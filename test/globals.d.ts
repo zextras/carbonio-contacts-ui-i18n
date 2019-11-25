@@ -8,5 +8,4 @@
  * http://www.zextras.com/zextras-eula.html
  * *** END LICENSE BLOCK *****
  */
-
 import '@testing-library/jest-dom/extend-expect';
