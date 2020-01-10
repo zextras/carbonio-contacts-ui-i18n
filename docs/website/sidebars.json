@@ -1,0 +1,7 @@
+{
+  "docs": {
+    "Api": ["api"],
+    "Data": ["data"],
+    "Main": ["main"]
+  }
+}

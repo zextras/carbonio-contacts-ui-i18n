@@ -10,18 +10,11 @@
  */
 
 import React from 'react';
-import style from './App.less';
 
-const App = (): JSX.Element => {
+export default function App() {
 	return (
-		<div
-			className={style.App}
-		>
-			<p>
-				Contacts!
-			</p>
+		<div>
+			Contacts.
 		</div>
 	);
 };
-
-export default App;
