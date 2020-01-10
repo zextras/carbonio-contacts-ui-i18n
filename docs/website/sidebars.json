@@ -2,6 +2,9 @@
   "docs": {
     "Api": ["api"],
     "Data": ["data"],
+    "Design": [
+      "design/view_contact"
+    ],
     "Main": ["main"]
   }
 }
