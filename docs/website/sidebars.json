@@ -3,8 +3,9 @@
     "Api": ["api"],
     "Data": ["data"],
     "Design": [
-      "design/view_contact",
-      "design/contact_editor"
+      "design/contact_editor",
+      "design/main_list_item",
+      "design/view_contact"
     ],
     "Main": ["main"]
   }

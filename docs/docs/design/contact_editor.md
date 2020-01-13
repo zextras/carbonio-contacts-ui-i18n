@@ -49,4 +49,4 @@ Wireframes are almost the same for both Mobile and Desktop.
 ⚠️ **Warning** ⚠️
 
 The only difference is on the _element 19_ 
-![desktop-wireframe](assets/design/contact_editor/desktop.png)
+![wireframe](assets/design/contact_editor/desktop.png)
