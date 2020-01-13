@@ -13,7 +13,7 @@ author: Michele Olivo
 | lastName | string |||
 | image | string || url of the image |
 | jobTitle | string |||
-| departement | string |||
+| department | string |||
 | company | string |||
 | email | string |||
 | phone | ContactPhones |||
