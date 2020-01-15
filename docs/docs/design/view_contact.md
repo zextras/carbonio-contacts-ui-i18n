@@ -1,7 +1,8 @@
 ---
-title: View Contact
+title: ContactPreviewPanel
 author: Michele Olivo
 ---
+
 ## Components Involved
 Some components may require a version specific for each screen size, that items are marked with the ⚠️ icon.
 
@@ -9,8 +10,8 @@ Some components may require a version specific for each screen size, that items 
 |:-:|-----------|-------|------|
 | 1 | ContactViewHeader | A Container | 🖥️ 📱 |
 | 2 | Avatar || 🖥️ 📱 |
-| 3 | IconButton || 🖥️ 📱 |
-| 4 | Typography || 🖥️ 📱 |
+| 3 | Typography || 🖥️ 📱 |
+| 4 | IconButton || 🖥️ 📱 |
 | 5 | Avatar || 🖥️ 📱 |
 | 6 | Typography || 🖥️ 📱 |
 | 7 | Typography || 🖥️ 📱 |

@@ -1,7 +1,8 @@
 ---
-title: Main List Item
+title: ContactListItem
 author: Michele Olivo
 ---
+
 ## Components Involved
 Some components may require a version specific for each screen size, that items are marked with the ⚠️ icon.
 

@@ -1,7 +1,8 @@
 ---
-title: Contact Editor
+title: ContactEditorPanel
 author: Michele Olivo
 ---
+
 ## Components Involved
 Some components may require a version specific for each screen size, that items are marked with the ⚠️ icon.
 
@@ -15,7 +16,7 @@ Some components may require a version specific for each screen size, that items 
 | 6 | Button || 🖥️ 📱 |
 | 7 | Input | First Name | 🖥️ 📱 |
 | 8 | Input | Last Name | 🖥️ 📱 |
-| 9 | Select | Suffix | 🖥️ 📱 |
+| 9 | Select | Prefix | 🖥️ 📱 |
 | 10 | Input | Job title | 🖥️ 📱 |
 | 11 | Input | Department | 🖥️ 📱 |
 | 12 | Input | Company | 🖥️ 📱 |
@@ -29,7 +30,7 @@ Some components may require a version specific for each screen size, that items 
 | 20 | Content | A Container | 🖥️ 📱 |
 | 21 | Footer | A Container | 🖥️ 📱 |
 
-### Options for "Suffix" field (9).
+### Options for "Prefix" field (9).
 - Mr.
 - Miss
 - Mrs.

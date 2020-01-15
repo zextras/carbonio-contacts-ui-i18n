@@ -15,10 +15,10 @@ author: Michele Olivo
 | jobTitle | string |||
 | department | string |||
 | company | string |||
-| email | string |||
-| phone | ContactPhones |||
+| email | string[] |||
+| phone | ContactPhone[] |||
 
-## ContactPhones
+## ContactPhone
 
 | Field | Type | Notes |
 |-------|------|-------|
