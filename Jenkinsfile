@@ -247,7 +247,7 @@ pipeline {
 				script {
 					unstash 'doc'
 					doc.rm file: "iris/zapp-contacts/${BRANCH_NAME}"
-					doc.upload file: "docs/website/build/com_zextras_zapp_contacts/", destination: "iris/zapp-contacts/${BRANCH_NAME}"
+					doc.upload file: "docs/website/build/com_zextras_zapp_contacts/**", destination: "iris/zapp-contacts/${BRANCH_NAME}"
 				}
 			}
 		}
