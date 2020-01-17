@@ -9,21 +9,17 @@
  * *** END LICENSE BLOCK *****
  */
 
+import React from 'react';
 import { Contacts } from '@material-ui/icons';
 import { registerRoute, addMainMenuItem } from '@zextras/zapp-shell/router';
-import React, { FC } from 'react';
 
 import App from './components/App';
 
-const WrappedApp: FC<{}> = () => (
-	<App />
-);
-
-export default function app(): void {
+export default function app() {
 	addMainMenuItem(
 		<Contacts />,
 		'Contacts',
 		'/contacts'
 	);
-	registerRoute('/contacts', WrappedApp, {});
+	registerRoute('/contacts', App, {});
 }

@@ -1,6 +1,4 @@
-def nodeCmd(String cmd) {
-	sh '. load_nvm && nvm use && ' + cmd
-}
+@Library("zextras-library@0.4.1") _
 
 def getCommitParentsCount() {
 	return sh(script: '''
@@ -148,8 +146,8 @@ pipeline {
 				stage('Type Checking') {
 					steps {
 						executeNpmLogin()
-						nodeCmd 'npm install'
-						nodeCmd 'npm run type-check'
+						cmd sh: "nvm use && npm install"
+						cmd sh: "nvm use && npm run type-check"
 					}
 				}
 			}
@@ -157,7 +155,7 @@ pipeline {
 
 //============================================ Build ===================================================================
 
-		stage('Build Zimlet Package') {
+		stage('Build') {
 			when {
 				beforeAgent true
 				not {
@@ -168,7 +166,16 @@ pipeline {
 				}
 			}
 			parallel {
-				stage('Build Zimbra Zimlet') {
+				stage('Build package') {
+					when {
+						beforeAgent true
+						not {
+							allOf {
+								expression { BRANCH_NAME ==~ /(release|beta)/ }
+								environment name: 'COMMIT_PARENTS_COUNT', value: '2'
+							}
+						}
+					}
 					agent {
 						node {
 							label 'nodejs-agent-v1'
@@ -176,9 +183,30 @@ pipeline {
 					}
 					steps {
 						executeNpmLogin()
-						nodeCmd 'npm install'
-						nodeCmd 'NODE_ENV="production" npx zapp package'
+						cmd sh: "nvm use && npm install"
+						cmd sh: "nvm use && NODE_ENV='production' npx zapp package"
 						stash includes: 'pkg/com_zextras_zapp_contacts.zip', name: 'zimlet_package_unsigned'
+					}
+				}
+				stage('Build documentation') {
+					when {
+						beforeAgent true
+						allOf {
+							expression { BRANCH_NAME ==~ /(release|beta)/ }
+							environment name: 'COMMIT_PARENTS_COUNT', value: '1'
+						}
+					}
+					agent {
+						node {
+							label 'nodejs-agent-v2'
+						}
+					}
+					steps {
+						script {
+							cmd sh: "nvm use && cd docs/website && npm install"
+							cmd sh: "nvm use && cd docs/website && BRANCH_NAME=${BRANCH_NAME} npm run build"
+							stash includes: 'docs/website/build/com_zextras_zapp_contacts/', name: 'doc'
+						}
 					}
 				}
 			}
@@ -205,6 +233,36 @@ pipeline {
 					archiveArtifacts artifacts: 'pkg/com_zextras_zapp_contacts.zip', fingerprint: true
 				}
 			}
+		}
+
+		stage('Deploy documentation') {
+			when {
+				beforeAgent true
+				allOf {
+					expression { BRANCH_NAME ==~ /(release|beta)/ }
+					environment name: 'COMMIT_PARENTS_COUNT', value: '1'
+				}
+			}
+			steps {
+				script {
+					unstash 'doc'
+					doc.rm file: "iris/zapp-contacts/${BRANCH_NAME}"
+					doc.mkdir folder: "iris/zapp-contacts/${BRANCH_NAME}"
+					doc.upload file: "docs/website/build/com_zextras_zapp_contacts/**", destination: "iris/zapp-contacts/${BRANCH_NAME}"
+				}
+			}
+		}
+	}
+
+	post {
+		always {
+			script {
+				GIT_COMMIT_EMAIL = sh(
+						script: 'git --no-pager show -s --format=\'%ae\'',
+						returnStdout: true
+				).trim()
+			}
+			emailext attachLog: true, body: '$DEFAULT_CONTENT', recipientProviders: [requestor()], subject: '$DEFAULT_SUBJECT', to: "${GIT_COMMIT_EMAIL}"
 		}
 	}
 }
