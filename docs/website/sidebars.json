@@ -1,7 +1,18 @@
 {
   "docs": {
-    "Api": ["api"],
-    "Data": ["data"],
-    "Main": ["main"]
+    "Architecture": [
+      "architecture/architecture",
+      "architecture/synchronization",
+      "architecture/api",
+      "architecture/data"
+    ],
+    "Design": [
+      "design/contact_editor",
+      "design/main_list_item",
+      "design/view_contact"
+    ],
+    "Main": [
+      "main"
+    ]
   }
 }
