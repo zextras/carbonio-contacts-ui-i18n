@@ -1,6 +1,5 @@
 ---
 title: ContactPreviewPanel
-author: Michele Olivo
 ---
 
 ## Components Involved

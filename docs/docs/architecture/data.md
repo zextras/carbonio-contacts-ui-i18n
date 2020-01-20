@@ -1,6 +1,5 @@
 ---
 title: Data
-author: Michele Olivo
 ---
 
 ## Contact
@@ -15,14 +14,33 @@ author: Michele Olivo
 | jobTitle | string |||
 | department | string |||
 | company | string |||
-| email | string[] |||
+| address | string |||
+| notes | string |||
+| email | ContactMail[] |||
 | phone | ContactPhone[] |||
+
+## ContactMail
+
+| Field | Type | Notes |
+|-------|------|-------|
+| mail | string ||
+| name | string | See note 1 |
+
+**Notes**
+1. Possible values:
+    - `Work`
+    - `Home`
 
 ## ContactPhone
 
 | Field | Type | Notes |
 |-------|------|-------|
-| mobile | string ||
-| work | string || 
-| home | string ||
-| fax | string ||
+| number | string ||
+| name | string | See note 1 |
+
+**Notes**
+1. Possible values:
+    - `Mobile`
+    - `Work`
+    - `Home`
+    - `Other`
