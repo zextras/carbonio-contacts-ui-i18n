@@ -12,6 +12,7 @@
 import React from 'react';
 import { Contacts } from '@material-ui/icons';
 import { registerRoute, addMainMenuItem } from '@zextras/zapp-shell/router';
+import { serviceWorkerSrvc } from '@zextras/zapp-shell/service';
 
 import App from './components/App';
 
@@ -22,4 +23,7 @@ export default function app() {
 		'/contacts'
 	);
 	registerRoute('/contacts', App, {});
+	serviceWorkerSrvc.registerAppServiceWorker(
+		'contacts-sw.js'
+	);
 }

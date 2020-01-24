@@ -56,7 +56,8 @@
     "react-hot-loader": "4.12.15",
     "react-test-renderer": "16.10.2",
     "styled-components": "4.4.1",
-    "typescript": "3.6.4"
+    "typescript": "3.6.4",
+    "workbox-webpack-plugin": "5.0.0-rc.1"
   },
   "dependencies": {
     "@babel/preset-typescript": "7.6.0",
