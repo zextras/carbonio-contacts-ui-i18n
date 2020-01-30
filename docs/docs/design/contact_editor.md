@@ -32,7 +32,6 @@ Some components may require a version specific for each screen size, that items 
 | 19 | IconButton | Visible only to delete the current row, not visible if the row is empty. | 🖥️⚠️ |
 | 20 | Content | A Container | 🖥️ 📱 |
 | 21 | Footer | A Container | 🖥️ 📱 |
-| 22 | Select || 🖥️ 📱 |
 
 ### Options for "Prefix" field (9).
 - Mr.
