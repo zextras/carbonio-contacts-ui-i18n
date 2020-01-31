@@ -17,5 +17,5 @@ Calls involved in synchronisation are:
 - `SyncRequest`  with the previous `SyncRequest`'s token set as request’s parameter will be used in order to check changes on contacts list. Different changes will be treated in different ways:
     - deleted contacts will be deleted
     - created and edited contact ids will be used to call `GetContactsRequest` to retrieve all the informations
-- `SearchRequest` will be used to retrieve all the information of a given contact in order to keep local data synchronised
+- `GetContactsRequest` will be used to retrieve all the information of a given contact in order to keep local data synchronised
 - `ModifyContactRequest` will be used in order to push changes done to contact(s) on mobile devices to the cloud server

@@ -2,23 +2,29 @@
 title: Data
 ---
 
+This page descibes the data managed by the Contacts App.
+
+- 🔑 - This filed is the primary key
+- 🔖 - This filed is an index
+
 ## Contact
 
 | Field | Type | 🔑 | Notes |
 |-------|------|----|-------|
+| parent | string | 🔖 ||
 | id | string | 🔑 ||
-| suffix | string |||
+| nameSuffix | string |||
 | firstName | string |||
 | lastName | string |||
 | image | string || url of the image |
 | jobTitle | string |||
 | department | string |||
 | company | string |||
-| address | ContactAddress[] |||
+| address | [ContactAddress\[\]][1] |||
 | notes | string |||
-| email | ContactMail[] |||
-| phone | ContactPhone[] |||
-| _modifyDate | number |||
+| email | [ContactMail\[\]][2] |||
+| phone | [ContactPhone\[\]][3] |||
+| _revision | number |||
 
 ## ContactAddress
 | Field | Type | Notes |
@@ -41,11 +47,8 @@ title: Data
 | Field | Type | Notes |
 |-------|------|-------|
 | number | string ||
-| name | string | See note 1 |
+| name | enum(other, home, work, mobile) ||
 
-**Notes**
-1. Possible values:
-    - `Mobile`
-    - `Work`
-    - `Home`
-    - `Other`
+[1]: #contactaddress
+[2]: #contactmail
+[3]: #contactphone
