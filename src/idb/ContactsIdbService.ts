@@ -2,11 +2,10 @@ import { IDBPDatabase, openDB } from 'idb';
 import { Contact, IContactsIdb } from './IContactsIdb';
 import { schemaVersion, upgradeFn } from './ContactsIdb';
 import { IFolderSchmV1 } from '@zextras/zapp-shell/lib/sync/IFolderSchm';
-import pkg from '../../zapp.conf';
 import { IContactsIdbService } from './IContactsIdbService';
 
 export default class ContactsIdbService implements IContactsIdbService {
-	private static _IDB_NAME = pkg.pkgName;
+	private static _IDB_NAME = 'com_zextras_zapp_contacts';
 
 	public openDb(): Promise<IDBPDatabase<IContactsIdb>> {
 		return openDB<IContactsIdb>(
@@ -38,9 +37,9 @@ export default class ContactsIdbService implements IContactsIdbService {
 
 	public saveContactsData(c: Contact[]): Promise<string[]> {
 		if (c.length < 1) return Promise.resolve([]);
-		const cCopy = [].concat(c);
+		const cCopy = [...c];
 		const contact = cCopy.shift();
-		return this.saveContactData(contact)
+		return this.saveContactData(contact!)
 			.then(c => new Promise((resolve, reject) => {
 				if (cCopy.length === 0) resolve([c.id]);
 				else {
@@ -53,15 +52,15 @@ export default class ContactsIdbService implements IContactsIdbService {
 
 	public removeContacts(ids: string[]): Promise<string[]> {
 		if (ids.length < 1) return Promise.resolve([]);
-		const cCopy = [].concat(ids);
+		const cCopy = [...ids];
 		const id = cCopy.shift();
 		return this.openDb()
-			.then(idb => idb.delete<'contacts'>('contacts', id))
+			.then(idb => idb.delete<'contacts'>('contacts', id!))
 			.then(_ => new Promise((resolve, reject) => {
-				if (cCopy.length === 0) resolve([id]);
+				if (cCopy.length === 0) resolve([id!]);
 				else {
 					this.removeContacts(cCopy)
-						.then(r => resolve([id].concat(r)))
+						.then(r => resolve([id!].concat(r)))
 						.catch(e => reject(e))
 				}
 			}));
@@ -69,15 +68,15 @@ export default class ContactsIdbService implements IContactsIdbService {
 
 	public removeFolders(ids: string[]): Promise<string[]> {
 		if (ids.length < 1) return Promise.resolve([]);
-		const cCopy = [].concat(ids);
+		const cCopy = [...ids];
 		const id = cCopy.shift();
 		return this.openDb()
-			.then(idb => idb.delete<'folders'>('folders', id))
+			.then(idb => idb.delete<'folders'>('folders', id!))
 			.then(_ => new Promise((resolve, reject) => {
-				if (cCopy.length === 0) resolve([id]);
+				if (cCopy.length === 0) resolve([id!]);
 				else {
 					this.removeFolders(cCopy)
-						.then(r => resolve([id].concat(r)))
+						.then(r => resolve([id!].concat(r)))
 						.catch(e => reject(e))
 				}
 			}));

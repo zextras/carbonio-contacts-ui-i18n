@@ -39,9 +39,9 @@ export default class ContactsService {
 	private _loadAllContactsAndFolders(): void {
 		this._idbSrvc.openDb()
 			.then(idb => idb.getAll<'contacts'>('contacts'))
-			.then(c => {
+			.then((c: Contact[]) => {
 				this.contacts.next(
-					reduce(
+					reduce<Contact, {[id: string]: Contact}>(
 						c,
 						(result, c) => {
 							result[c.id] = c;
@@ -55,7 +55,7 @@ export default class ContactsService {
 			.then(idb => idb.getAll<'folders'>('folders'))
 			.then(c => {
 				this.folders.next(
-					reduce(
+					reduce<IFolderSchmV1, {[id: string]: IFolderSchmV1}>(
 						c,
 						(result, f) => {
 							result[f.id] = f;

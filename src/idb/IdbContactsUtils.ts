@@ -23,7 +23,7 @@ export function normalizeFolder(soapFolderObj: ISoapFolderObj): IFolderSchmV1 {
 
 export function contactPhoneTypeFromString(s: string): ContactPhoneType {
 	if (!PHONE_REG.test(s)) return ContactPhoneType.OTHER;
-	switch(s.match(PHONE_REG)[1]) {
+	switch(s.match(PHONE_REG)![1]) {
 		case 'mobile':
 			return ContactPhoneType.MOBILE;
 		case 'work':
@@ -59,7 +59,7 @@ function normalizeContactAddresses(c: ISoapContactObj): ContactAddress[] {
 
 function normalizeContactMails(c: ISoapContactObj): ContactEmail[] {
 	return map(
-		pickBy(c._attrs, (v, k) => MAIL_REG.test(k)),
+		pickBy<string>(c._attrs, (v, k) => MAIL_REG.test(k)),
 		(v, k) => ({
 			mail: v
 		})
@@ -68,7 +68,7 @@ function normalizeContactMails(c: ISoapContactObj): ContactEmail[] {
 
 function normalizeContactPhones(c: ISoapContactObj): ContactPhone[] {
 	return map(
-		pickBy(c._attrs, (v, k) => PHONE_REG.test(k)),
+		pickBy<string>(c._attrs, (v, k) => PHONE_REG.test(k)),
 		(v, k) => ({
 			number: v,
 			name: contactPhoneTypeFromString(k)
