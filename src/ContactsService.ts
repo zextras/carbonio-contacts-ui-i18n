@@ -1,8 +1,9 @@
 import { fc } from '@zextras/zapp-shell/fc';
 import { IFolderSchmV1 } from '@zextras/zapp-shell/lib/sync/IFolderSchm';
+import { IMainSubMenuItemData } from "@zextras/zapp-shell/lib/router/IRouterService";
 import { filter } from 'rxjs/operators';
-import { BehaviorSubject } from 'rxjs';
-import { reduce } from 'lodash';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { reduce, filter as loFilter } from 'lodash';
 import { Contact } from './idb/IContactsIdb';
 import { IContactsIdbService } from './idb/IContactsIdbService';
 
@@ -11,10 +12,36 @@ const _CONTACT_DELETED_EV_REG = /contacts:deleted:contact/;
 const _FOLDER_UPDATED_EV_REG = /contacts:updated:folder/;
 const _FOLDER_DELETED_EV_REG = /contacts:deleted:folder/;
 
-export default class ContactsService {
+const subfolders: (folders: {[id: string]: IFolderSchmV1}, parentId: string) => Array<IMainSubMenuItemData> =
+	(folders, parentId) =>
+		reduce<IFolderSchmV1, Array<IMainSubMenuItemData>>(
+			loFilter(
+				folders,
+				(folder: IFolderSchmV1): boolean => folder.parent === parentId
+			),
+			(acc: Array<IMainSubMenuItemData>, folder: IFolderSchmV1) => {
+				acc.push(
+					{
+						icon: 'PeopleOutline',
+						id: folder.id,
+						label: folder.name,
+						to: `/contacts/folder${folder.path}`,
+						children: subfolders(folders, folder.id)
+					}
+				);
+				return acc;
+			},
+			[]
+		);
 
+export default class ContactsService {
 	public contacts = new BehaviorSubject<{[id: string]: Contact}>({});
+
 	public folders = new BehaviorSubject<{[id: string]: IFolderSchmV1}>({});
+
+	public menuFolders = new BehaviorSubject<Array<IMainSubMenuItemData>>([]);
+
+	private _menuFoldersSub: Subscription;
 
 	constructor(private _idbSrvc: IContactsIdbService) {
 		fc
@@ -34,11 +61,33 @@ export default class ContactsService {
 		fc
 			.pipe(filter(e => _FOLDER_DELETED_EV_REG.test(e.event)))
 			.subscribe(({ data }) => this._deleteFolder(data.id));
+		this._menuFoldersSub = this.folders.subscribe(
+			(folders: {[id: string]: IFolderSchmV1}): void => {
+				this.menuFolders.next(
+					reduce<IFolderSchmV1, Array<IMainSubMenuItemData>>(
+						loFilter(folders, (folder: IFolderSchmV1): boolean => folder.parent === '1'),
+						(acc: Array<IMainSubMenuItemData>, folder: IFolderSchmV1) => {
+							acc.push(
+								{
+									icon: 'PeopleOutline',
+									id: folder.id,
+									label: folder.name,
+									to: `/contacts/folder${folder.path}`,
+									children: subfolders(folders, folder.id)
+								}
+							);
+							return acc;
+						},
+						[]
+					)
+				);
+			}
+		);
 	}
 
 	private _loadAllContactsAndFolders(): void {
 		this._idbSrvc.openDb()
-			.then(idb => idb.getAll<'contacts'>('contacts'))
+			.then((idb) => idb.getAll<'contacts'>('contacts'))
 			.then((c: Contact[]) => {
 				this.contacts.next(
 					reduce<Contact, {[id: string]: Contact}>(

@@ -10,11 +10,18 @@
  */
 
 import React from 'react';
+import { useParams } from 'react-router-dom';
+import { Container, Text } from '@zextras/zapp-ui';
+
+export const ROUTE = '/contacts/folder/:path*';
 
 export default function App() {
+	const { path } = useParams();
 	return (
-		<div>
-			Contacts.
-		</div>
+		<Container width="fill" height="fill" background="bg_9" mainAlignment="flex-start" crossAlignment="flex-start">
+			<Container width="50%" background="bg_7" padding={{ all: 'large' }} mainAlignment="flex-start" crossAlignment="flex-start">
+				<Text size="large" color="txt_2">{`Contacts: ${path}`}</Text>
+			</Container>
+		</Container>
 	);
 };
