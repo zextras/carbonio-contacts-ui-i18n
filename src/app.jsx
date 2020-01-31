@@ -15,8 +15,14 @@ import { registerRoute, addMainMenuItem } from '@zextras/zapp-shell/router';
 import { serviceWorkerSrvc } from '@zextras/zapp-shell/service';
 
 import App from './components/App';
+import ContactsService from './ContactsService';
+import ContactsIdbService from './idb/ContactsIdbService';
 
 export default function app() {
+	const idbSrvc = new ContactsIdbService();
+	const contactSrvc = new ContactsService(
+		idbSrvc
+	);
 	addMainMenuItem(
 		<Contacts />,
 		'Contacts',

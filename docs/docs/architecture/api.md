@@ -2,8 +2,12 @@
 title: API
 ---
 
-| 📫 | Int | Event Name | Data | Notes |
-|:--:|:---:|:----------:|------|-------|
+| 📫 | Event Name | Data | Notes |
+|---|------------|------|-------|
+|| `contacts:updated:contact` | `id`: string ||
+|| `contacts:deleted:contact` | `id`: string ||
+|| `contacts:updated:folder` | `id`: string ||
+|| `contacts:deleted:folder` | `id`: string ||
 
 ## SOAP
 SOAP calls involved on contacts synchronisation will let the application to send and retrieve changes on contacts list.
