@@ -1,5 +1,16 @@
-import { ContactAddress, ContactData, ContactEmail, ContactPhone } from './idb/IContactsIdb';
-import { map, pick, merge, reduce, omit } from 'lodash';
+import {
+	map,
+	pick,
+	merge,
+	reduce,
+	omit
+} from 'lodash';
+import {
+	ContactAddress,
+	ContactData,
+	ContactEmail,
+	ContactPhone
+} from './idb/IContactsIdb';
 
 type SoapContactObjAttrs = {
 	jobTitle?: string;
@@ -81,11 +92,11 @@ export function normalizeContactMailsToSoapOp(mails: ContactEmail[]): any {
 	return reduce(
 		mails,
 		(c, v, k) => ({
-				...c,
-				...{
-					[`mail${k > 0 ? k : ''}`]: v.mail
-				}
-			}),
+			...c,
+			...{
+				[`mail${k > 0 ? k : ''}`]: v.mail
+			}
+		}),
 		{}
 	);
 }
@@ -95,18 +106,16 @@ export function normalizeContactPhonesToSoapOp(phones: ContactPhone[]): any {
 		reduce(
 			phones,
 			(a: {[k: string]: any[]}, v, k) => {
-				if (a[v.name]) return { ...a, ...{ [v.name]: [...a[v.name], v.number] }};
-				else return { ...a, ...{ [v.name]: [v.number] }};
+				if (a[v.name]) return { ...a, ...{ [v.name]: [...a[v.name], v.number] } };
+				return { ...a, ...{ [v.name]: [v.number] } };
 			},
 			{}
 		),
-		(a, v, k) => {
-			return reduce(
-				v,
-				(a1, v1, k1) => ({ ...a1, [`${k}Phone${k1 > 0 ? k1 : ''}`]: v1}),
-				a
-			);
-		},
+		(a, v, k) => reduce(
+			v,
+			(a1, v1, k1) => ({ ...a1, [`${k}Phone${k1 > 0 ? k1 : ''}`]: v1}),
+			a
+		),
 		{}
 	);
 }
@@ -118,23 +127,21 @@ export function normalizeContactAddressesToSoapOp(addresses: ContactAddress[]): 
 		reduce(
 			addresses,
 			(a: {[k: string]: any[]}, v, k) => {
-				if (a[v.type]) return { ...a, ...{ [v.type]: [...a[v.type], v] }};
-				else return { ...a, ...{ [v.type]: [v] }};
+				if (a[v.type]) return { ...a, ...{ [v.type]: [...a[v.type], v] } };
+				return { ...a, ...{ [v.type]: [v] } };
 			},
 			{}
 		),
 		(a, v, k) => {
 			return reduce(
 				v,
-				(a1, v1, k1: number) => {
-					return reduce(
-						omit<any>(v1, ['type']),
-						(a2, v2, k2) => {
-							return { ...a2, [`${k}${capitalize(k2)}${k1 > 0 ? k1 : ''}`]: v2};
-						},
-						a1
-					);
-				},
+				(a1, v1, k1: number) => reduce(
+					omit<any>(v1, ['type']),
+					(a2, v2, k2) => {
+						return { ...a2, [`${k}${capitalize(k2)}${k1 > 0 ? k1 : ''}`]: v2 };
+					},
+					a1
+				),
 				a
 			);
 		},
@@ -158,6 +165,6 @@ export function normalizeContactAttrsToSoapOp(c: ContactData): ContactCreationAt
 	if (c.address) merge(obj, normalizeContactAddressesToSoapOp(c.address));
 	return map<any, any>(
 		obj,
-		(v: any, k: any) => ({ n: k, _content: v})
+		(v: any, k: any) => ({ n: k, _content: v })
 	);
 }

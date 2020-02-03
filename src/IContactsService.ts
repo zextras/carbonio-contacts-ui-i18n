@@ -8,14 +8,16 @@ export interface IContactsService {
 	deleteContact(contactId: string): void;
 }
 
+export type ContactOp = CreateContactOp | ModifyContactOp | MoveContactOp | DeleteContactOp;
+
 export type CreateContactOp = {
 	operation: 'create-contact';
-	contactData: ContactData;
+	contactData: Contact;
 };
 
 export type ModifyContactOp = {
 	operation: 'modify-contact';
-	contactData: ContactData;
+	contactData: Contact;
 };
 
 export type MoveContactOp = {

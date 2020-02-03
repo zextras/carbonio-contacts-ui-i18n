@@ -1,13 +1,20 @@
 import { fc, fcSink } from '@zextras/zapp-shell/fc';
 import { IFolderSchmV1 } from '@zextras/zapp-shell/lib/sync/IFolderSchm';
 import { syncOperations } from '@zextras/zapp-shell/sync';
-import { ISyncOperation, ISyncOpSoapRequest } from '@zextras/zapp-shell/lib/sync/ISyncService';
+import { ISyncOperation, ISyncOpRequest, ISyncOpSoapRequest } from '@zextras/zapp-shell/lib/sync/ISyncService';
 import { filter } from 'rxjs/operators';
-import { BehaviorSubject } from 'rxjs';
-import { reduce } from 'lodash';
+import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
+import { reduce, cloneDeep } from 'lodash';
 import { Contact, ContactData } from './idb/IContactsIdb';
 import { IContactsIdbService } from './idb/IContactsIdbService';
-import { CreateContactOp, DeleteContactOp, IContactsService, ModifyContactOp, MoveContactOp } from './IContactsService';
+import {
+	ContactOp,
+	CreateContactOp,
+	DeleteContactOp,
+	IContactsService,
+	ModifyContactOp,
+	MoveContactOp
+} from './IContactsService';
 import {
 	CreateContactOpReq,
 	DeleteContactActionOpReq,
@@ -22,9 +29,15 @@ const _FOLDER_UPDATED_EV_REG = /contacts:updated:folder/;
 const _FOLDER_DELETED_EV_REG = /contacts:deleted:folder/;
 
 export default class ContactsService implements IContactsService {
-
 	public contacts = new BehaviorSubject<{[id: string]: Contact}>({});
+
 	public folders = new BehaviorSubject<{[id: string]: IFolderSchmV1}>({});
+
+	private _contacts = new BehaviorSubject<{[id: string]: Contact}>({});
+
+	private _folders = new BehaviorSubject<{[id: string]: IFolderSchmV1}>({});
+
+	private _createId = 0;
 
 	constructor(private _idbSrvc: IContactsIdbService) {
 		fc
@@ -33,21 +46,30 @@ export default class ContactsService implements IContactsService {
 			)
 			.subscribe(() => this._loadAllContactsAndFolders());
 		fc
-			.pipe(filter(e => _CONTACT_UPDATED_EV_REG.test(e.event)))
+			.pipe(filter((e) => _CONTACT_UPDATED_EV_REG.test(e.event)))
 			.subscribe(({ data }) => this._updateContact(data.id));
 		fc
-			.pipe(filter(e => _CONTACT_DELETED_EV_REG.test(e.event)))
+			.pipe(filter((e) => _CONTACT_DELETED_EV_REG.test(e.event)))
 			.subscribe(({ data }) => this._deleteContact(data.id));
 		fc
-			.pipe(filter(e => _FOLDER_UPDATED_EV_REG.test(e.event)))
+			.pipe(filter((e) => _FOLDER_UPDATED_EV_REG.test(e.event)))
 			.subscribe(({ data }) => this._updateFolder(data.id));
 		fc
-			.pipe(filter(e => _FOLDER_DELETED_EV_REG.test(e.event)))
+			.pipe(filter((e) => _FOLDER_DELETED_EV_REG.test(e.event)))
 			.subscribe(({ data }) => this._deleteFolder(data.id));
 
-		syncOperations.subscribe(
-			(ops) => console.log('Contacts Sync Operations', ops)
-		);
+		combineLatest([
+			syncOperations as BehaviorSubject<Array<ISyncOperation<ContactOp, ISyncOpRequest<unknown>>>>,
+			this._contacts
+		]).subscribe(this._mergeContactsAndOperations);
+
+		this.contacts.subscribe((v) => console.log('Contact list', v));
+		syncOperations.subscribe((v) => console.log('Operations', v));
+
+		combineLatest([
+			syncOperations,
+			this._folders
+		]).subscribe(this._mergeFoldersAndOperations);
 	}
 
 	public createContact(c: ContactData): void {
@@ -57,7 +79,7 @@ export default class ContactsService implements IContactsService {
 				description: 'Creating a new contact',
 				opData: {
 					operation: 'create-contact',
-					contactData: c,
+					contactData: { ...c, id: `${this._createId -= 1}`, _revision: -1 },
 				},
 				opType: 'soap',
 				request: {
@@ -179,13 +201,13 @@ export default class ContactsService implements IContactsService {
 
 	private _loadAllContactsAndFolders(): void {
 		this._idbSrvc.openDb()
-			.then(idb => idb.getAll<'contacts'>('contacts'))
+			.then((idb) => idb.getAll<'contacts'>('contacts'))
 			.then((c: Contact[]) => {
-				this.contacts.next(
+				this._contacts.next(
 					reduce<Contact, {[id: string]: Contact}>(
 						c,
-						(result, c) => {
-							result[c.id] = c;
+						(result, c1) => {
+							result[c1.id] = c1;
 							return result;
 						},
 						{}
@@ -193,8 +215,8 @@ export default class ContactsService implements IContactsService {
 				);
 			});
 		this._idbSrvc.openDb()
-			.then(idb => idb.getAll<'folders'>('folders'))
-			.then(c => {
+			.then((idb) => idb.getAll<'folders'>('folders'))
+			.then((c) => {
 				this.folders.next(
 					reduce<IFolderSchmV1, {[id: string]: IFolderSchmV1}>(
 						c,
@@ -210,34 +232,90 @@ export default class ContactsService implements IContactsService {
 
 	private _updateContact(id: string): void {
 		this._idbSrvc.openDb()
-			.then(idb => idb.get<'contacts'>('contacts', id))
-			.then(c => {
-				if (c) this.contacts.next({ ...this.contacts.value, [id]: c });
-			})
+			.then((idb) => idb.get<'contacts'>('contacts', id))
+			.then((c) => {
+				if (c) this._contacts.next({ ...this._contacts.getValue(), [id]: c });
+			});
 	}
 
 	private _deleteContact(id: string): void {
-		const newVal = { ...this.contacts.getValue() };
+		const newVal = { ...this._contacts.getValue() };
 		try {
 			delete newVal[id];
-		} catch (e) {}
-		this.contacts.next(newVal);
+		}
+		catch (e) {}
+		this._contacts.next(newVal);
 	}
 
 	private _updateFolder(id: string): void {
 		this._idbSrvc.openDb()
-			.then(idb => idb.get<'folders'>('folders', id))
-			.then(f => {
-				if (f) this.folders.next({ ...this.folders.value, [id]: f });
-			})
+			.then((idb) => idb.get<'folders'>('folders', id))
+			.then((f) => {
+				if (f) this.folders.next({ ...this._folders.getValue(), [id]: f });
+			});
 	}
 
 	private _deleteFolder(id: string): void {
-		const newVal = { ...this.folders.getValue() };
+		const newVal = { ...this._folders.getValue() };
 		try {
 			delete newVal[id];
-		} catch (e) {}
+		}
+		catch (e) {}
 		this.folders.next(newVal);
 	}
 
+	private _mergeContactsAndOperations: ([
+		_syncOperations,
+		contacts
+	]: [
+		Array<ISyncOperation<ContactOp, ISyncOpRequest<unknown>>>,
+		{[id: string]: Contact}
+	]) => void =
+		([
+			_syncOperations,
+			contacts
+		]) => {
+			this.contacts.next(
+				reduce(
+					_syncOperations,
+					(r, v, k) => {
+						switch (v.opData.operation) {
+							case 'create-contact':
+								// eslint-disable-next-line no-param-reassign
+								r[v.opData.contactData.id] = v.opData.contactData;
+								return r;
+							case 'delete-contact':
+								// eslint-disable-next-line no-param-reassign
+								delete r[v.opData.contactId];
+								return r;
+							case 'modify-contact':
+								// eslint-disable-next-line no-param-reassign
+								r[v.opData.contactData.id] = v.opData.contactData;
+								return r;
+							case 'move-contact':
+								// eslint-disable-next-line no-param-reassign
+								r[v.opData.contactId] = { ...r[v.opData.contactId], parent: v.opData.folderId };
+								return r;
+							default:
+								return r;
+						}
+					},
+					cloneDeep(contacts)
+				)
+			);
+		};
+
+	private _mergeFoldersAndOperations: ([
+		_syncOperations,
+		folders
+	]: [
+		Array<ISyncOperation<unknown, ISyncOpRequest<unknown>>>,
+		{[id: string]: IFolderSchmV1}
+	]) => void =
+		([
+			_syncOperations,
+			folders
+		]) => {
+			this.folders.next(folders);
+		};
 }
