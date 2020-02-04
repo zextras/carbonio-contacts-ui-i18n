@@ -29,32 +29,37 @@ const _CONTACT_DELETED_EV_REG = /contacts:deleted:contact/;
 const _FOLDER_UPDATED_EV_REG = /contacts:updated:folder/;
 const _FOLDER_DELETED_EV_REG = /contacts:deleted:folder/;
 
-const subfolders: (folders: {[id: string]: IFolderSchmV1}, parentId: string) => Array<IMainSubMenuItemData> =
-	(folders, parentId) =>
-		reduce<IFolderSchmV1, Array<IMainSubMenuItemData>>(
-			loFilter(
-				folders,
-				(folder: IFolderSchmV1): boolean => folder.parent === parentId
-			),
-			(acc: Array<IMainSubMenuItemData>, folder: IFolderSchmV1) => {
-				acc.push(
-					{
-						icon: 'PeopleOutline',
-						id: folder.id,
-						label: folder.name,
-						to: `/contacts/folder${folder.path}`,
-						children: subfolders(folders, folder.id)
-					}
-				);
-				return acc;
-			},
-			[]
-		);
+const subfolders: (
+	folders: {[id: string]: IFolderSchmV1},
+	parentId: string
+) => Array<IMainSubMenuItemData> =(folders, parentId) =>
+	reduce<IFolderSchmV1, Array<IMainSubMenuItemData>>(
+		loFilter(
+			folders,
+			(folder: IFolderSchmV1): boolean => folder.parent === parentId
+		),
+		(acc: Array<IMainSubMenuItemData>, folder: IFolderSchmV1) => {
+			acc.push(
+				{
+					id: folder.id,
+					label: folder.name,
+					to: `/contacts/folder${folder.path}`,
+					children: subfolders(folders, folder.id)
+				}
+			);
+			return acc;
+		},
+		[]
+	);
 
 export default class ContactsService implements IContactsService {
 	public contacts = new BehaviorSubject<{[id: string]: Contact}>({});
 
 	public folders = new BehaviorSubject<{[id: string]: IFolderSchmV1}>({});
+
+	private _contacts = new BehaviorSubject<{[id: string]: Contact}>({});
+
+	private _folders = new BehaviorSubject<{[id: string]: IFolderSchmV1}>({});
 
 	public menuFolders = new BehaviorSubject<Array<IMainSubMenuItemData>>([]);
 
@@ -80,7 +85,7 @@ export default class ContactsService implements IContactsService {
 		fc
 			.pipe(filter((e) => _FOLDER_DELETED_EV_REG.test(e.event)))
 			.subscribe(({ data }) => this._deleteFolder(data.id));
-			
+
 		this._menuFoldersSub = this.folders.subscribe(
 			(folders: {[id: string]: IFolderSchmV1}): void => {
 				this.menuFolders.next(
@@ -101,6 +106,8 @@ export default class ContactsService implements IContactsService {
 						[]
 					)
 				);
+			}
+		);
 
 		combineLatest([
 			syncOperations as BehaviorSubject<Array<ISyncOperation<ContactOp, ISyncOpRequest<unknown>>>>,
