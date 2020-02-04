@@ -61,7 +61,7 @@ function _fetchSoapContacts(ids) {
 				GetContactsRequest: {
 					_jsns: 'urn:zimbraMail',
 					sync: 1,
-					cn: map(ids, id => ({ id }))
+					cn: map(ids, (id) => ({ id }))
 				}
 			}
 		};
@@ -72,12 +72,12 @@ function _fetchSoapContacts(ids) {
 				body: JSON.stringify(searchReq)
 			}
 		)
-			.then(r => r.json())
-			.then(r => {
+			.then((r) => r.json())
+			.then((r) => {
 				if (r.Body.Fault) throw new Error(r.Body.Fault.Reason.Text);
-				resolve(map(r.Body.GetContactsResponse.cn, c => normalizeContact(c)));
+				resolve(map(r.Body.GetContactsResponse.cn, (c) => normalizeContact(c)));
 			})
-			.catch(e => reject(e));
+			.catch((e) => reject(e));
 	});
 }
 
@@ -87,10 +87,11 @@ function _walkSOAPContactsFolder(folders) {
 			folders,
 			(f) => {
 				const promises = [];
-				if (f.folder)
+				if (f.folder) {
 					promises.push(
 						_walkSOAPContactsFolder(f.folder)
 					);
+				}
 				if (f.view && f.view === 'contact') {
 					// console.log('Processing folder', f);
 					// Store the folder data
@@ -98,44 +99,45 @@ function _walkSOAPContactsFolder(folders) {
 						_idbSrvc.saveFolderData(
 							normalizeFolder(f)
 						)
-						.then(_ => new Promise((resolve, reject) => {
-							if (!f.cn) resolve([]);
-							_fetchSoapContacts(f.cn[0].ids.split(','))
-								.then((contacts) => resolve(contacts))
-								.catch(e => reject(e)); // TODO: If has more handle it!
-						}))
-						.then(r => new Promise((resolve, reject) => {
-							_idbSrvc.saveContactsData(r)
-								.then(() => {
-									forEach(r, (c) => _sharedBC.postMessage({
-										action: 'app:fiberchannel',
-										data: {
-											event: 'contacts:updated:contact',
+							.then((_) => new Promise((resolve, reject) => {
+								if (!f.cn) resolve([]);
+								_fetchSoapContacts(f.cn[0].ids.split(','))
+									.then((contacts) => resolve(contacts))
+									.catch((e) => reject(e)); // TODO: If has more handle it!
+							}))
+							.then((r) => new Promise((resolve, reject) => {
+								_idbSrvc.saveContactsData(r)
+									.then(() => {
+										forEach(r, (c) => _sharedBC.postMessage({
+											action: 'app:fiberchannel',
 											data: {
-												id: c.id
+												event: 'contacts:updated:contact',
+												data: {
+													id: c.id
+												}
 											}
-										}
-									}));
-								})
-								.then(_ => resolve())
-								.catch(e => reject(e));
-						}))
-						.then(_ => {
-							_sharedBC.postMessage({
-								action: 'app:fiberchannel',
-								data: {
-									event: 'contacts:updated:folder',
+										}));
+									})
+									.then((_) => resolve())
+									.catch((e) => reject(e));
+							}))
+							.then((_) => {
+								_sharedBC.postMessage({
+									action: 'app:fiberchannel',
 									data: {
-										id: f.id
+										event: 'contacts:updated:folder',
+										data: {
+											id: f.id
+										}
 									}
-								}
-							});
-						})
+								});
+							})
 					);
 				}
 				return Promise.all(promises);
 			}
-	));
+		)
+	);
 }
 
 function _handleSOAPChanges(changes) {
@@ -143,10 +145,10 @@ function _handleSOAPChanges(changes) {
 		_fetchSoapContacts(
 			map(
 				changes,
-				c => c.id
+				(c) => c.id
 			)
 		)
-			.then(r => new Promise((resolve, reject) => {
+			.then((r) => new Promise((resolve1, reject1) => {
 				_idbSrvc.saveContactsData(r)
 					.then(() => {
 						forEach(r, (c) => _sharedBC.postMessage({
@@ -159,18 +161,18 @@ function _handleSOAPChanges(changes) {
 							}
 						}));
 					})
-					.then(_ => resolve())
-					.catch(e => reject(e));
+					.then((_) => resolve1())
+					.catch((e) => reject1(e));
 			}))
-			.then(_ => resolve())
-			.catch(e => reject(e))
+			.then((_) => resolve())
+			.catch((e) => reject(e));
 	}));
 }
 
 function _removeContacts(ids) {
 	return _idbSrvc.removeContacts(ids)
-		.then((ids) => {
-			forEach(ids, (id) => _sharedBC.postMessage({
+		.then((ids1) => {
+			forEach(ids1, (id) => _sharedBC.postMessage({
 				action: 'app:fiberchannel',
 				data: {
 					event: 'contacts:deleted:contact',
@@ -184,8 +186,8 @@ function _removeContacts(ids) {
 
 function _removeFolders(ids) {
 	return _idbSrvc.removeFolders(ids)
-		.then((ids) => {
-			forEach(ids, (id) => _sharedBC.postMessage({
+		.then((ids1) => {
+			forEach(ids1, (id) => _sharedBC.postMessage({
 				action: 'app:fiberchannel',
 				data: {
 					event: 'contacts:deleted:folder',
@@ -200,37 +202,148 @@ function _removeFolders(ids) {
 function _processSOAPNotifications(syncResponse) {
 	const promises = [];
 	// First sync will have the folders
-	if (syncResponse.folder) promises.push(
-		_walkSOAPContactsFolder(syncResponse.folder)
-	);
+	if (syncResponse.folder) {
+		promises.push(
+			_walkSOAPContactsFolder(syncResponse.folder)
+		);
+	}
 	// Other syncs will have the 'cn' field populated.
-	if (syncResponse.cn) promises.push(
-		_handleSOAPChanges(syncResponse.cn)
-	);
+	if (syncResponse.cn) {
+		promises.push(
+			_handleSOAPChanges(syncResponse.cn)
+		);
+	}
 	// Handle the deleted items
-	if (syncResponse.deleted && syncResponse.deleted[0].cn) promises.push(
-		_removeContacts(syncResponse.deleted[0].cn[0].ids.split(','))
-	);
+	if (syncResponse.deleted && syncResponse.deleted[0].cn) {
+		promises.push(
+			_removeContacts(syncResponse.deleted[0].cn[0].ids.split(','))
+		);
+	}
 	// Handle the deleted folders
-	if (syncResponse.deleted && syncResponse.deleted[0].folder) promises.push(
-		_removeFolders(syncResponse.deleted[0].folder[0].ids.split(','))
-	);
+	if (syncResponse.deleted && syncResponse.deleted[0].folder) {
+		promises.push(
+			_removeFolders(syncResponse.deleted[0].folder[0].ids.split(','))
+		);
+	}
 	return Promise.all(promises);
 }
 
-_sharedBC.addEventListener('message', function onMessageOnBC(e) {
+function _processContactCreated(operation, response) {
+	return _fetchSoapContacts([response.CreateContactResponse.cn[0].id])
+		.then((r) => new Promise((resolve, reject) => {
+			_idbSrvc.saveContactsData(r)
+				.then(() => {
+					forEach(r, (c) => _sharedBC.postMessage({
+						action: 'app:fiberchannel',
+						data: {
+							event: 'contacts:updated:contact',
+							data: {
+								id: c.id
+							}
+						}
+					}));
+				})
+				.then((_) => resolve())
+				.catch((e) => reject(e));
+		}));
+}
+
+function _processContactDeleted(operation, response) {
+	return _removeContacts([response.ContactActionResponse.action.id]);
+}
+
+function _processContactModified(operation, response) {
+	return _fetchSoapContacts([response.ModifyContactResponse.cn[0].id])
+		.then((r) => new Promise((resolve, reject) => {
+			_idbSrvc.saveContactsData(r)
+				.then(() => {
+					forEach(r, (c) => _sharedBC.postMessage({
+						action: 'app:fiberchannel',
+						data: {
+							event: 'contacts:updated:contact',
+							data: {
+								id: c.id
+							}
+						}
+					}));
+				})
+				.then((_) => resolve())
+				.catch((e) => reject(e));
+		}));
+}
+
+function _processContactMoved(operation, response) {
+	return _fetchSoapContacts([response.ContactActionResponse.action.id])
+		.then((r) => new Promise((resolve, reject) => {
+			_idbSrvc.saveContactsData(r)
+				.then(() => {
+					forEach(r, (c) => _sharedBC.postMessage({
+						action: 'app:fiberchannel',
+						data: {
+							event: 'contacts:updated:contact',
+							data: {
+								id: c.id
+							}
+						}
+					}));
+				})
+				.then((_) => resolve())
+				.catch((e) => reject(e));
+		}));
+}
+
+function _processOperationCompleted(data) {
+	// console.log(data.action, data.data);
+	return new Promise(((resolve, reject) => {
+		const promises = [];
+		if (data.action === 'sync:operation:completed') {
+			// Fetch the updated information for edited objects
+			const operation = data.data.data.operation;
+			const result = data.data.data.result;
+			switch (data.data.data.operation.opData.operation) {
+				case 'create-contact':
+					promises.push(_processContactCreated(operation, result.Body));
+					break;
+				case 'delete-contact':
+					promises.push(_processContactDeleted(operation, result.Body));
+					break;
+				case 'modify-contact':
+					promises.push(_processContactModified(operation, result.Body));
+					break;
+				case 'move-contact':
+					promises.push(_processContactMoved(operation, result.Body));
+					break;
+				default:
+			}
+		}
+		// Proxy te information to the shell to update the Operation queue.
+		Promise.all(promises).then(() => {
+			_sharedBC.postMessage({
+				action: 'app:fiberchannel',
+				data: {
+					to: 'com_zextras_zapp_shell',
+					event: data.action,
+					data: data.data
+				}
+			});
+			resolve();
+		});
+	}));
+}
+
+_sharedBC.addEventListener('message', (e) => {
 	if (!e.data || !e.data.action) return;
-	switch(e.data.action) {
+	switch (e.data.action) {
 		case 'SOAP:notification:handle':
 			_processSOAPNotifications(e.data.data)
-				.catch(e => console.error(e));
+				.catch((e1) => console.error(e1));
 			break;
 		case 'sync:operation:completed':
-			console.log('sync:operation:completed', e.data.data);
-			break;
 		case 'sync:operation:error':
-			console.log('sync:operation:error', e.data.data);
+			_processOperationCompleted(e.data)
+				.catch((e1) => console.error(e1));
 			break;
+		default:
 	}
 });
 

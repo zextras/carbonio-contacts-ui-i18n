@@ -150,6 +150,13 @@ pipeline {
 						cmd sh: "nvm use && npm run type-check"
 					}
 				}
+				stage('Unit tests') {
+					steps {
+						executeNpmLogin()
+						cmd sh: "nvm use && npm install"
+						cmd sh: "nvm use && npm run test"
+					}
+				}
 			}
 		}
 

@@ -12,8 +12,13 @@
 import React, {useCallback, useEffect, useReducer, useState} from 'react';
 import { Container, Text } from '@zextras/zapp-ui';
 import { findIndex, map } from 'lodash';
+import { useParams } from 'react-router-dom';
+
+export const ROUTE = '/contacts/folder/:path*';
 
 export default function App({ contactSrvc }) {
+	const { path } = useParams();
+
 	const [amountSelected, setAmountSelected] = useState(0);
 
 	const cReducer = (state, action) => {

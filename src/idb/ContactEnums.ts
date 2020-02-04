@@ -6,5 +6,7 @@ export enum ContactPhoneType {
 }
 
 export enum ContactaddressType {
-	OTHER = 'other'
+	OTHER = 'other',
+	WORK = 'work',
+	HOME = 'home'
 }

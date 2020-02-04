@@ -20,10 +20,10 @@ export interface IContactsIdb extends DBSchema {
 	};
 }
 
-export type Contact = {
-	_revision: number;
+export type ContactData = {
+	_revision?: number;
+	id?: string;
 	parent: string;
-	id: string;
 	nameSuffix: string;
 	firstName: string;
 	lastName: string;
@@ -35,6 +35,11 @@ export type Contact = {
 	notes: string;
 	mail: ContactEmail[];
 	phone: ContactPhone[];
+};
+
+export type Contact = ContactData & {
+	_revision: number;
+	id: string;
 };
 
 export type ContactAddress = {
