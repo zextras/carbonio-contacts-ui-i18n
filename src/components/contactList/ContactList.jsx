@@ -174,6 +174,9 @@ export default function ContactList({ contactSrvc }) {
 				width="fill"
 				height="40px"
 				background="bg_9"
+				style={{
+					minHeight: '40px'
+				}}
 			>
 				<ListHeader
 					breadCrumbs={breadcrumbs}

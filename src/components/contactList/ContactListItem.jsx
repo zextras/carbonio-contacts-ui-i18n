@@ -27,10 +27,10 @@ const HoverArea = styled.div`
 	background: ${
 	({theme, selected}) => (selected ? theme.colors.background['bg_1'] : 'none')
 };
-	width: ${({theme}) => theme.sizes.avatar.medium.diameter};
-	min-width: ${({theme}) => theme.sizes.avatar.medium.diameter};
-	height: ${({theme}) => theme.sizes.avatar.medium.diameter};
-	min-height: ${({theme}) => theme.sizes.avatar.medium.diameter};
+	width: ${({ theme }) => theme.sizes.avatar.medium.diameter};
+	min-width: ${({ theme }) => theme.sizes.avatar.medium.diameter};
+	height: ${({ theme }) => theme.sizes.avatar.medium.diameter};
+	min-height: ${({ theme }) => theme.sizes.avatar.medium.diameter};
 	border-radius: 50%;
 	display: flex;
 	justify-content: center;
@@ -74,20 +74,23 @@ const ContactListItem = ({ contact, selected, onSelect, onDeselect, actions, onC
 				<Padding all="small">
 					<HoverArea
 						selected={selected}
-						onClick={() => selected? onDeselect() : onSelect()}
+						onClick={(ev) => {
+							ev.stopPropagation();
+							selected ? onDeselect() : onSelect();
+						}}
 					>
-						{ !selected &&
-						<AvatarContainer>
-							<Avatar
-								label={`${contact.firstName} ${contact.lastName}`}
-								picture={contact.image}
-								size="medium"
-							/>
-						</AvatarContainer>
-						}
-						{ selected &&
-						<Icon size="large" icon="Checkmark" color="txt_3"/>
-						}
+						{ !selected
+						&& (
+							<AvatarContainer>
+								<Avatar
+									label={`${contact.firstName} ${contact.lastName}`}
+									picture={contact.image}
+									size="medium"
+								/>
+							</AvatarContainer>
+						)}
+						{ selected
+						&& <Icon size="large" icon="Checkmark" color="txt_3" />}
 					</HoverArea>
 				</Padding>
 				<Container
@@ -122,7 +125,7 @@ const ContactListItem = ({ contact, selected, onSelect, onDeselect, actions, onC
 				</Container>
 				}
 			</Container>
-			<Divider/>
+			<Divider />
 		</Container>
 	);
 };
