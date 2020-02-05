@@ -11,11 +11,12 @@
 
 import { fc, fcSink } from '@zextras/zapp-shell/fc';
 import { IFolderSchmV1 } from '@zextras/zapp-shell/lib/sync/IFolderSchm';
+import { IMainSubMenuItemData } from "@zextras/zapp-shell/lib/router/IRouterService";
 import { syncOperations } from '@zextras/zapp-shell/sync';
 import { ISyncOperation, ISyncOpRequest, ISyncOpSoapRequest } from '@zextras/zapp-shell/lib/sync/ISyncService';
 import { filter } from 'rxjs/operators';
-import { BehaviorSubject, combineLatest } from 'rxjs';
-import { reduce, cloneDeep } from 'lodash';
+import { BehaviorSubject, combineLatest, Subject, Subscription } from 'rxjs';
+import { reduce, filter as loFilter, cloneDeep } from 'lodash';
 import { Contact, ContactData } from './idb/IContactsIdb';
 import { IContactsIdbService } from './idb/IContactsIdbService';
 import {
@@ -51,6 +52,29 @@ const _CONTACT_DELETED_EV_REG = /contacts:deleted:contact/;
 const _FOLDER_UPDATED_EV_REG = /contacts:updated:folder/;
 const _FOLDER_DELETED_EV_REG = /contacts:deleted:folder/;
 
+const subfolders: (
+	folders: {[id: string]: IFolderSchmV1},
+	parentId: string
+) => Array<IMainSubMenuItemData> =(folders, parentId) =>
+	reduce<IFolderSchmV1, Array<IMainSubMenuItemData>>(
+		loFilter(
+			folders,
+			(folder: IFolderSchmV1): boolean => folder.parent === parentId
+		),
+		(acc: Array<IMainSubMenuItemData>, folder: IFolderSchmV1) => {
+			acc.push(
+				{
+					id: folder.id,
+					label: folder.name,
+					to: `/contacts/folder${folder.path}`,
+					children: subfolders(folders, folder.id)
+				}
+			);
+			return acc;
+		},
+		[]
+	);
+
 export default class ContactsService implements IContactsService {
 	public contacts = new BehaviorSubject<{[id: string]: Contact}>({});
 
@@ -59,6 +83,10 @@ export default class ContactsService implements IContactsService {
 	private _contacts = new BehaviorSubject<{[id: string]: Contact}>({});
 
 	private _folders = new BehaviorSubject<{[id: string]: IFolderSchmV1}>({});
+
+	public menuFolders = new BehaviorSubject<Array<IMainSubMenuItemData>>([]);
+
+	private _menuFoldersSub: Subscription;
 
 	private _createId = 0;
 
@@ -81,6 +109,29 @@ export default class ContactsService implements IContactsService {
 			.pipe(filter((e) => _FOLDER_DELETED_EV_REG.test(e.event)))
 			.subscribe(({ data }) => this._deleteFolder(data.id));
 
+		this._menuFoldersSub = this.folders.subscribe(
+			(folders: {[id: string]: IFolderSchmV1}): void => {
+				this.menuFolders.next(
+					reduce<IFolderSchmV1, Array<IMainSubMenuItemData>>(
+						loFilter(folders, (folder: IFolderSchmV1): boolean => folder.parent === '1'),
+						(acc: Array<IMainSubMenuItemData>, folder: IFolderSchmV1) => {
+							acc.push(
+								{
+									icon: 'PeopleOutline',
+									id: folder.id,
+									label: folder.name,
+									to: `/contacts/folder${folder.path}`,
+									children: subfolders(folders, folder.id)
+								}
+							);
+							return acc;
+						},
+						[]
+					)
+				);
+			}
+		);
+
 		combineLatest([
 			syncOperations as BehaviorSubject<Array<ISyncOperation<ContactOp, ISyncOpRequest<unknown>>>>,
 			this._contacts
@@ -90,10 +141,6 @@ export default class ContactsService implements IContactsService {
 			syncOperations as BehaviorSubject<Array<ISyncOperation<ContactFolderOp, ISyncOpRequest<unknown>>>>,
 			this._folders
 		]).subscribe(this._mergeFoldersAndOperations);
-
-		this.contacts.subscribe((v) => console.log('Contact list', v));
-		this.folders.subscribe((v) => console.log('Folders', v));
-		syncOperations.subscribe((v) => console.log('Operations', v));
 	}
 
 	public createContact(c: ContactData): void {
