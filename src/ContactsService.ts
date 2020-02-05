@@ -141,10 +141,6 @@ export default class ContactsService implements IContactsService {
 			syncOperations as BehaviorSubject<Array<ISyncOperation<ContactFolderOp, ISyncOpRequest<unknown>>>>,
 			this._folders
 		]).subscribe(this._mergeFoldersAndOperations);
-
-		this.contacts.subscribe((v) => console.log('Contact list', v));
-		this.folders.subscribe((v) => console.log('Folders', v));
-		syncOperations.subscribe((v) => console.log('Operations', v));
 	}
 
 	public createContact(c: ContactData): void {
