@@ -6,6 +6,7 @@ export interface IContactsService {
 	moveContact(contactId: string, folderId: string): void;
 	moveContactToTrash(contactId: string): void;
 	deleteContact(contactId: string): void;
+	getFolderIdByPath(path: string): string;
 }
 
 export type ContactOp = CreateContactOp | ModifyContactOp | MoveContactOp | DeleteContactOp;

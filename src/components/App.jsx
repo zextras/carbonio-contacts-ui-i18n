@@ -9,55 +9,22 @@
  * *** END LICENSE BLOCK *****
  */
 
-import React, {useCallback, useEffect, useReducer, useState} from 'react';
-import { Container, Text } from '@zextras/zapp-ui';
-import { findIndex, map } from 'lodash';
-import { useParams } from 'react-router-dom';
+import React from 'react';
+import { Container, Text, useScreenMode, Responsive } from '@zextras/zapp-ui';
+import { useLocation } from 'react-router-dom';
+import ContactList from './contactList/ContactList';
 
 export const ROUTE = '/contacts/folder/:path*';
 
+function useQuery() {
+	return new URLSearchParams(useLocation().search);
+}
+
 export default function App({ contactSrvc }) {
-	const { path } = useParams();
-
-	const [amountSelected, setAmountSelected] = useState(0);
-
-	const cReducer = (state, action) => {
-		if (action.type === 'update') {
-			return action.contacts;
-		}
-		const cIndex = findIndex(state, [['data', 'id'], action.id]);
-		const newState = [...state];
-		switch (action.type) {
-			case 'select':
-				newState[cIndex].selected = true;
-				setAmountSelected(amountSelected + 1);
-				return state;
-			case 'deselect':
-				newState[cIndex].selected = false;
-				setAmountSelected(amountSelected - 1);
-				return state;
-			default: return state;
-		}
-	};
-	const [contacts, dispatch] = useReducer(cReducer, []);
-
-	const extendList = useCallback((baseContacts) => map(baseContacts, (baseContact) => {
-		const index = findIndex(contacts, ['id', baseContact.id]);
-		if (index >= 0) {
-			return { ...contacts[index], data: { ...contacts[index].data, ...baseContact } };
-		}
-		return { data: { ...baseContact }, selected: false, actions: [] };
-	}), [contacts]);
-
-	useEffect(() => {
-		const sub = contactSrvc.contacts.subscribe((newContacts) => {
-			dispatch({ type: 'update', contacts: extendList(newContacts) });
-		});
-		return () => {
-			sub.unsubscribe();
-		};
-	}, [contactSrvc.contacts]);
-
+	const screenMode = useScreenMode();
+	const query = useQuery();
+	const view = query.get('view');
+	const edit = query.get('edit');
 	return (
 		<Container
 			orientation="horizontal"
@@ -66,20 +33,22 @@ export default function App({ contactSrvc }) {
 			mainAlignment="flex-start"
 			crossAlignment="flex-start"
 		>
-			<Container orientation="vertical" width="50%" height="fill" mainAlignment="flex-start">
-				{map(
-					contacts,
-					(c, index) => (
-						<Text
-							key={index}
-							size="large"
-							onClick={() => dispatch({ type: c.selected ? 'deselect' : 'select', id: c.data.id })}
-						>
-							{`${c.data.firstName} ${c.data.lastName}: ${c.selected ? 'S' : 'X'}`}
-						</Text>
-					)
-				)}
+			<Container
+				orientation="vertical"
+				width={screenMode === 'desktop' ? '50%' : 'fill'}
+				height="fill"
+				mainAlignment="flex-start"
+			>
+				<ContactList contactSrvc={contactSrvc} />
 			</Container>
+			<Responsive mode="desktop">
+				<Container orientation="vertical" width="50%" height="fill" mainAlignment="flex-start">
+					<Text>
+						{`viewing: ${view}, `}
+						{`editing: ${edit}`}
+					</Text>
+				</Container>
+			</Responsive>
 		</Container>
 	);
 };
