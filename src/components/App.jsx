@@ -10,18 +10,50 @@
  */
 
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import { Container, Text } from '@zextras/zapp-ui';
+import {
+	Container,
+	Text,
+	useScreenMode,
+	Responsive
+} from '@zextras/zapp-ui';
+import { useLocation } from 'react-router-dom';
+import ContactList from './contactList/ContactList';
 
 export const ROUTE = '/contacts/folder/:path*';
 
-export default function App() {
-	const { path } = useParams();
+function useQuery() {
+	return new URLSearchParams(useLocation().search);
+}
+
+export default function App({ contactSrvc }) {
+	const screenMode = useScreenMode();
+	const query = useQuery();
+	const view = query.get('view');
+	const edit = query.get('edit');
 	return (
-		<Container width="fill" height="fill" background="bg_9" mainAlignment="flex-start" crossAlignment="flex-start">
-			<Container width="50%" background="bg_7" padding={{ all: 'large' }} mainAlignment="flex-start" crossAlignment="flex-start">
-				<Text size="large" color="txt_2">{`Contacts: ${path}`}</Text>
+		<Container
+			orientation="horizontal"
+			width="fill"
+			height="fill"
+			mainAlignment="flex-start"
+			crossAlignment="flex-start"
+		>
+			<Container
+				orientation="vertical"
+				width={screenMode === 'desktop' ? '50%' : 'fill'}
+				height="fill"
+				mainAlignment="flex-start"
+			>
+				<ContactList contactSrvc={contactSrvc} />
 			</Container>
+			<Responsive mode="desktop">
+				<Container orientation="vertical" width="50%" height="fill" mainAlignment="flex-start">
+					<Text>
+						{`viewing: ${view}, `}
+						{`editing: ${edit}`}
+					</Text>
+				</Container>
+			</Responsive>
 		</Container>
 	);
 };
