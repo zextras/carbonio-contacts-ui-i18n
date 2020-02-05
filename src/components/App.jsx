@@ -17,7 +17,8 @@ import {
 	Responsive
 } from '@zextras/zapp-ui';
 import { useLocation } from 'react-router-dom';
-import ContactList from './contactList/ContactList';
+import ContactList from './list/ContactList';
+import ContactPreview from './preview/ContactPreview';
 
 export const ROUTE = '/contacts/folder/:path*';
 
@@ -26,10 +27,27 @@ function useQuery() {
 }
 
 export default function App({ contactSrvc }) {
-	const screenMode = useScreenMode();
 	const query = useQuery();
 	const view = query.get('view');
 	const edit = query.get('edit');
+	const mobileView = () => {
+		if (edit) {
+			return <Text>{`Edit: ${edit}`}</Text>;
+		}
+		if (view) {
+			return <ContactPreview contactSrvc={contactSrvc} id={view} />;
+		}
+		return <ContactList contactSrvc={contactSrvc} />;
+	};
+	const sideView = () => {
+		if (edit) {
+			return <Text>{`Edit: ${edit}`}</Text>;
+		}
+		if (view) {
+			return <ContactPreview contactSrvc={contactSrvc} id={view} />;
+		}
+		return <Text>Nothing</Text>;
+	};
 	return (
 		<Container
 			orientation="horizontal"
@@ -38,21 +56,29 @@ export default function App({ contactSrvc }) {
 			mainAlignment="flex-start"
 			crossAlignment="flex-start"
 		>
-			<Container
-				orientation="vertical"
-				width={screenMode === 'desktop' ? '50%' : 'fill'}
-				height="fill"
-				mainAlignment="flex-start"
-			>
-				<ContactList contactSrvc={contactSrvc} />
-			</Container>
 			<Responsive mode="desktop">
-				<Container orientation="vertical" width="50%" height="fill" mainAlignment="flex-start">
-					<Text>
-						{`viewing: ${view}, `}
-						{`editing: ${edit}`}
-					</Text>
+				<Container
+					orientation="vertical"
+					width="50%"
+					height="fill"
+					mainAlignment="flex-start"
+				>
+					<ContactList contactSrvc={contactSrvc} />
 				</Container>
+				<Container
+					orientation="vertical"
+					width="50%"
+					height="fill"
+					mainAlignment="flex-start"
+					padding={{ horizontal: 'medium' }}
+					background="bg_9"
+				>
+					{ sideView() }
+				</Container>
+			</Responsive>
+
+			<Responsive mode="mobile">
+				{ mobileView() }
 			</Responsive>
 		</Container>
 	);
