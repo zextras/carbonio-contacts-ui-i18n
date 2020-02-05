@@ -4,7 +4,7 @@ title: Synchronization
 
 The synchronisation will be divided in three different phases: initial synchronisation, retrieve changes from server, push changes on server.
 
-## Workflows
+## Workflow
 
 ### Init
 
