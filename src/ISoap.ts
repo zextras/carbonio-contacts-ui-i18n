@@ -1,3 +1,14 @@
+/*
+ * *** BEGIN LICENSE BLOCK *****
+ * Copyright (C) 2011-2020 ZeXtras
+ *
+ * The contents of this file are subject to the ZeXtras EULA;
+ * you may not use this file except in compliance with the EULA.
+ * You may obtain a copy of the EULA at
+ * http://www.zextras.com/zextras-eula.html
+ * *** END LICENSE BLOCK *****
+ */
+
 import {
 	map,
 	pick,
@@ -5,6 +16,7 @@ import {
 	reduce,
 	omit
 } from 'lodash';
+import { IFolderSchmV1 } from '@zextras/zapp-shell/lib/sync/IFolderSchm';
 import {
 	ContactAddress,
 	ContactData,
@@ -88,6 +100,45 @@ export type DeleteContactActionOpReq = {
 	};
 };
 
+export type CreateContactFolderOpReq = {
+	folder: {
+		view: 'contact';
+		l: string;
+		name: string;
+	};
+};
+
+export type MoveContactFolderActionOpReq = {
+	action: {
+		l: string;
+		id: string;
+		op: 'move';
+	};
+};
+
+export type RenameContactFolderActionOpReq = {
+	action: {
+		name: string;
+		id: string;
+		op: 'rename';
+	};
+};
+
+export type DeleteContactFolderActionOpReq = {
+	action: {
+		id: string;
+		op: 'delete';
+	};
+};
+
+export type EmptyContactFolderActionOpReq = {
+	action: {
+		id: string;
+		op: 'empty';
+		recursive: true;
+	};
+};
+
 export function normalizeContactMailsToSoapOp(mails: ContactEmail[]): any {
 	return reduce(
 		mails,
@@ -167,4 +218,24 @@ export function normalizeContactAttrsToSoapOp(c: ContactData): ContactCreationAt
 		obj,
 		(v: any, k: any) => ({ n: k, _content: v })
 	);
+}
+
+export function calculateAbsPath(
+	id: string,
+	name: string,
+	fMap: {[id: string]: IFolderSchmV1},
+	parentId?: string
+): string {
+	let mName = name;
+	let mParentId = parentId;
+	if (fMap[id]) {
+		mName = fMap[id].name;
+		mParentId = fMap[id].parent;
+	}
+
+	if (!mParentId || mParentId === '1' || !fMap[mParentId]) {
+		return `/${mName}`;
+	}
+
+	return `${calculateAbsPath(mParentId, fMap[mParentId].name, fMap, fMap[mParentId].parent)}/${mName}`;
 }

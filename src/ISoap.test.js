@@ -1,4 +1,20 @@
-import { normalizeContactMailsToSoapOp, normalizeContactPhonesToSoapOp, normalizeContactAddressesToSoapOp } from './ISoap';
+/*
+ * *** BEGIN LICENSE BLOCK *****
+ * Copyright (C) 2011-2020 ZeXtras
+ *
+ * The contents of this file are subject to the ZeXtras EULA;
+ * you may not use this file except in compliance with the EULA.
+ * You may obtain a copy of the EULA at
+ * http://www.zextras.com/zextras-eula.html
+ * *** END LICENSE BLOCK *****
+ */
+
+import {
+	normalizeContactMailsToSoapOp,
+	normalizeContactPhonesToSoapOp,
+	normalizeContactAddressesToSoapOp,
+	calculateAbsPath
+} from './ISoap';
 import { ContactaddressType, ContactPhoneType } from './idb/ContactEnums';
 
 test('Normalize Contact Mails for SOAP Operation', () => {
@@ -101,3 +117,69 @@ test('Normalize Contact Addresses for SOAP Operation', () => {
 	);
 });
 
+test('Calculate a folder path', () => {
+	const fMap = {};
+	expect(
+		calculateAbsPath(
+			'-1',
+			'my folder',
+			fMap
+		)
+	).toBe('/my folder');
+});
+
+test('Calculate a folder path recursively', () => {
+	const fMap = {
+		'123': {
+			_revision: 0,
+			id: '123',
+			parent: '1',
+			path: '/parent path',
+			name: 'parent path',
+			unreadCount: 0,
+			itemsCount: 0,
+			size: 0
+		}
+	};
+	expect(
+		calculateAbsPath(
+			'-1',
+			'my folder',
+			fMap,
+			'123'
+		)
+	).toBe('/parent path/my folder');
+});
+
+test('Calculate a folder path with an unknown folder', () => {
+	const fMap = {
+		'123': {
+			_revision: 0,
+			id: '123',
+			parent: '456',
+			path: '/parent path',
+			name: 'parent path',
+			unreadCount: 0,
+			itemsCount: 0,
+			size: 0
+		},
+		'456': {
+			_revision: 0,
+			id: '456',
+			parent: '1',
+			path: '/parent path',
+			name: 'parent path',
+			unreadCount: 0,
+			itemsCount: 0,
+			size: 0
+		}
+	};
+	expect(
+		calculateAbsPath(
+			'-1',
+			'my folder',
+			fMap,
+			'123'
+		)
+	).toBe('/parent path/parent path/my folder');
+});

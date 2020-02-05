@@ -1,6 +1,6 @@
 /*
  * *** BEGIN LICENSE BLOCK *****
- * Copyright (C) 2011-2019 ZeXtras
+ * Copyright (C) 2011-2020 ZeXtras
  *
  * The contents of this file are subject to the ZeXtras EULA;
  * you may not use this file except in compliance with the EULA.
@@ -103,7 +103,7 @@ function _walkSOAPContactsFolder(folders) {
 								if (!f.cn) resolve([]);
 								_fetchSoapContacts(f.cn[0].ids.split(','))
 									.then((contacts) => resolve(contacts))
-									.catch((e) => reject(e)); // TODO: If has more handle it!
+									.catch((e) => reject(e));
 							}))
 							.then((r) => new Promise((resolve, reject) => {
 								_idbSrvc.saveContactsData(r)
@@ -292,6 +292,18 @@ function _processContactMoved(operation, response) {
 		}));
 }
 
+function _sendFolderUpdatedOnBC(id) {
+	_sharedBC.postMessage({
+		action: 'app:fiberchannel',
+		data: {
+			event: 'contacts:updated:folder',
+			data: {
+				id: id
+			}
+		}
+	});
+}
+
 function _processOperationCompleted(data) {
 	// console.log(data.action, data.data);
 	return new Promise(((resolve, reject) => {
@@ -312,6 +324,35 @@ function _processOperationCompleted(data) {
 					break;
 				case 'move-contact':
 					promises.push(_processContactMoved(operation, result.Body));
+					break;
+				case 'create-contact-folder':
+					promises.push(
+						_idbSrvc.saveFolderData(
+							normalizeFolder(result.Body.CreateFolderResponse.folder[0])
+						)
+							.then(() => _sendFolderUpdatedOnBC(result.Body.CreateFolderResponse.folder[0].id))
+					);
+					break;
+				case 'delete-contact-folder':
+					promises.push(_removeFolders([data.data.data.operation.opData.id]));
+					break;
+				case 'move-contact-folder':
+					promises.push(
+						_idbSrvc.moveFolder(
+							data.data.data.operation.opData.id,
+							data.data.data.operation.opData.parent
+						)
+							.then(() => _sendFolderUpdatedOnBC(data.data.data.operation.opData.id))
+					);
+					break;
+				case 'rename-contact-folder':
+					promises.push(
+						_idbSrvc.renameFolder(
+							data.data.data.operation.opData.id,
+							data.data.data.operation.opData.name
+						)
+							.then(() => _sendFolderUpdatedOnBC(data.data.data.operation.opData.id))
+					);
 					break;
 				default:
 			}
