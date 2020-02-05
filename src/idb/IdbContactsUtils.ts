@@ -1,9 +1,25 @@
+/*
+ * *** BEGIN LICENSE BLOCK *****
+ * Copyright (C) 2011-2020 ZeXtras
+ *
+ * The contents of this file are subject to the ZeXtras EULA;
+ * you may not use this file except in compliance with the EULA.
+ * You may obtain a copy of the EULA at
+ * http://www.zextras.com/zextras-eula.html
+ * *** END LICENSE BLOCK *****
+ */
+
 import { IFolderSchmV1 } from '@zextras/zapp-shell/lib/sync/IFolderSchm';
 import { ISoapFolderObj } from '@zextras/zapp-shell/lib/network/ISoap';
-import { ISoapContactObj } from '../ISoap';
-import { Contact, ContactAddress, ContactEmail, ContactPhone } from './IContactsIdb';
-import { ContactaddressType, ContactPhoneType } from './ContactEnums';
 import { map, pickBy } from 'lodash';
+import { ISoapContactObj } from '../ISoap';
+import {
+	Contact,
+	ContactAddress,
+	ContactEmail,
+	ContactPhone
+} from './IContactsIdb';
+import { ContactaddressType, ContactPhoneType } from './ContactEnums';
 
 const MAIL_REG = /^email(\d*)$/;
 const PHONE_REG = /^(.*)Phone(\d*)$/;
@@ -23,7 +39,7 @@ export function normalizeFolder(soapFolderObj: ISoapFolderObj): IFolderSchmV1 {
 
 export function contactPhoneTypeFromString(s: string): ContactPhoneType {
 	if (!PHONE_REG.test(s)) return ContactPhoneType.OTHER;
-	switch(s.match(PHONE_REG)![1]) {
+	switch (s.match(PHONE_REG)![1]) {
 		case 'mobile':
 			return ContactPhoneType.MOBILE;
 		case 'work':

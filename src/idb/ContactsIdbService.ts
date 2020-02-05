@@ -1,13 +1,27 @@
+/*
+ * *** BEGIN LICENSE BLOCK *****
+ * Copyright (C) 2011-2020 ZeXtras
+ *
+ * The contents of this file are subject to the ZeXtras EULA;
+ * you may not use this file except in compliance with the EULA.
+ * You may obtain a copy of the EULA at
+ * http://www.zextras.com/zextras-eula.html
+ * *** END LICENSE BLOCK *****
+ */
+
 import { IDBPDatabase, openDB } from 'idb';
+import { IFolderSchmV1 } from '@zextras/zapp-shell/lib/sync/IFolderSchm';
+import { map, reduce } from 'lodash';
 import { Contact, IContactsIdb } from './IContactsIdb';
 import { schemaVersion, upgradeFn } from './ContactsIdb';
-import { IFolderSchmV1 } from '@zextras/zapp-shell/lib/sync/IFolderSchm';
 import { IContactsIdbService } from './IContactsIdbService';
+
+/* eslint-disable class-methods-use-this */
 
 export default class ContactsIdbService implements IContactsIdbService {
 	private static _IDB_NAME = 'com_zextras_zapp_contacts';
 
-	public openDb(): Promise<IDBPDatabase<IContactsIdb>> {
+	private static _openDb(): Promise<IDBPDatabase<IContactsIdb>> {
 		return openDB<IContactsIdb>(
 			ContactsIdbService._IDB_NAME,
 			schemaVersion,
@@ -17,21 +31,37 @@ export default class ContactsIdbService implements IContactsIdbService {
 		);
 	}
 
-	public saveFolderData(f: IFolderSchmV1): Promise<IFolderSchmV1> {
+	public getContact(id: string): Promise<Contact|undefined> {
+		return ContactsIdbService._openDb()
+			.then((idb) => idb.get<'contacts'>('contacts', id));
+	}
+
+	public getAllContacts(): Promise<{[id: string]: Contact}> {
 		return new Promise(((resolve, reject) => {
-			this.openDb()
-				.then(idb => idb.put<'folders'>('folders', f))
-				.then(_ => resolve(f))
-				.catch(e => reject(e));
+			ContactsIdbService._openDb()
+				.then(
+					(idb) => idb.getAll<'contacts'>('contacts')
+						.then((contacts) => reduce<Contact, {[id: string]: Contact}>(
+							contacts,
+							(r, v, k) => {
+								// eslint-disable-next-line no-param-reassign
+								r[v.id] = v;
+								return r;
+							},
+							{}
+						))
+				)
+				.then((folders) => resolve(folders))
+				.catch((e) => reject(e));
 		}));
 	}
 
 	public saveContactData(c: Contact): Promise<Contact> {
 		return new Promise(((resolve, reject) => {
-			this.openDb()
-				.then(idb => idb.put<'contacts'>('contacts', c))
-				.then(_ => resolve(c))
-				.catch(e => reject(e));
+			ContactsIdbService._openDb()
+				.then((idb) => idb.put<'contacts'>('contacts', c))
+				.then((_) => resolve(c))
+				.catch((e) => reject(e));
 		}));
 	}
 
@@ -40,45 +70,132 @@ export default class ContactsIdbService implements IContactsIdbService {
 		const cCopy = [...c];
 		const contact = cCopy.shift();
 		return this.saveContactData(contact!)
-			.then(c => new Promise((resolve, reject) => {
-				if (cCopy.length === 0) resolve([c.id]);
+			.then((c1) => new Promise((resolve, reject) => {
+				if (cCopy.length === 0) resolve([c1.id]);
 				else {
 					this.saveContactsData(cCopy)
-						.then(r => resolve([c.id].concat(r)))
-						.catch(e => reject(e))
+						.then((r) => resolve([c1.id].concat(r)))
+						.catch((e) => reject(e));
 				}
 			}));
 	}
 
-	public removeContacts(ids: string[]): Promise<string[]> {
+	public deleteContacts(ids: string[]): Promise<string[]> {
 		if (ids.length < 1) return Promise.resolve([]);
 		const cCopy = [...ids];
 		const id = cCopy.shift();
-		return this.openDb()
-			.then(idb => idb.delete<'contacts'>('contacts', id!))
-			.then(_ => new Promise((resolve, reject) => {
+		return ContactsIdbService._openDb()
+			.then((idb) => idb.delete<'contacts'>('contacts', id!))
+			.then((_) => new Promise((resolve, reject) => {
 				if (cCopy.length === 0) resolve([id!]);
 				else {
-					this.removeContacts(cCopy)
-						.then(r => resolve([id!].concat(r)))
-						.catch(e => reject(e))
+					this.deleteContacts(cCopy)
+						.then((r) => resolve([id!].concat(r)))
+						.catch((e) => reject(e));
 				}
 			}));
 	}
 
-	public removeFolders(ids: string[]): Promise<string[]> {
+	public getFolder(id: string): Promise<IFolderSchmV1|void> {
+		return ContactsIdbService._openDb()
+			.then((idb) => idb.get<'folders'>('folders', id));
+	}
+
+	public getAllFolders(): Promise<{[id: string]: IFolderSchmV1}> {
+		return new Promise(((resolve, reject) => {
+			ContactsIdbService._openDb()
+				.then(
+					(idb) => idb.getAll<'folders'>('folders')
+						.then((folders) => reduce<IFolderSchmV1, {[id: string]: IFolderSchmV1}>(
+							folders,
+							(r, v, k) => {
+								// eslint-disable-next-line no-param-reassign
+								r[v.id] = v;
+								return r;
+							},
+							{}
+						))
+				)
+				.then((folders) => resolve(folders))
+				.catch((e) => reject(e));
+		}));
+	}
+
+	public saveFolderData(f: IFolderSchmV1): Promise<IFolderSchmV1> {
+		return new Promise(((resolve, reject) => {
+			ContactsIdbService._openDb()
+				.then((idb) => idb.put<'folders'>('folders', f))
+				.then((_) => resolve(f))
+				.catch((e) => reject(e));
+		}));
+	}
+
+	public deleteFolders(ids: string[]): Promise<string[]> {
 		if (ids.length < 1) return Promise.resolve([]);
 		const cCopy = [...ids];
 		const id = cCopy.shift();
-		return this.openDb()
-			.then(idb => idb.delete<'folders'>('folders', id!))
-			.then(_ => new Promise((resolve, reject) => {
+		return ContactsIdbService._openDb()
+			.then((idb) => idb.delete<'folders'>('folders', id!))
+			.then((_) => new Promise((resolve, reject) => {
+				// TODO: Remove the children
 				if (cCopy.length === 0) resolve([id!]);
 				else {
-					this.removeFolders(cCopy)
-						.then(r => resolve([id!].concat(r)))
-						.catch(e => reject(e))
+					this.deleteFolders(cCopy)
+						.then((r) => resolve([id!].concat(r)))
+						.catch((e) => reject(e));
 				}
 			}));
+	}
+
+	public moveFolder(id: string, parent: string): Promise<void> {
+		return new Promise(((resolve, reject) => {
+			ContactsIdbService._openDb()
+				.then((idb) => new Promise((resolve1, reject1) => {
+					idb.get<'folders'>('folders', id)
+						.then((f) => {
+							if (!f) resolve1();
+							idb.put<'folders'>('folders', { ...f!, parent })
+								// TODO: Update the path and the children paths
+								.then(
+									() => idb.getAllFromIndex<'folders', 'parent'>(
+										'folders',
+										'parent',
+										id
+									)
+										.then((folders) => Promise.all(
+											map(
+												folders,
+												(f1) => idb.put<'folders'>(
+													'folders',
+													{ ...f1 }
+												)
+											)
+										))
+										.then(() => resolve1())
+								)
+								.catch((e) => reject1(e));
+						});
+				}))
+				.then(() => resolve())
+				.catch((e) => reject(e));
+		}));
+	}
+
+	public renameFolder(id: string, name: string): Promise<void> {
+		return new Promise(((resolve, reject) => {
+			ContactsIdbService._openDb()
+				.then((idb) => new Promise((resolve1, reject1) => {
+					idb.get<'folders'>('folders', id)
+						.then((f) => {
+							if (!f) resolve1();
+							idb.put<'folders'>('folders', { ...f!, name })
+								// TODO: Update the path and the children paths
+								.then(() => resolve1())
+								.catch((e) => reject1(e));
+						});
+				}))
+				.then(() => resolve())
+				.catch((e) => reject(e));
+		}));
 	}
 }

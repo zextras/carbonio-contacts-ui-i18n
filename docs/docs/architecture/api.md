@@ -63,9 +63,10 @@ The `Sync` is not performed directly by the Contact App.
 Request performed to create a contact into the user's contact list.
 ```typescript
 type Request = {
-  op: 'move';
-  l: '$DESTINATION_FOLDER_ID';
-  id:  '$CONTACT_ID';
+  cn: {
+  		l: '$PARENT_ID';
+  		a: [ /* List of attrs */ ];
+  	};
 };
 ```
 
@@ -83,23 +84,85 @@ type Request = {
 ```
 
 ### ContactAction
-Request performed to move or delete a contact into the user's contact list.
+Requests performed to move or delete a contact into the user's contact list.
 
 **Notes:** To send a contact into the user's _Trash_, a move action is performed. 
 The _Trash_ folder has id `3`.
 
 #### Move to a folder
+Request performed to move a contact into another folder.
 ```typescript
 type Request = {
-  op: 'move';
-  l: '$DESTINATION_FOLDER_ID';
-  id:  '$CONTACT_ID';
+  action: {
+      op: 'move',
+      l: '$DESTINATION_FOLDER_ID',
+      id:  '$CONTACT_ID'
+    }
 };
 ```
 #### Delete
+Request performed to delete a contact.
 ```typescript
 type Request = {
-  op: 'delete';
-  id:  '$CONTACT_ID';
+  action: {
+      op: 'delete',
+      id:  '$CONTACT_ID'
+  }
+};
+```
+### CreateFolder
+Request performed to create a contact folder (in zimbra is called 'Address book').
+```typescript
+type Request = {
+  folder: {
+  		view: 'contact',
+  		l: '$PARENT_ID',
+  		name: '$NAME'
+  	}
+};
+```
+### FolderAction
+Requests performed to move, rename or move a contact folder.
+#### Move
+Request performed to move a contact folder.
+```typescript
+type Request = {
+  action: {
+    op: 'move',
+    id: '$FOLDER_ID',
+    l: '$PARENT_ID'
+  }
+};
+```
+#### Rename
+Request performed to rename a contact folder.
+```typescript
+type Request = {
+  action: {
+    op: 'rename',
+    id: '$FOLDER_ID',
+    name: '$NAME'
+  }
+};
+```
+#### Delete
+Request performed to delete a contact folder.
+```typescript
+type Request = {
+  action: {
+    op: 'delete',
+    id: '$FOLDER_ID'
+  }
+};
+```
+#### Empty
+Request performed to delete a contact folder.
+```typescript
+type Request = {
+  action: {
+    op: 'empty',
+    id: '$FOLDER_ID',
+    recursive: true
+  }
 };
 ```
