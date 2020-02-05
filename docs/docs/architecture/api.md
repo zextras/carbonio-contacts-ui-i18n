@@ -45,8 +45,8 @@ type opData = {
 SOAP calls involved on contacts synchronisation will let the application to send and retrieve changes on contacts list.
 Calls involved in synchronisation are:
 
-- `Sync` without a previous token set on request’s parameters will be used to retrieve and save contacts lists that have to be synchronised. Contacts list that will be saved locally are the standard contacts list and all the custom contact’s folders that user has created in his account. This call will be merged with the standard mail and conversation synchronisation because it’s the same request.
-- `Sync`  with the previous `Sync`'s token set as request’s parameter will be used in order to check changes on contacts list. Different changes will be treated in different ways:
+- `Sync` without a previous token set on request’s parameters will be used to retrieve and save contacts lists that have to be synchronised.
+- `Sync` with the previous `Sync`'s token set as request’s parameter will be used in order to check changes on contacts list. Different changes will be treated in different ways:
     - deleted contacts will be deleted
     - created and edited contact ids will be used to call `GetContacts` to retrieve all the information
 - `GetContacts` will be used to retrieve all the information of a given contact in order to keep local data synchronised
@@ -54,6 +54,8 @@ Calls involved in synchronisation are:
 Alongside the synchronization, other calls used are  
 - `ModifyContact` will be used in order to push changes done to contact(s) on mobile devices to the cloud server
 - `ContactAction` will be used to perform actions like `move` or `delete`.
+- `CreateFolder` will be used to create a mail folder.
+- `FolderAction` will be used to perform actions like `move` or `delete` on the folders.
 
 ### Sync
 For the `Sync` management please refer to the Shell project.
