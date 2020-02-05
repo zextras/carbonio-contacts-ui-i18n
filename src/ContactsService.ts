@@ -9,15 +9,20 @@
  * *** END LICENSE BLOCK *****
  */
 
-import { fc, fcSink } from '@zextras/zapp-shell/fc';
-import { IFolderSchmV1 } from '@zextras/zapp-shell/lib/sync/IFolderSchm';
-import { IMainSubMenuItemData } from "@zextras/zapp-shell/lib/router/IRouterService";
+import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { reduce, filter as loFilter, cloneDeep, find } from 'lodash';
-import { Contact, ContactData } from './idb/IContactsIdb';
+import {
+	reduce,
+	filter as loFilter,
+	cloneDeep,
+	find
+} from 'lodash';
+import { fc, fcSink } from '@zextras/zapp-shell/fc';
 import { syncOperations } from '@zextras/zapp-shell/sync';
+import { IFolderSchmV1 } from '@zextras/zapp-shell/lib/sync/IFolderSchm';
+import { IMainSubMenuItemData } from '@zextras/zapp-shell/lib/router/IRouterService';
 import { ISyncOperation, ISyncOpRequest, ISyncOpSoapRequest } from '@zextras/zapp-shell/lib/sync/ISyncService';
-import { BehaviorSubject, combineLatest, Subject, Subscription } from 'rxjs';
+import { Contact, ContactData } from './idb/IContactsIdb';
 import { IContactsIdbService } from './idb/IContactsIdbService';
 import {
 	ContactFolderOp,

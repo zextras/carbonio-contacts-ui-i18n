@@ -10,7 +10,12 @@
  */
 
 import React from 'react';
-import { Container, Text, useScreenMode, Responsive } from '@zextras/zapp-ui';
+import {
+	Container,
+	Text,
+	useScreenMode,
+	Responsive
+} from '@zextras/zapp-ui';
 import { useLocation } from 'react-router-dom';
 import ContactList from './contactList/ContactList';
 
