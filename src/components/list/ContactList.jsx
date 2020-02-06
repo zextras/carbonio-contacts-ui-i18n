@@ -14,17 +14,7 @@ import { Container, ListHeader, List } from '@zextras/zapp-ui';
 import ContactListItem from './ContactListItem';
 import { findIndex, map, reduce, filter, forEach } from 'lodash';
 import {useParams, useHistory} from 'react-router-dom';
-
-const addToQuery = (location, param, value) => {
-	const query = new URLSearchParams(location.search);
-	if (query.has(param)) {
-		query.set(param, value);
-	}
-	else {
-		query.append(param, value);
-	}
-	return query.toString();
-};
+import { addToQuery } from '../../utils/utils';
 
 export default function ContactList({ contactSrvc }) {
 	const history = useHistory();
@@ -35,15 +25,18 @@ export default function ContactList({ contactSrvc }) {
 		acc.push({
 			label: crumb,
 			click: () => history.push(`/contacts/folder${
-				reduce(splitPath, (to, part, index2) => `${to}${(index2 <= index) ? `/${part}` : ''}`
-					, '')}`)
+				reduce(
+					splitPath,
+					(to, part, index2) => `${to}${(index2 <= index) ? `/${part}` : ''}`,
+					''
+				)}`)
 		});
 		return acc;
 	}, []);
 
 	const filterByPath = (incomingContacts) => filter(
 		incomingContacts,
-		contact => contact.parent === folderId
+		(contact) => contact.parent === folderId
 	);
 
 	const [amountSelected, setAmountSelected] = useState(0);
@@ -104,7 +97,7 @@ export default function ContactList({ contactSrvc }) {
 					click: (ev) => {
 						ev.stopPropagation();
 						history.push({
-							search: addToQuery(history.location, 'edit', baseContact.id)
+							search: addToQuery(history.location.search, 'edit', baseContact.id)
 						});
 					}
 				},
@@ -131,33 +124,30 @@ export default function ContactList({ contactSrvc }) {
 		};
 	}, [contactSrvc.contacts]);
 
-	const itemFactory = c => ({index}) => {
-		return (
-			<>
-				{ c && c.length > 0
-				&& <ContactListItem
-					contact={c[index].data}
-					actions={c[index].actions}
-					selected={c[index].selected}
-					onSelect={c[index].onSelect}
-					onDeselect={c[index].onDeselect}
-					onClick={() => history.push({
-						search: addToQuery(history.location, 'view', c[index].data.id)
-					})}
-				/>}
-			</>
-		);
-	};
+	const itemFactory = c => ({ index }) => (
+		<>
+			{ c && c.length > 0
+				&& (
+					<ContactListItem
+						contact={c[index].data}
+						actions={c[index].actions}
+						selected={c[index].selected}
+						onSelect={c[index].onSelect}
+						onDeselect={c[index].onDeselect}
+						onClick={() => history.push({
+							search: addToQuery(history.location.search, 'view', c[index].data.id)
+						})}
+					/>
+				)
+			}
+		</>
+	);
+
 
 	const groupActions = [
 		{
-			label: 'Edit',
-			icon:	'EditOutline',
-			click: console.log
-		},
-		{
 			label: 'Delete',
-			icon: 'Trash2Outline',
+			icon: 'TrashOutline',
 			click: console.log
 		}
 	];

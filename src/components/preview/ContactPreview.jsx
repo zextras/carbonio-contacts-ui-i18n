@@ -9,11 +9,24 @@
  * *** END LICENSE BLOCK *****
  */
 
-import React, {useContext, useEffect, useState} from 'react';
-import { Container, IconButton, Text, Avatar, Divider, Padding } from '@zextras/zapp-ui';
-import { distinctUntilChanged } from "rxjs/operators";
+import React, {
+	useContext,
+	useEffect,
+	useState
+} from 'react';
+import { distinctUntilChanged } from 'rxjs/operators';
 import { map, pick } from 'lodash';
+import { useHistory } from 'react-router-dom';
+import {
+	Container,
+	IconButton,
+	Text,
+	Avatar,
+	Divider,
+	Padding
+} from '@zextras/zapp-ui';
 import { I18nCtxt } from '@zextras/zapp-shell/context';
+import { addToQuery, deleteFromQuery } from '../../utils/utils';
 
 function useObservable(observable) {
 	const [value, setValue] = useState(observable.value);
@@ -25,128 +38,243 @@ function useObservable(observable) {
 }
 
 export default function ContactPreview({ contactSrvc, id }) {
+	const history = useHistory();
 	const { t } = useContext(I18nCtxt);
 	const contact = useObservable(contactSrvc.getContact(id));
 	const actions = [
 		{
 			label: 'Edit',
 			icon: 'Edit',
-			click: console.log
+			click: () => history.push({
+				search: addToQuery(history.location.search, 'edit', contact.id)
+			})
 		},
 		{
 			label: 'Delete',
 			icon: 'TrashOutline',
-			click: console.log
+			click: () => {
+				history.push({
+					search: deleteFromQuery(history.location.search, 'view')
+				});
+				contactSrvc.moveContactToTrash(contact.id);
+			}
 		},
 	];
-	console.log(contact);
 	return (
+		<Container
+			background="bg_7"
+			mainAlignment="flex-start"
+			height="fit"
+		>
+			<Container
+				orientation="horizontal"
+				padding={{ horizontal: 'large', vertical: 'small' }}
+				width="fill"
+				mainAlignment="space-between"
+			>
+				<Avatar
+					label={`${contact.firstName} ${contact.lastName}`}
+					picture={contact.image}
+					size="medium"
+				/>
 				<Container
-					background="bg_7"
-					mainAlignment="flex-start"
-					height="fit"
+					width="fill"
+					padding={{
+						left: 'medium'
+					}}
+					orientation="horizontal"
+					mainAlignment="space-between"
 				>
-					<Container
-						orientation="horizontal"
-						padding={{horizontal: 'large', vertical: 'small'}}
-						width="fill"
-						mainAlignment="space-between"
+					<Text
+						size="large"
+						weight="medium"
 					>
-						<Avatar
-							label={`${contact.firstName} ${contact.lastName}`}
-							picture={contact.image}
-							size="medium"
-						/>
-						<Container
-							width="fill"
-							padding={{
-								horizontal: 'medium'
-							}}
-							orientation="horizontal"
-							mainAlignment="flex-start"
-						>
-							<Text size="large" weight="medium">
-								{`${
-									contact.nameSuffix ? contact.nameSuffix : ''
-								} ${
-									contact.firstName
-								} ${
-									contact.lastName
-								}`}
-							</Text>
-						</Container>
-						<IconButton
-							icon="Close"
-							onClick={console.log}
-						/>
-					</Container>
-					<Divider style={{ minHeight: '1px' }}/>
+						{`${
+							contact.nameSuffix ? contact.nameSuffix : ''
+						} ${
+							contact.firstName
+						} ${
+							contact.lastName
+						}`}
+					</Text>
+					<IconButton
+						icon="Close"
+						onClick={() => history.push({
+							search: deleteFromQuery(history.location.search, 'view')
+						})}
+					/>
+				</Container>
+			</Container>
+			<Divider style={{ minHeight: '1px' }} />
+			<Container
+				padding={{ all: 'large' }}
+				orientation="vertical"
+				mainAlignment="flex-start"
+				crossAlignment="flex-start"
+			>
+				<Container
+					orientation="horizontal"
+					padding={{ bottom: 'large' }}
+					mainAlignment="flex-start"
+				>
+					<Avatar
+						label={`${contact.firstName} ${contact.lastName}`}
+						picture={contact.image}
+						size="large"
+					/>
 					<Container
-						padding={{ all: 'large' }}
-						orientation="vertical"
-						mainAlignment="flex-start"
+						width="fill-available"
+						padding={{ horizontal: 'large' }}
 						crossAlignment="flex-start"
 					>
+						<Text size="large">
+							{`${
+								contact.nameSuffix ? contact.nameSuffix : ''
+							} ${
+								contact.firstName
+							} ${
+								contact.lastName
+							}`}
+						</Text>
+						<Text size="medium">
+							{contact.jobTitle}
+						</Text>
+						<Text size="medium">
+							{contact.company}
+						</Text>
+					</Container>
+					<Container orientation="horizontal" width="fit">
+						{ map(
+							actions,
+							(action, index) => (
+								<IconButton
+									key={`${index}-${action.label}`}
+									onClick={action.click}
+									icon={action.icon}
+									label={action.label}
+									iconColor="txt_2"
+								/>
+							)
+						)}
+					</Container>
+				</Container>
+				{ map(
+					pick(
+						contact,
+						[
+							'nameSuffix',
+							'firstName',
+							'lastName',
+							'jobTitle',
+							'department',
+							'company'
+						]
+					),
+					(value, key) => {
+						if (value) {
+							return (<DataField translator={t} key={key} label={key} value={value} />);
+						}
+						return null;
+					}
+				)}
+				{
+					contact.mail.length > 0 && (
 						<Container
 							orientation="horizontal"
-							padding={{ bottom: 'large' }}
+							mainAlignment="flex-start"
+							crossAlignment="flex-start"
+							width="fill"
+							padding={{ all: 'extrasmall' }}
 						>
-							<Avatar
-								label={`${contact.firstName} ${contact.lastName}`}
-								picture={contact.image}
-								size="large"
-							/>
 							<Container
-								width="fill"
-								crossAlignment="flex-start"
-								padding={{ horizontal: 'large'}}
+								width="80px"
+								height="16px"
+								orientation="horizontal"
+								mainAlignment="flex-end"
+								crossAlignment="flex-end"
+								padding={{ right: 'small' }}
 							>
-								<Text size="large">
-									{`${
-										contact.nameSuffix ? contact.nameSuffix : ''
-									} ${
-										contact.firstName
-									} ${
-										contact.lastName
-									}`}
-								</Text>
-								<Text size="medium">
-									{contact.jobTitle}
-								</Text>
-								<Text size="medium">
-									{contact.company}
-								</Text>
+								<Text color="txt_4">{t('contact.preview.label.mail')}</Text>
 							</Container>
-							{ map(
-								actions,
-								(action, index) => (
-									<IconButton
-										key={`${index}-${action.label}`}
-										onClick={action.click}
-										icon={action.icon}
-										label={action.label}
-										iconColor="txt_2"
-									/>
-								)
-							)}
-						</Container>
-						{ map(
-							pick(
-								contact,
-								[
-									'nameSuffix',
-									'firstName',
-									'lastName',
-									'jobTitle',
-									'department',
-									'company'
-								]
-							),
-							(value, key) => value ? <DataField translator={t} key={key} label={key} value={value}/> : null
-						)}
-						{
-							contact.phone.length > 0 && (
 							<Container
+								width="fit"
+								orientation="vertical"
+								mainAlignment="flex-start"
+								crossAlignment="flex-start"
+							>
+								{
+									map(contact.mail, (mail, key) => (
+										<Container
+											key={key}
+											width="fit"
+											orientation="horizontal"
+											mainAlignment="flex-start"
+											padding={{ bottom: 'extrasmall' }}
+										>
+											<Text size="large">{mail.mail}</Text>
+										</Container>
+									))
+								}
+							</Container>
+						</Container>
+					)
+				}
+				{
+					contact.phone.length > 0 && (
+						<Container
+							orientation="horizontal"
+							mainAlignment="flex-start"
+							crossAlignment="flex-start"
+							width="fill"
+							padding={{ all: 'extrasmall' }}
+						>
+							<Container
+								width="80px"
+								height="16px"
+								orientation="horizontal"
+								mainAlignment="flex-end"
+								crossAlignment="flex-end"
+								padding={{ right: 'small' }}
+							>
+								<Text color="txt_4">{t('contact.preview.label.phone.main')}</Text>
+							</Container>
+							<Container
+								width="fit"
+								orientation="vertical"
+								mainAlignment="flex-start"
+								crossAlignment="flex-start"
+							>
+								{
+									map(contact.phone, (phone, key) => (
+										<Container
+											key={key}
+											width="fit"
+											orientation="horizontal"
+											mainAlignment="flex-start"
+											padding={{ bottom: 'extrasmall' }}
+										>
+											<Container width="40px" mainAlignment="flex-end" crossAlignment="flex-end">
+												<Text color="txt_4">
+													{t(`contact.preview.label.phone.${phone.name}`)}
+												</Text>
+											</Container>
+											<Padding horizontal="small">
+												<Text size="large">{phone.number}</Text>
+											</Padding>
+										</Container>
+									))
+								}
+							</Container>
+						</Container>
+					)
+				}
+				{
+					contact.address.length > 0
+					&& map(
+						contact.address,
+						(address, key) => (
+							<Container
+								key={key}
 								orientation="horizontal"
 								mainAlignment="flex-start"
 								crossAlignment="flex-start"
@@ -161,7 +289,7 @@ export default function ContactPreview({ contactSrvc, id }) {
 									crossAlignment="flex-end"
 									padding={{ right: 'small' }}
 								>
-									<Text color="txt_4">{t('contact.preview.label.phone.main')}</Text>
+									<Text color="txt_4">{t('contact.preview.label.address.main')}</Text>
 								</Container>
 								<Container
 									width="fit"
@@ -170,140 +298,45 @@ export default function ContactPreview({ contactSrvc, id }) {
 									crossAlignment="flex-start"
 								>
 									{
-										map(contact.phone, (phone, key) => (
+										map(address, (field, fieldKey) => (
 											<Container
-												key={key}
+												key={`${key}-${fieldKey}`}
 												width="fit"
 												orientation="horizontal"
 												mainAlignment="flex-start"
-												padding={{ bottom: 'extrasmall'}}
+												padding={{ bottom: 'extrasmall' }}
 											>
-												<Container width="40px" mainAlignment="flex-end" crossAlignment="flex-end">
+												<Container
+													width="40px"
+													mainAlignment="flex-end"
+													crossAlignment="flex-end"
+												>
 													<Text color="txt_4">
-														{t(`contact.preview.label.phone.${phone.name}`)}
+														{t(`contact.preview.label.address.${fieldKey}`)}
 													</Text>
 												</Container>
 												<Padding horizontal="small">
-													<Text size="large">{phone.number}</Text>
+													<Text size="large">{field}</Text>
 												</Padding>
 											</Container>
 										))
 									}
 								</Container>
 							</Container>
-							)
-						}
-						{
-							contact.mail.length > 0 && (
-								<Container
-									orientation="horizontal"
-									mainAlignment="flex-start"
-									crossAlignment="flex-start"
-									width="fill"
-									padding={{ all: 'extrasmall' }}
-								>
-									<Container
-										width="80px"
-										height="16px"
-										orientation="horizontal"
-										mainAlignment="flex-end"
-										crossAlignment="flex-end"
-										padding={{ right: 'small' }}
-									>
-										<Text color="txt_4">{t('contact.preview.label.mail')}</Text>
-									</Container>
-									<Container
-										width="fit"
-										orientation="vertical"
-										mainAlignment="flex-start"
-										crossAlignment="flex-start"
-									>
-										{
-											map(contact.mail, (mail, key) => (
-												<Container
-													key={key}
-													width="fit"
-													orientation="horizontal"
-													mainAlignment="flex-start"
-													padding={{ bottom: 'extrasmall'}}
-												>
-													<Text size="large">{mail.mail}</Text>
-												</Container>
-											))
-										}
-									</Container>
-								</Container>
-							)
-						}
-						{
-							contact.address.length > 0 &&
-								map(
-									contact.address,
-									(address, key) => (
-										<Container
-											key={key}
-											orientation="horizontal"
-											mainAlignment="flex-start"
-											crossAlignment="flex-start"
-											width="fill"
-											padding={{ all: 'extrasmall' }}
-										>
-											<Container
-												width="80px"
-												height="16px"
-												orientation="horizontal"
-												mainAlignment="flex-end"
-												crossAlignment="flex-end"
-												padding={{ right: 'small' }}
-											>
-												<Text color="txt_4">{t('contact.preview.label.address.main')}</Text>
-											</Container>
-											<Container
-												width="fit"
-												orientation="vertical"
-												mainAlignment="flex-start"
-												crossAlignment="flex-start"
-											>
-												{
-													map(address, (field, key) => (
-														<Container
-															key={key}
-															width="fit"
-															orientation="horizontal"
-															mainAlignment="flex-start"
-															padding={{ bottom: 'extrasmall'}}
-														>
-															<Container
-																width="40px"
-																mainAlignment="flex-end"
-																crossAlignment="flex-end"
-															>
-																<Text color="txt_4">
-																	{t(`contact.preview.label.address.${key}`)}
-																</Text>
-															</Container>
-															<Padding horizontal="small">
-																<Text size="large">{field}</Text>
-															</Padding>
-														</Container>
-													))
-												}
-											</Container>
-										</Container>
-									)
-								)
-						}
-						{
-							contact.notes &&
-							<DataField translator={t} label={'notes'} value={contact.notes}/>
-						}
-					</Container>
-				</Container>
+						)
+					)
+				}
+				{
+					contact.notes
+					&& <DataField translator={t} label="notes" value={contact.notes} />
+				}
+			</Container>
+		</Container>
 
 	);
 };
 
-const DataField = ({label, value, translator}) => (
+const DataField = ({ label, value, translator }) => (
 	<Container
 		orientation="horizontal"
 		mainAlignment="flex-start"
