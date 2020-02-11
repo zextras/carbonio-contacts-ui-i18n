@@ -123,9 +123,12 @@ export default function ContactPreview({ contactSrvc, id }) {
 						size="large"
 					/>
 					<Container
-						width="fill-available"
+						width={`calc(100% - 64px - ${actions.length * 40}px)`}
 						padding={{ horizontal: 'large' }}
 						crossAlignment="flex-start"
+						style={{
+							maxWidth: `calc(100% + 64px + ${actions.length * 40}px)`
+						}}
 					>
 						<Text size="large">
 							{`${
@@ -143,7 +146,7 @@ export default function ContactPreview({ contactSrvc, id }) {
 							{contact.company}
 						</Text>
 					</Container>
-					<Container orientation="horizontal" width="fit">
+					<Container mainAlignment="flex-end" orientation="horizontal" width="fit">
 						{ map(
 							actions,
 							(action, index) => (
