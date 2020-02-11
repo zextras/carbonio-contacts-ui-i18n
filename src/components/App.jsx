@@ -19,6 +19,7 @@ import {
 import { useLocation } from 'react-router-dom';
 import ContactList from './list/ContactList';
 import ContactPreview from './preview/ContactPreview';
+import ContactEditor from './edit/ContactEditor';
 
 export const ROUTE = '/contacts/folder/:path*';
 
@@ -32,7 +33,7 @@ export default function App({ contactSrvc }) {
 	const edit = query.get('edit');
 	const mobileView = () => {
 		if (edit) {
-			return <Text>{`Edit: ${edit}`}</Text>;
+			return <ContactEditor contactSrvc={contactSrvc} id={edit} />;
 		}
 		if (view) {
 			return <ContactPreview contactSrvc={contactSrvc} id={view} />;
@@ -41,7 +42,7 @@ export default function App({ contactSrvc }) {
 	};
 	const sideView = () => {
 		if (edit) {
-			return <Text>{`Edit: ${edit}`}</Text>;
+			return <ContactEditor contactSrvc={contactSrvc} id={edit} />;
 		}
 		if (view) {
 			return <ContactPreview contactSrvc={contactSrvc} id={view} />;
