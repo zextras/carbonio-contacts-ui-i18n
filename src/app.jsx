@@ -16,12 +16,14 @@ import { serviceWorkerSrvc } from '@zextras/zapp-shell/service';
 import App, { ROUTE as mainRoute } from './components/App';
 import ContactsService from './ContactsService';
 import ContactsIdbService from './idb/ContactsIdbService';
+import { registerTranslations } from './i18n/i18n';
 
 export default function app() {
 	const idbSrvc = new ContactsIdbService();
 	const contactSrvc = new ContactsService(
 		idbSrvc
 	);
+	registerTranslations();
 	addMainMenuItem(
 		'PeopleOutline',
 		'Contacts',
