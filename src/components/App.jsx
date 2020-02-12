@@ -9,7 +9,7 @@
  * *** END LICENSE BLOCK *****
  */
 
-import React from 'react';
+import React, {useMemo} from 'react';
 import {
 	Container,
 	Text,
@@ -20,6 +20,7 @@ import { useLocation } from 'react-router-dom';
 import ContactList from './list/ContactList';
 import ContactPreview from './preview/ContactPreview';
 import ContactEditor from './edit/ContactEditor';
+import ContactContextProvider from "../contact/ContactContextProvider";
 
 export const ROUTE = '/contacts/folder/:path*';
 
@@ -31,24 +32,7 @@ export default function App({ contactSrvc }) {
 	const query = useQuery();
 	const view = query.get('view');
 	const edit = query.get('edit');
-	const mobileView = () => {
-		if (edit) {
-			return <ContactEditor contactSrvc={contactSrvc} id={edit} />;
-		}
-		if (view) {
-			return <ContactPreview contactSrvc={contactSrvc} id={view} />;
-		}
-		return <ContactList contactSrvc={contactSrvc} />;
-	};
-	const sideView = () => {
-		if (edit) {
-			return <ContactEditor contactSrvc={contactSrvc} id={edit} />;
-		}
-		if (view) {
-			return <ContactPreview contactSrvc={contactSrvc} id={view} />;
-		}
-		return <Text>Nothing</Text>;
-	};
+
 	return (
 		<Container
 			orientation="horizontal"
@@ -74,13 +58,36 @@ export default function App({ contactSrvc }) {
 					padding={{ horizontal: 'medium' }}
 					background="bg_9"
 				>
-					{ sideView() }
+					<SecondaryView edit={edit} view={view} contactSrvc={contactSrvc} />
 				</Container>
 			</Responsive>
-
 			<Responsive mode="mobile">
-				{ mobileView() }
+				<SecondaryView edit={edit} view={view} contactSrvc={contactSrvc} />
 			</Responsive>
 		</Container>
+	);
+};
+
+const SecondaryView = ({ contactSrvc, view, edit }) => {
+	const screenMode = useScreenMode();
+	const panel = useMemo(() => {
+		if (edit) {
+			return <ContactEditor contactSrvc={contactSrvc} id={edit} />;
+		}
+		if (view) {
+			return <ContactPreview contactSrvc={contactSrvc} id={view} />;
+		}
+		if (screenMode === 'mobile') {
+			return <ContactList contactSrvc={contactSrvc} />;
+		}
+		return <Text>Hello</Text>;
+	}, [screenMode, edit, view, contactSrvc]);
+	return (
+		<ContactContextProvider
+			contactSrvc={contactSrvc}
+			id={edit || view}
+		>
+			{ panel }
+		</ContactContextProvider>
 	);
 };

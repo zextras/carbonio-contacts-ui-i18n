@@ -70,7 +70,7 @@ export type CreateContactOpReq = {
 };
 
 export type ModifyContactOpReq = {
-	replace: 0;
+	replace: 0 | 1;
 	force: 1;
 	cn: {
 		id: string;

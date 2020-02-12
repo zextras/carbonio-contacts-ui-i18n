@@ -213,7 +213,7 @@ export default class ContactsService implements IContactsService {
 					command: 'ModifyContact',
 					urn: 'urn:zimbraMail',
 					data: {
-						replace: 0,
+						replace: 1,
 						force: 1,
 						cn: {
 							id: c.id,

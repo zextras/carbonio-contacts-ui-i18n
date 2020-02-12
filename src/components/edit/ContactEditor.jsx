@@ -11,48 +11,107 @@
 
 import React, {
 	useContext,
-	useEffect,
-	useState
 } from 'react';
-import { distinctUntilChanged } from 'rxjs/operators';
-import { map, pick } from 'lodash';
 import { useHistory } from 'react-router-dom';
 import {
+	Button,
 	Container,
 	IconButton,
 	Text,
 	Avatar,
 	Divider,
-	Padding,
-	Input
+	Select,
+	Input,
+	FormSection,
+	FormRow,
+	Padding
 } from '@zextras/zapp-ui';
+import { map } from 'lodash';
 import { I18nCtxt } from '@zextras/zapp-shell/context';
-import { addToQuery, deleteFromQuery } from '../../utils/utils';
+import { deleteFromQuery } from '../../utils/utils';
+import ContactContext from '../../contact/ContactContext';
+import { ContactPhoneType, ContactaddressType } from '../../idb/ContactEnums';
 
-function useObservable(observable) {
-	const [value, setValue] = useState(observable.value);
-	useEffect(() => {
-		const sub = observable.pipe(distinctUntilChanged()).subscribe(setValue);
-		return () => sub.unsubscribe();
-	}, [observable]);
-	return value;
-}
+const suffixes = [
+	{
+		label: 'Mr.',
+		value: 'Mr.',
+	},
+	{
+		label: 'Miss',
+		value: 'Miss',
+	},
+	{
+		label: 'Mrs.',
+		value: 'Mrs.',
+	},
+	{
+		label: 'Ms.',
+		value: 'Ms.',
+	},
+	{
+		label: 'Mx.',
+		value: 'Mx.',
+	},
+	{
+		label: 'Sir',
+		value: 'Sir',
+	},
+	{
+		label: 'Dr.',
+		value: 'Dr.',
+	},
+	{
+		label: 'Lady',
+		value: 'Lady',
+	},
+	{
+		label: 'Lord',
+		value: 'Lord',
+	}
+];
 
-export default function ContactEditor({ contactSrvc, id }) {
+const phoneTypeItems = [
+	{
+		label: ContactPhoneType.OTHER,
+		value: ContactPhoneType.OTHER
+	},
+	{
+		label: ContactPhoneType.WORK,
+		value: ContactPhoneType.WORK
+	},
+	{
+		label: ContactPhoneType.HOME,
+		value: ContactPhoneType.HOME
+	},
+	{
+		label: ContactPhoneType.MOBILE,
+		value: ContactPhoneType.MOBILE
+	},
+];
+
+
+export default function ContactEditor() {
 	const history = useHistory();
 	const { t } = useContext(I18nCtxt);
-	const contact = useObservable(contactSrvc.getContact(id));
-
+	const {
+		contact,
+		editContact,
+		dispatch,
+		save
+	} = useContext(ContactContext);
 	return (
 		<Container
 			background="bg_7"
 			mainAlignment="flex-start"
 			height="fit"
+			style={{ maxHeight: '100%' }}
 		>
 			<Container
 				orientation="horizontal"
 				padding={{ horizontal: 'large', vertical: 'small' }}
 				width="fill"
+				height="fit"
 				mainAlignment="space-between"
 			>
 				<Avatar
@@ -90,39 +149,192 @@ export default function ContactEditor({ contactSrvc, id }) {
 			</Container>
 			<Divider style={{ minHeight: '1px' }} />
 			<Container
+				height="fit"
+				style={{ overflowY: 'auto' }}
 				padding={{ all: 'large' }}
 				orientation="vertical"
 				mainAlignment="flex-start"
 				crossAlignment="flex-start"
 			>
-				{ map(
-					pick(
-						contact,
-						[
-							'nameSuffix',
-							'firstName',
-							'lastName',
-							'jobTitle',
-							'department',
-							'company'
-						]
-					),
-					(value, key) => {
-						if (value) {
-							return (
-								<Container padding={{ bottom:'medium' }}>
-									<Input
-										label={t(`contact.preview.label.${key}`)}
-										backgroundColor="bg_9"
+				<Container padding={{ bottom: 'medium' }}>
+					<Input
+						label={t('contact.label.firstName')}
+						backgroundColor="bg_9"
+						value={editContact.firstName}
+						onChange={(ev) => dispatch({ type: 'edit', next: { firstName: ev.target.value } })}
+					/>
+				</Container>
+				<Container padding={{ bottom: 'medium' }}>
+					<Input
+						label={t('contact.label.lastName')}
+						backgroundColor="bg_9"
+						value={editContact.lastName}
+						onChange={(ev) => dispatch({ type: 'edit', next: { lastName: ev.target.value } })}
+					/>
+				</Container>
+				<Container padding={{ bottom: 'medium' }} width="50%">
+					<Select
+						background="bg_9"
+						label={t('contact.label.nameSuffix')}
+						onChange={(newSuffix) => dispatch({ type: 'edit', next: { nameSuffix: newSuffix } })}
+						items={suffixes}
+					/>
+				</Container>
+				<Container padding={{ bottom: 'medium' }}>
+					<Input
+						label={t('contact.label.jobTitle')}
+						backgroundColor="bg_9"
+						value={editContact.jobTitle}
+						onChange={(ev) => dispatch({ type: 'edit', next: { jobTitle: ev.target.value } })}
+					/>
+				</Container>
+				<Container padding={{ bottom: 'medium' }}>
+					<Input
+						label={t('contact.label.department')}
+						backgroundColor="bg_9"
+						value={editContact.department}
+						onChange={(ev) => dispatch({ type: 'edit', next: { department: ev.target.value } })}
+					/>
+				</Container>
+				<Container padding={{ bottom: 'medium' }}>
+					<Input
+						label={t('contact.label.company')}
+						backgroundColor="bg_9"
+						value={editContact.company}
+						onChange={(ev) => dispatch({ type: 'edit', next: { company: ev.target.value } })}
+					/>
+				</Container>
+				{	editContact.address.length > 0
+					? (
+						<FormSection label={t('contact.label.address.main')}>
+							<FormRow>
+								<Input
+									label={t('contact.label.address.street')}
+									backgroundColor="bg_9"
+									value={editContact.address[0].street}
+									onChange={(ev) => dispatch({type: 'editAddress', next: {street: ev.target.value}})}
+								/>
+							</FormRow>
+							<FormRow>
+								<Input
+									label={t('contact.label.address.city')}
+									backgroundColor="bg_9"
+									value={editContact.address[0].city}
+									onChange={(ev) => dispatch({type: 'editAddress', next: {city: ev.target.value}})}
+								/>
+							</FormRow>
+							<FormRow>
+								<Input
+									label={t('contact.label.address.postalCode')}
+									backgroundColor="bg_9"
+									value={editContact.address[0].postalCode}
+									onChange={(ev) => dispatch({type: 'editAddress', next: {postalCode: ev.target.value}})}
+								/>
+							</FormRow>
+							<FormRow>
+								<Input
+									label={t('contact.label.address.country')}
+									backgroundColor="bg_9"
+									value={editContact.address[0].country}
+									onChange={(ev) => dispatch({type: 'editAddress', next: {country: ev.target.value}})}
+								/>
+							</FormRow>
+							<FormRow>
+								<Input
+									label={t('contact.label.address.state')}
+									backgroundColor="bg_9"
+									value={editContact.address[0].state}
+									onChange={(ev) => dispatch({type: 'editAddress', next: {state: ev.target.value}})}
+								/>
+							</FormRow>
+						</FormSection>
+					)
+					: (
+						<FormSection label={t('contact.label.address.main')}>
+							<FormRow>
+								<IconButton icon="Plus" onClick={() => dispatch({ type: 'addAddress' })} />
+							</FormRow>
+						</FormSection>
+					)
+				}
+				<FormSection label={t('contact.label.mail')} style={{ height: '100%' }}>
+					{ map(
+						editContact.mail,
+						(mail, index) => (
+							<FormRow key={`${index}-${mail.mail}`}>
+								<Input
+									backgroundColor="bg_9"
+									label={'address'}
+									value={mail.mail}
+									onChange={(ev) => dispatch({ type: 'editMail', index, next: { mail: ev.target.value } })}
+								/>
+								<IconButton icon="TrashOutline" onClick={() => dispatch({ type: 'deleteMail', index })} />
+							</FormRow>
+						)
+					)}
+					<FormRow>
+						<Input
+							backgroundColor="bg_9"
+							label={'address'}
+							value={editContact.tempMail.mail}
+							onChange={(ev) => dispatch({ type: 'editTempMail', temp: { mail: ev.target.value } })}
+						/>
+						<IconButton icon="Plus" onClick={() => dispatch({ type: 'addMail' })} />
+					</FormRow>
+				</FormSection>
+				<FormSection label={t('contact.label.phone.main')}>
+					{ map(
+						editContact.phone,
+						(phone, index) => (
+							<FormRow key={`${index}-${phone.number}-${phone.type}`}>
+								<Container width="40%" padding={{ right: 'medium' }}>
+									<Select
+										background="bg_9"
+										label="type"
+										items={phoneTypeItems}
+										onChange={(value) => dispatch({ type: 'editPhone', index, next: { number: phone.number, name: value } })}
 									/>
 								</Container>
-							);
-						}
-						return null;
-					}
-				)}
+								<Input
+									backgroundColor="bg_9"
+									label={'number'}
+									value={phone.number}
+									onChange={(ev) => dispatch({ type: 'editPhone', index, next: { number: ev.target.value, name: phone.name } })}
+								/>
+								<IconButton icon="TrashOutline" onClick={() => dispatch({ type: 'deletePhone', index })} />
+							</FormRow>
+						)
+					)}
+					<FormRow>
+						<Container width="40%" padding={{ right: 'medium' }}>
+							<Select
+								background="bg_9"
+								label="type"
+								items={phoneTypeItems}
+								onChange={(value) => dispatch({ type: 'editTempPhone', temp: { number: editContact.tempPhone.number, name: value } })}
+							/>
+						</Container>
+						<Input
+							backgroundColor="bg_9"
+							label={'number'}
+							value={editContact.tempPhone.number}
+							onChange={(ev) => dispatch({ type: 'editTempPhone', temp: { number: ev.target.value, name: editContact.tempPhone.name } })}
+						/>
+						<IconButton icon="Plus" onClick={() => dispatch({ type: 'addPhone' })} />
+					</FormRow>
+				</FormSection>
+			</Container>
+			<Divider />
+			<Container
+				mainAlignment="flex-end"
+				orientation="horizontal"
+				height="fit"
+				padding={{
+					all: 'medium'
+				}}
+			>
+				<Button label="SAVE" onClick={save} />
 			</Container>
 		</Container>
-
 	);
 };

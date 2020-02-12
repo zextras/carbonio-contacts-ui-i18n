@@ -27,6 +27,7 @@ import {
 } from '@zextras/zapp-ui';
 import { I18nCtxt } from '@zextras/zapp-shell/context';
 import { addToQuery, deleteFromQuery } from '../../utils/utils';
+import ContactContext from '../../contact/ContactContext';
 
 function useObservable(observable) {
 	const [value, setValue] = useState(observable.value);
@@ -40,7 +41,7 @@ function useObservable(observable) {
 export default function ContactPreview({ contactSrvc, id }) {
 	const history = useHistory();
 	const { t } = useContext(I18nCtxt);
-	const contact = useObservable(contactSrvc.getContact(id));
+	const { contact } = useContext(ContactContext);
 	const actions = [
 		{
 			label: 'Edit',
@@ -197,7 +198,7 @@ export default function ContactPreview({ contactSrvc, id }) {
 								crossAlignment="flex-end"
 								padding={{ right: 'small' }}
 							>
-								<Text color="txt_4">{t('contact.preview.label.mail')}</Text>
+								<Text color="txt_4">{t('contact.label.mail')}</Text>
 							</Container>
 							<Container
 								width="fit"
@@ -239,7 +240,7 @@ export default function ContactPreview({ contactSrvc, id }) {
 								crossAlignment="flex-end"
 								padding={{ right: 'small' }}
 							>
-								<Text color="txt_4">{t('contact.preview.label.phone.main')}</Text>
+								<Text color="txt_4">{t('contact.label.phone.main')}</Text>
 							</Container>
 							<Container
 								width="fit"
@@ -258,7 +259,7 @@ export default function ContactPreview({ contactSrvc, id }) {
 										>
 											<Container width="40px" mainAlignment="flex-end" crossAlignment="flex-end">
 												<Text color="txt_4">
-													{t(`contact.preview.label.phone.${phone.name}`)}
+													{t(`contact.label.phone.${phone.name}`)}
 												</Text>
 											</Container>
 											<Padding horizontal="small">
@@ -292,7 +293,7 @@ export default function ContactPreview({ contactSrvc, id }) {
 									crossAlignment="flex-end"
 									padding={{ right: 'small' }}
 								>
-									<Text color="txt_4">{t('contact.preview.label.address.main')}</Text>
+									<Text color="txt_4">{t('contact.label.address.main')}</Text>
 								</Container>
 								<Container
 									width="fit"
@@ -315,7 +316,7 @@ export default function ContactPreview({ contactSrvc, id }) {
 													crossAlignment="flex-end"
 												>
 													<Text color="txt_4">
-														{t(`contact.preview.label.address.${fieldKey}`)}
+														{t(`contact.label.address.${fieldKey}`)}
 													</Text>
 												</Container>
 												<Padding horizontal="small">
@@ -355,7 +356,7 @@ const DataField = ({ label, value, translator }) => (
 			padding={{ right: 'small' }}
 		>
 			<Text color="txt_4">
-				{translator(`contact.preview.label.${label}`, label)}
+				{translator(`contact.label.${label}`, label)}
 			</Text>
 		</Container>
 		<Container
