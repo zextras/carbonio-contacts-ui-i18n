@@ -13,6 +13,7 @@ import React, { useEffect, useState, useReducer } from 'react';
 import { distinctUntilChanged } from 'rxjs/operators';
 import ContactContext from './ContactContext';
 import { ContactPhoneType, ContactaddressType } from '../idb/ContactEnums';
+import {ContactAddress, ContactEmail, ContactPhone} from "../idb/IContactsIdb";
 
 function useObservable(observable) {
 	const [value, setValue] = useState(observable.value);
@@ -108,8 +109,25 @@ const reducer = (state, action) => {
 };
 
 const ContactContextProvider = ({ contactSrvc, id, children }) => {
-	const contact = useObservable(contactSrvc.getContact(id));
-
+	let contact = useObservable(contactSrvc.getContact(id));
+	if (!contact) {
+		contact = {
+			_revision: 0,
+			id: 'new',
+			parent: '7',
+			nameSuffix: '',
+			firstName: '',
+			lastName: '',
+			image: '',
+			jobTitle: '',
+			department: '',
+			company: '',
+			address: [],
+			notes: '',
+			mail: [],
+			phone: []
+		};
+	}
 	const [editContact, dispatch] = useReducer(reducer, {
 		...contact,
 		tempMail: { mail: '' },
@@ -120,7 +138,14 @@ const ContactContextProvider = ({ contactSrvc, id, children }) => {
 			value={{
 				contact,
 				editContact,
-				save: () => contactSrvc.modifyContact(editContact),
+				save: () => {
+					if (id === 'new') {
+						contactSrvc.createContact(editContact);
+					}
+					else {
+						contactSrvc.modifyContact(editContact);
+					}
+				},
 				dispatch,
 			}}
 		>
