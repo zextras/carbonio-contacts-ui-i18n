@@ -10,13 +10,14 @@
  */
 
 import { createContext } from 'react';
-import IContactContext from './IContactContext';
+import IContactContext, { EditContact } from './IContactContext';
 import { Contact } from '../idb/IContactsIdb';
 
 const contactContext = createContext<IContactContext>({
 	contact: {} as unknown as Contact,
-	save: console.log,
-	edit: (next) => console.log(next)
+	editContact: {} as unknown as EditContact,
+	save: () => console.log('Context not initialized'),
+	dispatch: () => console.log('Context not initialized')
 });
 
 export default contactContext;

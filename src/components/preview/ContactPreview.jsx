@@ -198,7 +198,7 @@ export default function ContactPreview({ contactSrvc, id }) {
 								crossAlignment="flex-end"
 								padding={{ right: 'small' }}
 							>
-								<Text color="txt_4">{t('contact.label.mail')}</Text>
+								<Text color="txt_4">{t('contact.label.mail.main')}</Text>
 							</Container>
 							<Container
 								width="fit"

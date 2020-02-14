@@ -10,7 +10,7 @@
  */
 
 import React, {
-	useContext,
+	useContext, useEffect, useMemo, useRef
 } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
@@ -26,74 +26,17 @@ import {
 	FormRow,
 	Padding
 } from '@zextras/zapp-ui';
-import { map } from 'lodash';
+import { map, find } from 'lodash';
 import { I18nCtxt } from '@zextras/zapp-shell/context';
 import { deleteFromQuery } from '../../utils/utils';
 import ContactContext from '../../contact/ContactContext';
-import { ContactPhoneType, ContactaddressType } from '../../idb/ContactEnums';
-
-const suffixes = [
-	{
-		label: 'Mr.',
-		value: 'Mr.',
-	},
-	{
-		label: 'Miss',
-		value: 'Miss',
-	},
-	{
-		label: 'Mrs.',
-		value: 'Mrs.',
-	},
-	{
-		label: 'Ms.',
-		value: 'Ms.',
-	},
-	{
-		label: 'Mx.',
-		value: 'Mx.',
-	},
-	{
-		label: 'Sir',
-		value: 'Sir',
-	},
-	{
-		label: 'Dr.',
-		value: 'Dr.',
-	},
-	{
-		label: 'Lady',
-		value: 'Lady',
-	},
-	{
-		label: 'Lord',
-		value: 'Lord',
-	}
-];
-
-const phoneTypeItems = [
-	{
-		label: ContactPhoneType.OTHER,
-		value: ContactPhoneType.OTHER
-	},
-	{
-		label: ContactPhoneType.WORK,
-		value: ContactPhoneType.WORK
-	},
-	{
-		label: ContactPhoneType.HOME,
-		value: ContactPhoneType.HOME
-	},
-	{
-		label: ContactPhoneType.MOBILE,
-		value: ContactPhoneType.MOBILE
-	},
-];
-
+import { suffixItems, phoneTypeItems } from './editorSelectItems';
 
 export default function ContactEditor() {
 	const history = useHistory();
 	const { t } = useContext(I18nCtxt);
+	const phoneTypes = useMemo(() => phoneTypeItems(t), [t]);
+	const suffixes = useMemo(() => suffixItems(t), [t]);
 	const {
 		contact,
 		editContact,
@@ -178,6 +121,7 @@ export default function ContactEditor() {
 						label={t('contact.label.nameSuffix')}
 						onChange={(newSuffix) => dispatch({ type: 'edit', next: { nameSuffix: newSuffix } })}
 						items={suffixes}
+						defaultSelection={find(suffixes, ['value', editContact.nameSuffix])}
 					/>
 				</Container>
 				<Container padding={{ bottom: 'medium' }}>
@@ -204,6 +148,76 @@ export default function ContactEditor() {
 						onChange={(ev) => dispatch({ type: 'edit', next: { company: ev.target.value } })}
 					/>
 				</Container>
+				<FormSection label={t('contact.label.mail.main')} style={{ height: '100%' }}>
+					{ map(
+						editContact.mail,
+						(mail, index) => {
+							return (
+								<FormRow key={index}>
+									<Input
+										backgroundColor="bg_9"
+										label={t('contact.label.mail.address')}
+										value={mail.mail}
+										onChange={(ev) => dispatch({type: 'editMail', index, next: {mail: ev.target.value}})}
+									/>
+									<IconButton icon="TrashOutline" onClick={() => dispatch({type: 'deleteMail', index})}/>
+								</FormRow>
+							);
+						}
+					)}
+					<FormRow>
+						<Input
+							backgroundColor="bg_9"
+							label={t('contact.label.mail.address')}
+							value={editContact.tempMail.mail}
+							onChange={(ev) => dispatch({ type: 'editTempMail', temp: { mail: ev.target.value } })}
+						/>
+						<IconButton icon="Plus" onClick={() => dispatch({ type: 'addMail' })} />
+					</FormRow>
+				</FormSection>
+				<FormSection label={t('contact.label.phone.main')}>
+					{ map(
+						editContact.phone,
+						(phone, index) => (
+							<FormRow key={index}>
+								<Container width="40%" padding={{ right: 'medium' }}>
+									<Select
+										background="bg_9"
+										label={t('contact.label.phone.type')}
+										items={phoneTypes}
+										onChange={(value) => dispatch({ type: 'editPhone', index, next: { number: phone.number, name: value } })}
+										defaultSelection={find(phoneTypes, ['value', phone.name])}
+									/>
+								</Container>
+								<Input
+									backgroundColor="bg_9"
+									label={t('contact.label.phone.number')}
+									value={phone.number}
+									onChange={(ev) => dispatch({ type: 'editPhone', index, next: { number: ev.target.value, name: phone.name } })}
+								/>
+								<IconButton icon="TrashOutline" onClick={() => dispatch({ type: 'deletePhone', index })} />
+							</FormRow>
+						)
+					)}
+					<FormRow>
+						<Container width="40%" padding={{ right: 'medium' }}>
+							<Select
+								background="bg_9"
+								label={t('contact.label.phone.type')}
+								items={phoneTypes}
+								defaultSelection={find(phoneTypes, ['value', editContact.tempPhone.name])}
+								onChange={(value) => dispatch({ type: 'editTempPhone', temp: { number: editContact.tempPhone.number, name: value } })}
+							/>
+						</Container>
+						<Input
+							backgroundColor="bg_9"
+							label={t('contact.label.phone.number')}
+							value={editContact.tempPhone.number}
+							onChange={(ev) => dispatch({ type: 'editTempPhone', temp: { number: ev.target.value, name: editContact.tempPhone.name } })}
+						/>
+						<IconButton icon="Plus" onClick={() => dispatch({ type: 'addPhone' })} />
+					</FormRow>
+				</FormSection>
 				{	editContact.address.length > 0
 					? (
 						<FormSection label={t('contact.label.address.main')}>
@@ -257,72 +271,14 @@ export default function ContactEditor() {
 						</FormSection>
 					)
 				}
-				<FormSection label={t('contact.label.mail')} style={{ height: '100%' }}>
-					{ map(
-						editContact.mail,
-						(mail, index) => (
-							<FormRow key={`${index}-${mail.mail}`}>
-								<Input
-									backgroundColor="bg_9"
-									label={'address'}
-									value={mail.mail}
-									onChange={(ev) => dispatch({ type: 'editMail', index, next: { mail: ev.target.value } })}
-								/>
-								<IconButton icon="TrashOutline" onClick={() => dispatch({ type: 'deleteMail', index })} />
-							</FormRow>
-						)
-					)}
-					<FormRow>
-						<Input
-							backgroundColor="bg_9"
-							label={'address'}
-							value={editContact.tempMail.mail}
-							onChange={(ev) => dispatch({ type: 'editTempMail', temp: { mail: ev.target.value } })}
-						/>
-						<IconButton icon="Plus" onClick={() => dispatch({ type: 'addMail' })} />
-					</FormRow>
-				</FormSection>
-				<FormSection label={t('contact.label.phone.main')}>
-					{ map(
-						editContact.phone,
-						(phone, index) => (
-							<FormRow key={`${index}-${phone.number}-${phone.type}`}>
-								<Container width="40%" padding={{ right: 'medium' }}>
-									<Select
-										background="bg_9"
-										label="type"
-										items={phoneTypeItems}
-										onChange={(value) => dispatch({ type: 'editPhone', index, next: { number: phone.number, name: value } })}
-									/>
-								</Container>
-								<Input
-									backgroundColor="bg_9"
-									label={'number'}
-									value={phone.number}
-									onChange={(ev) => dispatch({ type: 'editPhone', index, next: { number: ev.target.value, name: phone.name } })}
-								/>
-								<IconButton icon="TrashOutline" onClick={() => dispatch({ type: 'deletePhone', index })} />
-							</FormRow>
-						)
-					)}
-					<FormRow>
-						<Container width="40%" padding={{ right: 'medium' }}>
-							<Select
-								background="bg_9"
-								label="type"
-								items={phoneTypeItems}
-								onChange={(value) => dispatch({ type: 'editTempPhone', temp: { number: editContact.tempPhone.number, name: value } })}
-							/>
-						</Container>
-						<Input
-							backgroundColor="bg_9"
-							label={'number'}
-							value={editContact.tempPhone.number}
-							onChange={(ev) => dispatch({ type: 'editTempPhone', temp: { number: ev.target.value, name: editContact.tempPhone.name } })}
-						/>
-						<IconButton icon="Plus" onClick={() => dispatch({ type: 'addPhone' })} />
-					</FormRow>
-				</FormSection>
+				<Container padding={{ bottom: 'medium' }}>
+					<Input
+						label={t('contact.label.notes')}
+						backgroundColor="bg_9"
+						value={editContact.notes}
+						onChange={(ev) => dispatch({ type: 'edit', next: { notes: ev.target.value } })}
+					/>
+				</Container>
 			</Container>
 			<Divider />
 			<Container
@@ -333,8 +289,52 @@ export default function ContactEditor() {
 					all: 'medium'
 				}}
 			>
-				<Button label="SAVE" onClick={save} />
+				<Button
+					backgroundColor="bg_4"
+					label={t('contact.cancel')}
+					onClick={() => history.push({
+						search: deleteFromQuery(history.location.search, 'edit')
+					})}
+				/>
+				<Padding left="medium">
+					<Button label={t('contact.save')} onClick={save} />
+				</Padding>
 			</Container>
 		</Container>
 	);
 };
+
+// Hook
+function useWhyDidYouUpdate(name, props) {
+	// Get a mutable ref object where we can store props ...
+	// ... for comparison next time this hook runs.
+	const previousProps = useRef();
+
+	useEffect(() => {
+		if (previousProps.current) {
+			// Get all keys from previous and current props
+			const allKeys = Object.keys({ ...previousProps.current, ...props });
+			// Use this object to keep track of changed props
+			const changesObj = {};
+			// Iterate through keys
+			allKeys.forEach(key => {
+				// If previous is different from current
+				if (previousProps.current[key] !== props[key]) {
+					// Add to changesObj
+					changesObj[key] = {
+						from: previousProps.current[key],
+						to: props[key]
+					};
+				}
+			});
+
+			// If changesObj not empty then output to console
+			if (Object.keys(changesObj).length) {
+				console.log('[why-did-you-update]', name, changesObj);
+			}
+		}
+
+		// Finally update previousProps with current props for next hook call
+		previousProps.current = props;
+	});
+}

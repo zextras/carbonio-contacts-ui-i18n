@@ -34,37 +34,42 @@ export default function App({ contactSrvc }) {
 	const edit = query.get('edit');
 
 	return (
-		<Container
-			orientation="horizontal"
-			width="fill"
-			height="fill"
-			mainAlignment="flex-start"
-			crossAlignment="flex-start"
+		<ContactContextProvider
+			contactSrvc={contactSrvc}
+			id={edit || view}
 		>
-			<Responsive mode="desktop">
-				<Container
-					orientation="vertical"
-					width="50%"
-					height="fill"
-					mainAlignment="flex-start"
-				>
-					<ContactList contactSrvc={contactSrvc} />
-				</Container>
-				<Container
-					orientation="vertical"
-					width="50%"
-					height="fill"
-					mainAlignment="flex-start"
-					padding={{ horizontal: 'medium' }}
-					background="bg_9"
-				>
+			<Container
+				orientation="horizontal"
+				width="fill"
+				height="fill"
+				mainAlignment="flex-start"
+				crossAlignment="flex-start"
+			>
+				<Responsive mode="desktop">
+					<Container
+						orientation="vertical"
+						width="50%"
+						height="fill"
+						mainAlignment="flex-start"
+					>
+						<ContactList contactSrvc={contactSrvc} />
+					</Container>
+					<Container
+						orientation="vertical"
+						width="50%"
+						height="fill"
+						mainAlignment="flex-start"
+						padding={{ horizontal: 'medium' }}
+						background="bg_9"
+					>
+						<SecondaryView edit={edit} view={view} contactSrvc={contactSrvc} />
+					</Container>
+				</Responsive>
+				<Responsive mode="mobile">
 					<SecondaryView edit={edit} view={view} contactSrvc={contactSrvc} />
-				</Container>
-			</Responsive>
-			<Responsive mode="mobile">
-				<SecondaryView edit={edit} view={view} contactSrvc={contactSrvc} />
-			</Responsive>
-		</Container>
+				</Responsive>
+			</Container>
+		</ContactContextProvider>
 	);
 };
 
@@ -82,12 +87,5 @@ const SecondaryView = ({ contactSrvc, view, edit }) => {
 		}
 		return <Text>Hello</Text>;
 	}, [screenMode, edit, view, contactSrvc]);
-	return (
-		<ContactContextProvider
-			contactSrvc={contactSrvc}
-			id={edit || view}
-		>
-			{ panel }
-		</ContactContextProvider>
-	);
+	return <>{ panel }</>;
 };

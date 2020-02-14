@@ -23,92 +23,93 @@ function useObservable(observable) {
 	return value;
 }
 
+const reducer = (state, action) => {
+	switch (action.type) {
+		case 'edit':
+			return {
+				...state,
+				...action.next
+			};
+		case 'editAddress':
+			return {
+				...state,
+				address: [
+					{
+						...state.address[0],
+						...action.next
+					}
+				]
+			};
+		case 'editTempMail':
+			return {
+				...state,
+				tempMail: action.temp
+			};
+		case 'editTempPhone':
+			return {
+				...state,
+				tempPhone: action.temp
+			};
+		case 'editMail':
+			const nextMail = [...state.mail];
+			nextMail[action.index] = action.next;
+			return {
+				...state,
+				mail: nextMail
+			};
+		case 'deleteMail':
+			const nextMail2 = [].concat(state.mail);
+			nextMail2.splice(action.index, 1);
+			return {
+				...state,
+				mail: nextMail2
+			};
+		case 'addAddress':
+			return {
+				...state,
+				address: [{
+					type: ContactaddressType.OTHER,
+					street: '',
+					city: '',
+					postalCode: '',
+					country: '',
+					state: ''
+				}],
+			};
+		case 'addMail':
+			return {
+				...state,
+				mail: [...state.mail, state.tempMail],
+				tempMail: { mail: '' }
+			};
+		case 'editPhone':
+			const nextPhone = [].concat(state.phone);
+			nextPhone[action.index] = action.next;
+			return {
+				...state,
+				phone: [...nextPhone]
+			};
+		case 'deletePhone':
+			const nextPhone2 = [].concat(state.phone);
+			nextPhone2.splice(action.index, 1);
+			return {
+				...state,
+				phone: nextPhone2
+			};
+		case 'addPhone':
+			return {
+				...state,
+				phone: [...state.phone, state.tempPhone],
+				tempPhone: { number: '', name: ContactPhoneType.OTHER }
+			};
+		default:
+			throw new Error('unsupported operation');
+	}
+};
+
 const ContactContextProvider = ({ contactSrvc, id, children }) => {
 	const contact = useObservable(contactSrvc.getContact(id));
-	const reducer = (state, action) => {
-		console.log(action);
-		switch (action.type) {
-			case 'edit':
-				return {
-					...state,
-					...action.next
-				};
-			case 'editAddress':
-				return {
-					...state,
-					address: [
-						{
-							...state.address[0],
-							...action.next
-						}
-					]
-				};
-			case 'editTempMail':
-				return {
-					...state,
-					tempMail: action.temp
-				};
-			case 'editTempPhone':
-				return {
-					...state,
-					tempPhone: action.temp
-				};
-			case 'editMail':
-				const nextMail = [].concat(state.mail);
-				nextMail[action.index] = action.next;
-				return {
-					...state,
-					mail: nextMail
-				};
-			case 'deleteMail':
-				const nextMail2 = [].concat(state.mail);
-				nextMail2.splice(action.index, 1);
-				return {
-					...state,
-					mail: nextMail2
-				};
-			case 'addAddress':
-				return {
-					...state,
-					address: [{
-						type: ContactaddressType.OTHER,
-						street: '',
-						city: '',
-						postalCode: '',
-						country: '',
-						state: ''
-					}],
-				};
-			case 'addMail':
-				return {
-					...state,
-					mail: [...state.mail, state.tempMail],
-					tempMail: { mail: '' }
-				};
-			case 'editPhone':
-				const nextPhone = [].concat(state.phone);
-				nextPhone[action.index] = action.next;
-				return {
-					...state,
-					phone: nextPhone
-				};
-			case 'deletePhone':
-				const nextPhone2 = [].concat(state.phone);
-				nextPhone2.splice(action.index, 1);
-				return {
-					...state,
-					phone: nextPhone2
-				};
-			case 'addPhone':
-				return {
-					...state,
-					phone: [...state.phone, state.tempPhone],
-					tempPhone: { number: '', name: ContactPhoneType.OTHER }
-				};
-			default:
-				throw new Error('unsupported operation');
-		}
-	};
+
 	const [editContact, dispatch] = useReducer(reducer, {
 		...contact,
 		tempMail: { mail: '' },
@@ -127,4 +128,5 @@ const ContactContextProvider = ({ contactSrvc, id, children }) => {
 		</ContactContext.Provider>
 	);
 };
+
 export default ContactContextProvider;

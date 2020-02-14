@@ -145,7 +145,7 @@ export function normalizeContactMailsToSoapOp(mails: ContactEmail[]): any {
 		(c, v, k) => ({
 			...c,
 			...{
-				[`mail${k > 0 ? k : ''}`]: v.mail
+				[`email${k > 0 ? k : ''}`]: v.mail
 			}
 		}),
 		{}

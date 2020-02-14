@@ -10,10 +10,22 @@
  */
 
 
-import {Contact} from "../idb/IContactsIdb";
+import { Contact } from '../idb/IContactsIdb';
+import { ContactPhoneType } from '../idb/ContactEnums';
+
+export interface EditContact extends Contact {
+    tempMail: {
+        mail: string;
+    };
+    tempPhone: {
+        number: string;
+        name: ContactPhoneType;
+    };
+}
 
 export default interface IContactContext {
     contact: Contact;
-    edit: (next: object) => void;
+    editContact: EditContact;
+    dispatch: (action: object) => void;
     save: () => void;
 };
