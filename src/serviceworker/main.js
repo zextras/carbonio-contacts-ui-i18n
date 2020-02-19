@@ -16,8 +16,8 @@
 import { forEach, map } from 'lodash';
 import ContactsIdbService from '../idb/ContactsIdbService';
 import { normalizeContact, normalizeFolder } from '../idb/IdbContactsUtils';
+import { fc, fcSink } from '@zextras/zapp-shell/fc';
 
-const _sharedBC = new BroadcastChannel('com_zextras_zapp_shell_sw');
 const _idbSrvc = new ContactsIdbService();
 
 // function _fetchSoapContactsByFolder(f) {
@@ -372,20 +372,7 @@ function _processOperationCompleted(data) {
 	}));
 }
 
-_sharedBC.addEventListener('message', (e) => {
-	if (!e.data || !e.data.action) return;
-	switch (e.data.action) {
-		case 'SOAP:notification:handle':
-			_processSOAPNotifications(e.data.data)
-				.catch((e1) => console.error(e1));
-			break;
-		case 'sync:operation:completed':
-		case 'sync:operation:error':
-			_processOperationCompleted(e.data)
-				.catch((e1) => console.error(e1));
-			break;
-		default:
-	}
-});
-
-console.log(`Hello from contacts-sw.js`);
+fc.pipe(filter(({ event }) => event === 'app:all-loaded' ))
+	.subscribe((e) => _processSOAPNotifications(e.data).then().catch((e1) => console.error(e1)));
+fc.pipe(filter(({ event }) => event === 'sync:operation:completed' || event === 'sync:operation:error'))
+	.subscribe((e) => _processOperationCompleted(e.data).then().catch((e1) => console.error(e1)));

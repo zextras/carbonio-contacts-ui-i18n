@@ -11,7 +11,7 @@
 
 import React from 'react';
 import { registerRoute, addMainMenuItem } from '@zextras/zapp-shell/router';
-import { serviceWorkerSrvc } from '@zextras/zapp-shell/service';
+import { fc } from '@zextras/zapp-shell/fc';
 
 import App, { ROUTE as mainRoute } from './components/App';
 import ContactsService from './ContactsService';
@@ -22,6 +22,7 @@ export default function app() {
 	const contactSrvc = new ContactsService(
 		idbSrvc
 	);
+	fc.subscribe((e) => console.log('contacts event', e));
 	addMainMenuItem(
 		'PeopleOutline',
 		'Contacts',
@@ -29,7 +30,4 @@ export default function app() {
 		contactSrvc.menuFolders
 	);
 	registerRoute(mainRoute, App, { contactSrvc });
-	serviceWorkerSrvc.registerAppServiceWorker(
-		'contacts-sw.js'
-	);
 }
