@@ -26,9 +26,9 @@ test('Normalize Contact Mails for SOAP Operation', () => {
 		])
 	).toStrictEqual(
 		{
-			mail: 'mail@example.com',
-			mail1: 'mail1@example.com',
-			mail2: 'mail2@example.com',
+			email: 'mail@example.com',
+			email1: 'mail1@example.com',
+			email2: 'mail2@example.com',
 		}
 	);
 });

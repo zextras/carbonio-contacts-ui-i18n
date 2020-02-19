@@ -70,7 +70,7 @@ export type CreateContactOpReq = {
 };
 
 export type ModifyContactOpReq = {
-	replace: 0;
+	replace: 0 | 1;
 	force: 1;
 	cn: {
 		id: string;
@@ -145,7 +145,7 @@ export function normalizeContactMailsToSoapOp(mails: ContactEmail[]): any {
 		(c, v, k) => ({
 			...c,
 			...{
-				[`mail${k > 0 ? k : ''}`]: v.mail
+				[`email${k > 0 ? k : ''}`]: v.mail
 			}
 		}),
 		{}

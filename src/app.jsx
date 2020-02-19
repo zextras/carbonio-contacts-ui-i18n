@@ -10,7 +10,7 @@
  */
 
 import React from 'react';
-import { registerRoute, addMainMenuItem } from '@zextras/zapp-shell/router';
+import { registerRoute, addMainMenuItem, addCreateMenuItem } from '@zextras/zapp-shell/router';
 import { serviceWorkerSrvc } from '@zextras/zapp-shell/service';
 
 import App, { ROUTE as mainRoute } from './components/App';
@@ -29,6 +29,11 @@ export default function app() {
 		'Contacts',
 		'/contacts/folder/Contacts',
 		contactSrvc.menuFolders
+	);
+	addCreateMenuItem(
+		'PersonOutline',
+		'Contact',
+		'/contacts/folder/Contacts?edit=new'
 	);
 	registerRoute(mainRoute, App, { contactSrvc });
 	serviceWorkerSrvc.registerAppServiceWorker(

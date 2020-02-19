@@ -124,9 +124,9 @@ export default function ContactList({ contactSrvc }) {
 		};
 	}, [contactSrvc.contacts]);
 
-	const itemFactory = c => ({ index }) => (
+	const itemFactory = (c) => ({ index }) => (
 		<>
-			{ c && c.length > 0
+			{ c && c.length > 0 && c[index]
 				&& (
 					<ContactListItem
 						contact={c[index].data}
@@ -179,11 +179,13 @@ export default function ContactList({ contactSrvc }) {
 				/>
 			</Container>
 			{
-				contacts.length > 0 &&
-				<List
-					Factory={itemFactory(contacts)}
-					amount={contacts.length}
-				/>
+				contacts.length > 0
+				&& (
+					<List
+						Factory={itemFactory(contacts)}
+						amount={contacts.length}
+					/>
+				)
 			}
 		</Container>
 	);

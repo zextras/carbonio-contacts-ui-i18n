@@ -9,7 +9,7 @@
  * *** END LICENSE BLOCK *****
  */
 
-import React from 'react';
+import React, {useMemo} from 'react';
 import {
 	Container,
 	Text,
@@ -19,6 +19,8 @@ import {
 import { useLocation } from 'react-router-dom';
 import ContactList from './list/ContactList';
 import ContactPreview from './preview/ContactPreview';
+import ContactEditor from './edit/ContactEditor';
+import ContactContextProvider from "../contact/ContactContextProvider";
 
 export const ROUTE = '/contacts/folder/:path*';
 
@@ -30,56 +32,60 @@ export default function App({ contactSrvc }) {
 	const query = useQuery();
 	const view = query.get('view');
 	const edit = query.get('edit');
-	const mobileView = () => {
-		if (edit) {
-			return <Text>{`Edit: ${edit}`}</Text>;
-		}
-		if (view) {
-			return <ContactPreview contactSrvc={contactSrvc} id={view} />;
-		}
-		return <ContactList contactSrvc={contactSrvc} />;
-	};
-	const sideView = () => {
-		if (edit) {
-			return <Text>{`Edit: ${edit}`}</Text>;
-		}
-		if (view) {
-			return <ContactPreview contactSrvc={contactSrvc} id={view} />;
-		}
-		return <Text>Nothing</Text>;
-	};
-	return (
-		<Container
-			orientation="horizontal"
-			width="fill"
-			height="fill"
-			mainAlignment="flex-start"
-			crossAlignment="flex-start"
-		>
-			<Responsive mode="desktop">
-				<Container
-					orientation="vertical"
-					width="50%"
-					height="fill"
-					mainAlignment="flex-start"
-				>
-					<ContactList contactSrvc={contactSrvc} />
-				</Container>
-				<Container
-					orientation="vertical"
-					width="50%"
-					height="fill"
-					mainAlignment="flex-start"
-					padding={{ horizontal: 'medium' }}
-					background="bg_9"
-				>
-					{ sideView() }
-				</Container>
-			</Responsive>
 
-			<Responsive mode="mobile">
-				{ mobileView() }
-			</Responsive>
-		</Container>
+	return (
+		<ContactContextProvider
+			contactSrvc={contactSrvc}
+			id={edit || view}
+		>
+			<Container
+				orientation="horizontal"
+				width="fill"
+				height="fill"
+				mainAlignment="flex-start"
+				crossAlignment="flex-start"
+			>
+				<Responsive mode="desktop">
+					<Container
+						orientation="vertical"
+						width="50%"
+						height="fill"
+						mainAlignment="flex-start"
+					>
+						<ContactList contactSrvc={contactSrvc} />
+					</Container>
+					<Container
+						orientation="vertical"
+						width="50%"
+						height="fill"
+						mainAlignment="flex-start"
+						padding={{ horizontal: 'medium' }}
+						background="bg_9"
+					>
+						<SecondaryView edit={edit} view={view} contactSrvc={contactSrvc} />
+					</Container>
+				</Responsive>
+				<Responsive mode="mobile">
+					<SecondaryView edit={edit} view={view} contactSrvc={contactSrvc} />
+				</Responsive>
+			</Container>
+		</ContactContextProvider>
 	);
+};
+
+const SecondaryView = ({ contactSrvc, view, edit }) => {
+	const screenMode = useScreenMode();
+	const panel = useMemo(() => {
+		if (edit) {
+			return <ContactEditor contactSrvc={contactSrvc} id={edit} />;
+		}
+		if (view) {
+			return <ContactPreview contactSrvc={contactSrvc} id={view} />;
+		}
+		if (screenMode === 'mobile') {
+			return <ContactList contactSrvc={contactSrvc} />;
+		}
+		return <Text>Hello</Text>;
+	}, [screenMode, edit, view, contactSrvc]);
+	return <>{ panel }</>;
 };
