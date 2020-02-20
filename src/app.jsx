@@ -10,24 +10,31 @@
  */
 
 import React from 'react';
-import { registerRoute, addMainMenuItem } from '@zextras/zapp-shell/router';
-import { fc } from '@zextras/zapp-shell/fc';
+import { registerRoute, addMainMenuItem, addCreateMenuItem } from '@zextras/zapp-shell/router';
 
 import App, { ROUTE as mainRoute } from './components/App';
 import ContactsService from './ContactsService';
 import ContactsIdbService from './idb/ContactsIdbService';
+import { registerTranslations } from './i18n/i18n';
 
 export default function app() {
 	const idbSrvc = new ContactsIdbService();
 	const contactSrvc = new ContactsService(
 		idbSrvc
 	);
-	fc.subscribe((e) => console.log('contacts event', e));
+
+	registerTranslations();
+
 	addMainMenuItem(
 		'PeopleOutline',
 		'Contacts',
 		'/contacts/folder/Contacts',
 		contactSrvc.menuFolders
+	);
+	addCreateMenuItem(
+		'PersonOutline',
+		'Contact',
+		'/contacts/folder/Contacts?edit=new'
 	);
 	registerRoute(mainRoute, App, { contactSrvc });
 }

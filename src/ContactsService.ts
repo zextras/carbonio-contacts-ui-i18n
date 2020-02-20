@@ -9,14 +9,20 @@
  * *** END LICENSE BLOCK *****
  */
 
-import { fc, fcSink } from '@zextras/zapp-shell/fc';
-import { IFolderSchmV1 } from '@zextras/zapp-shell/lib/sync/IFolderSchm';
-import { IMainSubMenuItemData } from "@zextras/zapp-shell/lib/router/IRouterService";
-import { syncOperations } from '@zextras/zapp-shell/sync';
-import { ISyncOperation, ISyncOpRequest, ISyncOpSoapRequest } from '@zextras/zapp-shell/lib/sync/ISyncService';
+import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { BehaviorSubject, combineLatest, Subject, Subscription } from 'rxjs';
-import { reduce, filter as loFilter, cloneDeep } from 'lodash';
+import {
+	reduce,
+	filter as loFilter,
+	cloneDeep,
+	find,
+	forEach
+} from 'lodash';
+import { fc, fcSink } from '@zextras/zapp-shell/fc';
+import { syncOperations } from '@zextras/zapp-shell/sync';
+import { IFolderSchmV1 } from '@zextras/zapp-shell/lib/sync/IFolderSchm';
+import { IMainSubMenuItemData } from '@zextras/zapp-shell/lib/router/IRouterService';
+import { ISyncOperation, ISyncOpRequest, ISyncOpSoapRequest } from '@zextras/zapp-shell/lib/sync/ISyncService';
 import { Contact, ContactData } from './idb/IContactsIdb';
 import { IContactsIdbService } from './idb/IContactsIdbService';
 import {
@@ -88,7 +94,11 @@ export default class ContactsService implements IContactsService {
 
 	private _menuFoldersSub: Subscription;
 
+	private _contactCacheSub: Subscription;
+
 	private _createId = 0;
+
+	private _contactCache: {[id: string]: BehaviorSubject<Contact>} = {};
 
 	constructor(private _idbSrvc: IContactsIdbService) {
 		fc
@@ -141,6 +151,20 @@ export default class ContactsService implements IContactsService {
 			syncOperations as BehaviorSubject<Array<ISyncOperation<ContactFolderOp, ISyncOpRequest<unknown>>>>,
 			this._folders
 		]).subscribe(this._mergeFoldersAndOperations);
+
+		this._contactCacheSub = this.contacts.subscribe((contacts) => {
+			forEach(this._contactCache, (cache: BehaviorSubject<Contact>, id: string) => {
+				cache.next(contacts[id]);
+			});
+		});
+	}
+
+	public getFolderIdByPath(path: string): string {
+		const folder = find(this.folders.value, ['path', `/${path}`]);
+		if (folder) {
+			return folder.id;
+		}
+		return '';
 	}
 
 	public createContact(c: ContactData): void {
@@ -167,6 +191,14 @@ export default class ContactsService implements IContactsService {
 		);
 	}
 
+	public getContact(id: string): BehaviorSubject<Contact> {
+		if (this._contactCache[id]) {
+			return this._contactCache[id];
+		}
+		this._contactCache[id] = new BehaviorSubject<Contact>(this.contacts.value[id]);
+		return this._contactCache[id];
+	}
+
 	public modifyContact(c: Contact): void {
 		fcSink<ISyncOperation<ModifyContactOp, ISyncOpSoapRequest<ModifyContactOpReq>>>(
 			'sync:operation:push',
@@ -181,7 +213,7 @@ export default class ContactsService implements IContactsService {
 					command: 'ModifyContact',
 					urn: 'urn:zimbraMail',
 					data: {
-						replace: 0,
+						replace: 1,
 						force: 1,
 						cn: {
 							id: c.id,

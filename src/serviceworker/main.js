@@ -170,7 +170,7 @@ function _handleSOAPChanges(changes) {
 }
 
 function _removeContacts(ids) {
-	return _idbSrvc.removeContacts(ids)
+	return _idbSrvc.deleteContacts(ids)
 		.then((ids1) => {
 			forEach(ids1, (id) => _sharedBC.postMessage({
 				action: 'app:fiberchannel',
@@ -185,7 +185,7 @@ function _removeContacts(ids) {
 }
 
 function _removeFolders(ids) {
-	return _idbSrvc.removeFolders(ids)
+	return _idbSrvc.deleteFolders(ids)
 		.then((ids1) => {
 			forEach(ids1, (id) => _sharedBC.postMessage({
 				action: 'app:fiberchannel',

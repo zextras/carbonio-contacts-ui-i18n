@@ -9,14 +9,17 @@
  * *** END LICENSE BLOCK *****
  */
 
+import { BehaviorSubject } from 'rxjs';
 import { Contact, ContactData } from './idb/IContactsIdb';
 
 export interface IContactsService {
 	createContact(c: ContactData): void;
+	getContact(id: string): BehaviorSubject<Contact>;
 	modifyContact(c: Contact): void;
 	moveContact(contactId: string, folderId: string): void;
 	moveContactToTrash(contactId: string): void;
 	deleteContact(contactId: string): void;
+	getFolderIdByPath(path: string): string;
 	createFolder(name: string, parent: string): void;
 	moveFolder(id: string, newParent: string): void;
 	renameFolder(id: string, name: string): void;

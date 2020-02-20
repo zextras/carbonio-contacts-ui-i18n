@@ -30,8 +30,8 @@
     "@typescript-eslint/eslint-plugin": "2.6.1",
     "@typescript-eslint/parser": "2.6.1",
     "@zextras/zapp-cli": "0.0.28",
-    "@zextras/zapp-shell": "0.0.41",
-    "@zextras/zapp-ui": "0.0.5",
+    "@zextras/zapp-shell": "0.0.43",
+    "@zextras/zapp-ui": "0.0.7",
     "babel-eslint": "10.0.3",
     "babel-loader": "8.0.6",
     "babel-plugin-styled-components": "1.10.6",
@@ -53,6 +53,7 @@
     "postcss-loader": "3.0.0",
     "react-dom": "16.11.0",
     "react-hot-loader": "4.12.15",
+    "react-router-dom": "5.1.2",
     "react-test-renderer": "16.10.2",
     "styled-components": "4.4.1",
     "typescript": "3.6.4"

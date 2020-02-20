@@ -9,19 +9,83 @@
  * *** END LICENSE BLOCK *****
  */
 
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import { Container, Text } from '@zextras/zapp-ui';
+import React, {useMemo} from 'react';
+import {
+	Container,
+	Text,
+	useScreenMode,
+	Responsive
+} from '@zextras/zapp-ui';
+import { useLocation } from 'react-router-dom';
+import ContactList from './list/ContactList';
+import ContactPreview from './preview/ContactPreview';
+import ContactEditor from './edit/ContactEditor';
+import ContactContextProvider from "../contact/ContactContextProvider";
 
 export const ROUTE = '/contacts/folder/:path*';
 
-export default function App() {
-	const { path } = useParams();
+function useQuery() {
+	return new URLSearchParams(useLocation().search);
+}
+
+export default function App({ contactSrvc }) {
+	const query = useQuery();
+	const view = query.get('view');
+	const edit = query.get('edit');
+
 	return (
-		<Container width="fill" height="fill" background="bg_9" mainAlignment="flex-start" crossAlignment="flex-start">
-			<Container width="50%" background="bg_7" padding={{ all: 'large' }} mainAlignment="flex-start" crossAlignment="flex-start">
-				<Text size="large" color="txt_2">{`Contacts: ${path}`}</Text>
+		<ContactContextProvider
+			contactSrvc={contactSrvc}
+			id={edit || view}
+		>
+			<Container
+				orientation="horizontal"
+				width="fill"
+				height="fill"
+				mainAlignment="flex-start"
+				crossAlignment="flex-start"
+			>
+				<Responsive mode="desktop">
+					<Container
+						orientation="vertical"
+						width="50%"
+						height="fill"
+						mainAlignment="flex-start"
+					>
+						<ContactList contactSrvc={contactSrvc} />
+					</Container>
+					<Container
+						orientation="vertical"
+						width="50%"
+						height="fill"
+						mainAlignment="flex-start"
+						padding={{ horizontal: 'medium' }}
+						background="bg_9"
+					>
+						<SecondaryView edit={edit} view={view} contactSrvc={contactSrvc} />
+					</Container>
+				</Responsive>
+				<Responsive mode="mobile">
+					<SecondaryView edit={edit} view={view} contactSrvc={contactSrvc} />
+				</Responsive>
 			</Container>
-		</Container>
+		</ContactContextProvider>
 	);
+};
+
+const SecondaryView = ({ contactSrvc, view, edit }) => {
+	const screenMode = useScreenMode();
+	const panel = useMemo(() => {
+		if (edit) {
+			return <ContactEditor contactSrvc={contactSrvc} id={edit} />;
+		}
+		if (view) {
+			return <ContactPreview contactSrvc={contactSrvc} id={view} />;
+		}
+		if (screenMode === 'mobile') {
+			return <ContactList contactSrvc={contactSrvc} />;
+		}
+		return <Text>Hello</Text>;
+	}, [screenMode, edit, view, contactSrvc]);
+	return <>{ panel }</>;
 };
