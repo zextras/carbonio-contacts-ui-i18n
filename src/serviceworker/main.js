@@ -108,29 +108,15 @@ function _walkSOAPContactsFolder(folders) {
 							.then((r) => new Promise((resolve, reject) => {
 								_idbSrvc.saveContactsData(r)
 									.then(() => {
-										forEach(r, (c) => _sharedBC.postMessage({
-											action: 'app:fiberchannel',
-											data: {
-												event: 'contacts:updated:contact',
-												data: {
-													id: c.id
-												}
-											}
-										}));
+										forEach(r, (c) => 
+											fcSink('contacts:updated:contact', { id: c.id })
+										);
 									})
 									.then((_) => resolve())
 									.catch((e) => reject(e));
 							}))
 							.then((_) => {
-								_sharedBC.postMessage({
-									action: 'app:fiberchannel',
-									data: {
-										event: 'contacts:updated:folder',
-										data: {
-											id: f.id
-										}
-									}
-								});
+								fcSink('contacts:updated:folder', { id: f.id });
 							})
 					);
 				}
@@ -151,15 +137,9 @@ function _handleSOAPChanges(changes) {
 			.then((r) => new Promise((resolve1, reject1) => {
 				_idbSrvc.saveContactsData(r)
 					.then(() => {
-						forEach(r, (c) => _sharedBC.postMessage({
-							action: 'app:fiberchannel',
-							data: {
-								event: 'contacts:updated:contact',
-								data: {
-									id: c.id
-								}
-							}
-						}));
+						forEach(r, (c) => 
+							fcSink('contacts:updated:contact', { id: c.id })
+						);
 					})
 					.then((_) => resolve1())
 					.catch((e) => reject1(e));
@@ -172,30 +152,18 @@ function _handleSOAPChanges(changes) {
 function _removeContacts(ids) {
 	return _idbSrvc.deleteContacts(ids)
 		.then((ids1) => {
-			forEach(ids1, (id) => _sharedBC.postMessage({
-				action: 'app:fiberchannel',
-				data: {
-					event: 'contacts:deleted:contact',
-					data: {
-						id
-					}
-				}
-			}));
+			forEach(ids1, (id) => 
+				fcSink('contacts:deleted:contact', { id })
+			);
 		});
 }
 
 function _removeFolders(ids) {
 	return _idbSrvc.deleteFolders(ids)
 		.then((ids1) => {
-			forEach(ids1, (id) => _sharedBC.postMessage({
-				action: 'app:fiberchannel',
-				data: {
-					event: 'contacts:deleted:folder',
-					data: {
-						id
-					}
-				}
-			}));
+			forEach(ids1, (id) => 
+				fcSink('contacts:deleted:folder', { id })
+			);
 		});
 }
 
@@ -233,15 +201,9 @@ function _processContactCreated(operation, response) {
 		.then((r) => new Promise((resolve, reject) => {
 			_idbSrvc.saveContactsData(r)
 				.then(() => {
-					forEach(r, (c) => _sharedBC.postMessage({
-						action: 'app:fiberchannel',
-						data: {
-							event: 'contacts:updated:contact',
-							data: {
-								id: c.id
-							}
-						}
-					}));
+					forEach(r, (c) => 
+						fcSink('contacts:updated:contact', { id: c.id })
+					);
 				})
 				.then((_) => resolve())
 				.catch((e) => reject(e));
@@ -257,15 +219,9 @@ function _processContactModified(operation, response) {
 		.then((r) => new Promise((resolve, reject) => {
 			_idbSrvc.saveContactsData(r)
 				.then(() => {
-					forEach(r, (c) => _sharedBC.postMessage({
-						action: 'app:fiberchannel',
-						data: {
-							event: 'contacts:updated:contact',
-							data: {
-								id: c.id
-							}
-						}
-					}));
+					forEach(r, (c) => 
+						fcSink('contacts:updated:contact', { id: c.id })
+					);
 				})
 				.then((_) => resolve())
 				.catch((e) => reject(e));
@@ -277,15 +233,9 @@ function _processContactMoved(operation, response) {
 		.then((r) => new Promise((resolve, reject) => {
 			_idbSrvc.saveContactsData(r)
 				.then(() => {
-					forEach(r, (c) => _sharedBC.postMessage({
-						action: 'app:fiberchannel',
-						data: {
-							event: 'contacts:updated:contact',
-							data: {
-								id: c.id
-							}
-						}
-					}));
+					forEach(r, (c) => 
+						fcSink('contacts:updated:contact', { id: c.id })
+					);
 				})
 				.then((_) => resolve())
 				.catch((e) => reject(e));
@@ -293,15 +243,7 @@ function _processContactMoved(operation, response) {
 }
 
 function _sendFolderUpdatedOnBC(id) {
-	_sharedBC.postMessage({
-		action: 'app:fiberchannel',
-		data: {
-			event: 'contacts:updated:folder',
-			data: {
-				id: id
-			}
-		}
-	});
+	fcSink('contacts:updated:folder', { id });
 }
 
 function _processOperationCompleted(data) {
@@ -359,13 +301,10 @@ function _processOperationCompleted(data) {
 		}
 		// Proxy te information to the shell to update the Operation queue.
 		Promise.all(promises).then(() => {
-			_sharedBC.postMessage({
-				action: 'app:fiberchannel',
-				data: {
-					to: 'com_zextras_zapp_shell',
-					event: data.action,
-					data: data.data
-				}
+			fcSink({
+				to: 'com_zextras_zapp_shell',
+				event: data.action,
+				data: data.data
 			});
 			resolve();
 		});
