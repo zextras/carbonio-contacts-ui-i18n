@@ -8,5 +8,5 @@ module.exports = {
 	pkgDescription: pkg.description,
 	version: pkg.version,
 	projectType: 'app',
-	serviceworkerEntryPoint: path.resolve(process.cwd(), 'src', 'serviceworker', 'main.js')
+	serviceworkerEntryPoint: path.resolve(process.cwd(), 'src', 'serviceworker', 'main.ts')
 };
