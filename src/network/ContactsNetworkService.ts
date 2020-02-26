@@ -2,9 +2,10 @@ import { map } from 'lodash';
 import { Contact } from '../idb/IContactsIdb';
 import { ISoapContactObj } from '../ISoap';
 import { normalizeContact } from '../idb/IdbContactsUtils';
+import { IContactNetworkService } from './IContactNetworkService';
 
 /* eslint-disable class-methods-use-this */
-export default class ContactsNetworkService {
+export default class ContactsNetworkService implements IContactNetworkService {
 	public fetchSoapContacts(ids: Array<string>): Promise<Contact[]> {
 		return new Promise((resolve, reject) => {
 			const searchReq: {} = {
