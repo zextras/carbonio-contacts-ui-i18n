@@ -147,7 +147,6 @@ function _removeFolders(ids: Array<string>): Promise<void> {
 
 function _processSOAPNotifications(syncResponse: ISoapSyncContactResponse): Promise<void> {
 	const promises: Array<Promise<void>> = [];
-	console.log('Qua:', syncResponse);
 	// First sync will have the folders
 	if (syncResponse.folder) {
 		promises.push(
