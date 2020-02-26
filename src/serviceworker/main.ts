@@ -147,6 +147,7 @@ function _removeFolders(ids: Array<string>): Promise<void> {
 
 function _processSOAPNotifications(syncResponse: ISoapSyncContactResponse): Promise<void> {
 	const promises: Array<Promise<void>> = [];
+	console.log('Qua:', syncResponse);
 	// First sync will have the folders
 	if (syncResponse.folder) {
 		promises.push(
@@ -262,7 +263,7 @@ function _processOperationCompleted(data: any): Promise<void> {
 				default:
 			}
 		}
-		// Proxy te information to the shell to update the Operation queue.
+		// Proxy the information to the shell to update the Operation queue.
 		Promise.all(promises).then((): void => {
 			fcSink<IFCPartialEvent<any>>({
 				to: 'com_zextras_zapp_shell',
@@ -274,7 +275,7 @@ function _processOperationCompleted(data: any): Promise<void> {
 	});
 }
 
-fc.pipe(filter(({ event }) => event === 'app:all-loaded'))
+fc.pipe(filter(({ event }) => event === 'SOAP:notification:handle'))
 	.subscribe((e) => _processSOAPNotifications(e.data).then().catch((e1) => console.error(e1)));
 fc.pipe(filter(({ event }) => event === 'sync:operation:completed' || event === 'sync:operation:error'))
 	.subscribe((e) => _processOperationCompleted(e.data).then().catch((e1) => console.error(e1)));
