@@ -23,6 +23,7 @@ export default function ContactList({ contactSrvc }) {
 	const folderId = contactSrvc.getFolderIdByPath(path);
 	const breadcrumbs = reduce(splitPath, (acc, crumb, index) => {
 		acc.push({
+			id: `${index}-${crumb}`,
 			label: crumb,
 			click: () => history.push(`/contacts/folder${
 				reduce(
@@ -92,6 +93,7 @@ export default function ContactList({ contactSrvc }) {
 			selected: false,
 			actions: [
 				{
+					id: 'edit',
 					label: 'Edit',
 					icon:	'EditOutline',
 					click: (ev) => {
@@ -102,6 +104,7 @@ export default function ContactList({ contactSrvc }) {
 					}
 				},
 				{
+					id: 'delete',
 					label: 'Delete',
 					icon: 'Trash2Outline',
 					click: (ev) => {
@@ -122,7 +125,7 @@ export default function ContactList({ contactSrvc }) {
 		return () => {
 			sub.unsubscribe();
 		};
-	}, [contactSrvc.contacts]);
+	}, [contactSrvc.contacts, path]);
 
 	const itemFactory = (c) => ({ index }) => (
 		<>
@@ -144,13 +147,7 @@ export default function ContactList({ contactSrvc }) {
 	);
 
 
-	const groupActions = [
-		{
-			label: 'Delete',
-			icon: 'TrashOutline',
-			click: console.log
-		}
-	];
+	const groupActions = [];
 	return (
 		<Container
 			orientation="vertical"
