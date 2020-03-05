@@ -26,6 +26,12 @@ function useObservable(observable) {
 
 const reducer = (state, action) => {
 	switch (action.type) {
+		case 'init':
+			return {
+				...action.contact,
+				tempMail: { mail: '' },
+				tempPhone: { number: '', name: ContactPhoneType.OTHER }
+			};
 		case 'edit':
 			return {
 				...state,
@@ -108,35 +114,41 @@ const reducer = (state, action) => {
 	}
 };
 
+const emptyContact = {
+	_revision: 0,
+	id: 'new',
+	parent: '7',
+	nameSuffix: '',
+	firstName: '',
+	lastName: '',
+	image: '',
+	jobTitle: '',
+	department: '',
+	company: '',
+	address: [],
+	notes: '',
+	mail: [],
+	phone: []
+};
+
 const ContactContextProvider = ({ contactSrvc, id, children }) => {
-	let contact = useObservable(contactSrvc.getContact(id));
-	if (!contact) {
-		contact = {
-			_revision: 0,
-			id: 'new',
-			parent: '7',
-			nameSuffix: '',
-			firstName: '',
-			lastName: '',
-			image: '',
-			jobTitle: '',
-			department: '',
-			company: '',
-			address: [],
-			notes: '',
-			mail: [],
-			phone: []
-		};
-	}
+	const contact = useObservable(contactSrvc.getContact(id));
+
 	const [editContact, dispatch] = useReducer(reducer, {
 		...contact,
 		tempMail: { mail: '' },
 		tempPhone: { number: '', name: ContactPhoneType.OTHER }
 	});
+	useEffect(() => dispatch(
+		{
+			type: 'init',
+			contact: contact || emptyContact
+		}
+	), [contact]);
 	return (
 		<ContactContext.Provider
 			value={{
-				contact,
+				contact: contact || emptyContact,
 				editContact,
 				save: () => {
 					if (id === 'new') {
