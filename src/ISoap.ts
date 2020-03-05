@@ -17,12 +17,22 @@ import {
 	omit
 } from 'lodash';
 import { IFolderSchmV1 } from '@zextras/zapp-shell/lib/sync/IFolderSchm';
+import { ISoapSyncDeletedMap, ISoapSyncFolderObj, ISoapSyncResponse } from '@zextras/zapp-shell/lib/network/ISoap';
 import {
 	ContactAddress,
 	ContactData,
 	ContactEmail,
 	ContactPhone
 } from './idb/IContactsIdb';
+
+export type ISoapSyncContactFolderObj = ISoapSyncFolderObj & {
+	cn: Array<{ids: string}>;
+	folder: Array<ISoapSyncContactFolderObj>;
+};
+
+export type ISoapSyncContactResponse = ISoapSyncResponse<ISoapSyncDeletedMap, ISoapSyncContactFolderObj> & {
+	cn: Array<ISoapContactObj>;
+};
 
 type SoapContactObjAttrs = {
 	jobTitle?: string;
@@ -69,6 +79,14 @@ export type CreateContactOpReq = {
 	};
 };
 
+export type CreateContactOpResp = {
+	CreateContactResponse: {
+		cn: Array<{
+			id: string;
+		}>;
+	};
+};
+
 export type ModifyContactOpReq = {
 	replace: 0 | 1;
 	force: 1;
@@ -76,6 +94,14 @@ export type ModifyContactOpReq = {
 		id: string;
 		a: ContactCreationAttr[];
 		m: Array<unknown>;
+	};
+};
+
+export type ModifyContactOpResp = {
+	ModifyContactResponse: {
+		cn: Array<{
+			id: string;
+		}>;
 	};
 };
 
@@ -93,10 +119,27 @@ export type MoveContactActionOpReq = {
 	};
 };
 
+export type MoveContactActionOpResp = {
+	ContactActionResponse: {
+		action: {
+			id: string;
+		};
+	};
+};
+
 export type DeleteContactActionOpReq = {
 	action: {
 		op: 'delete';
 		id: string;
+	};
+};
+
+export type DeleteContactActionOpResp = {
+	ContactActionResponse: {
+		action: {
+			op: 'delete';
+			id: string;
+		};
 	};
 };
 
@@ -164,7 +207,7 @@ export function normalizeContactPhonesToSoapOp(phones: ContactPhone[]): any {
 		),
 		(a, v, k) => reduce(
 			v,
-			(a1, v1, k1) => ({ ...a1, [`${k}Phone${k1 > 0 ? k1 : ''}`]: v1}),
+			(a1, v1, k1) => ({ ...a1, [`${k}Phone${k1 > 0 ? k1 : ''}`]: v1 }),
 			a
 		),
 		{}

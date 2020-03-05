@@ -9,8 +9,8 @@
  * *** END LICENSE BLOCK *****
  */
 
-import { IDBPDatabase, openDB } from 'idb';
 import { IFolderSchmV1 } from '@zextras/zapp-shell/lib/sync/IFolderSchm';
+import idbSrvc from '@zextras/zapp-shell/idb';
 import { map, reduce } from 'lodash';
 import { Contact, IContactsIdb } from './IContactsIdb';
 import { schemaVersion, upgradeFn } from './ContactsIdb';
@@ -19,26 +19,22 @@ import { IContactsIdbService } from './IContactsIdbService';
 /* eslint-disable class-methods-use-this */
 
 export default class ContactsIdbService implements IContactsIdbService {
-	private static _IDB_NAME = 'com_zextras_zapp_contacts';
 
-	private static _openDb(): Promise<IDBPDatabase<IContactsIdb>> {
-		return openDB<IContactsIdb>(
-			ContactsIdbService._IDB_NAME,
+	constructor() {
+		idbSrvc.setUpgradeFcn(
 			schemaVersion,
-			{
-				upgrade: upgradeFn
-			}
+			upgradeFn
 		);
 	}
 
 	public getContact(id: string): Promise<Contact|undefined> {
-		return ContactsIdbService._openDb()
+		return idbSrvc.openDb<IContactsIdb>()
 			.then((idb) => idb.get<'contacts'>('contacts', id));
 	}
 
 	public getAllContacts(): Promise<{[id: string]: Contact}> {
 		return new Promise(((resolve, reject) => {
-			ContactsIdbService._openDb()
+			idbSrvc.openDb<IContactsIdb>()
 				.then(
 					(idb) => idb.getAll<'contacts'>('contacts')
 						.then((contacts) => reduce<Contact, {[id: string]: Contact}>(
@@ -58,7 +54,7 @@ export default class ContactsIdbService implements IContactsIdbService {
 
 	public saveContactData(c: Contact): Promise<Contact> {
 		return new Promise(((resolve, reject) => {
-			ContactsIdbService._openDb()
+			idbSrvc.openDb<IContactsIdb>()
 				.then((idb) => idb.put<'contacts'>('contacts', c))
 				.then((_) => resolve(c))
 				.catch((e) => reject(e));
@@ -84,7 +80,7 @@ export default class ContactsIdbService implements IContactsIdbService {
 		if (ids.length < 1) return Promise.resolve([]);
 		const cCopy = [...ids];
 		const id = cCopy.shift();
-		return ContactsIdbService._openDb()
+		return idbSrvc.openDb<IContactsIdb>()
 			.then((idb) => idb.delete<'contacts'>('contacts', id!))
 			.then((_) => new Promise((resolve, reject) => {
 				if (cCopy.length === 0) resolve([id!]);
@@ -97,13 +93,13 @@ export default class ContactsIdbService implements IContactsIdbService {
 	}
 
 	public getFolder(id: string): Promise<IFolderSchmV1|void> {
-		return ContactsIdbService._openDb()
+		return idbSrvc.openDb<IContactsIdb>()
 			.then((idb) => idb.get<'folders'>('folders', id));
 	}
 
 	public getAllFolders(): Promise<{[id: string]: IFolderSchmV1}> {
 		return new Promise(((resolve, reject) => {
-			ContactsIdbService._openDb()
+			idbSrvc.openDb<IContactsIdb>()
 				.then(
 					(idb) => idb.getAll<'folders'>('folders')
 						.then((folders) => reduce<IFolderSchmV1, {[id: string]: IFolderSchmV1}>(
@@ -123,7 +119,7 @@ export default class ContactsIdbService implements IContactsIdbService {
 
 	public saveFolderData(f: IFolderSchmV1): Promise<IFolderSchmV1> {
 		return new Promise(((resolve, reject) => {
-			ContactsIdbService._openDb()
+			idbSrvc.openDb<IContactsIdb>()
 				.then((idb) => idb.put<'folders'>('folders', f))
 				.then((_) => resolve(f))
 				.catch((e) => reject(e));
@@ -134,7 +130,7 @@ export default class ContactsIdbService implements IContactsIdbService {
 		if (ids.length < 1) return Promise.resolve([]);
 		const cCopy = [...ids];
 		const id = cCopy.shift();
-		return ContactsIdbService._openDb()
+		return idbSrvc.openDb<IContactsIdb>()
 			.then((idb) => idb.delete<'folders'>('folders', id!))
 			.then((_) => new Promise((resolve, reject) => {
 				// TODO: Remove the children
@@ -149,7 +145,7 @@ export default class ContactsIdbService implements IContactsIdbService {
 
 	public moveFolder(id: string, parent: string): Promise<void> {
 		return new Promise(((resolve, reject) => {
-			ContactsIdbService._openDb()
+			idbSrvc.openDb<IContactsIdb>()
 				.then((idb) => new Promise((resolve1, reject1) => {
 					idb.get<'folders'>('folders', id)
 						.then((f) => {
@@ -183,7 +179,7 @@ export default class ContactsIdbService implements IContactsIdbService {
 
 	public renameFolder(id: string, name: string): Promise<void> {
 		return new Promise(((resolve, reject) => {
-			ContactsIdbService._openDb()
+			idbSrvc.openDb<IContactsIdb>()
 				.then((idb) => new Promise((resolve1, reject1) => {
 					idb.get<'folders'>('folders', id)
 						.then((f) => {
