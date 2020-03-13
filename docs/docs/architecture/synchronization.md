@@ -1,11 +1,10 @@
 ---
 title: Synchronization
-author: Michele Olivo
 ---
 
 The synchronisation will be divided in three different phases: initial synchronisation, retrieve changes from server, push changes on server.
 
-## Workflows
+## Workflow
 
 ### Init
 
@@ -23,7 +22,7 @@ For each element returned by the sync operated by the `SyncService` will trigger
 The synchronization is handled by the Shell and the contacts app is notified about the updates on contacts.
 The process can be syntetized with these steps:
 1. The `SyncRequest` is processed by the shell and inform for the changes using the `FiberChannel`.
-1. A `GetContactRequest` is performed to retrieve all changed Contact data.
+    1. A `GetContactRequest` is performed to retrieve all changed Contact data.
 1. Search for conflicts on incoming data and the stored one, merge strategy is defined with:
     1. Most recent edit will be kept. 
     1. If is not determinable the date of the edit, the server data is kept.
@@ -31,6 +30,6 @@ The process can be syntetized with these steps:
 1. Send edits and new contacts with `ModfifyContactRequest` and `CreateContactRequest` requests.
 
 ### Local edits
-Each edit or creation will be handled sending a create or modify operation through the `FiberChannel`.
+Each edit or creation will be handled sending a `create` or `modify` operation through the `FiberChannel`.
 
 [1]: https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API

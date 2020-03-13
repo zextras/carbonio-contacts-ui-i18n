@@ -8,13 +8,9 @@
  * http://www.zextras.com/zextras-eula.html
  * *** END LICENSE BLOCK *****
  */
-/* eslint-disable */
-import app from './app';
 
-window.__ZAPP_EXPORT__(app);
+import {Contact} from "../idb/IContactsIdb";
 
-if (module.hot) {
-	module.hot.accept('./app.jsx', () => {
-		window.__ZAPP_HMR_EXPORT__(app);
-	});
+export interface IContactNetworkService {
+	fetchSoapContacts(ids: Array<string>): Promise<Contact[]>;
 }

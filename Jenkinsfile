@@ -1,4 +1,4 @@
-@Library("zextras-library@0.4.1") _
+@Library("zextras-library@0.5.0") _
 
 def getCommitParentsCount() {
 	return sh(script: '''
@@ -150,6 +150,13 @@ pipeline {
 						cmd sh: "nvm use && npm run type-check"
 					}
 				}
+				stage('Unit tests') {
+					steps {
+						executeNpmLogin()
+						cmd sh: "nvm use && npm install"
+						cmd sh: "nvm use && npm run test"
+					}
+				}
 			}
 		}
 
@@ -249,6 +256,27 @@ pipeline {
 					doc.rm file: "iris/zapp-contacts/${BRANCH_NAME}"
 					doc.mkdir folder: "iris/zapp-contacts/${BRANCH_NAME}"
 					doc.upload file: "docs/website/build/com_zextras_zapp_contacts/**", destination: "iris/zapp-contacts/${BRANCH_NAME}"
+				}
+			}
+		}
+
+		stage('Deploy Beta') {
+			when {
+				beforeAgent true
+				allOf {
+					expression { BRANCH_NAME ==~ /(beta)/ }
+					environment name: 'COMMIT_PARENTS_COUNT', value: '1'
+				}
+			}
+			parallel {
+				stage('Deploy on demo server') {
+					steps {
+						script {
+							unstash 'zimlet_package'
+							sh 'unzip pkg/com_zextras_zapp_contacts.zip -d deploy'
+							iris.upload file: 'deploy/', destination: 'com_zextras_zapp_contacts/'
+						}
+					}
 				}
 			}
 		}

@@ -1,13 +1,16 @@
 ---
 title: ContactEditorPanel
-author: Michele Olivo
 ---
+
+The contact editor panel allow the user to edit or create contact entries for his contact list.
+
+Once the user hit the `Save` button, a `modify` or `creation` action is dispatched.
 
 ## Components Involved
 Some components may require a version specific for each screen size, that items are marked with the ⚠️ icon.
 
 | n | Component | Notes | View |
-|:-:|-----------|-------|------|
+|---|-----------|-------|------|
 | 1 | Header | A Container | 🖥️ 📱 |
 | 2 | Icon || 🖥️ 📱 |
 | 3 | Typography || 🖥️ 📱 |
@@ -24,9 +27,9 @@ Some components may require a version specific for each screen size, that items 
 | 14 | FormSection | Level 1 | 🖥️ 📱 |
 | 15 | FormSection | Level 2 | 🖥️ 📱 |
 | 16 | Input | Primary | 🖥️ 📱 |
-| 17 | Input | Other | 🖥️ 📱 |
+| 17 | Select || 🖥️ 📱 |
 | 18 | Input | Number | 🖥️ 📱 |
-| 19 | IconButton | Not visible in **Mobile** | 🖥️ 📱 ⚠️ |
+| 19 | IconButton | Visible only to delete the current row, not visible if the row is empty. | 🖥️⚠️ |
 | 20 | Content | A Container | 🖥️ 📱 |
 | 21 | Footer | A Container | 🖥️ 📱 |
 

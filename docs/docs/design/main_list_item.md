@@ -1,6 +1,5 @@
 ---
 title: ContactListItem
-author: Michele Olivo
 ---
 
 ## Components Involved

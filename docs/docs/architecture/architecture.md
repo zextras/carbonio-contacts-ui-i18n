@@ -1,6 +1,5 @@
 ---
 title: Architecture
-author: Michele Olivo
 ---
 
 The Contacts App needs to keep Contacts data synchronized on the client.

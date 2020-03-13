@@ -1,6 +1,6 @@
 /*
  * *** BEGIN LICENSE BLOCK *****
- * Copyright (C) 2011-2019 ZeXtras
+ * Copyright (C) 2011-2020 ZeXtras
  *
  * The contents of this file are subject to the ZeXtras EULA;
  * you may not use this file except in compliance with the EULA.
@@ -10,16 +10,31 @@
  */
 
 import React from 'react';
-import { Contacts } from '@material-ui/icons';
-import { registerRoute, addMainMenuItem } from '@zextras/zapp-shell/router';
+import { registerRoute, addMainMenuItem, addCreateMenuItem } from '@zextras/zapp-shell/router';
 
-import App from './components/App';
+import App, { ROUTE as mainRoute } from './components/App';
+import ContactsService from './ContactsService';
+import ContactsIdbService from './idb/ContactsIdbService';
+import { registerTranslations } from './i18n/i18n';
 
 export default function app() {
-	addMainMenuItem(
-		<Contacts />,
-		'Contacts',
-		'/contacts'
+	const idbSrvc = new ContactsIdbService();
+	const contactSrvc = new ContactsService(
+		idbSrvc
 	);
-	registerRoute('/contacts', App, {});
+
+	registerTranslations();
+
+	addMainMenuItem(
+		'PeopleOutline',
+		'Contacts',
+		'/contacts/folder/Contacts',
+		contactSrvc.menuFolders
+	);
+	addCreateMenuItem(
+		'PersonOutline',
+		'Contact',
+		'/contacts/folder/Contacts?edit=new'
+	);
+	registerRoute(mainRoute, App, { contactSrvc });
 }
