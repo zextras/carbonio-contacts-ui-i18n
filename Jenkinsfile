@@ -1,5 +1,9 @@
 @Library("zextras-library@0.5.0") _
 
+def nodeCmd(String cmd) {
+	sh '. load_nvm && nvm install && nvm use && ' + cmd
+}
+
 def getCommitParentsCount() {
 	return sh(script: '''
 		COMMIT_ID=$(git log -1 --oneline | sed 's/ .*//')
@@ -31,7 +35,7 @@ def executeNpmLogin() {
 						-X PUT --data \'{"name": "${AUTH_USERNAME}", "password": "${AUTH_PASSWORD}"}\' \
 						http://registry.npmjs.com/-/user/org.couchdb.user:${AUTH_USERNAME} 2>&1 | grep -Po \
 						\'(?<="token":")[^"]*\';
-					""",
+				""",
 				returnStdout: true
 		).trim()
 		sh(
@@ -41,7 +45,6 @@ def executeNpmLogin() {
 					""",
 				returnStdout: true
 		).trim()
-	
 	}
 }
 
@@ -64,7 +67,7 @@ def calculateNextVersion() {
 pipeline {
 	agent {
 		node {
-			label 'nodejs-agent-v1'
+			label 'nodejs-agent-v2'
 		}
 	}
 	options {
@@ -144,17 +147,15 @@ pipeline {
 			}
 			parallel {
 				stage('Type Checking') {
-					steps {
-						executeNpmLogin()
-						cmd sh: "nvm use && npm install"
-						cmd sh: "nvm use && npm run type-check"
+					agent {
+						node {
+							label 'nodejs-agent-v2'
+						}
 					}
-				}
-				stage('Unit tests') {
 					steps {
 						executeNpmLogin()
-						cmd sh: "nvm use && npm install"
-						cmd sh: "nvm use && npm run test"
+						nodeCmd 'npm install'
+						nodeCmd 'npm run type-check'
 					}
 				}
 			}
@@ -163,17 +164,13 @@ pipeline {
 //============================================ Build ===================================================================
 
 		stage('Build') {
-			when {
-				beforeAgent true
-				not {
-					allOf {
-						expression { BRANCH_NAME ==~ /(release|beta)/ }
-						environment name: 'COMMIT_PARENTS_COUNT', value: '2'
-					}
-				}
-			}
 			parallel {
 				stage('Build package') {
+					agent {
+						node {
+							label 'nodejs-agent-v2'
+						}
+					}
 					when {
 						beforeAgent true
 						not {
@@ -181,11 +178,6 @@ pipeline {
 								expression { BRANCH_NAME ==~ /(release|beta)/ }
 								environment name: 'COMMIT_PARENTS_COUNT', value: '2'
 							}
-						}
-					}
-					agent {
-						node {
-							label 'nodejs-agent-v1'
 						}
 					}
 					steps {
@@ -196,16 +188,16 @@ pipeline {
 					}
 				}
 				stage('Build documentation') {
+					agent {
+						node {
+							label 'nodejs-agent-v2'
+						}
+					}
 					when {
 						beforeAgent true
 						allOf {
 							expression { BRANCH_NAME ==~ /(release|beta)/ }
 							environment name: 'COMMIT_PARENTS_COUNT', value: '1'
-						}
-					}
-					agent {
-						node {
-							label 'nodejs-agent-v2'
 						}
 					}
 					steps {
@@ -220,6 +212,11 @@ pipeline {
 		}
 
 		stage('Sign Zimlet Package') {
+			agent {
+				node {
+					label 'nodejs-agent-v2'
+				}
+			}
 			when {
 				beforeAgent true
 				not {
@@ -242,55 +239,54 @@ pipeline {
 			}
 		}
 
-		stage('Deploy documentation') {
-			when {
-				beforeAgent true
-				allOf {
-					expression { BRANCH_NAME ==~ /(release|beta)/ }
-					environment name: 'COMMIT_PARENTS_COUNT', value: '1'
-				}
-			}
-			steps {
-				script {
-					unstash 'doc'
-					doc.rm file: "iris/zapp-contacts/${BRANCH_NAME}"
-					doc.mkdir folder: "iris/zapp-contacts/${BRANCH_NAME}"
-					doc.upload file: "docs/website/build/com_zextras_zapp_contacts/**", destination: "iris/zapp-contacts/${BRANCH_NAME}"
-				}
-			}
-		}
-
-		stage('Deploy Beta') {
-			when {
-				beforeAgent true
-				allOf {
-					expression { BRANCH_NAME ==~ /(beta)/ }
-					environment name: 'COMMIT_PARENTS_COUNT', value: '1'
-				}
-			}
+		stage('Deploy') {
 			parallel {
-				stage('Deploy on demo server') {
+				stage('Deploy documentation') {
+					agent {
+						node {
+							label 'nodejs-agent-v2'
+						}
+					}
+					when {
+						beforeAgent true
+						allOf {
+							expression { BRANCH_NAME ==~ /(release|beta)/ }
+							environment name: 'COMMIT_PARENTS_COUNT', value: '1'
+						}
+					}
+					steps {
+						script {
+							unstash 'doc'
+							doc.rm file: "iris/zapp-contacts/${BRANCH_NAME}"
+							doc.mkdir folder: "iris/zapp-contacts/${BRANCH_NAME}"
+							doc.upload file: "docs/website/build/com_zextras_zapp_contacts/**", destination: "iris/zapp-contacts/${BRANCH_NAME}"
+						}
+					}
+				}
+				stage('Deploy Beta on demo server') {
+					agent {
+						node {
+							label 'nodejs-agent-v2'
+						}
+					}
+					when {
+						beforeAgent true
+						allOf {
+							expression { BRANCH_NAME ==~ /(beta)/ }
+							environment name: 'COMMIT_PARENTS_COUNT', value: '1'
+						}
+					}
 					steps {
 						script {
 							unstash 'zimlet_package'
 							sh 'unzip pkg/com_zextras_zapp_contacts.zip -d deploy'
-							iris.upload file: 'deploy/', destination: 'com_zextras_zapp_contacts/'
+							iris.rm file: 'com_zextras_zapp_contacts/*'
+							// iris.mkdir folder: 'com_zextras_zapp_contacts'
+							iris.upload file: 'deploy/*', destination: 'com_zextras_zapp_contacts/'
 						}
 					}
 				}
 			}
-		}
-	}
-
-	post {
-		always {
-			script {
-				GIT_COMMIT_EMAIL = sh(
-						script: 'git --no-pager show -s --format=\'%ae\'',
-						returnStdout: true
-				).trim()
-			}
-			emailext attachLog: true, body: '$DEFAULT_CONTENT', recipientProviders: [requestor()], subject: '$DEFAULT_SUBJECT', to: "${GIT_COMMIT_EMAIL}"
 		}
 	}
 }
