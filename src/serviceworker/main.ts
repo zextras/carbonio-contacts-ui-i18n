@@ -37,9 +37,13 @@ import { Contact } from '../idb/IContactsIdb';
 import ContactsIdbService from '../idb/ContactsIdbService';
 import { normalizeContact, normalizeFolder } from '../idb/IdbContactsUtils';
 import ContactsNetworkService from '../network/ContactsNetworkService';
+import { ContactsDb } from '../idb/ContactsDb';
+import { ContactsDbSOAPSync } from '../idb/ContactsDbSOAPSync';
 
 const _idbSrvc = new ContactsIdbService();
 const _networkSrvc = new ContactsNetworkService();
+
+const db = new ContactsDb();
 
 // function _fetchSoapContactsByFolder(f) {
 // 	if (f.n === 0) return Promise.resolve([false, []]);
@@ -146,6 +150,8 @@ function _removeFolders(ids: Array<string>): Promise<void> {
 }
 
 function _processSOAPNotifications(syncResponse: ISoapSyncContactResponse): Promise<void> {
+	return Promise.resolve();
+
 	const promises: Array<Promise<void>> = [];
 	// First sync will have the folders
 	if (syncResponse.folder) {
@@ -278,3 +284,15 @@ fc.pipe(filter(({ event }) => event === 'SOAP:notification:handle'))
 	.subscribe((e) => _processSOAPNotifications(e.data).then().catch((e1) => console.error(e1)));
 fc.pipe(filter(({ event }) => event === 'sync:operation:completed' || event === 'sync:operation:error'))
 	.subscribe((e) => _processOperationCompleted(e.data).then().catch((e1) => console.error(e1)));
+/*
+fc.pipe(
+	filter(({ event }) => event === 'app:all-loaded')
+).subscribe(() => {
+	db.open().then((d) => {
+		console.log('DB Opened');
+		d.contacts.add({ email: 'email1' }).then(console.log);
+		d.contacts.add({ email: 'email2' }).then(console.log);
+		d.contacts.add({ email: 'email3' }).then(console.log);
+	});
+});
+*/
