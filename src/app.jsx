@@ -9,18 +9,22 @@
  * *** END LICENSE BLOCK *****
  */
 
-import React from 'react';
-import { registerRoute, addMainMenuItem, addCreateMenuItem } from '@zextras/zapp-shell/router';
+// import React from 'react';
+// import { registerRoute, addMainMenuItem, addCreateMenuItem } from '@zextras/zapp-shell/router';
 
-import { filter as loFilter, reduce } from 'lodash';
-import { BehaviorSubject } from 'rxjs';
-import App, { ROUTE as mainRoute } from './components/App';
-import ContactsService from './ContactsService';
-import ContactsIdbService from './idb/ContactsIdbService';
-import { registerTranslations } from './i18n/i18n';
-import { ContactsDb } from './idb/ContactsDb';
-import { ContactsDbSOAPSync } from './idb/ContactsDbSOAPSync';
+// import { filter as loFilter, reduce } from 'lodash';
+// import { BehaviorSubject } from 'rxjs';
+// import App, { ROUTE as mainRoute } from './components/App';
+// import ContactsService from './ContactsService';
+// import ContactsIdbService from './idb/ContactsIdbService';
+// import { registerTranslations } from './i18n/i18n';
+// import { ContactsDb } from './idb/ContactsDb';
+// import { ContactsDbSOAPSync } from './idb/ContactsDbSOAPSync';
 
+import { setMainMenuItems, setRoutes } from '@zextras/zapp-shell';
+import { lazy } from 'react';
+
+/*
 function _subfolders(
 	folders,
 	parentId
@@ -63,8 +67,49 @@ function _foldersToIMainMenuItem(folders) {
 		[]
 	);
 }
+*/
+
+const lazyFolderView = lazy(() => (import(/* webpackChunkName: "folder-view" */ './v2/folder-view')));
+const lazyEditView = lazy(() => (import(/* webpackChunkName: "edit-view" */ './v2/edit-view')));
 
 export default function app() {
+	console.log('Hello from contacts');
+
+	setMainMenuItems([{
+		id: 'contacts-main',
+		icon: 'PeopleOutline',
+		to: '/',
+		label: 'Contacts',
+		children: [
+			{
+				id: 'folder-4',
+				label: 'Folder 4',
+				to: '/folder/4'
+			},
+			{
+				id: 'folder-3',
+				label: 'Trash',
+				to: '/folder/3'
+			}
+		]
+	}]);
+
+	setRoutes([
+		{
+			route: '/folder/:folderId',
+			view: lazyFolderView
+		},
+		{
+			route: '/',
+			view: lazyFolderView
+		},
+		{
+			route: '/edit/:id?',
+			view: lazyEditView
+		}
+	]);
+
+	/*
 	const db = new ContactsDb();
 	const soapSync = new ContactsDbSOAPSync();
 	db.registerSyncProtocol('soap-contacts', soapSync);
@@ -94,4 +139,5 @@ export default function app() {
 	// 	'/contacts/folder/Contacts?edit=new'
 	// );
 	registerRoute(mainRoute, App, { contactSrvc, db });
+	*/
 }
