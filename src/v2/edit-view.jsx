@@ -1,12 +1,34 @@
+/*
+ * *** BEGIN LICENSE BLOCK *****
+ * Copyright (C) 2011-2020 ZeXtras
+ *
+ * The contents of this file are subject to the ZeXtras EULA;
+ * you may not use this file except in compliance with the EULA.
+ * You may obtain a copy of the EULA at
+ * http://www.zextras.com/zextras-eula.html
+ * *** END LICENSE BLOCK *****
+ */
+
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import { useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
 
 export default function FolderView() {
-    let { id } = useParams();
+	let { id } = useParams();
+	const history = useHistory();
+	const doSave = useCallback(() => {
+		history.push('/com_zextras_zapp_contacts/edit/1234');
+	}, [history]);
 
-    return (
-        <div>
-            Edit contact: { id }
-        </div>
-    );
+	return (
+		<div>
+			Edit contact:
+			{ id }
+			<br />
+			<Link to="/edit/4567">My link</Link>
+			<br />
+			<button onClick={doSave}>Save</button>
+		</div>
+	);
 }

@@ -37,13 +37,13 @@ import { Contact } from '../idb/IContactsIdb';
 import ContactsIdbService from '../idb/ContactsIdbService';
 import { normalizeContact, normalizeFolder } from '../idb/IdbContactsUtils';
 import ContactsNetworkService from '../network/ContactsNetworkService';
-import { ContactsDb } from '../idb/ContactsDb';
-import { ContactsDbSOAPSync } from '../idb/ContactsDbSOAPSync';
+// import { ContactsDb } from '../idb/ContactsDb';
+// import { ContactsDbSOAPSync } from '../idb/ContactsDbSOAPSync';
 
 const _idbSrvc = new ContactsIdbService();
 const _networkSrvc = new ContactsNetworkService();
 
-const db = new ContactsDb();
+// const db = new ContactsDb();
 
 // function _fetchSoapContactsByFolder(f) {
 // 	if (f.n === 0) return Promise.resolve([false, []]);

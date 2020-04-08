@@ -21,8 +21,10 @@
 // import { ContactsDb } from './idb/ContactsDb';
 // import { ContactsDbSOAPSync } from './idb/ContactsDbSOAPSync';
 
-import { setMainMenuItems, setRoutes } from '@zextras/zapp-shell';
+import { setMainMenuItems, setRoutes, setCreateOptions } from '@zextras/zapp-shell';
 import { lazy } from 'react';
+import { ContactsDb } from './v2/db/contacts-db';
+import { ContactsDbSoapSyncProtocol } from './v2/db/contacts-db-soap-sync-protocol';
 
 /*
 function _subfolders(
@@ -75,6 +77,14 @@ const lazyEditView = lazy(() => (import(/* webpackChunkName: "edit-view" */ './v
 export default function app() {
 	console.log('Hello from contacts');
 
+	const db = new ContactsDb();
+	const syncProtocol = new ContactsDbSoapSyncProtocol(db);
+	db.registerSyncProtocol('soap-contacts', syncProtocol);
+	db.syncable.connect('soap-contacts', '/service/soap/SyncRequest');
+	// db.syncable.on('statusChanged', (newStatus, url) => {
+	// 	console.log ("Sync Status changed: " + Dexie.Syncable.StatusTexts[newStatus]);
+	// });
+
 	setMainMenuItems([{
 		id: 'contacts-main',
 		icon: 'PeopleOutline',
@@ -82,8 +92,13 @@ export default function app() {
 		label: 'Contacts',
 		children: [
 			{
+				id: 'folder-7',
+				label: 'Contacts',
+				to: '/folder/7'
+			},
+			{
 				id: 'folder-4',
-				label: 'Folder 4',
+				label: 'Mailed Contacts',
 				to: '/folder/4'
 			},
 			{
@@ -104,17 +119,22 @@ export default function app() {
 			view: lazyFolderView
 		},
 		{
-			route: '/edit/:id?',
+			route: '/edit/:id',
+			view: lazyEditView
+		},
+		{
+			route: '/new',
 			view: lazyEditView
 		}
 	]);
 
-	/*
-	const db = new ContactsDb();
-	const soapSync = new ContactsDbSOAPSync();
-	db.registerSyncProtocol('soap-contacts', soapSync);
-	db.syncable.connect('soap-contacts', '/service/soap/SyncRequest');
+	setCreateOptions([{
+		id: 'create-contact',
+		label: 'New Contact',
+		panel: { path: '/new' }
+	}]);
 
+	/*
 	const idbSrvc = new ContactsIdbService();
 	const contactSrvc = new ContactsService(
 		idbSrvc
