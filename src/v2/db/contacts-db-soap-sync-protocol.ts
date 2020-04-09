@@ -411,7 +411,7 @@ export class ContactsDbSoapSyncProtocol implements ISyncProtocol {
 							r.push({
 								type: 2,
 								table: 'folders',
-								key: v._id,
+								key: oldContactFolder._id,
 								mods
 							});
 						}

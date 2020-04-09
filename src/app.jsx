@@ -21,10 +21,11 @@
 // import { ContactsDb } from './idb/ContactsDb';
 // import { ContactsDbSOAPSync } from './idb/ContactsDbSOAPSync';
 
-import { setMainMenuItems, setRoutes, setCreateOptions } from '@zextras/zapp-shell';
+import { setMainMenuItems, setRoutes, setCreateOptions, setAppContext } from '@zextras/zapp-shell';
 import { lazy } from 'react';
 import { ContactsDb } from './v2/db/contacts-db';
 import { ContactsDbSoapSyncProtocol } from './v2/db/contacts-db-soap-sync-protocol';
+import mainMenuItems from './v2/main-menu-items';
 
 /*
 function _subfolders(
@@ -77,37 +78,26 @@ const lazyEditView = lazy(() => (import(/* webpackChunkName: "edit-view" */ './v
 export default function app() {
 	console.log('Hello from contacts');
 
-	const db = new ContactsDb();
-	const syncProtocol = new ContactsDbSoapSyncProtocol(db);
-	db.registerSyncProtocol('soap-contacts', syncProtocol);
-	db.syncable.connect('soap-contacts', '/service/soap/SyncRequest');
-	// db.syncable.on('statusChanged', (newStatus, url) => {
-	// 	console.log ("Sync Status changed: " + Dexie.Syncable.StatusTexts[newStatus]);
-	// });
-
 	setMainMenuItems([{
 		id: 'contacts-main',
 		icon: 'PeopleOutline',
 		to: '/',
 		label: 'Contacts',
-		children: [
-			{
-				id: 'folder-7',
-				label: 'Contacts',
-				to: '/folder/7'
-			},
-			{
-				id: 'folder-4',
-				label: 'Mailed Contacts',
-				to: '/folder/4'
-			},
-			{
-				id: 'folder-3',
-				label: 'Trash',
-				to: '/folder/3'
-			}
-		]
+		children: []
 	}]);
+
+	const db = new ContactsDb();
+	const syncProtocol = new ContactsDbSoapSyncProtocol(db);
+	db.registerSyncProtocol('soap-contacts', syncProtocol);
+	db.syncable.connect('soap-contacts', '/service/soap/SyncRequest');
+
+	setAppContext({
+		db
+	});
+
+	db
+		.observe(() => db.folders.where({ parent: '1' }).sortBy('name'))
+		.subscribe((folders) => mainMenuItems(folders, db));
 
 	setRoutes([
 		{
@@ -133,31 +123,4 @@ export default function app() {
 		label: 'New Contact',
 		panel: { path: '/new' }
 	}]);
-
-	/*
-	const idbSrvc = new ContactsIdbService();
-	const contactSrvc = new ContactsService(
-		idbSrvc
-	);
-
-	registerTranslations();
-
-	const menuFolders = new BehaviorSubject([]);
-	db.observe(() => db.folders.toArray()).subscribe((f) => {
-		menuFolders.next(_foldersToIMainMenuItem(f));
-	});
-
-	addMainMenuItem(
-		'PeopleOutline',
-		'Contacts',
-		'/contacts/folder/7',
-		menuFolders
-	);
-	// addCreateMenuItem(
-	// 	'PersonOutline',
-	// 	'Contact',
-	// 	'/contacts/folder/Contacts?edit=new'
-	// );
-	registerRoute(mainRoute, App, { contactSrvc, db });
-	*/
 }

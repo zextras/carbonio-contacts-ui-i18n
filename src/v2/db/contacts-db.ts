@@ -22,7 +22,7 @@ export class ContactsDb extends Dexie {
 		super('contacts');
 		this.version(1).stores({
 			contacts: '$$_id, id, mail, parent',
-			folders: '$$_id, id, name, path, parent',
+			folders: '$$_id, id, name, parent',
 		});
 		this.contacts = this.table('contacts');
 		this.contacts.mapToClass(Contact);

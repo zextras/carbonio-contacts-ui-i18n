@@ -8,14 +8,13 @@
  * http://www.zextras.com/zextras-eula.html
  * *** END LICENSE BLOCK *****
  */
-
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 
 export default function FolderView() {
-	let { id } = useParams();
+	const { id } = useParams();
 	const history = useHistory();
 	const doSave = useCallback(() => {
 		history.push('/com_zextras_zapp_contacts/edit/1234');
