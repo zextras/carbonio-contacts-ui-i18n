@@ -21,12 +21,16 @@ export class ContactsDb extends Dexie {
 	constructor() {
 		super('contacts');
 		this.version(1).stores({
-			contacts: '$$_id, id, mail, parent',
-			folders: '$$_id, id, name, parent',
+			contacts: '$$_id, id, *mail, parent',
+			folders: '$$_id, id, parent',
 		});
 		this.contacts = this.table('contacts');
 		this.contacts.mapToClass(Contact);
 		this.folders = this.table('folders');
 		this.folders.mapToClass(ContactsFolder);
+	}
+
+	public getFolderChildren(folder: ContactsFolder): Promise<ContactsFolder[]> {
+		return this.folders.where({ parent: folder.id }).sortBy('name');
 	}
 }

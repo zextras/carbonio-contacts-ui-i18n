@@ -8,24 +8,46 @@
  * http://www.zextras.com/zextras-eula.html
  * *** END LICENSE BLOCK *****
  */
-import React from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+import { hooks } from '@zextras/zapp-shell';
+import { Contact } from './db/contact';
 
 export default function FolderView() {
 	const { id } = useParams();
-	const history = useHistory();
+	const { db } = hooks.useAppContext();
+	const pushHistory = hooks.usePushHistoryCallback();
+	const [contact, setContact] = useState(id ? null : new Contact({ parent: '7' }));
+
+	useEffect(() => {
+		let canSet = true;
+		if (id && db) {
+			db.contacts
+				.where({ _id: id })
+				.toArray()
+				.then(
+					(c) => canSet && setContact(c[0])
+				);
+		}
+		return () => {
+			canSet = false;
+		};
+	}, [id, db]);
+
 	const doSave = useCallback(() => {
-		history.push('/com_zextras_zapp_contacts/edit/1234');
-	}, [history]);
+		if (!id) {
+			db.contacts
+				.add(contact)
+				.then((cid) => pushHistory(`/edit/${cid}`));
+		}
+		db.contacts.update(contact._id, contact);
+	}, [contact, id, db, pushHistory]);
 
 	return (
 		<div>
 			Edit contact:
 			{ id }
 			<br />
-			<Link to="/edit/4567">My link</Link>
 			<br />
 			<button onClick={doSave}>Save</button>
 		</div>

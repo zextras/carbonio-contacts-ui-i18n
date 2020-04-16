@@ -9,68 +9,16 @@
  * *** END LICENSE BLOCK *****
  */
 
-// import React from 'react';
-// import { registerRoute, addMainMenuItem, addCreateMenuItem } from '@zextras/zapp-shell/router';
-
-// import { filter as loFilter, reduce } from 'lodash';
-// import { BehaviorSubject } from 'rxjs';
-// import App, { ROUTE as mainRoute } from './components/App';
-// import ContactsService from './ContactsService';
-// import ContactsIdbService from './idb/ContactsIdbService';
-// import { registerTranslations } from './i18n/i18n';
-// import { ContactsDb } from './idb/ContactsDb';
-// import { ContactsDbSOAPSync } from './idb/ContactsDbSOAPSync';
-
-import { setMainMenuItems, setRoutes, setCreateOptions, setAppContext } from '@zextras/zapp-shell';
+import {
+	setMainMenuItems,
+	setRoutes,
+	setCreateOptions,
+	setAppContext
+} from '@zextras/zapp-shell';
 import { lazy } from 'react';
 import { ContactsDb } from './v2/db/contacts-db';
 import { ContactsDbSoapSyncProtocol } from './v2/db/contacts-db-soap-sync-protocol';
 import mainMenuItems from './v2/main-menu-items';
-
-/*
-function _subfolders(
-	folders,
-	parentId
-) {
-	return reduce(
-		loFilter(
-			folders,
-			(folder) => folder.parent === parentId
-		),
-		(acc, folder) => {
-			acc.push(
-				{
-					id: folder._id,
-					label: folder.name,
-					to: `/contacts/folder/${folder.id}`,
-					children: _subfolders(folders, folder.id)
-				}
-			);
-			return acc;
-		},
-		[]
-	);
-}
-
-function _foldersToIMainMenuItem(folders) {
-	return reduce(
-		loFilter(folders, (folder) => folder.parent === '1'),
-		(acc, folder) => {
-			acc.push(
-				{
-					icon: 'PeopleOutline',
-					id: folder._id,
-					label: folder.name,
-					to: `/contacts/folder/${folder.id}`,
-					children: _subfolders(folders, folder.id)
-				}
-			);
-			return acc;
-		},
-		[]
-	);
-}
-*/
 
 const lazyFolderView = lazy(() => (import(/* webpackChunkName: "folder-view" */ './v2/folder-view')));
 const lazyEditView = lazy(() => (import(/* webpackChunkName: "edit-view" */ './v2/edit-view')));
@@ -98,6 +46,25 @@ export default function app() {
 	db
 		.observe(() => db.folders.where({ parent: '1' }).sortBy('name'))
 		.subscribe((folders) => mainMenuItems(folders, db));
+
+	// const toAdd = [];
+	// for (let i = 0; i < 10000; i += 1) {
+	// 	toAdd.push(new Contact({
+	// 		parent: '277',
+	// 		address: [],
+	// 		company: '',
+	// 		department: '',
+	// 		mail: [{ mail: `user.${i}@example.com` }],
+	// 		firstName: `User ${i}`,
+	// 		lastName: '',
+	// 		image: '',
+	// 		jobTitle: '',
+	// 		notes: '',
+	// 		phone: [],
+	// 		nameSuffix: ''
+	// 	}));
+	// }
+	// db.contacts.bulkAdd(toAdd).then(console.log);
 
 	setRoutes([
 		{

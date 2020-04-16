@@ -9,9 +9,9 @@
  * *** END LICENSE BLOCK *****
  */
 import { setMainMenuItems } from '@zextras/zapp-shell';
+import { reduce } from 'lodash';
 import { ContactsFolder } from './db/contacts-folder';
 import { ContactsDb } from './db/contacts-db';
-import { reduce } from 'lodash';
 
 type MainMenuItem = {
 	id: string;
@@ -21,7 +21,7 @@ type MainMenuItem = {
 };
 
 function buildMenuItem(folder: ContactsFolder, db: ContactsDb): Promise<MainMenuItem> {
-	return folder.getChildren(db)
+	return db.getFolderChildren(folder)
 		.then(
 			(children) => Promise.all(
 				reduce<ContactsFolder, Promise<MainMenuItem>[]>(
@@ -41,13 +41,13 @@ function buildMenuItem(folder: ContactsFolder, db: ContactsDb): Promise<MainMenu
 					label: folder.name,
 					to: `/folder/${folder.id}`,
 					children: childrn
-				}
+				};
 			}
 			return {
 				id: `contacts-folder-${folder.id}`,
 				label: folder.name,
 				to: `/folder/${folder.id}`
-			}
+			};
 		});
 }
 
@@ -69,6 +69,6 @@ export default function mainMenuItems(folders: ContactsFolder[], db: ContactsDb)
 				to: '/',
 				label: 'Contacts',
 				children
-			}])
+			}]);
 		});
 }

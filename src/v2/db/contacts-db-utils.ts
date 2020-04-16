@@ -13,7 +13,14 @@ import { map, pickBy } from 'lodash';
 import { ISoapFolderObj } from '@zextras/zapp-shell/lib/network/ISoap';
 import { ISoapContactObj } from '../soap';
 import { ContactsFolder } from './contacts-folder';
-import { ContactAddress, ContactAddressType, ContactPhoneType, ContactEmail, ContactPhone, Contact } from './contact';
+import {
+	ContactAddress,
+	ContactAddressType,
+	ContactPhoneType,
+	ContactEmail,
+	ContactPhone,
+	Contact
+} from './contact';
 
 const MAIL_REG = /^email(\d*)$/;
 const PHONE_REG = /^(.*)Phone(\d*)$/;

@@ -87,20 +87,20 @@ export class Contact implements IContact {
 	nameSuffix: string;
 
 	constructor({
-								parent,
-								id,
-								address,
-								company,
-								department,
-								mail,
-								firstName,
-								lastName,
-								image,
-								jobTitle,
-								notes,
-								phone,
-								nameSuffix
-							}: IContact) {
+		parent,
+		id,
+		address,
+		company,
+		department,
+		mail,
+		firstName,
+		lastName,
+		image,
+		jobTitle,
+		notes,
+		phone,
+		nameSuffix
+	}: IContact) {
 		this.parent = parent;
 		this.id = id;
 		this.address = address;

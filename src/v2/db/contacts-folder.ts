@@ -9,8 +9,6 @@
  * *** END LICENSE BLOCK *****
  */
 
-import { ContactsDb } from './contacts-db';
-
 export interface IContactsFolder {
 	/** Internal UUID */ _id?: string;
 	/** Zimbra ID */ id?: string;
@@ -57,9 +55,5 @@ export class ContactsFolder implements IContactsFolder {
 		this.unreadCount = unreadCount;
 		this.size = size;
 		this.parent = parent;
-	}
-
-	public getChildren(db: ContactsDb): Promise<ContactsFolder[]> {
-		return db.folders.where({ parent: this.id }).sortBy('name');
 	}
 }

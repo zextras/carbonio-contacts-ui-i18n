@@ -282,12 +282,24 @@ export class ContactsDbSoapSyncProtocol implements ISyncProtocol {
 					.then((container) => this._createDeleteContactOperations(container))
 					.then((container) => this._createDeleteContactFoldersOperations(container))
 					.then(({ syncChanges, syncToken }) => {
-						console.log('Sync Changes', syncChanges);
-						return applyRemoteChanges(syncChanges as IDatabaseChange[], syncToken, false);
-					})
-					.then(() => {
-						console.log('Remote changes applied');
-						onSuccess({ again: POLL_INTERVAL });
+						if (!context.clientIdentity) {
+							// eslint-disable-next-line no-param-reassign
+							context.clientIdentity = '';
+							return context.save().then(
+								() => applyRemoteChanges(syncChanges as IDatabaseChange[], syncToken, false)
+									.then(() => {
+										onChangesAccepted();
+										onSuccess({ again: POLL_INTERVAL });
+									})
+							).catch((e) => {
+								onError(e, Infinity);
+							});
+						}
+						return applyRemoteChanges(syncChanges as IDatabaseChange[], syncToken, false)
+							.then(() => {
+								onChangesAccepted();
+								onSuccess({ again: POLL_INTERVAL });
+							});
 					})
 			)
 			.catch((e) => {
