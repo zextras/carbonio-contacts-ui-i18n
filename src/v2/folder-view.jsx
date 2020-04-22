@@ -117,7 +117,7 @@ export default function FolderView() {
 				</ListContainer>
 			</SecondaryBar>
 			{ typeof previewId !== 'undefined' && (
-				<ContactPreviewPanel contactInternalId={previewId} />
+				<ContactPreviewPanel contactInternalId={previewId} folderId={folderId}/>
 			)}
 		</ViewContainer>
 	);

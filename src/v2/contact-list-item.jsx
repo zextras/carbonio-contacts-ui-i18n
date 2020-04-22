@@ -11,8 +11,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Contact } from './db/contact';
 import { Link } from 'react-router-dom';
+import { Contact } from './db/contact';
 
 const Container = styled.div`
 	height: 68px;
@@ -57,7 +57,8 @@ export default function ContactListItem({ contact, style }) {
 				</Avatar>
 				<Data>
 					<NameContainer>
-						<span>{ contact.firstName }</span> <span>{ contact.lastName }</span>
+						<span>{ contact.firstName }</span>
+						<span>{ contact.lastName }</span>
 					</NameContainer>
 					<MailContainer>
 						{ (contact.mail || []).length > 0 && contact.mail[0].mail }
