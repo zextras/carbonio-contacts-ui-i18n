@@ -15,14 +15,17 @@ import {
 	PollContinuation,
 	ReactiveContinuation
 } from 'dexie-syncable/api';
-import { ICreateChange, IDatabaseChange } from 'dexie-observable/api';
+import { ICreateChange, IDatabaseChange, IDeleteChange, IUpdateChange } from 'dexie-observable/api';
 import {
 	forEach,
 	map,
 	reduce,
 	difference,
 	includes,
-	find
+	find,
+	values,
+	keys,
+	filter
 } from 'lodash';
 import { normalizeContact, normalizeFolder } from './contacts-db-utils';
 import { ContactsFolder } from './contacts-folder';
@@ -33,6 +36,7 @@ import { Contact } from './contact';
 const POLL_INTERVAL = 20000;
 
 type SyncChainContainer = {
+	changesSentContainer: ChangesSentContainer;
 	newOrUpdatedFolders: ContactsFolder[];
 	newOrUpdatesContactIds: string[];
 	deletedFolders: string[];
@@ -40,6 +44,11 @@ type SyncChainContainer = {
 	syncChanges: IDatabaseChange[];
 	syncToken: string;
 	isInitialSync: boolean;
+};
+
+type ChangesSentContainer = {
+	zimbraToInternalIds: {[id: string]: string};
+	deletedRemappedRowId: string[];
 };
 
 export class ContactsDbSoapSyncProtocol implements ISyncProtocol {
@@ -63,6 +72,7 @@ export class ContactsDbSoapSyncProtocol implements ISyncProtocol {
 
 	private static _calculateContactMods(oldC: Contact, newC: Contact): {[keyPath: string]: any | undefined} {
 		const mods: {[keyPath: string]: any | undefined} = {};
+		if (oldC.id !== newC.id) mods.id = newC.id;
 		if (oldC.parent !== newC.parent) mods.parent = newC.parent;
 		if (oldC.company !== newC.company) mods.company = newC.company;
 		if (oldC.department !== newC.department) mods.department = newC.department;
@@ -91,30 +101,30 @@ export class ContactsDbSoapSyncProtocol implements ISyncProtocol {
 
 	private static _createContact(
 		c: ICreateChange,
-		applyRemoteChanges: (changes: IDatabaseChange[], lastRevision: any, partial?: boolean, clear?: boolean) => Promise<void>,
-		baseRevision: any
-	): Promise<void> {
-		const createContactReq = {
-			Body: {
-				CreateContactRequest: {
-					_jsns: 'urn:zimbraMail',
-					cn: {
-						l: c.obj.parent,
-						a: map<any, any>(
-							{
-								email: c.obj.email,
-							},
-							(v: any, k: any) => ({ n: k, _content: v })
-						)
-					}
-				}
-			}
-		};
+		changesSentContainer: ChangesSentContainer,
+	): Promise<ChangesSentContainer> {
 		return fetch(
 			'/service/soap/CreateContactRequest',
 			{
 				method: 'POST',
-				body: JSON.stringify(createContactReq)
+				body: JSON.stringify({
+					Body: {
+						CreateContactRequest: {
+							_jsns: 'urn:zimbraMail',
+							cn: {
+								l: c.obj.parent,
+								a: map<any, any>( // TODO: Add more fields here
+									{
+										firstName: c.obj.firstName,
+										lastName: c.obj.lastName,
+									},
+									(v: any, k: any) => ({ n: k, _content: v })
+								),
+								m: []
+							}
+						}
+					}
+				})
 			}
 		)
 			.then((response) => response.json())
@@ -123,41 +133,133 @@ export class ContactsDbSoapSyncProtocol implements ISyncProtocol {
 				else return r.Body.CreateContactResponse;
 			})
 			.then(
-				({ cn }) => applyRemoteChanges(
-					[{
-						type: 2,
-						table: 'contacts',
-						key: c.key,
-						mods: {
-							id: cn[0].id
+				({ cn }) => (
+					{
+						...changesSentContainer,
+						zimbraToInternalIds: {
+							...changesSentContainer.zimbraToInternalIds,
+							[cn[0].id]: c.key
 						}
-					}],
-					baseRevision
+					}
 				)
 			);
 	}
 
-	private static _createRequestForChange(
-		c: IDatabaseChange,
-		applyRemoteChanges: (changes: IDatabaseChange[], lastRevision: any, partial?: boolean, clear?: boolean) => Promise<void>,
-		baseRevision: any
-	): Promise<void> {
-		// TODO: Implement here!
-		// TODO: Concatenate changes?
-		switch (c.table) {
-			case 'contacts': {
-				switch (c.type) {
-					case 1: {
-						return ContactsDbSoapSyncProtocol._createContact(c as ICreateChange, applyRemoteChanges, baseRevision);
+	private static _updateContact(
+		change: IUpdateChange,
+		changesSentContainer: ChangesSentContainer,
+	): Promise<ChangesSentContainer> {
+		return Promise.resolve(changesSentContainer);
+	}
+
+	private _deleteContact(
+		change: IDeleteChange,
+		changesSentContainer: ChangesSentContainer,
+	): Promise<ChangesSentContainer> {
+		return this._db.remapped_ids
+			.where({ _id: change.key })
+			.limit(1)
+			.toArray()
+			.then((remapped: Array<{ _?: string; _id: string; id: string }>) => {
+				if (remapped.length === 0) return Promise.resolve(changesSentContainer);
+				return fetch(
+					'/service/soap/ContactActionRequest',
+					{
+						method: 'POST',
+						body: JSON.stringify({
+							Body: {
+								ContactActionRequest: {
+									_jsns: 'urn:zimbraMail',
+									action: {
+										op: 'delete',
+										id: remapped[0].id
+									}
+								}
+							}
+						})
 					}
-					default:
-						return Promise.resolve();
-				}
+				)
+					.then((response) => response.json())
+					.then((r) => {
+						if (r.Body.Fault) throw new Error(r.Body.Fault.Reason.Text);
+						else return r.Body.SyncResponse as ISoapSyncContactResponse;
+					})
+					.then(
+						() => {
+							// console.log('Adding a deleted remapped row with id: ', remapped[0]);
+							return (
+								{
+									...changesSentContainer,
+									deletedRemappedRowId: [...changesSentContainer.deletedRemappedRowId, remapped[0]._!]
+								}
+							);
+						}
+					);
+			});
+	}
+
+	private _consumeContactChange(
+		change: IDatabaseChange,
+		changesSentContainer: ChangesSentContainer,
+	): Promise<ChangesSentContainer> {
+		switch (change.type) {
+			case 1: { // DatabaseChangeType.Create
+				return ContactsDbSoapSyncProtocol._createContact(change as ICreateChange, changesSentContainer);
 			}
-			case 'folders':
+			case 2: { // DatabaseChangeType.Update
+				return ContactsDbSoapSyncProtocol._updateContact(change as IUpdateChange, changesSentContainer);
+			}
+			case 3: { // DatabaseChangeType.Delete
+				return this._deleteContact(change as IDeleteChange, changesSentContainer);
+			}
 			default:
-				return Promise.resolve();
 		}
+		return Promise.resolve(changesSentContainer);
+	}
+
+	private static _consumeFolderChange(
+		change: IDatabaseChange,
+		changesSentContainer: ChangesSentContainer,
+	): Promise<ChangesSentContainer> {
+		switch (change.type) {
+			case 1: // DatabaseChangeType.Create
+			case 2: // DatabaseChangeType.Update
+			case 3: // DatabaseChangeType.Delete
+			default:
+				return Promise.resolve(changesSentContainer);
+		}
+	}
+
+	private _consumeSingleChange(
+		change: IDatabaseChange,
+		changesSentContainer: ChangesSentContainer,
+	): Promise<ChangesSentContainer> {
+		console.log('Consume a change', change);
+		switch (change.table) {
+			case 'contacts': {
+				return this._consumeContactChange(change, changesSentContainer);
+			}
+			case 'folders': {
+				return ContactsDbSoapSyncProtocol._consumeFolderChange(change, changesSentContainer);
+			}
+			case 'remapped_ids':
+			default:
+				return Promise.resolve(changesSentContainer);
+		}
+	}
+
+	private _consumeChanges(
+		changes: IDatabaseChange[],
+		changesSentContainer: ChangesSentContainer,
+	): Promise<ChangesSentContainer> {
+		if (changes.length === 0) return Promise.resolve(changesSentContainer);
+
+		// TODO: Try to use the batch request to prevent the DoS filter to kick in.
+		const [c0, ...otherChanges] = changes;
+		return this._consumeSingleChange(c0, changesSentContainer)
+			.then(
+				(chCont) => this._consumeChanges(otherChanges, chCont)
+			);
 	}
 
 	constructor(
@@ -178,24 +280,9 @@ export class ContactsDbSoapSyncProtocol implements ISyncProtocol {
 		onError: (error: any, again?: number) => void
 	): void {
 		Promise.resolve()
-			// () => {
-			// if (changes.length > 0) {
-			// 	return Promise.all(
-			// 		reduce<IDatabaseChange, Promise<void>[]>(
-			// 			changes,
-			// 			(r, c) => {
-			// 				// r.push(ContactsDbSoapSyncProtocol._createRequestForChange(c, applyRemoteChanges, baseRevision));
-			// 				return r;
-			// 			},
-			// 			[]
-			// 		)
-			// 	)
-			// 		.then(() => onChangesAccepted());
-			// }
-			// return null;
-			// })
+			.then(() => this._consumeChanges(changes, { zimbraToInternalIds: {}, deletedRemappedRowId: [] }))
 			.then(
-				() => fetch(
+				(changesSentContainer) => fetch(
 					'/service/soap/SyncRequest',
 					{
 						method: 'POST',
@@ -273,7 +360,8 @@ export class ContactsDbSoapSyncProtocol implements ISyncProtocol {
 								deletedContacts,
 								syncChanges,
 								syncToken: `${token}`,
-								isInitialSync: !syncedRevision
+								isInitialSync: !syncedRevision,
+								changesSentContainer
 							} as SyncChainContainer;
 						}
 					)
@@ -281,6 +369,7 @@ export class ContactsDbSoapSyncProtocol implements ISyncProtocol {
 					.then((container) => this._createInsertOrUpdateContactOperations(container))
 					.then((container) => this._createDeleteContactOperations(container))
 					.then((container) => this._createDeleteContactFoldersOperations(container))
+					.then((container) => this._createCleanupRemappedDeletedContactsOperations(container))
 					.then(({ syncChanges, syncToken }) => {
 						if (!context.clientIdentity) {
 							// eslint-disable-next-line no-param-reassign
@@ -312,16 +401,30 @@ export class ContactsDbSoapSyncProtocol implements ISyncProtocol {
 		const {
 			newOrUpdatesContactIds,
 			syncChanges,
-			isInitialSync
+			isInitialSync,
+			changesSentContainer
 		} = container;
 		return (
 			isInitialSync ? Promise.resolve<Contact[]>([])
 				: this._db.contacts.where('id').anyOf(newOrUpdatesContactIds).toArray()
 		)
+			.then(
+				(oldContacts) => (
+					isInitialSync ? Promise.resolve<Contact[]>([])
+						: this._db.contacts.where('_id')
+							.anyOf(values(changesSentContainer.zimbraToInternalIds))
+							.toArray()
+				)
+					.then((toRemap) => ([...oldContacts, ...toRemap]))
+			)
 			.then((oldContacts) => {
+				const oldContactsId = [
+					...map(oldContacts, 'id'),
+					...keys(changesSentContainer.zimbraToInternalIds)
+				];
 				const newContactIds = difference(
 					newOrUpdatesContactIds,
-					map(oldContacts, 'id')
+					oldContactsId
 				) as string[];
 
 				return [
@@ -341,7 +444,18 @@ export class ContactsDbSoapSyncProtocol implements ISyncProtocol {
 									GetContactsRequest: {
 										_jsns: 'urn:zimbraMail',
 										sync: 1,
-										cn: map([...newContactIds, ...map(oldContacts as Contact[], 'id')], (id: string) => ({ id }))
+										cn: map(
+											[
+												...newContactIds,
+												...map(
+													filter(
+														oldContacts as Contact[],
+														(c) => !!c.id
+													),
+													'id'
+												)
+											], (id: string) => ({ id })
+										)
 									}
 								}
 							})
@@ -358,7 +472,7 @@ export class ContactsDbSoapSyncProtocol implements ISyncProtocol {
 								(r, c) => {
 									const contact = normalizeContact(c);
 									if (includes(newContactIds, c.id)) {
-										// New Contact
+										// New Contact (remote)
 										r.push({
 											type: 1,
 											table: 'contacts',
@@ -367,8 +481,10 @@ export class ContactsDbSoapSyncProtocol implements ISyncProtocol {
 										});
 									}
 									else {
-										// Updated contact
-										const oldContact: Contact = find(oldContacts as Contact[], ['id', c.id])!;
+										// Updated contact or New Contact (local)
+										const oldContact: Contact|undefined = find(oldContacts as Contact[], ['id', c.id])
+											|| find(oldContacts as Contact[], ['_id', changesSentContainer.zimbraToInternalIds[c.id]]);
+										if (!oldContact) return r;
 										const mods = ContactsDbSoapSyncProtocol._calculateContactMods(oldContact, contact);
 										r.push({
 											type: 2,
@@ -488,5 +604,29 @@ export class ContactsDbSoapSyncProtocol implements ISyncProtocol {
 				);
 				return container;
 			});
+	}
+
+	private _createCleanupRemappedDeletedContactsOperations(container: SyncChainContainer): PromiseLike<SyncChainContainer> {
+		const {
+			changesSentContainer,
+			syncChanges
+		} = container;
+
+		console.log('Cleanup', changesSentContainer);
+
+		reduce(
+			changesSentContainer.deletedRemappedRowId,
+			(r, v, k) => {
+				r.push({
+					type: 3,
+					table: 'remapped_ids',
+					key: v
+				});
+				return r;
+			},
+			syncChanges
+		);
+
+		return Promise.resolve(container);
 	}
 }
