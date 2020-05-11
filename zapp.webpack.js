@@ -1,6 +1,13 @@
+const InjectPlugin = require('webpack-inject-plugin').default;
+const SyncResponse = require('./e2e/mocks/sync_request');
+
 module.exports = function (wpConf, zappConfig, options) {
-    wpConf.output.publicPath = options.watch ? `/` : `/zx/zmlet/${zappConfig.pkgName}/`;
-    wpConf.output.chunkFilename = options.watch ? '[name].chunk.js' : '[name].[chunkhash:8].chunk.js',
-    wpConf.externals['@zextras/zapp-shell'] = '__ZAPP_SHARED_LIBRARIES__[\'@zextras/zapp-shell\']';
-    wpConf.externals['dexie'] = '__ZAPP_SHARED_LIBRARIES__[\'dexie\']';
+    wpConf.plugins.push(
+      // TODO: Enhance the developer UX
+      new InjectPlugin(function() {
+          return `
+e2e.addMockedResponse(${JSON.stringify(SyncResponse)});
+`;
+      })
+    );
 };

@@ -5,6 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "test": "jest",
+    "webdriver:start": "webdriver-manager update && webdriver-manager start",
+    "test:e2e": "cd e2e && protractor protractor.conf.js",
     "test:watch": "jest --watch",
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch",
@@ -53,14 +55,18 @@
     "eslint-plugin-react-hooks": "2.2.0",
     "eslint-plugin-standard": "4.0.1",
     "flow-bin": "0.109.0",
+    "jasmine-reporters": "2.3.2",
     "jest": "24.9.0",
     "postcss-loader": "3.0.0",
+    "protractor": "5.4.4",
+    "protractor-react-selector": "2.2.2",
     "react-dom": "16.11.0",
     "react-hot-loader": "4.12.15",
     "react-router-dom": "5.1.2",
     "react-test-renderer": "16.10.2",
     "styled-components": "4.4.1",
-    "typescript": "3.6.4"
+    "typescript": "3.6.4",
+    "webpack-inject-plugin": "1.5.4"
   },
   "dependencies": {
     "@babel/preset-typescript": "7.6.0",

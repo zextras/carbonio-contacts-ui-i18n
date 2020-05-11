@@ -19,6 +19,7 @@ import { lazy } from 'react';
 import { ContactsDb } from './v2/db/contacts-db';
 import { ContactsDbSoapSyncProtocol } from './v2/db/contacts-db-soap-sync-protocol';
 import mainMenuItems from './v2/main-menu-items';
+import { Contact } from './v2/db/contact';
 
 const lazyFolderView = lazy(() => (import(/* webpackChunkName: "folder-view" */ './v2/folder-view')));
 const lazyEditView = lazy(() => (import(/* webpackChunkName: "edit-view" */ './v2/edit-view')));

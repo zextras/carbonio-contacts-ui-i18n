@@ -2,3 +2,4 @@
 /pkg/
 /build/
 /.idea/workspace.xml
+/e2e/output/
