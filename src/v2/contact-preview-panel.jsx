@@ -13,6 +13,7 @@ import React, { useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 import { hooks } from '@zextras/zapp-shell';
 import { reduce } from 'lodash';
+import { useTranslation } from 'react-i18next';
 
 const _PreviewPanel = styled.div`
 	flex-grow: 1;
@@ -47,6 +48,8 @@ export default function ContactPreviewPanel({ contactInternalId, folderId }) {
 	const onEdit = hooks.useAddPanelCallback(`/edit/${contactInternalId}`);
 	const replaceHistory = hooks.useReplaceHistoryCallback();
 	const { db } = hooks.useAppContext();
+	const { t } = useTranslation();
+
 	const query = useMemo(
 		() => () => db.contacts
 			.where({ _id: contactInternalId })
@@ -73,15 +76,15 @@ export default function ContactPreviewPanel({ contactInternalId, folderId }) {
 			</_toolbar>
 			{contactLoaded && <_content>
 				<div>
-					First Name:
+					{ t('First Name') }
 					{ contact.firstName }
 				</div>
 				<div>
-					Last Name:
+					{ t('Last Name') }
 					{ contact.lastName }
 				</div>
 				<div>
-					Mail addresses:
+					{ t('Mail Address') }
 				</div>
 				{ reduce(
 					contact.mail,

@@ -23,6 +23,7 @@ import {
 } from 'formik';
 import styled from 'styled-components';
 import { Contact } from './db/contact';
+import { useTranslation } from 'react-i18next';
 
 const _Form = styled(Form)`
 	display: flex;
@@ -41,6 +42,7 @@ const _Toolbar = styled.div`
 
 export default function FolderView() {
 	const { id } = useParams();
+	const { t } = useTranslation();
 	const { db } = hooks.useAppContext();
 	const pushHistory = hooks.usePushHistoryCallback();
 
@@ -97,20 +99,20 @@ export default function FolderView() {
 	const formFactory = useCallback(({ isSubmitting }) => (
 		<_Form>
 			<p>
-				First name:
+				{ t('First Name') }
 				<Field name="firstName" />
 			</p>
 			<p>
-				Last name:
+				{ t('Last Name') }
 				<Field name="lastName" />
 			</p>
 			<_Toolbar>
 				<button type="submit" disabled={isSubmitting}>
-					Submit
+					{ t('Save') }
 				</button>
 			</_Toolbar>
 		</_Form>
-	), []);
+	), [t]);
 
 	return initialContact
 		? (

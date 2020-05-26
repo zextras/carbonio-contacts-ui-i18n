@@ -53,7 +53,7 @@ function Breadcrumbs({ folderId }) {
 
 	return (
 		<div>
-			{ folderLoaded && folder.path }
+			{ folderLoaded && folder && folder.path }
 		</div>
 	);
 }
