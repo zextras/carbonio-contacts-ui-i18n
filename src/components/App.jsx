@@ -90,7 +90,7 @@ const SecondaryView = ({ contactSrvc, view, edit, db, previewId }) => {
 		if (screenMode === 'mobile') {
 			return <ContactList contactSrvc={contactSrvc} />;
 		}
-		return <Text>Hello</Text>;
-	}, [screenMode, edit, view, contactSrvc, db, previewId]);
+		return null;
+	}, [screenMode, edit, view, contactSrvc]);
 	return <>{ panel }</>;
 };
