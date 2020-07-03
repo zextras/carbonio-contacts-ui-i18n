@@ -9,7 +9,7 @@
  * *** END LICENSE BLOCK *****
  */
 
-import React, {useMemo} from 'react';
+import React, { useMemo } from 'react';
 import {
 	Container,
 	Text,
@@ -20,18 +20,23 @@ import { useLocation } from 'react-router-dom';
 import ContactList from './list/ContactList';
 import ContactPreview from './preview/ContactPreview';
 import ContactEditor from './edit/ContactEditor';
-import ContactContextProvider from "../contact/ContactContextProvider";
+import ContactContextProvider from '../contact/ContactContextProvider';
+import DexieContactList from './list/DexieContactList';
+import DexieContactPreview from './preview/DexieContactPreview';
+import useQueryParam from '../hooks/getQueryParam';
 
-export const ROUTE = '/contacts/folder/:path*';
+export const ROUTE = '/contacts/folder/:id*';
 
 function useQuery() {
 	return new URLSearchParams(useLocation().search);
 }
 
-export default function App({ contactSrvc }) {
+export default function App({ contactSrvc, db }) {
 	const query = useQuery();
 	const view = query.get('view');
 	const edit = query.get('edit');
+
+	const previewId = useQueryParam('preview');
 
 	return (
 		<ContactContextProvider
@@ -52,7 +57,7 @@ export default function App({ contactSrvc }) {
 						height="fill"
 						mainAlignment="flex-start"
 					>
-						<ContactList contactSrvc={contactSrvc} />
+						<DexieContactList db={db} />
 					</Container>
 					<Container
 						orientation="vertical"
@@ -62,7 +67,7 @@ export default function App({ contactSrvc }) {
 						padding={{ horizontal: 'medium' }}
 						background="bg_9"
 					>
-						<SecondaryView edit={edit} view={view} contactSrvc={contactSrvc} />
+						<SecondaryView edit={edit} view={view} contactSrvc={contactSrvc} db={db} previewId={previewId} />
 					</Container>
 				</Responsive>
 				<Responsive mode="mobile">
@@ -73,14 +78,14 @@ export default function App({ contactSrvc }) {
 	);
 };
 
-const SecondaryView = ({ contactSrvc, view, edit }) => {
+const SecondaryView = ({ contactSrvc, view, edit, db, previewId }) => {
 	const screenMode = useScreenMode();
 	const panel = useMemo(() => {
 		if (edit) {
 			return <ContactEditor contactSrvc={contactSrvc} id={edit} />;
 		}
-		if (view) {
-			return <ContactPreview contactSrvc={contactSrvc} id={view} />;
+		if (previewId) {
+			return <DexieContactPreview db={db} id={previewId} />;
 		}
 		if (screenMode === 'mobile') {
 			return <ContactList contactSrvc={contactSrvc} />;

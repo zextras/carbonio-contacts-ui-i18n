@@ -9,32 +9,86 @@
  * *** END LICENSE BLOCK *****
  */
 
-import React from 'react';
-import { registerRoute, addMainMenuItem, addCreateMenuItem } from '@zextras/zapp-shell/router';
+import {
+	setMainMenuItems,
+	setRoutes,
+	setCreateOptions,
+	setAppContext
+} from '@zextras/zapp-shell';
+import { lazy } from 'react';
+import { ContactsDb } from './v2/db/contacts-db';
+import { ContactsDbSoapSyncProtocol } from './v2/db/contacts-db-soap-sync-protocol';
+import mainMenuItems from './v2/main-menu-items';
+import { Contact } from './v2/db/contact';
 
-import App, { ROUTE as mainRoute } from './components/App';
-import ContactsService from './ContactsService';
-import ContactsIdbService from './idb/ContactsIdbService';
-import { registerTranslations } from './i18n/i18n';
+const lazyFolderView = lazy(() => (import(/* webpackChunkName: "folder-view" */ './v2/folder-view')));
+const lazyEditView = lazy(() => (import(/* webpackChunkName: "edit-view" */ './v2/edit-view')));
 
 export default function app() {
-	const idbSrvc = new ContactsIdbService();
-	const contactSrvc = new ContactsService(
-		idbSrvc
-	);
+	console.log('Hello from contacts');
 
-	registerTranslations();
+	setMainMenuItems([{
+		id: 'contacts-main',
+		icon: 'PeopleOutline',
+		to: '/',
+		label: 'Contacts',
+		children: []
+	}]);
 
-	addMainMenuItem(
-		'PeopleOutline',
-		'Contacts',
-		'/contacts/folder/Contacts',
-		contactSrvc.menuFolders
-	);
-	addCreateMenuItem(
-		'PersonOutline',
-		'Contact',
-		'/contacts/folder/Contacts?edit=new'
-	);
-	registerRoute(mainRoute, App, { contactSrvc });
+	const db = new ContactsDb();
+	const syncProtocol = new ContactsDbSoapSyncProtocol(db);
+	db.registerSyncProtocol('soap-contacts', syncProtocol);
+	db.syncable.connect('soap-contacts', '/service/soap/SyncRequest');
+
+	setAppContext({
+		db
+	});
+
+	db
+		.observe(() => db.folders.where({ parent: '1' }).sortBy('name'))
+		.subscribe((folders) => mainMenuItems(folders, db));
+
+	// const toAdd = [];
+	// for (let i = 0; i < 10000; i += 1) {
+	// 	toAdd.push(new Contact({
+	// 		parent: '277',
+	// 		address: [],
+	// 		company: '',
+	// 		department: '',
+	// 		mail: [{ mail: `user.${i}@example.com` }],
+	// 		firstName: `User ${i}`,
+	// 		lastName: '',
+	// 		image: '',
+	// 		jobTitle: '',
+	// 		notes: '',
+	// 		phone: [],
+	// 		nameSuffix: ''
+	// 	}));
+	// }
+	// db.contacts.bulkAdd(toAdd).then(console.log);
+
+	setRoutes([
+		{
+			route: '/folder/:folderId',
+			view: lazyFolderView
+		},
+		{
+			route: '/',
+			view: lazyFolderView
+		},
+		{
+			route: '/edit/:id',
+			view: lazyEditView
+		},
+		{
+			route: '/new',
+			view: lazyEditView
+		}
+	]);
+
+	setCreateOptions([{
+		id: 'create-contact',
+		label: 'New Contact',
+		panel: { path: '/new' }
+	}]);
 }
