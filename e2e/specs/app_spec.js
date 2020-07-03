@@ -14,7 +14,14 @@
 const until = protractor.ExpectedConditions;
 
 describe('App', function() {
+	beforeEach(async function () {
+		await browser.get('http://localhost:9000');
+		await browser.waitForReact(100000, '#app');
+	});
+
 	it('Main menu item is rendered', async function() {
+		await browser.get('http://localhost:9000');
+		await browser.waitForReact(100000, '#app');
 		await browser.wait(until.presenceOf(element(by.linkText('Contacts')), 5000, 'Element taking too long to appear in the DOM'));
 		expect(element(by.linkText('Contacts')).isPresent()).toBeTruthy();
 	});

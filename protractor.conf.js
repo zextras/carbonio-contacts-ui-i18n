@@ -12,7 +12,7 @@
 exports.config = {
 	framework: 'jasmine',
 	seleniumAddress: 'http://localhost:4444/wd/hub',
-	specs: ['specs/*_spec.js'],
+	specs: ['e2e/specs/*_spec.js'],
 	plugins: [
 		{ package: 'protractor-react-selector' }
 	],
@@ -22,7 +22,7 @@ exports.config = {
 		const junitReporter = new jasmineReporters.JUnitXmlReporter({
 
 			// setup the output path for the junit reports
-			savePath: 'output/',
+			savePath: 'e2e/output/',
 
 			// conslidate all true:
 			//   output/junitresults.xml
@@ -36,8 +36,30 @@ exports.config = {
 		jasmine.getEnv().addReporter(junitReporter);
 
 		await browser.waitForAngularEnabled(false);
-		// Wait for the Shell view to be rendered
-		await browser.get('http://localhost:9000/');
-		// await browser.wait(until.presenceOf(element(by.react('ShellView')), 5000, 'Element taking too long to appear in the DOM'));
+		// Wait for the Shell view to be rendered and cleanup the environment
+		await browser.get('http://localhost:9000');
+		await browser.waitForReact(100000, '#app');
+		await new Promise(function(resolve, reject) {
+				let interval;
+				let count = 0;
+				interval = setInterval(function() {
+					if (browser.executeScript("return typeof window.e2e !== 'undefined'")) {
+						clearInterval(interval);
+						resolve();
+					} else {
+						count++;
+						if (count > 100) {
+							reject('Timout on waiting e2e environment');
+						}
+					}
+				}, 100);
+			});
+		await browser.executeAsyncScript(function() {
+			var callback = arguments[arguments.length - 1];
+			window.e2e.beforeEachTest()
+				.then(function() {
+					callback();
+				});
+		});
 	}
 }
