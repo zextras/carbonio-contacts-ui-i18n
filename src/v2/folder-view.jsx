@@ -21,40 +21,40 @@ import {
 } from 'react-virtualized';
 import ContactListItem from './contact-list-item';
 import useQueryParam from '../hooks/getQueryParam';
-import ContactPreviewPanel from './contact-preview-panel';
-
-const ViewContainer = styled.div`
-	flex-grow: 1;
-	display: flex;
-	flex-direction: row;
-`;
-
-const SecondaryBar = styled.div`
-	display: flex;
-	flex-direction: column;
-	height: 100%;
-	flex-grow: 1;
-`;
-
-const ListContainer = styled.div`
-	flex-grow: 1;
-`;
+import ContactPreviewPanel from './preview/contact-preview-panel';
+import {Container, Divider, Text} from "@zextras/zapp-ui";
+import Row from "@zextras/zapp-ui/dist/components/layout/Row";
+import {VerticalDivider} from "./commons/vertical-divider";
 
 const cache = new CellMeasurerCache({
 	fixedWidth: true,
-	defaultHeight: 68
+	defaultHeight: 57
 });
 
 function Breadcrumbs({ folderId }) {
 	const { db } = hooks.useAppContext();
-	const query = useMemo(() => () => db.folders.where({ id: folderId }).toArray().then((folders) => Promise.resolve(folders[0])), [db, folderId]);
+	const query = useMemo(
+		() => () => db.folders.where({ id: folderId }).toArray()
+			.then((folders) => Promise.resolve(folders[0])),
+		[db, folderId]
+	);
 	// TODO: Add the sort by
 	const [folder, folderLoaded] = hooks.useObserveDb(query, db);
 
 	return (
-		<div>
-			{ folderLoaded && folder && folder.path }
-		</div>
+		<Container
+			background="gray5"
+			height={49}
+			crossAlignment="flex-start"
+		>
+			<Row
+				height={48}
+				padding={{ all: 'medium' }}
+			>
+				<Text size="large">{ folderLoaded && folder && folder.path }</Text>
+			</Row>
+			<Divider />
+		</Container>
 	);
 }
 Breadcrumbs.propTypes = {
@@ -98,10 +98,27 @@ export default function FolderView() {
 	console.log('Contacts', contactsLoaded, (contacts || []).length, contacts || []);
 
 	return (
-		<ViewContainer>
-			<SecondaryBar>
+		<Container
+			orientation="row"
+			crossAlignment="flex-start"
+			mainAlignment="flex-start"
+			width="fill"
+			height="fill"
+			background="gray5"
+			borderRadius="none"
+		>
+			<Container
+				width="calc(50% - 4px)"
+				mainAlignment="flex-start"
+				crossAlignment="flex-start"
+				borderRadius="none"
+			>
 				<Breadcrumbs folderId={folderId} />
-				<ListContainer>
+				<Container
+					mainAlignment="flex-start"
+					crossAlignment="flex-start"
+					borderRadius="none"
+				>
 					<AutoSizer>
 						{({ height, width }) => (
 							<List
@@ -109,16 +126,17 @@ export default function FolderView() {
 								width={width}
 								rowCount={(contacts || []).length}
 								overscanRowCount={10}
-								rowHeight={68}
+								rowHeight={57}
 								rowRenderer={rowRenderer}
 							/>
 						)}
 					</AutoSizer>
-				</ListContainer>
-			</SecondaryBar>
+				</Container>
+			</Container>
+			<VerticalDivider />
 			{ typeof previewId !== 'undefined' && (
-				<ContactPreviewPanel contactInternalId={previewId} folderId={folderId}/>
+				<ContactPreviewPanel contactInternalId={previewId} folderId={folderId} />
 			)}
-		</ViewContainer>
+		</Container>
 	);
 }

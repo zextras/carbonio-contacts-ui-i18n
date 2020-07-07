@@ -39,6 +39,7 @@ type SoapContactObjAttrs = {
 	firstName?: string;
 	lastName?: string;
 	nameSuffix?: string;
+	namePrefix?: string;
 	mobilePhone?: string;
 	workPhone?: string;
 	otherPhone?: string;

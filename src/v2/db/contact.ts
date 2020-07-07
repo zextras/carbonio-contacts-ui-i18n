@@ -55,6 +55,7 @@ export interface IContact {
 	notes: string;
 	phone: ContactPhone[];
 	nameSuffix: string;
+	namePrefix: string;
 }
 
 export class Contact implements IContact {
@@ -86,6 +87,8 @@ export class Contact implements IContact {
 
 	nameSuffix: string;
 
+	namePrefix: string;
+
 	constructor({
 		_id,
 		parent,
@@ -100,7 +103,8 @@ export class Contact implements IContact {
 		jobTitle,
 		notes,
 		phone,
-		nameSuffix
+		nameSuffix,
+		namePrefix
 	}: IContact) {
 		this._id = _id;
 		this.parent = parent;
@@ -116,6 +120,7 @@ export class Contact implements IContact {
 		this.notes = notes;
 		this.phone = phone;
 		this.nameSuffix = nameSuffix;
+		this.namePrefix = namePrefix;
 	}
 
 	public toMap() {
@@ -133,7 +138,8 @@ export class Contact implements IContact {
 			jobTitle: this.jobTitle,
 			notes: this.notes,
 			phone: this.phone,
-			nameSuffix: this.nameSuffix
+			nameSuffix: this.nameSuffix,
+			namePrefix: this.namePrefix
 		};
 	}
 }

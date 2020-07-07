@@ -2,5 +2,30 @@
   "First Name": "",
   "Last Name": "",
   "Mail Address": "",
-  "Save": ""
+  "Save": "",
+  "company": "",
+  "contact": {
+    "label": {
+      "address": {
+        "main": ""
+      },
+      "mail": {
+        "main": ""
+      },
+      "phone": {
+        "main": ""
+      }
+    }
+  },
+  "department": "",
+  "edit": "",
+  "first name": "",
+  "firstName": "",
+  "jobTitle": "",
+  "lastName": "",
+  "mail": "",
+  "notes": "",
+  "phone": "",
+  "prefix": "",
+  "suffix": ""
 }

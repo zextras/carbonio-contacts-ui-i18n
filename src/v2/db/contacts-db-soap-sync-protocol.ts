@@ -82,6 +82,7 @@ export class ContactsDbSoapSyncProtocol implements ISyncProtocol {
 		if (oldC.jobTitle !== newC.jobTitle) mods.jobTitle = newC.jobTitle;
 		if (oldC.notes !== newC.notes) mods.notes = newC.notes;
 		if (oldC.nameSuffix !== newC.nameSuffix) mods.nameSuffix = newC.nameSuffix;
+		if (oldC.namePrefix !== newC.namePrefix) mods.namePrefix = newC.namePrefix;
 		if (JSON.stringify(oldC.address) !== JSON.stringify(newC.address)) mods.address = newC.address;
 		if (JSON.stringify(oldC.mail) !== JSON.stringify(newC.mail)) mods.mail = newC.mail;
 		if (JSON.stringify(oldC.phone) !== JSON.stringify(newC.phone)) mods.phone = newC.phone;

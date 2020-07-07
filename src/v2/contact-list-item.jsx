@@ -8,63 +8,66 @@
  * http://www.zextras.com/zextras-eula.html
  * *** END LICENSE BLOCK *****
  */
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import {
+	Avatar,
+	Container,
+	Text,
+	Row,
+	Divider,
+	Padding
+} from '@zextras/zapp-ui';
 import { Contact } from './db/contact';
+import {useDisplayName} from "./commons/use-display-name";
 
-const Container = styled.div`
-	height: 68px;
-	cursor: pointer;
-	a {
-		padding: 16px;
-		display: flex;
-		flex-direction: row;
-	}
+const InvisibleLink = styled(Link)`
+	text-decoration: none; /* no underline */
+	width: 100%;
+	height: 100%;
 `;
-
-const Avatar = styled.div`
-	min-width: 24px;
-	max-width: 24px;
-	min-height: 24px;
-	max-height: 24px;
-	border-radius: 50%;
-	background-color: coral;
-	display: flex;
-	align-content: center;
-	justify-content: center;
-	margin-right: 8px;
-`;
-
-const Data = styled.div`
-	flex-grow: 1;
-	display: flex;
-	flex-direction: column;
-`;
-
-const NameContainer = styled.div``;
-const MailContainer = styled.div``;
 
 export default function ContactListItem({ contact, style }) {
+	console.log('contact', contact);
+	const displayName = useDisplayName(contact);
 	return (
-		<Container
-			style={style}
-		>
-			<Link to={`/folder/${contact.parent}?preview=${contact._id}`}>
-				<Avatar>
-					{ (contact.firstName || '  ').substr(0, 2).toUpperCase() }
-				</Avatar>
-				<Data>
-					<NameContainer>
-						<span>{ contact.firstName }</span>
-						<span>{ contact.lastName }</span>
-					</NameContainer>
-					<MailContainer>
-						{ (contact.mail || []).length > 0 && contact.mail[0].mail }
-					</MailContainer>
-				</Data>
-			</Link>
+		<Container style={style}>
+			<InvisibleLink to={`/folder/${contact.parent}?preview=${contact._id}`}>
+				<Container
+					borderRadius="none"
+					height="fill"
+					background="gray6"
+					orientation="horizontal"
+				>
+					<Padding all="medium">
+						<Avatar
+							label={`${contact.firstName} ${contact.lastName}`}
+							picture={contact.image}
+						/>
+					</Padding>
+					<Container
+						width="fill"
+						mainAlignment="center"
+						crossAlignment="flex-start"
+					>
+						<Row width="fill" mainAlignment="flex-start" padding={{ vertical: 'extrasmall' }}>
+							<Text size="large">{displayName}</Text>
+						</Row>
+						<Row width="fill" mainAlignment="flex-start">
+							<Text color="secondary">
+								{
+									contact.mail
+									&& contact.mail.length > 0
+									&& contact.mail[0].mail
+								}
+							</Text>
+						</Row>
+					</Container>
+				</Container>
+			</InvisibleLink>
+			<Divider />
 		</Container>
 	);
 }
