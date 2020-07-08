@@ -20,8 +20,8 @@ import {
 	Divider,
 	Padding
 } from '@zextras/zapp-ui';
-import { Contact } from './db/contact';
-import {useDisplayName} from "./commons/use-display-name";
+import { Contact } from '../db/contact';
+import {useDisplayName} from "../commons/use-display-name";
 
 const InvisibleLink = styled(Link)`
 	text-decoration: none; /* no underline */
@@ -30,7 +30,6 @@ const InvisibleLink = styled(Link)`
 `;
 
 export default function ContactListItem({ contact, style }) {
-	console.log('contact', contact);
 	const displayName = useDisplayName(contact);
 	return (
 		<Container style={style}>

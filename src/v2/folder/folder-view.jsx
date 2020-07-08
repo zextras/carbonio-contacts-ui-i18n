@@ -22,7 +22,7 @@ import {
 import { Container, Divider, Text } from '@zextras/zapp-ui';
 import Row from '@zextras/zapp-ui/dist/components/layout/Row';
 import Responsive from '@zextras/zapp-ui/dist/components/utilities/Responsive';
-import ContactListItem from '../contact-list-item';
+import ContactListItem from './contact-list-item';
 import useQueryParam from '../../hooks/getQueryParam';
 import ContactPreviewPanel from '../preview/contact-preview-panel';
 import { VerticalDivider } from '../commons/vertical-divider';
