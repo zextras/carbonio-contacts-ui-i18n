@@ -13,6 +13,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { trim, map } from 'lodash';
 import { useDisplayName } from '../commons/use-display-name';
+import {CompactView} from "../commons/contact-compact-view";
 
 const ContactPreviewContent = ({ contact, onEdit, onDelete }) => {
 	const [open, setOpen] = useState(false);
@@ -43,62 +44,7 @@ const ContactPreviewContent = ({ contact, onEdit, onDelete }) => {
 						onClick={onEdit}
 					/>
 				</Row>
-				<Row
-					width="fill"
-					height="fit"
-					mainAlignment="flex-start"
-				>
-					<Avatar
-						label={`${contact.firstName} ${contact.lastName}`}
-						picture={contact.image}
-						size="large"
-					/>
-					<Row
-						orientation="vertical"
-						takeAvailableSpace
-						mainAlignment="flex-start"
-						crossAlignment="flex-start"
-						padding={{ horizontal: 'medium', vertical: 'small' }}
-						height="fill"
-					>
-						<Text
-							size="large"
-							weight="bold"
-						>
-							{displayName}
-						</Text>
-						<Text
-							weight="bold"
-							color="secondary"
-						>
-							{
-								trim(`${
-									contact.jobTitle && `${contact.jobTitle}, `
-								} ${
-									contact.department && `${contact.department}, `
-								} ${
-									contact.company && `${contact.company}, `
-								}`, ', ')
-							}
-						</Text>
-						<Text
-							color="secondary"
-						>
-							{
-								trim(`${
-									contact.mail && contact.mail.length > 0 && contact.mail[0].mail && `${contact.mail[0].mail}, `
-								} ${
-									contact.phone && contact.phone.length > 0 && contact.phone[0].number && `${contact.phone[0].number} `
-								}`, ', ')
-							}
-						</Text>
-					</Row>
-					<IconButton
-						size="large"
-						onClick={toggleOpen}
-						icon={open ? 'ArrowIosDownward' : 'ArrowIosUpward'}
-					/>
-				</Row>
+				<CompactView contact={contact} open={open} toggleOpen={toggleOpen} />
 			</Container>
 			<Collapse
 				orientation="vertical"

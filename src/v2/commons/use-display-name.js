@@ -10,18 +10,18 @@
  */
 
 import { useMemo } from 'react';
+import { trim } from 'lodash';
 
-export const useDisplayName = (contact) => {
-	return useMemo(
-		() => {
-			if (contact) {
-				if (contact.firstName && contact.lastName) return `${contact.firstName} ${contact.lastName}`;
-				if (contact.lastName) return contact.lastName;
-				if (contact.firstName) return contact.firstName;
-				if (contact.mail.length > 0) return contact.mail[0].mail;
+export const useDisplayName = (contact) => useMemo(
+	() => {
+		console.log(contact);
+		if (contact) {
+			if (contact.firstName || contact.lastName) {
+				return trim(`${contact.namePrefix || ''} ${contact.firstName || ''} ${contact.lastName || ''} ${contact.nameSuffix || ''}`);
 			}
-			return 'no data';
-		},
-		[contact]
-	);
-};
+			if (contact.mail.length > 0) return contact.mail[0].mail;
+		}
+		return 'no data';
+	},
+	[contact]
+);

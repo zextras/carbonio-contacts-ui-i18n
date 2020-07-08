@@ -21,16 +21,19 @@ import {
 	useField,
 } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { map, filter } from 'lodash';
+import { map, filter, trim } from 'lodash';
 import {
 	Button,
 	Container,
 	Input,
 	Row,
 	IconButton,
-	Padding
+	Padding,
+	FormSection,
+	Text, Avatar
 } from '@zextras/zapp-ui';
-import { Contact } from './db/contact';
+import { Contact, ContactAddressType } from './db/contact';
+import { CompactView } from './commons/contact-compact-view';
 
 export default function FolderView() {
 	const { id } = useParams();
@@ -97,10 +100,20 @@ export default function FolderView() {
 				width="fill"
 				wrap="nowrap"
 			>
-				<CustomStringField name="prefix" label={t('prefix')} />
+				<Text>{t('This contact will be created in the \'Contacts\' folder')}</Text>
+				<Button label={t('Save')} onClick={submitForm} disabled={isSubmitting} />
+			</Row>
+			<CompactView contact={initialContact} />
+			<Row
+				orientation="horizontal"
+				mainAlignment="space-between"
+				width="fill"
+				wrap="nowrap"
+			>
+				<CustomStringField name="namePrefix" label={t('prefix')} />
 				<CustomStringField name="firstName" label={t('firstName')} />
 				<CustomStringField name="lastName" label={t('lastName')} />
-				<CustomStringField name="suffix" label={t('suffix')} />
+				<CustomStringField name="nameSuffix" label={t('suffix')} />
 			</Row>
 			<Row
 				orientation="horizontal"
@@ -120,11 +133,29 @@ export default function FolderView() {
 			>
 				<CustomStringField name="notes" label={t('notes')} />
 			</Row>
-			<CustomMultivalueField label="mail address" name="mail" subField="mail" />
-			<CustomMultivalueField label="phone number" name="phone" subField="number" />
-			<Button label={t('Save')} onClick={submitForm} disabled={isSubmitting} />
+			<CustomMultivalueField
+				editInputLabel={t('edit the email address')}
+				newInputLabel={t('insert email address')}
+				label={t('email address')}
+				name="mail"
+				subFields="mail"
+			/>
+			<CustomMultivalueField
+				editInputLabel={t('edit the phone contact')}
+				newInputLabel={t('insert phone contact')}
+				label={t('phone contact')}
+				name="phone"
+				subFields="number"
+			/>
+			<CustomMultivalueField
+				editInputLabel={t('edit the phone contact')}
+				newInputLabel={t('insert phone contact')}
+				label={t('addresses')}
+				name="address"
+				subField="street"
+			/>
 		</Container>
-	), [t]);
+	), [initialContact, t]);
 
 	return initialContact
 		? (
@@ -162,14 +193,16 @@ const CustomStringField = ({ name, label }) => (
 	</Container>
 );
 
-const CustomMultivalueField = ({ name, label, subField }) => {
+const CustomMultivalueField = ({
+	name, label, subField, editInputLabel, newInputLabel
+}) => {
 	const [field, meta, helpers] = useField({ name });
 
 	const addValue = useCallback(
 		() => {
 			helpers.setValue([...field.value, { [subField]: '' }]);
 		},
-		[helpers, field]
+		[helpers, field.value, subField]
 	);
 
 	const removeValue = useCallback(
@@ -192,11 +225,11 @@ const CustomMultivalueField = ({ name, label, subField }) => {
 			helpers.setValue(
 				map(
 					field.value,
-					(v, i) => i === index ? { [subField]: newString } : v
+					(v, i) => (i === index ? { [subField]: newString } : v)
 				)
 			);
 		},
-		[helpers, field]
+		[field.value, helpers, subField, removeValue]
 	);
 
 	if (field.value.length === 0) {
@@ -204,11 +237,12 @@ const CustomMultivalueField = ({ name, label, subField }) => {
 	}
 
 	return (
-		<Container padding={{ all: 'small' }}>
+		<FormSection label={label}>
 			{map(
 				field.value,
 				(item, index) => (
 					<Row
+						key={index}
 						orientation="horizontal"
 						mainAlignment="space-between"
 						width="fill"
@@ -216,7 +250,7 @@ const CustomMultivalueField = ({ name, label, subField }) => {
 					>
 						<Input
 							backgroundColor="gray5"
-							label={label}
+							label={item[subField] === '' ? newInputLabel : editInputLabel}
 							value={item[subField]}
 							onChange={(ev) => updateValue(ev.target.value, index)}
 						/>
@@ -254,6 +288,6 @@ const CustomMultivalueField = ({ name, label, subField }) => {
 					</Row>
 				)
 			)}
-		</Container>
+		</FormSection>
 	);
 };
