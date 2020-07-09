@@ -6,6 +6,7 @@
   "Save": "",
   "This contact will be created in the 'Contacts' folder": "",
   "addresses": "",
+  "city": "",
   "company": "",
   "contact": {
     "label": {
@@ -20,6 +21,7 @@
       }
     }
   },
+  "country": "",
   "department": "",
   "edit": "",
   "edit mail address": "",
@@ -40,11 +42,17 @@
   "lastName": "",
   "mail": "",
   "mail address": "",
+  "name": "",
   "notes": "",
   "other": "",
   "phone": "",
   "phone contact": "",
+  "postalCode": "",
   "prefix": "",
+  "state": "",
+  "street": "",
   "suffix": "",
+  "type": "",
+  "url": "",
   "work": ""
 }

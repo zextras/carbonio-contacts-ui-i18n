@@ -5,23 +5,38 @@ import {
 	Row,
 	Button,
 	Padding,
-	Avatar,
 	Text,
 	Collapse,
-	Dropdown
+	Dropdown,
+	Icon
 } from '@zextras/zapp-ui';
 import { useTranslation } from 'react-i18next';
-import { trim, map } from 'lodash';
-import { useDisplayName } from '../commons/use-display-name';
-import {CompactView} from "../commons/contact-compact-view";
+import { map } from 'lodash';
+import { CompactView } from '../commons/contact-compact-view';
+
+const typeToIcon = (type) => {
+	switch (type) {
+		case 'mail':
+			return 'EmailOutline';
+		case 'mobile':
+			return 'SmartphoneOutline';
+		case 'home':
+			return 'HomeOutline';
+		case 'work':
+			return 'BriefcaseOutline';
+		case 'other':
+		default:
+			return 'PersonOutline';
+	}
+};
 
 const ContactPreviewContent = ({ contact, onEdit, onDelete }) => {
-	const [open, setOpen] = useState(false);
+	const [open, setOpen] = useState(true);
 	const toggleOpen = useCallback(() => {
 		setOpen(!open);
 	}, [setOpen, open]);
 	const { t } = useTranslation();
-	const displayName = useDisplayName(contact);
+	console.log(contact);
 	return (
 		<>
 			<Container
@@ -54,13 +69,9 @@ const ContactPreviewContent = ({ contact, onEdit, onDelete }) => {
 				<Container
 					background="gray6"
 					width="fill"
+					crossAlignment="flex-start"
 				>
-					<Row
-						orientation="horizontal"
-						mainAlignment="space-between"
-						width="fill"
-						wrap="nowrap"
-					>
+					<ContactPreviewRow>
 						<ContactField
 							field={contact.namePrefix}
 							label={t('prefix')}
@@ -77,30 +88,53 @@ const ContactPreviewContent = ({ contact, onEdit, onDelete }) => {
 							field={contact.nameSuffix}
 							label={t('suffix')}
 						/>
-					</Row>
-					<Row
-						orientation="horizontal"
-						mainAlignment="space-between"
-						width="fill"
-						wrap="nowrap"
-					>
-						<ContactMultipleField
-							label={t('phone')}
-							fields={contact.phone}
-							fieldKey="number"
+					</ContactPreviewRow>
+					<ContactPreviewRow>
+						<ContactMultiValueField
+							labels={{
+								number: t('phone')
+							}}
+							values={contact.phone}
+							dropdownLabelKey="number"
+							showIcon
+							width="33.33%"
 						/>
-						<ContactMultipleField
-							label={t('mail')}
-							fields={contact.mail}
-							fieldKey="mail"
+						<ContactMultiValueField
+							labels={{
+								mail: t('mail'),
+							}}
+							values={contact.mail}
+							dropdownLabelKey="mail"
+							defaultType="mail"
+							showIcon
+							width="33.33%"
 						/>
-					</Row>
-					<Row
-						orientation="horizontal"
-						mainAlignment="space-between"
-						width="fill"
-						wrap="nowrap"
-					>
+						<ContactMultiValueField
+							labels={{
+								url: t('url')
+							}}
+							values={contact.url}
+							dropdownLabelKey="url"
+							showIcon
+							width="33.33%"
+						/>
+					</ContactPreviewRow>
+					<ContactPreviewRow>
+						<ContactMultiValueField
+							labels={{
+								type: t('type'),
+								street: t('street'),
+								city: t('city'),
+								postalCode: t('postalCode'),
+								country: t('country'),
+								state: t('state'),
+							}}
+							values={contact.address}
+							dropdownLabelKey="type"
+							wrap
+						/>
+					</ContactPreviewRow>
+					<ContactPreviewRow width="calc(100% - 40px)">
 						<ContactField
 							field={contact.jobTitle}
 							label={t('jobTitle')}
@@ -113,43 +147,61 @@ const ContactPreviewContent = ({ contact, onEdit, onDelete }) => {
 							field={contact.company}
 							label={t('company')}
 						/>
-					</Row>
-					<Row
-						orientation="horizontal"
-						mainAlignment="space-between"
-						width="fill"
-						wrap="nowrap"
-					>
+					</ContactPreviewRow>
+					<ContactPreviewRow>
 						<ContactField
 							field={contact.notes}
 							label={t('notes')}
 						/>
-					</Row>
+					</ContactPreviewRow>
 				</Container>
 			</Collapse>
 		</>
 	);
 };
 
-const ContactMultipleField = ({ fields, label, fieldKey }) => {
+const ContactPreviewRow = ({ children, width }) => (
+	<Row
+		orientation="horizontal"
+		mainAlignment="flex-start"
+		width={width || 'fill'}
+		wrap="nowrap"
+	>
+		{children}
+	</Row>
+);
+
+const ContactMultiValueField = ({
+	values, labels, dropdownLabelKey, wrap, width, defaultType, showIcon
+}) => {
+	const [selected, setSelected] = useState(0);
 	const items = useMemo(
 		() =>	map(
-			fields,
+			values,
 			(item, idx) => ({
-				id: `${idx}-${item[fieldKey]}`,
-				label: item[fieldKey],
-				click: () => {}
+				id: idx.toString(),
+				label: item[dropdownLabelKey],
+				icon: typeToIcon(item.type || defaultType || 'other'),
+				click: () => setSelected(idx)
 			})
 		),
-		[fields]
+		[defaultType, dropdownLabelKey, values]
 	);
 	return (
-		(fields && fields.length > 0 && label) ? (
+		(values && values.length > 0 && labels) ? (
 			<Container
 				orientation="horizontal"
+				width={width}
+				crossAlignment="flex-start"
 			>
-				<ContactField field={fields[0][fieldKey]} label={label} />
-				{ fields.length > 1
+				<ContactMultipleField
+					defaultType={defaultType}
+					fields={values[selected]}
+					labels={labels}
+					wrap={wrap}
+					showIcon={showIcon}
+				/>
+				{ values.length > 1
 				&& (
 					<Dropdown items={items}>
 						<IconButton icon="ArrowIosDownward" />
@@ -159,14 +211,57 @@ const ContactMultipleField = ({ fields, label, fieldKey }) => {
 		) : null);
 };
 
-const ContactField = ({ field, label }) => ((field && label) ? (
+const ContactMultipleField = ({
+	fields, labels, wrap, width, defaultType, showIcon
+}) => (
 	<Container
 		crossAlignment="flex-start"
-		padding={{ all: 'medium' }}
 		height="fit"
+		orientation="horizontal"
+		style={wrap ? { flexWrap: 'wrap' } : {}}
+		width={width}
+	>
+		{
+			map(
+				labels,
+				(label, key) => (
+					<ContactField
+						key={key}
+						label={label}
+						field={fields[key]}
+						wrap={wrap}
+						icon={showIcon && typeToIcon(fields.type || defaultType || 'other')}
+					/>
+				)
+			)
+		}
+	</Container>
+);
+
+const ContactField = ({
+	field, label, wrap, icon
+}) => ((field && label) ? (
+	<Container
+		mainAlignment="flex-start"
+		crossAlignment="flex-start"
+		padding={{ all: 'small' }}
+		height="fit"
+		width={wrap ? '33.33%' : 'fill'}
 	>
 		<Text color="secondary">{label}</Text>
-		<Text size="large" overflow="break-word">{field}</Text>
+		<Container
+			width="fill"
+			height="fit"
+			orientation="horizontal"
+			mainAlignment="flex-start"
+		>
+			{ icon && (
+				<Padding right="extrasmall">
+					<Icon icon={icon} />
+				</Padding>
+			)}
+			<Text size="large" overflow="break-word">{field}</Text>
+		</Container>
 	</Container>
 ) : null);
 
