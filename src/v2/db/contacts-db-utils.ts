@@ -9,9 +9,9 @@
  * *** END LICENSE BLOCK *****
  */
 
-import { map, pickBy } from 'lodash';
+import { forEach, map, pickBy } from 'lodash';
 import { ISoapFolderObj } from '@zextras/zapp-shell/lib/network/ISoap';
-import { ISoapContactObj } from '../soap';
+import { ISoapContactObj, ISoapSyncContactFolderObj } from '../soap';
 import { ContactsFolder } from './contacts-folder';
 import {
 	ContactAddress,
@@ -25,7 +25,7 @@ import {
 const MAIL_REG = /^email(\d*)$/;
 const PHONE_REG = /^(.*)Phone(\d*)$/;
 
-export function normalizeFolder(soapFolderObj: ISoapFolderObj): ContactsFolder {
+function normalizeFolder(soapFolderObj: ISoapFolderObj): ContactsFolder {
 	return new ContactsFolder({
 		itemsCount: soapFolderObj.n,
 		name: soapFolderObj.name,
@@ -38,7 +38,23 @@ export function normalizeFolder(soapFolderObj: ISoapFolderObj): ContactsFolder {
 	});
 }
 
-export function contactPhoneTypeFromString(s: string): ContactPhoneType {
+export function normalizeContactsFolders(f: ISoapSyncContactFolderObj): ContactsFolder[] {
+	if (!f) return [];
+	let children: ContactsFolder[] = [];
+	if (f.folder) {
+		forEach(f.folder, (c: ISoapSyncContactFolderObj) => {
+			const child = normalizeContactsFolders(c);
+			children = [...children, ...child];
+		});
+	}
+	if (f.id === '3' || (f.view && f.view === 'contact')) {
+		return [normalizeFolder(f), ...children];
+	}
+
+	return children;
+}
+
+function contactPhoneTypeFromString(s: string): ContactPhoneType {
 	if (!PHONE_REG.test(s)) return ContactPhoneType.OTHER;
 	switch (s.match(PHONE_REG)![1]) {
 		case 'mobile':
@@ -93,7 +109,7 @@ function normalizeContactPhones(c: ISoapContactObj): ContactPhone[] {
 	);
 }
 
-export function normalizeContact(c: ISoapContactObj): Contact {
+function normalizeContact(c: ISoapContactObj): Contact {
 	return new Contact({
 		parent: c.l,
 		id: c.id,

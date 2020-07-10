@@ -1,0 +1,177 @@
+/*
+ * *** BEGIN LICENSE BLOCK *****
+ * Copyright (C) 2011-2020 ZeXtras
+ *
+ * The contents of this file are subject to the ZeXtras EULA;
+ * you may not use this file except in compliance with the EULA.
+ * You may obtain a copy of the EULA at
+ * http://www.zextras.com/zextras-eula.html
+ * *** END LICENSE BLOCK *****
+ */
+
+import { ICreateChange, IDatabaseChange, IUpdateChange } from 'dexie-observable/api';
+import { reduce, map, filter, intersectionWith } from 'lodash';
+import { ISoapSyncResponse } from '../soap';
+import { ContactsDb } from './contacts-db';
+import { ContactsFolder } from './contacts-folder';
+import { normalizeContactsFolders } from './contacts-db-utils';
+
+function searchLocalFolders(db: ContactsDb, ids: string[]): Promise<{[key: string]: string}> {
+	return db.folders.where('id').anyOf(ids).toArray()
+		.then((localFolders) => reduce<ContactsFolder, {[key: string]: string}>(
+			localFolders,
+			(r, f) => {
+				// @ts-ignore
+				r[f.id] = f._id;
+				return r;
+			},
+			{}
+		));
+}
+
+function _isCreationUpdated(u: IUpdateChange, c: ICreateChange) {
+	return c.key === u.key && typeof u.mods.id !== 'undefined';
+}
+
+function searchForLocallyCreatedFolders(
+	changes: IDatabaseChange[],
+	localChangesFromRemote: IDatabaseChange[]
+): Promise<{[key: string]: boolean}> {
+	const localCreations = filter(filter(changes, ['table', 'folders']), ['type', 1]) as ICreateChange[];
+	const remoteModifications = filter(filter(localChangesFromRemote, ['table', 'folders']), ['type', 2]) as IUpdateChange[];
+
+	const isLocallyCreated = reduce(
+		intersectionWith<IUpdateChange, ICreateChange>(
+			remoteModifications,
+			localCreations,
+			_isCreationUpdated
+		),
+		(r, c) => {
+			r[c.mods.id] = true;
+			return r;
+		},
+		{}
+	);
+
+	return Promise.resolve(isLocallyCreated);
+}
+
+/*
+function calculateContactFolderMods(oldf: ContactsFolder, newf: ContactsFolder): {[keyPath: string]: any | undefined} {
+	const mods: {[keyPath: string]: any | undefined} = {};
+	if (oldf.itemsCount !== newf.itemsCount) mods.itemsCount = newf.itemsCount;
+	if (oldf.unreadCount !== newf.unreadCount) mods.unreadCount = newf.unreadCount;
+	if (oldf.path !== newf.path) mods.path = newf.path;
+	if (oldf.name !== newf.name) mods.name = newf.name;
+	if (oldf.size !== newf.size) mods.size = newf.size;
+	if (oldf.parent !== newf.parent) mods.parent = newf.parent;
+	return mods;
+}
+*/
+
+export default function processRemoteFolderNotifications(
+	db: ContactsDb,
+	isInitialSync: boolean,
+	changes: IDatabaseChange[],
+	localChangesFromRemote: IDatabaseChange[],
+	{ folder, deleted }: ISoapSyncResponse
+): Promise<IDatabaseChange[]> {
+	const folders = reduce(
+		folder || [],
+		(r: ContactsFolder[], f) => {
+			const _folders = normalizeContactsFolders(f);
+			r.push(..._folders);
+			return r;
+		},
+		[]
+	);
+
+	if (isInitialSync) {
+		return Promise.resolve(
+			reduce<ContactsFolder, IDatabaseChange[]>(
+				folders,
+				(r, f) => {
+					r.push({
+						type: 1,
+						table: 'folders',
+						key: undefined,
+						obj: f
+					});
+					return r;
+				},
+				[]
+			)
+		);
+	}
+
+	return searchLocalFolders(
+		db,
+		map<ContactsFolder>(folders, 'id'),
+	)
+		.then(
+			(idToLocalUUIDMap) => new Promise<{idToLocalUUIDMap: {[key: string]: string}; isLocallyCreated: {[key: string]: boolean}}>((resolve) => {
+				searchForLocallyCreatedFolders(changes, localChangesFromRemote)
+					.then((isLocallyCreated) => resolve({ idToLocalUUIDMap, isLocallyCreated }));
+			})
+		)
+		.then(({ idToLocalUUIDMap, isLocallyCreated }) => {
+			const dbChanges = reduce<ContactsFolder, IDatabaseChange[]>(
+				folders,
+				(r, f) => {
+					// @ts-ignore
+					if (idToLocalUUIDMap.hasOwnProperty(f.id)) {
+						// @ts-ignore
+						f._id = idToLocalUUIDMap[f.id];
+						r.push({
+							type: 2,
+							table: 'folders',
+							key: f._id,
+							mods: {
+								id: f.id,
+								parent: f.parent,
+								itemsCount: f.itemsCount,
+								name: f.name,
+								path: f.path,
+								unreadCount: f.unreadCount,
+								size: f.size
+							}
+						});
+					}
+					else if (!isLocallyCreated[f.id!]) {
+						r.push({
+							type: 1,
+							table: 'folders',
+							key: undefined,
+							obj: f
+						});
+					}
+					return r;
+				},
+				[]
+			);
+
+			if (deleted && deleted[0].folder) {
+				return searchLocalFolders(
+					db,
+					deleted[0].folder[0].ids.split(','),
+				)
+					.then((deletedIdToLocalUUIDMap) => {
+						reduce<{[key: string]: string}, IDatabaseChange[]>(
+							deletedIdToLocalUUIDMap,
+							(r, _id, id) => {
+								r.push({
+									type: 3,
+									table: 'folders',
+									key: _id,
+								});
+								return r;
+							},
+							dbChanges
+						);
+						return dbChanges;
+					});
+			}
+
+			return dbChanges;
+		});
+}

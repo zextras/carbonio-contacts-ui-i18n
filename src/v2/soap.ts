@@ -25,6 +25,11 @@ import {
 	ContactPhone
 } from '../idb/IContactsIdb';
 
+export type ISoapSyncResponse = ISoapSyncContactFolderObj & {
+	md: number;
+	token: string|number;
+};
+
 export type ISoapSyncContactFolderObj = ISoapSyncFolderObj & {
 	cn: Array<{ids: string}>;
 	folder: Array<ISoapSyncContactFolderObj>;
@@ -32,6 +37,14 @@ export type ISoapSyncContactFolderObj = ISoapSyncFolderObj & {
 
 export type ISoapSyncContactResponse = ISoapSyncResponse<ISoapSyncDeletedMap, ISoapSyncContactFolderObj> & {
 	cn: Array<ISoapContactObj>;
+};
+
+export type ISoapCreateFolderResponse = {
+	folder: Array<ISoapSyncContactFolderObj>;
+}
+
+export type IBulkedResponse = {
+	requestId: string;
 };
 
 type SoapContactObjAttrs = {

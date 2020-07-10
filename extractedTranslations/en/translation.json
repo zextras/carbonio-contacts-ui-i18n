@@ -1,5 +1,4 @@
 {
-  "": "",
   "First Name": "",
   "Last Name": "",
   "Mail Address": "",
@@ -8,43 +7,60 @@
   "addresses": "",
   "company": "",
   "contact": {
+    "cancel": "",
     "label": {
       "address": {
-        "main": ""
+        "city": "",
+        "country": "",
+        "main": "",
+        "postalCode": "",
+        "state": "",
+        "street": ""
       },
+      "company": "",
+      "department": "",
+      "firstName": "",
+      "jobTitle": "",
+      "lastName": "",
       "mail": {
+        "address": "",
         "main": ""
       },
+      "nameSuffix": "",
+      "notes": "",
       "phone": {
-        "main": ""
+        "main": "",
+        "number": "",
+        "type": ""
+      },
+      "suffix": {
+        "Dr": "",
+        "Lady": "",
+        "Lord": "",
+        "Miss": "",
+        "Mr": "",
+        "Mrs": "",
+        "Ms": "",
+        "Mx": "",
+        "Sir": ""
       }
-    }
+    },
+    "save": ""
   },
   "department": "",
   "edit": "",
-  "edit mail address": "",
-  "edit phone contact": "",
   "edit the email address": "",
   "edit the phone contact": "",
   "email address": "",
-  "first name": "",
   "firstName": "",
-  "home": "",
-  "insert  mail address": "",
-  "insert  phone contact": "",
-  "insert a phone contact": "",
-  "insert an email address": "",
   "insert email address": "",
   "insert phone contact": "",
   "jobTitle": "",
   "lastName": "",
   "mail": "",
-  "mail address": "",
   "notes": "",
-  "other": "",
   "phone": "",
   "phone contact": "",
   "prefix": "",
-  "suffix": "",
-  "work": ""
+  "suffix": ""
 }
