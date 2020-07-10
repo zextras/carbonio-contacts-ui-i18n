@@ -11,34 +11,29 @@
 import React, {
 	useCallback,
 	useEffect,
-	useReducer, useState
+	useState
 } from 'react';
 import { useParams } from 'react-router-dom';
 import { hooks } from '@zextras/zapp-shell';
 import {
 	Formik,
-	Form,
 	Field,
-	ErrorMessage
+	useField,
 } from 'formik';
-import styled from 'styled-components';
-import { Contact } from './db/contact';
 import { useTranslation } from 'react-i18next';
-
-const _Form = styled(Form)`
-	display: flex;
-	flex-direction: column;
-	
-	> p {
-		margin: 0;
-	}
-`;
-
-const _Toolbar = styled.div`
-	display: flex;
-	flex-direction: row;
-	justify-content: end;
-`;
+import { map, filter, trim } from 'lodash';
+import {
+	Button,
+	Container,
+	Input,
+	Row,
+	IconButton,
+	Padding,
+	FormSection,
+	Text, Avatar
+} from '@zextras/zapp-ui';
+import { Contact, ContactAddressType } from './db/contact';
+import { CompactView } from './commons/contact-compact-view';
 
 export default function FolderView() {
 	const { id } = useParams();
@@ -61,6 +56,7 @@ export default function FolderView() {
 			notes: '',
 			phone: [],
 			nameSuffix: '',
+			namePrefix: ''
 		}));
 
 	useEffect(() => {
@@ -96,32 +92,202 @@ export default function FolderView() {
 		}
 	}, [db, pushHistory]);
 
-	const formFactory = useCallback(({ isSubmitting }) => (
-		<_Form>
-			<p>
-				{ t('First Name') }
-				<Field name="firstName" />
-			</p>
-			<p>
-				{ t('Last Name') }
-				<Field name="lastName" />
-			</p>
-			<_Toolbar>
-				<button type="submit" disabled={isSubmitting}>
-					{ t('Save') }
-				</button>
-			</_Toolbar>
-		</_Form>
-	), [t]);
+	const formFactory = useCallback(({ isSubmitting, submitForm }) => (
+		<Container padding={{ all: 'medium' }} height="fit">
+			<Row
+				orientation="horizontal"
+				mainAlignment="space-between"
+				width="fill"
+				wrap="nowrap"
+			>
+				<Text>{t('This contact will be created in the \'Contacts\' folder')}</Text>
+				<Button label={t('Save')} onClick={submitForm} disabled={isSubmitting} />
+			</Row>
+			<CompactView contact={initialContact} />
+			<Row
+				orientation="horizontal"
+				mainAlignment="space-between"
+				width="fill"
+				wrap="nowrap"
+			>
+				<CustomStringField name="namePrefix" label={t('prefix')} />
+				<CustomStringField name="firstName" label={t('firstName')} />
+				<CustomStringField name="lastName" label={t('lastName')} />
+				<CustomStringField name="nameSuffix" label={t('suffix')} />
+			</Row>
+			<Row
+				orientation="horizontal"
+				mainAlignment="space-between"
+				width="fill"
+				wrap="nowrap"
+			>
+				<CustomStringField name="jobTitle" label={t('jobTitle')} />
+				<CustomStringField name="department" label={t('department')} />
+				<CustomStringField name="company" label={t('company')} />
+			</Row>
+			<Row
+				orientation="horizontal"
+				mainAlignment="space-between"
+				width="fill"
+				wrap="nowrap"
+			>
+				<CustomStringField name="notes" label={t('notes')} />
+			</Row>
+			<CustomMultivalueField
+				editInputLabel={t('edit the email address')}
+				newInputLabel={t('insert email address')}
+				label={t('email address')}
+				name="mail"
+				subFields="mail"
+			/>
+			<CustomMultivalueField
+				editInputLabel={t('edit the phone contact')}
+				newInputLabel={t('insert phone contact')}
+				label={t('phone contact')}
+				name="phone"
+				subFields="number"
+			/>
+			<CustomMultivalueField
+				editInputLabel={t('edit the phone contact')}
+				newInputLabel={t('insert phone contact')}
+				label={t('addresses')}
+				name="address"
+				subField="street"
+			/>
+		</Container>
+	), [initialContact, t]);
 
 	return initialContact
 		? (
-			<Formik
-				initialValues={initialContact.toMap()}
-				onSubmit={onSubmit}
+			<Container
+				mainAlignment="flex-start"
+				crossAlignment="flex-start"
+				background="gray6"
+				height="fill"
 			>
-				{formFactory}
-			</Formik>
+				<Formik
+					initialValues={initialContact.toMap()}
+					onSubmit={onSubmit}
+				>
+					{formFactory}
+				</Formik>
+			</Container>
 		)
 		: null;
 }
+
+const CustomStringField = ({ name, label }) => (
+	<Container padding={{ all: 'small' }}>
+		<Field name={name} id={name}>
+			{
+				({ field: { value }, form: { setFieldValue } }) => (
+					<Input
+						backgroundColor="gray5"
+						label={label}
+						value={value}
+						onChange={(ev) => setFieldValue(name, ev.target.value)}
+					/>
+				)
+			}
+		</Field>
+	</Container>
+);
+
+const CustomMultivalueField = ({
+	name, label, subField, editInputLabel, newInputLabel
+}) => {
+	const [field, meta, helpers] = useField({ name });
+
+	const addValue = useCallback(
+		() => {
+			helpers.setValue([...field.value, { [subField]: '' }]);
+		},
+		[helpers, field.value, subField]
+	);
+
+	const removeValue = useCallback(
+		(index) => {
+			helpers.setValue(filter(field.value, (v, i) => i !== index));
+		},
+		[helpers, field]
+	);
+
+	const updateValue = useCallback(
+		(newString, index) => {
+			if (index >= field.value.length) {
+				helpers.setValue([...field.value, { [subField]: newString }]);
+				return;
+			}
+			if (newString === '') {
+				removeValue(index);
+				return;
+			}
+			helpers.setValue(
+				map(
+					field.value,
+					(v, i) => (i === index ? { [subField]: newString } : v)
+				)
+			);
+		},
+		[field.value, helpers, subField, removeValue]
+	);
+
+	if (field.value.length === 0) {
+		addValue();
+	}
+
+	return (
+		<FormSection label={label}>
+			{map(
+				field.value,
+				(item, index) => (
+					<Row
+						key={index}
+						orientation="horizontal"
+						mainAlignment="space-between"
+						width="fill"
+						wrap="nowrap"
+					>
+						<Input
+							backgroundColor="gray5"
+							label={item[subField] === '' ? newInputLabel : editInputLabel}
+							value={item[subField]}
+							onChange={(ev) => updateValue(ev.target.value, index)}
+						/>
+						<Padding all="small">
+							{ index >= field.value.length - 1
+								? (
+									<Container
+										orientation="horizontal"
+									>
+										<Padding right="small">
+											<IconButton
+												icon="Plus"
+												iconColor="gray6"
+												backgroundColor="primary"
+												onClick={() => addValue()}
+											/>
+										</Padding>
+										<IconButton
+											icon="Minus"
+											iconColor="gray6"
+											backgroundColor="secondary"
+											onClick={() => removeValue(index)}
+										/>
+									</Container>
+								)
+								: (
+									<IconButton
+										icon="Minus"
+										iconColor="gray6"
+										backgroundColor="secondary"
+										onClick={() => removeValue(index)}
+									/>
+								)}
+						</Padding>
+					</Row>
+				)
+			)}
+		</FormSection>
+	);
+};

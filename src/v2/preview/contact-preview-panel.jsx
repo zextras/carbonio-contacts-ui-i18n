@@ -12,14 +12,20 @@
 import React, { useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 import { hooks } from '@zextras/zapp-shell';
-import { reduce } from 'lodash';
 import { useTranslation } from 'react-i18next';
-
-const _PreviewPanel = styled.div`
-	flex-grow: 1;
-	display: flex;
-	flex-direction: column;
-`;
+import {
+	Container,
+	Divider,
+	Icon,
+	IconButton,
+	Padding,
+	Text,
+	Row
+} from '@zextras/zapp-ui';
+import { generateDisplayName } from '../contact-list-item';
+import ContactPreviewHeader from './contact-preview-header';
+import ContactPreviewContent from "./contact-preview-content";
+import {useDisplayName} from "../commons/use-display-name";
 
 const _toolbar = styled.div`
 	min-height: 50px;
@@ -48,8 +54,6 @@ export default function ContactPreviewPanel({ contactInternalId, folderId }) {
 	const onEdit = hooks.useAddPanelCallback(`/edit/${contactInternalId}`);
 	const replaceHistory = hooks.useReplaceHistoryCallback();
 	const { db } = hooks.useAppContext();
-	const { t } = useTranslation();
-
 	const query = useMemo(
 		() => () => db.contacts
 			.where({ _id: contactInternalId })
@@ -66,35 +70,27 @@ export default function ContactPreviewPanel({ contactInternalId, folderId }) {
 			.delete(contactInternalId)
 			.then(() => replaceHistory(`/folder/${folderId}`));
 	}, [db, contactInternalId, folderId, replaceHistory]);
-
+	const onClose = useCallback(
+		() => replaceHistory(`/folder/${folderId}`),
+		[folderId, replaceHistory]
+	);
+	const displayName = useDisplayName(contact);
 	return (
-		<_PreviewPanel>
-			<_toolbar>
-				<p onClick={onDelete} style={{ cursor: 'pointer' }}>Delete</p>
-				<p>|</p>
-				<p onClick={onEdit} style={{ cursor: 'pointer' }}>Edit</p>
-			</_toolbar>
-			{contactLoaded && <_content>
-				<div>
-					{ t('First Name') }
-					{ contact.firstName }
-				</div>
-				<div>
-					{ t('Last Name') }
-					{ contact.lastName }
-				</div>
-				<div>
-					{ t('Mail Address') }
-				</div>
-				{ reduce(
-					contact.mail,
-					(r, v, k) => {
-						r.push((<div key={v.mail}>{v.mail}</div>));
-						return r;
-					},
-					[]
-				)}
-			</_content>}
-		</_PreviewPanel>
+		<Container
+			width="calc(50% - 4px)"
+			mainAlignment="flex-start"
+		>
+			{contactLoaded && (
+				<>
+					<ContactPreviewHeader displayName={displayName} onClose={onClose} />
+					<ContactPreviewContent
+						contact={contact}
+						onEdit={onEdit}
+						onDelete={onDelete}
+					/>
+					<Divider />
+				</>
+			)}
+		</Container>
 	);
 }

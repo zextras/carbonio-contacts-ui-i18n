@@ -1,6 +1,50 @@
 {
+  "": "",
   "First Name": "",
   "Last Name": "",
   "Mail Address": "",
-  "Save": ""
+  "Save": "",
+  "This contact will be created in the 'Contacts' folder": "",
+  "addresses": "",
+  "company": "",
+  "contact": {
+    "label": {
+      "address": {
+        "main": ""
+      },
+      "mail": {
+        "main": ""
+      },
+      "phone": {
+        "main": ""
+      }
+    }
+  },
+  "department": "",
+  "edit": "",
+  "edit mail address": "",
+  "edit phone contact": "",
+  "edit the email address": "",
+  "edit the phone contact": "",
+  "email address": "",
+  "first name": "",
+  "firstName": "",
+  "home": "",
+  "insert  mail address": "",
+  "insert  phone contact": "",
+  "insert a phone contact": "",
+  "insert an email address": "",
+  "insert email address": "",
+  "insert phone contact": "",
+  "jobTitle": "",
+  "lastName": "",
+  "mail": "",
+  "mail address": "",
+  "notes": "",
+  "other": "",
+  "phone": "",
+  "phone contact": "",
+  "prefix": "",
+  "suffix": "",
+  "work": ""
 }

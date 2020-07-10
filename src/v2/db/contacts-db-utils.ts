@@ -109,6 +109,7 @@ export function normalizeContact(c: ISoapContactObj): Contact {
 		jobTitle: c._attrs.jobTitle || '',
 		notes: c._attrs.notes || '',
 		phone: normalizeContactPhones(c),
-		nameSuffix: c._attrs.nameSuffix || ''
+		nameSuffix: c._attrs.nameSuffix || '',
+		namePrefix: c._attrs.namePrefix || '',
 	});
 }
