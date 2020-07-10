@@ -36,6 +36,16 @@ const ContactPreviewContent = ({ contact, onEdit, onDelete }) => {
 		setOpen(!open);
 	}, [setOpen, open]);
 	const { t } = useTranslation();
+	const addressRowData = useMemo(
+		() => map(
+			contact.address,
+			(addr) => ({
+				type: addr.type,
+				address: `${addr.street} - ${addr.city} (${addr.postalCode}), ${addr.country}, ${addr.state}`
+			})
+		),
+		[contact]
+	);
 	console.log(contact);
 	return (
 		<>
@@ -70,6 +80,7 @@ const ContactPreviewContent = ({ contact, onEdit, onDelete }) => {
 					background="gray6"
 					width="fill"
 					crossAlignment="flex-start"
+					padding={{ all: 'large' }}
 				>
 					<ContactPreviewRow>
 						<ContactField
@@ -80,61 +91,45 @@ const ContactPreviewContent = ({ contact, onEdit, onDelete }) => {
 							field={contact.firstName}
 							label={t('firstName')}
 						/>
+					</ContactPreviewRow>
+					<ContactPreviewRow>
+						<ContactField
+							field={contact.middleName}
+							label={t('middleName')}
+						/>
 						<ContactField
 							field={contact.lastName}
 							label={t('lastName')}
 						/>
+					</ContactPreviewRow>
+					<ContactPreviewRow>
 						<ContactField
 							field={contact.nameSuffix}
 							label={t('suffix')}
 						/>
+						<ContactMultiValueField
+							label={t('phone')}
+							values={contact.phone}
+							labelKey="number"
+							showIcon
+						/>
 					</ContactPreviewRow>
 					<ContactPreviewRow>
 						<ContactMultiValueField
-							labels={{
-								number: t('phone')
-							}}
-							values={contact.phone}
-							dropdownLabelKey="number"
-							showIcon
-							width="33.33%"
-						/>
-						<ContactMultiValueField
-							labels={{
-								mail: t('mail'),
-							}}
+							label={t('mail')}
 							values={contact.mail}
-							dropdownLabelKey="mail"
+							labelKey="mail"
 							defaultType="mail"
 							showIcon
-							width="33.33%"
 						/>
 						<ContactMultiValueField
-							labels={{
-								url: t('url')
-							}}
+							label={t('url')}
 							values={contact.url}
-							dropdownLabelKey="url"
+							labelKey="url"
 							showIcon
-							width="33.33%"
 						/>
 					</ContactPreviewRow>
 					<ContactPreviewRow>
-						<ContactMultiValueField
-							labels={{
-								type: t('type'),
-								street: t('street'),
-								city: t('city'),
-								postalCode: t('postalCode'),
-								country: t('country'),
-								state: t('state'),
-							}}
-							values={contact.address}
-							dropdownLabelKey="type"
-							wrap
-						/>
-					</ContactPreviewRow>
-					<ContactPreviewRow width="calc(100% - 40px)">
 						<ContactField
 							field={contact.jobTitle}
 							label={t('jobTitle')}
@@ -143,15 +138,27 @@ const ContactPreviewContent = ({ contact, onEdit, onDelete }) => {
 							field={contact.department}
 							label={t('department')}
 						/>
+					</ContactPreviewRow>
+					<ContactPreviewRow>
 						<ContactField
 							field={contact.company}
 							label={t('company')}
 						/>
 					</ContactPreviewRow>
 					<ContactPreviewRow>
+						<ContactMultiValueField
+							label={t('address')}
+							values={addressRowData}
+							labelKey="address"
+							width="fill"
+							showIcon
+						/>
+					</ContactPreviewRow>
+					<ContactPreviewRow>
 						<ContactField
 							field={contact.notes}
 							label={t('notes')}
+							width="fill"
 						/>
 					</ContactPreviewRow>
 				</Container>
@@ -172,7 +179,7 @@ const ContactPreviewRow = ({ children, width }) => (
 );
 
 const ContactMultiValueField = ({
-	values, labels, dropdownLabelKey, wrap, width, defaultType, showIcon
+	values, label, labelKey, width, defaultType, showIcon
 }) => {
 	const [selected, setSelected] = useState(0);
 	const items = useMemo(
@@ -180,78 +187,50 @@ const ContactMultiValueField = ({
 			values,
 			(item, idx) => ({
 				id: idx.toString(),
-				label: item[dropdownLabelKey],
+				label: item[labelKey],
 				icon: typeToIcon(item.type || defaultType || 'other'),
 				click: () => setSelected(idx)
 			})
 		),
-		[defaultType, dropdownLabelKey, values]
+		[defaultType, labelKey, values]
 	);
 	return (
-		(values && values.length > 0 && labels) ? (
-			<Container
-				orientation="horizontal"
-				width={width}
-				crossAlignment="flex-start"
-			>
-				<ContactMultipleField
-					defaultType={defaultType}
-					fields={values[selected]}
-					labels={labels}
-					wrap={wrap}
-					showIcon={showIcon}
-				/>
-				{ values.length > 1
+		<Container
+			orientation="horizontal"
+			width={width || '50%'}
+			crossAlignment="center"
+			mainAlignment="space-between"
+		>
+			<ContactField
+				label={label}
+				field={values && values[selected] && values[selected][labelKey]}
+				icon={values && values[selected] && showIcon && typeToIcon(values[selected].type || defaultType || 'other')}
+				width={width || 'fill'}
+			/>
+			{ values.length > 1
 				&& (
 					<Dropdown items={items}>
-						<IconButton icon="ArrowIosDownward" />
+						<IconButton icon="ChevronDown" />
 					</Dropdown>
 				)}
-			</Container>
-		) : null);
+		</Container>
+	);
 };
 
-const ContactMultipleField = ({
-	fields, labels, wrap, width, defaultType, showIcon
-}) => (
-	<Container
-		crossAlignment="flex-start"
-		height="fit"
-		orientation="horizontal"
-		style={wrap ? { flexWrap: 'wrap' } : {}}
-		width={width}
-	>
-		{
-			map(
-				labels,
-				(label, key) => (
-					<ContactField
-						key={key}
-						label={label}
-						field={fields[key]}
-						wrap={wrap}
-						icon={showIcon && typeToIcon(fields.type || defaultType || 'other')}
-					/>
-				)
-			)
-		}
-	</Container>
-);
-
 const ContactField = ({
-	field, label, wrap, icon
-}) => ((field && label) ? (
+	field, label, width, icon
+}) => (
 	<Container
 		mainAlignment="flex-start"
 		crossAlignment="flex-start"
 		padding={{ all: 'small' }}
-		height="fit"
-		width={wrap ? '33.33%' : 'fill'}
+		width={width || '50%'}
+		style={{ minHeight: '48px' }}
 	>
 		<Text color="secondary">{label}</Text>
 		<Container
-			width="fill"
 			height="fit"
+			width="fill"
 			orientation="horizontal"
 			mainAlignment="flex-start"
 		>
@@ -263,6 +242,6 @@ const ContactField = ({
 			<Text size="large" overflow="break-word">{field}</Text>
 		</Container>
 	</Container>
-) : null);
+);
 
 export default ContactPreviewContent;
