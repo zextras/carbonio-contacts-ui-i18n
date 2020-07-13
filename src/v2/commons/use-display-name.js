@@ -16,7 +16,17 @@ export const useDisplayName = (contact) => useMemo(
 	() => {
 		if (contact) {
 			if (contact.firstName || contact.lastName) {
-				return trim(`${contact.namePrefix || ''} ${contact.firstName || ''} ${contact.lastName || ''} ${contact.nameSuffix || ''}`);
+				return trim(`${
+					contact.namePrefix || ''
+				} ${
+					contact.firstName || ''
+				} ${
+					contact.middleName || ''
+				} ${
+					contact.lastName || ''
+				} ${
+					contact.nameSuffix || ''
+				}`);
 			}
 			if (contact.mail.length > 0) return `<No Name> ${contact.mail[0].mail}`;
 		}

@@ -10,17 +10,45 @@
   "city": "",
   "company": "",
   "contact": {
+    "cancel": "",
     "label": {
       "address": {
-        "main": ""
+        "city": "",
+        "country": "",
+        "main": "",
+        "postalCode": "",
+        "state": "",
+        "street": ""
       },
+      "company": "",
+      "department": "",
+      "firstName": "",
+      "jobTitle": "",
+      "lastName": "",
       "mail": {
+        "address": "",
         "main": ""
       },
+      "nameSuffix": "",
+      "notes": "",
       "phone": {
-        "main": ""
+        "main": "",
+        "number": "",
+        "type": ""
+      },
+      "suffix": {
+        "Dr": "",
+        "Lady": "",
+        "Lord": "",
+        "Miss": "",
+        "Mr": "",
+        "Mrs": "",
+        "Ms": "",
+        "Mx": "",
+        "Sir": ""
       }
-    }
+    },
+    "save": ""
   },
   "country": "",
   "department": "",
