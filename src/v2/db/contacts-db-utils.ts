@@ -142,6 +142,7 @@ export function normalizeContact(c: ISoapContactObj): Contact {
 		firstName: c._attrs.firstName || '',
 		middleName: c._attrs.middleName || '',
 		lastName: c._attrs.lastName || '',
+		nickName: c._attrs.nickname || '',
 		image: (c._attrs.image)
 			? `/service/home/~/?auth=co&id=${c.id}&part=${c._attrs.image.part}&max_width=32&max_height=32`
 			: '',

@@ -24,6 +24,7 @@ import {
 	ContactEmail,
 	ContactPhone
 } from '../idb/IContactsIdb';
+import {ContactUrl} from "./db/contact";
 
 export type ISoapSyncContactFolderObj = ISoapSyncFolderObj & {
 	cn: Array<{ids: string}>;
@@ -39,6 +40,7 @@ type SoapContactObjAttrs = {
 	firstName?: string;
 	middleName?: string;
 	lastName?: string;
+	nickname?: string;
 	nameSuffix?: string;
 	namePrefix?: string;
 	mobilePhone?: string;
@@ -216,6 +218,25 @@ export function normalizeContactPhonesToSoapOp(phones: ContactPhone[]): any {
 	);
 }
 
+export function normalizeContactUrlsToSoapOp(urls: ContactUrl[]): any {
+	return reduce(
+		reduce(
+			urls,
+			(a: {[k: string]: any[]}, v, k) => {
+				if (a[v.type]) return { ...a, ...{ [v.type]: [...a[v.type], v.url] } };
+				return { ...a, ...{ [v.type]: [v.url] } };
+			},
+			{}
+		),
+		(a, v, k) => reduce(
+			v,
+			(a1, v1, k1) => ({ ...a1, [`${k}Phone${k1 > 0 ? k1 : ''}`]: v1 }),
+			a
+		),
+		{}
+	);
+}
+
 const capitalize = (lower: string) => lower.replace(/^\w/, (c: string) => c.toUpperCase());
 
 export function normalizeContactAddressesToSoapOp(addresses: ContactAddress[]): any {
@@ -244,8 +265,10 @@ export function normalizeContactAddressesToSoapOp(addresses: ContactAddress[]): 
 export function normalizeContactAttrsToSoapOp(c: ContactData): ContactCreationAttr[] {
 	const obj: any = pick(c, [
 		'nameSuffix',
+		'namePrefix',
 		'firstName',
 		'lastName',
+		'nickName',
 		'image',
 		'jobTitle',
 		'department',
@@ -255,6 +278,7 @@ export function normalizeContactAttrsToSoapOp(c: ContactData): ContactCreationAt
 	if (c.mail) merge(obj, normalizeContactMailsToSoapOp(c.mail));
 	if (c.phone) merge(obj, normalizeContactPhonesToSoapOp(c.phone));
 	if (c.address) merge(obj, normalizeContactAddressesToSoapOp(c.address));
+	if (c.url) merge(obj, normalizeContactUrlsToSoapOp(c.url));
 	return map<any, any>(
 		obj,
 		(v: any, k: any) => ({ n: k, _content: v })

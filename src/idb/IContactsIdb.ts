@@ -12,6 +12,7 @@
 import { DBSchema } from 'idb';
 import { IFolderSchmV1 } from '@zextras/zapp-shell/lib/sync/IFolderSchm';
 import { ContactaddressType, ContactPhoneType } from './ContactEnums';
+import {ContactUrl} from "../v2/db/contact";
 
 export interface IContactsIdb extends DBSchema {
 	contacts: {
@@ -35,9 +36,12 @@ export type ContactData = {
 	_revision?: number;
 	id?: string;
 	parent: string;
+	namePrefix: string;
 	nameSuffix: string;
 	firstName: string;
+	middleName: string;
 	lastName: string;
+	nickName: string;
 	image: string;
 	jobTitle: string;
 	department: string;
@@ -46,6 +50,7 @@ export type ContactData = {
 	notes: string;
 	mail: ContactEmail[];
 	phone: ContactPhone[];
+	url: ContactUrl[];
 };
 
 export type Contact = ContactData & {
