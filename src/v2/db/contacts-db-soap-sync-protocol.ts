@@ -77,7 +77,9 @@ export class ContactsDbSoapSyncProtocol implements ISyncProtocol {
 		if (oldC.company !== newC.company) mods.company = newC.company;
 		if (oldC.department !== newC.department) mods.department = newC.department;
 		if (oldC.firstName !== newC.firstName) mods.firstName = newC.firstName;
+		if (oldC.middleName !== newC.middleName) mods.middleName = newC.middleName;
 		if (oldC.lastName !== newC.lastName) mods.lastName = newC.lastName;
+		if (oldC.nickName !== newC.nickName) mods.nickName = newC.nickName;
 		if (oldC.image !== newC.image) mods.image = newC.image;
 		if (oldC.jobTitle !== newC.jobTitle) mods.jobTitle = newC.jobTitle;
 		if (oldC.notes !== newC.notes) mods.notes = newC.notes;
@@ -86,6 +88,7 @@ export class ContactsDbSoapSyncProtocol implements ISyncProtocol {
 		if (JSON.stringify(oldC.address) !== JSON.stringify(newC.address)) mods.address = newC.address;
 		if (JSON.stringify(oldC.mail) !== JSON.stringify(newC.mail)) mods.mail = newC.mail;
 		if (JSON.stringify(oldC.phone) !== JSON.stringify(newC.phone)) mods.phone = newC.phone;
+		if (JSON.stringify(oldC.url) !== JSON.stringify(newC.url)) mods.url = newC.url;
 		return mods;
 	}
 
@@ -157,7 +160,7 @@ export class ContactsDbSoapSyncProtocol implements ISyncProtocol {
 		change: IDeleteChange,
 		changesSentContainer: ChangesSentContainer,
 	): Promise<ChangesSentContainer> {
-		return this._db.remapped_ids
+		return this._db.remappedIds
 			.where({ _id: change.key })
 			.limit(1)
 			.toArray()
@@ -243,7 +246,7 @@ export class ContactsDbSoapSyncProtocol implements ISyncProtocol {
 			case 'folders': {
 				return ContactsDbSoapSyncProtocol._consumeFolderChange(change, changesSentContainer);
 			}
-			case 'remapped_ids':
+			case 'remappedIds':
 			default:
 				return Promise.resolve(changesSentContainer);
 		}
@@ -620,7 +623,7 @@ export class ContactsDbSoapSyncProtocol implements ISyncProtocol {
 			(r, v, k) => {
 				r.push({
 					type: 3,
-					table: 'remapped_ids',
+					table: 'remappedIds',
 					key: v
 				});
 				return r;

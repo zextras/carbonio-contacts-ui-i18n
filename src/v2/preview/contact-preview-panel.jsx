@@ -17,7 +17,6 @@ import ContactPreviewContent from './contact-preview-content';
 import { useDisplayName } from '../commons/use-display-name';
 
 export default function ContactPreviewPanel({ contactInternalId, folderId }) {
-	const onEdit = hooks.useAddPanelCallback(`/edit/${contactInternalId}`);
 	const replaceHistory = hooks.useReplaceHistoryCallback();
 	const { db } = hooks.useAppContext();
 	const query = useMemo(
@@ -31,6 +30,10 @@ export default function ContactPreviewPanel({ contactInternalId, folderId }) {
 	);
 	// TODO: Add the sort by
 	const [contact, contactLoaded] = hooks.useObserveDb(query, db);
+	const onEdit = useCallback(
+		() => replaceHistory(`/edit/${contactInternalId}`),
+		[contactInternalId, replaceHistory]
+	);
 	const onDelete = useCallback(() => {
 		db.contacts
 			.delete(contactInternalId)

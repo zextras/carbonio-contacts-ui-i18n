@@ -22,7 +22,7 @@ import mainMenuItems from './v2/main-menu-items';
 import { Contact } from './v2/db/contact';
 
 const lazyFolderView = lazy(() => (import(/* webpackChunkName: "folder-view" */ './v2/folder/folder-view')));
-const lazyEditView = lazy(() => (import(/* webpackChunkName: "edit-view" */ './v2/edit-view')));
+const lazyEditView = lazy(() => (import(/* webpackChunkName: "edit-view" */ './v2/edit/edit-view')));
 
 export default function app() {
 	console.log('Hello from contacts');

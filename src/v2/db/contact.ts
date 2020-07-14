@@ -57,6 +57,7 @@ export interface IContact {
 	firstName: string;
 	middleName: string;
 	lastName: string;
+	nickName: string;
 	parent: string;
 	address: ContactAddress[];
 	company: string;
@@ -94,6 +95,8 @@ export class Contact implements IContact {
 
 	lastName: string;
 
+	nickName: string;
+
 	nameSuffix: string;
 
 	image: string;
@@ -118,6 +121,7 @@ export class Contact implements IContact {
 		firstName,
 		middleName,
 		lastName,
+		nickName,
 		nameSuffix,
 		image,
 		jobTitle,
@@ -136,6 +140,7 @@ export class Contact implements IContact {
 		this.firstName = firstName;
 		this.middleName = middleName;
 		this.lastName = lastName;
+		this.nickName = nickName;
 		this.nameSuffix = nameSuffix;
 		this.image = image;
 		this.jobTitle = jobTitle;
@@ -144,7 +149,7 @@ export class Contact implements IContact {
 		this.url = url;
 	}
 
-	public toMap() {
+	public toMap(): IContact {
 		return {
 			_id: this._id,
 			id: this.id,
@@ -153,14 +158,17 @@ export class Contact implements IContact {
 			company: this.company,
 			department: this.department,
 			mail: this.mail,
+			nameSuffix: this.nameSuffix,
 			firstName: this.firstName,
+			middleName: this.middleName,
 			lastName: this.lastName,
+			nickName: this.nickName,
+			namePrefix: this.namePrefix,
 			image: this.image,
 			jobTitle: this.jobTitle,
 			notes: this.notes,
 			phone: this.phone,
-			nameSuffix: this.nameSuffix,
-			namePrefix: this.namePrefix
+			url: this.url,
 		};
 	}
 }
