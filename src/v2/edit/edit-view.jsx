@@ -35,16 +35,23 @@ import {
 	FormSection,
 	Text, Select
 } from '@zextras/zapp-ui';
-import { Contact, ContactAddressType } from '../db/contact';
+import { Contact } from '../db/contact';
 import { CompactView } from '../commons/contact-compact-view';
 
-export default function FolderView() {
+export default function EditView({ panel, editPanelId, folderId }) {
 	const { id } = useParams();
+	const editId = useMemo(() => {
+		if (id) return id;
+		if (editPanelId) return editPanelId;
+		return undefined;
+	}, [id, editPanelId]);
+
 	const { t } = useTranslation();
 	const { db } = hooks.useAppContext();
 	const pushHistory = hooks.usePushHistoryCallback();
+	const replaceHistory = hooks.useReplaceHistoryCallback();
 
-	const [initialContact, setInitialContact] = useState(id
+	const [initialContact, setInitialContact] = useState(editId
 		? null
 		: new Contact({
 			parent: '7',
@@ -66,9 +73,9 @@ export default function FolderView() {
 
 	useEffect(() => {
 		let canSet = true;
-		if (id && db) {
+		if (editId && db) {
 			db.contacts
-				.where({ _id: id })
+				.where({ _id: editId })
 				.toArray()
 				.then(
 					(c) => canSet && c.length > 0 && setInitialContact(c[0])
@@ -77,7 +84,7 @@ export default function FolderView() {
 		return () => {
 			canSet = false;
 		};
-	}, [id, db, setInitialContact]);
+	}, [editId, db, setInitialContact]);
 
 	const onSubmit = useCallback((values, { setSubmitting }) => {
 		const contact = new Contact(values);
@@ -89,7 +96,12 @@ export default function FolderView() {
 					setSubmitting(false);
 					return cid;
 				})
-				.then((cid) => pushHistory(`/edit/${cid}`));
+				.then((cid) => {
+					if (panel) {
+						replaceHistory(`/folder/${folderId}?preview=${cid}`);
+					}
+					pushHistory(`/edit/${cid}`);
+				});
 		}
 		else {
 			db.contacts.update(contact._id, contact)
@@ -97,13 +109,32 @@ export default function FolderView() {
 		}
 	}, [db, pushHistory]);
 
+	const defaultTypes = useMemo(() => [
+		{ label: t('work'), value: 'work' },
+		{ label: t('home'), value: 'home' },
+		{ label: t('other'), value: 'other' },
+	], [t]);
+
+	const mobileTypes = useMemo(() => [
+		{ label: t('mobile'), value: 'mobile' },
+		{ label: t('work'), value: 'work' },
+		{ label: t('home'), value: 'home' },
+		{ label: t('other'), value: 'other' },
+	], [t]);
+
 	const formFactory = useCallback(({ isSubmitting, submitForm }) => (
-		<Container padding={{ all: 'medium' }} height="fit">
-			<ContactEditorRow>
-				<Text>{t('This contact will be created in the \'Contacts\' folder')}</Text>
+		<Container padding={{ all: 'medium' }} height="fit" crossAlignment="flex-start">
+			<Row
+				orientation="horizontal"
+				mainAlignment="space-between"
+				width="fill"
+			>
+				<Container height="fit" width="fit">{!editId && <Text>{t('This contact will be created in the \'Contacts\' folder')}</Text> }</Container>
 				<Button label={t('Save')} onClick={submitForm} disabled={isSubmitting} />
-			</ContactEditorRow>
-			<CompactView contact={initialContact} />
+			</Row>
+			<Padding all="medium">
+				<CompactView contact={initialContact} />
+			</Padding>
 			<ContactEditorRow>
 				<CustomStringField name="namePrefix" label={t('prefix')} />
 				<CustomStringField name="firstName" label={t('firstName')} />
@@ -130,12 +161,7 @@ export default function FolderView() {
 				label={t('phone contact')}
 				typeLabel={t('name')}
 				typeField="name"
-				types={[
-					{ label: t('mobile'), value: 'mobile' },
-					{ label: t('work'), value: 'work' },
-					{ label: t('home'), value: 'home' },
-					{ label: t('other'), value: 'other' },
-				]}
+				types={mobileTypes}
 				subFields={['number']}
 				fieldLabels={[t('number')]}
 			/>
@@ -144,11 +170,7 @@ export default function FolderView() {
 				label={t('url')}
 				typeLabel={t('type')}
 				typeField="type"
-				types={[
-					{ label: t('work'), value: 'work' },
-					{ label: t('home'), value: 'home' },
-					{ label: t('other'), value: 'other' },
-				]}
+				types={defaultTypes}
 				subFields={['url']}
 				fieldLabels={[t('url')]}
 			/>
@@ -157,11 +179,7 @@ export default function FolderView() {
 				label={t('address')}
 				typeField="type"
 				typeLabel={t('type')}
-				types={[
-					{ label: t('work'), value: 'work' },
-					{ label: t('home'), value: 'home' },
-					{ label: t('other'), value: 'other' },
-				]}
+				types={defaultTypes}
 				subFields={['street', 'city', 'postalCode', 'country', 'state']}
 				fieldLabels={[t('street'), t('city'), t('postalCode'), t('country'), t('state')]}
 				wrap
@@ -254,7 +272,8 @@ const CustomMultivalueField = ({
 
 	const updateValue = useCallback(
 		(newString, subField, index) => {
-			if ((subField === typeField) && (newString === field.value[index][typeField])) {
+			if (subField === typeField && newString === field.value[index][typeField]
+			) {
 				return;
 			}
 			if (index >= field.value.length) {
@@ -263,7 +282,11 @@ const CustomMultivalueField = ({
 				}
 				return;
 			}
-			if (newString === '' && filter(subFields, (sf) => field.value[sf] !== '').length === 0 && field.value.length > 1) {
+			if (
+				newString === ''
+				&& filter(subFields, (sf) => sf !== subField && field.value[index][sf] !== '').length === 0
+				&& index < field.value.length - 1
+			) {
 				removeValue(index);
 				return;
 			}
@@ -280,6 +303,10 @@ const CustomMultivalueField = ({
 	if (field.value.length === 0) {
 		addValue();
 	}
+
+	const defaultSelection = useMemo(() => {
+		return types && types.length > 0 && types[0];
+	}, [types]);
 
 	return (
 		<FormSection label={label}>
@@ -306,8 +333,8 @@ const CustomMultivalueField = ({
 							)
 						)}
 						<Container
-							style={{ flexGrow: 1 }}
-							width="calc(32% + 8px)"
+							style={{ flexGrow: 1, minWidth: typeField ? '200px' : '104px' }}
+							width={typeField ? 'calc(32% + 8px)' : '104px'}
 							orientation="horizontal"
 							mainAlignment="space-between"
 							padding={{ top: 'small', right: 'small' }}
@@ -322,7 +349,7 @@ const CustomMultivalueField = ({
 										items={types}
 										label={typeLabel}
 										onChange={(val) => updateValue(val, typeField, index)}
-										defaultSelection={types[0]}
+										defaultSelection={defaultSelection}
 									/>
 								)}
 							</Padding>

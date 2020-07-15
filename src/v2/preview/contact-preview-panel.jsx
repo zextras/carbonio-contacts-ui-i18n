@@ -29,21 +29,27 @@ export default function ContactPreviewPanel({ contactInternalId, folderId }) {
 		[db, contactInternalId]
 	);
 	// TODO: Add the sort by
+
 	const [contact, contactLoaded] = hooks.useObserveDb(query, db);
+
 	const onEdit = useCallback(
-		() => replaceHistory(`/edit/${contactInternalId}`),
-		[contactInternalId, replaceHistory]
+		() => replaceHistory(`/folder/${folderId}?edit=${contactInternalId}`),
+		[contactInternalId, folderId, replaceHistory]
 	);
+
 	const onDelete = useCallback(() => {
 		db.contacts
 			.delete(contactInternalId)
 			.then(() => replaceHistory(`/folder/${folderId}`));
 	}, [db, contactInternalId, folderId, replaceHistory]);
+
 	const onClose = useCallback(
 		() => replaceHistory(`/folder/${folderId}`),
 		[folderId, replaceHistory]
 	);
+
 	const displayName = useDisplayName(contact);
+
 	if (contactLoaded) {
 		return (
 			<>

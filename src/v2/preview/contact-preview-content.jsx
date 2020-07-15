@@ -46,7 +46,6 @@ const ContactPreviewContent = ({ contact, onEdit, onDelete }) => {
 		),
 		[contact]
 	);
-	console.log(contact);
 	return (
 		<>
 			<Container
