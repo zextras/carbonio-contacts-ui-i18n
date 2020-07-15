@@ -16,49 +16,44 @@ import { ContactsFolder } from './contacts-folder';
 import processRemoteFolderNotifications from './process-remote-folder-notifications';
 
 describe('Notifications - Folder', () => {
-
 	test('Initial Sync', (done) => {
 		const db = new ContactsDb();
+		const SyncResponse = {
+			md: 1,
+			token: 1,
+			folder: [{
+				id: '11',
+				folder: [{
+					absFolderPath: '/',
+					folder: [{
+						absFolderPath: '/Contacts',
+						cn: [{
+							ids: '1000' // Comma-separated values
+						}],
+						id: '7',
+						l: '1',
+						name: 'Contacts',
+						view: 'contact'
+					}],
+					id: '1',
+					l: '11',
+					name: 'USER_ROOT'
+				}]
+			}],
+		};
 		processRemoteFolderNotifications(
 			db,
 			true,
 			[],
 			[],
-			{
-				md: 1,
-				token: 1,
-				folder: [{
-					id: '11',
-					folder: [{
-						absFolderPath: '/',
-						folder: [{
-							absFolderPath: '/Contacts',
-							cn: [{
-								ids: '1000'
-							}],
-							id: '7',
-							l: '1',
-							name: 'Contacts',
-							view: 'contact'
-						}],
-						id: '1',
-						l: '11',
-						name: 'USER_ROOT'
-					}]
-				}],
-			}
+			SyncResponse
 		)
 			.then((changes) => {
 				expect(changes.length).toBe(1);
 				expect(changes[0].type).toBe(1);
 				expect(changes[0].table).toBe('folders');
 				expect(changes[0].key).toBeUndefined();
-				expect(changes[0].obj).toStrictEqual(new ContactsFolder({
-					id: '7',
-					name: 'Contacts',
-					parent: '1',
-					path: '/Contacts'
-				}));
+				expect(changes[0].obj).toBeInstanceOf(ContactsFolder);
 				done();
 			});
 	});
@@ -87,35 +82,26 @@ describe('Notifications - Folder', () => {
 				expect(changes[0].type).toBe(1);
 				expect(changes[0].table).toBe('folders');
 				expect(changes[0].key).toBeUndefined();
-				expect(changes[0].obj).toStrictEqual(new ContactsFolder({
-					id: '1000',
-					name: 'New Folder',
-					parent: '1',
-					path: '/New Folder'
-				}));
+				expect(changes[0].obj).toBeInstanceOf(ContactsFolder);
 				done();
 			});
 	});
 
 	test('Updated Folder - Name Changed', (done) => {
 		const db = new ContactsDb();
-		db.folders.where.mockImplementation(() => {
-			return {
-				anyOf: jest.fn().mockImplementation(() => {
-					return {
-						toArray: jest.fn().mockImplementation(() => Promise.resolve([
-							new ContactsFolder({
-								_id: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
-								id: '1000',
-								name: 'Folder Name',
-								parent: '1',
-								path: '/Folder Name'
-							}),
-						]))
-					};
-				})
-			};
-		});
+		db.folders.where.mockImplementation(() => ({
+			anyOf: jest.fn().mockImplementation(() => ({
+				toArray: jest.fn().mockImplementation(() => Promise.resolve([
+					new ContactsFolder({
+						_id: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
+						id: '1000',
+						name: 'Folder Name',
+						parent: '1',
+						path: '/Folder Name'
+					}),
+				]))
+			}))
+		}));
 		processRemoteFolderNotifications(
 			db,
 			false,
@@ -153,23 +139,19 @@ describe('Notifications - Folder', () => {
 
 	test('Deleted Folder - Found locally', (done) => {
 		const db = new ContactsDb();
-		db.deletions.where.mockImplementation(() => {
-			return {
-				anyOf: jest.fn().mockImplementation(() => {
-					return {
-						toArray: jest.fn().mockImplementation(() => Promise.resolve([
-							new ContactsFolder({
-								_id: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
-								id: '1000',
-								name: 'Folder Name',
-								parent: '1',
-								path: '/Folder Name'
-							}),
-						]))
-					};
-				})
-			};
-		});
+		db.deletions.where.mockImplementation(() => ({
+			anyOf: jest.fn().mockImplementation(() => ({
+				toArray: jest.fn().mockImplementation(() => Promise.resolve([
+					new ContactsFolder({
+						_id: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
+						id: '1000',
+						name: 'Folder Name',
+						parent: '1',
+						path: '/Folder Name'
+					})
+				]))
+			}))
+		}));
 		processRemoteFolderNotifications(
 			db,
 			false,
@@ -194,5 +176,4 @@ describe('Notifications - Folder', () => {
 				done();
 			});
 	});
-
 });

@@ -10,16 +10,18 @@
  */
 
 import {
-	ICreateChange, IDatabaseChange,
-	IDeleteChange, IUpdateChange
+	ICreateChange, IDatabaseChange, IDeleteChange, IUpdateChange
 } from 'dexie-observable/api';
-import { filter, reduce, map } from 'lodash';
+import { filter, map, reduce } from 'lodash';
 import { ContactsDb, DeletionData } from './contacts-db';
-import { ContactsFolder } from './contacts-folder';
+import { Contact } from './contact';
 import {
 	BatchedRequest, BatchedResponse,
-	BatchRequest, CreateFolderResponse,
-	FolderActionRequest
+	BatchRequest, ContactActionRequest,
+	CreateContactRequest,
+	CreateContactResponse,
+	ModifyContactRequest,
+	normalizeContactAttrsToSoapOp
 } from '../soap';
 
 function processInserts(
@@ -29,25 +31,25 @@ function processInserts(
 	localChanges: IDatabaseChange[],
 ): Promise<[BatchRequest, IDatabaseChange[]]> {
 	if (changes.length < 1) return Promise.resolve([batchRequest, localChanges]);
-	const CreateFolderRequest: any[] = [];
-	reduce<ICreateChange, any[]>(
+	const createContactRequest: Array<BatchedRequest & CreateContactRequest> = [];
+	reduce<ICreateChange, Array<BatchedRequest & CreateContactRequest>>(
 		changes,
 		(r, c) => {
 			r.push({
 				_jsns: 'urn:zimbraMail',
 				requestId: c.key,
-				folder: {
+				cn: {
+					m: [],
 					l: c.obj.parent,
-					name: c.obj.name,
-					view: 'contact'
+					a: normalizeContactAttrsToSoapOp(c.obj)
 				}
 			});
 			return r;
 		},
-		CreateFolderRequest
+		createContactRequest
 	);
-	if (CreateFolderRequest.length > 0) {
-			batchRequest.CreateFolderRequest = [...(batchRequest.CreateFolderRequest || []), ...CreateFolderRequest];
+	if (createContactRequest.length > 0) {
+		batchRequest.CreateContactRequest = [...(batchRequest.CreateContactRequest || []), ...createContactRequest];
 	}
 	return Promise.resolve([batchRequest, localChanges]);
 }
@@ -60,32 +62,22 @@ function processUpdates(
 ): Promise<[BatchRequest, IDatabaseChange[]]> {
 	if (changes.length < 1) return Promise.resolve([batchRequest, localChanges]);
 
-	return db.folders.where('_id').anyOf(map(changes, 'key')).toArray().then((folders) => {
-		const uuidToId = reduce<ContactsFolder, {[key: string]: string}>(
-			folders,
+	return db.contacts.where('_id').anyOf(map(changes, 'key')).toArray().then((contacts) => {
+		const uuidToId = reduce<Contact, {[key: string]: string}>(
+			contacts,
 			(r, f) => {
 				r[f._id!] = f.id;
 				return r;
 			},
 			{}
 		);
-		const folderActionRequest: Array<BatchedRequest & FolderActionRequest> = [];
-		reduce(
+		const modifyContactRequest: Array<BatchedRequest & ModifyContactRequest> = [];
+		const moveContactRequest: Array<BatchedRequest & ContactActionRequest> = [];
+		reduce<IUpdateChange, [Array<BatchedRequest & ModifyContactRequest>, Array<BatchedRequest & ContactActionRequest>]>(
 			changes,
-			(r, c) => {
-				if (c.mods.name) {
-					r.push({
-						_jsns: 'urn:zimbraMail',
-						requestId: c.key,
-						action: {
-							op: 'rename',
-							id: uuidToId[c.key],
-							name: c.mods.name
-						}
-					});
-				}
+			([_modifyContactRequest, _moveContactRequest], c) => {
 				if (c.mods.parent) {
-					r.push({
+					_moveContactRequest.push({
 						_jsns: 'urn:zimbraMail',
 						requestId: c.key,
 						action: {
@@ -95,14 +87,31 @@ function processUpdates(
 						}
 					});
 				}
-				return r;
+				else {
+					_modifyContactRequest.push({
+						_jsns: 'urn:zimbraMail',
+						requestId: c.key,
+						force: '1',
+						replace: '0',
+						cn: {
+							id: uuidToId[c.key],
+							m: [],
+							a: normalizeContactAttrsToSoapOp(c.mods as Contact) // Smelly code
+						}
+					});
+				}
+				return [_modifyContactRequest, _moveContactRequest];
 			},
-			folderActionRequest
+			[modifyContactRequest, moveContactRequest]
 		);
 
-		if (folderActionRequest.length > 0) {
-			batchRequest.FolderActionRequest = [...(batchRequest.FolderActionRequest || []), ...folderActionRequest];
+		if (modifyContactRequest.length > 0) {
+			batchRequest.ModifyContactRequest =	[...(batchRequest.ModifyContactRequest || []), ...modifyContactRequest];
 		}
+		if (moveContactRequest.length > 0) {
+			batchRequest.ContactActionRequest =	[...(batchRequest.ContactActionRequest || []), ...moveContactRequest];
+		}
+
 		return [batchRequest, localChanges];
 	});
 }
@@ -116,14 +125,14 @@ function processDeletions(
 	if (changes.length < 1) return Promise.resolve([batchRequest, localChanges]);
 	return db.deletions.where('_id').anyOf(map(changes, 'key')).toArray().then((deletedIds) => {
 		const uuidToId = reduce<DeletionData, {[key: string]: {id: string; rowId: string}}>(
-			filter(deletedIds, ['table', 'folders']),
+			filter(deletedIds, ['table', 'contacts']),
 			(r, d) => {
 				r[d._id] = { id: d.id, rowId: d.rowId! };
 				return r;
 			},
 			{}
 		);
-		const folderActionRequest: Array<BatchedRequest & FolderActionRequest> = [];
+		const contactActionRequest: Array<BatchedRequest & ContactActionRequest> = [];
 		reduce(
 			changes,
 			(r, c) => {
@@ -142,38 +151,35 @@ function processDeletions(
 				});
 				return r;
 			},
-			folderActionRequest
+			contactActionRequest
 		);
-		if (folderActionRequest.length > 0) {
-			batchRequest.FolderActionRequest = [...(batchRequest.FolderActionRequest || []), ...folderActionRequest];
+		if (contactActionRequest.length > 0) {
+			batchRequest.ContactActionRequest =	[...(batchRequest.ContactActionRequest || []), ...contactActionRequest];
 		}
 		return Promise.resolve([batchRequest, localChanges]);
 	});
 }
 
-function processCreationResponse(r: BatchedResponse & CreateFolderResponse): IUpdateChange {
-	const folder = r.folder[0];
+function processCreationResponse(r: BatchedResponse & CreateContactResponse): IUpdateChange {
+	const folder = r.cn[0];
 	return {
 		type: 2,
-		table: 'folders',
+		table: 'contacts',
 		key: r.requestId,
 		mods: {
-			id: folder.id,
-			name: folder.name,
-			path: folder.absFolderPath,
-			parent: folder.l
+			id: folder.id
 		}
 	};
 }
 
-// TODO: Return local changes to apply the zimbra ids to the folders
-export default function processLocalFolderChange(
+export default function processLocalContactChange(
 	db: ContactsDb,
 	changes: IDatabaseChange[],
 	_fetch: (input: RequestInfo, init?: RequestInit) => Promise<Response>
 ): Promise<IDatabaseChange[]> {
 	if (changes.length < 1) return Promise.resolve([]);
-	const folderChanges = filter(changes, ['table', 'folders']);
+
+	const contactChanges = filter(changes, ['table', 'contacts']);
 	const batchRequest: BatchRequest = {
 		_jsns: 'urn:zimbra',
 		onerror: 'continue'
@@ -181,24 +187,23 @@ export default function processLocalFolderChange(
 
 	return processInserts(
 		db,
-		filter(folderChanges, ['type', 1]) as ICreateChange[],
+		filter(contactChanges, ['type', 1]) as ICreateChange[],
 		batchRequest,
 		[]
-	)
-		.then(([_batchRequest, _dbChanges]) => processUpdates(
-			db,
-			filter(folderChanges, ['type', 2]) as IUpdateChange[],
-			_batchRequest,
-			_dbChanges
-		))
+	).then(([_batchRequest, _dbChanges]) => processUpdates(
+		db,
+		filter(contactChanges, ['type', 2]) as IUpdateChange[],
+		_batchRequest,
+		_dbChanges
+	))
 		.then(([_batchRequest, _dbChanges]) => processDeletions(
 			db,
-			filter(folderChanges, ['type', 3]) as IDeleteChange[],
+			filter(contactChanges, ['type', 3]) as IDeleteChange[],
 			_batchRequest,
 			_dbChanges
 		))
 		.then(([_batchRequest, _dbChanges]) => {
-			if (!_batchRequest.CreateFolderRequest && !_batchRequest.FolderActionRequest) {
+			if (!_batchRequest.CreateContactRequest && !_batchRequest.ModifyContactRequest && !_batchRequest.ContactActionRequest) {
 				return _dbChanges;
 			}
 			return _fetch(
@@ -218,9 +223,9 @@ export default function processLocalFolderChange(
 					else return r.Body.BatchResponse;
 				})
 				.then((BatchResponse) => {
-					if (BatchResponse.CreateFolderResponse) {
+					if (BatchResponse.CreateContactResponse) {
 						const creationChanges = reduce<any, IUpdateChange[]>(
-							BatchResponse.CreateFolderResponse,
+							BatchResponse.CreateContactResponse,
 							(r, response) => {
 								r.push(processCreationResponse(response));
 								return r;

@@ -11,7 +11,6 @@
 
 import { forEach, map, pickBy } from 'lodash';
 import { ISoapFolderObj } from '@zextras/zapp-shell/lib/network/ISoap';
-import { ISoapContactObj, ISoapSyncContactFolderObj } from '../soap';
 import { ContactsFolder } from './contacts-folder';
 import {
 	ContactAddress,
@@ -21,6 +20,7 @@ import {
 	ContactPhone,
 	Contact
 } from './contact';
+import { SyncResponseContactFolder } from '../soap';
 
 const MAIL_REG = /^email(\d*)$/;
 const PHONE_REG = /^(.*)Phone(\d*)$/;
@@ -38,11 +38,11 @@ function normalizeFolder(soapFolderObj: ISoapFolderObj): ContactsFolder {
 	});
 }
 
-export function normalizeContactsFolders(f: ISoapSyncContactFolderObj): ContactsFolder[] {
+export function normalizeContactsFolders(f: SyncResponseContactFolder): ContactsFolder[] {
 	if (!f) return [];
 	let children: ContactsFolder[] = [];
 	if (f.folder) {
-		forEach(f.folder, (c: ISoapSyncContactFolderObj) => {
+		forEach(f.folder, (c: SyncResponseContactFolder) => {
 			const child = normalizeContactsFolders(c);
 			children = [...children, ...child];
 		});
@@ -109,7 +109,7 @@ function normalizeContactPhones(c: ISoapContactObj): ContactPhone[] {
 	);
 }
 
-function normalizeContact(c: ISoapContactObj): Contact {
+export function normalizeContact(c: ISoapContactObj): Contact {
 	return new Contact({
 		parent: c.l,
 		id: c.id,

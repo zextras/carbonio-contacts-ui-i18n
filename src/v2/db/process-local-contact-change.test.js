@@ -9,27 +9,29 @@
  * *** END LICENSE BLOCK *****
  */
 
+import { ContactsDb } from './contacts-db';
+import processLocalContactChange from './process-local-contact-change';
+import { Contact } from './contact';
+
 jest.mock('./contacts-db');
 
-import { ContactsFolder } from './contacts-folder';
-import { ContactsDb } from './contacts-db';
-import processLocalFolderChange from './process-local-folder-change';
-
-describe('Local Changes - Folder', () => {
-	test('Create a folder', (done) => {
+describe('Local Changes - Contact', () => {
+	test('Create a Contact', (done) => {
 		const db = new ContactsDb();
 		const response = {
 			json: jest.fn()
 				.mockImplementationOnce(() => Promise.resolve({
 					Body: {
 						BatchResponse: {
-							CreateFolderResponse: [{
+							CreateContactResponse: [{
 								requestId: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
-								folder: [{
+								cn: [{
 									id: '1000',
-									name: 'New Folder',
-									absFolderPath: '/New Folder',
-									l: '1'
+									l: '7',
+									_attrs: {
+										firstName: 'Test',
+										lastName: 'User'
+									}
 								}]
 							}]
 						}
@@ -37,30 +39,27 @@ describe('Local Changes - Folder', () => {
 				}))
 				.mockImplementationOnce({
 					Body: {
-						SyncResponse: {
+						SyncResponse: { // TODO: FixMe!
 							md: 1,
 							token: 1,
-							folder: [{
-								absFolderPath: '/New Folder',
+							cn: [{
 								id: '1000',
-								l: '1',
-								name: 'New Folder',
-								view: 'contact'
 							}],
 						}
 					}
 				})
 		};
 		const fetch = jest.fn().mockImplementation(() => Promise.resolve(response));
-		processLocalFolderChange(
+		processLocalContactChange(
 			db,
 			[{
 				type: 1,
-				table: 'folders',
+				table: 'contacts',
 				key: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
 				obj: {
-					name: 'Folder Name',
-					parent: '1'
+					parent: '7',
+					firstName: 'Test',
+					lastName: 'User'
 				}
 			}],
 			fetch
@@ -71,11 +70,8 @@ describe('Local Changes - Folder', () => {
 					key: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
 					mods: {
 						id: '1000',
-						name: 'New Folder',
-						parent: '1',
-						path: '/New Folder'
 					},
-					table: 'folders',
+					table: 'contacts',
 					type: 2
 				});
 				expect(fetch).toHaveBeenCalledTimes(1);
@@ -88,13 +84,16 @@ describe('Local Changes - Folder', () => {
 								BatchRequest: {
 									_jsns: 'urn:zimbra',
 									onerror: 'continue',
-									CreateFolderRequest: [{
+									CreateContactRequest: [{
 										_jsns: 'urn:zimbraMail',
 										requestId: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
-										folder: {
-											l: '1',
-											name: 'Folder Name',
-											view: 'contact'
+										cn: {
+											m: [],
+											l: '7',
+											a: [
+												{ n: 'firstName', _content: 'Test' },
+												{ n: 'lastName', _content: 'User' }
+											]
 										}
 									}]
 								}
@@ -107,15 +106,14 @@ describe('Local Changes - Folder', () => {
 		);
 	});
 
-	test('Edit a folder - Name', (done) => {
+	test('Modify a Contact', (done) => {
 		const db = new ContactsDb();
-		db.folders.where.mockImplementation(() => ({
-			anyOf: jest.fn().mockImplementationOnce(() => ({
-				toArray: jest.fn().mockImplementationOnce(() => Promise.resolve([
-					new ContactsFolder({
-						id: '1000',
+		db.contacts.where.mockImplementation(() => ({
+			anyOf: jest.fn().mockImplementation(() => ({
+				toArray: jest.fn().mockImplementation(() => Promise.resolve([
+					new Contact({
 						_id: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
-						name: 'Folder Name'
+						id: '1000'
 					})
 				]))
 			}))
@@ -124,19 +122,42 @@ describe('Local Changes - Folder', () => {
 			json: jest.fn()
 				.mockImplementationOnce(() => Promise.resolve({
 					Body: {
-						BatchResponse: {}
+						BatchResponse: {
+							ModifyContactResponse: [{
+								requestId: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
+								cn: [{
+									id: '1000',
+									l: '7',
+									d: 1,
+									fileAsStr: 'Updated User, Test',
+									rev: 1,
+								}]
+							}]
+						}
 					}
 				}))
+				.mockImplementationOnce({
+					Body: {
+						SyncResponse: { // TODO: FixMe!
+							md: 1,
+							token: 1,
+							cn: [{
+								id: '1000',
+							}],
+						}
+					}
+				})
 		};
 		const fetch = jest.fn().mockImplementation(() => Promise.resolve(response));
-		processLocalFolderChange(
+		processLocalContactChange(
 			db,
 			[{
 				type: 2,
-				table: 'folders',
+				table: 'contacts',
 				key: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
 				mods: {
-					name: 'New Folder Name',
+					firstName: 'Updated Test',
+					lastName: 'User'
 				}
 			}],
 			fetch
@@ -153,13 +174,18 @@ describe('Local Changes - Folder', () => {
 								BatchRequest: {
 									_jsns: 'urn:zimbra',
 									onerror: 'continue',
-									FolderActionRequest: [{
+									ModifyContactRequest: [{
 										_jsns: 'urn:zimbraMail',
 										requestId: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
-										action: {
-											op: 'rename',
+										force: '1',
+										replace: '0',
+										cn: {
 											id: '1000',
-											name: 'New Folder Name'
+											m: [],
+											a: [
+												{ n: 'firstName', _content: 'Updated Test' },
+												{ n: 'lastName', _content: 'User' }
+											]
 										}
 									}]
 								}
@@ -172,15 +198,14 @@ describe('Local Changes - Folder', () => {
 		);
 	});
 
-	test('Edit a folder - Move', (done) => {
+	test('Move a Contact', (done) => {
 		const db = new ContactsDb();
-		db.folders.where.mockImplementation(() => ({
-			anyOf: jest.fn().mockImplementationOnce(() => ({
-				toArray: jest.fn().mockImplementationOnce(() => Promise.resolve([
-					new ContactsFolder({
-						id: '1000',
+		db.contacts.where.mockImplementation(() => ({
+			anyOf: jest.fn().mockImplementation(() => ({
+				toArray: jest.fn().mockImplementation(() => Promise.resolve([
+					new Contact({
 						_id: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
-						name: 'Folder Name'
+						id: '1000'
 					})
 				]))
 			}))
@@ -189,19 +214,38 @@ describe('Local Changes - Folder', () => {
 			json: jest.fn()
 				.mockImplementationOnce(() => Promise.resolve({
 					Body: {
-						BatchResponse: {}
+						BatchResponse: {
+							ContactActionResponse: [{
+								requestId: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
+								action: {
+									id: '1000',
+									op: 'move'
+								}
+							}]
+						}
 					}
 				}))
+				.mockImplementationOnce({
+					Body: {
+						SyncResponse: { // TODO: FixMe!
+							md: 1,
+							token: 1,
+							cn: [{
+								id: '1000',
+							}],
+						}
+					}
+				})
 		};
 		const fetch = jest.fn().mockImplementation(() => Promise.resolve(response));
-		processLocalFolderChange(
+		processLocalContactChange(
 			db,
 			[{
 				type: 2,
-				table: 'folders',
+				table: 'contacts',
 				key: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
 				mods: {
-					parent: '2',
+					parent: '1001',
 				}
 			}],
 			fetch
@@ -218,13 +262,13 @@ describe('Local Changes - Folder', () => {
 								BatchRequest: {
 									_jsns: 'urn:zimbra',
 									onerror: 'continue',
-									FolderActionRequest: [{
+									ContactActionRequest: [{
 										_jsns: 'urn:zimbraMail',
 										requestId: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
 										action: {
 											op: 'move',
 											id: '1000',
-											l: '2'
+											l: '1001'
 										}
 									}]
 								}
@@ -237,14 +281,14 @@ describe('Local Changes - Folder', () => {
 		);
 	});
 
-	test('Delete a folder', (done) => {
+	test('Delete a Contact', (done) => {
 		const db = new ContactsDb();
 		const anyOf = jest.fn().mockImplementation(() => ({
 			toArray: jest.fn().mockImplementation(() => Promise.resolve([{
 				rowId: 'yyyyyyyy-yyyy-Myyy-Nyyy-yyyyyyyyyyyy',
 				_id: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
 				id: '1000',
-				table: 'folders',
+				table: 'contacts',
 			}]))
 		}));
 		db.deletions.where.mockImplementation(() => ({
@@ -254,16 +298,35 @@ describe('Local Changes - Folder', () => {
 			json: jest.fn()
 				.mockImplementationOnce(() => Promise.resolve({
 					Body: {
-						BatchResponse: {}
+						BatchResponse: {
+							ContactActionResponse: [{
+								requestId: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
+								action: {
+									op: 'delete',
+									id: '1000'
+								}
+							}]
+						}
 					}
 				}))
+				.mockImplementationOnce({
+					Body: {
+						SyncResponse: { // TODO: FixMe!
+							md: 1,
+							token: 1,
+							cn: [{
+								id: '1000',
+							}],
+						}
+					}
+				})
 		};
 		const fetch = jest.fn().mockImplementation(() => Promise.resolve(response));
-		processLocalFolderChange(
+		processLocalContactChange(
 			db,
 			[{
 				type: 3,
-				table: 'folders',
+				table: 'contacts',
 				key: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
 			}],
 			fetch
@@ -286,7 +349,7 @@ describe('Local Changes - Folder', () => {
 								BatchRequest: {
 									_jsns: 'urn:zimbra',
 									onerror: 'continue',
-									FolderActionRequest: [{
+									ContactActionRequest: [{
 										_jsns: 'urn:zimbraMail',
 										requestId: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
 										action: {

@@ -16,17 +16,18 @@ import {
 	ReactiveContinuation
 } from 'dexie-syncable/api';
 import { IDatabaseChange } from 'dexie-observable/api';
-import { ISoapSyncContactResponse } from '../soap';
 import { ContactsDb } from './contacts-db';
 
 import processLocalFolderChange from './process-local-folder-change';
 import processRemoteFolderNotifications from './process-remote-folder-notifications';
+import { SyncResponse, SyncResponseContact } from '../soap';
+import processLocalContactChange from './process-local-contact-change';
+import processRemoteContactsNotification from './process-remote-contact-notification';
 
 const POLL_INTERVAL = 20000;
 
 interface IContactsDexieContext extends IPersistedContext {
 	clientIdentity?: '';
-	changeDate?: number;
 }
 
 export class ContactsDbSoapSyncProtocol implements ISyncProtocol {
@@ -73,33 +74,76 @@ export class ContactsDbSoapSyncProtocol implements ISyncProtocol {
 					.then((r) => {
 						// TODO: Handle "mail.MUST_RESYNC" fault
 						if (r.Body.Fault) throw new Error(r.Body.Fault.Reason.Text);
-						else return r.Body.SyncResponse as ISoapSyncContactResponse;
+						else return r.Body.SyncResponse as SyncResponse;
 					})
 					.then(
 						({
 							token,
 							folder,
+							md,
 							cn,
 							deleted,
-							md
-						}) => new Promise<{token: string; remoteChanges: IDatabaseChange[]; md: number}>((resolve, reject) => {
-							processRemoteFolderNotifications(
+						}) => new Promise<SyncResponse & { remoteChanges: IDatabaseChange[] }>(
+							(resolve, reject) => {
+								processRemoteFolderNotifications(
+									this._db,
+									!baseRevision,
+									changes,
+									localChangesFromRemote,
+									{
+										token,
+										md,
+										folder,
+										deleted
+									}
+								)
+									.then((remoteChanges) => resolve({
+										token,
+										md,
+										cn,
+										folder,
+										deleted,
+										remoteChanges
+									}))
+									.catch((e: Error) => reject(e));
+							}
+						)
+					)
+					.then(({
+						token,
+						cn,
+						md,
+						folder,
+						deleted,
+						remoteChanges
+					}) =>
+						processLocalContactChange(
+							this._db,
+							changes,
+							this._fetch
+						)
+							.then((_localChangesFromRemote) => {
+								localChangesFromRemote.push(..._localChangesFromRemote);
+							})
+							.then(() => processRemoteContactsNotification(
+								this._fetch,
 								this._db,
 								!baseRevision,
 								changes,
 								localChangesFromRemote,
 								{
+									token,
+									md,
+									cn,
 									folder,
 									deleted
 								}
-							)
-								.then((remoteChanges) => resolve({ token, md, remoteChanges }));
-						})
-					)
-					.then(({ token, md, remoteChanges }) => {
-						if (context.clientIdentity !== '' || context.changeDate !== md) {
+							))
+							.then((_remoteChanges) => remoteChanges.push(..._remoteChanges))
+							.then(() => ({ token, remoteChanges })))
+					.then(({ token, remoteChanges }) => {
+						if (context.clientIdentity !== '') {
 							context.clientIdentity = '';
-							context.changeDate = md;
 							return context.save()
 								.then(() => ({
 									token,

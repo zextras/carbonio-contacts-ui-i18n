@@ -10,189 +10,163 @@
  */
 
 import {
-	map,
-	pick,
-	merge,
-	reduce,
-	omit
+	map, merge, omit, pick, reduce
 } from 'lodash';
-import { IFolderSchmV1 } from '@zextras/zapp-shell/lib/sync/IFolderSchm';
-import { ISoapSyncDeletedMap, ISoapSyncFolderObj, ISoapSyncResponse } from '@zextras/zapp-shell/lib/network/ISoap';
+import { ISoapSyncDeletedMap, ISoapSyncFolderObj } from '@zextras/zapp-shell/lib/network/ISoap';
 import {
-	ContactAddress,
-	ContactData,
-	ContactEmail,
-	ContactPhone
-} from '../idb/IContactsIdb';
+	Contact, ContactAddress, ContactEmail, ContactPhone
+} from './db/contact';
 
-export type ISoapSyncResponse = ISoapSyncContactFolderObj & {
+export type SyncResponseContactFolder = ISoapSyncFolderObj & {
+	cn: Array<{
+		ids: string; // Comma-separated values
+	}>;
+	folder: Array<SyncResponseContactFolder>;
+};
+
+export type SyncResponseContact = {
+	d: number;
+	id: string;
+	l: string;
 	md: number;
-	token: string|number;
+	ms: number;
+	rev: number;
 };
 
-export type ISoapSyncContactFolderObj = ISoapSyncFolderObj & {
-	cn: Array<{ids: string}>;
-	folder: Array<ISoapSyncContactFolderObj>;
+type SyncResponseDeletedMapRow = {
+	ids: string;
 };
 
-export type ISoapSyncContactResponse = ISoapSyncResponse<ISoapSyncDeletedMap, ISoapSyncContactFolderObj> & {
-	cn: Array<ISoapContactObj>;
+export type SyncResponseDeletedMap = SyncResponseDeletedMapRow & {
+	folder?: Array<SyncResponseDeletedMapRow>;
+	cn?: Array<SyncResponseDeletedMapRow>;
 };
 
-export type ISoapCreateFolderResponse = {
-	folder: Array<ISoapSyncContactFolderObj>;
-}
+export type SyncResponse = {
+	token: string;
+	md: number;
+	folder?: Array<SyncResponseContactFolder>;
+	cn?: Array<SyncResponseContact>;
+	deleted?: Array<SyncResponseDeletedMap>;
+};
 
-export type IBulkedResponse = {
+export type FolderActionRequest = {
+	action: FolderActionRename |FolderActionMove | FolderActionDelete;
+};
+
+type FolderActionRename = {
+	op: 'rename';
+	id: string;
+	name: string;
+};
+
+type FolderActionMove = {
+	op: 'move';
+	id: string;
+	l: string;
+};
+
+type FolderActionDelete = {
+	op: 'delete';
+	id: string;
+};
+
+export type CreateFolderRequest = {};
+
+export type CreateFolderResponse = {
+	folder: Array<SyncResponseContactFolder>;
+};
+
+export type CreateContactRequestAttr =
+	{ n: 'firstName'; _content: string }
+	| { n: 'lastName'; _content: string }
+	| { n: 'fullName'; _content: string }
+	| { n: 'nameSuffix'; _content: string }
+	| { n: 'image'; aid?: string }
+	| { n: 'jobTitle'; _content: string }
+	| { n: 'department'; _content: string }
+	| { n: 'company'; _content: string }
+	| { n: 'notes'; _content: string }
+	| { n: 'email'; _content: string };
+export type CreateContactRequest = {
+	cn: {
+		m: unknown[];
+		l: string;
+		a: Array<CreateContactRequestAttr>;
+	};
+};
+
+export type ModifyContactRequestAttr = CreateContactRequestAttr;
+
+export type ModifyContactRequest = {
+	force: '0'|'1'; // Default to '1'
+	replace: '0'|'1'; // Default to '0'
+	cn: {
+		a: Array<ModifyContactRequestAttr>;
+		id: string;
+		m: unknown[];
+	};
+};
+
+export type ContactActionRequest = {
+	action: ContactActionMove | ContactActionDelete;
+};
+
+type ContactActionMove = {
+	op: 'move';
+	id: string;
+	l: string;
+};
+
+type ContactActionDelete = {
+	op: 'delete';
+	id: string;
+};
+
+export type CreateContactResponse = {
+	cn: Array<SoapContact>;
+};
+
+export type BatchedRequest = {
+	_jsns: 'urn:zimbraMail';
 	requestId: string;
 };
 
-type SoapContactObjAttrs = {
-	jobTitle?: string;
-	firstName?: string;
-	lastName?: string;
-	nameSuffix?: string;
-	namePrefix?: string;
-	mobilePhone?: string;
-	workPhone?: string;
-	otherPhone?: string;
-	department?: string;
-	email?: string;
-	notes?: string;
-	company?: string;
-	otherStreet?: string;
-	otherPostalCode?: string;
-	otherCity?: string;
-	otherState?: string;
-	otherCountry?: string;
-	image?: {
-		part: string;
-		ct: string;
-		s: number;
-		filename: string;
-	};
-	fullName?: string;
+export type BatchedResponse = {
+	requestId: string;
 };
 
-export type ISoapContactObj = {
+export type BatchRequest = {
+	_jsns: 'urn:zimbra';
+	onerror: 'continue';
+	CreateFolderRequest?: Array<BatchedRequest & CreateFolderRequest>;
+	FolderActionRequest?: Array<BatchedRequest & FolderActionRequest>;
+	CreateContactRequest?: Array<BatchedRequest & CreateContactRequest>;
+	ModifyContactRequest?: Array<BatchedRequest & ModifyContactRequest>;
+	ContactActionRequest?: Array<BatchedRequest & ContactActionRequest>;
+};
+
+export type GetContactRequest = {
+	_jsns: 'urn:zimbraMail';
+	cn: Array<{
+		id: string;
+	}>;
+};
+
+export type GetContactsResponse = {
+	cn: Array<SoapContact>;
+};
+
+export type SoapContact = {
+	d: number;
+	fileAsStr: string;
 	id: string;
 	l: string;
 	rev: number;
-	_attrs: SoapContactObjAttrs;
-};
-
-type ContactCreationAttr = {
-	n: keyof SoapContactObjAttrs;
-	_content: string;
-};
-
-export type CreateContactOpReq = {
-	cn: {
-		l: string;
-		a: ContactCreationAttr[];
-	};
-};
-
-export type CreateContactOpResp = {
-	CreateContactResponse: {
-		cn: Array<{
-			id: string;
-		}>;
-	};
-};
-
-export type ModifyContactOpReq = {
-	replace: 0 | 1;
-	force: 1;
-	cn: {
-		id: string;
-		a: ContactCreationAttr[];
-		m: Array<unknown>;
-	};
-};
-
-export type ModifyContactOpResp = {
-	ModifyContactResponse: {
-		cn: Array<{
-			id: string;
-		}>;
-	};
-};
-
-export type ContactActionOpReq = {
-	action: {
-		op: 'move' | 'delete';
-	};
-};
-
-export type MoveContactActionOpReq = {
-	action: {
-		op: 'move';
-		l: string;
-		id: string;
-	};
-};
-
-export type MoveContactActionOpResp = {
-	ContactActionResponse: {
-		action: {
-			id: string;
-		};
-	};
-};
-
-export type DeleteContactActionOpReq = {
-	action: {
-		op: 'delete';
-		id: string;
-	};
-};
-
-export type DeleteContactActionOpResp = {
-	ContactActionResponse: {
-		action: {
-			op: 'delete';
-			id: string;
-		};
-	};
-};
-
-export type CreateContactFolderOpReq = {
-	folder: {
-		view: 'contact';
-		l: string;
-		name: string;
-	};
-};
-
-export type MoveContactFolderActionOpReq = {
-	action: {
-		l: string;
-		id: string;
-		op: 'move';
-	};
-};
-
-export type RenameContactFolderActionOpReq = {
-	action: {
-		name: string;
-		id: string;
-		op: 'rename';
-	};
-};
-
-export type DeleteContactFolderActionOpReq = {
-	action: {
-		id: string;
-		op: 'delete';
-	};
-};
-
-export type EmptyContactFolderActionOpReq = {
-	action: {
-		id: string;
-		op: 'empty';
-		recursive: true;
+	_attrs: {
+		firstName?: string;
+		fullName?: string;
+		lastName?: string;
 	};
 };
 
@@ -253,7 +227,7 @@ export function normalizeContactAddressesToSoapOp(addresses: ContactAddress[]): 
 	);
 }
 
-export function normalizeContactAttrsToSoapOp(c: ContactData): ContactCreationAttr[] {
+export function normalizeContactAttrsToSoapOp(c: Contact): Array<CreateContactRequestAttr|ModifyContactRequestAttr> {
 	const obj: any = pick(c, [
 		'nameSuffix',
 		'firstName',
@@ -271,24 +245,4 @@ export function normalizeContactAttrsToSoapOp(c: ContactData): ContactCreationAt
 		obj,
 		(v: any, k: any) => ({ n: k, _content: v })
 	);
-}
-
-export function calculateAbsPath(
-	id: string,
-	name: string,
-	fMap: {[id: string]: IFolderSchmV1},
-	parentId?: string
-): string {
-	let mName = name;
-	let mParentId = parentId;
-	if (fMap[id]) {
-		mName = fMap[id].name;
-		mParentId = fMap[id].parent;
-	}
-
-	if (!mParentId || mParentId === '1' || !fMap[mParentId]) {
-		return `/${mName}`;
-	}
-
-	return `${calculateAbsPath(mParentId, fMap[mParentId].name, fMap, fMap[mParentId].parent)}/${mName}`;
 }

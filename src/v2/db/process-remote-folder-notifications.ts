@@ -10,11 +10,13 @@
  */
 
 import { ICreateChange, IDatabaseChange, IUpdateChange } from 'dexie-observable/api';
-import { reduce, map, filter, intersectionWith } from 'lodash';
-import { ISoapSyncResponse } from '../soap';
+import {
+	reduce, map, filter, intersectionWith
+} from 'lodash';
 import { ContactsDb } from './contacts-db';
 import { ContactsFolder } from './contacts-folder';
 import { normalizeContactsFolders } from './contacts-db-utils';
+import { SyncResponse } from '../soap';
 
 function searchLocalFolders(db: ContactsDb, ids: string[]): Promise<{[key: string]: string}> {
 	return db.folders.where('id').anyOf(ids).toArray()
@@ -56,25 +58,12 @@ function searchForLocallyCreatedFolders(
 	return Promise.resolve(isLocallyCreated);
 }
 
-/*
-function calculateContactFolderMods(oldf: ContactsFolder, newf: ContactsFolder): {[keyPath: string]: any | undefined} {
-	const mods: {[keyPath: string]: any | undefined} = {};
-	if (oldf.itemsCount !== newf.itemsCount) mods.itemsCount = newf.itemsCount;
-	if (oldf.unreadCount !== newf.unreadCount) mods.unreadCount = newf.unreadCount;
-	if (oldf.path !== newf.path) mods.path = newf.path;
-	if (oldf.name !== newf.name) mods.name = newf.name;
-	if (oldf.size !== newf.size) mods.size = newf.size;
-	if (oldf.parent !== newf.parent) mods.parent = newf.parent;
-	return mods;
-}
-*/
-
 export default function processRemoteFolderNotifications(
 	db: ContactsDb,
 	isInitialSync: boolean,
 	changes: IDatabaseChange[],
 	localChangesFromRemote: IDatabaseChange[],
-	{ folder, deleted }: ISoapSyncResponse
+	{ folder, deleted }: SyncResponse
 ): Promise<IDatabaseChange[]> {
 	const folders = reduce(
 		folder || [],
@@ -150,7 +139,7 @@ export default function processRemoteFolderNotifications(
 				[]
 			);
 
-			if (deleted && deleted[0].folder) {
+			if (deleted && deleted[0] && deleted[0].folder) {
 				return searchLocalFolders(
 					db,
 					deleted[0].folder[0].ids.split(','),
