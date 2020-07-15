@@ -88,7 +88,6 @@ export default function EditView({ panel, editPanelId, folderId }) {
 
 	const onSubmit = useCallback((values, { setSubmitting }) => {
 		const contact = new Contact(values);
-		console.log('OnSubmit', contact);
 		if (!contact._id) {
 			db.contacts
 				.add(contact)
@@ -105,7 +104,12 @@ export default function EditView({ panel, editPanelId, folderId }) {
 		}
 		else {
 			db.contacts.update(contact._id, contact)
-				.then(() => setSubmitting(false));
+				.then(() => {
+					setSubmitting(false);
+					if (panel) {
+						replaceHistory(`/folder/${folderId}?preview=${contact._id}`);
+					}
+				});
 		}
 	}, [db, pushHistory]);
 
