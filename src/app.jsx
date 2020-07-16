@@ -21,9 +21,7 @@ import { ContactsDbSoapSyncProtocol } from './v2/db/contacts-db-soap-sync-protoc
 import mainMenuItems from './v2/main-menu-items';
 
 const lazyFolderView = lazy(() => (import(/* webpackChunkName: "folder-view" */ './v2/folder/folder-view')));
-const lazyEditView = lazy(() => (import(/* webpackChunkName: "edit-view" */ './v2/edit-view')));
-// import { Contact } from './v2/db/contact';
-// import { ContactsFolder } from './v2/db/contacts-folder';
+const lazyEditView = lazy(() => (import(/* webpackChunkName: "edit-view" */ './v2/edit/edit-view')));
 
 export default function app() {
 	console.log('Hello from contacts');

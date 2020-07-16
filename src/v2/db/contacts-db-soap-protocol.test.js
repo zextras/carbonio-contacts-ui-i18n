@@ -207,7 +207,10 @@ describe('Contacts DB Sync Protocol', () => {
 					nameSuffix: '',
 					notes: '',
 					namePrefix: '',
-					phone: []
+					phone: [],
+					middleName: '',
+					nickName: '',
+					url: []
 				})
 			}], 1, false);
 			done();

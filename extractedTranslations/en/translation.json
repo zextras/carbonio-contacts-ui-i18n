@@ -1,69 +1,34 @@
 {
-  "First Name": "",
-  "Last Name": "",
-  "Mail Address": "",
+  "Edit Contact": "",
   "Save": "",
   "This contact will be created in the 'Contacts' folder": "",
   "address": "",
-  "addresses": "",
+  "city": "",
   "company": "",
-  "contact": {
-    "cancel": "",
-    "label": {
-      "address": {
-        "city": "",
-        "country": "",
-        "main": "",
-        "postalCode": "",
-        "state": "",
-        "street": ""
-      },
-      "company": "",
-      "department": "",
-      "firstName": "",
-      "jobTitle": "",
-      "lastName": "",
-      "mail": {
-        "address": "",
-        "main": ""
-      },
-      "nameSuffix": "",
-      "notes": "",
-      "phone": {
-        "main": "",
-        "number": "",
-        "type": ""
-      },
-      "suffix": {
-        "Dr": "",
-        "Lady": "",
-        "Lord": "",
-        "Miss": "",
-        "Mr": "",
-        "Mrs": "",
-        "Ms": "",
-        "Mx": "",
-        "Sir": ""
-      }
-    },
-    "save": ""
-  },
+  "country": "",
   "department": "",
   "edit": "",
-  "edit the email address": "",
-  "edit the phone contact": "",
   "email address": "",
   "firstName": "",
-  "insert email address": "",
-  "insert phone contact": "",
+  "home": "",
   "jobTitle": "",
   "lastName": "",
   "mail": "",
   "middleName": "",
+  "mobile": "",
+  "name": "",
+  "nickName": "",
   "notes": "",
+  "number": "",
+  "other": "",
   "phone": "",
   "phone contact": "",
+  "postalCode": "",
   "prefix": "",
+  "state": "",
+  "street": "",
   "suffix": "",
-  "url": ""
+  "type": "",
+  "url": "",
+  "work": ""
 }

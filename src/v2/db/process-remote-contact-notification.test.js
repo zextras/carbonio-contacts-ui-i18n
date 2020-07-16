@@ -216,7 +216,10 @@ describe('Notifications - Contact', () => {
 					nameSuffix: '',
 					notes: '',
 					parent: '7',
-					phone: []
+					phone: [],
+					middleName: '',
+					nickName: '',
+					url: []
 				});
 				done();
 			});
@@ -289,7 +292,10 @@ describe('Notifications - Contact', () => {
 					nameSuffix: '',
 					notes: '',
 					parent: '1001',
-					phone: []
+					phone: [],
+					middleName: '',
+					nickName: '',
+					url: []
 				});
 				done();
 			});

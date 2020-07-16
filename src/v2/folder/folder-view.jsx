@@ -9,11 +9,10 @@
  * *** END LICENSE BLOCK *****
  */
 
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import { hooks } from '@zextras/zapp-shell';
-import styled from 'styled-components';
 import {
 	AutoSizer,
 	CellMeasurerCache,
@@ -26,6 +25,8 @@ import ContactListItem from './contact-list-item';
 import useQueryParam from '../../hooks/getQueryParam';
 import ContactPreviewPanel from '../preview/contact-preview-panel';
 import { VerticalDivider } from '../commons/vertical-divider';
+import EditView from '../edit/edit-view';
+import ContactEditPanel from '../edit/contact-edit-panel';
 
 const cache = new CellMeasurerCache({
 	fixedWidth: true,
@@ -69,6 +70,13 @@ export default function FolderView() {
 	}
 
 	const previewId = useQueryParam('preview');
+	const editId = useQueryParam('edit');
+
+	const MemoPanel = useMemo(() => {
+		if (editId) return EditView;
+		if (previewId) return ContactPreviewPanel;
+		return Container;
+	}, [editId, previewId]);
 
 	return (
 		<Container
@@ -79,6 +87,10 @@ export default function FolderView() {
 			height="fill"
 			background="gray5"
 			borderRadius="none"
+			style={{
+				maxHeight: '100%',
+				overflowY: 'auto'
+			}}
 		>
 			<Responsive mode="desktop" target={window.top}>
 				<Container
@@ -93,20 +105,34 @@ export default function FolderView() {
 					/>
 				</Container>
 				<VerticalDivider />
-				{ typeof previewId !== 'undefined' && (
-					<Container
-						width="calc(50% - 4px)"
-						mainAlignment="flex-start"
-						crossAlignment="flex-start"
-						borderRadius="none"
-					>
-						<ContactPreviewPanel
-							key={`contactPreview-${previewId}`}
-							contactInternalId={previewId}
-							folderId={folderId}
-						/>
-					</Container>
-				)}
+				<Container
+					width="calc(50% - 4px)"
+					mainAlignment="flex-start"
+					crossAlignment="flex-start"
+					borderRadius="none"
+				>
+					{
+						typeof editId !== 'undefined'
+							? (
+								<ContactEditPanel
+									key={`contactEdit-${editId}`}
+									editPanelId={editId}
+									folderId={folderId}
+								/>
+							)
+							: (
+								typeof previewId !== 'undefined'
+									? (
+										<ContactPreviewPanel
+											key={`contactPreview-${previewId}`}
+											contactInternalId={previewId}
+											folderId={folderId}
+										/>
+									)
+									: <Container />
+							)
+					}
+				</Container>
 			</Responsive>
 			<Responsive mode="mobile" target={window.top}>
 				<Container
@@ -115,18 +141,29 @@ export default function FolderView() {
 					borderRadius="none"
 					height="fill"
 				>
-					{typeof previewId !== 'undefined'
+					{typeof editId !== 'undefined'
 						? (
-							<ContactPreviewPanel
-								key={`contactPreview-${previewId}`}
-								contactInternalId={previewId}
+							<ContactEditPanel
+								key={`contactEdit-${editId}`}
+								editPanelId={editId}
 								folderId={folderId}
 							/>
-						) : (
-							<ContactList
-								key={`contactList-${folderId}`}
-								folderId={folderId}
-							/>
+						)
+						: (
+							typeof previewId !== 'undefined'
+								? (
+									<ContactPreviewPanel
+										key={`contactPreview-${previewId}`}
+										contactInternalId={previewId}
+										folderId={folderId}
+									/>
+								)
+								: (
+									<ContactList
+										key={`contactList-${folderId}`}
+										folderId={folderId}
+									/>
+								)
 						)}
 				</Container>
 			</Responsive>

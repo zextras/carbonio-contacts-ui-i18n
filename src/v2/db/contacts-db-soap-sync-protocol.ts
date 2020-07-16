@@ -20,7 +20,7 @@ import { ContactsDb } from './contacts-db';
 
 import processLocalFolderChange from './process-local-folder-change';
 import processRemoteFolderNotifications from './process-remote-folder-notifications';
-import { SyncResponse, SyncResponseContact } from '../soap';
+import { SyncResponse } from '../soap';
 import processLocalContactChange from './process-local-contact-change';
 import processRemoteContactsNotification from './process-remote-contact-notification';
 
