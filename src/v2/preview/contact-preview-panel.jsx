@@ -39,7 +39,7 @@ export default function ContactPreviewPanel({ contactInternalId, folderId }) {
 
 	const onDelete = useCallback(() => {
 		db.contacts
-			.delete(contactInternalId)
+			.update(contactInternalId, { parent: '3' })
 			.then(() => replaceHistory(`/folder/${folderId}`));
 	}, [db, contactInternalId, folderId, replaceHistory]);
 
