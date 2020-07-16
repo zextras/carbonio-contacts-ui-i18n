@@ -5,21 +5,52 @@
   "Mail Address": "",
   "Save": "",
   "This contact will be created in the 'Contacts' folder": "",
+  "address": "",
   "addresses": "",
+  "city": "",
   "company": "",
   "contact": {
+    "cancel": "",
     "label": {
       "address": {
-        "main": ""
+        "city": "",
+        "country": "",
+        "main": "",
+        "postalCode": "",
+        "state": "",
+        "street": ""
       },
+      "company": "",
+      "department": "",
+      "firstName": "",
+      "jobTitle": "",
+      "lastName": "",
       "mail": {
+        "address": "",
         "main": ""
       },
+      "nameSuffix": "",
+      "notes": "",
       "phone": {
-        "main": ""
+        "main": "",
+        "number": "",
+        "type": ""
+      },
+      "suffix": {
+        "Dr": "",
+        "Lady": "",
+        "Lord": "",
+        "Miss": "",
+        "Mr": "",
+        "Mrs": "",
+        "Ms": "",
+        "Mx": "",
+        "Sir": ""
       }
-    }
+    },
+    "save": ""
   },
+  "country": "",
   "department": "",
   "edit": "",
   "edit mail address": "",
@@ -40,11 +71,18 @@
   "lastName": "",
   "mail": "",
   "mail address": "",
+  "middleName": "",
+  "name": "",
   "notes": "",
   "other": "",
   "phone": "",
   "phone contact": "",
+  "postalCode": "",
   "prefix": "",
+  "state": "",
+  "street": "",
   "suffix": "",
+  "type": "",
+  "url": "",
   "work": ""
 }

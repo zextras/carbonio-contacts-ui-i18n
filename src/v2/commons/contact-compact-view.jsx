@@ -77,7 +77,7 @@ export const CompactView = ({ contact, toggleOpen, open }) => {
 				<IconButton
 					size="large"
 					onClick={toggleOpen}
-					icon={open ? 'ArrowIosDownward' : 'ArrowIosUpward'}
+					icon={open ? 'ArrowIosUpward' : 'ArrowIosDownward'}
 				/>
 			)}
 		</Row>

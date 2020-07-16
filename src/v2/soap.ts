@@ -37,6 +37,7 @@ export type ISoapSyncContactResponse = ISoapSyncResponse<ISoapSyncDeletedMap, IS
 type SoapContactObjAttrs = {
 	jobTitle?: string;
 	firstName?: string;
+	middleName?: string;
 	lastName?: string;
 	nameSuffix?: string;
 	namePrefix?: string;

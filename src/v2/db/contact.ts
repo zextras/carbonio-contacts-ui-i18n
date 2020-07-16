@@ -22,6 +22,12 @@ export enum ContactAddressType {
 	HOME = 'home'
 }
 
+export enum ContactUrlType {
+	OTHER = 'other',
+	WORK = 'work',
+	HOME = 'home'
+}
+
 export type ContactAddress = {
 	type: ContactAddressType;
 	street: string;
@@ -37,13 +43,19 @@ export type ContactEmail = {
 
 export type ContactPhone = {
 	number: string;
-	name: ContactPhoneType;
+	type: ContactPhoneType;
 };
+
+export type ContactUrl = {
+	url: string;
+	type: ContactUrlType;
+}
 
 export interface IContact {
 	/** Internal UUID */ _id?: string;
 	/** Zimbra ID */ id?: string;
 	firstName: string;
+	middleName: string;
 	lastName: string;
 	parent: string;
 	address: ContactAddress[];
@@ -56,6 +68,7 @@ export interface IContact {
 	phone: ContactPhone[];
 	nameSuffix: string;
 	namePrefix: string;
+	url: ContactUrl[];
 }
 
 export class Contact implements IContact {
@@ -73,9 +86,15 @@ export class Contact implements IContact {
 
 	mail: ContactEmail[];
 
+	namePrefix: string;
+
 	firstName: string;
 
+	middleName: string;
+
 	lastName: string;
+
+	nameSuffix: string;
 
 	image: string;
 
@@ -85,9 +104,7 @@ export class Contact implements IContact {
 
 	phone: ContactPhone[];
 
-	nameSuffix: string;
-
-	namePrefix: string;
+	url: ContactUrl[];
 
 	constructor({
 		_id,
@@ -97,14 +114,16 @@ export class Contact implements IContact {
 		company,
 		department,
 		mail,
+		namePrefix,
 		firstName,
+		middleName,
 		lastName,
+		nameSuffix,
 		image,
 		jobTitle,
 		notes,
 		phone,
-		nameSuffix,
-		namePrefix
+		url
 	}: IContact) {
 		this._id = _id;
 		this.parent = parent;
@@ -113,14 +132,16 @@ export class Contact implements IContact {
 		this.company = company;
 		this.department = department;
 		this.mail = mail;
+		this.namePrefix = namePrefix;
 		this.firstName = firstName;
+		this.middleName = middleName;
 		this.lastName = lastName;
+		this.nameSuffix = nameSuffix;
 		this.image = image;
 		this.jobTitle = jobTitle;
 		this.notes = notes;
 		this.phone = phone;
-		this.nameSuffix = nameSuffix;
-		this.namePrefix = namePrefix;
+		this.url = url;
 	}
 
 	public toMap() {
