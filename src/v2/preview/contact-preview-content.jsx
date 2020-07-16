@@ -68,7 +68,9 @@ const ContactPreviewContent = ({ contact, onEdit, onDelete }) => {
 						onClick={onEdit}
 					/>
 				</Row>
-				<CompactView contact={contact} open={open} toggleOpen={toggleOpen} />
+				<Padding all="medium" top="extrasmall">
+					<CompactView contact={contact} open={open} toggleOpen={toggleOpen} />
+				</Padding>
 			</Container>
 			<Collapse
 				orientation="vertical"
@@ -79,7 +81,9 @@ const ContactPreviewContent = ({ contact, onEdit, onDelete }) => {
 					background="gray6"
 					width="fill"
 					crossAlignment="flex-start"
+					mainAlignment="flex-start"
 					padding={{ all: 'large' }}
+					style={{ overflowY: 'auto' }}
 				>
 					<ContactPreviewRow>
 						<ContactField
