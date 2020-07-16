@@ -38,6 +38,22 @@ import {
 import { Contact } from '../db/contact';
 import { CompactView } from '../commons/contact-compact-view';
 
+const filterEmptyValues = (values) => filter(
+	values,
+	(value) => filter(
+		value,
+		(field, key) => key !== 'name' && key !== 'type' && field !== ''
+	).length > 0
+);
+
+const cleanMultivalueFields = (contact) => ({
+	...contact,
+	address: filterEmptyValues(contact.address),
+	mail: filterEmptyValues(contact.mail),
+	phone: filterEmptyValues(contact.phone),
+	url: filterEmptyValues(contact.url)
+});
+
 export default function EditView({ panel, editPanelId, folderId }) {
 	const { id } = useParams();
 	const editId = useMemo(() => {
@@ -87,7 +103,7 @@ export default function EditView({ panel, editPanelId, folderId }) {
 	}, [editId, db, setInitialContact]);
 
 	const onSubmit = useCallback((values, { setSubmitting }) => {
-		const contact = new Contact(values);
+		const contact = new Contact(cleanMultivalueFields(values));
 		if (!contact._id) {
 			db.contacts
 				.add(contact)
