@@ -34,7 +34,7 @@ export const CompactView = ({ contact, toggleOpen, open }) => {
 			<Row
 				orientation="vertical"
 				takeAvailableSpace
-				mainAlignment="flex-start"
+				mainAlignment="center"
 				crossAlignment="flex-start"
 				padding={{ horizontal: 'medium', vertical: 'small' }}
 				height="fill"

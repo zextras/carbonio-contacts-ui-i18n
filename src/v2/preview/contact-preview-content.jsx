@@ -46,7 +46,6 @@ const ContactPreviewContent = ({ contact, onEdit, onDelete }) => {
 		),
 		[contact]
 	);
-	console.log(contact);
 	return (
 		<>
 			<Container
@@ -69,7 +68,9 @@ const ContactPreviewContent = ({ contact, onEdit, onDelete }) => {
 						onClick={onEdit}
 					/>
 				</Row>
-				<CompactView contact={contact} open={open} toggleOpen={toggleOpen} />
+				<Container padding={{ all: 'medium', top: 'extrasmall' }}>
+					<CompactView contact={contact} open={open} toggleOpen={toggleOpen} />
+				</Container>
 			</Container>
 			<Collapse
 				orientation="vertical"
@@ -80,7 +81,9 @@ const ContactPreviewContent = ({ contact, onEdit, onDelete }) => {
 					background="gray6"
 					width="fill"
 					crossAlignment="flex-start"
+					mainAlignment="flex-start"
 					padding={{ all: 'large' }}
+					style={{ overflowY: 'auto' }}
 				>
 					<ContactPreviewRow>
 						<ContactField
@@ -98,20 +101,18 @@ const ContactPreviewContent = ({ contact, onEdit, onDelete }) => {
 							label={t('middleName')}
 						/>
 						<ContactField
-							field={contact.lastName}
-							label={t('lastName')}
+							field={contact.nickName}
+							label={t('nickName')}
 						/>
 					</ContactPreviewRow>
 					<ContactPreviewRow>
 						<ContactField
+							field={contact.lastName}
+							label={t('lastName')}
+						/>
+						<ContactField
 							field={contact.nameSuffix}
 							label={t('suffix')}
-						/>
-						<ContactMultiValueField
-							label={t('phone')}
-							values={contact.phone}
-							labelKey="number"
-							showIcon
 						/>
 					</ContactPreviewRow>
 					<ContactPreviewRow>
@@ -122,6 +123,14 @@ const ContactPreviewContent = ({ contact, onEdit, onDelete }) => {
 							defaultType="mail"
 							showIcon
 						/>
+						<ContactMultiValueField
+							label={t('phone')}
+							values={contact.phone}
+							labelKey="number"
+							showIcon
+						/>
+					</ContactPreviewRow>
+					<ContactPreviewRow>
 						<ContactMultiValueField
 							label={t('url')}
 							values={contact.url}
@@ -206,6 +215,7 @@ const ContactMultiValueField = ({
 				field={values && values[selected] && values[selected][labelKey]}
 				icon={values && values[selected] && showIcon && typeToIcon(values[selected].type || defaultType || 'other')}
 				width={width || 'fill'}
+				limit
 			/>
 			{ values.length > 1
 				&& (
@@ -218,17 +228,19 @@ const ContactMultiValueField = ({
 };
 
 const ContactField = ({
-	field, label, width, icon
+	field, label, width, icon, limit
 }) => (
 	<Container
 		mainAlignment="flex-start"
 		crossAlignment="flex-start"
 		padding={{ all: 'small' }}
 		width={width || '50%'}
-		style={{ minHeight: '48px' }}
+		style={{ minHeight: '48px', maxWidth : limit ? 'calc(100% - 48px)' : '100%' }}
 	>
 		<Text color="secondary">{label}</Text>
-		<Container
+		<Row
+			takeAvailableSpace
+			wrap="nowrap"
 			height="fit"
 			width="fill"
 			orientation="horizontal"
@@ -240,7 +252,7 @@ const ContactField = ({
 				</Padding>
 			)}
 			<Text size="large" overflow="break-word">{field}</Text>
-		</Container>
+		</Row>
 	</Container>
 );
 
