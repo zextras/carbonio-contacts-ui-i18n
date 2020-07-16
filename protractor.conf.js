@@ -54,12 +54,12 @@ exports.config = {
 					}
 				}, 100);
 			});
-		await browser.executeAsyncScript(function() {
-			var callback = arguments[arguments.length - 1];
-			window.e2e.beforeEachTest()
-				.then(function() {
-					callback();
-				});
-		});
+		// await browser.executeAsyncScript(function() {
+		// 	var callback = arguments[arguments.length - 1];
+		// 	window.e2e.beforeEachTest()
+		// 		.then(function() {
+		// 			callback();
+		// 		});
+		// });
 	}
 }

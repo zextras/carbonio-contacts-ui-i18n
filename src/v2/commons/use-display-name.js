@@ -14,14 +14,23 @@ import { trim } from 'lodash';
 
 export const useDisplayName = (contact) => useMemo(
 	() => {
-		console.log(contact);
 		if (contact) {
 			if (contact.firstName || contact.lastName) {
-				return trim(`${contact.namePrefix || ''} ${contact.firstName || ''} ${contact.lastName || ''} ${contact.nameSuffix || ''}`);
+				return trim(`${
+					contact.namePrefix || ''
+				} ${
+					contact.firstName || ''
+				} ${
+					contact.middleName || ''
+				} ${
+					contact.lastName || ''
+				} ${
+					contact.nameSuffix || ''
+				}`);
 			}
-			if (contact.mail.length > 0) return contact.mail[0].mail;
+			if (contact.mail.length > 0) return `<No Name> ${contact.mail[0].mail}`;
 		}
-		return 'no data';
+		return '<No Data>';
 	},
 	[contact]
 );

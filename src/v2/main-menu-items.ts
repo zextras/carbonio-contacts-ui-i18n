@@ -34,13 +34,13 @@ function buildMenuItem(folder: ContactsFolder, db: ContactsDb): Promise<MainMenu
 				)
 			)
 		)
-		.then((childrn) => {
-			if (childrn.length > 0) {
+		.then((children) => {
+			if (children.length > 0) {
 				return {
 					id: `contacts-folder-${folder.id}`,
 					label: folder.name,
 					to: `/folder/${folder.id}`,
-					children: childrn
+					children
 				};
 			}
 			return {

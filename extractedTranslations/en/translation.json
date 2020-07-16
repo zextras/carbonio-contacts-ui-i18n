@@ -4,6 +4,7 @@
   "Mail Address": "",
   "Save": "",
   "This contact will be created in the 'Contacts' folder": "",
+  "address": "",
   "addresses": "",
   "company": "",
   "contact": {
@@ -58,9 +59,11 @@
   "jobTitle": "",
   "lastName": "",
   "mail": "",
+  "middleName": "",
   "notes": "",
   "phone": "",
   "phone contact": "",
   "prefix": "",
-  "suffix": ""
+  "suffix": "",
+  "url": ""
 }

@@ -10,45 +10,11 @@
  */
 
 import React, { useCallback, useMemo } from 'react';
-import styled from 'styled-components';
 import { hooks } from '@zextras/zapp-shell';
-import { useTranslation } from 'react-i18next';
-import {
-	Container,
-	Divider,
-	Icon,
-	IconButton,
-	Padding,
-	Text,
-	Row
-} from '@zextras/zapp-ui';
-import { generateDisplayName } from '../contact-list-item';
+import { Divider } from '@zextras/zapp-ui';
 import ContactPreviewHeader from './contact-preview-header';
-import ContactPreviewContent from "./contact-preview-content";
-import {useDisplayName} from "../commons/use-display-name";
-
-const _toolbar = styled.div`
-	min-height: 50px;
-	max-height: 50px;
-	display: flex;
-	flex-direction: row;
-	justify-content: flex-end;
-	padding-left: 16px;
-	padding-right: 16px;
-	
-	p {
-		margin: 8px;
-	}
-`;
-
-const _content = styled.div`
-	flex-grow: 1;
-	display: flex;
-	flex-direction: column;
-	padding-left: 16px;
-	padding-right: 16px;
-	padding-bottom: 16px;
-`;
+import ContactPreviewContent from './contact-preview-content';
+import { useDisplayName } from '../commons/use-display-name';
 
 export default function ContactPreviewPanel({ contactInternalId, folderId }) {
 	const onEdit = hooks.useAddPanelCallback(`/edit/${contactInternalId}`);
@@ -75,22 +41,18 @@ export default function ContactPreviewPanel({ contactInternalId, folderId }) {
 		[folderId, replaceHistory]
 	);
 	const displayName = useDisplayName(contact);
-	return (
-		<Container
-			width="calc(50% - 4px)"
-			mainAlignment="flex-start"
-		>
-			{contactLoaded && (
-				<>
-					<ContactPreviewHeader displayName={displayName} onClose={onClose} />
-					<ContactPreviewContent
-						contact={contact}
-						onEdit={onEdit}
-						onDelete={onDelete}
-					/>
-					<Divider />
-				</>
-			)}
-		</Container>
-	);
+	if (contactLoaded) {
+		return (
+			<>
+				<ContactPreviewHeader displayName={displayName} onClose={onClose} />
+				<ContactPreviewContent
+					contact={contact}
+					onEdit={onEdit}
+					onDelete={onDelete}
+				/>
+				<Divider />
+			</>
+		);
+	}
+	return null;
 }

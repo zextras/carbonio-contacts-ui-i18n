@@ -9,21 +9,25 @@
  * *** END LICENSE BLOCK *****
  */
 
-import { forEach, map, pickBy } from 'lodash';
+import {
+	forEach, map, pickBy, lowerFirst, parseInt, reduce, flatMap, words
+} from 'lodash';
 import { ISoapFolderObj } from '@zextras/zapp-shell/lib/network/ISoap';
 import { ContactsFolder } from './contacts-folder';
 import {
 	ContactAddress,
-	ContactAddressType,
+	ContactUrlType,
 	ContactPhoneType,
 	ContactEmail,
 	ContactPhone,
-	Contact
+	Contact, ContactUrl
 } from './contact';
-import { SyncResponseContactFolder } from '../soap';
+import { SoapContact, SyncResponseContactFolder } from '../soap';
 
 const MAIL_REG = /^email(\d*)$/;
 const PHONE_REG = /^(.*)Phone(\d*)$/;
+const URL_REG = /^(.*)URL(\d*)$/;
+const ADDR_PART_REG = /^(.*)(City|Country|PostalCode|State|Street)(\d*)$/;
 
 function normalizeFolder(soapFolderObj: ISoapFolderObj): ContactsFolder {
 	return new ContactsFolder({
@@ -68,29 +72,53 @@ function contactPhoneTypeFromString(s: string): ContactPhoneType {
 	}
 }
 
-function normalizeContactAddresses(c: ISoapContactObj): ContactAddress[] {
-	if (
-		c._attrs.hasOwnProperty('otherStreet')
-		|| c._attrs.hasOwnProperty('otherPostalCode')
-		|| c._attrs.hasOwnProperty('otherCity')
-		|| c._attrs.hasOwnProperty('otherState')
-		|| c._attrs.hasOwnProperty('otherCountry')
-	) {
-		return [{
-			type: ContactAddressType.OTHER,
-			street: c._attrs.otherStreet || '',
-			postalCode: c._attrs.otherPostalCode || '',
-			city: c._attrs.otherCity || '',
-			state: c._attrs.otherState || '',
-			country: c._attrs.otherCountry || ''
-		}];
-	}
-	else {
-		return [];
+export function contactUrlTypeFromString(s: string): ContactUrlType {
+	if (!URL_REG.test(s)) return ContactUrlType.OTHER;
+	switch (s.match(URL_REG)![1]) {
+		case 'work':
+			return ContactUrlType.WORK;
+		case 'home':
+			return ContactUrlType.HOME;
+		default:
+			return ContactUrlType.OTHER;
 	}
 }
 
-function normalizeContactMails(c: ISoapContactObj): ContactEmail[] {
+const getParts: (key: string) => [string, string, number] = (key) => {
+	const [type, subType, index, opt]: string[] = words(key);
+	return [
+		type,
+		lowerFirst(subType === 'Postal' ? 'postalCode' : subType),
+		(parseInt(index === 'Code' ? opt : index) || 1) - 1
+	];
+};
+
+function normalizeContactAddresses(c: SoapContact): ContactAddress[] {
+	return flatMap(
+		reduce(
+			c._attrs,
+			(acc, attr, key) => {
+				if (ADDR_PART_REG.test(key)) {
+					const [type, subType, index] = getParts(key);
+					if (typeof acc[type][index] === 'undefined') {
+						acc[type][index] = { [subType]: attr, type };
+					}
+					else {
+						acc[type][index][subType] = attr;
+					}
+				}
+				return acc;
+			},
+			{
+				work: [],
+				home: [],
+				other: []
+			}
+		)
+	);
+}
+
+function normalizeContactMails(c: SoapContact): ContactEmail[] {
 	return map(
 		pickBy<string>(c._attrs, (v, k) => MAIL_REG.test(k)),
 		(v, k) => ({
@@ -99,17 +127,27 @@ function normalizeContactMails(c: ISoapContactObj): ContactEmail[] {
 	);
 }
 
-function normalizeContactPhones(c: ISoapContactObj): ContactPhone[] {
+function normalizeContactPhones(c: SoapContact): ContactPhone[] {
 	return map(
 		pickBy<string>(c._attrs, (v, k) => PHONE_REG.test(k)),
 		(v, k) => ({
 			number: v,
-			name: contactPhoneTypeFromString(k)
+			type: contactPhoneTypeFromString(k)
 		})
 	);
 }
 
-export function normalizeContact(c: ISoapContactObj): Contact {
+function normalizeContactUrls(c: SoapContact): ContactUrl[] {
+	return map(
+		pickBy<string>(c._attrs, (v, k) => URL_REG.test(k)),
+		(v, k) => ({
+			url: v,
+			type: contactUrlTypeFromString(k)
+		})
+	);
+}
+
+export function normalizeContact(c: SoapContact): Contact {
 	return new Contact({
 		parent: c.l,
 		id: c.id,
@@ -118,6 +156,7 @@ export function normalizeContact(c: ISoapContactObj): Contact {
 		department: c._attrs.department || '',
 		mail: normalizeContactMails(c),
 		firstName: c._attrs.firstName || '',
+		middleName: c._attrs.middleName || '',
 		lastName: c._attrs.lastName || '',
 		image: (c._attrs.image)
 			? `/service/home/~/?auth=co&id=${c.id}&part=${c._attrs.image.part}&max_width=32&max_height=32`
@@ -127,5 +166,6 @@ export function normalizeContact(c: ISoapContactObj): Contact {
 		phone: normalizeContactPhones(c),
 		nameSuffix: c._attrs.nameSuffix || '',
 		namePrefix: c._attrs.namePrefix || '',
+		url: normalizeContactUrls(c)
 	});
 }

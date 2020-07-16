@@ -12,7 +12,7 @@
 import {
 	map, merge, omit, pick, reduce
 } from 'lodash';
-import { ISoapSyncDeletedMap, ISoapSyncFolderObj } from '@zextras/zapp-shell/lib/network/ISoap';
+import { ISoapSyncFolderObj } from '@zextras/zapp-shell/lib/network/ISoap';
 import {
 	Contact, ContactAddress, ContactEmail, ContactPhone
 } from './db/contact';
@@ -167,6 +167,28 @@ export type SoapContact = {
 		firstName?: string;
 		fullName?: string;
 		lastName?: string;
+		jobTitle?: string;
+		middleName?: string;
+		nameSuffix?: string;
+		namePrefix?: string;
+		mobilePhone?: string;
+		workPhone?: string;
+		otherPhone?: string;
+		department?: string;
+		email?: string;
+		notes?: string;
+		company?: string;
+		otherStreet?: string;
+		otherPostalCode?: string;
+		otherCity?: string;
+		otherState?: string;
+		otherCountry?: string;
+		image?: {
+			part: string;
+			ct: string;
+			s: number;
+			filename: string;
+		};
 	};
 };
 
