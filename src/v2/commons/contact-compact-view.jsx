@@ -10,10 +10,12 @@
  */
 
 
-import {Avatar, IconButton, Row, Text} from "@zextras/zapp-ui";
-import {trim} from "lodash";
-import React from "react";
-import {useDisplayName} from "./use-display-name";
+import {
+	Avatar, IconButton, Row, Text
+} from '@zextras/zapp-ui';
+import { trim } from 'lodash';
+import React from 'react';
+import { useDisplayName } from './use-display-name';
 
 export const CompactView = ({ contact, toggleOpen, open }) => {
 	const displayName = useDisplayName(contact);
@@ -27,6 +29,7 @@ export const CompactView = ({ contact, toggleOpen, open }) => {
 				label={`${contact.firstName} ${contact.lastName}`}
 				picture={contact.image}
 				size="large"
+				fallbackIcon="EmailOutline"
 			/>
 			<Row
 				orientation="vertical"
@@ -70,13 +73,13 @@ export const CompactView = ({ contact, toggleOpen, open }) => {
 					}
 				</Text>
 			</Row>
-			{toggleOpen &&
+			{toggleOpen && (
 				<IconButton
 					size="large"
 					onClick={toggleOpen}
 					icon={open ? 'ArrowIosDownward' : 'ArrowIosUpward'}
 				/>
-			}
+			)}
 		</Row>
-	)
-}
+	);
+};

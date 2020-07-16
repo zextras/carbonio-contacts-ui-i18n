@@ -20,8 +20,9 @@ import {
 	Divider,
 	Padding
 } from '@zextras/zapp-ui';
-import { Contact } from './db/contact';
-import {useDisplayName} from "./commons/use-display-name";
+import { trim, get, has } from 'lodash';
+import { Contact } from '../db/contact';
+import { useDisplayName } from '../commons/use-display-name';
 
 const InvisibleLink = styled(Link)`
 	text-decoration: none; /* no underline */
@@ -30,8 +31,15 @@ const InvisibleLink = styled(Link)`
 `;
 
 export default function ContactListItem({ contact, style }) {
-	console.log('contact', contact);
 	const displayName = useDisplayName(contact);
+	const secondaryRow = useMemo(
+		() => trim(`${
+			has(contact, 'mail[0].mail') ? get(contact, 'mail[0].mail') : ''
+		}, ${
+			has(contact, 'phone[0].number') ? get(contact, 'phone[0].number') : ''
+		}`, ', '),
+		[contact]
+	);
 	return (
 		<Container style={style}>
 			<InvisibleLink to={`/folder/${contact.parent}?preview=${contact._id}`}>
@@ -57,11 +65,7 @@ export default function ContactListItem({ contact, style }) {
 						</Row>
 						<Row width="fill" mainAlignment="flex-start">
 							<Text color="secondary">
-								{
-									contact.mail
-									&& contact.mail.length > 0
-									&& contact.mail[0].mail
-								}
+								{secondaryRow}
 							</Text>
 						</Row>
 					</Container>
