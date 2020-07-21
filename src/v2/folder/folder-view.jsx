@@ -214,6 +214,7 @@ const ContactList = ({ folderId }) => {
 							overscanRowCount={10}
 							rowHeight={57}
 							rowRenderer={rowRenderer}
+							style={{ outline: 'none' }}
 						/>
 					)}
 				</AutoSizer>

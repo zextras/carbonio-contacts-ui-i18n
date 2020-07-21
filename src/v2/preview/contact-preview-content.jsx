@@ -76,6 +76,7 @@ const ContactPreviewContent = ({ contact, onEdit, onDelete }) => {
 				orientation="vertical"
 				open={open}
 				crossSize="100%"
+				disableTransition={true}
 			>
 				<Container
 					background="gray6"
