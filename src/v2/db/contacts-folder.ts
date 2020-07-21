@@ -38,12 +38,12 @@ export class ContactsFolder implements IContactsFolder {
 	parent: string;
 
 	constructor({
-		itemsCount,
+		itemsCount = 0,
 		name,
 		id,
 		path,
-		unreadCount,
-		size,
+		unreadCount = 0,
+		size = 0,
 		parent,
 		_id
 	}: IContactsFolder) {

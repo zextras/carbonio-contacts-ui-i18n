@@ -9,58 +9,69 @@
  * *** END LICENSE BLOCK *****
  */
 
-import Dexie from 'dexie';
+import Dexie, { PromiseExtended } from 'dexie';
+import { db } from '@zextras/zapp-shell';
 import { ContactsFolder } from './contacts-folder';
 import { Contact } from './contact';
 
-export class ContactsDb extends Dexie {
+export type DeletionData = {
+	_id: string;
+	id: string;
+	table: 'contacts'|'folders';
+	rowId?: string;
+};
+
+export class ContactsDb extends db.Database {
 	contacts: Dexie.Table<Contact, string>; // string = type of the primary key
 
 	folders: Dexie.Table<ContactsFolder, string>; // string = type of the primary key
 
-	// string = type of the primary key
-	remappedIds: Dexie.Table<{ _?: string; _id: string; id: string }, string>;
+	deletions: Dexie.Table<DeletionData, string>;
 
 	constructor() {
 		super('contacts');
 		this.version(1).stores({
-			contacts: '$$_id, &id, *mail, parent',
-			folders: '$$_id, &id, parent',
-			remappedIds: '$$_, &_id, &id'
-		});
-		this.on('changes', (changes) => {
-			changes.forEach((change) => {
-				switch (change.type) {
-					case 1: // CREATED
-						// console.log('An object was created: ' + JSON.stringify(change.obj));
-						break;
-					case 2: // UPDATED
-						// console.log(
-						// 	'An object with key ' + change.key
-						// 	+ ' was updated with modifications: ' + JSON.stringify(change.mods)
-						// );
-						break;
-					case 3: // DELETED
-						if (change.table !== 'contacts' /* && change.table !== 'folders' */) break;
-						if (change.oldObj.id) {
-							this.remappedIds.put({
-								_id: change.oldObj._id,
-								id: change.oldObj.id
-							}).then(() => null);
-						}
-						break;
-					default:
-				}
-			});
+			contacts: '$$_id, id, *mail, parent',
+			folders: '$$_id, id, parent',
+			deletions: '$$rowId, _id, id'
 		});
 		this.contacts = this.table('contacts');
 		this.contacts.mapToClass(Contact);
 		this.folders = this.table('folders');
 		this.folders.mapToClass(ContactsFolder);
-		this.remappedIds = this.table('remappedIds');
+		this.deletions = this.table('deletions');
+	}
+
+	public open(): PromiseExtended<ContactsDb> {
+		return super.open().then((db) => db as ContactsDb);
 	}
 
 	public getFolderChildren(folder: ContactsFolder): Promise<ContactsFolder[]> {
+		// TODO: For locally created folders we should resolve the internal id, we should ALWAYS to that.
+		if (!folder.id) return Promise.resolve([]);
 		return this.folders.where({ parent: folder.id }).sortBy('name');
+	}
+
+	public deleteContact(c: Contact): Promise<void> {
+		return this.folders.get(c._id!).then((_c) => {
+			if (_c) {
+				return this.deletions.add({ _id: _c._id!, id: _c.id!, table: 'contacts' })
+					.then(() => this.contacts.delete(_c._id!).then(() => undefined))
+					.catch(console.error);
+			}
+			return undefined;
+		});
+	}
+
+	public deleteFolder(f: ContactsFolder): Promise<void> {
+		return this.folders.get(f._id!).then((_f) => {
+			if (_f) {
+				console.log({ _id: _f._id!, id: _f.id!, table: 'folders' });
+				return this.deletions.add({ rowId: this.createUUID(), _id: _f._id!, id: _f.id!, table: 'folders' })
+					.then(() => this.folders.delete(_f._id!).then(() => undefined))
+					.catch(console.error);
+			}
+			return undefined;
+		});
 	}
 }

@@ -10,10 +10,9 @@
  */
 
 import {
-	map, pickBy, lowerFirst, parseInt, reduce, flatMap, words
+	forEach, map, pickBy, lowerFirst, parseInt, reduce, flatMap, words
 } from 'lodash';
 import { ISoapFolderObj } from '@zextras/zapp-shell/lib/network/ISoap';
-import { ISoapContactObj } from '../soap';
 import { ContactsFolder } from './contacts-folder';
 import {
 	ContactAddress,
@@ -23,13 +22,14 @@ import {
 	ContactPhone,
 	Contact, ContactUrl
 } from './contact';
+import { SoapContact, SyncResponseContactFolder } from '../soap';
 
 const MAIL_REG = /^email(\d*)$/;
 const PHONE_REG = /^(.*)Phone(\d*)$/;
 const URL_REG = /^(.*)URL(\d*)$/;
 const ADDR_PART_REG = /^(.*)(City|Country|PostalCode|State|Street)(\d*)$/;
 
-export function normalizeFolder(soapFolderObj: ISoapFolderObj): ContactsFolder {
+function normalizeFolder(soapFolderObj: ISoapFolderObj): ContactsFolder {
 	return new ContactsFolder({
 		itemsCount: soapFolderObj.n,
 		name: soapFolderObj.name,
@@ -42,7 +42,23 @@ export function normalizeFolder(soapFolderObj: ISoapFolderObj): ContactsFolder {
 	});
 }
 
-export function contactPhoneTypeFromString(s: string): ContactPhoneType {
+export function normalizeContactsFolders(f: SyncResponseContactFolder): ContactsFolder[] {
+	if (!f) return [];
+	let children: ContactsFolder[] = [];
+	if (f.folder) {
+		forEach(f.folder, (c: SyncResponseContactFolder) => {
+			const child = normalizeContactsFolders(c);
+			children = [...children, ...child];
+		});
+	}
+	if (f.id === '3' || (f.view && f.view === 'contact')) {
+		return [normalizeFolder(f), ...children];
+	}
+
+	return children;
+}
+
+function contactPhoneTypeFromString(s: string): ContactPhoneType {
 	if (!PHONE_REG.test(s)) return ContactPhoneType.OTHER;
 	switch (s.match(PHONE_REG)![1]) {
 		case 'mobile':
@@ -77,7 +93,7 @@ const getParts: (key: string) => [string, string, number] = (key) => {
 	];
 };
 
-function normalizeContactAddresses(c: ISoapContactObj): ContactAddress[] {
+function normalizeContactAddresses(c: SoapContact): ContactAddress[] {
 	return flatMap(
 		reduce(
 			c._attrs,
@@ -102,7 +118,7 @@ function normalizeContactAddresses(c: ISoapContactObj): ContactAddress[] {
 	);
 }
 
-function normalizeContactMails(c: ISoapContactObj): ContactEmail[] {
+function normalizeContactMails(c: SoapContact): ContactEmail[] {
 	return map(
 		pickBy<string>(c._attrs, (v, k) => MAIL_REG.test(k)),
 		(v, k) => ({
@@ -111,7 +127,7 @@ function normalizeContactMails(c: ISoapContactObj): ContactEmail[] {
 	);
 }
 
-function normalizeContactPhones(c: ISoapContactObj): ContactPhone[] {
+function normalizeContactPhones(c: SoapContact): ContactPhone[] {
 	return map(
 		pickBy<string>(c._attrs, (v, k) => PHONE_REG.test(k)),
 		(v, k) => ({
@@ -121,7 +137,7 @@ function normalizeContactPhones(c: ISoapContactObj): ContactPhone[] {
 	);
 }
 
-function normalizeContactUrls(c: ISoapContactObj): ContactUrl[] {
+function normalizeContactUrls(c: SoapContact): ContactUrl[] {
 	return map(
 		pickBy<string>(c._attrs, (v, k) => URL_REG.test(k)),
 		(v, k) => ({
@@ -131,7 +147,7 @@ function normalizeContactUrls(c: ISoapContactObj): ContactUrl[] {
 	);
 }
 
-export function normalizeContact(c: ISoapContactObj): Contact {
+export function normalizeContact(c: SoapContact): Contact {
 	return new Contact({
 		parent: c.l,
 		id: c.id,

@@ -9,13 +9,13 @@
  * *** END LICENSE BLOCK *****
  */
 
+import React, { lazy } from 'react';
 import {
 	setMainMenuItems,
 	setRoutes,
 	setCreateOptions,
 	setAppContext
 } from '@zextras/zapp-shell';
-import { lazy } from 'react';
 import { ContactsDb } from './v2/db/contacts-db';
 import { ContactsDbSoapSyncProtocol } from './v2/db/contacts-db-soap-sync-protocol';
 import mainMenuItems from './v2/main-menu-items';
@@ -35,7 +35,7 @@ export default function app() {
 	}]);
 
 	const db = new ContactsDb();
-	const syncProtocol = new ContactsDbSoapSyncProtocol(db);
+	const syncProtocol = new ContactsDbSoapSyncProtocol(db, fetch);
 	db.registerSyncProtocol('soap-contacts', syncProtocol);
 	db.syncable.connect('soap-contacts', '/service/soap/SyncRequest');
 
@@ -46,25 +46,6 @@ export default function app() {
 	db
 		.observe(() => db.folders.where({ parent: '1' }).sortBy('name'))
 		.subscribe((folders) => mainMenuItems(folders, db));
-
-	// const toAdd = [];
-	// for (let i = 0; i < 10000; i += 1) {
-	// 	toAdd.push(new Contact({
-	// 		parent: '277',
-	// 		address: [],
-	// 		company: '',
-	// 		department: '',
-	// 		mail: [{ mail: `user.${i}@example.com` }],
-	// 		firstName: `User ${i}`,
-	// 		lastName: '',
-	// 		image: '',
-	// 		jobTitle: '',
-	// 		notes: '',
-	// 		phone: [],
-	// 		nameSuffix: ''
-	// 	}));
-	// }
-	// db.contacts.bulkAdd(toAdd).then(console.log);
 
 	setRoutes([
 		{
