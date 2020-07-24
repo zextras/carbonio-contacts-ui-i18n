@@ -10,7 +10,7 @@
  */
 
 import {
-	map, merge, omit, pick, reduce
+	map, merge, omit, pick, reduce, startsWith, split
 } from 'lodash';
 import { ISoapSyncFolderObj } from '@zextras/zapp-shell/lib/network/ISoap';
 import {
@@ -291,5 +291,99 @@ export function normalizeContactAttrsToSoapOp(c: Contact): Array<CreateContactRe
 	return map<any, any>(
 		obj,
 		(v: any, k: any) => ({ n: k, _content: v })
+	);
+}
+
+export function normalizeContactChangesToSoapOp(c: { [key: string]: string }): Array<CreateContactRequestAttr|ModifyContactRequestAttr> {
+	const obj: any = pick(c, [
+		'nameSuffix',
+		'namePrefix',
+		'firstName',
+		'lastName',
+		'nickName',
+		'image',
+		'jobTitle',
+		'department',
+		'company',
+		'notes',
+	]);
+	const mail = normalizeChangeMailsToSoapOp(c);
+	const phone = normalizeChangePhonesToSoapOp(c);
+	const address = normalizeChangeAddressesToSoapOp(c);
+	const url = normalizeChangeUrlsToSoapOp(c);
+	console.log(c, obj, mail, phone);
+	return map<any, any>(
+		obj,
+		(v: any, k: any) => ({ n: k, _content: v })
+	);
+}
+
+function normalizeChangeMailsToSoapOp(c) {
+	return reduce(
+		c,
+		(acc, v, k) => {
+			if (startsWith(k, 'mail')) {
+				const keyparts = split(k, '.');
+				return {
+					...acc,
+					[`mail${keyparts[1] !== '0' ? keyparts[1] : ''}`]: v ? v.mail : undefined
+				};
+			}
+			return acc;
+		},
+		{}
+	);
+}
+
+function normalizeChangePhonesToSoapOp(c) {
+	return reduce(
+		c,
+		(acc, v, k) => {
+			if (startsWith(k, 'phone')) {
+				console.log(k, v);
+				if (!v) return acc;
+				const keyparts = k.split('.');
+				return {
+					...acc,
+					[`${v.type}Phone${keyparts[1] !== '0' ? keyparts[1] : ''}`]: v.mail
+				};
+			}
+			return acc;
+		},
+		{}
+	);
+}
+
+function normalizeChangeUrlsToSoapOp(c) {
+	return reduce(
+		c,
+		(acc, v, k) => {
+			if (startsWith(k, 'url')) {
+				const keyparts = k.split('.');
+				return {
+					...acc,
+					[`url${keyparts[1] !== '0' ? keyparts[1] : ''}`]: v.mail
+				};
+			}
+			return acc;
+		},
+		{}
+	);
+}
+
+function normalizeChangeAddressesToSoapOp(c) {
+	return reduce(
+		c,
+		(acc, v, k) => {
+			if (startsWith(k, 'address')) {
+				const keyparts = k.split('.');
+				return {
+					...acc,
+					[`email${keyparts[1] !== '0' ? keyparts[1] : ''}`]: v.mail
+				};
+			}
+			return acc;
+		},
+		{}
 	);
 }
