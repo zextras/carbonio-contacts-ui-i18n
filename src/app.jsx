@@ -16,12 +16,12 @@ import {
 	setCreateOptions,
 	setAppContext
 } from '@zextras/zapp-shell';
-import { ContactsDb } from './v2/db/contacts-db';
-import { ContactsDbSoapSyncProtocol } from './v2/db/contacts-db-soap-sync-protocol';
-import mainMenuItems from './v2/main-menu-items';
+import { ContactsDb } from './db/contacts-db';
+import { ContactsDbSoapSyncProtocol } from './db/contacts-db-soap-sync-protocol';
+import mainMenuItems from './main-menu-items';
 
-const lazyFolderView = lazy(() => (import(/* webpackChunkName: "folder-view" */ './v2/folder/folder-view')));
-const lazyEditView = lazy(() => (import(/* webpackChunkName: "edit-view" */ './v2/edit/edit-view')));
+const lazyFolderView = lazy(() => (import(/* webpackChunkName: "folder-view" */ './folder/folder-view')));
+const lazyEditView = lazy(() => (import(/* webpackChunkName: "edit-view" */ './edit/edit-view')));
 
 export default function app() {
 	console.log('Hello from contacts');
