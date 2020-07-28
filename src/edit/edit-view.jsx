@@ -70,7 +70,7 @@ export default function EditView({ panel, editPanelId, folderId }) {
 	const [initialContact, setInitialContact] = useState(!!editId && editId !== 'new'
 		? null
 		: new Contact({
-			parent: '7',
+			parent: folderId || '7',
 			address: [],
 			mail: [],
 			phone: [],
