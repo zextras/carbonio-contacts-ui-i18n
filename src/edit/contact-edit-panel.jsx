@@ -16,7 +16,7 @@ export default function ContactEditPanel({ editPanelId, folderId }) {
 
 	return (
 		<>
-			<ContactEditHeader folderId={folderId} />
+			<ContactEditHeader editPanelId={editPanelId} folderId={folderId} />
 				<Container height="fit" style={{ maxHeight: '100%', overflowY: 'auto' }}>
 					<EditView panel editPanelId={editPanelId} folderId={folderId} />
 				</Container>
@@ -24,7 +24,7 @@ export default function ContactEditPanel({ editPanelId, folderId }) {
 	)
 };
 
-const ContactEditHeader = ({ folderId }) => {
+const ContactEditHeader = ({ editPanelId, folderId }) => {
 	const { t } = useTranslation();
 	const replaceHistory = hooks.useReplaceHistoryCallback();
 
@@ -45,7 +45,7 @@ const ContactEditHeader = ({ folderId }) => {
 				<Padding all="medium"><Icon size="large" icon="EditOutline"/></Padding>
 				<Row takeAvailableSpace mainAlignment="flex-start">
 					<Text size="large">
-						{t('Edit Contact')}
+						{ t(editPanelId && editPanelId !== 'new' ? 'Edit Contact' : 'New Contact') }
 					</Text>
 				</Row>
 				<IconButton icon="Close" size="large" onClick={onClose}/>
