@@ -72,10 +72,10 @@ export default function EditView({ panel, editPanelId, folderId }) {
 	const pushHistory = hooks.usePushHistoryCallback();
 	const replaceHistory = hooks.useReplaceHistoryCallback();
 
-	const [initialContact, setInitialContact] = useState(editId
+	const [initialContact, setInitialContact] = useState(editId && editId !== 'new'
 		? null
 		: new Contact({
-			parent: '7',
+			parent: folderId || '7',
 			address: {},
 			email: {},
 			phone: {},
@@ -95,7 +95,7 @@ export default function EditView({ panel, editPanelId, folderId }) {
 
 	useEffect(() => {
 		let canSet = true;
-		if (editId && db) {
+		if (editId && editId !== 'new' && db) {
 			db.contacts
 				.where({ _id: editId })
 				.toArray()
@@ -121,7 +121,9 @@ export default function EditView({ panel, editPanelId, folderId }) {
 					if (panel) {
 						replaceHistory(`/folder/${folderId}?preview=${cid}`);
 					}
-					pushHistory(`/edit/${cid}`);
+					else {
+						pushHistory(`/edit/${cid}`);
+					}
 				});
 		}
 		else {
