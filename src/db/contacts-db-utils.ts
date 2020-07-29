@@ -155,7 +155,7 @@ function normalizeContactUrls(c: SoapContact): ContactUrlMap {
 }
 
 export function normalizeContact(c: SoapContact): Contact {
-	const C = new Contact({
+	return new Contact({
 		parent: c.l,
 		id: c.id,
 		address: normalizeContactAddresses(c),
@@ -176,6 +176,4 @@ export function normalizeContact(c: SoapContact): Contact {
 		namePrefix: c._attrs.namePrefix || '',
 		URL: normalizeContactUrls(c)
 	});
-	console.log(C);
-	return C;
 }
