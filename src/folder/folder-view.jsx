@@ -18,7 +18,7 @@ import {
 	CellMeasurerCache,
 	List
 } from 'react-virtualized';
-import { Container, Divider, Text } from '@zextras/zapp-ui';
+import {Container, Divider, Text, useScreenMode} from '@zextras/zapp-ui';
 import Row from '@zextras/zapp-ui/dist/components/layout/Row';
 import Responsive from '@zextras/zapp-ui/dist/components/utilities/Responsive';
 import ContactListItem from './contact-list-item';
@@ -69,14 +69,39 @@ export default function FolderView() {
 		folderId = '7'; // '/Contacts'
 	}
 
+	const screen = useScreenMode();
 	const previewId = useQueryParam('preview');
 	const editId = useQueryParam('edit');
 
 	const MemoPanel = useMemo(() => {
-		if (editId) return EditView;
-		if (previewId) return ContactPreviewPanel;
-		return Container;
-	}, [editId, previewId]);
+		if (editId) {
+			return (
+				<ContactEditPanel
+					key={`contactEdit-${editId}`}
+					editPanelId={editId}
+					folderId={folderId}
+				/>
+			);
+		}
+		if (previewId) {
+			return (
+				<ContactPreviewPanel
+					key={`contactPreview-${previewId}`}
+					contactInternalId={previewId}
+					folderId={folderId}
+				/>
+			);
+		}
+		if (screen === 'mobile') {
+			return (
+				<ContactList
+					key={`contactList-${folderId}`}
+					folderId={folderId}
+				/>
+			);
+		}
+		return <Container />;
+	}, [editId, folderId, previewId, screen]);
 
 	return (
 		<Container
@@ -111,27 +136,7 @@ export default function FolderView() {
 					crossAlignment="flex-start"
 					borderRadius="none"
 				>
-					{
-						typeof editId !== 'undefined'
-							? (
-								<ContactEditPanel
-									key={`contactEdit-${editId}`}
-									editPanelId={editId}
-									folderId={folderId}
-								/>
-							)
-							: (
-								typeof previewId !== 'undefined'
-									? (
-										<ContactPreviewPanel
-											key={`contactPreview-${previewId}`}
-											contactInternalId={previewId}
-											folderId={folderId}
-										/>
-									)
-									: <Container />
-							)
-					}
+					{MemoPanel}
 				</Container>
 			</Responsive>
 			<Responsive mode="mobile" target={window.top}>
@@ -141,30 +146,7 @@ export default function FolderView() {
 					borderRadius="none"
 					height="fill"
 				>
-					{typeof editId !== 'undefined'
-						? (
-							<ContactEditPanel
-								key={`contactEdit-${editId}`}
-								editPanelId={editId}
-								folderId={folderId}
-							/>
-						)
-						: (
-							typeof previewId !== 'undefined'
-								? (
-									<ContactPreviewPanel
-										key={`contactPreview-${previewId}`}
-										contactInternalId={previewId}
-										folderId={folderId}
-									/>
-								)
-								: (
-									<ContactList
-										key={`contactList-${folderId}`}
-										folderId={folderId}
-									/>
-								)
-						)}
+					{MemoPanel}
 				</Container>
 			</Responsive>
 		</Container>

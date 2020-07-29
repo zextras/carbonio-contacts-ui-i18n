@@ -19,7 +19,7 @@ const contacts = {
 		firstName: '',
 		middleName: '',
 		lastName: '',
-		mail: [],
+		email: [],
 		nameSuffix: '',
 		namePrefix: '',
 	},
@@ -27,14 +27,14 @@ const contacts = {
 		firstName: 'Parker',
 		middleName: 'Averill',
 		lastName: 'Swindlehurst',
-		mail: [{
+		email: [{
 			mail: 'swindlehurst@gmail.com'
 		}],
 		nameSuffix: 'Junior',
 		namePrefix: 'Sir',
 	},
 	mailOnly: {
-		mail: [{
+		email: [{
 			mail: 'swindlehurst@gmail.com'
 		}]
 	},

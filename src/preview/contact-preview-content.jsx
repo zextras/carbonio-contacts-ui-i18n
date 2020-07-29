@@ -46,6 +46,9 @@ const ContactPreviewContent = ({ contact, onEdit, onDelete }) => {
 		),
 		[contact]
 	);
+	const mailData = useMemo(() => Object.values(contact.email), [contact]);
+	const urlData = useMemo(() => Object.values(contact.URL), [contact]);
+	const phoneData = useMemo(() => Object.values(contact.phone), [contact]);
 	return (
 		<>
 			<Container
@@ -119,14 +122,14 @@ const ContactPreviewContent = ({ contact, onEdit, onDelete }) => {
 					<ContactPreviewRow>
 						<ContactMultiValueField
 							label={t('mail')}
-							values={contact.mail}
+							values={mailData}
 							labelKey="mail"
-							defaultType="mail"
+							defaultType="email"
 							showIcon
 						/>
 						<ContactMultiValueField
 							label={t('phone')}
-							values={contact.phone}
+							values={phoneData}
 							labelKey="number"
 							showIcon
 						/>
@@ -134,7 +137,7 @@ const ContactPreviewContent = ({ contact, onEdit, onDelete }) => {
 					<ContactPreviewRow>
 						<ContactMultiValueField
 							label={t('url')}
-							values={contact.url}
+							values={urlData}
 							labelKey="url"
 							showIcon
 						/>
@@ -195,11 +198,11 @@ const ContactMultiValueField = ({
 	const items = useMemo(
 		() =>	map(
 			values,
-			(item, idx) => ({
-				id: idx.toString(),
+			(item, id) => ({
+				id: id.toString(),
 				label: item[labelKey],
 				icon: typeToIcon(item.type || defaultType || 'other'),
-				click: () => setSelected(idx)
+				click: () => setSelected(id)
 			})
 		),
 		[defaultType, labelKey, values]
@@ -236,7 +239,7 @@ const ContactField = ({
 		crossAlignment="flex-start"
 		padding={{ all: 'small' }}
 		width={width || '50%'}
-		style={{ minHeight: '48px', maxWidth : limit ? 'calc(100% - 48px)' : '100%' }}
+		style={{ minHeight: '48px', maxWidth: limit ? 'calc(100% - 48px)' : '100%' }}
 	>
 		<Text color="secondary">{label}</Text>
 		<Row

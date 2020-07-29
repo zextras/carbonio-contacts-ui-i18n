@@ -23,7 +23,7 @@ import {
 } from 'formik';
 import { useTranslation } from 'react-i18next';
 import {
-	map, filter, reduce, set
+	map, filter, reduce, set, omit, find
 } from 'lodash';
 import {
 	Button,
@@ -38,20 +38,25 @@ import {
 import { Contact } from '../db/contact';
 import { CompactView } from '../commons/contact-compact-view';
 
-const filterEmptyValues = (values) => filter(
+const filterEmptyValues = (values) => reduce(
 	values,
-	(value) => filter(
-		value,
-		(field, key) => key !== 'name' && key !== 'type' && field !== ''
-	).length > 0
+	(acc, v, k) => (
+		filter(
+			v,
+			(field, key) => key !== 'name' && key !== 'type' && field !== ''
+		).length > 0
+	)
+		? { ...acc, [k]: v }
+		: acc,
+	{}
 );
 
 const cleanMultivalueFields = (contact) => ({
 	...contact,
 	address: filterEmptyValues(contact.address),
-	mail: filterEmptyValues(contact.mail),
+	email: filterEmptyValues(contact.email),
 	phone: filterEmptyValues(contact.phone),
-	url: filterEmptyValues(contact.url)
+	URL: filterEmptyValues(contact.URL)
 });
 
 export default function EditView({ panel, editPanelId, folderId }) {
@@ -71,16 +76,17 @@ export default function EditView({ panel, editPanelId, folderId }) {
 		? null
 		: new Contact({
 			parent: '7',
-			address: [],
-			mail: [],
-			phone: [],
-			url: [],
+			address: {},
+			email: {},
+			phone: {},
+			URL: {},
 			jobTitle: '',
 			department: '',
 			namePrefix: '',
 			company: '',
 			firstName: '',
 			middleName: '',
+			nickName: '',
 			lastName: '',
 			nameSuffix: '',
 			image: '',
@@ -171,7 +177,7 @@ export default function EditView({ panel, editPanelId, folderId }) {
 				<CustomStringField name="company" label={t('company')} />
 			</ContactEditorRow>
 			<CustomMultivalueField
-				name="mail"
+				name="email"
 				label={t('email address')}
 				subFields={['mail']}
 				fieldLabels={[t('mail')]}
@@ -180,13 +186,13 @@ export default function EditView({ panel, editPanelId, folderId }) {
 				name="phone"
 				label={t('phone contact')}
 				typeLabel={t('name')}
-				typeField="name"
+				typeField="type"
 				types={mobileTypes}
 				subFields={['number']}
 				fieldLabels={[t('number')]}
 			/>
 			<CustomMultivalueField
-				name="url"
+				name="URL"
 				label={t('url')}
 				typeLabel={t('type')}
 				typeField="type"
@@ -233,6 +239,7 @@ const ContactEditorRow = ({ children, wrap }) => (
 	<Row
 		orientation="horizontal"
 		mainAlignment="space-between"
+		crossAlignment="flex-start"
 		width="fill"
 		wrap={wrap || 'nowrap'}
 	>
@@ -257,6 +264,8 @@ const CustomStringField = ({ name, label }) => (
 	</Container>
 );
 
+const capitalize = (lower) => lower.replace(/^\w/, (c) => c.toUpperCase());
+
 const CustomMultivalueField = ({
 	name,
 	label,
@@ -268,86 +277,89 @@ const CustomMultivalueField = ({
 	wrap
 }) => {
 	const [field, meta, helpers] = useField({ name });
+	const typeCounts = useMemo(() => reduce(
+		types,
+		(acc, type, k) => ({
+			...acc,
+			[type.value]: filter(field.value, (v) => v[typeLabel] === type.value).length
+		}),
+		{}
+	), [field.value, typeLabel, types]);
 	const emptyValue = useMemo(
 		() => reduce(
 			subFields,
 			(acc, val) => set(acc, val, ''),
 			typeField ? { [typeField]: types[0].value } : {}
 		),
-		[subFields]
+		[subFields, typeField, types]
 	);
 	const addValue = useCallback(
 		() => {
-			helpers.setValue([...field.value, emptyValue]);
+			helpers.setValue(
+				{
+					...field.value,
+					[(types && types[0].value)
+						? `${types[0].value}${capitalize(name)}${typeCounts[types[0].value] > 0 ? typeCounts[types[0].value] + 1 : ''}`
+						: `${name}${Object.values(field.value).length > 0 ? Object.values(field.value).length + 1 : ''}`
+					]: emptyValue
+				}
+			);
 		},
-		[helpers, field.value, emptyValue]
+		[types, name, typeCounts, helpers, field.value, emptyValue]
 	);
 
 	const removeValue = useCallback(
 		(index) => {
-			helpers.setValue(filter(field.value, (v, i) => i !== index));
+			helpers.setValue(omit(field.value, [index]));
 		},
 		[helpers, field]
 	);
-
 	const updateValue = useCallback(
-		(newString, subField, index) => {
-			if (subField === typeField && newString === field.value[index][typeField]
-			) {
-				return;
+		(newString, subField, id) => {
+			if (newString === field.value[id][subField]) return;
+			if (subField === typeField) {
+				helpers.setValue(
+					{
+						...omit(field.value, [id]),
+						[`${newString}${capitalize(name)}${typeCounts[newString] > 0 ? typeCounts[newString] + 1 : ''}`]: {
+							...field.value[id],
+							type: newString
+						}
+					}
+				);
 			}
-			if (index >= field.value.length) {
-				if (subField !== typeField) {
-					helpers.setValue([...field.value, { ...emptyValue, [subField]: newString }]);
-				}
-				return;
+			else {
+				helpers.setValue({ ...field.value, [id]: { ...field.value[id], [subField]: newString } });
 			}
-			if (
-				newString === ''
-				&& filter(subFields, (sf) => sf !== subField && field.value[index][sf] !== '').length === 0
-				&& index < field.value.length - 1
-			) {
-				removeValue(index);
-				return;
-			}
-			helpers.setValue(
-				map(
-					field.value,
-					(v, i) => (i === index ? { ...v, [subField]: newString } : v)
-				)
-			);
 		},
-		[emptyValue, field.value, helpers, removeValue, subFields, typeField]
+		[field.value, helpers, name, typeCounts, typeField]
 	);
 
-	if (field.value.length === 0) {
+	if (Object.values(field.value).length === 0) {
 		addValue();
 	}
 
-	const defaultSelection = useMemo(() => {
-		return types && types.length > 0 && types[0];
-	}, [types]);
-
+	const defaultSelection = useMemo(() => types && types.length > 0 && types[0], [types]);
 	return (
 		<FormSection label={label}>
 			{map(
-				field.value,
-				(item, index) => (
-					<ContactEditorRow wrap={wrap ? 'wrap' : 'nowrap'} key={`${label}${index}`}>
+				Object.entries(field.value),
+				([id, item], index) => (
+					<ContactEditorRow wrap={wrap ? 'wrap' : 'nowrap'} key={`${label}${id}`}>
 						{map(
 							subFields,
 							(subField, subIndex) => (
 								<Padding
 									right="small"
 									top="small"
-									key={`${fieldLabels[subIndex]}${index}`}
+									key={`${fieldLabels[subIndex]}${id}`}
 									style={{ width: wrap ? '32%' : '100%', flexGrow: 1 }}
 								>
 									<Input
 										backgroundColor="gray5"
 										label={fieldLabels[subIndex]}
 										value={item[subField]}
-										onChange={(ev) => updateValue(ev.target.value, subField, index)}
+										onChange={(ev) => updateValue(ev.target.value, subField, id)}
 									/>
 								</Padding>
 							)
@@ -357,6 +369,7 @@ const CustomMultivalueField = ({
 							width={typeField ? 'calc(32% + 8px)' : '104px'}
 							orientation="horizontal"
 							mainAlignment="space-between"
+							crossAlignment="flex-start"
 							padding={{ top: 'small', right: 'small' }}
 						>
 							<Padding
@@ -368,18 +381,19 @@ const CustomMultivalueField = ({
 									<Select
 										items={types}
 										label={typeLabel}
-										onChange={(val) => updateValue(val, typeField, index)}
-										defaultSelection={defaultSelection}
+										onChange={(val) => updateValue(val, typeField, id)}
+										defaultSelection={find(types, ['value', field.value[id][typeField]])}
 									/>
 								)}
 							</Padding>
 							<Container
 								orientation="horizontal"
 								mainAlignment="flex-end"
+								height="fit"
 								width="88px"
 								style={{ minWidth: '88px' }}
 							>
-								{ index >= field.value.length - 1
+								{ index >= Object.entries(field.value).length - 1
 									? (
 										<>
 											<Padding right="small">
@@ -394,7 +408,7 @@ const CustomMultivalueField = ({
 												icon="Minus"
 												iconColor="gray6"
 												backgroundColor="secondary"
-												onClick={() => removeValue(index)}
+												onClick={() => removeValue(id)}
 											/>
 										</>
 									)
@@ -403,7 +417,7 @@ const CustomMultivalueField = ({
 											icon="Minus"
 											iconColor="gray6"
 											backgroundColor="secondary"
-											onClick={() => removeValue(index)}
+											onClick={() => removeValue(id)}
 										/>
 									)}
 							</Container>

@@ -14,11 +14,28 @@ import {
 	Avatar, IconButton, Row, Text
 } from '@zextras/zapp-ui';
 import { trim } from 'lodash';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useDisplayName } from './use-display-name';
 
 export const CompactView = ({ contact, toggleOpen, open }) => {
 	const displayName = useDisplayName(contact);
+	const displayMailAndPhone = useMemo(
+		() => `${
+			(() => {
+				if (Object.values(contact.email).length > 0) {
+					return Object.values(contact.email)[0].mail;
+				}
+				return null;
+			})()}${
+			(() => {
+				if (Object.values(contact.phone).length > 0) {
+					return Object.values(contact.phone)[0].number;
+				}
+				return null;
+			})()
+		}`,
+		[contact.email]
+	);
 	return (
 		<Row
 			width="fill"
@@ -64,11 +81,13 @@ export const CompactView = ({ contact, toggleOpen, open }) => {
 				>
 					{
 						trim(`${
-							(contact.mail && contact.mail.length > 0 && contact.mail[0].mail)
-							&& `${contact.mail[0].mail}, `
-						} ${
-							(contact.phone && contact.phone.length > 0 && contact.phone[0].number)
-							&& `${contact.phone[0].number} `
+							Object.values(contact.email).length > 0
+								? Object.values(contact.email)[0].mail
+								: ''
+						}, ${
+							Object.values(contact.phone).length > 0
+								? Object.values(contact.phone)[0].number
+								: ''
 						}`, ', ')
 					}
 				</Text>

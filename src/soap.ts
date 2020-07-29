@@ -10,13 +10,13 @@
  */
 
 import {
-	map, merge, omit, pick, reduce, startsWith, split
+	map, merge, omit, pick, reduce, startsWith, split, words, replace
 } from 'lodash';
 import { ISoapSyncFolderObj } from '@zextras/zapp-shell/lib/network/ISoap';
 import {
-	Contact, ContactAddress,
-	ContactEmail, ContactPhone,
-	ContactUrl
+	Contact, ContactAddress, ContactAddressMap,
+	ContactEmail, ContactEmailMap, ContactPhone, ContactPhoneMap,
+	ContactUrl, ContactUrlMap
 } from './db/contact';
 
 export type SyncResponseContactFolder = ISoapSyncFolderObj & {
@@ -195,78 +195,66 @@ export type SoapContact = {
 	};
 };
 
-export function normalizeContactMailsToSoapOp(mails: ContactEmail[]): any {
+export function normalizeContactMailsToSoapOp(mails: ContactEmailMap): any {
 	return reduce(
 		mails,
 		(c, v, k) => ({
 			...c,
-			...{
-				[`email${k > 0 ? k : ''}`]: v.mail
-			}
+			[k]: v.mail
 		}),
 		{}
 	);
 }
 
-export function normalizeContactPhonesToSoapOp(phones: ContactPhone[]): any {
+export function normalizeContactPhonesToSoapOp(phones: ContactPhoneMap): any {
 	return reduce(
-		reduce(
-			phones,
-			(a: {[k: string]: any[]}, v, k) => {
-				if (a[v.type]) return { ...a, ...{ [v.type]: [...a[v.type], v.number] } };
-				return { ...a, ...{ [v.type]: [v.number] } };
-			},
-			{}
-		),
-		(a, v, k) => reduce(
-			v,
-			(a1, v1, k1) => ({ ...a1, [`${k}Phone${k1 > 0 ? k1 : ''}`]: v1 }),
-			a
-		),
+		phones,
+		(acc, v, k) => k === 'type' ? acc : ({
+			...acc,
+			[k]: v.number
+		}),
 		{}
 	);
 }
 
-export function normalizeContactUrlsToSoapOp(urls: ContactUrl[]): any {
+export function normalizeContactUrlsToSoapOp(urls: ContactUrlMap): any {
 	return reduce(
-		reduce(
-			urls,
-			(a: {[k: string]: any[]}, v, k) => {
-				if (a[v.type]) return { ...a, ...{ [v.type]: [...a[v.type], v.url] } };
-				return { ...a, ...{ [v.type]: [v.url] } };
-			},
-			{}
-		),
-		(a, v, k) => reduce(
-			v,
-			(a1, v1, k1) => ({ ...a1, [`${k}Phone${k1 > 0 ? k1 : ''}`]: v1 }),
-			a
-		),
+		urls,
+		(acc, v, k) => k === 'type' ? acc : ({
+			...acc,
+			[k]: v.url
+		}),
 		{}
 	);
 }
 
 const capitalize = (lower: string) => lower.replace(/^\w/, (c: string) => c.toUpperCase());
 
-export function normalizeContactAddressesToSoapOp(addresses: ContactAddress[]): any {
+const getKey: (k: string, v: ContactAddress, field: string) => string = (k, v, field) => {
+	const index = k.match(/(\d+)$/);
+	return `${
+		v.type
+	}${
+		capitalize(field)
+	}${
+		(index && index.length > 0) ? parseInt(index[0], 10) : ''
+	}`;
+};
+
+export function normalizeContactAddressesToSoapOp(addresses: ContactAddressMap): any {
 	return reduce(
-		reduce(
-			addresses,
-			(a: {[k: string]: any[]}, v, k) => {
-				if (a[v.type]) return { ...a, ...{ [v.type]: [...a[v.type], v] } };
-				return { ...a, ...{ [v.type]: [v] } };
-			},
-			{}
-		),
-		(a, v, k) => reduce(
-			v,
-			(a1, v1, k1: number) => reduce(
-				omit<any>(v1, ['type']),
-				(a2, v2, k2) => ({ ...a2, [`${k}${capitalize(k2)}${k1 > 0 ? k1 : ''}`]: v2 }),
-				a1
-			),
-			a
-		),
+		addresses,
+		(acc, v, k) => ({
+			...acc,
+			...reduce(
+				v,
+				(acc2, v2, k2) => k2 === 'type' ? acc : ({
+					...acc2,
+					[getKey(k, v, k2)]: v2
+				}),
+				{}
+			)
+		}),
 		{}
 	);
 }
@@ -284,10 +272,10 @@ export function normalizeContactAttrsToSoapOp(c: Contact): Array<CreateContactRe
 		'company',
 		'notes',
 	]);
-	if (c.mail) merge(obj, normalizeContactMailsToSoapOp(c.mail));
+	if (c.email) merge(obj, normalizeContactMailsToSoapOp(c.email));
 	if (c.phone) merge(obj, normalizeContactPhonesToSoapOp(c.phone));
 	if (c.address) merge(obj, normalizeContactAddressesToSoapOp(c.address));
-	if (c.url) merge(obj, normalizeContactUrlsToSoapOp(c.url));
+	if (c.URL) merge(obj, normalizeContactUrlsToSoapOp(c.URL));
 	return map<any, any>(
 		obj,
 		(v: any, k: any) => ({ n: k, _content: v })
@@ -307,26 +295,25 @@ export function normalizeContactChangesToSoapOp(c: { [key: string]: string }): A
 		'company',
 		'notes',
 	]);
-	const mail = normalizeChangeMailsToSoapOp(c);
-	const phone = normalizeChangePhonesToSoapOp(c);
-	const address = normalizeChangeAddressesToSoapOp(c);
-	const url = normalizeChangeUrlsToSoapOp(c);
-	console.log(c, obj, mail, phone);
+	merge(obj, normalizeChangeMailsToSoapOp(c));
+	merge(obj, normalizeChangePhonesToSoapOp(c));
+	merge(obj, normalizeChangeUrlsToSoapOp(c));
+	merge(obj, normalizeChangeAddressesToSoapOp(c));
 	return map<any, any>(
 		obj,
 		(v: any, k: any) => ({ n: k, _content: v })
 	);
 }
 
-function normalizeChangeMailsToSoapOp(c) {
+function normalizeChangeMailsToSoapOp(c: { [key: string]: any }) {
 	return reduce(
 		c,
 		(acc, v, k) => {
-			if (startsWith(k, 'mail')) {
+			if (startsWith(k, 'email')) {
 				const keyparts = split(k, '.');
 				return {
 					...acc,
-					[`mail${keyparts[1] !== '0' ? keyparts[1] : ''}`]: v ? v.mail : undefined
+					[keyparts[1]]: v ? v.mail : undefined
 				};
 			}
 			return acc;
@@ -335,17 +322,16 @@ function normalizeChangeMailsToSoapOp(c) {
 	);
 }
 
-function normalizeChangePhonesToSoapOp(c) {
+function normalizeChangePhonesToSoapOp(c: { [key: string]: any }) {
 	return reduce(
 		c,
 		(acc, v, k) => {
 			if (startsWith(k, 'phone')) {
-				console.log(k, v);
 				if (!v) return acc;
-				const keyparts = k.split('.');
+				const keyparts = split(k, '.');
 				return {
 					...acc,
-					[`${v.type}Phone${keyparts[1] !== '0' ? keyparts[1] : ''}`]: v.mail
+					[keyparts[1]]: v ? v.number : undefined
 				};
 			}
 			return acc;
@@ -354,15 +340,15 @@ function normalizeChangePhonesToSoapOp(c) {
 	);
 }
 
-function normalizeChangeUrlsToSoapOp(c) {
+function normalizeChangeUrlsToSoapOp(c: { [key: string]: any }) {
 	return reduce(
 		c,
 		(acc, v, k) => {
-			if (startsWith(k, 'url')) {
-				const keyparts = k.split('.');
+			if (startsWith(k, 'URL')) {
+				const keyparts = split(k, '.');
 				return {
 					...acc,
-					[`url${keyparts[1] !== '0' ? keyparts[1] : ''}`]: v.mail
+					[keyparts[1]]: v ? v.url : undefined
 				};
 			}
 			return acc;
@@ -371,7 +357,7 @@ function normalizeChangeUrlsToSoapOp(c) {
 	);
 }
 
-function normalizeChangeAddressesToSoapOp(c) {
+function normalizeChangeAddressesToSoapOp(c: { [key: string]: string }) {
 	return reduce(
 		c,
 		(acc, v, k) => {
@@ -379,7 +365,7 @@ function normalizeChangeAddressesToSoapOp(c) {
 				const keyparts = k.split('.');
 				return {
 					...acc,
-					[`email${keyparts[1] !== '0' ? keyparts[1] : ''}`]: v.mail
+					[replace(keyparts[1], 'Address', capitalize(keyparts[2]))]: v
 				};
 			}
 			return acc;
