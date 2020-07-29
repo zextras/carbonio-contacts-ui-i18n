@@ -67,7 +67,7 @@ export default function EditView({ panel, editPanelId, folderId }) {
 	const pushHistory = hooks.usePushHistoryCallback();
 	const replaceHistory = hooks.useReplaceHistoryCallback();
 
-	const [initialContact, setInitialContact] = useState(!!editId && editId !== 'new'
+	const [initialContact, setInitialContact] = useState(editId && editId !== 'new'
 		? null
 		: new Contact({
 			parent: folderId || '7',
