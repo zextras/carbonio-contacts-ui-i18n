@@ -11,10 +11,11 @@ const ContactPreviewHeader = ({ displayName, onClose }) => (
 			orientation="horizontal"
 			mainAlignment="flex-start"
 			height={48}
+			padding={{ left: 'large', right: 'large' }}
 		>
-			<Padding all="medium"><Icon size="large" icon="PersonOutline" /></Padding>
-			<Row takeAvailableSpace mainAlignment="flex-start"><Text size="large">{displayName}</Text></Row>
-			<IconButton icon="Close" size="large" onClick={onClose} />
+			<Padding right="medium"><Icon size="medium" icon="PeopleOutline" /></Padding>
+			<Row takeAvailableSpace mainAlignment="flex-start"><Text size="medium">{displayName}</Text></Row>
+			<IconButton icon="Close" size="small" onClick={onClose} />
 		</Container>
 		<Divider />
 	</Container>
