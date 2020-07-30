@@ -295,13 +295,25 @@ const CustomMultivalueField = ({
 		),
 		[subFields, typeField, types]
 	);
+
+	const generateNewId = useCallback((type) => {
+		const substring = `${type}${capitalize(name)}`;
+		const recursiveIdIncrement = (candidateId, increment) => {
+			if (field.value[candidateId]) {
+				return recursiveIdIncrement(`${substring}${increment}`, increment + 1);
+			}
+			return candidateId;
+		};
+		return recursiveIdIncrement(`${substring}${typeCounts[type] > 0 ? typeCounts[type] + 1 : ''}`, 2);
+	}, [field.value, name, typeCounts]);
+
 	const addValue = useCallback(
 		() => {
 			helpers.setValue(
 				{
 					...field.value,
 					[(types && types[0].value)
-						? `${types[0].value}${capitalize(name)}${typeCounts[types[0].value] > 0 ? typeCounts[types[0].value] + 1 : ''}`
+						? generateNewId(types[0].value)
 						: `${name}${Object.values(field.value).length > 0 ? Object.values(field.value).length + 1 : ''}`
 					]: emptyValue
 				}
@@ -323,7 +335,7 @@ const CustomMultivalueField = ({
 				helpers.setValue(
 					{
 						...omit(field.value, [id]),
-						[`${newString}${capitalize(name)}${typeCounts[newString] > 0 ? typeCounts[newString] + 1 : ''}`]: {
+						[generateNewId(newString)]: {
 							...field.value[id],
 							type: newString
 						}
@@ -334,14 +346,13 @@ const CustomMultivalueField = ({
 				helpers.setValue({ ...field.value, [id]: { ...field.value[id], [subField]: newString } });
 			}
 		},
-		[field.value, helpers, name, typeCounts, typeField]
+		[field.value, generateNewId, helpers, typeField]
 	);
 
 	if (Object.values(field.value).length === 0) {
 		addValue();
 	}
 
-	const defaultSelection = useMemo(() => types && types.length > 0 && types[0], [types]);
 	return (
 		<FormSection label={label}>
 			{map(
