@@ -31,7 +31,7 @@ export class ContactsDb extends db.Database {
 	constructor() {
 		super('contacts');
 		this.version(1).stores({
-			contacts: '$$_id, id, *mail, parent',
+			contacts: '$$_id, id, *email, parent',
 			folders: '$$_id, id, parent',
 			deletions: '$$rowId, _id, id'
 		});

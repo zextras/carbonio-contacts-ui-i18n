@@ -20,7 +20,7 @@ import {
 	ContactPhoneType,
 	ContactEmail,
 	ContactPhone,
-	Contact, ContactUrl
+	Contact, ContactUrl, ContactEmailMap, ContactPhoneMap, ContactUrlMap, ContactAddressMap, ContactAddressType
 } from './contact';
 import { SoapContact, SyncResponseContactFolder } from '../soap';
 
@@ -84,66 +84,73 @@ export function contactUrlTypeFromString(s: string): ContactUrlType {
 	}
 }
 
-const getParts: (key: string) => [string, string, number] = (key) => {
+const getParts: (key: string) => [ContactAddressType, keyof ContactAddress, number] = (key) => {
 	const [type, subType, index, opt]: string[] = words(key);
 	return [
-		type,
-		lowerFirst(subType === 'Postal' ? 'postalCode' : subType),
-		(parseInt(index === 'Code' ? opt : index) || 1) - 1
+		type as ContactAddressType,
+		lowerFirst(subType === 'Postal' ? 'postalCode' : subType) as keyof ContactAddress,
+		(parseInt(index === 'Code' ? opt : index) || 1)
 	];
 };
 
-function normalizeContactAddresses(c: SoapContact): ContactAddress[] {
-	return flatMap(
-		reduce(
-			c._attrs,
-			(acc, attr, key) => {
-				if (ADDR_PART_REG.test(key)) {
-					const [type, subType, index] = getParts(key);
-					if (typeof acc[type][index] === 'undefined') {
-						acc[type][index] = { [subType]: attr, type };
-					}
-					else {
-						acc[type][index][subType] = attr;
-					}
+function normalizeContactAddresses(c: SoapContact): ContactAddressMap {
+	return	reduce(
+		c._attrs as {[k: string]: string},
+		(acc: {[id: string]: ContactAddress}, attr: string, key) => {
+			if (ADDR_PART_REG.test(key)) {
+				const [type, subType, index] = getParts(key);
+				const id = `${type}Address${index > 1 ? index : ''}`;
+				if (typeof acc[id] === 'undefined') {
+					acc[id] = { [subType]: attr, type };
 				}
-				return acc;
-			},
-			{
-				work: [],
-				home: [],
-				other: []
+				else {
+					acc[id] = { ...acc[id], [subType]: attr };
+				}
 			}
-		)
+			return acc;
+		},
+		{}
 	);
 }
 
-function normalizeContactMails(c: SoapContact): ContactEmail[] {
-	return map(
+function normalizeContactMails(c: SoapContact): ContactEmailMap {
+	return reduce(
 		pickBy<string>(c._attrs, (v, k) => MAIL_REG.test(k)),
-		(v, k) => ({
-			mail: v
-		})
+		(acc, v, k) => ({
+			...acc,
+			[k]: {
+				mail: v
+			}
+		}),
+		{}
 	);
 }
 
-function normalizeContactPhones(c: SoapContact): ContactPhone[] {
-	return map(
+function normalizeContactPhones(c: SoapContact): ContactPhoneMap {
+	return reduce(
 		pickBy<string>(c._attrs, (v, k) => PHONE_REG.test(k)),
-		(v, k) => ({
-			number: v,
-			type: contactPhoneTypeFromString(k)
-		})
+		(acc, v, k) => ({
+			...acc,
+			[k]: {
+				number: v,
+				type: contactPhoneTypeFromString(k)
+			}
+		}),
+		{}
 	);
 }
 
-function normalizeContactUrls(c: SoapContact): ContactUrl[] {
-	return map(
+function normalizeContactUrls(c: SoapContact): ContactUrlMap {
+	return reduce(
 		pickBy<string>(c._attrs, (v, k) => URL_REG.test(k)),
-		(v, k) => ({
-			url: v,
-			type: contactUrlTypeFromString(k)
-		})
+		(acc, v, k) => ({
+			...acc,
+			[k]: {
+				url: v,
+				type: contactUrlTypeFromString(k)
+			}
+		}),
+		{}
 	);
 }
 
@@ -154,7 +161,7 @@ export function normalizeContact(c: SoapContact): Contact {
 		address: normalizeContactAddresses(c),
 		company: c._attrs.company || '',
 		department: c._attrs.department || '',
-		mail: normalizeContactMails(c),
+		email: normalizeContactMails(c),
 		firstName: c._attrs.firstName || '',
 		middleName: c._attrs.middleName || '',
 		lastName: c._attrs.lastName || '',
@@ -167,6 +174,6 @@ export function normalizeContact(c: SoapContact): Contact {
 		phone: normalizeContactPhones(c),
 		nameSuffix: c._attrs.nameSuffix || '',
 		namePrefix: c._attrs.namePrefix || '',
-		url: normalizeContactUrls(c)
+		URL: normalizeContactUrls(c)
 	});
 }

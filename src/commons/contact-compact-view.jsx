@@ -14,11 +14,23 @@ import {
 	Avatar, IconButton, Row, Text
 } from '@zextras/zapp-ui';
 import { trim } from 'lodash';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useDisplayName } from './use-display-name';
 
 export const CompactView = ({ contact, toggleOpen, open }) => {
 	const displayName = useDisplayName(contact);
+	const displayMailAndPhone = useMemo(
+		() => trim(`${
+			Object.values(contact.email).length > 0
+				? Object.values(contact.email)[0].mail
+				: ''
+		}, ${
+			Object.values(contact.phone).length > 0
+				? Object.values(contact.phone)[0].number
+				: ''
+		}`, ', '),
+		[contact.email, contact.phone]
+	);
 	return (
 		<Row
 			width="fill"
@@ -36,7 +48,7 @@ export const CompactView = ({ contact, toggleOpen, open }) => {
 				takeAvailableSpace
 				mainAlignment="center"
 				crossAlignment="flex-start"
-				padding={{ horizontal: 'medium', vertical: 'small' }}
+				padding={{ horizontal: 'large', vertical: 'small' }}
 				height="fill"
 			>
 				<Text
@@ -62,20 +74,12 @@ export const CompactView = ({ contact, toggleOpen, open }) => {
 				<Text
 					color="secondary"
 				>
-					{
-						trim(`${
-							(contact.mail && contact.mail.length > 0 && contact.mail[0].mail)
-							&& `${contact.mail[0].mail}, `
-						} ${
-							(contact.phone && contact.phone.length > 0 && contact.phone[0].number)
-							&& `${contact.phone[0].number} `
-						}`, ', ')
-					}
+					{displayMailAndPhone}
 				</Text>
 			</Row>
 			{toggleOpen && (
 				<IconButton
-					size="large"
+					size="medium"
 					onClick={toggleOpen}
 					icon={open ? 'ArrowIosUpward' : 'ArrowIosDownward'}
 				/>

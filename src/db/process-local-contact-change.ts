@@ -21,7 +21,8 @@ import {
 	CreateContactRequest,
 	CreateContactResponse,
 	ModifyContactRequest,
-	normalizeContactAttrsToSoapOp
+	normalizeContactAttrsToSoapOp,
+	normalizeContactChangesToSoapOp
 } from '../soap';
 
 function processInserts(
@@ -49,7 +50,10 @@ function processInserts(
 		createContactRequest
 	);
 	if (createContactRequest.length > 0) {
-		batchRequest.CreateContactRequest = [...(batchRequest.CreateContactRequest || []), ...createContactRequest];
+		batchRequest.CreateContactRequest = [
+			...(batchRequest.CreateContactRequest || []),
+			...createContactRequest
+		];
 	}
 	return Promise.resolve([batchRequest, localChanges]);
 }
@@ -96,7 +100,7 @@ function processUpdates(
 						cn: {
 							id: uuidToId[c.key],
 							m: [],
-							a: normalizeContactAttrsToSoapOp(c.mods as Contact) // Smelly code
+							a: normalizeContactChangesToSoapOp(c.mods) // Smelly code
 						}
 					});
 				}
@@ -106,10 +110,16 @@ function processUpdates(
 		);
 
 		if (modifyContactRequest.length > 0) {
-			batchRequest.ModifyContactRequest =	[...(batchRequest.ModifyContactRequest || []), ...modifyContactRequest];
+			batchRequest.ModifyContactRequest =	[
+				...(batchRequest.ModifyContactRequest || []),
+				...modifyContactRequest
+			];
 		}
 		if (moveContactRequest.length > 0) {
-			batchRequest.ContactActionRequest =	[...(batchRequest.ContactActionRequest || []), ...moveContactRequest];
+			batchRequest.ContactActionRequest =	[
+				...(batchRequest.ContactActionRequest || []),
+				...moveContactRequest
+			];
 		}
 
 		return [batchRequest, localChanges];
@@ -154,7 +164,10 @@ function processDeletions(
 			contactActionRequest
 		);
 		if (contactActionRequest.length > 0) {
-			batchRequest.ContactActionRequest =	[...(batchRequest.ContactActionRequest || []), ...contactActionRequest];
+			batchRequest.ContactActionRequest =	[
+				...(batchRequest.ContactActionRequest || []),
+				...contactActionRequest
+			];
 		}
 		return Promise.resolve([batchRequest, localChanges]);
 	});
@@ -203,7 +216,11 @@ export default function processLocalContactChange(
 			_dbChanges
 		))
 		.then(([_batchRequest, _dbChanges]) => {
-			if (!_batchRequest.CreateContactRequest && !_batchRequest.ModifyContactRequest && !_batchRequest.ContactActionRequest) {
+			if (
+				!_batchRequest.CreateContactRequest
+				&& !_batchRequest.ModifyContactRequest
+				&& !_batchRequest.ContactActionRequest
+			) {
 				return _dbChanges;
 			}
 			return _fetch(

@@ -34,9 +34,13 @@ export default function ContactListItem({ contact, style }) {
 	const displayName = useDisplayName(contact);
 	const secondaryRow = useMemo(
 		() => trim(`${
-			has(contact, 'mail[0].mail') ? get(contact, 'mail[0].mail') : ''
+			Object.values(contact.email).length > 0
+				? Object.values(contact.email)[0].mail
+				: ''
 		}, ${
-			has(contact, 'phone[0].number') ? get(contact, 'phone[0].number') : ''
+			Object.values(contact.phone).length > 0
+				? Object.values(contact.phone)[0].number
+				: ''
 		}`, ', '),
 		[contact]
 	);

@@ -30,11 +30,11 @@ export enum ContactUrlType {
 
 export type ContactAddress = {
 	type: ContactAddressType;
-	street: string;
-	city: string;
-	postalCode: string;
-	country: string;
-	state: string;
+	street?: string;
+	city?: string;
+	postalCode?: string;
+	country?: string;
+	state?: string;
 }
 
 export type ContactEmail = {
@@ -51,6 +51,11 @@ export type ContactUrl = {
 	type: ContactUrlType;
 }
 
+export type ContactAddressMap = { [key: string]: ContactAddress };
+export type ContactEmailMap = { [key: string]: ContactEmail };
+export type ContactPhoneMap = { [key: string]: ContactPhone };
+export type ContactUrlMap = { [key: string]: ContactUrl };
+
 export interface IContact {
 	/** Internal UUID */ _id?: string;
 	/** Zimbra ID */ id?: string;
@@ -59,17 +64,17 @@ export interface IContact {
 	lastName: string;
 	nickName: string;
 	parent: string;
-	address: ContactAddress[];
+	address: ContactAddressMap;
 	company: string;
 	department: string;
-	mail: ContactEmail[];
+	email: ContactEmailMap;
 	image: string;
 	jobTitle: string;
 	notes: string;
-	phone: ContactPhone[];
+	phone: ContactPhoneMap;
 	nameSuffix: string;
 	namePrefix: string;
-	url: ContactUrl[];
+	URL: ContactUrlMap;
 }
 
 export class Contact implements IContact {
@@ -79,13 +84,13 @@ export class Contact implements IContact {
 
 	_id?: string;
 
-	address: ContactAddress[];
+	address: { [key: string]: ContactAddress };
 
 	company: string;
 
 	department: string;
 
-	mail: ContactEmail[];
+	email: { [key: string]: ContactEmail };
 
 	namePrefix: string;
 
@@ -105,9 +110,9 @@ export class Contact implements IContact {
 
 	notes: string;
 
-	phone: ContactPhone[];
+	phone: { [key: string]: ContactPhone };
 
-	url: ContactUrl[];
+	URL: { [key: string]: ContactUrl };
 
 	constructor({
 		_id,
@@ -116,7 +121,7 @@ export class Contact implements IContact {
 		address,
 		company,
 		department,
-		mail,
+		email,
 		namePrefix,
 		firstName,
 		middleName,
@@ -127,7 +132,7 @@ export class Contact implements IContact {
 		jobTitle,
 		notes,
 		phone,
-		url
+		URL
 	}: IContact) {
 		this._id = _id;
 		this.parent = parent;
@@ -135,7 +140,7 @@ export class Contact implements IContact {
 		this.address = address;
 		this.company = company;
 		this.department = department;
-		this.mail = mail;
+		this.email = email;
 		this.namePrefix = namePrefix;
 		this.firstName = firstName;
 		this.middleName = middleName;
@@ -146,7 +151,7 @@ export class Contact implements IContact {
 		this.jobTitle = jobTitle;
 		this.notes = notes;
 		this.phone = phone;
-		this.url = url;
+		this.URL = URL;
 	}
 
 	public toMap(): IContact {
@@ -157,7 +162,7 @@ export class Contact implements IContact {
 			address: this.address,
 			company: this.company,
 			department: this.department,
-			mail: this.mail,
+			email: this.email,
 			nameSuffix: this.nameSuffix,
 			firstName: this.firstName,
 			middleName: this.middleName,
@@ -168,7 +173,7 @@ export class Contact implements IContact {
 			jobTitle: this.jobTitle,
 			notes: this.notes,
 			phone: this.phone,
-			url: this.url,
+			URL: this.URL,
 		};
 	}
 }
