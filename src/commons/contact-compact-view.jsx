@@ -48,7 +48,7 @@ export const CompactView = ({ contact, toggleOpen, open }) => {
 				takeAvailableSpace
 				mainAlignment="center"
 				crossAlignment="flex-start"
-				padding={{ horizontal: 'medium', vertical: 'small' }}
+				padding={{ horizontal: 'large', vertical: 'small' }}
 				height="fill"
 			>
 				<Text
@@ -79,7 +79,7 @@ export const CompactView = ({ contact, toggleOpen, open }) => {
 			</Row>
 			{toggleOpen && (
 				<IconButton
-					size="large"
+					size="medium"
 					onClick={toggleOpen}
 					icon={open ? 'ArrowIosUpward' : 'ArrowIosDownward'}
 				/>
