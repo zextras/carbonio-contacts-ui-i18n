@@ -196,21 +196,21 @@ describe('Contacts DB Sync Protocol', () => {
 				obj: new Contact({
 					parent: '7',
 					id: '1000',
-					address: [],
+					address: {},
 					company: '',
 					department: '',
 					firstName: '',
 					image: '',
 					jobTitle: '',
 					lastName: '',
-					mail: [],
+					email: {},
 					nameSuffix: '',
 					notes: '',
 					namePrefix: '',
-					phone: [],
+					phone: {},
 					middleName: '',
 					nickName: '',
-					url: []
+					URL: {}
 				})
 			}], 1, false);
 			done();

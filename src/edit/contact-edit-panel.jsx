@@ -9,11 +9,10 @@ import {
 	Row,
 	Text
 } from '@zextras/zapp-ui';
+import { useTranslation } from 'react-i18next';
 import EditView from './edit-view';
-import {useTranslation} from "react-i18next";
 
 export default function ContactEditPanel({ editPanelId, folderId }) {
-
 	return (
 		<>
 			<ContactEditHeader editPanelId={editPanelId} folderId={folderId} />
@@ -21,7 +20,7 @@ export default function ContactEditPanel({ editPanelId, folderId }) {
 				<EditView panel editPanelId={editPanelId} folderId={folderId} />
 			</Container>
 		</>
-	)
+	);
 };
 
 const ContactEditHeader = ({ editPanelId, folderId }) => {
@@ -43,7 +42,9 @@ const ContactEditHeader = ({ editPanelId, folderId }) => {
 				height={48}
 				padding={{ left: 'large', right: 'large' }}
 			>
-				<Padding right="medium"><Icon size="medium" icon="EditOutline"/></Padding>
+				<Padding right="medium">
+					<Icon size="medium" icon="EditOutline"/>
+				</Padding>
 				<Row takeAvailableSpace mainAlignment="flex-start">
 					<Text size="medium">
 						{ t(editPanelId && editPanelId !== 'new' ? 'Edit Contact' : 'New Contact') }
@@ -51,7 +52,7 @@ const ContactEditHeader = ({ editPanelId, folderId }) => {
 				</Row>
 				<IconButton icon="Close" size="small" onClick={onClose} />
 			</Container>
-			<Divider/>
+			<Divider />
 		</Container>
 	);
-}
+};
