@@ -10,13 +10,13 @@
  */
 
 import {
-	map, merge, omit, pick, reduce, startsWith, split, words, replace
+	map, merge, pick, reduce, startsWith, split, replace
 } from 'lodash';
 import { ISoapSyncFolderObj } from '@zextras/zapp-shell/lib/network/ISoap';
 import {
 	Contact, ContactAddress, ContactAddressMap,
-	ContactEmail, ContactEmailMap, ContactPhone, ContactPhoneMap,
-	ContactUrl, ContactUrlMap
+	ContactEmailMap, ContactPhoneMap,
+	ContactUrlMap
 } from './db/contact';
 
 export type SyncResponseContactFolder = ISoapSyncFolderObj & {
@@ -282,28 +282,6 @@ export function normalizeContactAttrsToSoapOp(c: Contact): Array<CreateContactRe
 	);
 }
 
-export function normalizeContactChangesToSoapOp(c: { [key: string]: string }): Array<CreateContactRequestAttr|ModifyContactRequestAttr> {
-	const obj: any = pick(c, [
-		'nameSuffix',
-		'namePrefix',
-		'firstName',
-		'lastName',
-		'nickName',
-		'image',
-		'jobTitle',
-		'department',
-		'company',
-		'notes',
-	]);
-	merge(obj, normalizeChangeMailsToSoapOp(c));
-	merge(obj, normalizeChangePhonesToSoapOp(c));
-	merge(obj, normalizeChangeUrlsToSoapOp(c));
-	merge(obj, normalizeChangeAddressesToSoapOp(c));
-	return map<any, any>(
-		obj,
-		(v: any, k: any) => ({ n: k, _content: v })
-	);
-}
 
 function normalizeChangeMailsToSoapOp(c: { [key: string]: any }) {
 	return reduce(
@@ -371,5 +349,28 @@ function normalizeChangeAddressesToSoapOp(c: { [key: string]: string }) {
 			return acc;
 		},
 		{}
+	);
+}
+
+export function normalizeContactChangesToSoapOp(c: { [key: string]: string }): Array<CreateContactRequestAttr|ModifyContactRequestAttr> {
+	const obj: any = pick(c, [
+		'nameSuffix',
+		'namePrefix',
+		'firstName',
+		'lastName',
+		'nickName',
+		'image',
+		'jobTitle',
+		'department',
+		'company',
+		'notes',
+	]);
+	merge(obj, normalizeChangeMailsToSoapOp(c));
+	merge(obj, normalizeChangePhonesToSoapOp(c));
+	merge(obj, normalizeChangeUrlsToSoapOp(c));
+	merge(obj, normalizeChangeAddressesToSoapOp(c));
+	return map<any, any>(
+		obj,
+		(v: any, k: any) => ({ n: k, _content: v })
 	);
 }

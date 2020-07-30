@@ -12,7 +12,6 @@
 import processRemoteContactsNotification, { fetchContacts } from './process-remote-contact-notification';
 import { ContactsDb } from './contacts-db';
 import { Contact } from './contact';
-import { ContactsFolder } from './contacts-folder';
 
 jest.mock('./contacts-db');
 
@@ -204,22 +203,22 @@ describe('Notifications - Contact', () => {
 				expect(changes[0].table).toBe('contacts');
 				expect(changes[0].key).toBe('xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx');
 				expect(changes[0].mods).toStrictEqual({
-					address: [],
+					address: {},
 					company: '',
 					department: '',
 					firstName: 'Updated Test',
 					image: '',
 					jobTitle: '',
 					lastName: 'User',
-					mail: [],
+					email: {},
 					namePrefix: '',
 					nameSuffix: '',
 					notes: '',
 					parent: '7',
-					phone: [],
+					phone: {},
 					middleName: '',
 					nickName: '',
-					url: []
+					URL: {}
 				});
 				done();
 			});
@@ -280,22 +279,22 @@ describe('Notifications - Contact', () => {
 				expect(changes[0].table).toBe('contacts');
 				expect(changes[0].key).toBe('xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx');
 				expect(changes[0].mods).toStrictEqual({
-					address: [],
+					address: {},
 					company: '',
 					department: '',
 					firstName: '',
 					image: '',
 					jobTitle: '',
 					lastName: '',
-					mail: [],
+					email: {},
 					namePrefix: '',
 					nameSuffix: '',
 					notes: '',
 					parent: '1001',
-					phone: [],
+					phone: {},
 					middleName: '',
 					nickName: '',
-					url: []
+					URL: {}
 				});
 				done();
 			});

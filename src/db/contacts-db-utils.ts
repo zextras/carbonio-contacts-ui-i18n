@@ -10,7 +10,7 @@
  */
 
 import {
-	forEach, map, pickBy, lowerFirst, parseInt, reduce, flatMap, words
+	forEach, pickBy, lowerFirst, parseInt, reduce, words
 } from 'lodash';
 import { ISoapFolderObj } from '@zextras/zapp-shell/lib/network/ISoap';
 import { ContactsFolder } from './contacts-folder';
@@ -18,9 +18,12 @@ import {
 	ContactAddress,
 	ContactUrlType,
 	ContactPhoneType,
-	ContactEmail,
-	ContactPhone,
-	Contact, ContactUrl, ContactEmailMap, ContactPhoneMap, ContactUrlMap, ContactAddressMap, ContactAddressType
+	Contact,
+	ContactEmailMap,
+	ContactPhoneMap,
+	ContactUrlMap,
+	ContactAddressMap,
+	ContactAddressType
 } from './contact';
 import { SoapContact, SyncResponseContactFolder } from '../soap';
 
