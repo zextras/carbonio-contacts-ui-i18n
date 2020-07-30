@@ -15,7 +15,7 @@ import {
 	normalizeContactAddressesToSoapOp,
 	calculateAbsPath
 } from './ISoap';
-import { ContactaddressType, ContactPhoneType } from './idb/ContactEnums';
+import { ContactAddressType, ContactPhoneType } from './db/contact';
 
 test('Normalize Contact Mails for SOAP Operation', () => {
 	expect(
@@ -64,7 +64,7 @@ test('Normalize Contact Addresses for SOAP Operation', () => {
 				city: 'oc0',
 				state: 'ost0',
 				country: 'oco0',
-				type: ContactaddressType.OTHER,
+				type: ContactAddressType.OTHER,
 			},
 			{
 				street: 'os1',
@@ -72,7 +72,7 @@ test('Normalize Contact Addresses for SOAP Operation', () => {
 				city: 'oc1',
 				state: 'ost1',
 				country: 'oco1',
-				type: ContactaddressType.OTHER,
+				type: ContactAddressType.OTHER,
 			},
 			{
 				street: 'hs',
@@ -80,7 +80,7 @@ test('Normalize Contact Addresses for SOAP Operation', () => {
 				city: 'hc',
 				state: 'hst',
 				country: 'hco',
-				type: ContactaddressType.HOME,
+				type: ContactAddressType.HOME,
 			},
 			{
 				street: 'ws',
@@ -88,7 +88,7 @@ test('Normalize Contact Addresses for SOAP Operation', () => {
 				city: 'wc',
 				state: 'wst',
 				country: 'wco',
-				type: ContactaddressType.WORK,
+				type: ContactAddressType.WORK,
 			}
 		])
 	).toStrictEqual(

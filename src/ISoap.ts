@@ -243,26 +243,6 @@ export function normalizeContactAddressesToSoapOp(addresses: ContactAddress[]): 
 	);
 }
 
-export function normalizeContactAttrsToSoapOp(c: ContactData): ContactCreationAttr[] {
-	const obj: any = pick(c, [
-		'nameSuffix',
-		'firstName',
-		'lastName',
-		'image',
-		'jobTitle',
-		'department',
-		'company',
-		'notes',
-	]);
-	if (c.mail) merge(obj, normalizeContactMailsToSoapOp(c.mail));
-	if (c.phone) merge(obj, normalizeContactPhonesToSoapOp(c.phone));
-	if (c.address) merge(obj, normalizeContactAddressesToSoapOp(c.address));
-	return map<any, any>(
-		obj,
-		(v: any, k: any) => ({ n: k, _content: v })
-	);
-}
-
 export function calculateAbsPath(
 	id: string,
 	name: string,
