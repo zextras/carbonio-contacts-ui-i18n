@@ -9,32 +9,72 @@
  * *** END LICENSE BLOCK *****
  */
 
-import React from 'react';
-import { registerRoute, addMainMenuItem, addCreateMenuItem } from '@zextras/zapp-shell/router';
+import React, { lazy } from 'react';
+import {
+	setMainMenuItems,
+	setRoutes,
+	setCreateOptions,
+	setAppContext
+} from '@zextras/zapp-shell';
+import { ContactsDb } from './db/contacts-db';
+import { ContactsDbSoapSyncProtocol } from './db/contacts-db-soap-sync-protocol';
+import mainMenuItems from './main-menu-items';
 
-import App, { ROUTE as mainRoute } from './components/App';
-import ContactsService from './ContactsService';
-import ContactsIdbService from './idb/ContactsIdbService';
-import { registerTranslations } from './i18n/i18n';
+const lazyFolderView = lazy(() => (import(/* webpackChunkName: "folder-view" */ './folder/folder-view')));
+const lazyEditView = lazy(() => (import(/* webpackChunkName: "edit-view" */ './edit/edit-view')));
 
 export default function app() {
-	const idbSrvc = new ContactsIdbService();
-	const contactSrvc = new ContactsService(
-		idbSrvc
-	);
+	console.log('Hello from contacts');
 
-	registerTranslations();
+	setMainMenuItems([{
+		id: 'contacts-main',
+		icon: 'PeopleOutline',
+		to: '/',
+		label: 'Contacts',
+		children: []
+	}]);
 
-	addMainMenuItem(
-		'PeopleOutline',
-		'Contacts',
-		'/contacts/folder/Contacts',
-		contactSrvc.menuFolders
-	);
-	addCreateMenuItem(
-		'PersonOutline',
-		'Contact',
-		'/contacts/folder/Contacts?edit=new'
-	);
-	registerRoute(mainRoute, App, { contactSrvc });
+	const db = new ContactsDb();
+	const syncProtocol = new ContactsDbSoapSyncProtocol(db, fetch);
+	db.registerSyncProtocol('soap-contacts', syncProtocol);
+	db.syncable.connect('soap-contacts', '/service/soap/SyncRequest');
+
+	setAppContext({
+		db
+	});
+
+	db
+		.observe(() => db.folders.where({ parent: '1' }).sortBy('name'))
+		.subscribe((folders) => mainMenuItems(folders, db));
+
+	setRoutes([
+		{
+			route: '/folder/:folderId',
+			view: lazyFolderView
+		},
+		{
+			route: '/',
+			view: lazyFolderView
+		},
+		{
+			route: '/edit/:id',
+			view: lazyEditView
+		},
+		{
+			route: '/new',
+			view: lazyEditView
+		}
+	]);
+
+	setCreateOptions([{
+		id: 'create-contact',
+		label: 'New Contact',
+		app: {
+			boardPath: '/new',
+			getPath: () => {
+				const splittedLocation = window.top.location.pathname.split('/folder');
+				return (splittedLocation[1] ? `/folder${splittedLocation[1]}` : '') + '?edit=new';
+			},
+		}
+	}]);
 }
