@@ -41,14 +41,15 @@ const ContactEditHeader = ({ folderId }) => {
 				orientation="horizontal"
 				mainAlignment="flex-start"
 				height={48}
+				padding={{ left: 'large', right: 'large' }}
 			>
-				<Padding all="medium"><Icon size="large" icon="EditOutline"/></Padding>
+				<Padding right="medium"><Icon size="medium" icon="EditOutline"/></Padding>
 				<Row takeAvailableSpace mainAlignment="flex-start">
-					<Text size="large">
+					<Text size="medium">
 						{t('Edit Contact')}
 					</Text>
 				</Row>
-				<IconButton icon="Close" size="large" onClick={onClose}/>
+				<IconButton icon="Close" size="small" onClick={onClose} />
 			</Container>
 			<Divider/>
 		</Container>

@@ -58,6 +58,7 @@ const ContactPreviewContent = ({ contact, onEdit, onDelete }) => {
 					height="fit"
 					takeAvailableSpace
 					mainAlignment="flex-end"
+					padding={{ horizontal: 'small' }}
 				>
 					<Padding horizontal="small">
 						<IconButton icon="Trash2Outline" onClick={onDelete} />
@@ -68,7 +69,7 @@ const ContactPreviewContent = ({ contact, onEdit, onDelete }) => {
 						onClick={onEdit}
 					/>
 				</Row>
-				<Container padding={{ all: 'medium', top: 'extrasmall' }}>
+				<Container padding={{ all: 'small', top: 'extrasmall' }}>
 					<CompactView contact={contact} open={open} toggleOpen={toggleOpen} />
 				</Container>
 			</Container>
@@ -83,7 +84,7 @@ const ContactPreviewContent = ({ contact, onEdit, onDelete }) => {
 					width="fill"
 					crossAlignment="flex-start"
 					mainAlignment="flex-start"
-					padding={{ all: 'large' }}
+					padding={{ vertical: 'large', horizontal: 'extralarge' }}
 					style={{ overflowY: 'auto' }}
 				>
 					<ContactPreviewRow>
@@ -180,9 +181,10 @@ const ContactPreviewContent = ({ contact, onEdit, onDelete }) => {
 const ContactPreviewRow = ({ children, width }) => (
 	<Row
 		orientation="horizontal"
-		mainAlignment="flex-start"
+		mainAlignment="space-between"
 		width={width || 'fill'}
 		wrap="nowrap"
+		padding={{ horizontal: 'small' }}
 	>
 		{children}
 	</Row>
@@ -207,7 +209,7 @@ const ContactMultiValueField = ({
 	return (
 		<Container
 			orientation="horizontal"
-			width={width || '50%'}
+			width={width || '48%'}
 			crossAlignment="center"
 			mainAlignment="space-between"
 		>
@@ -216,26 +218,20 @@ const ContactMultiValueField = ({
 				field={values && values[selected] && values[selected][labelKey]}
 				icon={values && values[selected] && showIcon && typeToIcon(values[selected].type || defaultType || 'other')}
 				width={width || 'fill'}
-				limit
+				items={values.length > 1 && items}
 			/>
-			{ values.length > 1
-				&& (
-					<Dropdown items={items}>
-						<IconButton icon="ChevronDown" />
-					</Dropdown>
-				)}
 		</Container>
 	);
 };
 
 const ContactField = ({
-	field, label, width, icon, limit
+	field, label, width, icon, limit, items
 }) => (
 	<Container
 		mainAlignment="flex-start"
 		crossAlignment="flex-start"
 		padding={{ all: 'small' }}
-		width={width || '50%'}
+		width={width || '48%'}
 		style={{ minHeight: '48px', maxWidth : limit ? 'calc(100% - 48px)' : '100%' }}
 	>
 		<Text color="secondary">{label}</Text>
@@ -246,13 +242,23 @@ const ContactField = ({
 			width="fill"
 			orientation="horizontal"
 			mainAlignment="flex-start"
+			padding={{ top: 'extrasmall' }}
 		>
 			{ icon && (
 				<Padding right="extrasmall">
 					<Icon icon={icon} />
 				</Padding>
 			)}
-			<Text size="large" overflow="break-word">{field}</Text>
+			<Row takeAvailableSpace mainAlignment="flex-start">
+				<Text size="medium" overflow="break-word">{ field }</Text>
+			</Row>
+			{ items && (
+				<Padding left="extrasmall">
+					<Dropdown items={items} placement="bottom-end">
+						<IconButton size="small" icon="ArrowIosDownward" />
+					</Dropdown>
+				</Padding>
+			)}
 		</Row>
 	</Container>
 );

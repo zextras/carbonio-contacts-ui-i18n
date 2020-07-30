@@ -152,7 +152,7 @@ export default function EditView({ panel, editPanelId, folderId }) {
 				<Container height="fit" width="fit">{!editId && <Text>{t('This contact will be created in the \'Contacts\' folder')}</Text> }</Container>
 				<Button label={t('Save')} onClick={submitForm} disabled={isSubmitting} />
 			</Row>
-			<Padding all="medium">
+			<Padding value="medium small">
 				<CompactView contact={initialContact} />
 			</Padding>
 			<ContactEditorRow>
