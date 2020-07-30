@@ -69,6 +69,12 @@ export default function app() {
 	setCreateOptions([{
 		id: 'create-contact',
 		label: 'New Contact',
-		panel: { path: '/new' }
+		app: {
+			boardPath: '/new',
+			getPath: () => {
+				const splittedLocation = window.top.location.pathname.split('/folder');
+				return (splittedLocation[1] ? `/folder${splittedLocation[1]}` : '') + '?edit=new';
+			},
+		}
 	}]);
 }
