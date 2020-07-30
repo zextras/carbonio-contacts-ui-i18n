@@ -35,7 +35,7 @@ export default function app() {
 	}]);
 
 	const db = new ContactsDb();
-	const syncProtocol = new ContactsDbSoapSyncProtocol(db, fetch);
+	const syncProtocol = new ContactsDbSoapSyncProtocol(db, fetch.bind(window));
 	db.registerSyncProtocol('soap-contacts', syncProtocol);
 	db.syncable.connect('soap-contacts', '/service/soap/SyncRequest');
 
