@@ -265,13 +265,14 @@ export function normalizeContactAttrsToSoapOp(c: Contact): Array<CreateContactRe
 		'namePrefix',
 		'firstName',
 		'lastName',
-		'nickName',
+		'middleName',
 		'image',
 		'jobTitle',
 		'department',
 		'company',
 		'notes',
 	]);
+	if (c.nickName) obj.nickname = c.nickName;
 	if (c.email) merge(obj, normalizeContactMailsToSoapOp(c.email));
 	if (c.phone) merge(obj, normalizeContactPhonesToSoapOp(c.phone));
 	if (c.address) merge(obj, normalizeContactAddressesToSoapOp(c.address));
@@ -359,6 +360,7 @@ export function normalizeContactChangesToSoapOp(c: { [key: string]: string }): A
 		'firstName',
 		'lastName',
 		'nickName',
+		'middleName',
 		'image',
 		'jobTitle',
 		'department',
