@@ -336,7 +336,7 @@ function normalizeChangeUrlsToSoapOp(c: { [key: string]: any }) {
 	);
 }
 
-function normalizeChangeAddressesToSoapOp(c: { [key: string]: string }) {
+function normalizeChangeAddressesToSoapOp(c: { [key: string]: any }) {
 	return reduce(
 		c,
 		(acc, v, k) => {
@@ -344,7 +344,16 @@ function normalizeChangeAddressesToSoapOp(c: { [key: string]: string }) {
 				const keyparts = k.split('.');
 				return {
 					...acc,
-					[replace(keyparts[1], 'Address', capitalize(keyparts[2]))]: v
+					...reduce(
+						v,
+						(acc2, v2, k2) => k2 !== 'type'
+							? ({
+								...acc2,
+								[replace(keyparts[1], 'Address', capitalize(String(k2)))]: v2
+							})
+							: acc,
+						{}
+					)
 				};
 			}
 			return acc;
@@ -359,7 +368,6 @@ export function normalizeContactChangesToSoapOp(c: { [key: string]: string }): A
 		'namePrefix',
 		'firstName',
 		'lastName',
-		'nickName',
 		'middleName',
 		'image',
 		'jobTitle',
@@ -367,6 +375,7 @@ export function normalizeContactChangesToSoapOp(c: { [key: string]: string }): A
 		'company',
 		'notes',
 	]);
+	if (c.nickName) obj.nickname = c.nickName;
 	merge(obj, normalizeChangeMailsToSoapOp(c));
 	merge(obj, normalizeChangePhonesToSoapOp(c));
 	merge(obj, normalizeChangeUrlsToSoapOp(c));
