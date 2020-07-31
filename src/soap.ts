@@ -248,7 +248,7 @@ export function normalizeContactAddressesToSoapOp(addresses: ContactAddressMap):
 			...acc,
 			...reduce(
 				v,
-				(acc2, v2, k2) => k2 === 'type' ? acc : ({
+				(acc2, v2, k2) => k2 === 'type' ? acc2 : ({
 					...acc2,
 					[getKey(k, v, k2)]: v2
 				}),
@@ -284,7 +284,7 @@ export function normalizeContactAttrsToSoapOp(c: Contact): Array<CreateContactRe
 }
 
 
-function normalizeChangeMailsToSoapOp(c: { [key: string]: any }) {
+export function normalizeChangeMailsToSoapOp(c: { [key: string]: any }) {
 	return reduce(
 		c,
 		(acc, v, k) => {
@@ -292,7 +292,7 @@ function normalizeChangeMailsToSoapOp(c: { [key: string]: any }) {
 				const keyparts = split(k, '.');
 				return {
 					...acc,
-					[keyparts[1]]: v ? v.mail : undefined
+					[keyparts[1]]: v ? v.mail : ''
 				};
 			}
 			return acc;
@@ -301,16 +301,15 @@ function normalizeChangeMailsToSoapOp(c: { [key: string]: any }) {
 	);
 }
 
-function normalizeChangePhonesToSoapOp(c: { [key: string]: any }) {
+export function normalizeChangePhonesToSoapOp(c: { [key: string]: any }) {
 	return reduce(
 		c,
 		(acc, v, k) => {
 			if (startsWith(k, 'phone')) {
-				if (!v) return acc;
 				const keyparts = split(k, '.');
 				return {
 					...acc,
-					[keyparts[1]]: v ? v.number : undefined
+					[keyparts[1]]: v ? v.number : ''
 				};
 			}
 			return acc;
@@ -319,7 +318,7 @@ function normalizeChangePhonesToSoapOp(c: { [key: string]: any }) {
 	);
 }
 
-function normalizeChangeUrlsToSoapOp(c: { [key: string]: any }) {
+export function normalizeChangeUrlsToSoapOp(c: { [key: string]: any }) {
 	return reduce(
 		c,
 		(acc, v, k) => {
@@ -327,7 +326,7 @@ function normalizeChangeUrlsToSoapOp(c: { [key: string]: any }) {
 				const keyparts = split(k, '.');
 				return {
 					...acc,
-					[keyparts[1]]: v ? v.url : undefined
+					[keyparts[1]]: v ? v.url : ''
 				};
 			}
 			return acc;
@@ -336,12 +335,25 @@ function normalizeChangeUrlsToSoapOp(c: { [key: string]: any }) {
 	);
 }
 
-function normalizeChangeAddressesToSoapOp(c: { [key: string]: any }) {
+export function normalizeChangeAddressesToSoapOp(c: { [key: string]: any }) {
 	return reduce(
 		c,
 		(acc, v, k) => {
 			if (startsWith(k, 'address')) {
 				const keyparts = k.split('.');
+				if (!v) {
+					return {
+						...acc,
+						...reduce(
+							['Street', 'City', 'Country', 'State', 'PostalCode'],
+							(acc2, v2) => ({
+								...acc2,
+								[replace(keyparts[1], 'Address', v2)]: ''
+							}),
+							{}
+						)
+					};
+				}
 				return {
 					...acc,
 					...reduce(
@@ -349,9 +361,9 @@ function normalizeChangeAddressesToSoapOp(c: { [key: string]: any }) {
 						(acc2, v2, k2) => k2 !== 'type'
 							? ({
 								...acc2,
-								[replace(keyparts[1], 'Address', capitalize(String(k2)))]: v2
+								[replace(keyparts[1], 'Address', capitalize(String(k2)))]: v2 || ''
 							})
-							: acc,
+							: acc2,
 						{}
 					)
 				};
