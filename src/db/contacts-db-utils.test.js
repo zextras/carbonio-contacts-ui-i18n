@@ -9,7 +9,8 @@
  * *** END LICENSE BLOCK *****
  */
 
-import { normalizeContactsFolders } from './contacts-db-utils';
+import {
+	normalizeContactsFolders, contactPhoneTypeFromString, contactUrlTypeFromString, normalizeContactAddresses } from './contacts-db-utils';
 import { ContactsFolder } from './contacts-folder';
 
 describe('DB Utils', () => {
@@ -34,4 +35,71 @@ describe('DB Utils', () => {
 		expect(f[0].size).toBe(1);
 		expect(f[0].parent).toBe('1');
 	});
+	test('Contact Phone Type', () => {
+		const g1 = contactPhoneTypeFromString('mobilePhone');
+		const g2 = contactPhoneTypeFromString('workPhone');
+		const g3 = contactPhoneTypeFromString('homePhone');
+		const g4 = contactPhoneTypeFromString('otherPhone');
+		expect(g1).toBe('mobile');
+		expect(g2).toBe('work');
+		expect(g3).toBe('home');
+		expect(g4).toBe('other');
+	});
+	/*test('Numbered Contact Phone Type', () => {
+		const g01 = contactPhoneTypeFromString(1);
+		const g02 = contactPhoneTypeFromString(' ');
+		expect(g01).toBe(1);
+		expect(g02).toBe(' ');
+	});*/
+	test('Contact Url Type', () => {
+		const h1 = contactUrlTypeFromString('workURL');
+		const h2 = contactUrlTypeFromString('homeURL');
+		const h3 = contactUrlTypeFromString('otherURL');
+		expect(h1).toBe('work');
+		expect(h2).toBe('home');
+		expect(h3).toBe('other');
+	});
+	/*test('Numbered Contact Url Type', () => {
+		const h01 = contactUrlTypeFromString(URL1);
+		const h02 = contactUrlTypeFromString(' ');
+		expect(h01).toBe(1);
+		expect(h02).toBe(' ');
+	});*/
 });
+/*test('Normalize Contact Addresses', () => {
+	const i = normalizeContactAddresses({
+		d: 0,
+		fileAsStr: 'fileAs',
+		id: '1000',
+		l: '1',
+		rev: 1,
+		_attrs: {
+			firstName: 'Pippo',
+			fullName: 'Pippotamo',
+			lastName: 'Rossi',
+			jobTitle: 'pittore',
+			middleName: 'Secco',
+			nickname: 'Pippino',
+			nameSuffix: 'III',
+			namePrefix: 'Dr',
+			mobilePhone: '0444',
+			workPhone: '0444',
+			otherPhone: '0444',
+			department: 'Leisure',
+			email: 'pp@hot.it',
+			notes: ' ',
+			company: 'Pippos',
+			otherStreet: 'via Pinco',
+			otherPostalCode: '55547',
+			otherCity: 'Toronto',
+			otherState: 'Alabama',
+			otherCountry: 'France'
+		}
+	});
+	expect(i[0].d).toBe(0);
+	expect(i[0].fileAsStr).toBe('fileAs');
+	expect(i[0].id).toBe('5000');
+	expect(i[0].l).toBe('1');
+	expect(i[0].rev).toBe(1);
+	expect(i[0]._attrs).toBe('string');
+});*/

@@ -61,7 +61,7 @@ export function normalizeContactsFolders(f: SyncResponseContactFolder): Contacts
 	return children;
 }
 
-function contactPhoneTypeFromString(s: string): ContactPhoneType {
+export function contactPhoneTypeFromString(s: string): ContactPhoneType {
 	if (!PHONE_REG.test(s)) return ContactPhoneType.OTHER;
 	switch (s.match(PHONE_REG)![1]) {
 		case 'mobile':
@@ -74,7 +74,6 @@ function contactPhoneTypeFromString(s: string): ContactPhoneType {
 			return ContactPhoneType.OTHER;
 	}
 }
-
 export function contactUrlTypeFromString(s: string): ContactUrlType {
 	if (!URL_REG.test(s)) return ContactUrlType.OTHER;
 	switch (s.match(URL_REG)![1]) {
@@ -96,7 +95,7 @@ const getParts: (key: string) => [ContactAddressType, keyof ContactAddress, numb
 	];
 };
 
-function normalizeContactAddresses(c: SoapContact): ContactAddressMap {
+export function normalizeContactAddresses(c: SoapContact): ContactAddressMap {
 	return	reduce(
 		c._attrs as {[k: string]: string},
 		(acc: {[id: string]: ContactAddress}, attr: string, key) => {
