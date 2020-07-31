@@ -359,7 +359,6 @@ export function normalizeContactChangesToSoapOp(c: { [key: string]: string }): A
 		'namePrefix',
 		'firstName',
 		'lastName',
-		'nickName',
 		'middleName',
 		'image',
 		'jobTitle',
@@ -367,6 +366,7 @@ export function normalizeContactChangesToSoapOp(c: { [key: string]: string }): A
 		'company',
 		'notes',
 	]);
+	if (c.nickName) obj.nickname = c.nickName;
 	merge(obj, normalizeChangeMailsToSoapOp(c));
 	merge(obj, normalizeChangePhonesToSoapOp(c));
 	merge(obj, normalizeChangeUrlsToSoapOp(c));
