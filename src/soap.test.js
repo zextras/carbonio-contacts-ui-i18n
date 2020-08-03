@@ -12,54 +12,57 @@
 import {
 	normalizeContactMailsToSoapOp,
 	normalizeContactPhonesToSoapOp,
-	normalizeContactAddressesToSoapOp
+	normalizeContactAddressesToSoapOp,
+	normalizeChangeMailsToSoapOp,
+	normalizeChangePhonesToSoapOp,
+	normalizeChangeAddressesToSoapOp,
+	normalizeChangeUrlsToSoapOp
 } from './soap';
 import { ContactAddressType, ContactPhoneType } from './db/contact';
 
 describe('SOAP Utils', () => {
-
 	test('Normalize Contact Mails for SOAP Operation', () => {
 		expect(
-			normalizeContactMailsToSoapOp([
-				{ mail: 'mail@example.com' },
-				{ mail: 'mail1@example.com' },
-				{ mail: 'mail2@example.com' }
-			])
+			normalizeContactMailsToSoapOp({
+				email: { mail: 'mail@example.com' },
+				email2: { mail: 'mail1@example.com' },
+				email3: { mail: 'mail2@example.com' }
+			})
 		).toStrictEqual(
 			{
-				'0': 'mail@example.com',
-				'1': 'mail1@example.com',
-				'2': 'mail2@example.com'
+				email: 'mail@example.com',
+				email2: 'mail1@example.com',
+				email3: 'mail2@example.com'
 			}
 		);
 	});
 
 	test('Normalize Contact Phones for SOAP Operation', () => {
 		expect(
-			normalizeContactPhonesToSoapOp([
-				{ number: 'o0', name: ContactPhoneType.OTHER },
-				{ number: 'o1', name: ContactPhoneType.OTHER },
-				{ number: 'o2', name: ContactPhoneType.OTHER },
-				{ number: 'm', name: ContactPhoneType.MOBILE },
-				{ number: 'h', name: ContactPhoneType.HOME },
-				{ number: 'w', name: ContactPhoneType.WORK }
-			])
+			normalizeContactPhonesToSoapOp({
+				otherPhone: { number: 'o0', type: ContactPhoneType.OTHER },
+				otherPhone2: { number: 'o1', type: ContactPhoneType.OTHER },
+				otherPhone3: { number: 'o2', type: ContactPhoneType.OTHER },
+				mobilePhone: { number: 'm', type: ContactPhoneType.MOBILE },
+				homePhone: { number: 'h', type: ContactPhoneType.HOME },
+				workPhone: { number: 'w', type: ContactPhoneType.WORK }
+			})
 		).toStrictEqual(
 			{
-				'0': 'o0',
-				'1': 'o1',
-				'2': 'o2',
-				'3': 'm',
-				'4': 'h',
-				'5': 'w'
+				otherPhone: 'o0',
+				otherPhone2: 'o1',
+				otherPhone3: 'o2',
+				mobilePhone: 'm',
+				homePhone: 'h',
+				workPhone: 'w'
 			}
 		);
 	});
 
-	test.skip('Normalize Contact Addresses for SOAP Operation', () => {
+	test('Normalize Contact Addresses for SOAP Operation', () => {
 		expect(
-			normalizeContactAddressesToSoapOp([
-				{
+			normalizeContactAddressesToSoapOp({
+				otherAddress: {
 					street: 'os0',
 					postalCode: 'op0',
 					city: 'oc0',
@@ -67,7 +70,7 @@ describe('SOAP Utils', () => {
 					country: 'oco0',
 					type: ContactAddressType.OTHER
 				},
-				{
+				otherAddress2: {
 					street: 'os1',
 					postalCode: 'op1',
 					city: 'oc1',
@@ -75,7 +78,7 @@ describe('SOAP Utils', () => {
 					country: 'oco1',
 					type: ContactAddressType.OTHER
 				},
-				{
+				homeAddress: {
 					street: 'hs',
 					postalCode: 'hp',
 					city: 'hc',
@@ -83,7 +86,7 @@ describe('SOAP Utils', () => {
 					country: 'hco',
 					type: ContactAddressType.HOME
 				},
-				{
+				workAddress: {
 					street: 'ws',
 					postalCode: 'wp',
 					city: 'wc',
@@ -91,7 +94,7 @@ describe('SOAP Utils', () => {
 					country: 'wco',
 					type: ContactAddressType.WORK
 				}
-			])
+			})
 		).toStrictEqual(
 			{
 				otherStreet: 'os0',
@@ -99,11 +102,11 @@ describe('SOAP Utils', () => {
 				otherCity: 'oc0',
 				otherState: 'ost0',
 				otherCountry: 'oco0',
-				otherStreet1: 'os1',
-				otherPostalCode1: 'op1',
-				otherCity1: 'oc1',
-				otherState1: 'ost1',
-				otherCountry1: 'oco1',
+				otherStreet2: 'os1',
+				otherPostalCode2: 'op1',
+				otherCity2: 'oc1',
+				otherState2: 'ost1',
+				otherCountry2: 'oco1',
 				homeStreet: 'hs',
 				homePostalCode: 'hp',
 				homeCity: 'hc',
@@ -114,6 +117,67 @@ describe('SOAP Utils', () => {
 				workCity: 'wc',
 				workState: 'wst',
 				workCountry: 'wco'
+			}
+		);
+	});
+
+	test('Normalize Mail Changes for SOAP Operation', () => {
+		expect(
+			normalizeChangeMailsToSoapOp({
+				'email.email': { mail: 'mail@example.com' },
+				'email.email2': { mail: 'mail1@example.com' },
+				'email.email3': { mail: 'mail2@example.com' },
+				'email.email4': null
+			})
+		).toStrictEqual(
+			{
+				email: 'mail@example.com',
+				email2: 'mail1@example.com',
+				email3: 'mail2@example.com',
+				email4: ''
+			}
+		);
+	});
+
+	test('Normalize Phone Changes for SOAP Operation', () => {
+		expect(
+			normalizeChangePhonesToSoapOp({
+				'phone.otherPhone': { number: 'o0', type: ContactPhoneType.OTHER },
+				'phone.mobilePhone': null,
+			})
+		).toStrictEqual(
+			{
+				otherPhone: 'o0',
+				mobilePhone: ''
+			}
+		);
+	});
+
+	test('Normalize Address Changes for SOAP Operation', () => {
+		expect(
+			normalizeChangeAddressesToSoapOp({
+				'address.otherAddress': {
+					street: 'os0',
+					postalCode: 'op0',
+					city: 'oc0',
+					state: 'ost0',
+					country: 'oco0',
+					type: ContactAddressType.OTHER
+				},
+				'address.otherAddress2': null
+			})
+		).toStrictEqual(
+			{
+				otherStreet: 'os0',
+				otherPostalCode: 'op0',
+				otherCity: 'oc0',
+				otherState: 'ost0',
+				otherCountry: 'oco0',
+				otherStreet2: '',
+				otherPostalCode2: '',
+				otherCity2: '',
+				otherState2: '',
+				otherCountry2: ''
 			}
 		);
 	});
