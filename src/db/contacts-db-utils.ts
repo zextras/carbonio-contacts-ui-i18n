@@ -85,7 +85,7 @@ export function contactUrlTypeFromString(s: string): ContactUrlType {
 			return ContactUrlType.OTHER;
 	}
 }
-
+// NO TESTING
 const getParts: (key: string) => [ContactAddressType, keyof ContactAddress, number] = (key) => {
 	const [type, subType, index, opt]: string[] = words(key);
 	return [
@@ -115,7 +115,7 @@ export function normalizeContactAddresses(c: SoapContact): ContactAddressMap {
 	);
 }
 
-function normalizeContactMails(c: SoapContact): ContactEmailMap {
+export function normalizeContactMails(c: SoapContact): ContactEmailMap {
 	return reduce(
 		pickBy<string>(c._attrs, (v, k) => MAIL_REG.test(k)),
 		(acc, v, k) => ({
@@ -128,7 +128,7 @@ function normalizeContactMails(c: SoapContact): ContactEmailMap {
 	);
 }
 
-function normalizeContactPhones(c: SoapContact): ContactPhoneMap {
+export function normalizeContactPhones(c: SoapContact): ContactPhoneMap {
 	return reduce(
 		pickBy<string>(c._attrs, (v, k) => PHONE_REG.test(k)),
 		(acc, v, k) => ({
@@ -142,7 +142,7 @@ function normalizeContactPhones(c: SoapContact): ContactPhoneMap {
 	);
 }
 
-function normalizeContactUrls(c: SoapContact): ContactUrlMap {
+export function normalizeContactUrls(c: SoapContact): ContactUrlMap {
 	return reduce(
 		pickBy<string>(c._attrs, (v, k) => URL_REG.test(k)),
 		(acc, v, k) => ({
