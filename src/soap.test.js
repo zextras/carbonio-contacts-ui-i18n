@@ -13,7 +13,9 @@ import {
 	normalizeContactMailsToSoapOp,
 	normalizeContactPhonesToSoapOp,
 	normalizeContactAddressesToSoapOp,
-	normalizeContactUrlsToSoapOp, normalizeContactAttrsToSoapOp
+	normalizeContactUrlsToSoapOp,
+	normalizeContactAttrsToSoapOp,
+	normalizeContactChangesToSoapOp
 } from './soap';
 import {
 	Contact, ContactAddressType, ContactPhoneType, ContactUrlType
@@ -39,12 +41,12 @@ describe('SOAP Utils', () => {
 	test('Normalize Contact Phones for SOAP Operation', () => {
 		expect(
 			normalizeContactPhonesToSoapOp({
-				otherPhone: { number: 'o0', name: ContactPhoneType.OTHER },
-				otherPhone2: { number: 'o1', name: ContactPhoneType.OTHER },
-				otherPhone3: { number: 'o2', name: ContactPhoneType.OTHER },
-				mobilePhone: { number: 'm', name: ContactPhoneType.MOBILE },
-				homePhone: { number: 'h', name: ContactPhoneType.HOME },
-				workPhone: { number: 'w', name: ContactPhoneType.WORK }
+				otherPhone: { number: 'o0', type: ContactPhoneType.OTHER },
+				otherPhone2: { number: 'o1', type: ContactPhoneType.OTHER },
+				otherPhone3: { number: 'o2', type: ContactPhoneType.OTHER },
+				mobilePhone: { number: 'm', type: ContactPhoneType.MOBILE },
+				homePhone: { number: 'h', type: ContactPhoneType.HOME },
+				workPhone: { number: 'w', type: ContactPhoneType.WORK }
 			})
 		).toStrictEqual(
 			{
@@ -61,11 +63,11 @@ describe('SOAP Utils', () => {
 	test('Normalize Contact Urls for SOAP Operation', () => {
 		expect(
 			normalizeContactUrlsToSoapOp({
-				otherUrl: { url: 'o0', name: ContactUrlType.OTHER },
-				otherUrl2: { url: 'o1', name: ContactUrlType.OTHER },
-				otherUrl3: { url: 'o2', name: ContactUrlType.OTHER },
-				homeUrl: { url: 'h', name: ContactUrlType.HOME },
-				workUrl: { url: 'w', name: ContactUrlType.WORK }
+				otherUrl: { url: 'o0', type: ContactUrlType.OTHER },
+				otherUrl2: { url: 'o1', type: ContactUrlType.OTHER },
+				otherUrl3: { url: 'o2', type: ContactUrlType.OTHER },
+				homeUrl: { url: 'h', type: ContactUrlType.HOME },
+				workUrl: { url: 'w', type: ContactUrlType.WORK }
 			})
 		).toStrictEqual(
 			{
@@ -139,7 +141,6 @@ describe('SOAP Utils', () => {
 			}
 		);
 	});
-
 	test('Normalize Contact Attributes for SOAP Operation', () => {
 		expect(
 			normalizeContactAttrsToSoapOp(new Contact(
@@ -154,6 +155,37 @@ describe('SOAP Utils', () => {
 					department: 'department',
 					company: 'company',
 					notes: 'notes',
+					nickName: 'nickName',
+					email: {
+						email: {
+							mail: 'mail@example.com'
+						},
+						email2: {
+							mail: 'mail2@example.com'
+						}
+					},
+					phone: {
+						otherPhone: {
+							type: ContactAddressType.OTHER,
+							number: 'number'
+						}
+					},
+					address: {
+						otherAddress: {
+							street: 'os0',
+							postalCode: 'op0',
+							city: 'oc0',
+							state: 'ost0',
+							country: 'oco0',
+							type: ContactAddressType.OTHER
+						}
+					},
+					URL: {
+						otherUrl: {
+							url: 'o0',
+							type: ContactUrlType.OTHER
+						}
+					}
 				}
 			))
 		).toStrictEqual(
@@ -197,8 +229,88 @@ describe('SOAP Utils', () => {
 				{
 					_content: 'notes',
 					n: 'notes'
+				},
+				{
+					_content: 'nickName',
+					n: 'nickname'
+				},
+				{
+					_content: 'mail@example.com',
+					n: 'email'
+				},
+				{
+					_content: 'mail2@example.com',
+					n: 'email2'
+				},
+				{
+					_content: 'number',
+					n: 'otherPhone'
+				},
+				{
+					_content: 'os0',
+					n: 'otherStreet'
+				},
+				{
+					_content: 'op0',
+					n: 'otherPostalCode'
+				},
+				{
+					_content: 'oc0',
+					n: 'otherCity'
+				},
+				{
+					_content: 'ost0',
+					n: 'otherState'
+				},
+				{
+					_content: 'oco0',
+					n: 'otherCountry'
+				},
+				{
+					_content: 'o0',
+					n: 'otherUrl'
 				}
 			]
+
 		);
+	});
+
+	test('Normalize Contact Changes for SOAP Operation', () => {
+		expect(
+			normalizeContactChangesToSoapOp({
+				'email.email2': {
+					mail: 'mail2@mail.com'
+				},
+				'email.email.mail': 'mail@mail.com',
+				'phone.workPhone': {
+					type: ContactAddressType.WORK,
+					number: 'number'
+				},
+				'URL.workURL2': {
+					type: ContactAddressType.WORK,
+					url: 'newURL'
+				},
+				'address.otherAddress': {
+					street: 'os0',
+					postalCode: 'op0',
+					city: 'oc0',
+					state: 'ost0',
+					country: 'oco0',
+					type: ContactAddressType.OTHER
+				}
+			})
+		).toStrictEqual([
+			{ _content: 'mail2@mail.com', n: 'email2' },
+			{ _content: 'mail@mail.com', n: 'email' },
+			{ _content: 'number', n: 'workPhone' },
+			{ _content: 'newURL', n: 'workURL2' },
+			{ _content: 'os0', n: 'otherStreet' },
+			{ _content: 'op0', n: 'otherPostalCode' },
+			{ _content: 'oc0', n: 'otherCity' },
+			{ _content: 'ost0', n: 'otherState' },
+			{ _content: 'oco0', n: 'otherCountry' },
+
+
+		]);
 	});
 });
