@@ -168,12 +168,12 @@ describe('DB Utils', () => {
 					ct: 'ct',
 					s: 1,
 					filename: 'filename'
-				} || '',
-				company: 'company' || '',
-				department: 'department' || '',
+				},
+				company: 'company',
+				department: 'department',
 				email: 'email',
 				email2: 'email2',
-				firstName: 'firstName' || '',
+				firstName: 'firstName',
 				homeCity: 'homeCity',
 				homeCountry: 'homeCountry',
 				homePhone: 'homePhone',
@@ -181,14 +181,14 @@ describe('DB Utils', () => {
 				homeState: 'homeState',
 				homeStreet: 'homeStreet',
 				homeURL: 'homeURL',
-				jobTitle: 'jobTitle' || '',
-				lastName: 'lastName' || '',
-				middleName: 'middleName' || '',
+				jobTitle: 'jobTitle',
+				lastName: 'lastName',
+				middleName: 'middleName',
 				mobilePhone: 'mobilePhone',
-				namePrefix: 'namePrefix' || '',
-				nameSuffix: 'nameSuffix' || '',
-				notes : 'notes' || '',
-				nickname: 'nickName' || '',
+				namePrefix: 'namePrefix',
+				nameSuffix: 'nameSuffix',
+				notes : 'notes',
+				nickname: 'nickName',
 				otherCity: 'otherCity',
 				otherCountry: 'otherCountry',
 				otherPhone: 'otherPhone',
@@ -233,8 +233,8 @@ describe('DB Utils', () => {
 				type: "work"
 			}
 		});
-		expect(mm.company).toBe('company' || '');
-		expect(mm.department).toBe('department' || '');
+		expect(mm.company).toBe('company');
+		expect(mm.department).toBe('department');
 		expect(mm.email).toStrictEqual({
 			email: {
 				mail: "email"
@@ -243,13 +243,13 @@ describe('DB Utils', () => {
 				mail: "email2"
 			}
 		});
-		expect(mm.firstName).toBe('firstName' || '');
-		expect(mm.middleName).toBe('middleName' || '');
-		expect(mm.lastName).toBe('lastName' || '');
-		expect(mm.nickName).toBe('nickName' || '');
-		expect(mm.image).toBe('/service/home/~/?auth=co&id=id&part=part&max_width=32&max_height=32');
-		expect(mm.jobTitle).toBe('jobTitle' || '');
-		expect(mm.notes).toBe('notes' || '');
+		expect(mm.firstName).toBe('firstName');
+		expect(mm.middleName).toBe('middleName');
+		expect(mm.lastName).toBe('lastName');
+		expect(mm.nickName).toBe('nickName'); //CHECK OUT Error: expect(received).toBe(expected) // Object.is equality
+		expect(mm.image).toBe('/service/home/~/?auth=co&id=id&part=part&max_width=32&max_height=32'); //CHECK OUT Error: expect(received).toBe(expected) // Object.is equality
+		expect(mm.jobTitle).toBe('jobTitle');
+		expect(mm.notes).toBe('notes'); //CHECK OUT Error: expect(received).toBe(expected) // Object.is equality
 		expect(mm.phone).toStrictEqual({
 			homePhone: {
 				number: "homePhone",
@@ -268,8 +268,8 @@ describe('DB Utils', () => {
 				type: "work"
 			}
 		});
-		expect(mm.nameSuffix).toBe('nameSuffix' || '');
-		expect(mm.namePrefix).toBe('namePrefix' || '');
+		expect(mm.nameSuffix).toBe('nameSuffix');
+		expect(mm.namePrefix).toBe('namePrefix');
 		expect(mm.URL).toStrictEqual({
 			homeURL: {
 				type: "home",
