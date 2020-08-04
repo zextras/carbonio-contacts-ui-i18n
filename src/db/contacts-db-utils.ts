@@ -95,7 +95,7 @@ const getParts: (key: string) => [ContactAddressType, keyof ContactAddress, numb
 	];
 };
 
-export function normalizeContactAddresses(c: SoapContact): ContactAddressMap {
+function normalizeContactAddresses(c: SoapContact): ContactAddressMap {
 	return	reduce(
 		c._attrs as {[k: string]: string},
 		(acc: {[id: string]: ContactAddress}, attr: string, key) => {
@@ -115,7 +115,7 @@ export function normalizeContactAddresses(c: SoapContact): ContactAddressMap {
 	);
 }
 
-export function normalizeContactMails(c: SoapContact): ContactEmailMap {
+function normalizeContactMails(c: SoapContact): ContactEmailMap {
 	return reduce(
 		pickBy<string>(c._attrs, (v, k) => MAIL_REG.test(k)),
 		(acc, v, k) => ({
@@ -128,7 +128,7 @@ export function normalizeContactMails(c: SoapContact): ContactEmailMap {
 	);
 }
 
-export function normalizeContactPhones(c: SoapContact): ContactPhoneMap {
+function normalizeContactPhones(c: SoapContact): ContactPhoneMap {
 	return reduce(
 		pickBy<string>(c._attrs, (v, k) => PHONE_REG.test(k)),
 		(acc, v, k) => ({
@@ -142,7 +142,7 @@ export function normalizeContactPhones(c: SoapContact): ContactPhoneMap {
 	);
 }
 
-export function normalizeContactUrls(c: SoapContact): ContactUrlMap {
+function normalizeContactUrls(c: SoapContact): ContactUrlMap {
 	return reduce(
 		pickBy<string>(c._attrs, (v, k) => URL_REG.test(k)),
 		(acc, v, k) => ({
