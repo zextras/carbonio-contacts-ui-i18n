@@ -202,7 +202,42 @@ describe('DB Utils', () => {
 				workPostalCode: 'workPostalCode',
 				workState: 'workState',
 				workStreet: 'workStreet',
-				workURL: 'workURL'
+				workURL: 'workURL',
+
+				company: '',
+				department: '',
+				email: '',
+				email2: '',
+				firstName: '',
+				homeCity: '',
+				homeCountry: '',
+				homePhone: '',
+				homePostalCode: '',
+				homeState: '',
+				homeStreet: '',
+				homeURL: '',
+				jobTitle: '',
+				lastName: '',
+				middleName: '',
+				mobilePhone: '',
+				namePrefix: '',
+				nameSuffix: '',
+				notes : '',
+				nickname: '',
+				otherCity: '',
+				otherCountry: '',
+				otherPhone: '',
+				otherPostalCode: '',
+				otherState: '',
+				otherStreet: '',
+				otherURL: '',
+				workCity: '',
+				workCountry: '',
+				workPhone: '',
+				workPostalCode: '',
+				workState: '',
+				workStreet: '',
+				workURL: ''
 			}
 		});
 		expect(mm.parent).toBe('l');
@@ -246,10 +281,10 @@ describe('DB Utils', () => {
 		expect(mm.firstName).toBe('firstName');
 		expect(mm.middleName).toBe('middleName');
 		expect(mm.lastName).toBe('lastName');
-		expect(mm.nickName).toBe('nickName'); //CHECK OUT Error: expect(received).toBe(expected) // Object.is equality
-		expect(mm.image).toBe('/service/home/~/?auth=co&id=id&part=part&max_width=32&max_height=32'); //CHECK OUT Error: expect(received).toBe(expected) // Object.is equality
+		expect(mm.nickName).toBe('nickName');
+		expect(mm.image).toBe('/service/home/~/?auth=co&id=id&part=part&max_width=32&max_height=32');
 		expect(mm.jobTitle).toBe('jobTitle');
-		expect(mm.notes).toBe('notes'); //CHECK OUT Error: expect(received).toBe(expected) // Object.is equality
+		expect(mm.notes).toBe('notes');
 		expect(mm.phone).toStrictEqual({
 			homePhone: {
 				number: "homePhone",
@@ -282,6 +317,136 @@ describe('DB Utils', () => {
 			workURL: {
 				type: "work",
 				url: "workURL"
+			}
+		});
+	});
+	test('Normalize Contact With Empty String ', () => {
+		const mm = normalizeContact({
+			d: 1,
+			fileAsStr: 'lastName, firstName',
+			id: 'id',
+			l: 'l',
+			rev: 1,
+			_attrs: {
+				image: {
+					part: 'part',
+					ct: 'ct',
+					s: 1,
+					filename: 'filename'
+				},
+				company: '',
+				department: '',
+				email: '',
+				email2: '',
+				firstName: '',
+				homeCity: '',
+				homeCountry: '',
+				homePhone: '',
+				homePostalCode: '',
+				homeState: '',
+				homeStreet: '',
+				homeURL: '',
+				jobTitle: '',
+				lastName: '',
+				middleName: '',
+				mobilePhone: '',
+				namePrefix: '',
+				nameSuffix: '',
+				notes : '',
+				nickname: '',
+				otherCity: '',
+				otherCountry: '',
+				otherPhone: '',
+				otherPostalCode: '',
+				otherState: '',
+				otherStreet: '',
+				otherURL: '',
+				workCity: '',
+				workCountry: '',
+				workPhone: '',
+				workPostalCode: '',
+				workState: '',
+				workStreet: '',
+				workURL: ''
+			}
+		});
+		expect(mm.parent).toBe('l');
+		expect(mm.id).toBe('id');
+		expect(mm.address).toStrictEqual({
+			homeAddress: {
+				city: "",
+				country: "",
+				postalCode: "",
+				state: "",
+				street: "",
+				type: "home"
+			},
+			otherAddress: {
+				city: "",
+				country: "",
+				postalCode: "",
+				state: "",
+				street: "",
+				type: "other"
+			},
+			workAddress: {
+				city: "",
+				country: "",
+				postalCode: "",
+				state: "",
+				street: "",
+				type: "work"
+			}
+		});
+		expect(mm.company).toBe('');
+		expect(mm.department).toBe('');
+		expect(mm.email).toStrictEqual({
+			email: {
+				mail: ""
+			},
+			email2: {
+				mail: ""
+			}
+		});
+		expect(mm.firstName).toBe('');
+		expect(mm.middleName).toBe('');
+		expect(mm.lastName).toBe('');
+		expect(mm.nickName).toBe('');
+		expect(mm.image).toBe('/service/home/~/?auth=co&id=id&part=part&max_width=32&max_height=32');
+		expect(mm.jobTitle).toBe('');
+		expect(mm.notes).toBe('');
+		expect(mm.phone).toStrictEqual({
+			homePhone: {
+				number: "",
+				type: "home"
+			},
+			mobilePhone: {
+				number: "",
+				type: "mobile"
+			},
+			otherPhone: {
+				number: "",
+				type: "other"
+			},
+			workPhone: {
+				number: "",
+				type: "work"
+			}
+		});
+		expect(mm.nameSuffix).toBe('');
+		expect(mm.namePrefix).toBe('');
+		expect(mm.URL).toStrictEqual({
+			homeURL: {
+				type: "home",
+				url: ""
+			},
+			otherURL: {
+				type: "other",
+				url: ""
+			},
+			workURL: {
+				type: "work",
+				url: ""
 			}
 		});
 	});
