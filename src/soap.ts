@@ -343,7 +343,7 @@ function normalizeChangeUrlsToSoapOp(c: { [key: string]: any }) {
 				if (typeof (v) !== 'string') {
 					value = v.url;
 				}
-				else{
+				else {
 					value = v;
 				}
 				return {
@@ -363,19 +363,27 @@ function normalizeChangeAddressesToSoapOp(c: { [key: string]: any }) {
 		(acc, v, k) => {
 			if (startsWith(k, 'address')) {
 				const keyparts = k.split('.');
-				return {
-					...acc,
-					...reduce(
-						v,
-						(acc2, v2, k2) => (k2 !== 'type'
-							? ({
-								...acc2,
-								[replace(keyparts[1], 'Address', capitalize(String(k2)))]: v2
-							})
-							: acc),
-						{}
-					)
-				};
+				if (typeof (v) === 'string') {
+					return {
+						...acc,
+						[replace(keyparts[1], 'Address', capitalize(keyparts[2]))]: v
+					};
+				}
+				else {
+					return {
+						...acc,
+						...reduce(
+							v,
+							(acc2, v2, k2) => (k2 !== 'type'
+								? ({
+									...acc2,
+									[replace(keyparts[1], 'Address', capitalize(String(k2)))]: v2
+								})
+								: acc2),
+							{}
+						)
+					};
+				}
 			}
 			return acc;
 		},
