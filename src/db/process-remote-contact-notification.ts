@@ -82,9 +82,10 @@ export function fetchContacts(
 			return reduce<SoapContact, Contact[]>(
 				response.cn,
 				(r, c) => {
+					if ((c._attrs as any).type && (c._attrs as any).type === 'group') return r;
 					r.push(
 						normalizeContact(c)
-					)
+					);
 					return r;
 				},
 				[]

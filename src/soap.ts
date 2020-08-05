@@ -10,7 +10,7 @@
  */
 
 import {
-	map, merge, pick, reduce, startsWith, split, replace
+	map, merge, pick, reduce, startsWith, split, replace,
 } from 'lodash';
 import { ISoapSyncFolderObj } from '@zextras/zapp-shell/lib/network/ISoap';
 import {
@@ -209,10 +209,10 @@ export function normalizeContactMailsToSoapOp(mails: ContactEmailMap): any {
 export function normalizeContactPhonesToSoapOp(phones: ContactPhoneMap): any {
 	return reduce(
 		phones,
-		(acc, v, k) => k === 'type' ? acc : ({
+		(acc, v, k) => (k === 'type' ? acc : ({
 			...acc,
 			[k]: v.number
-		}),
+		})),
 		{}
 	);
 }
@@ -220,10 +220,10 @@ export function normalizeContactPhonesToSoapOp(phones: ContactPhoneMap): any {
 export function normalizeContactUrlsToSoapOp(urls: ContactUrlMap): any {
 	return reduce(
 		urls,
-		(acc, v, k) => k === 'type' ? acc : ({
+		(acc, v, k) => (k === 'type' ? acc : ({
 			...acc,
 			[k]: v.url
-		}),
+		})),
 		{}
 	);
 }
@@ -248,10 +248,10 @@ export function normalizeContactAddressesToSoapOp(addresses: ContactAddressMap):
 			...acc,
 			...reduce(
 				v,
-				(acc2, v2, k2) => k2 === 'type' ? acc : ({
+				(acc2, v2, k2) => (k2 === 'type' ? acc2 : ({
 					...acc2,
 					[getKey(k, v, k2)]: v2
-				}),
+				})),
 				{}
 			)
 		}),
@@ -265,13 +265,14 @@ export function normalizeContactAttrsToSoapOp(c: Contact): Array<CreateContactRe
 		'namePrefix',
 		'firstName',
 		'lastName',
-		'nickName',
+		'middleName',
 		'image',
 		'jobTitle',
 		'department',
 		'company',
 		'notes',
 	]);
+	if (c.nickName) obj.nickname = c.nickName;
 	if (c.email) merge(obj, normalizeContactMailsToSoapOp(c.email));
 	if (c.phone) merge(obj, normalizeContactPhonesToSoapOp(c.phone));
 	if (c.address) merge(obj, normalizeContactAddressesToSoapOp(c.address));
@@ -289,9 +290,16 @@ function normalizeChangeMailsToSoapOp(c: { [key: string]: any }) {
 		(acc, v, k) => {
 			if (startsWith(k, 'email')) {
 				const keyparts = split(k, '.');
+				let value;
+				if (typeof (v) !== 'string') {
+					value = v.mail;
+				}
+				else{
+					value = v;
+				}
 				return {
 					...acc,
-					[keyparts[1]]: v ? v.mail : undefined
+					[keyparts[1]]: v ? value : undefined
 				};
 			}
 			return acc;
@@ -307,9 +315,16 @@ function normalizeChangePhonesToSoapOp(c: { [key: string]: any }) {
 			if (startsWith(k, 'phone')) {
 				if (!v) return acc;
 				const keyparts = split(k, '.');
+				let value;
+				if (typeof (v) !== 'string') {
+					value = v.number;
+				}
+				else{
+					value = v;
+				}
 				return {
 					...acc,
-					[keyparts[1]]: v ? v.number : undefined
+					[keyparts[1]]: v ? value : undefined
 				};
 			}
 			return acc;
@@ -324,9 +339,16 @@ function normalizeChangeUrlsToSoapOp(c: { [key: string]: any }) {
 		(acc, v, k) => {
 			if (startsWith(k, 'URL')) {
 				const keyparts = split(k, '.');
+				let value;
+				if (typeof (v) !== 'string') {
+					value = v.url;
+				}
+				else {
+					value = v;
+				}
 				return {
 					...acc,
-					[keyparts[1]]: v ? v.url : undefined
+					[keyparts[1]]: v ? value : undefined
 				};
 			}
 			return acc;
@@ -335,16 +357,33 @@ function normalizeChangeUrlsToSoapOp(c: { [key: string]: any }) {
 	);
 }
 
-function normalizeChangeAddressesToSoapOp(c: { [key: string]: string }) {
+function normalizeChangeAddressesToSoapOp(c: { [key: string]: any }) {
 	return reduce(
 		c,
 		(acc, v, k) => {
 			if (startsWith(k, 'address')) {
 				const keyparts = k.split('.');
-				return {
-					...acc,
-					[replace(keyparts[1], 'Address', capitalize(keyparts[2]))]: v
-				};
+				if (typeof (v) === 'string') {
+					return {
+						...acc,
+						[replace(keyparts[1], 'Address', capitalize(keyparts[2]))]: v
+					};
+				}
+				else {
+					return {
+						...acc,
+						...reduce(
+							v,
+							(acc2, v2, k2) => (k2 !== 'type'
+								? ({
+									...acc2,
+									[replace(keyparts[1], 'Address', capitalize(String(k2)))]: v2
+								})
+								: acc2),
+							{}
+						)
+					};
+				}
 			}
 			return acc;
 		},
@@ -358,13 +397,14 @@ export function normalizeContactChangesToSoapOp(c: { [key: string]: string }): A
 		'namePrefix',
 		'firstName',
 		'lastName',
-		'nickName',
+		'middleName',
 		'image',
 		'jobTitle',
 		'department',
 		'company',
 		'notes',
 	]);
+	if (c.nickName) obj.nickname = c.nickName;
 	merge(obj, normalizeChangeMailsToSoapOp(c));
 	merge(obj, normalizeChangePhonesToSoapOp(c));
 	merge(obj, normalizeChangeUrlsToSoapOp(c));
