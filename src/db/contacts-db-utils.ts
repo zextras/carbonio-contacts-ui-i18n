@@ -61,7 +61,7 @@ export function normalizeContactsFolders(f: SyncResponseContactFolder): Contacts
 	return children;
 }
 
-export function contactPhoneTypeFromString(s: string): ContactPhoneType {
+function contactPhoneTypeFromString(s: string): ContactPhoneType {
 	if (!PHONE_REG.test(s)) return ContactPhoneType.OTHER;
 	switch (s.match(PHONE_REG)![1]) {
 		case 'mobile':
@@ -74,7 +74,7 @@ export function contactPhoneTypeFromString(s: string): ContactPhoneType {
 			return ContactPhoneType.OTHER;
 	}
 }
-export function contactUrlTypeFromString(s: string): ContactUrlType {
+function contactUrlTypeFromString(s: string): ContactUrlType {
 	if (!URL_REG.test(s)) return ContactUrlType.OTHER;
 	switch (s.match(URL_REG)![1]) {
 		case 'work':
@@ -85,7 +85,7 @@ export function contactUrlTypeFromString(s: string): ContactUrlType {
 			return ContactUrlType.OTHER;
 	}
 }
-// NO TESTING
+
 const getParts: (key: string) => [ContactAddressType, keyof ContactAddress, number] = (key) => {
 	const [type, subType, index, opt]: string[] = words(key);
 	return [

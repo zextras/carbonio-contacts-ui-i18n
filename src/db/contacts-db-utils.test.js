@@ -10,13 +10,14 @@
  */
 
 import {
-	normalizeContactsFolders, contactPhoneTypeFromString, contactUrlTypeFromString, normalizeContactAddresses, normalizeContactMails, normalizeContactPhones, normalizeContactUrls, normalizeContact
+	normalizeContactsFolders, normalizeContact
 } from './contacts-db-utils';
 import { ContactsFolder } from './contacts-folder';
 import {ContactAddressMap, ContactAddressType, ContactPhoneType, ContactUrlType} from './contact';
+import {SyncResponseContactFolder} from "../soap";
 describe('DB Utils', () => {
 	test('Normalize Contact Folder, no children', () => {
-		const f = normalizeContactsFolders({
+		const d = normalizeContactsFolders({
 			n: 1,
 			name: 'Folder Name',
 			id: '1000',
@@ -26,135 +27,73 @@ describe('DB Utils', () => {
 			l: '1',
 			view: 'contact'
 		});
-		expect(f.length).toBe(1);
-		expect(f[0]).toBeInstanceOf(ContactsFolder);
-		expect(f[0].id).toBe('1000');
-		expect(f[0].itemsCount).toBe(1);
-		expect(f[0].name).toBe('Folder Name');
-		expect(f[0].path).toBe('/Folder Name');
-		expect(f[0].unreadCount).toBe(0);
-		expect(f[0].size).toBe(1);
-		expect(f[0].parent).toBe('1');
+		expect(d.length).toBe(1);
+		expect(d[0]).toBeInstanceOf(ContactsFolder);
+		expect(d[0].id).toBe('1000');
+		expect(d[0].itemsCount).toBe(1);
+		expect(d[0].name).toBe('Folder Name');
+		expect(d[0].path).toBe('/Folder Name');
+		expect(d[0].unreadCount).toBe(0);
+		expect(d[0].size).toBe(1);
+		expect(d[0].parent).toBe('1');
 	});
-	test.skip('Contact Phone Type', () => {
-		const g1 = contactPhoneTypeFromString('mobilePhone');
-		const g2 = contactPhoneTypeFromString('workPhone1');
-		const g3 = contactPhoneTypeFromString('homePhone');
-		const g4 = contactPhoneTypeFromString('otherPhone');
-		const g5 = contactPhoneTypeFromString(' ');
-		expect(g1).toBe('mobile');
-		expect(g2).toBe('work');
-		expect(g3).toBe('home');
-		expect(g4).toBe('other');
-		expect(g5).toBe('other');
-	});
-	test.skip('Contact Url Type', () => {
-		const h1 = contactUrlTypeFromString('workURL');
-		const h2 = contactUrlTypeFromString('homeURL');
-		const h3 = contactUrlTypeFromString('otherURL2');
-		const h4 = contactUrlTypeFromString(' ');
-		expect(h1).toBe('work');
-		expect(h2).toBe('home');
-		expect(h3).toBe('other');
-		expect(h4).toBe('other');
-	});
-	test.skip('Normalize Contact Addresses', () => {
-		const i = normalizeContactAddresses({
-			d: 1,
-			fileAsStr: 'lastName, firstName',
-			id: 'id',
-			l: 'l',
-			rev: 1,
-			_attrs: {
-				homeCity: 'homeCity',
-				homeCountry: 'homeCountry',
-				homePostalCode: 'homePostalCode',
-				homeState: 'homeState',
-				homeStreet: 'homeStreet',
-				otherCity: 'otherCity',
-				otherCountry: 'otherCountry',
-				otherPostalCode: 'otherPostalCode',
-				otherState: 'otherState',
-				otherStreet: 'otherStreet',
-				workCity: 'workCity',
-				workCountry: 'workCountry',
-				workPostalCode: 'workPostalCode',
-				workState: 'workState',
-				workStreet: 'workStreet',
-			}
+
+	test('Normalize Contact Folder, one child', () => {
+		const e = normalizeContactsFolders({
+			n: 1,
+			name: 'Folder Name',
+			id: '1000',
+			absFolderPath: '/Folder Name',
+			u: 0,
+			s: 1,
+			l: '1',
+			view: 'contact',
+			folder : [{
+				n: 1,
+				name: 'Child Folder Name',
+				id: '1001',
+				absFolderPath: '/Child Folder Name',
+				u: 0,
+				s: 1,
+				l: '1',
+				view: 'contact'
+			}]
 		});
-		expect(i.d).toBe(1);
-		expect(i[0].fileAsStr).toBe('lastName, firstName');
-		expect(i[0].id).toBe('id');
-		expect(i[0].l).toBe('l');
-		expect(i[0].rev).toBe(1);
-		expect(i[0].homeCity).toBe('homeCity');
-		expect(i[0].homeCountry).toBe('homeCountry');
-		expect(i[0].homePostalCode).toBe('homePostalCode');
-		expect(i[0].homeState).toBe('homeState');
-		expect(i[0].homeStreet).toBe('homeStreet');
-		expect(i[0].otherCity).toBe('otherCity');
-		expect(i[0].otherCountry).toBe('otherCountry');
-		expect(i[0].otherPostalCode).toBe('otherPostalCode');
-		expect(i[0].otherState).toBe('otherState');
-		expect(i[0].otherStreet).toBe('otherStreet');
-		expect(i[0].workCity).toBe('workCity');
-		expect(i[0].workCountry).toBe('workCountry');
-		expect(i[0].workPostalCode).toBe('workPostalCode');
-		expect(i[0].workState).toBe('workState');
-		expect(i[0].workStreet).toBe('workStreet');
+		expect(e.length).toBe(2);
+		expect(e[0]).toBeInstanceOf(ContactsFolder);
+		expect(e[0].id).toBe('1000');
+		expect(e[0].itemsCount).toBe(1);
+		expect(e[0].name).toBe('Folder Name');
+		expect(e[0].path).toBe('/Folder Name');
+		expect(e[0].unreadCount).toBe(0);
+		expect(e[0].size).toBe(1);
+		expect(e[0].parent).toBe('1');
 	});
-	test.skip('Normalize Contact Mails', () => {
-		const jj = normalizeContactMails({
-			d: 1,
-			fileAsStr: 'lastName, firstName',
-			id: 'id',
-			l: 'l',
-			rev: 1,
-			_attrs: {
-				email: 'email',
-				email2: 'email2',
-			}
+
+	test('Normalize Contact Folder, children', () => {
+		const ff = normalizeContactsFolders({
+			n: 1,
+			name: 'Folder Name',
+			id: '1000',
+			absFolderPath: '/Folder Name',
+			u: 0,
+			s: 1,
+			l: '1',
+			view: 'cont',
+			folder : [{
+				n: 1,
+				name: 'Child Folder Name',
+				id: '1001',
+				absFolderPath: '/Child Folder Name',
+				u: 0,
+				s: 1,
+				l: '1',
+				view: 'cont'
+			}]
 		});
-		expect(jj[0].email).toBe('email');
-		expect(jj[0].email2).toBe('email2');
+		expect(ff).toStrictEqual([]);
 	});
-	test.skip('Normalize Contact Phones', () => {
-		const kk = normalizeContactPhones({
-			d: 1,
-			fileAsStr: 'lastName, firstName',
-			id: 'id',
-			l: 'l',
-			rev: 1,
-			_attrs: {
-				homePhone: 'homePhone',
-				mobilePhone: 'mobilePhone',
-				otherPhone: 'otherPhone',
-				workPhone: 'workPhone',
-			}
-		});
-		expect(kk[0].homePhone).toBe('homePhone');
-		expect(kk[0].mobilePhone).toBe('mobilePhone');
-		expect(kk[0].otherPhone).toBe('otherPhone');
-		expect(kk[0].workPhone).toBe('workPhone');
-	});
-	test.skip('Normalize Contact Url', () => {
-		const ll = normalizeContactUrls({
-			d: 1,
-			fileAsStr: 'lastName, firstName',
-			id: 'id',
-			l: 'l',
-			rev: 1,
-			_attrs: {
-				homeURL: 'homeURL',
-				otherURL: 'otherURL',
-				workURL: 'workURL'
-			}
-		});
-		expect(ll[0].homeURL).toBe('homeURL');
-		expect(ll[0].otherURL).toBe('otherURL');
-		expect(ll[0].workURL).toBe('workURL');
-	});
+
 	test('Normalize Contact', () => {
 		const mm = normalizeContact({
 			d: 1,
@@ -299,7 +238,6 @@ describe('DB Utils', () => {
 					s: 1,
 					filename: 'filename'
 				},
-				company: '',
 				department: '',
 				email: '',
 				email2: '',
