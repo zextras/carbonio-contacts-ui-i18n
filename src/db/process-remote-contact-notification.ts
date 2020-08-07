@@ -158,7 +158,7 @@ export default function processRemoteContactsNotification(
 			ids
 		)
 			.then((idToLocalUUIDMap) => {
-				const isLocallyCreated = {};
+				const isLocallyCreated: {[key: string]: string} = {};
 				return { idToLocalUUIDMap, isLocallyCreated };
 			})
 			.then(({ idToLocalUUIDMap, isLocallyCreated }) => {

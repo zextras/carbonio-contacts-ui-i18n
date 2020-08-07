@@ -10,7 +10,7 @@
  */
 
 import Dexie, { PromiseExtended } from 'dexie';
-import { db } from '@zextras/zapp-shell';
+import { db } from '@zextras/zapp-shell/build/types';
 import { ContactsFolder } from './contacts-folder';
 import { Contact } from './contact';
 
@@ -43,7 +43,7 @@ export class ContactsDb extends db.Database {
 	}
 
 	public open(): PromiseExtended<ContactsDb> {
-		return super.open().then((db) => db as ContactsDb);
+		return super.open().then((_db) => _db as unknown as ContactsDb);
 	}
 
 	public getFolderChildren(folder: ContactsFolder): Promise<ContactsFolder[]> {
@@ -53,10 +53,11 @@ export class ContactsDb extends db.Database {
 	}
 
 	public deleteContact(c: Contact): Promise<void> {
-		return this.folders.get(c._id!).then((_c) => {
+		if (!c._id) return Promise.reject(new Error('Contact must have id'));
+		return this.folders.get(c._id).then((_c) => {
 			if (_c) {
-				return this.deletions.add({ _id: _c._id!, id: _c.id!, table: 'contacts' })
-					.then(() => this.contacts.delete(_c._id!).then(() => undefined))
+				return this.deletions.add({ _id: _c._id, id: _c.id, table: 'contacts' } as DeletionData)
+					.then(() => this.contacts.delete(_c._id as string).then(() => undefined))
 					.catch(console.error);
 			}
 			return undefined;
@@ -64,11 +65,15 @@ export class ContactsDb extends db.Database {
 	}
 
 	public deleteFolder(f: ContactsFolder): Promise<void> {
-		return this.folders.get(f._id!).then((_f) => {
+		if (!f._id) return Promise.reject(new Error('Folder must have id'));
+		return this.folders.get(f._id).then((_f) => {
 			if (_f) {
-				console.log({ _id: _f._id!, id: _f.id!, table: 'folders' });
-				return this.deletions.add({ rowId: this.createUUID(), _id: _f._id!, id: _f.id!, table: 'folders' })
-					.then(() => this.folders.delete(_f._id!).then(() => undefined))
+				console.log({ _id: _f._id, id: _f.id, table: 'folders' });
+
+				return this.deletions.add({
+					rowId: this.createUUID(), _id: _f._id, id: _f.id, table: 'folders'
+				} as DeletionData)
+					.then(() => this.folders.delete(_f._id as string).then(() => undefined))
 					.catch(console.error);
 			}
 			return undefined;
