@@ -74,8 +74,7 @@ function contactPhoneTypeFromString(s: string): ContactPhoneType {
 			return ContactPhoneType.OTHER;
 	}
 }
-
-export function contactUrlTypeFromString(s: string): ContactUrlType {
+function contactUrlTypeFromString(s: string): ContactUrlType {
 	if (!URL_REG.test(s)) return ContactUrlType.OTHER;
 	switch (s.match(URL_REG)![1]) {
 		case 'work':
