@@ -10,7 +10,7 @@
  */
 
 import Dexie, { PromiseExtended } from 'dexie';
-import { db } from '@zextras/zapp-shell/build/types';
+import { db } from '@zextras/zapp-shell';
 import { ContactsFolder } from './contacts-folder';
 import { Contact } from './contact';
 
