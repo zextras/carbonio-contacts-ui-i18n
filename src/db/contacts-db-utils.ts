@@ -12,7 +12,6 @@
 import {
 	forEach, pickBy, lowerFirst, parseInt, reduce, words
 } from 'lodash';
-import { ISoapFolderObj } from '@zextras/zapp-shell/lib/network/ISoap';
 import { ContactsFolder } from './contacts-folder';
 import {
 	ContactAddress,
@@ -25,7 +24,7 @@ import {
 	ContactAddressMap,
 	ContactAddressType
 } from './contact';
-import { SoapContact, SyncResponseContactFolder } from '../soap';
+import { ISoapFolderObj, SoapContact, SyncResponseContactFolder } from '../soap';
 
 const MAIL_REG = /^email(\d*)$/;
 const PHONE_REG = /^(.*)Phone(\d*)$/;

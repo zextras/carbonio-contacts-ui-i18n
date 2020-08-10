@@ -64,7 +64,7 @@ function processUpdates(
 		const uuidToId = reduce<ContactsFolder, {[key: string]: string}>(
 			folders,
 			(r, f) => {
-				r[f._id!] = f.id;
+				if (f._id && f.id) r[f._id] = f.id;
 				return r;
 			},
 			{}
