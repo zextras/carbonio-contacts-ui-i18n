@@ -13,8 +13,7 @@ import {
 	normalizeContactsFolders, normalizeContact
 } from './contacts-db-utils';
 import { ContactsFolder } from './contacts-folder';
-import {ContactAddressMap, ContactAddressType, ContactPhoneType, ContactUrlType} from './contact';
-import {SyncResponseContactFolder} from "../soap";
+
 describe('DB Utils', () => {
 	test('Normalize Contact Folder, no children', () => {
 		const d = normalizeContactsFolders({
@@ -48,7 +47,7 @@ describe('DB Utils', () => {
 			s: 1,
 			l: '1',
 			view: 'contact',
-			folder : [{
+			folder: [{
 				n: 1,
 				name: 'Child Folder Name',
 				id: '1001',
@@ -80,7 +79,7 @@ describe('DB Utils', () => {
 			s: 1,
 			l: '1',
 			view: 'cont',
-			folder : [{
+			folder: [{
 				n: 1,
 				name: 'Child Folder Name',
 				id: '1001',
@@ -126,7 +125,7 @@ describe('DB Utils', () => {
 				mobilePhone: 'mobilePhone',
 				namePrefix: 'namePrefix',
 				nameSuffix: 'nameSuffix',
-				notes : 'notes',
+				notes: 'notes',
 				nickname: 'nickName',
 				otherCity: 'otherCity',
 				otherCountry: 'otherCountry',
@@ -148,38 +147,38 @@ describe('DB Utils', () => {
 		expect(mm.id).toBe('id');
 		expect(mm.address).toStrictEqual({
 			homeAddress: {
-				city: "homeCity",
-				country: "homeCountry",
-				postalCode: "homePostalCode",
-				state: "homeState",
-				street: "homeStreet",
-				type: "home"
+				city: 'homeCity',
+				country: 'homeCountry',
+				postalCode: 'homePostalCode',
+				state: 'homeState',
+				street: 'homeStreet',
+				type: 'home'
 			},
 			otherAddress: {
-				city: "otherCity",
-				country: "otherCountry",
-				postalCode: "otherPostalCode",
-				state: "otherState",
-				street: "otherStreet",
-				type: "other"
+				city: 'otherCity',
+				country: 'otherCountry',
+				postalCode: 'otherPostalCode',
+				state: 'otherState',
+				street: 'otherStreet',
+				type: 'other'
 			},
 			workAddress: {
-				city: "workCity",
-				country: "workCountry",
-				postalCode: "workPostalCode",
-				state: "workState",
-				street: "workStreet",
-				type: "work"
+				city: 'workCity',
+				country: 'workCountry',
+				postalCode: 'workPostalCode',
+				state: 'workState',
+				street: 'workStreet',
+				type: 'work'
 			}
 		});
 		expect(mm.company).toBe('company');
 		expect(mm.department).toBe('department');
 		expect(mm.email).toStrictEqual({
 			email: {
-				mail: "email"
+				mail: 'email'
 			},
 			email2: {
-				mail: "email2"
+				mail: 'email2'
 			}
 		});
 		expect(mm.firstName).toBe('firstName');
@@ -191,36 +190,36 @@ describe('DB Utils', () => {
 		expect(mm.notes).toBe('notes');
 		expect(mm.phone).toStrictEqual({
 			homePhone: {
-				number: "homePhone",
-				type: "home"
+				number: 'homePhone',
+				type: 'home'
 			},
 			mobilePhone: {
-				number: "mobilePhone",
-				type: "mobile"
+				number: 'mobilePhone',
+				type: 'mobile'
 			},
 			otherPhone: {
-				number: "otherPhone",
-				type: "other"
+				number: 'otherPhone',
+				type: 'other'
 			},
 			workPhone: {
-				number: "workPhone",
-				type: "work"
+				number: 'workPhone',
+				type: 'work'
 			}
 		});
 		expect(mm.nameSuffix).toBe('nameSuffix');
 		expect(mm.namePrefix).toBe('namePrefix');
 		expect(mm.URL).toStrictEqual({
 			homeURL: {
-				type: "home",
-				url: "homeURL"
+				type: 'home',
+				url: 'homeURL'
 			},
 			otherURL: {
-				type: "other",
-				url: "otherURL"
+				type: 'other',
+				url: 'otherURL'
 			},
 			workURL: {
-				type: "work",
-				url: "workURL"
+				type: 'work',
+				url: 'workURL'
 			}
 		});
 	});
@@ -255,7 +254,7 @@ describe('DB Utils', () => {
 				mobilePhone: '',
 				namePrefix: '',
 				nameSuffix: '',
-				notes : '',
+				notes: '',
 				nickname: '',
 				otherCity: '',
 				otherCountry: '',
@@ -277,38 +276,38 @@ describe('DB Utils', () => {
 		expect(mm.id).toBe('id');
 		expect(mm.address).toStrictEqual({
 			homeAddress: {
-				city: "",
-				country: "",
-				postalCode: "",
-				state: "",
-				street: "",
-				type: "home"
+				city: '',
+				country: '',
+				postalCode: '',
+				state: '',
+				street: '',
+				type: 'home'
 			},
 			otherAddress: {
-				city: "",
-				country: "",
-				postalCode: "",
-				state: "",
-				street: "",
-				type: "other"
+				city: '',
+				country: '',
+				postalCode: '',
+				state: '',
+				street: '',
+				type: 'other'
 			},
 			workAddress: {
-				city: "",
-				country: "",
-				postalCode: "",
-				state: "",
-				street: "",
-				type: "work"
+				city: '',
+				country: '',
+				postalCode: '',
+				state: '',
+				street: '',
+				type: 'work'
 			}
 		});
 		expect(mm.company).toBe('');
 		expect(mm.department).toBe('');
 		expect(mm.email).toStrictEqual({
 			email: {
-				mail: ""
+				mail: ''
 			},
 			email2: {
-				mail: ""
+				mail: ''
 			}
 		});
 		expect(mm.firstName).toBe('');
@@ -320,36 +319,36 @@ describe('DB Utils', () => {
 		expect(mm.notes).toBe('');
 		expect(mm.phone).toStrictEqual({
 			homePhone: {
-				number: "",
-				type: "home"
+				number: '',
+				type: 'home'
 			},
 			mobilePhone: {
-				number: "",
-				type: "mobile"
+				number: '',
+				type: 'mobile'
 			},
 			otherPhone: {
-				number: "",
-				type: "other"
+				number: '',
+				type: 'other'
 			},
 			workPhone: {
-				number: "",
-				type: "work"
+				number: '',
+				type: 'work'
 			}
 		});
 		expect(mm.nameSuffix).toBe('');
 		expect(mm.namePrefix).toBe('');
 		expect(mm.URL).toStrictEqual({
 			homeURL: {
-				type: "home",
-				url: ""
+				type: 'home',
+				url: ''
 			},
 			otherURL: {
-				type: "other",
-				url: ""
+				type: 'other',
+				url: ''
 			},
 			workURL: {
-				type: "work",
-				url: ""
+				type: 'work',
+				url: ''
 			}
 		});
 	});

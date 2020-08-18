@@ -10,13 +10,12 @@
  */
 
 import { Contact } from './contact';
-
-jest.mock('./contacts-db');
-
 import { ContactsDb } from './contacts-db';
 
 import { ContactsDbSoapSyncProtocol } from './contacts-db-soap-sync-protocol';
 import { ContactsFolder } from './contacts-folder';
+
+jest.mock('./contacts-db');
 
 describe('Contacts DB Sync Protocol', () => {
 	test('Sync - Empty response', (done) => {
