@@ -8,11 +8,11 @@
  * http://www.zextras.com/zextras-eula.html
  * *** END LICENSE BLOCK *****
  */
+jest.mock('./contacts-db');
+
 import { ContactsFolder } from './contacts-folder';
 import { ContactsDb } from './contacts-db';
 import processLocalFolderChange from './process-local-folder-change';
-
-jest.mock('./contacts-db');
 
 describe('Local Changes - Folder', () => {
 	test('Create a folder', (done) => {
