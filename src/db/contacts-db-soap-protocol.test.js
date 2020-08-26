@@ -8,11 +8,9 @@
  * http://www.zextras.com/zextras-eula.html
  * *** END LICENSE BLOCK *****
  */
-
-import { Contact } from './contact';
-
 jest.mock('./contacts-db');
 
+import { Contact } from './contact';
 import { ContactsDb } from './contacts-db';
 
 import { ContactsDbSoapSyncProtocol } from './contacts-db-soap-sync-protocol';

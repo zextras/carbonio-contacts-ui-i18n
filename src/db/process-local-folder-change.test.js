@@ -8,7 +8,6 @@
  * http://www.zextras.com/zextras-eula.html
  * *** END LICENSE BLOCK *****
  */
-
 jest.mock('./contacts-db');
 
 import { ContactsFolder } from './contacts-folder';
