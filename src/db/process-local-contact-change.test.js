@@ -8,12 +8,11 @@
  * http://www.zextras.com/zextras-eula.html
  * *** END LICENSE BLOCK *****
  */
+jest.mock('./contacts-db');
 
 import { ContactsDb } from './contacts-db';
 import processLocalContactChange from './process-local-contact-change';
 import { Contact } from './contact';
-
-jest.mock('./contacts-db');
 
 describe('Local Changes - Contact', () => {
 	test('Create a Contact', (done) => {
