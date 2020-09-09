@@ -14,11 +14,12 @@ import {
 	IDeleteChange, IUpdateChange
 } from 'dexie-observable/api';
 import { filter, reduce, map } from 'lodash';
+import { SoapFetch } from '@zextras/zapp-shell';
 import { ContactsDb, DeletionData } from './contacts-db';
 import { ContactsFolder } from './contacts-folder';
 import {
 	BatchedRequest, BatchedResponse,
-	BatchRequest, CreateFolderResponse,
+	BatchRequest, BatchResponse, CreateFolderResponse,
 	FolderActionRequest
 } from '../soap';
 
@@ -170,7 +171,7 @@ function processCreationResponse(r: BatchedResponse & CreateFolderResponse): IUp
 export default function processLocalFolderChange(
 	db: ContactsDb,
 	changes: IDatabaseChange[],
-	_fetch: (input: RequestInfo, init?: RequestInit) => Promise<Response>
+	_soapFetch: SoapFetch
 ): Promise<IDatabaseChange[]> {
 	if (changes.length < 1) return Promise.resolve([]);
 	const folderChanges = filter(changes, ['table', 'folders']);
@@ -201,26 +202,14 @@ export default function processLocalFolderChange(
 			if (!_batchRequest.CreateFolderRequest && !_batchRequest.FolderActionRequest) {
 				return _dbChanges;
 			}
-			return _fetch(
-				'/service/soap/BatchRequest',
-				{
-					method: 'POST',
-					body: JSON.stringify({
-						Body: {
-							BatchRequest: _batchRequest
-						}
-					})
-				}
+			return _soapFetch<BatchRequest, BatchResponse>(
+				'Batch',
+				_batchRequest
 			)
-				.then((response) => response.json())
-				.then((r) => {
-					if (r.Body.Fault) throw new Error(r.Body.Fault.Reason.Text);
-					else return r.Body.BatchResponse;
-				})
-				.then((BatchResponse) => {
-					if (BatchResponse.CreateFolderResponse) {
+				.then(({ CreateFolderResponse }) => {
+					if (CreateFolderResponse) {
 						const creationChanges = reduce<any, IUpdateChange[]>(
-							BatchResponse.CreateFolderResponse,
+							CreateFolderResponse,
 							(r, response) => {
 								r.push(processCreationResponse(response));
 								return r;

@@ -17,10 +17,11 @@ import {
 } from 'dexie-syncable/api';
 import { IDatabaseChange } from 'dexie-observable/api';
 import { ContactsDb } from './contacts-db';
+import { SoapFetch } from '@zextras/zapp-shell';
 
 import processLocalFolderChange from './process-local-folder-change';
 import processRemoteFolderNotifications from './process-remote-folder-notifications';
-import { SyncResponse } from '../soap';
+import { SyncRequest, SyncResponse } from '../soap';
 import processLocalContactChange from './process-local-contact-change';
 import processRemoteContactsNotification from './process-remote-contact-notification';
 
@@ -33,7 +34,7 @@ interface IContactsDexieContext extends IPersistedContext {
 export class ContactsDbSoapSyncProtocol implements ISyncProtocol {
 	constructor(
 		private _db: ContactsDb,
-		private _fetch: (input: RequestInfo, init?: RequestInit) => Promise<Response>
+		private _soapFetch: SoapFetch
 	) {}
 
 	public sync(
@@ -52,30 +53,16 @@ export class ContactsDbSoapSyncProtocol implements ISyncProtocol {
 		processLocalFolderChange(
 			this._db,
 			changes,
-			this._fetch
+			this._soapFetch
 		)
-			.then((localChangesFromRemote) => {
-				this._fetch(
-					'/service/soap/SyncRequest',
+			.then((localChangesFromRemote) => this._soapFetch<SyncRequest, SyncResponse>(
+					'Sync',
 					{
-						method: 'POST',
-						body: JSON.stringify({
-							Body: {
-								SyncRequest: {
-									_jsns: 'urn:zimbraMail',
-									typed: true,
-									token: syncedRevision
-								}
-							}
-						})
+						_jsns: 'urn:zimbraMail',
+						typed: 1,
+						token: syncedRevision
 					}
 				)
-					.then((response) => response.json())
-					.then((r) => {
-						// TODO: Handle "mail.MUST_RESYNC" fault
-						if (r.Body.Fault) throw new Error(r.Body.Fault.Reason.Text);
-						else return r.Body.SyncResponse as SyncResponse;
-					})
 					.then(
 						({
 							token,
@@ -120,13 +107,13 @@ export class ContactsDbSoapSyncProtocol implements ISyncProtocol {
 						processLocalContactChange(
 							this._db,
 							changes,
-							this._fetch
+							this._soapFetch
 						)
 							.then((_localChangesFromRemote) => {
 								localChangesFromRemote.push(..._localChangesFromRemote);
 							})
 							.then(() => processRemoteContactsNotification(
-								this._fetch,
+								this._soapFetch,
 								this._db,
 								!baseRevision,
 								changes,
@@ -166,8 +153,8 @@ export class ContactsDbSoapSyncProtocol implements ISyncProtocol {
 					})
 					.catch((e) => {
 						onError(e, POLL_INTERVAL);
-					});
-			})
+					})
+			)
 			.catch((e) => {
 				onError(e, POLL_INTERVAL);
 			});

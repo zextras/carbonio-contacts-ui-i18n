@@ -18,16 +18,10 @@ jest.mock('./contacts-db');
 describe('Notifications - Contact', () => {
 	test('Fetch Contacts', (done) => {
 		const _fetch = jest.fn().mockImplementation(() => Promise.resolve({
-			json: jest.fn().mockImplementation(() => Promise.resolve({
-				Body: {
-					GetContactsResponse: {
-						cn: [{
-							id: '1000',
-							_attrs: {}
-						}]
-					}
-				}
-			}))
+			cn: [{
+				id: '1000',
+				_attrs: {}
+			}]
 		}));
 		fetchContacts(
 			_fetch,
@@ -46,16 +40,10 @@ describe('Notifications - Contact', () => {
 	test('Initial Sync', (done) => {
 		const db = new ContactsDb();
 		const _fetch = jest.fn().mockImplementation(() => Promise.resolve({
-			json: jest.fn().mockImplementation(() => Promise.resolve({
-				Body: {
-					GetContactsResponse: {
-						cn: [{
-							id: '1000',
-							_attrs: {}
-						}]
-					}
-				}
-			}))
+			cn: [{
+				id: '1000',
+				_attrs: {}
+			}]
 		}));
 		const SyncResponse = {
 			md: 1,
@@ -102,16 +90,10 @@ describe('Notifications - Contact', () => {
 	test('Created Contact', (done) => {
 		const db = new ContactsDb();
 		const _fetch = jest.fn().mockImplementation(() => Promise.resolve({
-			json: jest.fn().mockImplementation(() => Promise.resolve({
-				Body: {
-					GetContactsResponse: {
-						cn: [{
-							id: '1000',
-							_attrs: {}
-						}]
-					}
-				}
-			}))
+			cn: [{
+				id: '1000',
+				_attrs: {}
+			}]
 		}));
 		const SyncResponse = {
 			md: 1,
@@ -160,21 +142,15 @@ describe('Notifications - Contact', () => {
 			}))
 		}));
 		const _fetch = jest.fn().mockImplementation(() => Promise.resolve({
-			json: jest.fn().mockImplementation(() => Promise.resolve({
-				Body: {
-					GetContactsResponse: {
-						cn: [{
-							id: '1000',
-							l: '7',
-							_attrs: {
-								firstName: 'Updated Test',
-								fullName: 'Updated Test, User',
-								lastName: 'User'
-							}
-						}]
-					}
+			cn: [{
+				id: '1000',
+				l: '7',
+				_attrs: {
+					firstName: 'Updated Test',
+					fullName: 'Updated Test, User',
+					lastName: 'User'
 				}
-			}))
+			}]
 		}));
 		const SyncResponse = {
 			md: 2,
@@ -240,17 +216,11 @@ describe('Notifications - Contact', () => {
 			}))
 		}));
 		const _fetch = jest.fn().mockImplementation(() => Promise.resolve({
-			json: jest.fn().mockImplementation(() => Promise.resolve({
-				Body: {
-					GetContactsResponse: {
-						cn: [{
-							id: '1000',
-							l: '1001',
-							_attrs: {}
-						}]
-					}
-				}
-			}))
+			cn: [{
+				id: '1000',
+				l: '1001',
+				_attrs: {}
+			}]
 		}));
 		const SyncResponse = {
 			md: 2,
