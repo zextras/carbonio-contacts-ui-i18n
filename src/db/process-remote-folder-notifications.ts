@@ -48,7 +48,7 @@ function searchForLocallyCreatedFolders(
 			localCreations,
 			_isCreationUpdated
 		),
-		(r, c) => {
+		(r: any, c) => {
 			r[c.mods.id] = true;
 			return r;
 		},

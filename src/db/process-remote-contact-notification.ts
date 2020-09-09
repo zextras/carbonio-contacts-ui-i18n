@@ -16,11 +16,13 @@ import { Contact } from './contact';
 import { normalizeContact } from './contacts-db-utils';
 import {
 	GetContactRequest,
-	GetContactsResponse, SoapContact,
+	GetContactsResponse,
+	SoapContact,
 	SyncResponse,
 	SyncResponseContact,
 	SyncResponseContactFolder
 } from '../soap';
+import { SoapFetch } from '@zextras/zapp-shell';
 
 /**
  * Extract all contact ids inside a given folder and all his subfolder.
@@ -46,7 +48,7 @@ function _folderReducer(r: string[], f: SyncResponseContactFolder): string[] {
 }
 
 export function fetchContacts(
-	_fetch: (input: RequestInfo, init?: RequestInit) => Promise<Response>,
+	_fetch: SoapFetch,
 	ids: string[]
 ): Promise<Contact[]> {
 	if (ids.length < 1) return Promise.resolve([]);
@@ -62,23 +64,11 @@ export function fetchContacts(
 		)
 	};
 
-	return _fetch(
-		'/service/soap/GetContactsRequest',
-		{
-			method: 'POST',
-			body: JSON.stringify({
-				Body: {
-					GetContactsRequest: getContactRequest
-				}
-			})
-		}
+	return _fetch<GetContactRequest, GetContactsResponse>(
+		'GetContacts',
+		getContactRequest
 	)
-		.then((response) => response.json())
-		.then((r) => {
-			if (r.Body.Fault) throw new Error(r.Body.Fault.Reason.Text);
-			else return r.Body.GetContactsResponse;
-		})
-		.then((response: GetContactsResponse) => {
+		.then((response) => {
 			return reduce<SoapContact, Contact[]>(
 				response.cn,
 				(r, c) => {
@@ -94,7 +84,7 @@ export function fetchContacts(
 }
 
 function extractAllContactsForInitialSync(
-	_fetch: (input: RequestInfo, init?: RequestInit) => Promise<Response>,
+	_fetch: SoapFetch,
 	folders: Array<SyncResponseContactFolder>
 ): Promise<ICreateChange[]> {
 	const cnIds = reduce<SyncResponseContactFolder, string[]>(
@@ -135,7 +125,7 @@ function searchLocalContacts(db: ContactsDb, ids: string[]): Promise<{[key: stri
 }
 
 export default function processRemoteContactsNotification(
-	_fetch: (input: RequestInfo, init?: RequestInit) => Promise<Response>,
+	_fetch: SoapFetch,
 	db: ContactsDb,
 	isInitialSync: boolean,
 	changes: IDatabaseChange[],
@@ -158,7 +148,7 @@ export default function processRemoteContactsNotification(
 			ids
 		)
 			.then((idToLocalUUIDMap) => {
-				const isLocallyCreated = {};
+				const isLocallyCreated: {[key: string]: string} = {};
 				return { idToLocalUUIDMap, isLocallyCreated };
 			})
 			.then(({ idToLocalUUIDMap, isLocallyCreated }) => {

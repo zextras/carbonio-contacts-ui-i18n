@@ -8,11 +8,9 @@
  * http://www.zextras.com/zextras-eula.html
  * *** END LICENSE BLOCK *****
  */
-
-import { Contact } from './contact';
-
 jest.mock('./contacts-db');
 
+import { Contact } from './contact';
 import { ContactsDb } from './contacts-db';
 
 import { ContactsDbSoapSyncProtocol } from './contacts-db-soap-sync-protocol';
@@ -23,17 +21,10 @@ describe('Contacts DB Sync Protocol', () => {
 		const dbContext = {
 			save: jest.fn().mockImplementation(() => Promise.resolve())
 		};
-		const response = {
-			json: jest.fn().mockImplementation(() => Promise.resolve({
-				Body: {
-					SyncResponse: {
-						md: 1,
-						token: 0
-					}
-				}
-			}))
-		};
-		const fetch = jest.fn().mockImplementation(() => Promise.resolve(response));
+		const fetch = jest.fn().mockImplementation(() => Promise.resolve({
+			md: 1,
+			token: 0
+		}));
 		const applyRemoteChanges = jest.fn().mockImplementation(() => Promise.resolve());
 		const onChangesAccepted = jest.fn();
 
@@ -69,18 +60,7 @@ describe('Contacts DB Sync Protocol', () => {
 		const dbContext = {
 			save: jest.fn().mockImplementation(() => Promise.resolve())
 		};
-		const response = {
-			json: jest.fn().mockImplementation(() => Promise.resolve({
-				Body: {
-					Fault: {
-						Reason: {
-							Text: 'A generic error.'
-						}
-					}
-				}
-			}))
-		};
-		const fetch = jest.fn().mockImplementation(() => Promise.resolve(response));
+		const fetch = jest.fn().mockImplementation(() => Promise.reject(new Error('A generic error.')));
 		const applyRemoteChanges = jest.fn().mockImplementation(() => Promise.resolve());
 		const onChangesAccepted = jest.fn();
 
@@ -118,53 +98,40 @@ describe('Contacts DB Sync Protocol', () => {
 		const dbContext = {
 			save: jest.fn().mockImplementation(() => Promise.resolve())
 		};
-		const response = {
-			json: jest.fn()
-				.mockImplementationOnce(() => Promise.resolve({
-					Body: {
-						SyncResponse: {
-							md: 1,
-							token: 1,
-							folder: [{
-								id: '11',
-								folder: [{
-									absFolderPath: '/',
-									folder: [{
-										absFolderPath: '/Contacts',
-										cn: [{
-											ids: '1000'
-										}
-										],
-										id: '7',
-										l: '1',
-										name: 'Contacts',
-										view: 'contact'
-									}
-									],
-									id: '1',
-									l: '11',
-									name: 'USER_ROOT'
-								}
-								]
-							}
-							],
-						}
-					}
-				}))
-				.mockImplementationOnce(() => Promise.resolve({
-					Body: {
-						GetContactsResponse: {
+		const fetch = jest.fn()
+			.mockImplementationOnce(() => Promise.resolve({
+				md: 1,
+				token: 1,
+				folder: [{
+					id: '11',
+					folder: [{
+						absFolderPath: '/',
+						folder: [{
+							absFolderPath: '/Contacts',
 							cn: [{
-								id: '1000',
-								l: '7',
-								_attrs: {}
+								ids: '1000'
 							}
 							],
+							id: '7',
+							l: '1',
+							name: 'Contacts',
+							view: 'contact'
 						}
+						],
+						id: '1',
+						l: '11',
+						name: 'USER_ROOT'
 					}
-				}))
-		};
-		const fetch = jest.fn().mockImplementation(() => Promise.resolve(response));
+					]
+				}],
+			}))
+			.mockImplementationOnce(() => Promise.resolve({
+				cn: [{
+					id: '1000',
+					l: '7',
+					_attrs: {}
+				}]
+			}));
 		const applyRemoteChanges = jest.fn().mockImplementation(() => Promise.resolve());
 		const onChangesAccepted = jest.fn();
 
@@ -237,43 +204,29 @@ describe('Contacts DB Sync Protocol', () => {
 		const dbContext = {
 			save: jest.fn().mockImplementation(() => Promise.resolve())
 		};
-		const response = {
-			json: jest.fn()
-				.mockImplementationOnce(() => Promise.resolve({
-					Body: {
-						BatchResponse: {
-							CreateFolderResponse: [{
-								requestId: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
-								folder: [{
-									id: '1000',
-									name: 'New Folder',
-									absFolderPath: '/New Folder',
-									l: '1'
-								}
-								]
-							}
-							]
-						}
-					}
-				}))
-				.mockImplementationOnce(() => Promise.resolve({
-					Body: {
-						SyncResponse: {
-							md: 1,
-							token: 1,
-							folder: [{
-								absFolderPath: '/New Folder',
-								id: '1000',
-								l: '1',
-								name: 'New Folder',
-								view: 'contact'
-							}
-							],
-						}
-					}
-				}))
-		};
-		const fetch = jest.fn().mockImplementation(() => Promise.resolve(response));
+		const fetch = jest.fn()
+			.mockImplementationOnce(() => Promise.resolve({
+				CreateFolderResponse: [{
+					requestId: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
+					folder: [{
+						id: '1000',
+						name: 'New Folder',
+						absFolderPath: '/New Folder',
+						l: '1'
+					}]
+				}]
+			}))
+			.mockImplementationOnce(() => Promise.resolve({
+				md: 1,
+				token: 1,
+				folder: [{
+					absFolderPath: '/New Folder',
+					id: '1000',
+					l: '1',
+					name: 'New Folder',
+					view: 'contact'
+				}]
+			}));
 		const applyRemoteChanges = jest.fn().mockImplementation(() => Promise.resolve());
 		const onChangesAccepted = jest.fn();
 

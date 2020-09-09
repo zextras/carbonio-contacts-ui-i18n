@@ -8,48 +8,37 @@
  * http://www.zextras.com/zextras-eula.html
  * *** END LICENSE BLOCK *****
  */
+jest.mock('./contacts-db');
 
 import { ContactsDb } from './contacts-db';
 import processLocalContactChange from './process-local-contact-change';
 import { Contact } from './contact';
 
-jest.mock('./contacts-db');
-
 describe('Local Changes - Contact', () => {
 	test('Create a Contact', (done) => {
 		const db = new ContactsDb();
-		const response = {
-			json: jest.fn()
-				.mockImplementationOnce(() => Promise.resolve({
-					Body: {
-						BatchResponse: {
-							CreateContactResponse: [{
-								requestId: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
-								cn: [{
-									id: '1000',
-									l: '7',
-									_attrs: {
-										firstName: 'Test',
-										lastName: 'User'
-									}
-								}]
-							}]
+		const fetch = jest.fn()
+			.mockImplementationOnce(() => Promise.resolve({
+				CreateContactResponse: [{
+					requestId: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
+					cn: [{
+						id: '1000',
+						l: '7',
+						_attrs: {
+							firstName: 'Test',
+							lastName: 'User'
 						}
-					}
-				}))
-				.mockImplementationOnce({
-					Body: {
-						SyncResponse: { // TODO: FixMe!
-							md: 1,
-							token: 1,
-							cn: [{
-								id: '1000',
-							}],
-						}
-					}
-				})
-		};
-		const fetch = jest.fn().mockImplementation(() => Promise.resolve(response));
+					}]
+				}]
+			}))
+			.mockImplementationOnce(() => Promise.resolve({
+				// TODO: FixMe!
+				md: 1,
+				token: 1,
+				cn: [{
+					id: '1000',
+				}],
+			}));
 		processLocalContactChange(
 			db,
 			[{
@@ -76,29 +65,22 @@ describe('Local Changes - Contact', () => {
 				});
 				expect(fetch).toHaveBeenCalledTimes(1);
 				expect(fetch).toHaveBeenCalledWith(
-					'/service/soap/BatchRequest',
+					'Batch',
 					{
-						method: 'POST',
-						body: JSON.stringify({
-							Body: {
-								BatchRequest: {
-									_jsns: 'urn:zimbra',
-									onerror: 'continue',
-									CreateContactRequest: [{
-										_jsns: 'urn:zimbraMail',
-										requestId: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
-										cn: {
-											m: [],
-											l: '7',
-											a: [
-												{ n: 'firstName', _content: 'Test' },
-												{ n: 'lastName', _content: 'User' }
-											]
-										}
-									}]
-								}
+						_jsns: 'urn:zimbra',
+						onerror: 'continue',
+						CreateContactRequest: [{
+							_jsns: 'urn:zimbraMail',
+							requestId: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
+							cn: {
+								m: [],
+								l: '7',
+								a: [
+									{ n: 'firstName', _content: 'Test' },
+									{ n: 'lastName', _content: 'User' }
+								]
 							}
-						})
+						}]
 					}
 				);
 				done();
@@ -118,37 +100,27 @@ describe('Local Changes - Contact', () => {
 				]))
 			}))
 		}));
-		const response = {
-			json: jest.fn()
-				.mockImplementationOnce(() => Promise.resolve({
-					Body: {
-						BatchResponse: {
-							ModifyContactResponse: [{
-								requestId: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
-								cn: [{
-									id: '1000',
-									l: '7',
-									d: 1,
-									fileAsStr: 'Updated User, Test',
-									rev: 1,
-								}]
-							}]
-						}
-					}
-				}))
-				.mockImplementationOnce({
-					Body: {
-						SyncResponse: { // TODO: FixMe!
-							md: 1,
-							token: 1,
-							cn: [{
-								id: '1000',
-							}],
-						}
-					}
-				})
-		};
-		const fetch = jest.fn().mockImplementation(() => Promise.resolve(response));
+		const fetch = jest.fn()
+			.mockImplementationOnce(() => Promise.resolve({
+				ModifyContactResponse: [{
+					requestId: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
+					cn: [{
+						id: '1000',
+						l: '7',
+						d: 1,
+						fileAsStr: 'Updated User, Test',
+						rev: 1,
+					}]
+				}]
+			}))
+			.mockImplementationOnce(() => Promise.resolve({
+				// TODO: FixMe!
+				md: 1,
+				token: 1,
+				cn: [{
+					id: '1000',
+				}],
+			}));
 		processLocalContactChange(
 			db,
 			[{
@@ -166,31 +138,24 @@ describe('Local Changes - Contact', () => {
 				expect(additionalChanges.length).toBe(0);
 				expect(fetch).toHaveBeenCalledTimes(1);
 				expect(fetch).toHaveBeenCalledWith(
-					'/service/soap/BatchRequest',
+					'Batch',
 					{
-						method: 'POST',
-						body: JSON.stringify({
-							Body: {
-								BatchRequest: {
-									_jsns: 'urn:zimbra',
-									onerror: 'continue',
-									ModifyContactRequest: [{
-										_jsns: 'urn:zimbraMail',
-										requestId: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
-										force: '1',
-										replace: '0',
-										cn: {
-											id: '1000',
-											m: [],
-											a: [
-												{ n: 'firstName', _content: 'Updated Test' },
-												{ n: 'lastName', _content: 'User' }
-											]
-										}
-									}]
-								}
+						_jsns: 'urn:zimbra',
+						onerror: 'continue',
+						ModifyContactRequest: [{
+							_jsns: 'urn:zimbraMail',
+							requestId: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
+							force: '1',
+							replace: '0',
+							cn: {
+								id: '1000',
+								m: [],
+								a: [
+									{ n: 'firstName', _content: 'Updated Test' },
+									{ n: 'lastName', _content: 'User' }
+								]
 							}
-						})
+						}]
 					}
 				);
 				done();
@@ -210,34 +175,28 @@ describe('Local Changes - Contact', () => {
 				]))
 			}))
 		}));
-		const response = {
-			json: jest.fn()
-				.mockImplementationOnce(() => Promise.resolve({
-					Body: {
-						BatchResponse: {
-							ContactActionResponse: [{
-								requestId: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
-								action: {
-									id: '1000',
-									op: 'move'
-								}
-							}]
-						}
-					}
-				}))
-				.mockImplementationOnce({
-					Body: {
-						SyncResponse: { // TODO: FixMe!
-							md: 1,
-							token: 1,
-							cn: [{
+		const fetch = jest.fn()
+			.mockImplementationOnce(() => Promise.resolve({
+				Body: {
+					BatchResponse: {
+						ContactActionResponse: [{
+							requestId: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
+							action: {
 								id: '1000',
-							}],
-						}
+								op: 'move'
+							}
+						}]
 					}
-				})
-		};
-		const fetch = jest.fn().mockImplementation(() => Promise.resolve(response));
+				}
+			}))
+			.mockImplementationOnce(() => Promise.resolve({
+				// TODO: FixMe!
+				md: 1,
+				token: 1,
+				cn: [{
+					id: '1000',
+				}]
+			}));
 		processLocalContactChange(
 			db,
 			[{
@@ -254,26 +213,19 @@ describe('Local Changes - Contact', () => {
 				expect(additionalChanges.length).toBe(0);
 				expect(fetch).toHaveBeenCalledTimes(1);
 				expect(fetch).toHaveBeenCalledWith(
-					'/service/soap/BatchRequest',
+					'Batch',
 					{
-						method: 'POST',
-						body: JSON.stringify({
-							Body: {
-								BatchRequest: {
-									_jsns: 'urn:zimbra',
-									onerror: 'continue',
-									ContactActionRequest: [{
-										_jsns: 'urn:zimbraMail',
-										requestId: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
-										action: {
-											op: 'move',
-											id: '1000',
-											l: '1001'
-										}
-									}]
-								}
+						_jsns: 'urn:zimbra',
+						onerror: 'continue',
+						ContactActionRequest: [{
+							_jsns: 'urn:zimbraMail',
+							requestId: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
+							action: {
+								op: 'move',
+								id: '1000',
+								l: '1001'
 							}
-						})
+						}]
 					}
 				);
 				done();
@@ -294,34 +246,24 @@ describe('Local Changes - Contact', () => {
 		db.deletions.where.mockImplementation(() => ({
 			anyOf
 		}));
-		const response = {
-			json: jest.fn()
-				.mockImplementationOnce(() => Promise.resolve({
-					Body: {
-						BatchResponse: {
-							ContactActionResponse: [{
-								requestId: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
-								action: {
-									op: 'delete',
-									id: '1000'
-								}
-							}]
-						}
+		const fetch = jest.fn()
+			.mockImplementationOnce(() => Promise.resolve({
+				ContactActionResponse: [{
+					requestId: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
+					action: {
+						op: 'delete',
+						id: '1000'
 					}
-				}))
-				.mockImplementationOnce({
-					Body: {
-						SyncResponse: { // TODO: FixMe!
-							md: 1,
-							token: 1,
-							cn: [{
-								id: '1000',
-							}],
-						}
-					}
-				})
-		};
-		const fetch = jest.fn().mockImplementation(() => Promise.resolve(response));
+				}]
+			}))
+			.mockImplementationOnce(() => Promise.resolve({
+				// TODO: FixMe!
+				md: 1,
+				token: 1,
+				cn: [{
+					id: '1000',
+				}]
+			}));
 		processLocalContactChange(
 			db,
 			[{
@@ -341,25 +283,18 @@ describe('Local Changes - Contact', () => {
 				});
 				expect(fetch).toHaveBeenCalledTimes(1);
 				expect(fetch).toHaveBeenCalledWith(
-					'/service/soap/BatchRequest',
+					'Batch',
 					{
-						method: 'POST',
-						body: JSON.stringify({
-							Body: {
-								BatchRequest: {
-									_jsns: 'urn:zimbra',
-									onerror: 'continue',
-									ContactActionRequest: [{
-										_jsns: 'urn:zimbraMail',
-										requestId: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
-										action: {
-											op: 'delete',
-											id: '1000',
-										}
-									}]
-								}
+						_jsns: 'urn:zimbra',
+						onerror: 'continue',
+						ContactActionRequest: [{
+							_jsns: 'urn:zimbraMail',
+							requestId: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
+							action: {
+								op: 'delete',
+								id: '1000',
 							}
-						})
+						}]
 					}
 				);
 				done();

@@ -12,12 +12,74 @@
 import {
 	map, merge, pick, reduce, startsWith, split, replace,
 } from 'lodash';
-import { ISoapSyncFolderObj } from '@zextras/zapp-shell/lib/network/ISoap';
 import {
 	Contact, ContactAddress, ContactAddressMap,
 	ContactEmailMap, ContactPhoneMap,
 	ContactUrlMap
 } from './db/contact';
+
+export type IFolderView =
+	'search folder'
+	| 'tag'
+	| 'conversation'
+	| 'message'
+	| 'contact'
+	| 'document'
+	| 'appointment'
+	| 'virtual conversation'
+	| 'remote folder'
+	| 'wiki'
+	| 'task'
+	| 'chat';
+
+export type ISoapFolderObj = {
+	absFolderPath: string;
+	activesyncdisabled: boolean;
+	deletable: boolean;
+	folder?: Array<ISoapFolderObj>;
+	i4ms: number;
+	i4next: number;
+	id: string;
+	/** Parent ID */ l: string;
+	luuid: string;
+	ms: number;
+	/** Count of non-folder items */ n: number;
+	name: string;
+	rev: number;
+	/** Size */ s: number;
+	/** Count of unread messages */ u?: number;
+	uuid: string;
+	view: IFolderView;
+	webOfflineSyncDays: number;
+}
+
+export type ISoapSyncFolderObj = {
+	absFolderPath: string;
+	acl: {};
+	activesyncdisabled: boolean;
+	color: number;
+	deletable: boolean;
+	f: string;
+	i4ms: number;
+	i4next: number;
+	id: string;
+	l: string;
+	luuid: string;
+	md: number;
+	mdver: number;
+	meta: Array<{}>;
+	ms: number;
+	n: number;
+	name: string;
+	retentionPolicy: Array<{}>;
+	rev: number;
+	s: number;
+	u: number;
+	url: string;
+	uuid: string;
+	view: IFolderView;
+	webOfflineSyncDays: number;
+};
 
 export type SyncResponseContactFolder = ISoapSyncFolderObj & {
 	cn: Array<{
@@ -42,6 +104,12 @@ type SyncResponseDeletedMapRow = {
 export type SyncResponseDeletedMap = SyncResponseDeletedMapRow & {
 	folder?: Array<SyncResponseDeletedMapRow>;
 	cn?: Array<SyncResponseDeletedMapRow>;
+};
+
+export type SyncRequest = {
+	_jsns: 'urn:zimbraMail';
+	typed: 0|1;
+	token: string;
 };
 
 export type SyncResponse = {
@@ -146,6 +214,11 @@ export type BatchRequest = {
 	CreateContactRequest?: Array<BatchedRequest & CreateContactRequest>;
 	ModifyContactRequest?: Array<BatchedRequest & ModifyContactRequest>;
 	ContactActionRequest?: Array<BatchedRequest & ContactActionRequest>;
+};
+
+export type BatchResponse = {
+	CreateFolderResponse?: Array<BatchedResponse & CreateFolderResponse>;
+	CreateContactResponse?: Array<BatchedResponse & CreateContactResponse>;
 };
 
 export type GetContactRequest = {

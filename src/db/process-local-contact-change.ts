@@ -17,13 +17,14 @@ import { ContactsDb, DeletionData } from './contacts-db';
 import { Contact } from './contact';
 import {
 	BatchedRequest, BatchedResponse,
-	BatchRequest, ContactActionRequest,
+	BatchRequest, BatchResponse, ContactActionRequest,
 	CreateContactRequest,
 	CreateContactResponse,
 	ModifyContactRequest,
 	normalizeContactAttrsToSoapOp,
 	normalizeContactChangesToSoapOp
 } from '../soap';
+import { SoapFetch } from '@zextras/zapp-shell';
 
 function processInserts(
 	db: ContactsDb,
@@ -70,7 +71,7 @@ function processUpdates(
 		const uuidToId = reduce<Contact, {[key: string]: string}>(
 			contacts,
 			(r, f) => {
-				r[f._id!] = f.id;
+				if (f._id && f.id) r[f._id] = f.id;
 				return r;
 			},
 			{}
@@ -188,7 +189,7 @@ function processCreationResponse(r: BatchedResponse & CreateContactResponse): IU
 export default function processLocalContactChange(
 	db: ContactsDb,
 	changes: IDatabaseChange[],
-	_fetch: (input: RequestInfo, init?: RequestInit) => Promise<Response>
+	_soapFetch: SoapFetch
 ): Promise<IDatabaseChange[]> {
 	if (changes.length < 1) return Promise.resolve([]);
 
@@ -223,26 +224,14 @@ export default function processLocalContactChange(
 			) {
 				return _dbChanges;
 			}
-			return _fetch(
-				'/service/soap/BatchRequest',
-				{
-					method: 'POST',
-					body: JSON.stringify({
-						Body: {
-							BatchRequest: _batchRequest
-						}
-					})
-				}
+			return _soapFetch<BatchRequest, BatchResponse>(
+				'Batch',
+				_batchRequest
 			)
-				.then((response) => response.json())
-				.then((r) => {
-					if (r.Body.Fault) throw new Error(r.Body.Fault.Reason.Text);
-					else return r.Body.BatchResponse;
-				})
-				.then((BatchResponse) => {
-					if (BatchResponse.CreateContactResponse) {
+				.then(({ CreateContactResponse }) => {
+					if (CreateContactResponse) {
 						const creationChanges = reduce<any, IUpdateChange[]>(
-							BatchResponse.CreateContactResponse,
+							CreateContactResponse,
 							(r, response) => {
 								r.push(processCreationResponse(response));
 								return r;

@@ -45,33 +45,32 @@ const contacts = {
 	partial2: {
 		lastName: 'Swindlehurst',
 	},
-}
+};
 
 describe('useDisplayName', () => {
-
 	test('useDisplayName', () => {
 		const { result, rerender } = renderHook(
 			({ contact }) => useDisplayName(contact),
-			{ initialProps: { contact: contacts.example}}
+			{ initialProps: { contact: contacts.example } }
 		);
 		expect(result.current).toBe('Sir Parker Averill Swindlehurst Junior');
 
-		rerender({ contact: contacts.mailOnly});
+		rerender({ contact: contacts.mailOnly });
 		expect(result.current).toBe('<No Name> swindlehurst@gmail.com');
 
-		rerender({ contact: contacts.empty});
+		rerender({ contact: contacts.empty });
 		expect(result.current).toBe('<No Data>');
 
 		rerender({});
 		expect(result.current).toBe('<No Data>');
 
-		rerender({ contact: contacts.empty});
+		rerender({ contact: contacts.empty });
 		expect(result.current).toBe('<No Data>');
 
-		rerender({ contact: contacts.partial});
+		rerender({ contact: contacts.partial });
 		expect(result.current).toBe('Parker');
 
-		rerender({ contact: contacts.partial2});
+		rerender({ contact: contacts.partial2 });
 		expect(result.current).toBe('Swindlehurst');
 	});
 });

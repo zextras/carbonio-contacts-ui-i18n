@@ -12,7 +12,6 @@
 import {
 	forEach, pickBy, lowerFirst, parseInt, reduce, words
 } from 'lodash';
-import { ISoapFolderObj } from '@zextras/zapp-shell/lib/network/ISoap';
 import { ContactsFolder } from './contacts-folder';
 import {
 	ContactAddress,
@@ -25,7 +24,7 @@ import {
 	ContactAddressMap,
 	ContactAddressType
 } from './contact';
-import { SoapContact, SyncResponseContactFolder } from '../soap';
+import { ISoapFolderObj, SoapContact, SyncResponseContactFolder } from '../soap';
 
 const MAIL_REG = /^email(\d*)$/;
 const PHONE_REG = /^(.*)Phone(\d*)$/;
@@ -74,8 +73,7 @@ function contactPhoneTypeFromString(s: string): ContactPhoneType {
 			return ContactPhoneType.OTHER;
 	}
 }
-
-export function contactUrlTypeFromString(s: string): ContactUrlType {
+function contactUrlTypeFromString(s: string): ContactUrlType {
 	if (!URL_REG.test(s)) return ContactUrlType.OTHER;
 	switch (s.match(URL_REG)![1]) {
 		case 'work':
