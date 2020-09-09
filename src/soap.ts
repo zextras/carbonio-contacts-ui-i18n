@@ -106,6 +106,12 @@ export type SyncResponseDeletedMap = SyncResponseDeletedMapRow & {
 	cn?: Array<SyncResponseDeletedMapRow>;
 };
 
+export type SyncRequest = {
+	_jsns: 'urn:zimbraMail';
+	typed: 0|1;
+	token: string;
+};
+
 export type SyncResponse = {
 	token: string;
 	md: number;
@@ -208,6 +214,11 @@ export type BatchRequest = {
 	CreateContactRequest?: Array<BatchedRequest & CreateContactRequest>;
 	ModifyContactRequest?: Array<BatchedRequest & ModifyContactRequest>;
 	ContactActionRequest?: Array<BatchedRequest & ContactActionRequest>;
+};
+
+export type BatchResponse = {
+	CreateFolderResponse?: Array<BatchedResponse & CreateFolderResponse>;
+	CreateContactResponse?: Array<BatchedResponse & CreateContactResponse>;
 };
 
 export type GetContactRequest = {
