@@ -14,7 +14,8 @@ import {
 	setMainMenuItems,
 	setRoutes,
 	setCreateOptions,
-	setAppContext
+	setAppContext,
+	network
 } from '@zextras/zapp-shell';
 import { ContactsDb } from './db/contacts-db';
 import { ContactsDbSoapSyncProtocol } from './db/contacts-db-soap-sync-protocol';
@@ -35,7 +36,7 @@ export default function app() {
 	}]);
 
 	const db = new ContactsDb();
-	const syncProtocol = new ContactsDbSoapSyncProtocol(db, fetch.bind(window));
+	const syncProtocol = new ContactsDbSoapSyncProtocol(db, network.soapFetch);
 	db.registerSyncProtocol('soap-contacts', syncProtocol);
 	db.syncable.connect('soap-contacts', '/service/soap/SyncRequest');
 
