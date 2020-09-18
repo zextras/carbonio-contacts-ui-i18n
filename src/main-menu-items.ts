@@ -9,7 +9,7 @@
  * *** END LICENSE BLOCK *****
  */
 import { setMainMenuItems } from '@zextras/zapp-shell';
-import { reduce, find } from 'lodash';
+import { reduce } from 'lodash';
 import { ContactsFolder } from './db/contacts-folder';
 import { ContactsDb } from './db/contacts-db';
 
@@ -37,23 +37,21 @@ function buildMenuItem(folder: ContactsFolder, db: ContactsDb): Promise<MainMenu
 		.then((children) => {
 			if (children.length > 0) {
 				return {
-					id: `contacts-folder-${folder._id}`,
+					id: `contacts-folder-${folder.id}`,
 					label: folder.name,
-					to: `/folder/${folder._id}`,
+					to: `/folder/${folder.id}`,
 					children
 				};
 			}
 			return {
-				id: `contacts-folder-${folder._id}`,
+				id: `contacts-folder-${folder.id}`,
 				label: folder.name,
-				to: `/folder/${folder._id}`
+				to: `/folder/${folder.id}`
 			};
 		});
 }
 
 export default function mainMenuItems(folders: ContactsFolder[], db: ContactsDb): void {
-	const contacts = find(folders, ['id', '7']);
-	if (!contacts || !contacts._id) return;
 	Promise.all(
 		reduce<ContactsFolder, Promise<MainMenuItem>[]>(
 			folders,
@@ -68,7 +66,7 @@ export default function mainMenuItems(folders: ContactsFolder[], db: ContactsDb)
 			setMainMenuItems([{
 				id: 'contacts-main',
 				icon: 'PeopleOutline',
-				to: `/folder/${contacts._id}`,
+				to: '/folder/7',
 				label: 'Contacts',
 				children
 			}]);
