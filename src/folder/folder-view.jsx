@@ -36,8 +36,8 @@ const cache = new CellMeasurerCache({
 function Breadcrumbs({ folderId }) {
 	const { db } = hooks.useAppContext();
 	const query = useMemo(
-		() => () => db.folders.where({ id: folderId }).toArray()
-			.then((folders) => Promise.resolve(folders[0])),
+		() => () => db.folders.get(folderId)
+			.then((folder) => Promise.resolve(folder)),
 		[db, folderId]
 	);
 	// TODO: Add the sort by
