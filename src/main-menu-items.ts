@@ -37,16 +37,16 @@ function buildMenuItem(folder: ContactsFolder, db: ContactsDb): Promise<MainMenu
 		.then((children) => {
 			if (children.length > 0) {
 				return {
-					id: `contacts-folder-${folder.id}`,
+					id: `contacts-folder-${folder._id}`,
 					label: folder.name,
-					to: `/folder/${folder.id}`,
+					to: `/folder/${folder._id}`,
 					children
 				};
 			}
 			return {
-				id: `contacts-folder-${folder.id}`,
+				id: `contacts-folder-${folder._id}`,
 				label: folder.name,
-				to: `/folder/${folder.id}`
+				to: `/folder/${folder._id}`
 			};
 		});
 }
