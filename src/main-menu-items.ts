@@ -9,7 +9,7 @@
  * *** END LICENSE BLOCK *****
  */
 import { setMainMenuItems } from '@zextras/zapp-shell';
-import { reduce } from 'lodash';
+import { reduce, find } from 'lodash';
 import { ContactsFolder } from './db/contacts-folder';
 import { ContactsDb } from './db/contacts-db';
 
@@ -52,6 +52,8 @@ function buildMenuItem(folder: ContactsFolder, db: ContactsDb): Promise<MainMenu
 }
 
 export default function mainMenuItems(folders: ContactsFolder[], db: ContactsDb): void {
+	const contacts = find(folders, ['id', '7']);
+	if (!contacts || !contacts._id) return;
 	Promise.all(
 		reduce<ContactsFolder, Promise<MainMenuItem>[]>(
 			folders,
@@ -66,7 +68,7 @@ export default function mainMenuItems(folders: ContactsFolder[], db: ContactsDb)
 			setMainMenuItems([{
 				id: 'contacts-main',
 				icon: 'PeopleOutline',
-				to: '/',
+				to: `/folder/${contacts._id}`,
 				label: 'Contacts',
 				children
 			}]);
