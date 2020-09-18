@@ -66,7 +66,7 @@ export default function mainMenuItems(folders: ContactsFolder[], db: ContactsDb)
 			setMainMenuItems([{
 				id: 'contacts-main',
 				icon: 'PeopleOutline',
-				to: '/',
+				to: '/folder/7',
 				label: 'Contacts',
 				children
 			}]);
