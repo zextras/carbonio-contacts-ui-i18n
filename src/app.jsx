@@ -20,20 +20,24 @@ import {
 import { ContactsDb } from './db/contacts-db';
 import { ContactsDbSoapSyncProtocol } from './db/contacts-db-soap-sync-protocol';
 import mainMenuItems from './main-menu-items';
+import { report } from './commons/report-exception';
 
 const lazyFolderView = lazy(() => (import(/* webpackChunkName: "folder-view" */ './folder/folder-view')));
 const lazyEditView = lazy(() => (import(/* webpackChunkName: "edit-view" */ './edit/edit-view')));
 
 export default function app() {
 	console.log('Hello from contacts');
-
+	window.onerror = (msg, url, lineNo, columnNo, error) => {
+		report(error);
+	};
 	setMainMenuItems([{
 		id: 'contacts-main',
 		icon: 'PeopleOutline',
 		to: '/',
 		label: 'Contacts',
 		children: []
-	}]);
+	}
+	]);
 
 	const db = new ContactsDb();
 	const syncProtocol = new ContactsDbSoapSyncProtocol(db, network.soapFetch);
@@ -74,8 +78,9 @@ export default function app() {
 			boardPath: '/new',
 			getPath: () => {
 				const splittedLocation = window.top.location.pathname.split('/folder');
-				return (splittedLocation[1] ? `/folder${splittedLocation[1]}` : '') + '?edit=new';
+				return `${splittedLocation[1] ? `/folder${splittedLocation[1]}` : ''}?edit=new`;
 			},
 		}
-	}]);
+	}
+	]);
 }
