@@ -27,17 +27,13 @@ const lazyEditView = lazy(() => (import(/* webpackChunkName: "edit-view" */ './e
 
 export default function app() {
 	console.log('Hello from contacts');
-	window.onerror = (msg, url, lineNo, columnNo, error) => {
-		report(error);
-	};
 	setMainMenuItems([{
 		id: 'contacts-main',
 		icon: 'PeopleOutline',
 		to: '/',
 		label: 'Contacts',
 		children: []
-	}
-	]);
+	}]);
 
 	const db = new ContactsDb();
 	const syncProtocol = new ContactsDbSoapSyncProtocol(db, network.soapFetch);
