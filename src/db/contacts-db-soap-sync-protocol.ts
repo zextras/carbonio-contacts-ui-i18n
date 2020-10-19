@@ -16,14 +16,15 @@ import {
 	ReactiveContinuation
 } from 'dexie-syncable/api';
 import { IDatabaseChange } from 'dexie-observable/api';
-import { ContactsDb } from './contacts-db';
 import { SoapFetch } from '@zextras/zapp-shell';
+import { ContactsDb } from './contacts-db';
 
 import processLocalFolderChange from './process-local-folder-change';
 import processRemoteFolderNotifications from './process-remote-folder-notifications';
 import { SyncRequest, SyncResponse } from '../soap';
 import processLocalContactChange from './process-local-contact-change';
 import processRemoteContactsNotification from './process-remote-contact-notification';
+import { report } from '../commons/report-exception';
 
 const POLL_INTERVAL = 20000;
 
@@ -56,64 +57,23 @@ export class ContactsDbSoapSyncProtocol implements ISyncProtocol {
 			this._soapFetch
 		)
 			.then((localChangesFromRemote) => this._soapFetch<SyncRequest, SyncResponse>(
-					'Sync',
-					{
-						_jsns: 'urn:zimbraMail',
-						typed: 1,
-						token: syncedRevision
-					}
-				)
-					.then(
-						({
-							token,
-							folder,
-							md,
-							cn,
-							deleted,
-						}) => new Promise<SyncResponse & { remoteChanges: IDatabaseChange[] }>(
-							(resolve, reject) => {
-								processRemoteFolderNotifications(
-									this._db,
-									!baseRevision,
-									changes,
-									localChangesFromRemote,
-									{
-										token,
-										md,
-										folder,
-										deleted
-									}
-								)
-									.then((remoteChanges) => resolve({
-										token,
-										md,
-										cn,
-										folder,
-										deleted,
-										remoteChanges
-									}))
-									.catch((e: Error) => reject(e));
-							}
-						)
-					)
-					.then(({
+				'Sync',
+				{
+					_jsns: 'urn:zimbraMail',
+					typed: 1,
+					token: syncedRevision
+				}
+			)
+				.then(
+					({
 						token,
-						cn,
-						md,
 						folder,
+						md,
+						cn,
 						deleted,
-						remoteChanges
-					}) =>
-						processLocalContactChange(
-							this._db,
-							changes,
-							this._soapFetch
-						)
-							.then((_localChangesFromRemote) => {
-								localChangesFromRemote.push(..._localChangesFromRemote);
-							})
-							.then(() => processRemoteContactsNotification(
-								this._soapFetch,
+					}) => new Promise<SyncResponse & { remoteChanges: IDatabaseChange[] }>(
+						(resolve, reject) => {
+							processRemoteFolderNotifications(
 								this._db,
 								!baseRevision,
 								changes,
@@ -121,41 +81,86 @@ export class ContactsDbSoapSyncProtocol implements ISyncProtocol {
 								{
 									token,
 									md,
-									cn,
 									folder,
 									deleted
 								}
-							))
-							.then((_remoteChanges) => remoteChanges.push(..._remoteChanges))
-							.then(() => ({ token, remoteChanges })))
-					.then(({ token, remoteChanges }) => {
-						if (context.clientIdentity !== '') {
-							context.clientIdentity = '';
-							return context.save()
-								.then(() => ({
+							)
+								.then((remoteChanges) => resolve({
 									token,
+									md,
+									cn,
+									folder,
+									deleted,
 									remoteChanges
-								}));
+								}))
+								.catch((e: Error) => {
+									reject(e);
+									report(e);
+								});
 						}
-
-						return {
-							token,
-							remoteChanges
-						};
-					})
-					.then(
-						({ token, remoteChanges }) =>
-							applyRemoteChanges([...localChangesFromRemote, ...remoteChanges], token, false)
 					)
-					.then(() => {
-						onChangesAccepted();
-						onSuccess({ again: POLL_INTERVAL });
-					})
-					.catch((e) => {
-						onError(e, POLL_INTERVAL);
-					})
-			)
+				)
+				.then(({
+					token,
+					cn,
+					md,
+					folder,
+					deleted,
+					remoteChanges
+				}) =>
+					processLocalContactChange(
+						this._db,
+						changes,
+						this._soapFetch
+					)
+						.then((_localChangesFromRemote) => {
+							localChangesFromRemote.push(..._localChangesFromRemote);
+						})
+						.then(() => processRemoteContactsNotification(
+							this._soapFetch,
+							this._db,
+							!baseRevision,
+							changes,
+							localChangesFromRemote,
+							{
+								token,
+								md,
+								cn,
+								folder,
+								deleted
+							}
+						))
+						.then((_remoteChanges) => remoteChanges.push(..._remoteChanges))
+						.then(() => ({ token, remoteChanges })))
+				.then(({ token, remoteChanges }) => {
+					if (context.clientIdentity !== '') {
+						context.clientIdentity = '';
+						return context.save()
+							.then(() => ({
+								token,
+								remoteChanges
+							}));
+					}
+
+					return {
+						token,
+						remoteChanges
+					};
+				})
+				.then(
+					({ token, remoteChanges }) =>
+						applyRemoteChanges([...localChangesFromRemote, ...remoteChanges], token, false)
+				)
+				.then(() => {
+					onChangesAccepted();
+					onSuccess({ again: POLL_INTERVAL });
+				})
+				.catch((e) => {
+					report(e);
+					onError(e, POLL_INTERVAL);
+				}))
 			.catch((e) => {
+				report(e);
 				onError(e, POLL_INTERVAL);
 			});
 	}

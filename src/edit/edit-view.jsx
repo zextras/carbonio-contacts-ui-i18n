@@ -37,6 +37,7 @@ import {
 } from '@zextras/zapp-ui';
 import { Contact } from '../db/contact';
 import { CompactView } from '../commons/contact-compact-view';
+import { report } from '../commons/report-exception';
 
 const filterEmptyValues = (values) => reduce(
 	values,
@@ -101,7 +102,8 @@ export default function EditView({ panel, editPanelId, folderId }) {
 				.toArray()
 				.then(
 					(c) => canSet && c.length > 0 && setInitialContact(c[0])
-				);
+				)
+				.catch(report);
 		}
 		return () => {
 			canSet = false;
@@ -124,7 +126,8 @@ export default function EditView({ panel, editPanelId, folderId }) {
 					else {
 						pushHistory(`/edit/${cid}`);
 					}
-				});
+				})
+				.catch(report);
 		}
 		else {
 			db.contacts.update(contact._id, contact)
@@ -133,9 +136,10 @@ export default function EditView({ panel, editPanelId, folderId }) {
 					if (panel) {
 						replaceHistory(`/folder/${folderId}?preview=${contact._id}`);
 					}
-				});
+				})
+				.catch(report);
 		}
-	}, [db, pushHistory]);
+	}, [db.contacts, folderId, panel, pushHistory, replaceHistory]);
 
 	const defaultTypes = useMemo(() => [
 		{ label: t('work'), value: 'work' },
