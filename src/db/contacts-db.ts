@@ -13,6 +13,7 @@ import Dexie, { PromiseExtended } from 'dexie';
 import { db } from '@zextras/zapp-shell';
 import { ContactsFolder } from './contacts-folder';
 import { Contact } from './contact';
+import { report } from '../commons/report-exception';
 
 export type DeletionData = {
 	_id: string;
@@ -43,13 +44,13 @@ export class ContactsDb extends db.Database {
 	}
 
 	public open(): PromiseExtended<ContactsDb> {
-		return super.open().then((_db) => _db as unknown as ContactsDb);
+		return super.open().then((_db) => _db as unknown as ContactsDb).catch(report);
 	}
 
 	public getFolderChildren(folder: ContactsFolder): Promise<ContactsFolder[]> {
 		// TODO: For locally created folders we should resolve the internal id, we should ALWAYS to that.
 		if (!folder.id) return Promise.resolve([]);
-		return this.folders.where({ parent: folder.id }).sortBy('name');
+		return this.folders.where({ parent: folder.id }).sortBy('name').catch(report);
 	}
 
 	public deleteContact(c: Contact): Promise<void> {
@@ -58,7 +59,7 @@ export class ContactsDb extends db.Database {
 			if (_c) {
 				return this.deletions.add({ _id: _c._id, id: _c.id, table: 'contacts' } as DeletionData)
 					.then(() => this.contacts.delete(_c._id as string).then(() => undefined))
-					.catch(console.error);
+					.catch(report);
 			}
 			return undefined;
 		});
@@ -74,7 +75,7 @@ export class ContactsDb extends db.Database {
 					rowId: this.createUUID(), _id: _f._id, id: _f.id, table: 'folders'
 				} as DeletionData)
 					.then(() => this.folders.delete(_f._id as string).then(() => undefined))
-					.catch(console.error);
+					.catch(report);
 			}
 			return undefined;
 		});
