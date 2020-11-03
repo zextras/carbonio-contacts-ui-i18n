@@ -1,0 +1,53 @@
+/*
+ * *** BEGIN LICENSE BLOCK *****
+ * Copyright (C) 2011-2020 Zextras
+ *
+ * The contents of this file are subject to the ZeXtras EULA;
+ * you may not use this file except in compliance with the EULA.
+ * You may obtain a copy of the EULA at
+ * http://www.zextras.com/zextras-eula.html
+ * *** END LICENSE BLOCK *****
+ */
+
+export function generateEmptySync(token) {
+	return {
+		Body: {
+			SyncResponse: {
+				token,
+			},
+		},
+	};
+}
+
+export const InitialSync = {
+	Body: {
+		SyncResponse: {
+			token: '0',
+			folder: [
+				{
+					id: '11',
+					folder: [
+						{
+							id: '1',
+							l: '11',
+							absFolderPath: '/',
+							name: 'USER_ROOT',
+							folder: [
+								{
+									id: '7',
+									l: '1',
+									absFolderPath: '/Contacts',
+									name: 'Contacts',
+									cn: [{
+										ids: '1000' /* Comma separated ids */
+									}],
+									view: 'contact'
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	}
+};
