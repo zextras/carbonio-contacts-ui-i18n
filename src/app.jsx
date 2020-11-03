@@ -9,7 +9,7 @@
  * *** END LICENSE BLOCK *****
  */
 
-import React, { lazy } from 'react';
+import React, { lazy, useEffect } from 'react';
 import {
 	setMainMenuItems,
 	setRoutes,
@@ -25,58 +25,62 @@ import { report } from './commons/report-exception';
 const lazyFolderView = lazy(() => (import(/* webpackChunkName: "folder-view" */ './folder/folder-view')));
 const lazyEditView = lazy(() => (import(/* webpackChunkName: "edit-view" */ './edit/edit-view')));
 
-export default function app() {
+export default function App() {
 	console.log('Hello from contacts');
-	setMainMenuItems([{
-		id: 'contacts-main',
-		icon: 'PeopleOutline',
-		to: '/',
-		label: 'Contacts',
-		children: []
-	}]);
 
-	const db = new ContactsDb();
-	const syncProtocol = new ContactsDbSoapSyncProtocol(db, network.soapFetch);
-	db.registerSyncProtocol('soap-contacts', syncProtocol);
-	db.syncable.connect('soap-contacts', '/service/soap/SyncRequest');
+	useEffect(() => {
+		setMainMenuItems([{
+			id: 'contacts-main',
+			icon: 'PeopleOutline',
+			to: '/',
+			label: 'Contacts',
+			children: []
+		}]);
 
-	setAppContext({
+		const db = new ContactsDb();
+		const syncProtocol = new ContactsDbSoapSyncProtocol(db, network.soapFetch);
+		db.registerSyncProtocol('soap-contacts', syncProtocol);
+		db.syncable.connect('soap-contacts', '/service/soap/SyncRequest');
+
+		setAppContext({
+			db
+		});
+
 		db
-	});
+			.observe(() => db.folders.where({ parent: '1' }).sortBy('name'))
+			.subscribe((folders) => mainMenuItems(folders, db));
 
-	db
-		.observe(() => db.folders.where({ parent: '1' }).sortBy('name'))
-		.subscribe((folders) => mainMenuItems(folders, db));
-
-	setRoutes([
-		{
-			route: '/folder/:folderId',
-			view: lazyFolderView
-		},
-		{
-			route: '/',
-			view: lazyFolderView
-		},
-		{
-			route: '/edit/:id',
-			view: lazyEditView
-		},
-		{
-			route: '/new',
-			view: lazyEditView
-		}
-	]);
-
-	setCreateOptions([{
-		id: 'create-contact',
-		label: 'New Contact',
-		app: {
-			boardPath: '/new',
-			getPath: () => {
-				const splittedLocation = window.top.location.pathname.split('/folder');
-				return `${splittedLocation[1] ? `/folder${splittedLocation[1]}` : ''}?edit=new`;
+		setRoutes([
+			{
+				route: '/folder/:folderId',
+				view: lazyFolderView
 			},
-		}
-	}
-	]);
+			{
+				route: '/',
+				view: lazyFolderView
+			},
+			{
+				route: '/edit/:id',
+				view: lazyEditView
+			},
+			{
+				route: '/new',
+				view: lazyEditView
+			}
+		]);
+
+		setCreateOptions([{
+			id: 'create-contact',
+			label: 'New Contact',
+			app: {
+				boardPath: '/new',
+				getPath: () => {
+					const splittedLocation = window.top.location.pathname.split('/folder');
+					return `${splittedLocation[1] ? `/folder${splittedLocation[1]}` : ''}?edit=new`;
+				},
+			}
+		}]);
+	}, []);
+
+	return null;
 }
