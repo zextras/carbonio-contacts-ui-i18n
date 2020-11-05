@@ -11,16 +11,15 @@
 
 import React, { lazy, useEffect } from 'react';
 import {
-	setMainMenuItems,
 	setRoutes,
 	setCreateOptions,
-	setAppContext,
-	network
+	store
 } from '@zextras/zapp-shell';
-import { ContactsDb } from './db/contacts-db';
-import { ContactsDbSoapSyncProtocol } from './db/contacts-db-soap-sync-protocol';
+import { combineReducers } from '@reduxjs/toolkit';
+import syncSliceReducer, { startSync } from './store/sync-slice';
+import foldersSliceReducer from './store/folders-slice';
+import contactsSliceReducer from './store/contacts-slice';
 import mainMenuItems from './main-menu-items';
-import { report } from './commons/report-exception';
 
 const lazyFolderView = lazy(() => (import(/* webpackChunkName: "folder-view" */ './folder/folder-view')));
 const lazyEditView = lazy(() => (import(/* webpackChunkName: "edit-view" */ './edit/edit-view')));
@@ -29,26 +28,17 @@ export default function App() {
 	console.log('Hello from contacts');
 
 	useEffect(() => {
-		setMainMenuItems([{
-			id: 'contacts-main',
-			icon: 'PeopleOutline',
-			to: '/',
-			label: 'Contacts',
-			children: []
-		}]);
+		store.setReducer(
+			combineReducers({
+				folders: foldersSliceReducer,
+				sync: syncSliceReducer,
+				contacts: contactsSliceReducer
+			})
+		);
+	}, []);
 
-		const db = new ContactsDb();
-		const syncProtocol = new ContactsDbSoapSyncProtocol(db, network.soapFetch);
-		db.registerSyncProtocol('soap-contacts', syncProtocol);
-		db.syncable.connect('soap-contacts', '/service/soap/SyncRequest');
-
-		setAppContext({
-			db
-		});
-
-		db
-			.observe(() => db.folders.where({ parent: '1' }).sortBy('name'))
-			.subscribe((folders) => mainMenuItems(folders, db));
+	useEffect(() => {
+		store.store.dispatch(startSync());
 
 		setRoutes([
 			{
@@ -81,6 +71,7 @@ export default function App() {
 			}
 		}]);
 	}, []);
+	mainMenuItems(store);
 
 	return null;
 }
