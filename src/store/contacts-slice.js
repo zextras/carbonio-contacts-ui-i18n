@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { network } from '@zextras/zapp-shell';
-import { isEmpty, reduce } from 'lodash';
+import { isEmpty, reduce, filter } from 'lodash';
 import produce from 'immer';
 import { normalizeContact } from '../db/contacts-db-utils';
 
@@ -13,7 +13,34 @@ export function findContacts(contacts) {
 	);
 }
 
-export const fetchContacts = createAsyncThunk('contacts/fetchContacts', async (ids) => {
+export const fetchContactsInFolder = createAsyncThunk('contacts/fetchContactsInFolder', async (ids) => {
+	const { cn } = await network.soapFetch(
+		'Search',
+		{
+			_jsns: 'urn:zimbraMail',
+			limit: '500',
+			offset: 0,
+			sortBy: 'none',
+			types: 'contact',
+			query: {
+				_content: `inid:"${ids}"`
+			}
+		}
+	);
+	return reduce(
+		cn,
+		(r, c) => {
+			if ((c._attrs).type && (c._attrs).type === 'group') return r;
+			r.push(
+				normalizeContact(c)
+			);
+			return r;
+		},
+		[]
+	);
+});
+
+export const fetchContact = createAsyncThunk('contacts/fetchContact', async (ids) => {
 	const currentContacts = [];
 	reduce(
 		ids,
@@ -68,6 +95,10 @@ function fetchContactsFullFilled(state, { payload }) {
 			if (!acc[v.parent]) {
 				acc[v.parent] = [];
 			}
+			const el = filter(acc[v.parent], (item) => item.id === v.id);
+			if (el.length > 0) {
+				return acc;
+			}
 			acc[v.parent].push(v);
 			return acc;
 		},
@@ -85,7 +116,7 @@ export const handleSyncData = createAsyncThunk('contacts/handleSyncData', async 
 	if (!firstSync) {
 		const updatedContacts = findContacts(cn || []);
 		if (!isEmpty(updatedContacts)) {
-			await dispatch(fetchContacts(updatedContacts));
+			await dispatch(fetchContact(updatedContacts));
 		}
 	}
 });
@@ -101,10 +132,20 @@ export const contactsSlice = createSlice({
 		[handleSyncData.pending]: produce(syncContactsPending),
 		[handleSyncData.fulfilled]: produce(syncContactsFullFilled),
 		[handleSyncData.rejected]: produce(syncContactsRejected),
-		[fetchContacts.pending]: produce(fetchContactsPending),
-		[fetchContacts.fulfilled]: produce(fetchContactsFullFilled),
-		[fetchContacts.rejected]: produce(fetchContactsRejected),
+		[fetchContact.pending]: produce(fetchContactsPending),
+		[fetchContact.fulfilled]: produce(fetchContactsFullFilled),
+		[fetchContact.rejected]: produce(fetchContactsRejected),
+		[fetchContactsInFolder.pending]: produce(fetchContactsPending),
+		[fetchContactsInFolder.fulfilled]: produce(fetchContactsFullFilled),
+		[fetchContactsInFolder.rejected]: produce(fetchContactsRejected),
 	}
 });
 
 export default contactsSlice.reducer;
+
+export function selectAllContactsInFolder({ contacts }, id) {
+	if (contacts && contacts.contacts[id]) {
+		return contacts.contacts[id];
+	}
+	return [];
+}

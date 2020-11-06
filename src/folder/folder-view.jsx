@@ -9,7 +9,7 @@
  * *** END LICENSE BLOCK *****
  */
 
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import { hooks } from '@zextras/zapp-shell';
@@ -21,12 +21,14 @@ import {
 import {Container, Divider, Text, useScreenMode} from '@zextras/zapp-ui';
 import Row from '@zextras/zapp-ui/dist/components/layout/Row';
 import Responsive from '@zextras/zapp-ui/dist/components/utilities/Responsive';
+import { useDispatch, useSelector } from 'react-redux';
 import ContactListItem from './contact-list-item';
 import useQueryParam from '../hooks/getQueryParam';
 import ContactPreviewPanel from '../preview/contact-preview-panel';
 import { VerticalDivider } from '../commons/vertical-divider';
 import EditView from '../edit/edit-view';
 import ContactEditPanel from '../edit/contact-edit-panel';
+import { fetchContact, fetchContactsInFolder, selectAllContactsInFolder } from '../store/contacts-slice';
 
 const cache = new CellMeasurerCache({
 	fixedWidth: true,
@@ -154,16 +156,14 @@ export default function FolderView() {
 }
 
 const ContactList = ({ folderId }) => {
-	const { db } = hooks.useAppContext();
-	const query = useMemo(
-		() => () =>
-			db.contacts
-				.where({ parent: folderId })
-				.sortBy('firstName'),
-		[db, folderId]
-	);
-	// TODO: Add the sort by
-	const [contacts, contactsLoaded] = hooks.useObserveDb(query, db);
+	const dispatch = useDispatch();
+	const contacts = useSelector((state) => selectAllContactsInFolder(state, folderId));
+
+	// dispatch(fetchContactsInFolder(folderId)),
+	// const [contacts, contactsLoaded] = hooks.useObserveDb(query, db);
+	useEffect(() => {
+		dispatch(fetchContactsInFolder(folderId));
+	},[]);
 
 	const rowRenderer = useCallback(
 		({
@@ -179,28 +179,32 @@ const ContactList = ({ folderId }) => {
 		),
 		[contacts]
 	);
-	return (
-		<>
-			<Breadcrumbs folderId={folderId} />
-			<Container
-				mainAlignment="flex-start"
-				crossAlignment="flex-start"
-				borderRadius="none"
-			>
-				<AutoSizer>
-					{({ height, width }) => (
-						<List
-							height={height}
-							width={width}
-							rowCount={(contacts || []).length}
-							overscanRowCount={10}
-							rowHeight={57}
-							rowRenderer={rowRenderer}
-							style={{ outline: 'none' }}
-						/>
-					)}
-				</AutoSizer>
-			</Container>
-		</>
-	);
+
+	if (contacts) {
+		return (
+			<>
+				<Breadcrumbs folderId={folderId} />
+				<Container
+					mainAlignment="flex-start"
+					crossAlignment="flex-start"
+					borderRadius="none"
+				>
+					<AutoSizer>
+						{ ({height, width}) => (
+							<List
+								height={ height }
+								width={ width }
+								rowCount={ (contacts || []).length }
+								overscanRowCount={ 10 }
+								rowHeight={ 57 }
+								rowRenderer={ rowRenderer }
+								style={ {outline: 'none'} }
+							/>
+						) }
+					</AutoSizer>
+				</Container>
+			</>
+		);
+	}
+	return <Container />;
 };

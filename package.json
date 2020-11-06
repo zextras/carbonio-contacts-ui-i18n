@@ -68,6 +68,7 @@
     "protractor-react-selector": "2.2.2",
     "react-dom": "16.11.0",
     "react-hot-loader": "4.12.15",
+    "react-redux": "^7.2.2",
     "react-router-dom": "5.1.2",
     "react-test-renderer": "16.10.2",
     "styled-components": "5.1.1",
