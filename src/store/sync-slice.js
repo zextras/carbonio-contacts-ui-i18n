@@ -13,7 +13,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import produce from 'immer';
 import { network } from '@zextras/zapp-shell';
 import { handleSyncData as handleFoldersSyncData } from './folders-slice';
-//import { handleSyncData as handleContactsSyncData } from './contacts-slice';
+import { handleSyncData as handleContactsSyncData } from './contacts-slice';
 
 const performSync = createAsyncThunk('sync/performSync', async (arg, { getState, dispatch }) => {
 	const { status, token } = getState().sync;
@@ -21,7 +21,7 @@ const performSync = createAsyncThunk('sync/performSync', async (arg, { getState,
 	if (status === 'syncing') {
 		console.log('Perform a Sync!');
 		const {
-			token: _token, folder, deleted
+			token: _token, folder, deleted, cn
 		} = await network.soapFetch(
 			'Sync',
 			{
@@ -34,9 +34,9 @@ const performSync = createAsyncThunk('sync/performSync', async (arg, { getState,
 			await dispatch(handleFoldersSyncData({
 				firstSync: !token, token: _token, folder, deleted
 			}));
-		/*	await dispatch(handleContactsSyncData({
+			await dispatch(handleContactsSyncData({
 				firstSync: !token, token: _token, folder, deleted, cn
-			})); */
+			}));
 		}
 		return ({
 			token: `${_token}`

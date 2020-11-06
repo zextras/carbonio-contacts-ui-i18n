@@ -8,7 +8,6 @@
  * http://www.zextras.com/zextras-eula.html
  * *** END LICENSE BLOCK *****
  */
-
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import produce from 'immer';
 import { network } from '@zextras/zapp-shell';
@@ -59,51 +58,6 @@ function fetchFoldersRejected(state, action) {
 	state.status = 'failed';
 }
 
-function createFoldersFullFilled(state, { payload }) {
-	const [list, tmpId] = payload;
-	state.status = 'succeeded';
-	delete state.taskList[tmpId];
-	reduce(
-		list,
-		(r, v, k) => {
-			r[k] = v;
-			return r;
-		},
-		state.taskList
-	);
-}
-
-function createFoldersRejected(state, { meta, error }) {
-	const { requestId } = meta;
-	state.taskList[requestId].error = error;
-}
-
-export const createFolders = createAsyncThunk('folders/create', async ({ name, parent }, { dispatch, requestId }) => {
-	dispatch({
-		type: 'folders/createLocalFolders',
-		payload: {
-			checked: true,
-			zid: requestId,
-			name,
-			parentZid: parent,
-			synced: false
-		}
-	});
-	const { folder } = await network.soapFetch(
-		'CreateFolder',
-		{
-			_jsns: 'urn:zimbraMail',
-			folder: {
-				f: '#',
-				l: parent,
-				name,
-				view: 'task'
-			}
-		}
-	);
-	return [findFolders(folder[0]), requestId];
-});
-
 export const handleSyncData = createAsyncThunk('folders/handleSyncData', async ({
 	firstSync, token, folder, deleted
 }, { dispatch }) => {
@@ -114,8 +68,22 @@ export const handleSyncData = createAsyncThunk('folders/handleSyncData', async (
 		});
 	}
 	else {
-		const updatedFolders = findFolders(folder ? folder[0] : []);
-		if (!isEmpty(updatedFolders)) {
+		if (!isEmpty(folder)) {
+			const updatedFolders = reduce(
+				folder,
+				(acc, v, k) => {
+					acc.push({
+						zid: v.id,
+						name: v.name,
+						parentZid: v.l,
+						tasks: {},
+						checked: false,
+						synced: true
+					});
+					return acc;
+				},
+				[]
+			);
 			await dispatch({
 				type: 'folders/updateFolders',
 				payload: updatedFolders,
@@ -177,14 +145,7 @@ export const foldersSlice = createSlice({
 		[handleSyncData.pending]: produce(fetchFoldersPending),
 		[handleSyncData.fulfilled]: produce(fetchFoldersFullFilled),
 		[handleSyncData.rejected]: produce(fetchFoldersRejected),
-		/*	[createList.pending]: produce((state, action) => {}),
-		[createList.fulfilled]: produce(createListFullFilled),
-		[createList.rejected]: produce(createListRejected) */
 	}
 });
 
 export default foldersSlice.reducer;
-
-export function selectAllFolders({ folders }) {
-	return folders ? folders.folders : [];
-}
