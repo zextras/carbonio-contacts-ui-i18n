@@ -15,11 +15,9 @@ import {
 	setCreateOptions,
 	store
 } from '@zextras/zapp-shell';
-import { combineReducers } from '@reduxjs/toolkit';
-import syncSliceReducer, { startSync } from './store/sync-slice';
-import foldersSliceReducer from './store/folders-slice';
-import contactsSliceReducer from './store/contacts-slice';
+import { startSync } from './store/sync-slice';
 import mainMenuItems from './main-menu-items';
+import reducers from './store/reducers';
 
 const lazyFolderView = lazy(() => (import(/* webpackChunkName: "folder-view" */ './folder/folder-view')));
 const lazyEditView = lazy(() => (import(/* webpackChunkName: "edit-view" */ './edit/edit-view')));
@@ -28,13 +26,7 @@ export default function App() {
 	console.log('Hello from contacts');
 
 	useEffect(() => {
-		store.setReducer(
-			combineReducers({
-				folders: foldersSliceReducer,
-				sync: syncSliceReducer,
-				contacts: contactsSliceReducer
-			})
-		);
+		store.setReducer(reducers);
 	}, []);
 
 	useEffect(() => {

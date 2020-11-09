@@ -9,6 +9,7 @@
  * *** END LICENSE BLOCK *****
  */
 
+import { network } from '@zextras/zapp-shell';
 import {
 	normalizeContactMailsToSoapOp,
 	normalizeContactPhonesToSoapOp,

@@ -22,6 +22,12 @@ const handlers = [
 			);
 		}
 		switch (req.body.Body.SyncRequest.token) {
+			case '0':
+				return res(
+					ctxt.json(
+						generateEmptySync('1')
+					)
+				);
 			default:
 				return res(
 					ctxt.json(
