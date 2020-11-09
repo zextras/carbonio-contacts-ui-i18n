@@ -12,21 +12,25 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import produce from 'immer';
 import { network } from '@zextras/zapp-shell';
 import { reduce, isEmpty, forEach } from 'lodash';
+import { ContactsFolder } from '../db/contacts-folder';
+import { ISoapFolderObj } from '../soap';
+import { IFoldersSlice } from './contacts-slice';
 
-export function findFolders(folder) {
-	const toRet = {};
-	if (folder.view === 'contact' || folder.id === '3') {
-		toRet[folder.id] = {
-			zid: folder.id,
-			name: folder.name,
-			parentZid: folder.l,
-			checked: false,
-			synced: true,
-			owner: folder.owner
-		};
+export function findFolders(soapFolderObj: ISoapFolderObj): {[k: string]: ContactsFolder} {
+	const toRet: {[k: string]: ContactsFolder} = {};
+	if (soapFolderObj.view === 'contact' || soapFolderObj.id === '3') {
+		toRet[soapFolderObj.id] = new ContactsFolder({
+			itemsCount: soapFolderObj.n,
+			name: soapFolderObj.name,
+			id: soapFolderObj.id,
+			path: soapFolderObj.absFolderPath,
+			unreadCount: soapFolderObj.u || 0,
+			size: soapFolderObj.s,
+			parent: soapFolderObj.l
+		});
 	}
 	return reduce(
-		folder.folder || [],
+		soapFolderObj.folder || [],
 		(r, f) => ({
 			...r,
 			...findFolders(f)
@@ -46,15 +50,15 @@ export const fetchFolders = createAsyncThunk('folders/fetchFolders', async () =>
 	return findFolders(folder[0]);
 });
 
-function fetchFoldersPending(state, action) {
+function fetchFoldersPending(state: IFoldersSlice) {
 	state.status = 'syncing';
 }
 
-function fetchFoldersFullFilled(state, action) {
+function fetchFoldersFullFilled(state: IFoldersSlice) {
 	state.status = 'succeeded';
 }
 
-function fetchFoldersRejected(state, action) {
+function fetchFoldersRejected(state: IFoldersSlice) {
 	state.status = 'failed';
 }
 
@@ -72,14 +76,15 @@ export const handleSyncData = createAsyncThunk('folders/handleSyncData', async (
 			const updatedFolders = reduce(
 				folder,
 				(acc, v, k) => {
-					acc.push({
-						zid: v.id,
+					acc.push(new ContactsFolder({
+						itemsCount: v.n,
 						name: v.name,
-						parentZid: v.l,
-						tasks: {},
-						checked: false,
-						synced: true
-					});
+						id: v.id,
+						path: v.absFolderPath,
+						unreadCount: v.u || 0,
+						size: v.s,
+						parent: v.l
+					}));
 					return acc;
 				},
 				[]
@@ -98,7 +103,7 @@ export const handleSyncData = createAsyncThunk('folders/handleSyncData', async (
 	}
 });
 
-function setFoldersReducer(state, { payload }) {
+function setFoldersReducer(state: IFoldersSlice, { payload }) {
 	state.folders = {};
 	reduce(
 		payload,
@@ -110,7 +115,7 @@ function setFoldersReducer(state, { payload }) {
 	);
 }
 
-function updateFoldersReducer(state, { payload }) {
+function updateFoldersReducer(state: IFoldersSlice, { payload }) {
 	reduce(
 		payload,
 		(acc, v, k) => {
@@ -121,12 +126,10 @@ function updateFoldersReducer(state, { payload }) {
 	);
 }
 
-function deleteFoldersReducer(state, { payload }) {
+function deleteFoldersReducer(state: IFoldersSlice, { payload }) {
 	forEach(
 		payload,
-		(id) => {
-			return state.folders[id] && delete state.folders[id];
-		}
+		(id) => state.folders[id] && delete state.folders[id]
 	);
 }
 

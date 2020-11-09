@@ -2,10 +2,13 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { network } from '@zextras/zapp-shell';
 import { isEmpty, reduce, filter } from 'lodash';
 import produce from 'immer';
+import { Contact } from '../db/contact';
 import { normalizeContact } from '../db/contacts-db-utils';
+import { ContactsFolder } from '../db/contacts-folder';
+import { SoapContact } from '../soap';
 
-export function findContacts(contacts) {
-	const accValue = [];
+export function findContacts(contacts: SoapContact[]): string[] {
+	const accValue: string[] = [];
 	return reduce(
 		contacts || [],
 		(acc, v) => acc.concat(v.id),
@@ -13,17 +16,17 @@ export function findContacts(contacts) {
 	);
 }
 
-export const fetchContactsInFolder = createAsyncThunk('contacts/fetchContactsInFolder', async (ids) => {
+export const fetchContactsByFolderId = createAsyncThunk('contacts/fetchContactsByFolderId', async (id) => {
 	const { cn } = await network.soapFetch(
 		'Search',
 		{
 			_jsns: 'urn:zimbraMail',
 			limit: '500',
 			offset: 0,
-			sortBy: 'none',
+			sortBy: 'nameAsc',
 			types: 'contact',
 			query: {
-				_content: `inid:"${ids}"`
+				_content: `inid:"${id}"`
 			}
 		}
 	);
@@ -40,8 +43,8 @@ export const fetchContactsInFolder = createAsyncThunk('contacts/fetchContactsInF
 	);
 });
 
-export const fetchContact = createAsyncThunk('contacts/fetchContact', async (ids) => {
-	const currentContacts = [];
+export const fetchContact = createAsyncThunk('contacts/fetchContact', async (ids: string[]) => {
+	const currentContacts: {[k: string]: string}[] = [];
 	reduce(
 		ids,
 		(acc, v) => {
@@ -72,23 +75,23 @@ export const fetchContact = createAsyncThunk('contacts/fetchContact', async (ids
 	);
 });
 
-function syncContactsPending(state, action) {
+function syncContactsPending(state: IContactsSlice) {
 	state.status = 'syncing';
 }
 
-function syncContactsFullFilled(state, action) {
+function syncContactsFullFilled(state: IContactsSlice) {
 	state.status = 'succeeded';
 }
 
-function syncContactsRejected(state, action) {
+function syncContactsRejected(state: IContactsSlice) {
 	state.status = 'failed';
 }
 
-function fetchContactsPending(state, action) {
-
+function fetchContactsPending() {
+	console.log('Pending');
 }
 
-function fetchContactsFullFilled(state, { payload }) {
+function fetchContactsFullFilled(state: IContactsSlice, { payload }) {
 	reduce(
 		payload,
 		(acc, v) => {
@@ -106,7 +109,7 @@ function fetchContactsFullFilled(state, { payload }) {
 	);
 }
 
-function fetchContactsRejected(state, action) {
+function fetchContactsRejected() {
 	console.log('failed');
 }
 
@@ -125,7 +128,7 @@ export const contactsSlice = createSlice({
 	name: 'contacts',
 	initialState: {
 		status: 'idle',
-		contacts: {}
+		contacts: {},
 	},
 	reducers: { },
 	extraReducers: {
@@ -135,17 +138,39 @@ export const contactsSlice = createSlice({
 		[fetchContact.pending]: produce(fetchContactsPending),
 		[fetchContact.fulfilled]: produce(fetchContactsFullFilled),
 		[fetchContact.rejected]: produce(fetchContactsRejected),
-		[fetchContactsInFolder.pending]: produce(fetchContactsPending),
-		[fetchContactsInFolder.fulfilled]: produce(fetchContactsFullFilled),
-		[fetchContactsInFolder.rejected]: produce(fetchContactsRejected),
+		[fetchContactsByFolderId.pending]: produce(fetchContactsPending),
+		[fetchContactsByFolderId.fulfilled]: produce(fetchContactsFullFilled),
+		[fetchContactsByFolderId.rejected]: produce(fetchContactsRejected),
 	}
 });
 
 export default contactsSlice.reducer;
 
-export function selectAllContactsInFolder({ contacts }, id) {
+export function selectAllContactsInFolder({ contacts }: IState, id: string) {
 	if (contacts && contacts.contacts[id]) {
 		return contacts.contacts[id];
 	}
 	return [];
+}
+
+export interface IState {
+	sync: ISyncSlice;
+	folders: IFoldersSlice;
+	contacts: IContactsSlice;
+}
+
+export interface IContactsSlice {
+	status: string;
+	contacts: {[k: string]: Contact[]};
+}
+
+export interface ISyncSlice {
+	status: string;
+	intervalId: number;
+	token: string;
+}
+
+export interface IFoldersSlice {
+	status: string;
+	folders: {[k: string]: ContactsFolder[]};
 }

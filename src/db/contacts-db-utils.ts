@@ -156,7 +156,7 @@ function normalizeContactUrls(c: SoapContact): ContactUrlMap {
 }
 
 export function normalizeContact(c: SoapContact) {
-	return {
+	return new Contact({
 		parent: c.l,
 		id: c.id,
 		address: normalizeContactAddresses(c),
@@ -176,5 +176,5 @@ export function normalizeContact(c: SoapContact) {
 		nameSuffix: c._attrs.nameSuffix || '',
 		namePrefix: c._attrs.namePrefix || '',
 		URL: normalizeContactUrls(c)
-	};
+	});
 }

@@ -9,16 +9,21 @@
  * *** END LICENSE BLOCK *****
  */
 
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
-import { hooks } from '@zextras/zapp-shell';
+import { hooks, store } from '@zextras/zapp-shell';
 import {
 	AutoSizer,
 	CellMeasurerCache,
 	List
 } from 'react-virtualized';
-import {Container, Divider, Text, useScreenMode} from '@zextras/zapp-ui';
+import {
+	Container,
+	Divider,
+	Text,
+	useScreenMode
+} from '@zextras/zapp-ui';
 import Row from '@zextras/zapp-ui/dist/components/layout/Row';
 import Responsive from '@zextras/zapp-ui/dist/components/utilities/Responsive';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,9 +31,8 @@ import ContactListItem from './contact-list-item';
 import useQueryParam from '../hooks/getQueryParam';
 import ContactPreviewPanel from '../preview/contact-preview-panel';
 import { VerticalDivider } from '../commons/vertical-divider';
-import EditView from '../edit/edit-view';
 import ContactEditPanel from '../edit/contact-edit-panel';
-import { fetchContact, fetchContactsInFolder, selectAllContactsInFolder } from '../store/contacts-slice';
+import { fetchContactsByFolderId, selectAllContactsInFolder } from '../store/contacts-slice';
 
 const cache = new CellMeasurerCache({
 	fixedWidth: true,
@@ -68,7 +72,7 @@ Breadcrumbs.propTypes = {
 export default function FolderView() {
 	let { folderId } = useParams();
 	if (!folderId) {
-		folderId = '7'; // '/Contacts'
+		folderId = '7';
 	}
 
 	const screen = useScreenMode();
@@ -158,12 +162,15 @@ export default function FolderView() {
 const ContactList = ({ folderId }) => {
 	const dispatch = useDispatch();
 	const contacts = useSelector((state) => selectAllContactsInFolder(state, folderId));
-
-	// dispatch(fetchContactsInFolder(folderId)),
 	// const [contacts, contactsLoaded] = hooks.useObserveDb(query, db);
-	useEffect(() => {
-		dispatch(fetchContactsInFolder(folderId));
-	},[]);
+	const contact = store.store.getState().contacts;
+	console.log(contact);
+	useMemo(() => {
+		if (contact.contacts && contact.contacts[folderId] && contact.contacts[folderId].length) {
+			return;
+		}
+		dispatch(fetchContactsByFolderId(folderId));
+	}, []);
 
 	const rowRenderer = useCallback(
 		({
@@ -190,15 +197,15 @@ const ContactList = ({ folderId }) => {
 					borderRadius="none"
 				>
 					<AutoSizer>
-						{ ({height, width}) => (
+						{ ({ height, width }) => (
 							<List
-								height={ height }
-								width={ width }
-								rowCount={ (contacts || []).length }
-								overscanRowCount={ 10 }
-								rowHeight={ 57 }
-								rowRenderer={ rowRenderer }
-								style={ {outline: 'none'} }
+								height={height}
+								width={width}
+								rowCount={(contacts || []).length}
+								overscanRowCount={10}
+								rowHeight={57}
+								rowRenderer={rowRenderer}
+								style={{ outline: 'none' }}
 							/>
 						) }
 					</AutoSizer>

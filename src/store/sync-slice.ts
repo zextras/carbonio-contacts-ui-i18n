@@ -13,7 +13,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import produce from 'immer';
 import { network } from '@zextras/zapp-shell';
 import { handleSyncData as handleFoldersSyncData } from './folders-slice';
-import { handleSyncData as handleContactsSyncData } from './contacts-slice';
+import { handleSyncData as handleContactsSyncData, ISyncSlice } from './contacts-slice';
 
 const performSync = createAsyncThunk('sync/performSync', async (arg, { getState, dispatch }) => {
 	const { status, token } = getState().sync;
@@ -48,13 +48,13 @@ const performSync = createAsyncThunk('sync/performSync', async (arg, { getState,
 	});
 });
 
-function performSyncPending(state, action) {
+function performSyncPending(state: ISyncSlice) {
 	if (state.status === 'idle' || state.status === 'init') {
 		state.status = 'syncing';
 	}
 }
 
-function performSyncFulfilled(state, { payload }) {
+function performSyncFulfilled(state: ISyncSlice, { payload }) {
 	const { token } = payload;
 	state.token = token;
 	state.status = state.intervalId > 0 ? 'idle' : 'stopped';
@@ -104,13 +104,13 @@ export const stopSync = createAsyncThunk('sync/stop', (arg, { getState, dispatch
 	});
 });
 
-function startStopSyncFulfilled(state, { payload }) {
+function startStopSyncFulfilled(state: ISyncSlice, { payload }) {
 	const { status, intervalId } = payload;
 	state.status = status;
 	state.intervalId = intervalId;
 }
 
-function setStatusR(state, { payload }) {
+function setStatusR(state: ISyncSlice, { payload }) {
 	state.status = payload.status;
 }
 
