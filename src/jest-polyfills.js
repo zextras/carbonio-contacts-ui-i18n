@@ -9,4 +9,4 @@
  * *** END LICENSE BLOCK *****
  */
 
-require('whatwg-fetch');
+require('node-fetch');
