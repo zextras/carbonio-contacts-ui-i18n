@@ -12,4 +12,13 @@ module.exports = {
 	// coverageDirectory: 'test/coverage',
 	coverageReporters: ['text'],
 	// testMatch: ['/test/**/*.js?(x)'],
+	moduleNameMapper: {
+		"^@zextras/zapp-shell$": "<rootDir>/node_modules/@zextras/zapp-shell/build/jest-mocks.js"
+	},
+	setupFilesAfterEnv: [
+		"<rootDir>/src/jest-env-setup.js"
+	],
+	setupFiles: [
+		"<rootDir>/src/jest-polyfills.js"
+	]
 };
