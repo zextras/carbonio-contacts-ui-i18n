@@ -15,7 +15,7 @@ import {
 } from 'lodash';
 import { ContactsDb } from './contacts-db';
 import { ContactsFolder } from './contacts-folder';
-import { normalizeContactsFolders } from './contacts-db-utils';
+import { normalizeContactsFolders } from './contact';
 import { SyncResponse } from '../soap';
 
 function searchLocalFolders(db: ContactsDb, ids: string[]): Promise<{[key: string]: string}> {

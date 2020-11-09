@@ -28,7 +28,7 @@ export const useDisplayName = (contact) => useMemo(
 					contact.nameSuffix || ''
 				}`);
 			}
-			if (contact.email.length > 0) return `<No Name> ${contact.email[0].mail}`;
+			if (contact.email && contact.email.length > 0) return `<No Name> ${contact.email[0].mail}`;
 		}
 		return '<No Data>';
 	},

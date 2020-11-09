@@ -18,16 +18,16 @@ import {
 
 const nest = (foldersList, id) => {
 	let children;
-	const childrenFolders = filter(foldersList, (item) => item.parentZid === id);
+	const childrenFolders = filter(foldersList, (item) => item.parent === id);
 	(childrenFolders.length > 0
 		? children = map(
 			childrenFolders,
 			(item) => ({
-				id: `mails-folder-${item.zid}`,
-				zid: item.zid,
+				id: `mails-folder-${item.id}`,
+				zid: item.id,
 				label: item.name,
-				to: `/folder/${item.zid}`,
-				children: nest(foldersList, item.zid)
+				to: `/folder/${item.id}`,
+				children: nest(foldersList, item.id)
 			})
 		)
 		: children = []);
@@ -36,11 +36,11 @@ const nest = (foldersList, id) => {
 
 export function buildMenuItem(folders, foldersList) {
 	return {
-		id: `mails-folder-${folders.zid}`,
-		zid: folders.zid,
+		id: `mails-folder-${folders.id}`,
+		zid: folders.id,
 		label: folders.name,
-		to: `/folder/${folders.zid}`,
-		children: nest(foldersList, folders.zid)
+		to: `/folder/${folders.id}`,
+		children: nest(foldersList, folders.id)
 	};
 }
 
@@ -55,8 +55,8 @@ export default function mainMenuItems({ store }) {
 		Promise.all(
 			reduce(
 				foldersList,
-				(r, v, k) => {
-					if (v.parentZid === '1') {
+				(r, v) => {
+					if (v.parent === '1') {
 						r.push(buildMenuItem(v, foldersList));
 					}
 					return r;

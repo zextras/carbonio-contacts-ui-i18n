@@ -235,7 +235,7 @@ const ContactField = ({
 		crossAlignment="flex-start"
 		padding={{ all: 'small' }}
 		width={width || '48%'}
-		style={{ minHeight: '48px', maxWidth : limit ? 'calc(100% - 48px)' : '100%' }}
+		style={{ minHeight: '48px', maxWidth: limit ? 'calc(100% - 48px)' : '100%' }}
 	>
 		<Text color="secondary">{label}</Text>
 		<Row

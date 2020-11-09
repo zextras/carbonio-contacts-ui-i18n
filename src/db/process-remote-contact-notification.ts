@@ -11,9 +11,9 @@
 
 import { ICreateChange, IDatabaseChange } from 'dexie-observable/api';
 import { reduce, map, omit } from 'lodash';
+import { SoapFetch } from '@zextras/zapp-shell';
 import { ContactsDb } from './contacts-db';
-import { Contact } from './contact';
-import { normalizeContact } from './contacts-db-utils';
+import { Contact, normalizeContact } from './contact';
 import {
 	GetContactRequest,
 	GetContactsResponse,
@@ -22,7 +22,6 @@ import {
 	SyncResponseContact,
 	SyncResponseContactFolder
 } from '../soap';
-import { SoapFetch } from '@zextras/zapp-shell';
 
 /**
  * Extract all contact ids inside a given folder and all his subfolder.
@@ -68,19 +67,17 @@ export function fetchContacts(
 		'GetContacts',
 		getContactRequest
 	)
-		.then((response) => {
-			return reduce<SoapContact, Contact[]>(
-				response.cn,
-				(r, c) => {
-					if ((c._attrs as any).type && (c._attrs as any).type === 'group') return r;
-					r.push(
-						normalizeContact(c)
-					);
-					return r;
-				},
-				[]
-			);
-		});
+		.then((response) => reduce<SoapContact, Contact[]>(
+			response.cn,
+			(r, c) => {
+				if ((c._attrs as any).type && (c._attrs as any).type === 'group') return r;
+				r.push(
+					normalizeContact(c)
+				);
+				return r;
+			},
+			[]
+		));
 }
 
 function extractAllContactsForInitialSync(

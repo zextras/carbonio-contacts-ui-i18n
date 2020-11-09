@@ -9,39 +9,27 @@
  * *** END LICENSE BLOCK *****
  */
 
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import { hooks } from '@zextras/zapp-shell';
 import { Divider } from '@zextras/zapp-ui';
+import { useSelector } from 'react-redux';
 import ContactPreviewHeader from './contact-preview-header';
 import ContactPreviewContent from './contact-preview-content';
 import { useDisplayName } from '../commons/use-display-name';
+import { selectContact } from '../store/contacts-slice';
 
 export default function ContactPreviewPanel({ contactInternalId, folderId }) {
 	const replaceHistory = hooks.useReplaceHistoryCallback();
-	const { db } = hooks.useAppContext();
-	const query = useMemo(
-		() => () => db.contacts
-			.where({ _id: contactInternalId })
-			.toArray()
-			.then(
-				(c) => Promise.resolve(c[0])
-			),
-		[db, contactInternalId]
-	);
-	// TODO: Add the sort by
-
-	const [contact, contactLoaded] = hooks.useObserveDb(query, db);
+	const contact = useSelector((state) => selectContact(state, folderId, contactInternalId));
 
 	const onEdit = useCallback(
 		() => replaceHistory(`/folder/${folderId}?edit=${contactInternalId}`),
 		[contactInternalId, folderId, replaceHistory]
 	);
-
+	// todo: implement delete
 	const onDelete = useCallback(() => {
-		db.contacts
-			.update(contactInternalId, { parent: '3' })
-			.then(() => replaceHistory(`/folder/${folderId}`));
-	}, [db, contactInternalId, folderId, replaceHistory]);
+
+	}, [contactInternalId, folderId, replaceHistory]);
 
 	const onClose = useCallback(
 		() => replaceHistory(`/folder/${folderId}`),
@@ -50,7 +38,7 @@ export default function ContactPreviewPanel({ contactInternalId, folderId }) {
 
 	const displayName = useDisplayName(contact);
 
-	if (contactLoaded) {
+	if (contact && displayName) {
 		return (
 			<>
 				<ContactPreviewHeader displayName={displayName} onClose={onClose} />

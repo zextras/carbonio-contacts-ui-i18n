@@ -11,7 +11,7 @@
 
 import {
 	normalizeContactsFolders, normalizeContact
-} from './contacts-db-utils';
+} from './contact';
 import { ContactsFolder } from './contacts-folder';
 
 describe('DB Utils', () => {

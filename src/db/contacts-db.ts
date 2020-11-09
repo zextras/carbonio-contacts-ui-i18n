@@ -10,7 +10,6 @@
  */
 
 import Dexie, { PromiseExtended } from 'dexie';
-import { db } from '@zextras/zapp-shell';
 import { ContactsFolder } from './contacts-folder';
 import { Contact } from './contact';
 import { report } from '../commons/report-exception';
@@ -48,7 +47,6 @@ export class ContactsDb extends db.Database {
 	}
 
 	public getFolderChildren(folder: ContactsFolder): Promise<ContactsFolder[]> {
-		// TODO: For locally created folders we should resolve the internal id, we should ALWAYS to that.
 		if (!folder.id) return Promise.resolve([]);
 		return this.folders.where({ parent: folder.id }).sortBy('name').catch(report);
 	}

@@ -13,8 +13,11 @@ import {
 	map, merge, pick, reduce, startsWith, split, replace,
 } from 'lodash';
 import {
-	Contact, ContactAddress, ContactAddressMap,
-	ContactEmailMap, ContactPhoneMap,
+	Contact,
+	ContactAddress,
+	ContactAddressMap,
+	ContactEmailMap,
+	ContactPhoneMap,
 	ContactUrlMap
 } from './db/contact';
 
@@ -367,7 +370,7 @@ function normalizeChangeMailsToSoapOp(c: { [key: string]: any }) {
 				if (typeof (v) !== 'string') {
 					value = v.mail;
 				}
-				else{
+				else {
 					value = v;
 				}
 				return {
@@ -392,7 +395,7 @@ function normalizeChangePhonesToSoapOp(c: { [key: string]: any }) {
 				if (typeof (v) !== 'string') {
 					value = v.number;
 				}
-				else{
+				else {
 					value = v;
 				}
 				return {
@@ -442,21 +445,19 @@ function normalizeChangeAddressesToSoapOp(c: { [key: string]: any }) {
 						[replace(keyparts[1], 'Address', capitalize(keyparts[2]))]: v
 					};
 				}
-				else {
-					return {
-						...acc,
-						...reduce(
-							v,
-							(acc2, v2, k2) => (k2 !== 'type'
-								? ({
-									...acc2,
-									[replace(keyparts[1], 'Address', capitalize(String(k2)))]: v2
-								})
-								: acc2),
-							{}
-						)
-					};
-				}
+				return {
+					...acc,
+					...reduce(
+						v,
+						(acc2, v2, k2) => (k2 !== 'type'
+							? ({
+								...acc2,
+								[replace(keyparts[1], 'Address', capitalize(String(k2)))]: v2
+							})
+							: acc2),
+						{}
+					)
+				};
 			}
 			return acc;
 		},

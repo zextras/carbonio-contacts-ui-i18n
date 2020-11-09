@@ -9,10 +9,9 @@
  * *** END LICENSE BLOCK *****
  */
 
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
-import { hooks, store } from '@zextras/zapp-shell';
 import {
 	AutoSizer,
 	CellMeasurerCache,
@@ -33,6 +32,7 @@ import ContactPreviewPanel from '../preview/contact-preview-panel';
 import { VerticalDivider } from '../commons/vertical-divider';
 import ContactEditPanel from '../edit/contact-edit-panel';
 import { fetchContactsByFolderId, selectAllContactsInFolder } from '../store/contacts-slice';
+import { selectFolder } from '../store/folders-slice';
 
 const cache = new CellMeasurerCache({
 	fixedWidth: true,
@@ -40,15 +40,7 @@ const cache = new CellMeasurerCache({
 });
 
 function Breadcrumbs({ folderId }) {
-	const { db } = hooks.useAppContext();
-	const query = useMemo(
-		() => () => db.folders.where({ id: folderId }).toArray()
-			.then((folders) => Promise.resolve(folders[0])),
-		[db, folderId]
-	);
-	// TODO: Add the sort by
-	const [folder, folderLoaded] = hooks.useObserveDb(query, db);
-
+	const folder = useSelector((state) => selectFolder(state, folderId));
 	return (
 		<Container
 			background="gray5"
@@ -59,7 +51,7 @@ function Breadcrumbs({ folderId }) {
 				height={48}
 				padding={{ all: 'medium' }}
 			>
-				<Text size="large">{ folderLoaded && folder && folder.path }</Text>
+				<Text size="large">{ folder && folder.path }</Text>
 			</Row>
 			<Divider />
 		</Container>
@@ -78,7 +70,6 @@ export default function FolderView() {
 	const screen = useScreenMode();
 	const previewId = useQueryParam('preview');
 	const editId = useQueryParam('edit');
-
 	const MemoPanel = useMemo(() => {
 		if (editId) {
 			return (
@@ -162,15 +153,11 @@ export default function FolderView() {
 const ContactList = ({ folderId }) => {
 	const dispatch = useDispatch();
 	const contacts = useSelector((state) => selectAllContactsInFolder(state, folderId));
-	// const [contacts, contactsLoaded] = hooks.useObserveDb(query, db);
-	const contact = store.store.getState().contacts;
-	console.log(contact);
-	useMemo(() => {
-		if (contact.contacts && contact.contacts[folderId] && contact.contacts[folderId].length) {
-			return;
+	useEffect(() => {
+		if (!contacts) {
+			dispatch(fetchContactsByFolderId(folderId));
 		}
-		dispatch(fetchContactsByFolderId(folderId));
-	}, []);
+	}, [contacts, folderId]);
 
 	const rowRenderer = useCallback(
 		({
@@ -187,7 +174,7 @@ const ContactList = ({ folderId }) => {
 		[contacts]
 	);
 
-	if (contacts) {
+	if ((contacts || []).length) {
 		return (
 			<>
 				<Breadcrumbs folderId={folderId} />

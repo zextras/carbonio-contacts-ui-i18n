@@ -1,6 +1,6 @@
 /*
  * *** BEGIN LICENSE BLOCK *****
- * Copyright (C) 2011-2020 ZeXtras
+ * Copyright (C) 2011-2020 Zextras
  *
  * The contents of this file are subject to the ZeXtras EULA;
  * you may not use this file except in compliance with the EULA.
@@ -8,6 +8,17 @@
  * http://www.zextras.com/zextras-eula.html
  * *** END LICENSE BLOCK *****
  */
+
+import {
+	forEach,
+	lowerFirst,
+	parseInt,
+	pickBy,
+	reduce,
+	words
+} from 'lodash';
+import { ISoapFolderObj, SoapContact, SyncResponseContactFolder } from '../soap';
+import { ContactsFolder } from './contacts-folder';
 
 export enum ContactPhoneType {
 	MOBILE = 'mobile',
@@ -56,9 +67,9 @@ export type ContactEmailMap = { [key: string]: ContactEmail };
 export type ContactPhoneMap = { [key: string]: ContactPhone };
 export type ContactUrlMap = { [key: string]: ContactUrl };
 
-export interface IContact {
-	/** Internal UUID */ _id?: string;
-	/** Zimbra ID */ id?: string;
+export type Contact = {
+	/* Internal UUID */ _id?: string; // todo: delete this param?
+	/* Zimbra ID */ id?: string;
 	firstName: string;
 	middleName: string;
 	lastName: string;
@@ -77,103 +88,165 @@ export interface IContact {
 	URL: ContactUrlMap;
 }
 
-export class Contact implements IContact {
-	parent: string;
+const MAIL_REG = /^email(\d*)$/;
+const PHONE_REG = /^(.*)Phone(\d*)$/;
+const URL_REG = /^(.*)URL(\d*)$/;
+const ADDR_PART_REG = /^(.*)(City|Country|PostalCode|State|Street)(\d*)$/;
 
-	id?: string;
+function normalizeFolder(soapFolderObj: ISoapFolderObj): ContactsFolder {
+	return new ContactsFolder({
+		itemsCount: soapFolderObj.n,
+		name: soapFolderObj.name,
+		// _id: soapFolderObj.uuid,
+		id: soapFolderObj.id,
+		path: soapFolderObj.absFolderPath,
+		unreadCount: soapFolderObj.u || 0,
+		size: soapFolderObj.s,
+		parent: soapFolderObj.l
+	});
+}
 
-	_id?: string;
-
-	address: { [key: string]: ContactAddress };
-
-	company: string;
-
-	department: string;
-
-	email: { [key: string]: ContactEmail };
-
-	namePrefix: string;
-
-	firstName: string;
-
-	middleName: string;
-
-	lastName: string;
-
-	nickName: string;
-
-	nameSuffix: string;
-
-	image: string;
-
-	jobTitle: string;
-
-	notes: string;
-
-	phone: { [key: string]: ContactPhone };
-
-	URL: { [key: string]: ContactUrl };
-
-	constructor({
-		_id,
-		parent,
-		id,
-		address,
-		company,
-		department,
-		email,
-		namePrefix,
-		firstName,
-		middleName,
-		lastName,
-		nickName,
-		nameSuffix,
-		image,
-		jobTitle,
-		notes,
-		phone,
-		URL
-	}: IContact) {
-		this._id = _id;
-		this.parent = parent;
-		this.id = id;
-		this.address = address;
-		this.company = company;
-		this.department = department;
-		this.email = email;
-		this.namePrefix = namePrefix;
-		this.firstName = firstName;
-		this.middleName = middleName;
-		this.lastName = lastName;
-		this.nickName = nickName;
-		this.nameSuffix = nameSuffix;
-		this.image = image;
-		this.jobTitle = jobTitle;
-		this.notes = notes;
-		this.phone = phone;
-		this.URL = URL;
+export function normalizeContactsFolders(f: SyncResponseContactFolder): ContactsFolder[] {
+	if (!f) return [];
+	let children: ContactsFolder[] = [];
+	if (f.folder) {
+		forEach(f.folder, (c: SyncResponseContactFolder) => {
+			const child = normalizeContactsFolders(c);
+			children = [...children, ...child];
+		});
+	}
+	if (f.id === '3' || (f.view && f.view === 'contact')) {
+		return [normalizeFolder(f), ...children];
 	}
 
-	public toMap(): IContact {
-		return {
-			_id: this._id,
-			id: this.id,
-			parent: this.parent,
-			address: this.address,
-			company: this.company,
-			department: this.department,
-			email: this.email,
-			nameSuffix: this.nameSuffix,
-			firstName: this.firstName,
-			middleName: this.middleName,
-			lastName: this.lastName,
-			nickName: this.nickName,
-			namePrefix: this.namePrefix,
-			image: this.image,
-			jobTitle: this.jobTitle,
-			notes: this.notes,
-			phone: this.phone,
-			URL: this.URL,
-		};
+	return children;
+}
+
+function contactPhoneTypeFromString(s: string): ContactPhoneType {
+	if (!PHONE_REG.test(s)) return ContactPhoneType.OTHER;
+	switch (s.match(PHONE_REG)![1]) {
+		case 'mobile':
+			return ContactPhoneType.MOBILE;
+		case 'work':
+			return ContactPhoneType.WORK;
+		case 'home':
+			return ContactPhoneType.HOME;
+		default:
+			return ContactPhoneType.OTHER;
 	}
+}
+
+function contactUrlTypeFromString(s: string): ContactUrlType {
+	if (!URL_REG.test(s)) return ContactUrlType.OTHER;
+	switch (s.match(URL_REG)![1]) {
+		case 'work':
+			return ContactUrlType.WORK;
+		case 'home':
+			return ContactUrlType.HOME;
+		default:
+			return ContactUrlType.OTHER;
+	}
+}
+
+const getParts: (key: string) => [ContactAddressType, keyof ContactAddress, number] = (key) => {
+	const [type, subType, index, opt]: string[] = words(key);
+	return [
+		type as ContactAddressType,
+		lowerFirst(subType === 'Postal' ? 'postalCode' : subType) as keyof ContactAddress,
+		(parseInt(index === 'Code' ? opt : index) || 1)
+	];
+};
+
+function normalizeContactAddresses(c: SoapContact): ContactAddressMap {
+	return	reduce(
+		c._attrs as {[k: string]: string},
+		(acc: {[id: string]: ContactAddress}, attr: string, key) => {
+			if (ADDR_PART_REG.test(key)) {
+				const [type, subType, index] = getParts(key);
+				const id = `${type}Address${index > 1 ? index : ''}`;
+				if (typeof acc[id] === 'undefined') {
+					acc[id] = { [subType]: attr, type };
+				}
+				else {
+					acc[id] = { ...acc[id], [subType]: attr };
+				}
+			}
+			return acc;
+		},
+		{}
+	);
+}
+
+function normalizeContactMails(c: SoapContact): ContactEmailMap {
+	return reduce(
+		pickBy<string>(c._attrs, (v, k) => MAIL_REG.test(k)),
+		(acc, v, k) => ({
+			...acc,
+			[k]: {
+				mail: v
+			}
+		}),
+		{}
+	);
+}
+
+function normalizeContactPhones(c: SoapContact): ContactPhoneMap {
+	return reduce(
+		pickBy<string>(c._attrs, (v, k) => PHONE_REG.test(k)),
+		(acc, v, k) => ({
+			...acc,
+			[k]: {
+				number: v,
+				type: contactPhoneTypeFromString(k)
+			}
+		}),
+		{}
+	);
+}
+
+function normalizeContactUrls(c: SoapContact): ContactUrlMap {
+	return reduce(
+		pickBy<string>(c._attrs, (v, k) => URL_REG.test(k)),
+		(acc, v, k) => ({
+			...acc,
+			[k]: {
+				url: v,
+				type: contactUrlTypeFromString(k)
+			}
+		}),
+		{}
+	);
+}
+
+export function normalizeContact(c: SoapContact): Contact {
+	return {
+		parent: c.l,
+		id: c.id,
+		address: normalizeContactAddresses(c),
+		company: c._attrs.company || '',
+		department: c._attrs.department || '',
+		email: normalizeContactMails(c),
+		firstName: c._attrs.firstName || '',
+		middleName: c._attrs.middleName || '',
+		lastName: c._attrs.lastName || '',
+		nickName: c._attrs.nickname || '',
+		image: (c._attrs.image)
+			? `/service/home/~/?auth=co&id=${c.id}&part=${c._attrs.image.part}&max_width=32&max_height=32`
+			: '',
+		jobTitle: c._attrs.jobTitle || '',
+		notes: c._attrs.notes || '',
+		phone: normalizeContactPhones(c),
+		nameSuffix: c._attrs.nameSuffix || '',
+		namePrefix: c._attrs.namePrefix || '',
+		URL: normalizeContactUrls(c)
+	};
+}
+
+export function GetIdsFromContacts(contacts: SoapContact[]): string[] {
+	const accValue: string[] = [];
+	return reduce(
+		contacts || [],
+		(acc, v) => acc.concat(v.id),
+		accValue
+	);
 }

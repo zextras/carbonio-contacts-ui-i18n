@@ -35,20 +35,19 @@ import {
 	FormSection,
 	Text, Select
 } from '@zextras/zapp-ui';
-import { Contact } from '../db/contact';
 import { CompactView } from '../commons/contact-compact-view';
 import { report } from '../commons/report-exception';
 
 const filterEmptyValues = (values) => reduce(
 	values,
-	(acc, v, k) => (
+	(acc, v, k) => ((
 		filter(
 			v,
 			(field, key) => key !== 'name' && key !== 'type' && field !== ''
 		).length > 0
 	)
 		? { ...acc, [k]: v }
-		: acc,
+		: acc),
 	{}
 );
 
@@ -75,7 +74,7 @@ export default function EditView({ panel, editPanelId, folderId }) {
 
 	const [initialContact, setInitialContact] = useState(editId && editId !== 'new'
 		? null
-		: new Contact({
+		: {
 			parent: folderId || '7',
 			address: {},
 			email: {},
@@ -92,11 +91,12 @@ export default function EditView({ panel, editPanelId, folderId }) {
 			nameSuffix: '',
 			image: '',
 			notes: ''
-		}));
+		});
 
 	useEffect(() => {
 		let canSet = true;
 		if (editId && editId !== 'new' && db) {
+			// todo: implement edit contact in contacts-slice
 			db.contacts
 				.where({ _id: editId })
 				.toArray()
@@ -111,8 +111,9 @@ export default function EditView({ panel, editPanelId, folderId }) {
 	}, [editId, db, setInitialContact]);
 
 	const onSubmit = useCallback((values, { setSubmitting }) => {
-		const contact = new Contact(cleanMultivalueFields(values));
+		const contact = cleanMultivalueFields(values);
 		if (!contact._id) {
+			// todo: implement add contact in contacts-slice
 			db.contacts
 				.add(contact)
 				.then((cid) => {
@@ -130,6 +131,7 @@ export default function EditView({ panel, editPanelId, folderId }) {
 				.catch(report);
 		}
 		else {
+			// todo: implement update contact in contacts-slice
 			db.contacts.update(contact._id, contact)
 				.then(() => {
 					setSubmitting(false);

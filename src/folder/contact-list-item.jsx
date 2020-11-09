@@ -46,7 +46,7 @@ export default function ContactListItem({ contact, style }) {
 	);
 	return (
 		<Container style={style}>
-			<InvisibleLink to={`/folder/${contact.parent}?preview=${contact._id}`}>
+			<InvisibleLink to={`/folder/${contact.parent}?preview=${contact.id}`}>
 				<Container
 					borderRadius="none"
 					height="fill"
@@ -83,5 +83,5 @@ export default function ContactListItem({ contact, style }) {
 ContactListItem.propTypes = {
 	className: PropTypes.string,
 	style: PropTypes.any,
-	contact: PropTypes.instanceOf(Contact).isRequired
+	contact: PropTypes.any.isRequired /* instanceOf(Contact) */ // todo: modify this
 };

@@ -14,12 +14,12 @@ import { network } from '@zextras/zapp-shell';
 import { reduce, isEmpty, forEach } from 'lodash';
 import { ContactsFolder } from '../db/contacts-folder';
 import { ISoapFolderObj } from '../soap';
-import { IFoldersSlice } from './contacts-slice';
+import { IFoldersSlice } from './store-type';
 
 export function findFolders(soapFolderObj: ISoapFolderObj): {[k: string]: ContactsFolder} {
 	const toRet: {[k: string]: ContactsFolder} = {};
 	if (soapFolderObj.view === 'contact' || soapFolderObj.id === '3') {
-		toRet[soapFolderObj.id] = new ContactsFolder({
+		toRet[soapFolderObj.id] = {
 			itemsCount: soapFolderObj.n,
 			name: soapFolderObj.name,
 			id: soapFolderObj.id,
@@ -27,7 +27,7 @@ export function findFolders(soapFolderObj: ISoapFolderObj): {[k: string]: Contac
 			unreadCount: soapFolderObj.u || 0,
 			size: soapFolderObj.s,
 			parent: soapFolderObj.l
-		});
+		};
 	}
 	return reduce(
 		soapFolderObj.folder || [],
@@ -64,7 +64,7 @@ function fetchFoldersRejected(state: IFoldersSlice) {
 
 export const handleSyncData = createAsyncThunk('folders/handleSyncData', async ({
 	firstSync, token, folder, deleted
-}, { dispatch }) => {
+}: any, { dispatch }) => {
 	if (firstSync) {
 		await dispatch({
 			type: 'folders/setFolders',
@@ -73,10 +73,10 @@ export const handleSyncData = createAsyncThunk('folders/handleSyncData', async (
 	}
 	else {
 		if (!isEmpty(folder)) {
-			const updatedFolders = reduce(
+			const updatedFolders: ContactsFolder[] = reduce(
 				folder,
 				(acc, v, k) => {
-					acc.push(new ContactsFolder({
+					acc.push({
 						itemsCount: v.n,
 						name: v.name,
 						id: v.id,
@@ -84,10 +84,10 @@ export const handleSyncData = createAsyncThunk('folders/handleSyncData', async (
 						unreadCount: v.u || 0,
 						size: v.s,
 						parent: v.l
-					}));
+					});
 					return acc;
 				},
-				[]
+				[] as ContactsFolder[]
 			);
 			await dispatch({
 				type: 'folders/updateFolders',
@@ -103,7 +103,7 @@ export const handleSyncData = createAsyncThunk('folders/handleSyncData', async (
 	}
 });
 
-function setFoldersReducer(state: IFoldersSlice, { payload }) {
+function setFoldersReducer(state: IFoldersSlice, { payload }: any) {
 	state.folders = {};
 	reduce(
 		payload,
@@ -115,7 +115,7 @@ function setFoldersReducer(state: IFoldersSlice, { payload }) {
 	);
 }
 
-function updateFoldersReducer(state: IFoldersSlice, { payload }) {
+function updateFoldersReducer(state: IFoldersSlice, { payload }: any) {
 	reduce(
 		payload,
 		(acc, v, k) => {
@@ -126,7 +126,7 @@ function updateFoldersReducer(state: IFoldersSlice, { payload }) {
 	);
 }
 
-function deleteFoldersReducer(state: IFoldersSlice, { payload }) {
+function deleteFoldersReducer(state: IFoldersSlice, { payload }: any) {
 	forEach(
 		payload,
 		(id) => state.folders[id] && delete state.folders[id]
@@ -144,11 +144,15 @@ export const foldersSlice = createSlice({
 		updateFolders: produce(updateFoldersReducer),
 		deleteFolders: produce(deleteFoldersReducer)
 	},
-	extraReducers: {
-		[handleSyncData.pending]: produce(fetchFoldersPending),
-		[handleSyncData.fulfilled]: produce(fetchFoldersFullFilled),
-		[handleSyncData.rejected]: produce(fetchFoldersRejected),
+	extraReducers: (builder) => {
+		builder.addCase(handleSyncData.pending, produce(fetchFoldersPending));
+		builder.addCase(handleSyncData.fulfilled, produce(fetchFoldersFullFilled));
+		builder.addCase(handleSyncData.rejected, produce(fetchFoldersRejected));
 	}
 });
 
 export default foldersSlice.reducer;
+
+export function selectFolder(state: IFoldersSlice, id: number) {
+	return state.folders.folders[id];
+}

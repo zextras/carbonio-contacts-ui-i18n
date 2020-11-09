@@ -14,7 +14,7 @@ import {
 } from 'dexie-observable/api';
 import { filter, map, reduce } from 'lodash';
 import { ContactsDb, DeletionData } from './contacts-db';
-import { Contact } from './contact';
+import { IContact } from './contact';
 import {
 	BatchedRequest, BatchedResponse,
 	BatchRequest, BatchResponse, ContactActionRequest,
