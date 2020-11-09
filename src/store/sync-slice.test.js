@@ -14,6 +14,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { network } from '@zextras/zapp-shell';
 import { performSync, startSync } from './sync-slice';
 import reducers from './reducers';
+import server from '../mocks/server';
 
 describe('Sync Slice', () => {
 	test('Mocked handler for Sync', async () => {
@@ -34,6 +35,7 @@ describe('Sync Slice', () => {
 		});
 
 		expect(store.getState().sync.status).toEqual('init');
+		expect(store.getState().sync.token).toBeUndefined();
 		await store.dispatch(
 			startSync()
 		);
