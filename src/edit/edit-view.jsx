@@ -35,10 +35,10 @@ import {
 	FormSection,
 	Text, Select
 } from '@zextras/zapp-ui';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { CompactView } from '../commons/contact-compact-view';
 import { report } from '../commons/report-exception';
-import { addContact, updateContact } from '../store/contacts-slice';
+import { addContact, selectContact, modifyContact } from '../store/contacts-slice';
 
 const filterEmptyValues = (values) => reduce(
 	values,
@@ -64,6 +64,7 @@ const cleanMultivalueFields = (contact) => ({
 export default function EditView({ panel, editPanelId, folderId }) {
 	const { id } = useParams();
 	const dispatch = useDispatch();
+	const editContact = useSelector((state) => selectContact(state, folderId, editPanelId));
 	const editId = useMemo(() => {
 		if (id) return id;
 		if (editPanelId) return editPanelId;
@@ -71,7 +72,7 @@ export default function EditView({ panel, editPanelId, folderId }) {
 	}, [id, editPanelId]);
 
 	const { t } = useTranslation();
-	const { db } = hooks.useAppContext();
+	// const { db } = hooks.useAppContext();
 	const pushHistory = hooks.usePushHistoryCallback();
 	const replaceHistory = hooks.useReplaceHistoryCallback();
 
@@ -98,9 +99,8 @@ export default function EditView({ panel, editPanelId, folderId }) {
 
 	useEffect(() => {
 		let canSet = true;
-		if (editId && editId !== 'new' && db) {
-			console.log('siamo qui');
-			// todo: implement edit contact in contacts-slice
+		if (editId && editId !== 'new' && editContact) {
+			canSet && setInitialContact(editContact);
 			/* db.contacts
 				.where({ _id: editId })
 				.toArray()
@@ -112,7 +112,7 @@ export default function EditView({ panel, editPanelId, folderId }) {
 		return () => {
 			canSet = false;
 		};
-	}, [editId, db, setInitialContact]);
+	}, [editId, setInitialContact, editContact]);
 
 	const onSubmit = useCallback((values, { setSubmitting }) => {
 		const contact = cleanMultivalueFields(values);
@@ -124,7 +124,6 @@ export default function EditView({ panel, editPanelId, folderId }) {
 					return res;
 				})
 				.then((res) => {
-					console.log(res);
 					if (panel) {
 						replaceHistory(`/folder/${folderId}?preview=${res.payload[0].id}`);
 					}
@@ -151,7 +150,7 @@ export default function EditView({ panel, editPanelId, folderId }) {
 		}
 		else {
 			// todo: implement update contact in contacts-slice
-			dispatch(updateContact(contact))
+			dispatch(modifyContact(contact))
 				.then(() => {
 					setSubmitting(false);
 					if (panel) {

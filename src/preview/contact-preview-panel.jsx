@@ -12,13 +12,14 @@
 import React, { useCallback } from 'react';
 import { hooks } from '@zextras/zapp-shell';
 import { Divider } from '@zextras/zapp-ui';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ContactPreviewHeader from './contact-preview-header';
 import ContactPreviewContent from './contact-preview-content';
 import { useDisplayName } from '../commons/use-display-name';
-import { selectContact } from '../store/contacts-slice';
+import { deleteContact, selectContact } from '../store/contacts-slice';
 
 export default function ContactPreviewPanel({ contactInternalId, folderId }) {
+	const dispatch = useDispatch();
 	const replaceHistory = hooks.useReplaceHistoryCallback();
 	const contact = useSelector((state) => selectContact(state, folderId, contactInternalId));
 
@@ -28,8 +29,9 @@ export default function ContactPreviewPanel({ contactInternalId, folderId }) {
 	);
 
 	const onDelete = useCallback(() => {
-		// todo: implement delete
-	}, [contactInternalId, folderId, replaceHistory]);
+		console.log(contact);
+		dispatch(deleteContact(contact));
+	}, [contactInternalId, folderId, replaceHistory, contact]);
 
 	const onClose = useCallback(
 		() => replaceHistory(`/folder/${folderId}`),
