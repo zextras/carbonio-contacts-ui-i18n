@@ -14,8 +14,7 @@ import {
 	reduce, map, filter, intersectionWith
 } from 'lodash';
 import { ContactsDb } from './contacts-db';
-import { ContactsFolder } from './contacts-folder';
-import { normalizeContactsFolders } from './contact';
+import { normalizeContactsFolders, ContactsFolder } from './contact';
 import { SyncResponse } from '../soap';
 
 function searchLocalFolders(db: ContactsDb, ids: string[]): Promise<{[key: string]: string}> {

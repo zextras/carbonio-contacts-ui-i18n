@@ -10,8 +10,7 @@
  */
 
 import Dexie, { PromiseExtended } from 'dexie';
-import { ContactsFolder } from './contacts-folder';
-import { Contact } from './contact';
+import { Contact, ContactsFolder } from './contact';
 import { report } from '../commons/report-exception';
 
 export type DeletionData = {
@@ -21,7 +20,7 @@ export type DeletionData = {
 	rowId?: string;
 };
 
-export class ContactsDb extends db.Database {
+export class ContactsDb {
 	contacts: Dexie.Table<Contact, string>; // string = type of the primary key
 
 	folders: Dexie.Table<ContactsFolder, string>; // string = type of the primary key

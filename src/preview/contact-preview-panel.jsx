@@ -26,9 +26,9 @@ export default function ContactPreviewPanel({ contactInternalId, folderId }) {
 		() => replaceHistory(`/folder/${folderId}?edit=${contactInternalId}`),
 		[contactInternalId, folderId, replaceHistory]
 	);
-	// todo: implement delete
-	const onDelete = useCallback(() => {
 
+	const onDelete = useCallback(() => {
+		// todo: implement delete
 	}, [contactInternalId, folderId, replaceHistory]);
 
 	const onClose = useCallback(

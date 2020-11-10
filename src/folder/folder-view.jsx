@@ -153,6 +153,7 @@ export default function FolderView() {
 const ContactList = ({ folderId }) => {
 	const dispatch = useDispatch();
 	const contacts = useSelector((state) => selectAllContactsInFolder(state, folderId));
+
 	useEffect(() => {
 		if (!contacts) {
 			dispatch(fetchContactsByFolderId(folderId));

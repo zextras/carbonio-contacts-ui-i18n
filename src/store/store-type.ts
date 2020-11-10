@@ -10,7 +10,7 @@
  */
 
 import { Contact } from '../db/contact';
-import { ContactsFolder } from '../db/contacts-folder';
+import { ContactsFolder } from '../db/contact';
 
 export interface IState {
 	sync: ISyncSlice;

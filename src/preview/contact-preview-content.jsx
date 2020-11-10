@@ -31,6 +31,7 @@ const typeToIcon = (type) => {
 };
 
 const ContactPreviewContent = ({ contact, onEdit, onDelete }) => {
+	console.log(contact);
 	const [open, setOpen] = useState(true);
 	const toggleOpen = useCallback(() => {
 		setOpen(!open);

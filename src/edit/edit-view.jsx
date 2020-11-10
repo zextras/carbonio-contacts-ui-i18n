@@ -35,8 +35,10 @@ import {
 	FormSection,
 	Text, Select
 } from '@zextras/zapp-ui';
+import { useDispatch } from 'react-redux';
 import { CompactView } from '../commons/contact-compact-view';
 import { report } from '../commons/report-exception';
+import { addContact, updateContact } from '../store/contacts-slice';
 
 const filterEmptyValues = (values) => reduce(
 	values,
@@ -61,6 +63,7 @@ const cleanMultivalueFields = (contact) => ({
 
 export default function EditView({ panel, editPanelId, folderId }) {
 	const { id } = useParams();
+	const dispatch = useDispatch();
 	const editId = useMemo(() => {
 		if (id) return id;
 		if (editPanelId) return editPanelId;
@@ -96,14 +99,15 @@ export default function EditView({ panel, editPanelId, folderId }) {
 	useEffect(() => {
 		let canSet = true;
 		if (editId && editId !== 'new' && db) {
+			console.log('siamo qui');
 			// todo: implement edit contact in contacts-slice
-			db.contacts
+			/* db.contacts
 				.where({ _id: editId })
 				.toArray()
 				.then(
 					(c) => canSet && c.length > 0 && setInitialContact(c[0])
 				)
-				.catch(report);
+				.catch(report); */
 		}
 		return () => {
 			canSet = false;
@@ -112,9 +116,24 @@ export default function EditView({ panel, editPanelId, folderId }) {
 
 	const onSubmit = useCallback((values, { setSubmitting }) => {
 		const contact = cleanMultivalueFields(values);
-		if (!contact._id) {
+		if (!contact.id) {
 			// todo: implement add contact in contacts-slice
-			db.contacts
+			dispatch(addContact(contact))
+				.then((res) => {
+					setSubmitting(false);
+					return res;
+				})
+				.then((res) => {
+					console.log(res);
+					if (panel) {
+						replaceHistory(`/folder/${folderId}?preview=${res.payload[0].id}`);
+					}
+					else {
+						pushHistory(`/edit/${res.payload[0].id}`);
+					}
+				})
+				.catch(report);
+			/* db.contacts
 				.add(contact)
 				.then((cid) => {
 					setSubmitting(false);
@@ -128,20 +147,20 @@ export default function EditView({ panel, editPanelId, folderId }) {
 						pushHistory(`/edit/${cid}`);
 					}
 				})
-				.catch(report);
+				.catch(report); */
 		}
 		else {
 			// todo: implement update contact in contacts-slice
-			db.contacts.update(contact._id, contact)
+			dispatch(updateContact(contact))
 				.then(() => {
 					setSubmitting(false);
 					if (panel) {
-						replaceHistory(`/folder/${folderId}?preview=${contact._id}`);
+						replaceHistory(`/folder/${folderId}?preview=${contact.id}`);
 					}
 				})
 				.catch(report);
 		}
-	}, [db.contacts, folderId, panel, pushHistory, replaceHistory]);
+	}, [folderId, panel, pushHistory, replaceHistory]);
 
 	const defaultTypes = useMemo(() => [
 		{ label: t('work'), value: 'work' },
@@ -233,7 +252,7 @@ export default function EditView({ panel, editPanelId, folderId }) {
 				height="fill"
 			>
 				<Formik
-					initialValues={initialContact.toMap()}
+					initialValues={initialContact}
 					onSubmit={onSubmit}
 				>
 					{formFactory}

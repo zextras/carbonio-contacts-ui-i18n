@@ -30,7 +30,6 @@ describe('Notifications - Contact', () => {
 			.then((contacts) => {
 				expect(_fetch).toHaveBeenCalledTimes(1);
 				expect(contacts.length).toBe(1);
-				expect(contacts[0]).toBeInstanceOf(Contact);
 				expect(contacts[0].id).toBe('1000');
 				done();
 			})
@@ -82,7 +81,6 @@ describe('Notifications - Contact', () => {
 				expect(changes[0].type).toBe(1);
 				expect(changes[0].table).toBe('contacts');
 				expect(changes[0].key).toBeUndefined();
-				expect(changes[0].obj).toBeInstanceOf(Contact);
 				done();
 			});
 	});
@@ -121,7 +119,6 @@ describe('Notifications - Contact', () => {
 				expect(changes[0].type).toBe(1);
 				expect(changes[0].table).toBe('contacts');
 				expect(changes[0].key).toBeUndefined();
-				expect(changes[0].obj).toBeInstanceOf(Contact);
 				done();
 			});
 	});
@@ -131,13 +128,13 @@ describe('Notifications - Contact', () => {
 		db.contacts.where.mockImplementation(() => ({
 			anyOf: jest.fn().mockImplementation(() => ({
 				toArray: jest.fn().mockImplementation(() => Promise.resolve([
-					new Contact({
+					{
 						_id: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
 						id: '1000',
 						parent: '7',
 						firstName: 'Test',
 						lastName: 'User'
-					}),
+					},
 				]))
 			}))
 		}));
@@ -205,13 +202,13 @@ describe('Notifications - Contact', () => {
 		db.contacts.where.mockImplementation(() => ({
 			anyOf: jest.fn().mockImplementation(() => ({
 				toArray: jest.fn().mockImplementation(() => Promise.resolve([
-					new Contact({
+					{
 						_id: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
 						id: '1000',
 						parent: '7',
 						firstName: 'Test',
 						lastName: 'User'
-					}),
+					},
 				]))
 			}))
 		}));
@@ -275,13 +272,13 @@ describe('Notifications - Contact', () => {
 		db.contacts.where.mockImplementation(() => ({
 			anyOf: jest.fn().mockImplementation(() => ({
 				toArray: jest.fn().mockImplementation(() => Promise.resolve([
-					new Contact({
+					{
 						_id: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
 						id: '1000',
 						parent: '7',
 						firstName: 'Test',
 						lastName: 'User'
-					}),
+					},
 				]))
 			}))
 		}));

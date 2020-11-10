@@ -160,7 +160,7 @@ describe('Contacts DB Sync Protocol', () => {
 				type: 1,
 				table: 'contacts',
 				key: undefined,
-				obj: new Contact({
+				obj: {
 					parent: '7',
 					id: '1000',
 					address: {},
@@ -178,7 +178,7 @@ describe('Contacts DB Sync Protocol', () => {
 					middleName: '',
 					nickName: '',
 					URL: {}
-				})
+				}
 			}], 1, false);
 			done();
 		});

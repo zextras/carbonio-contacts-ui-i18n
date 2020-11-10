@@ -13,8 +13,9 @@ import {
 	ICreateChange, IDatabaseChange, IDeleteChange, IUpdateChange
 } from 'dexie-observable/api';
 import { filter, map, reduce } from 'lodash';
+import { SoapFetch } from '@zextras/zapp-shell';
+import { Contact } from './contact';
 import { ContactsDb, DeletionData } from './contacts-db';
-import { IContact } from './contact';
 import {
 	BatchedRequest, BatchedResponse,
 	BatchRequest, BatchResponse, ContactActionRequest,
@@ -24,7 +25,6 @@ import {
 	normalizeContactAttrsToSoapOp,
 	normalizeContactChangesToSoapOp
 } from '../soap';
-import { SoapFetch } from '@zextras/zapp-shell';
 
 function processInserts(
 	db: ContactsDb,

@@ -12,7 +12,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import produce from 'immer';
 import { network } from '@zextras/zapp-shell';
 import { reduce, isEmpty, forEach } from 'lodash';
-import { ContactsFolder } from '../db/contacts-folder';
+import { ContactsFolder } from '../db/contact';
 import { ISoapFolderObj } from '../soap';
 import { IFoldersSlice } from './store-type';
 

@@ -16,7 +16,7 @@ import {
 import { filter, reduce, map } from 'lodash';
 import { SoapFetch } from '@zextras/zapp-shell';
 import { ContactsDb, DeletionData } from './contacts-db';
-import { ContactsFolder } from './contacts-folder';
+import { ContactsFolder } from './contact';
 import {
 	BatchedRequest, BatchedResponse,
 	BatchRequest, BatchResponse, CreateFolderResponse,

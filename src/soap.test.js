@@ -144,7 +144,7 @@ describe('SOAP Utils', () => {
 	});
 	test('Normalize Contact Attributes for SOAP Operation', () => {
 		expect(
-			normalizeContactAttrsToSoapOp(new Contact(
+			normalizeContactAttrsToSoapOp(
 				{
 					nameSuffix: 'nameSuffix',
 					namePrefix: 'namePrefix',
@@ -188,7 +188,7 @@ describe('SOAP Utils', () => {
 						}
 					}
 				}
-			))
+			)
 		).toStrictEqual(
 			[
 				{

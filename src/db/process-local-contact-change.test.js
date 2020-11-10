@@ -93,10 +93,10 @@ describe('Local Changes - Contact', () => {
 		db.contacts.where.mockImplementation(() => ({
 			anyOf: jest.fn().mockImplementation(() => ({
 				toArray: jest.fn().mockImplementation(() => Promise.resolve([
-					new Contact({
+					{
 						_id: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
 						id: '1000'
-					})
+					}
 				]))
 			}))
 		}));
@@ -168,10 +168,10 @@ describe('Local Changes - Contact', () => {
 		db.contacts.where.mockImplementation(() => ({
 			anyOf: jest.fn().mockImplementation(() => ({
 				toArray: jest.fn().mockImplementation(() => Promise.resolve([
-					new Contact({
+					{
 						_id: 'xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx',
 						id: '1000'
-					})
+					}
 				]))
 			}))
 		}));

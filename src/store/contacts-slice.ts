@@ -3,6 +3,7 @@ import { network } from '@zextras/zapp-shell';
 import { isEmpty, reduce, filter } from 'lodash';
 import produce from 'immer';
 import { Contact, normalizeContact, GetIdsFromContacts } from '../db/contact';
+import { normalizeContactAttrsToSoapOp } from '../soap';
 import { IContactsSlice, IState } from './store-type';
 
 export const fetchContactsByFolderId = createAsyncThunk('contacts/fetchContactsByFolderId', async (id) => {
@@ -66,6 +67,38 @@ export const fetchContact = createAsyncThunk('contacts/fetchContact', async (ids
 		},
 		[] as Contact[]
 	);
+});
+
+export const addContact = createAsyncThunk('contacts/addContact', async (contact: Contact) => {
+	const { cn } = await network.soapFetch(
+		'CreateContact',
+		{
+			_jsns: 'urn:zimbraMail',
+			cn: {
+				m: [],
+				l: contact.parent,
+				a: normalizeContactAttrsToSoapOp(contact)
+			}
+		}
+	);
+	return cn;
+});
+
+export const updateContact = createAsyncThunk('contacts/updateContact', async (contact: Contact) => {
+	const { cn } = await network.soapFetch(
+		'ModifyContact',
+		{
+			_jsns: 'urn:zimbraMail',
+			force: '1',
+			replace: '0',
+			cn: {
+				m: [],
+				id: contact.id,
+				a: normalizeContactAttrsToSoapOp(contact)
+			}
+		}
+	);
+	return cn;
 });
 
 export const handleSyncData = createAsyncThunk('contacts/handleSyncData', async ({
@@ -141,6 +174,31 @@ function fetchContactsRejected(state: IContactsSlice) {
 	console.log('failed');
 }
 
+function addContactPending(state: IContactsSlice) {
+	console.log('pending');
+}
+
+function addContactFullFilled(state: IContactsSlice, { payload }: any) {
+	state.contacts[payload[0].l].push(normalizeContact(payload[0]));
+}
+
+function addContactRejected(state: IContactsSlice) {
+	console.log('failed');
+}
+
+function updateContactPending(state: IContactsSlice) {
+	console.log('pending');
+}
+
+function updateContactFullFilled(state: IContactsSlice, { payload }: any) {
+	//state.contacts[payload[0].l].push(normalizeContact(payload[0]));
+	console.log(payload);
+}
+
+function updateContactRejected(state: IContactsSlice) {
+	console.log('failed');
+}
+
 export const contactsSlice = createSlice({
 	name: 'contacts',
 	initialState: {
@@ -158,6 +216,12 @@ export const contactsSlice = createSlice({
 		builder.addCase(fetchContactsByFolderId.pending, produce(fetchContactsPending));
 		builder.addCase(fetchContactsByFolderId.fulfilled, produce(fetchContactsByFolderIdFullFilled));
 		builder.addCase(fetchContactsByFolderId.rejected, produce(fetchContactsRejected));
+		builder.addCase(addContact.pending, produce(addContactPending));
+		builder.addCase(addContact.fulfilled, produce(addContactFullFilled));
+		builder.addCase(addContact.rejected, produce(addContactRejected));
+		builder.addCase(updateContact.pending, produce(updateContactPending));
+		builder.addCase(updateContact.fulfilled, produce(updateContactFullFilled));
+		builder.addCase(updateContact.rejected, produce(updateContactRejected));
 	}
 });
 

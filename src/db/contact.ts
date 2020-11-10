@@ -18,7 +18,6 @@ import {
 	words
 } from 'lodash';
 import { ISoapFolderObj, SoapContact, SyncResponseContactFolder } from '../soap';
-import { ContactsFolder } from './contacts-folder';
 
 export enum ContactPhoneType {
 	MOBILE = 'mobile',
@@ -67,6 +66,17 @@ export type ContactEmailMap = { [key: string]: ContactEmail };
 export type ContactPhoneMap = { [key: string]: ContactPhone };
 export type ContactUrlMap = { [key: string]: ContactUrl };
 
+export type ContactsFolder = {
+	/** Internal UUID */ _id?: string;
+	/** Zimbra ID */ id?: string;
+	itemsCount: number;
+	name: string;
+	path: string;
+	unreadCount: number;
+	size: number;
+	parent: string;
+}
+
 export type Contact = {
 	/* Internal UUID */ _id?: string; // todo: delete this param?
 	/* Zimbra ID */ id?: string;
@@ -94,7 +104,7 @@ const URL_REG = /^(.*)URL(\d*)$/;
 const ADDR_PART_REG = /^(.*)(City|Country|PostalCode|State|Street)(\d*)$/;
 
 function normalizeFolder(soapFolderObj: ISoapFolderObj): ContactsFolder {
-	return new ContactsFolder({
+	return {
 		itemsCount: soapFolderObj.n,
 		name: soapFolderObj.name,
 		// _id: soapFolderObj.uuid,
@@ -103,7 +113,7 @@ function normalizeFolder(soapFolderObj: ISoapFolderObj): ContactsFolder {
 		unreadCount: soapFolderObj.u || 0,
 		size: soapFolderObj.s,
 		parent: soapFolderObj.l
-	});
+	};
 }
 
 export function normalizeContactsFolders(f: SyncResponseContactFolder): ContactsFolder[] {
@@ -118,7 +128,6 @@ export function normalizeContactsFolders(f: SyncResponseContactFolder): Contacts
 	if (f.id === '3' || (f.view && f.view === 'contact')) {
 		return [normalizeFolder(f), ...children];
 	}
-
 	return children;
 }
 
