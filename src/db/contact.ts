@@ -250,12 +250,3 @@ export function normalizeContact(c: SoapContact): Contact {
 		URL: normalizeContactUrls(c)
 	};
 }
-
-export function GetIdsFromContacts(contacts: SoapContact[]): string[] {
-	const accValue: string[] = [];
-	return reduce(
-		contacts || [],
-		(acc, v) => acc.concat(v.id), // todo: check if already in state (if in state no need to fetch)
-		accValue
-	);
-}

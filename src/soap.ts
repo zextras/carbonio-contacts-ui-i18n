@@ -488,3 +488,12 @@ export function normalizeContactChangesToSoapOp(c: { [key: string]: string }): A
 		(v: any, k: any) => ({ n: k, _content: v })
 	);
 }
+
+export function GetIdsFromContacts(contacts: SoapContact[]): string[] {
+	const accValue: string[] = [];
+	return reduce(
+		contacts || [],
+		(acc, v) => acc.concat(v.id), // todo: check if already in state (if in state no need to fetch)
+		accValue
+	);
+}

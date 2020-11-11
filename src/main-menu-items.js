@@ -70,7 +70,7 @@ export default function mainMenuItems({ store }) {
 				setMainMenuItems([{
 					id: 'contact-main',
 					icon: 'PeopleOutline',
-					to: '/folder/15',
+					to: '/folder/7',
 					label: 'Contacts',
 					children: allItems
 				}]);

@@ -2,10 +2,23 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { network } from '@zextras/zapp-shell';
 import { isEmpty, reduce, filter, findIndex, remove } from 'lodash';
 import produce from 'immer';
-import { Contact, normalizeContact, GetIdsFromContacts } from '../db/contact';
-import { normalizeContactAttrsToSoapOp } from '../soap';
+import { Contact, normalizeContact } from '../db/contact';
+import { normalizeContactAttrsToSoapOp, GetIdsFromContacts } from '../soap';
 import { IContactsSlice, IState } from './store-type';
 
+function removeContactFromStore(state: IContactsSlice, id: string) {
+	reduce(
+		state.contacts,
+		(acc, v, k) => {
+			const filtered = filter(v, (item) => item.id === id);
+			if (filtered.length > 0) {
+				remove(v, filtered[0]);
+			}
+			return acc;
+		},
+		{},
+	);
+}
 export const fetchContactsByFolderId = createAsyncThunk('contacts/fetchContactsByFolderId', async (id) => {
 	const { cn } = await network.soapFetch(
 		'Search',
@@ -164,29 +177,16 @@ function fetchContactsPending(state: IContactsSlice) {
 }
 
 function fetchContactsFullFilled(state: IContactsSlice, { payload }: any) {
-	// delete old contact
-	reduce(
-		state.contacts,
-		(acc, v, k) => {
-			const filtered = filter(v, (item) => item.id === payload[0].id);
-			if (filtered.length > 0) {
-				remove(v, filtered[0]);
-			}
-			return acc;
-		},
-		{},
-	);
-	// add new contact
+	removeContactFromStore(state, payload[0].id);
+	// add updated contact
 	reduce(
 		payload,
 		(acc, v) => {
-			console.log(v);
 			if (!acc[v.parent]) {
 				return acc;
 			}
 			const el = filter(acc[v.parent], (item) => item.id === v.id);
 			if (el.length > 0) {
-				console.log(el);
 				return acc;
 			}
 			acc[v.parent].push(v);
@@ -229,7 +229,9 @@ function addContactPending(state: IContactsSlice) {
 }
 
 function addContactFullFilled(state: IContactsSlice, { payload }: any) {
-	state.contacts[payload[0].l].push(normalizeContact(payload[0]));
+	if (state && state.contacts && state.contacts[payload[0].l]) {
+		state.contacts[payload[0].l].push(normalizeContact(payload[0]));
+	}
 }
 
 function addContactRejected(state: IContactsSlice) {
@@ -255,8 +257,16 @@ function deleteContactPending(state: IContactsSlice) {
 	console.log('pending');
 }
 
-function deleteContactFullFilled(state: IContactsSlice) {
-
+function deleteContactFullFilled(state: IContactsSlice, { meta }: any) {
+	const { id, parent } = meta.arg;
+	removeContactFromStore(state, id);
+	if (parent !== '3' && state.contacts[3]) {
+		const obj = {
+			...meta.arg,
+			parent: '3'
+		};
+		state.contacts[3].push(obj);
+	}
 }
 
 function deleteContactRejected(state: IContactsSlice) {
