@@ -21,7 +21,7 @@ import {
 	Padding
 } from '@zextras/zapp-ui';
 import { trim, get, has } from 'lodash';
-import { Contact } from '../db/contact';
+import { Contact } from '../contact';
 import { useDisplayName } from '../commons/use-display-name';
 
 const InvisibleLink = styled(Link)`

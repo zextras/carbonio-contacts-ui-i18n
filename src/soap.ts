@@ -19,7 +19,7 @@ import {
 	ContactEmailMap,
 	ContactPhoneMap,
 	ContactUrlMap
-} from './db/contact';
+} from './contact';
 
 export type IFolderView =
 	'search folder'

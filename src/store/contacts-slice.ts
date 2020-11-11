@@ -1,8 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { network } from '@zextras/zapp-shell';
-import { isEmpty, reduce, filter, findIndex, remove } from 'lodash';
+import {
+	isEmpty,
+	reduce,
+	filter,
+	findIndex,
+	remove
+} from 'lodash';
 import produce from 'immer';
-import { Contact, normalizeContact } from '../db/contact';
+import { Contact, normalizeContact } from '../contact';
 import { normalizeContactAttrsToSoapOp, GetIdsFromContacts } from '../soap';
 import { IContactsSlice, IState } from './store-type';
 

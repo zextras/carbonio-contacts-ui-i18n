@@ -17,7 +17,7 @@ import {
 	reduce,
 	words
 } from 'lodash';
-import { ISoapFolderObj, SoapContact, SyncResponseContactFolder } from '../soap';
+import { ISoapFolderObj, SoapContact, SyncResponseContactFolder } from './soap';
 
 export enum ContactPhoneType {
 	MOBILE = 'mobile',

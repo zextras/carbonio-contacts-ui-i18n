@@ -20,7 +20,7 @@ import {
 } from './soap';
 import {
 	Contact, ContactAddressType, ContactPhoneType, ContactUrlType
-} from './db/contact';
+} from './contact';
 
 describe('SOAP Utils', () => {
 	test('Normalize Contact Mails for SOAP Operation', () => {

@@ -9,8 +9,8 @@
  * *** END LICENSE BLOCK *****
  */
 
-import { Contact } from '../db/contact';
-import { ContactsFolder } from '../db/contact';
+import { Contact } from '../contact';
+import { ContactsFolder } from '../contact';
 
 export interface IState {
 	sync: ISyncSlice;
