@@ -21,10 +21,10 @@ import {
 	Container,
 	Divider,
 	Text,
+	Row,
+	Responsive,
 	useScreenMode
 } from '@zextras/zapp-ui';
-import Row from '@zextras/zapp-ui/dist/components/layout/Row';
-import Responsive from '@zextras/zapp-ui/dist/components/utilities/Responsive';
 import { useDispatch, useSelector } from 'react-redux';
 import ContactListItem from './contact-list-item';
 import useQueryParam from '../hooks/getQueryParam';

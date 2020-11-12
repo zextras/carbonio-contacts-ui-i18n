@@ -9,4 +9,4 @@
  * *** END LICENSE BLOCK *****
  */
 
-require('node-fetch');
+window.fetch = require('node-fetch');
