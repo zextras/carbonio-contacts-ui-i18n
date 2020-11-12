@@ -18,6 +18,22 @@ function generateEmptySync(token) {
 	};
 }
 
+function generateSyncWithOneContact() {
+	return {
+		Body: {
+			SyncResponse: {
+				cn: [
+					{
+						id: '2982',
+						l: '7'
+					}
+				],
+				firstSync: false,
+				token: '1'
+			},
+		},
+	};
+}
 const InitialSync = {
 	Body: {
 		SyncResponse: {
@@ -64,6 +80,12 @@ export function handleSyncRequest(req, res, ctxt) {
 			return res(
 				ctxt.json(
 					generateEmptySync('1')
+				)
+			);
+		case '1':
+			return res(
+				ctxt.json(
+					generateSyncWithOneContact()
 				)
 			);
 		default:

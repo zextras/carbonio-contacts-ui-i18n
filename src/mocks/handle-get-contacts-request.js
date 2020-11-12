@@ -19,11 +19,9 @@ export function handleGetContactsRequest(req, res, ctxt) {
 				l: '7',
 				id,
 				_attrs: {
-					email: faker.internet.email(),
 					company: faker.company.companyName(),
 					firstName: faker.name.firstName(),
 					lastName: faker.name.lastName(),
-					middleName: faker.name.middleName(),
 					workCity: faker.address.city(),
 					workCountry: faker.address.country(),
 					workPostalCode: faker.address.zipCode(),
@@ -39,7 +37,8 @@ export function handleGetContactsRequest(req, res, ctxt) {
 		ctxt.json({
 			Body: {
 				GetContactsResponse: {
-					cn: contacts
+					cn: contacts,
+					_sns: 'urn:zimbraMail'
 				}
 			}
 		})

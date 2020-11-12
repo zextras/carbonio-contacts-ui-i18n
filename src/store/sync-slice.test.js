@@ -14,7 +14,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import { network } from '@zextras/zapp-shell';
 import { performSync, startSync } from './sync-slice';
 import reducers from './reducers';
-import { addContact, fetchContactsByFolderId } from './contacts-slice';
 
 describe('Sync Slice', () => {
 	test('Mocked handler for Sync', async () => {
