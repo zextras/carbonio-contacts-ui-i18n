@@ -12,9 +12,9 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import produce from 'immer';
 import { network } from '@zextras/zapp-shell';
 import { reduce, isEmpty, forEach } from 'lodash';
-import { ContactsFolder } from '../contact';
-import { ISoapFolderObj } from '../soap';
-import { IFoldersSlice } from './store-type';
+import { ContactsFolder } from '../types/contact';
+import { ISoapFolderObj } from '../types/soap';
+import { FoldersSlice } from '../types/store';
 
 export function findFolders(soapFolderObj: ISoapFolderObj): {[k: string]: ContactsFolder} {
 	const toRet: {[k: string]: ContactsFolder} = {};
@@ -50,15 +50,15 @@ export const fetchFolders = createAsyncThunk('folders/fetchFolders', async () =>
 	return findFolders(folder[0]);
 });
 
-function fetchFoldersPending(state: IFoldersSlice) {
+function fetchFoldersPending(state: FoldersSlice) {
 	state.status = 'syncing';
 }
 
-function fetchFoldersFullFilled(state: IFoldersSlice) {
+function fetchFoldersFullFilled(state: FoldersSlice) {
 	state.status = 'succeeded';
 }
 
-function fetchFoldersRejected(state: IFoldersSlice) {
+function fetchFoldersRejected(state: FoldersSlice) {
 	state.status = 'failed';
 }
 
@@ -103,7 +103,7 @@ export const handleSyncData = createAsyncThunk('folders/handleSyncData', async (
 	}
 });
 
-function setFoldersReducer(state: IFoldersSlice, { payload }: any) {
+function setFoldersReducer(state: FoldersSlice, { payload }: any) {
 	state.folders = {};
 	reduce(
 		payload,
@@ -115,7 +115,7 @@ function setFoldersReducer(state: IFoldersSlice, { payload }: any) {
 	);
 }
 
-function updateFoldersReducer(state: IFoldersSlice, { payload }: any) {
+function updateFoldersReducer(state: FoldersSlice, { payload }: any) {
 	reduce(
 		payload,
 		(acc, v, k) => {
@@ -126,7 +126,7 @@ function updateFoldersReducer(state: IFoldersSlice, { payload }: any) {
 	);
 }
 
-function deleteFoldersReducer(state: IFoldersSlice, { payload }: any) {
+function deleteFoldersReducer(state: FoldersSlice, { payload }: any) {
 	forEach(
 		payload,
 		(id) => state.folders[id] && delete state.folders[id]
@@ -153,6 +153,6 @@ export const foldersSlice = createSlice({
 
 export default foldersSlice.reducer;
 
-export function selectFolder(state: IFoldersSlice, id: number) {
+export function selectFolder(state: FoldersSlice, id: number) {
 	return state.folders.folders[id];
 }

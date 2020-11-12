@@ -10,50 +10,63 @@
  */
 import faker from 'faker';
 
-function searchContactResponse() {
-	return {
-		Body: {
-			SearchResponse: {
-				cn: [
-					{
-						d: 1604674171000,
-						fileAsStr: 'fsfas',
-						rev: 5700,
-						sf: 'fsfas0000002821',
-						id: '2821',
-						l: '7',
-						_attrs: {
-							email: faker.internet.email(),
-							company: faker.company.companyName(),
-							firstName: faker.name.firstName(),
-							lastName: faker.name.lastName(),
-							workCity: faker.address.city(),
-							workCountry: faker.address.country(),
-							workPostalCode: faker.address.zipCode(),
-							workState: faker.address.state(),
-							workStreet: faker.address.streetName()
-						}
+function searchContactResponse(id) {
+	switch (id) {
+		case '3':
+			return {
+				Body: {
+					SearchResponse: {
+						more: false,
+						offset: 0,
+						sortBy: 'none'
 					}
-				],
-				more: false,
-				offset: 0,
-				sortBy: 'nameAsc'
-			}
-		}
-	};
+				}
+			};
+		default:
+			return {
+				Body: {
+					SearchResponse: {
+						cn: [
+							{
+								d: 1604674171000,
+								fileAsStr: 'fsfas',
+								rev: 5700,
+								sf: 'fsfas0000002821',
+								id: '2821',
+								l: id,
+								_attrs: {
+									company: faker.company.companyName(),
+									firstName: faker.name.firstName(),
+									lastName: faker.name.lastName()
+								}
+							}
+						],
+						more: false,
+						offset: 0,
+						sortBy: 'nameAsc'
+					}
+				}
+			};
+	}
 }
 export function handleSearchRequest(req, res, ctxt) {
-	switch (req.body.Body.SearchRequest.types) {
-		case 'contact':
+	switch (req.body.Body.SearchRequest.query._content) {
+		case 'inid:"7"':
 			return res(
 				ctxt.json(
-					searchContactResponse()
+					searchContactResponse('7')
+				)
+			);
+		case 'inid:"3"':
+			return res(
+				ctxt.json(
+					searchContactResponse('3')
 				)
 			);
 		default:
 			return res(
 				ctxt.json(
-					searchContactResponse()
+					searchContactResponse('7')
 				)
 			);
 	}

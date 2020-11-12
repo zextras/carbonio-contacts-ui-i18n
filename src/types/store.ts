@@ -9,27 +9,26 @@
  * *** END LICENSE BLOCK *****
  */
 
-import { Contact } from '../contact';
-import { ContactsFolder } from '../contact';
+import { ContactsFolder, Contact } from './contact';
 
-export interface IState {
-	sync: ISyncSlice;
-	folders: IFoldersSlice;
-	contacts: IContactsSlice;
+export type State = {
+	sync: SyncSlice;
+	folders: FoldersSlice;
+	contacts: ContactsSlice;
 }
 
-export interface IContactsSlice {
+export type ContactsSlice = {
 	status: string;
 	contacts: {[k: string]: Contact[]};
 }
 
-export interface ISyncSlice {
+export type SyncSlice = {
 	status: string;
 	intervalId: number;
 	token: string;
 }
 
-export interface IFoldersSlice {
+export type FoldersSlice = {
 	status: string;
 	folders: {[k: string]: ContactsFolder[]};
 }

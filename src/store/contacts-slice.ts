@@ -8,14 +8,25 @@ import {
 	remove
 } from 'lodash';
 import produce from 'immer';
-import { Contact, normalizeContact } from '../contact';
-import { normalizeContactAttrsToSoapOp, GetIdsFromContacts } from '../soap';
-import { IContactsSlice, IState } from './store-type';
+import { Contact } from '../types/contact';
+import { SoapContact } from '../types/soap';
+import { ContactsSlice, State } from '../types/store';
+import { normalizeContact } from './normalize-contact-from-soap';
+import { normalizeContactAttrsToSoapOp } from './normalize-contact-to-soap';
 
-function removeContactFromStore(state: IContactsSlice, id: string) {
+function GetIdsFromContacts(contacts: SoapContact[]): string[] {
+	const accValue: string[] = [];
+	return reduce(
+		contacts || [],
+		(acc, v) => acc.concat(v.id), // todo: check if already in state (if in state no need to fetch)
+		accValue
+	);
+}
+
+function removeContactFromStore(state: ContactsSlice, id: string): void {
 	reduce(
 		state.contacts,
-		(acc, v, k) => {
+		(acc, v) => {
 			const filtered = filter(v, (item) => item.id === id);
 			if (filtered.length > 0) {
 				remove(v, filtered[0]);
@@ -25,6 +36,7 @@ function removeContactFromStore(state: IContactsSlice, id: string) {
 		{},
 	);
 }
+
 export const fetchContactsByFolderId = createAsyncThunk('contacts/fetchContactsByFolderId', async (id) => {
 	const { cn } = await network.soapFetch(
 		'Search',
@@ -66,7 +78,6 @@ export const fetchAndUpdateContacts = createAsyncThunk('contacts/fetchAndUpdateC
 		},
 		currentContacts,
 	);
-
 	const { cn } = await network.soapFetch(
 		'GetContacts',
 		{
@@ -74,7 +85,6 @@ export const fetchAndUpdateContacts = createAsyncThunk('contacts/fetchAndUpdateC
 			cn: currentContacts
 		}
 	);
-
 	return reduce(
 		cn,
 		(r, c) => {
@@ -134,17 +144,13 @@ export const deleteContact = createAsyncThunk('contacts/deleteContact', async (c
 		);
 		return cn;
 	}
-	const obj = {
-		...contact,
-		parent: '3'
-	};
 	const { cn } = await network.soapFetch(
 		'ContactAction',
 		{
 			_jsns: 'urn:zimbraMail',
 			action: {
-				id: obj.id,
-				l: obj.parent,
+				id: contact.id,
+				l: '3',
 				op: 'move'
 			}
 		}
@@ -153,36 +159,33 @@ export const deleteContact = createAsyncThunk('contacts/deleteContact', async (c
 });
 
 export const handleSyncData = createAsyncThunk('contacts/handleSyncData', async ({
-	firstSync, cn, deleted
-}: any, { dispatch, getState }) => {
+	firstSync, cn
+}: any, { dispatch }) => {
 	if (!firstSync) {
 		const updatedContacts = GetIdsFromContacts(cn || []);
 		if (!isEmpty(updatedContacts)) {
 			await dispatch(fetchAndUpdateContacts(updatedContacts));
 		}
-		if (!isEmpty(deleted)) {
-			console.log(deleted);
-		}
 	}
 });
 
-function syncContactsPending(state: IContactsSlice) {
+function syncContactsPending(state: ContactsSlice): void {
 	state.status = 'syncing';
 }
 
-function syncContactsFullFilled(state: IContactsSlice) {
+function syncContactsFullFilled(state: ContactsSlice): void {
 	state.status = 'succeeded';
 }
 
-function syncContactsRejected(state: IContactsSlice) {
+function syncContactsRejected(state: ContactsSlice): void {
 	state.status = 'failed';
 }
 
-function fetchContactsPending(state: IContactsSlice) {
-	console.log('Pending');
+function fetchContactsPending(state: ContactsSlice): ContactsSlice {
+	return state;
 }
 
-function fetchContactsFullFilled(state: IContactsSlice, { payload }: any) {
+function fetchContactsFullFilled(state: ContactsSlice, { payload }: any): void {
 	removeContactFromStore(state, payload[0].id);
 	// add updated contact
 	reduce(
@@ -202,7 +205,7 @@ function fetchContactsFullFilled(state: IContactsSlice, { payload }: any) {
 	);
 }
 
-function fetchContactsByFolderIdFullFilled(state: IContactsSlice, { payload }: any) {
+function fetchContactsByFolderIdFullFilled(state: ContactsSlice, { payload }: any): void {
 	const { contacts, folderId } = payload;
 	if (contacts.length > 0) {
 		reduce(
@@ -226,44 +229,44 @@ function fetchContactsByFolderIdFullFilled(state: IContactsSlice, { payload }: a
 	}
 }
 
-function fetchContactsRejected(state: IContactsSlice) {
-	console.log('failed');
+function fetchContactsRejected(state: ContactsSlice): ContactsSlice {
+	return state;
 }
 
-function addContactPending(state: IContactsSlice) {
-	console.log('pending');
+function addContactPending(state: ContactsSlice): ContactsSlice {
+	return state;
 }
 
-function addContactFullFilled(state: IContactsSlice, { payload }: any) {
+function addContactFullFilled(state: ContactsSlice, { payload }: any): void {
 	if (state && state.contacts && state.contacts[payload[0].l]) {
 		state.contacts[payload[0].l].push(normalizeContact(payload[0]));
 	}
 }
 
-function addContactRejected(state: IContactsSlice) {
-	console.log('failed');
+function addContactRejected(state: ContactsSlice): ContactsSlice {
+	return state;
 }
 
-function updateContactPending(state: IContactsSlice) {
-	console.log('pending');
+function updateContactPending(state: ContactsSlice): ContactsSlice {
+	return state;
 }
 
-function updateContactFullFilled(state: IContactsSlice, { payload, meta }: any) {
+function updateContactFullFilled(state: ContactsSlice, { payload, meta }: any): void {
 	const folderId = payload[0].l;
 	const contactId = payload[0].id;
 	const index = findIndex(state.contacts[folderId], ['id', contactId]);
 	state.contacts[folderId][index] = meta.arg;
 }
 
-function updateContactRejected(state: IContactsSlice) {
-	console.log('failed');
+function updateContactRejected(state: ContactsSlice): ContactsSlice {
+	return state;
 }
 
-function deleteContactPending(state: IContactsSlice) {
-	console.log('pending');
+function deleteContactPending(state: ContactsSlice): ContactsSlice {
+	return state;
 }
 
-function deleteContactFullFilled(state: IContactsSlice, { meta }: any) {
+function deleteContactFullFilled(state: ContactsSlice, { meta }: any): void {
 	const { id, parent } = meta.arg;
 	removeContactFromStore(state, id);
 	if (parent !== '3' && state.contacts[3]) {
@@ -275,8 +278,8 @@ function deleteContactFullFilled(state: IContactsSlice, { meta }: any) {
 	}
 }
 
-function deleteContactRejected(state: IContactsSlice) {
-	console.log('failed');
+function deleteContactRejected(state: ContactsSlice): ContactsSlice {
+	return state;
 }
 export const contactsSlice = createSlice({
 	name: 'contacts',
@@ -309,14 +312,14 @@ export const contactsSlice = createSlice({
 
 export default contactsSlice.reducer;
 
-export function selectAllContactsInFolder({ contacts }: IState, id: string) {
+export function selectAllContactsInFolder({ contacts }: State, id: string): Contact[] | undefined {
 	if (contacts && contacts.contacts[id]) {
 		return contacts.contacts[id];
 	}
 	return undefined;
 }
 
-export function selectContact({ contacts }: IState, folderId: number, id: string) {
+export function selectContact({ contacts }: State, folderId: number, id: string): Contact | undefined {
 	if (contacts && contacts.contacts[folderId]) {
 		return contacts.contacts[folderId].find((item) => item.id === id);
 	}
