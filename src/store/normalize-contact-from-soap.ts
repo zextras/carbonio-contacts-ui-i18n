@@ -9,127 +9,21 @@
  * *** END LICENSE BLOCK *****
  */
 
+import { lowerFirst, parseInt, pickBy, reduce, words } from 'lodash';
 import {
-	forEach,
-	lowerFirst,
-	parseInt,
-	pickBy,
-	reduce,
-	words
-} from 'lodash';
-import { ISoapFolderObj, SoapContact, SyncResponseContactFolder } from './soap';
-
-export enum ContactPhoneType {
-	MOBILE = 'mobile',
-	WORK = 'work',
-	HOME = 'home',
-	OTHER = 'other'
-}
-
-export enum ContactAddressType {
-	OTHER = 'other',
-	WORK = 'work',
-	HOME = 'home'
-}
-
-export enum ContactUrlType {
-	OTHER = 'other',
-	WORK = 'work',
-	HOME = 'home'
-}
-
-export type ContactAddress = {
-	type: ContactAddressType;
-	street?: string;
-	city?: string;
-	postalCode?: string;
-	country?: string;
-	state?: string;
-}
-
-export type ContactEmail = {
-	mail: string;
-};
-
-export type ContactPhone = {
-	number: string;
-	type: ContactPhoneType;
-};
-
-export type ContactUrl = {
-	url: string;
-	type: ContactUrlType;
-}
-
-export type ContactAddressMap = { [key: string]: ContactAddress };
-export type ContactEmailMap = { [key: string]: ContactEmail };
-export type ContactPhoneMap = { [key: string]: ContactPhone };
-export type ContactUrlMap = { [key: string]: ContactUrl };
-
-export type ContactsFolder = {
-	/** Internal UUID */ _id?: string;
-	/** Zimbra ID */ id?: string;
-	itemsCount: number;
-	name: string;
-	path: string;
-	unreadCount: number;
-	size: number;
-	parent: string;
-}
-
-export type Contact = {
-	/* Internal UUID */ _id?: string; // todo: delete this param?
-	/* Zimbra ID */ id?: string;
-	firstName: string;
-	middleName: string;
-	lastName: string;
-	nickName: string;
-	parent: string;
-	address: ContactAddressMap;
-	company: string;
-	department: string;
-	email: ContactEmailMap;
-	image: string;
-	jobTitle: string;
-	notes: string;
-	phone: ContactPhoneMap;
-	nameSuffix: string;
-	namePrefix: string;
-	URL: ContactUrlMap;
-}
+	Contact,
+	ContactAddress,
+	ContactAddressMap,
+	ContactAddressType, ContactEmailMap, ContactPhoneMap,
+	ContactPhoneType, ContactUrlMap,
+	ContactUrlType,
+} from '../types/contact';
+import { SoapContact } from '../types/soap';
 
 const MAIL_REG = /^email(\d*)$/;
 const PHONE_REG = /^(.*)Phone(\d*)$/;
 const URL_REG = /^(.*)URL(\d*)$/;
 const ADDR_PART_REG = /^(.*)(City|Country|PostalCode|State|Street)(\d*)$/;
-
-function normalizeFolder(soapFolderObj: ISoapFolderObj): ContactsFolder {
-	return {
-		itemsCount: soapFolderObj.n,
-		name: soapFolderObj.name,
-		// _id: soapFolderObj.uuid,
-		id: soapFolderObj.id,
-		path: soapFolderObj.absFolderPath,
-		unreadCount: soapFolderObj.u || 0,
-		size: soapFolderObj.s,
-		parent: soapFolderObj.l
-	};
-}
-
-export function normalizeContactsFolders(f: SyncResponseContactFolder): ContactsFolder[] {
-	if (!f) return [];
-	let children: ContactsFolder[] = [];
-	if (f.folder) {
-		forEach(f.folder, (c: SyncResponseContactFolder) => {
-			const child = normalizeContactsFolders(c);
-			children = [...children, ...child];
-		});
-	}
-	if (f.id === '3' || (f.view && f.view === 'contact')) {
-		return [normalizeFolder(f), ...children];
-	}
-	return children;
-}
 
 function contactPhoneTypeFromString(s: string): ContactPhoneType {
 	if (!PHONE_REG.test(s)) return ContactPhoneType.OTHER;

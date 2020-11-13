@@ -13,5 +13,33 @@ import { reduce } from 'lodash';
 import faker from 'faker';
 
 export function handleModifyContactRequest(req, res, ctxt) {
-
+	const _attrs = reduce(
+		req.body.Body.ModifyContactRequest.cn.a,
+		(acc, v) => {
+			acc[v.n] = v._content;
+			return acc;
+		},
+		{}
+	);
+	return res(
+		ctxt.json(
+			{
+				Body: {
+					ModifyContactResponse: {
+						_jsns: 'urn:zimbraMail',
+						cn: [
+							{
+								id: req.body.Body.ModifyContactRequest.cn.id,
+								l: '7',
+								meta: [{}],
+								t: '',
+								tn: '',
+								_attrs
+							}
+						]
+					}
+				}
+			},
+		)
+	);
 }

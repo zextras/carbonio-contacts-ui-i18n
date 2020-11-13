@@ -9,9 +9,19 @@
  * *** END LICENSE BLOCK *****
  */
 
-import { reduce } from 'lodash';
-import faker from 'faker';
-
 export function handleContactActionRequest(req, res, ctxt) {
-
+	return res(
+		ctxt.json({
+			Body: {
+				ContactActionResponse: {
+					action: {
+						id: req.body.Body.ContactActionRequest.action.id,
+						op: req.body.Body.ContactActionRequest.action.op,
+						// l: req.body.Body.ContactActionRequest.action.l
+					},
+					_jsns: 'urn:zimbraMail'
+				}
+			}
+		})
+	);
 }
