@@ -11,12 +11,13 @@
 
 import { configureStore } from '@reduxjs/toolkit';
 import faker from 'faker';
-import reducers from './reducers';
-import {
-	addContact, fetchContactsByFolderId, deleteContact, modifyContact, fetchAndUpdateContacts, selectAllContactsInFolder,
-} from './contacts-slice';
 import { network } from '@zextras/zapp-shell';
 import { useSelector } from 'react-redux';
+import reducers from './reducers';
+import {
+	addContact, fetchContactsByFolderId,
+	deleteContact, modifyContact, fetchAndUpdateContacts,
+} from './contacts-slice';
 
 describe('Contact Slice', () => {
 	describe('Add new Contact', () => {

@@ -20,8 +20,7 @@ import {
 	Divider,
 	Padding
 } from '@zextras/zapp-ui';
-import { trim, get, has } from 'lodash';
-import { Contact } from '../types/contact';
+import { trim } from 'lodash';
 import { useDisplayName } from '../commons/use-display-name';
 
 const InvisibleLink = styled(Link)`
@@ -81,7 +80,8 @@ export default function ContactListItem({ contact, style }) {
 }
 
 ContactListItem.propTypes = {
-	className: PropTypes.string,
+	// eslint-disable-next-line react/forbid-prop-types,react/require-default-props
 	style: PropTypes.any,
+	// eslint-disable-next-line react/forbid-prop-types
 	contact: PropTypes.any.isRequired /* instanceOf(Contact) */ // todo: modify this
 };

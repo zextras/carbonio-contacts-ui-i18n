@@ -43,7 +43,7 @@ const ContactEditHeader = ({ editPanelId, folderId }) => {
 				padding={{ left: 'large', right: 'large' }}
 			>
 				<Padding right="medium">
-					<Icon size="medium" icon="EditOutline"/>
+					<Icon size="medium" icon="EditOutline" />
 				</Padding>
 				<Row takeAvailableSpace mainAlignment="flex-start">
 					<Text size="medium">

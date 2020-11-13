@@ -14,9 +14,9 @@ import { reduce } from 'lodash';
 export function handleCreateContactRequest(req, res, ctxt) {
 	const attrs = reduce(
 		req.body.Body.CreateContactRequest.cn.a,
-		(acc, v, k) => {
-			v._content ? acc[v.n] = v._content : '';
-			return acc;
+		(r, v, k) => {
+			v._content ? r[v.n] = v._content : '';
+			return r;
 		},
 		{},
 	);

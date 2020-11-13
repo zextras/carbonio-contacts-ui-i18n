@@ -30,5 +30,5 @@ export type SyncSlice = {
 
 export type FoldersSlice = {
 	status: string;
-	folders: {[k: string]: ContactsFolder[]};
+	folders: {[k: string]: ContactsFolder};
 }
