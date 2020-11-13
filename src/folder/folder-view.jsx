@@ -61,6 +61,60 @@ Breadcrumbs.propTypes = {
 	folderId: PropTypes.string.isRequired
 };
 
+function ContactList({ folderId }) {
+	const dispatch = useDispatch();
+	const contacts = useSelector((state) => selectAllContactsInFolder(state, folderId));
+
+	useEffect(() => {
+		if (!contacts) {
+			dispatch(fetchContactsByFolderId(folderId));
+		}
+	}, [contacts, folderId]);
+
+	const rowRenderer = useCallback(
+		({
+			index,
+			key,
+			style
+		}) => (
+			<ContactListItem
+				key={key}
+				style={style}
+				contact={contacts[index]}
+			/>
+		),
+		[contacts]
+	);
+
+	if ((contacts || []).length) {
+		return (
+			<>
+				<Breadcrumbs folderId={folderId} />
+				<Container
+					mainAlignment="flex-start"
+					crossAlignment="flex-start"
+					borderRadius="none"
+				>
+					<AutoSizer>
+						{ ({ height, width }) => (
+							<List
+								height={height}
+								width={width}
+								rowCount={(contacts || []).length}
+								overscanRowCount={10}
+								rowHeight={57}
+								rowRenderer={rowRenderer}
+								style={{ outline: 'none' }}
+							/>
+						) }
+					</AutoSizer>
+				</Container>
+			</>
+		);
+	}
+	return <Container />;
+}
+
 export default function FolderView() {
 	let { folderId } = useParams();
 	if (!folderId) {
@@ -149,57 +203,3 @@ export default function FolderView() {
 		</Container>
 	);
 }
-
-const ContactList = ({ folderId }) => {
-	const dispatch = useDispatch();
-	const contacts = useSelector((state) => selectAllContactsInFolder(state, folderId));
-
-	useEffect(() => {
-		if (!contacts) {
-			dispatch(fetchContactsByFolderId(folderId));
-		}
-	}, [contacts, folderId]);
-
-	const rowRenderer = useCallback(
-		({
-			index,
-			key,
-			style
-		}) => (
-			<ContactListItem
-				key={key}
-				style={style}
-				contact={contacts[index]}
-			/>
-		),
-		[contacts]
-	);
-
-	if ((contacts || []).length) {
-		return (
-			<>
-				<Breadcrumbs folderId={folderId} />
-				<Container
-					mainAlignment="flex-start"
-					crossAlignment="flex-start"
-					borderRadius="none"
-				>
-					<AutoSizer>
-						{ ({ height, width }) => (
-							<List
-								height={height}
-								width={width}
-								rowCount={(contacts || []).length}
-								overscanRowCount={10}
-								rowHeight={57}
-								rowRenderer={rowRenderer}
-								style={{ outline: 'none' }}
-							/>
-						) }
-					</AutoSizer>
-				</Container>
-			</>
-		);
-	}
-	return <Container />;
-};

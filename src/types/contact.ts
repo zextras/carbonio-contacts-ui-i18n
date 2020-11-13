@@ -8,6 +8,7 @@
  * http://www.zextras.com/zextras-eula.html
  * *** END LICENSE BLOCK *****
  */
+// eslint-disable-next-line no-shadow
 export enum ContactPhoneType {
 	MOBILE = 'mobile',
 	WORK = 'work',
@@ -15,12 +16,14 @@ export enum ContactPhoneType {
 	OTHER = 'other'
 }
 
+// eslint-disable-next-line no-shadow
 export enum ContactAddressType {
 	OTHER = 'other',
 	WORK = 'work',
 	HOME = 'home'
 }
 
+// eslint-disable-next-line no-shadow
 export enum ContactUrlType {
 	OTHER = 'other',
 	WORK = 'work',

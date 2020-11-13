@@ -11,12 +11,6 @@
 
 import { ContactsFolder, Contact } from './contact';
 
-export type State = {
-	sync: SyncSlice;
-	folders: FoldersSlice;
-	contacts: ContactsSlice;
-}
-
 export type ContactsSlice = {
 	status: string;
 	contacts: {[k: string]: Contact[]};
@@ -31,4 +25,10 @@ export type SyncSlice = {
 export type FoldersSlice = {
 	status: string;
 	folders: {[k: string]: ContactsFolder};
+}
+
+export type State = {
+	sync: SyncSlice;
+	folders: FoldersSlice;
+	contacts: ContactsSlice;
 }

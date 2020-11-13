@@ -30,6 +30,91 @@ const typeToIcon = (type) => {
 	}
 };
 
+const ContactPreviewRow = ({ children, width }) => (
+	<Row
+		orientation="horizontal"
+		mainAlignment="space-between"
+		width={width || 'fill'}
+		wrap="nowrap"
+		padding={{ horizontal: 'small' }}
+	>
+		{children}
+	</Row>
+);
+
+const ContactField = ({
+	field, label, width, icon, limit, items
+}) => (
+	<Container
+		mainAlignment="flex-start"
+		crossAlignment="flex-start"
+		padding={{ all: 'small' }}
+		width={width || '48%'}
+		style={{ minHeight: '48px', maxWidth: limit ? 'calc(100% - 48px)' : '100%' }}
+	>
+		<Text color="secondary">{label}</Text>
+		<Row
+			takeAvailableSpace
+			wrap="nowrap"
+			height="fit"
+			width="fill"
+			orientation="horizontal"
+			mainAlignment="flex-start"
+			padding={{ top: 'extrasmall' }}
+		>
+			{ icon && (
+				<Padding right="extrasmall">
+					<Icon icon={icon} />
+				</Padding>
+			)}
+			<Row takeAvailableSpace mainAlignment="flex-start">
+				<Text size="medium" overflow="break-word">{ field }</Text>
+			</Row>
+			{ items && (
+				<Padding left="extrasmall">
+					<Dropdown items={items} placement="bottom-end">
+						<IconButton size="small" icon="ArrowIosDownward" />
+					</Dropdown>
+				</Padding>
+			)}
+		</Row>
+	</Container>
+);
+
+const ContactMultiValueField = ({
+	values, label, labelKey, width, defaultType, showIcon
+}) => {
+	const [selected, setSelected] = useState(0);
+	const items = useMemo(
+		() =>	map(
+			values,
+			(item, id) => ({
+				id: id.toString(),
+				label: item[labelKey],
+				icon: typeToIcon(item.type || defaultType || 'other'),
+				click: () => setSelected(id)
+			})
+		),
+		[defaultType, labelKey, values]
+	);
+	return (
+		<Container
+			orientation="horizontal"
+			width={width || '48%'}
+			crossAlignment="center"
+			mainAlignment="space-between"
+		>
+			<ContactField
+				label={label}
+				field={values && values[selected] && values[selected][labelKey]}
+				icon={values && values[selected] && showIcon && typeToIcon(values[selected].type || defaultType || 'other')}
+				width={width || 'fill'}
+				items={values.length > 1 && items}
+			/>
+		</Container>
+	);
+};
+
 const ContactPreviewContent = ({ contact, onEdit, onDelete }) => {
 	const [open, setOpen] = useState(true);
 	const toggleOpen = useCallback(() => {
@@ -180,90 +265,5 @@ const ContactPreviewContent = ({ contact, onEdit, onDelete }) => {
 		</>
 	);
 };
-
-const ContactPreviewRow = ({ children, width }) => (
-	<Row
-		orientation="horizontal"
-		mainAlignment="space-between"
-		width={width || 'fill'}
-		wrap="nowrap"
-		padding={{ horizontal: 'small' }}
-	>
-		{children}
-	</Row>
-);
-
-const ContactMultiValueField = ({
-	values, label, labelKey, width, defaultType, showIcon
-}) => {
-	const [selected, setSelected] = useState(0);
-	const items = useMemo(
-		() =>	map(
-			values,
-			(item, id) => ({
-				id: id.toString(),
-				label: item[labelKey],
-				icon: typeToIcon(item.type || defaultType || 'other'),
-				click: () => setSelected(id)
-			})
-		),
-		[defaultType, labelKey, values]
-	);
-	return (
-		<Container
-			orientation="horizontal"
-			width={width || '48%'}
-			crossAlignment="center"
-			mainAlignment="space-between"
-		>
-			<ContactField
-				label={label}
-				field={values && values[selected] && values[selected][labelKey]}
-				icon={values && values[selected] && showIcon && typeToIcon(values[selected].type || defaultType || 'other')}
-				width={width || 'fill'}
-				items={values.length > 1 && items}
-			/>
-		</Container>
-	);
-};
-
-const ContactField = ({
-	field, label, width, icon, limit, items
-}) => (
-	<Container
-		mainAlignment="flex-start"
-		crossAlignment="flex-start"
-		padding={{ all: 'small' }}
-		width={width || '48%'}
-		style={{ minHeight: '48px', maxWidth: limit ? 'calc(100% - 48px)' : '100%' }}
-	>
-		<Text color="secondary">{label}</Text>
-		<Row
-			takeAvailableSpace
-			wrap="nowrap"
-			height="fit"
-			width="fill"
-			orientation="horizontal"
-			mainAlignment="flex-start"
-			padding={{ top: 'extrasmall' }}
-		>
-			{ icon && (
-				<Padding right="extrasmall">
-					<Icon icon={icon} />
-				</Padding>
-			)}
-			<Row takeAvailableSpace mainAlignment="flex-start">
-				<Text size="medium" overflow="break-word">{ field }</Text>
-			</Row>
-			{ items && (
-				<Padding left="extrasmall">
-					<Dropdown items={items} placement="bottom-end">
-						<IconButton size="small" icon="ArrowIosDownward" />
-					</Dropdown>
-				</Padding>
-			)}
-		</Row>
-	</Container>
-);
 
 export default ContactPreviewContent;
