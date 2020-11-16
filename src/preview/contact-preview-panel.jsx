@@ -29,7 +29,8 @@ export default function ContactPreviewPanel({ contactInternalId, folderId }) {
 	);
 
 	const onDelete = useCallback(() => {
-		dispatch(deleteContact(contact));
+		const { parent } = contact;
+		dispatch(deleteContact({ contact, parent }));
 	}, [contactInternalId, folderId, replaceHistory, contact]);
 
 	const onClose = useCallback(

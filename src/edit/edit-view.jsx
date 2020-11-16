@@ -33,9 +33,11 @@ import {
 	IconButton,
 	Padding,
 	FormSection,
+	Snackbar,
 	Text, Select
 } from '@zextras/zapp-ui';
 import { useDispatch, useSelector } from 'react-redux';
+import { nanoid } from '@reduxjs/toolkit';
 import { CompactView } from '../commons/contact-compact-view';
 import { report } from '../commons/report-exception';
 import { addContact, selectContact, modifyContact } from '../store/contacts-slice';
@@ -101,13 +103,6 @@ export default function EditView({ panel, editPanelId, folderId }) {
 		let canSet = true;
 		if (editId && editId !== 'new' && editContact) {
 			canSet && setInitialContact(editContact);
-			/* db.contacts
-				.where({ _id: editId })
-				.toArray()
-				.then(
-					(c) => canSet && c.length > 0 && setInitialContact(c[0])
-				)
-				.catch(report); */
 		}
 		return () => {
 			canSet = false;
@@ -115,15 +110,19 @@ export default function EditView({ panel, editPanelId, folderId }) {
 	}, [editId, setInitialContact, editContact]);
 
 	const onSubmit = useCallback((values, { setSubmitting }) => {
-		const contact = cleanMultivalueFields(values);
-		if (!contact.id) {
-			// todo: implement add contact in contacts-slice
-			dispatch(addContact(contact))
+		const prevContact = editContact;
+		const updatedContact = cleanMultivalueFields(values);
+		if (!updatedContact.id) {
+			dispatch(addContact({
+				...updatedContact,
+				_id: nanoid()
+			}))
 				.then((res) => {
 					setSubmitting(false);
 					return res;
 				})
 				.then((res) => {
+					console.log(res);
 					if (panel) {
 						replaceHistory(`/folder/${folderId}?preview=${res.payload[0].id}`);
 					}
@@ -132,29 +131,21 @@ export default function EditView({ panel, editPanelId, folderId }) {
 					}
 				})
 				.catch(report);
-			/* db.contacts
-				.add(contact)
-				.then((cid) => {
-					setSubmitting(false);
-					return cid;
-				})
-				.then((cid) => {
-					if (panel) {
-						replaceHistory(`/folder/${folderId}?preview=${cid}`);
-					}
-					else {
-						pushHistory(`/edit/${cid}`);
-					}
-				})
-				.catch(report); */
 		}
 		else {
-			// todo: implement update contact in contacts-slice
-			dispatch(modifyContact(contact))
-				.then(() => {
-					setSubmitting(false);
+			dispatch(modifyContact(
+				{
+					updatedContact,
+					prevContact
+				}
+			))
+				.then((res) => {
+					if (!res.error) {
+						setSubmitting(false);
+						setSnack(true);
+					}
 					if (panel) {
-						replaceHistory(`/folder/${folderId}?preview=${contact.id}`);
+						replaceHistory(`/folder/${folderId}?preview=${res.payload[0].id}`);
 					}
 				})
 				.catch(report);
