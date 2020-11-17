@@ -4,6 +4,7 @@ import {
 	isEmpty,
 	reduce,
 	filter,
+	find,
 	findIndex,
 	remove
 } from 'lodash';
@@ -14,22 +15,65 @@ import { ContactsSlice, State } from '../types/store';
 import { normalizeContact } from './normalize-contact-from-soap';
 import { normalizeContactAttrsToSoapOp } from './normalize-contact-to-soap';
 
+
+type ModifyContactAction = {
+	meta: {
+		arg: {
+			updatedContact: Contact;
+			prevContact: Contact;
+		};
+		requestId: string;
+	};
+};
+type AddContactRequest = {
+	meta: {
+		arg: Contact;
+		requestId: string;
+	};
+};
+
+type AddContactAction = AddContactRequest & {
+	payload: SoapContact[];
+}
+
+type DeleteContactAction = {
+	meta: {
+		arg: {
+			contact: Contact;
+			parent: string;
+		};
+		requestId: string;
+	};
+}
+
+type GetContactAction = {
+	payload: Contact[];
+};
+
+type FetchContactsByFolderId = {
+	payload: {
+		contacts: Contact[];
+		folderId: string;
+	};
+};
+
 function GetIdsFromContacts(contacts: SoapContact[]): string[] {
 	const accValue: string[] = [];
 	return reduce(
 		contacts || [],
-		(acc, v) => acc.concat(v.id), // todo: check if already in state (if in state no need to fetch)
+		(acc, v) => acc.concat(v.id),
 		accValue
 	);
 }
 
-function removeContactFromStore(state: ContactsSlice, id: string): void {
+function removeTempIdAndAssignItsOwn(state: ContactsSlice, folderId: string, id: string): void {
 	reduce(
 		state.contacts,
 		(acc, v) => {
-			const filtered = filter(v, (item) => item.id === id);
-			if (filtered.length > 0) {
-				remove(v, filtered[0]);
+			const contact = find(v, (item) => !item.id);
+			if (contact && contact._id) {
+				delete contact._id;
+				contact.id = id;
 			}
 			return acc;
 		},
@@ -37,7 +81,35 @@ function removeContactFromStore(state: ContactsSlice, id: string): void {
 	);
 }
 
-export const fetchContactsByFolderId = createAsyncThunk('contacts/fetchContactsByFolderId', async (id) => {
+function removeContactsFromStore(state: ContactsSlice, id: string): void {
+	reduce(
+		state.contacts,
+		(acc, v) => {
+			const filteredWithId = filter(v, (item) => item.id === id);
+			if (filteredWithId.length) {
+				remove(v, (item) => item.id === id);
+			}
+			return acc;
+		},
+		{},
+	);
+}
+
+function addContactToStore(state: ContactsSlice, payload: Contact[]): void {
+	reduce(
+		payload,
+		(acc, v) => {
+			if (!acc[v.parent]) {
+				return acc;
+			}
+			acc[v.parent].push(v);
+			return acc;
+		},
+		state.contacts,
+	);
+}
+
+export const fetchContactsByFolderId = createAsyncThunk('contacts/fetchContactsByFolderId', async (id: string) => {
 	const { cn } = await network.soapFetch(
 		'Search',
 		{
@@ -69,7 +141,7 @@ export const fetchContactsByFolderId = createAsyncThunk('contacts/fetchContactsB
 });
 
 export const fetchAndUpdateContacts = createAsyncThunk('contacts/fetchAndUpdateContacts', async (ids: string[]) => {
-	const currentContacts: {[k: string]: string}[] = [];
+	const currentContacts: {[id: string]: string}[] = [];
 	reduce(
 		ids,
 		(acc, v) => {
@@ -113,7 +185,7 @@ export const addContact = createAsyncThunk('contacts/addContact', async (contact
 	return cn;
 });
 
-export const modifyContact = createAsyncThunk('contacts/modifyContact', async (contact: Contact) => {
+export const modifyContact = createAsyncThunk('contacts/modifyContact', async ({ updatedContact, prevContact }: { updatedContact: Contact; prevContact: Contact }) => {
 	const { cn } = await network.soapFetch(
 		'ModifyContact',
 		{
@@ -122,15 +194,15 @@ export const modifyContact = createAsyncThunk('contacts/modifyContact', async (c
 			replace: '0',
 			cn: {
 				m: [],
-				id: contact.id,
-				a: normalizeContactAttrsToSoapOp(contact)
+				id: updatedContact.id,
+				a: normalizeContactAttrsToSoapOp(updatedContact)
 			}
 		}
 	);
 	return cn;
 });
 
-export const deleteContact = createAsyncThunk('contacts/deleteContact', async (contact: Contact) => {
+export const deleteContact = createAsyncThunk('contacts/deleteContact', async ({ contact, parent }: { contact: Contact; parent: string }) => {
 	if (contact.parent === '3') {
 		const { cn } = await network.soapFetch(
 			'ContactAction',
@@ -160,7 +232,7 @@ export const deleteContact = createAsyncThunk('contacts/deleteContact', async (c
 
 export const handleSyncData = createAsyncThunk('contacts/handleSyncData', async ({
 	firstSync, cn
-}: any, { dispatch }) => {
+}: { firstSync: boolean; cn: SoapContact[]}, { dispatch }) => {
 	if (!firstSync) {
 		const updatedContacts = GetIdsFromContacts(cn || []);
 		if (!isEmpty(updatedContacts)) {
@@ -181,31 +253,18 @@ function syncContactsRejected(state: ContactsSlice): void {
 	state.status = 'failed';
 }
 
-function fetchContactsPending(state: ContactsSlice): ContactsSlice {
-	return state;
+function fetchContactsPending(state: ContactsSlice): void {
+	state.status = 'fetching';
 }
 
-function fetchContactsFullFilled(state: ContactsSlice, { payload }: any): void {
-	removeContactFromStore(state, payload[0].id);
-	// add updated contact
-	reduce(
-		payload,
-		(acc, v) => {
-			if (!acc[v.parent]) {
-				return acc;
-			}
-			const el = filter(acc[v.parent], (item) => item.id === v.id);
-			if (el.length > 0) {
-				return acc;
-			}
-			acc[v.parent].push(v);
-			return acc;
-		},
-		state.contacts,
-	);
+function fetchContactsFullFilled(state: ContactsSlice, { payload }: GetContactAction): void {
+	if (payload[0].id) {
+		removeContactsFromStore(state, payload[0].id);
+	}
+	addContactToStore(state, payload);
 }
 
-function fetchContactsByFolderIdFullFilled(state: ContactsSlice, { payload }: any): void {
+function fetchContactsByFolderIdFullFilled(state: ContactsSlice, { payload }: FetchContactsByFolderId): void {
 	const { contacts, folderId } = payload;
 	if (contacts.length > 0) {
 		reduce(
@@ -233,60 +292,67 @@ function fetchContactsRejected(state: ContactsSlice): ContactsSlice {
 	return state;
 }
 
-function addContactPending(state: ContactsSlice): ContactsSlice {
-	return state;
-}
-
-function addContactFullFilled(state: ContactsSlice, { payload }: any): void {
-	if (state && state.contacts && state.contacts[payload[0].l]) {
-		state.contacts[payload[0].l].push(normalizeContact(payload[0]));
+function addContactPending(state: ContactsSlice, { meta }: AddContactRequest): void {
+	if (state && state.contacts && state.contacts[meta.arg.parent]) {
+		state.contacts[meta.arg.parent].push(meta.arg);
 	}
 }
 
-function addContactRejected(state: ContactsSlice): ContactsSlice {
+function addContactFullFilled(state: ContactsSlice, { payload }: AddContactAction): void {
+	removeTempIdAndAssignItsOwn(state, payload[0].l, payload[0].id);
+}
+
+function addContactRejected(state: ContactsSlice, { meta }: AddContactRequest): void {
+	if (meta.arg._id) {
+		removeContactsFromStore(state, meta.arg._id);
+	}
+}
+
+function updateContactPending(state: ContactsSlice, { meta }: ModifyContactAction): void {
+	const { parent } = meta.arg.prevContact;
+	const { id } = meta.arg.prevContact;
+	const index = findIndex(state.contacts[parent], ['id', id]);
+	state.contacts[parent][index] = meta.arg.updatedContact;
+}
+
+function updateContactFullFilled(state: ContactsSlice): ContactsSlice {
 	return state;
 }
 
-function updateContactPending(state: ContactsSlice): ContactsSlice {
-	return state;
+function updateContactRejected(state: ContactsSlice, { meta }: ModifyContactAction): void {
+	const { parent } = meta.arg.prevContact;
+	const { id } = meta.arg.prevContact;
+	const index = findIndex(state.contacts[parent], ['id', id]);
+	state.contacts[parent][index] = meta.arg.prevContact;
 }
 
-function updateContactFullFilled(state: ContactsSlice, { payload, meta }: any): void {
-	const folderId = payload[0].l;
-	const contactId = payload[0].id;
-	const index = findIndex(state.contacts[folderId], ['id', contactId]);
-	state.contacts[folderId][index] = meta.arg;
-}
-
-function updateContactRejected(state: ContactsSlice): ContactsSlice {
-	return state;
-}
-
-function deleteContactPending(state: ContactsSlice): ContactsSlice {
-	return state;
-}
-
-function deleteContactFullFilled(state: ContactsSlice, { meta }: any): void {
-	const { id, parent } = meta.arg;
-	removeContactFromStore(state, id);
+function deleteContactPending(state: ContactsSlice, { meta }: DeleteContactAction): void {
+	const { id, parent } = meta.arg.contact;
+	if (id) {
+		removeContactsFromStore(state, id);
+	}
 	if (parent !== '3' && state.contacts[3]) {
 		const obj = {
-			...meta.arg,
+			...meta.arg.contact,
 			parent: '3'
 		};
 		state.contacts[3].push(obj);
 	}
 }
 
-function deleteContactRejected(state: ContactsSlice): ContactsSlice {
+function deleteContactFullFilled(state: ContactsSlice): ContactsSlice {
 	return state;
+}
+
+function deleteContactRejected(state: ContactsSlice, { meta }: DeleteContactAction): void {
+	state.contacts[meta.arg.parent].push(meta.arg.contact);
 }
 export const contactsSlice = createSlice({
 	name: 'contacts',
 	initialState: {
 		status: 'idle',
-		contacts: {},
-	},
+		contacts: {} as { [k: string]: Contact[]},
+	}as ContactsSlice,
 	reducers: { },
 	extraReducers: (builder) => {
 		builder.addCase(handleSyncData.pending, produce(syncContactsPending));

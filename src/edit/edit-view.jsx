@@ -33,9 +33,11 @@ import {
 	IconButton,
 	Padding,
 	FormSection,
+	Snackbar,
 	Text, Select
 } from '@zextras/zapp-ui';
 import { useDispatch, useSelector } from 'react-redux';
+import { nanoid } from '@reduxjs/toolkit';
 import { CompactView } from '../commons/contact-compact-view';
 import { report } from '../commons/report-exception';
 import { addContact, selectContact, modifyContact } from '../store/contacts-slice';

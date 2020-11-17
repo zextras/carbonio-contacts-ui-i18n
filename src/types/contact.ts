@@ -70,7 +70,7 @@ export type ContactsFolder = {
 }
 
 export type Contact = {
-	/* Internal UUID */ _id?: string; // todo: delete this param?
+	_id?: string;
 	/* Zimbra ID */ id?: string;
 	firstName: string;
 	middleName: string;

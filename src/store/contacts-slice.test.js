@@ -15,8 +15,11 @@ import { network } from '@zextras/zapp-shell';
 import { useSelector } from 'react-redux';
 import reducers from './reducers';
 import {
-	addContact, fetchContactsByFolderId,
-	deleteContact, modifyContact, fetchAndUpdateContacts,
+	addContact,
+	fetchContactsByFolderId,
+	deleteContact,
+	modifyContact,
+	fetchAndUpdateContacts,
 } from './contacts-slice';
 
 describe('Contact Slice', () => {
@@ -85,17 +88,20 @@ describe('Contact Slice', () => {
 			expect(store.getState().contacts.contacts[7]).toBeUndefined();
 		});
 	});
+
 	describe('Fetch Contact', () => {
 		test('Fetch Contact from Soap - unknown folder', async () => {
 			const store = configureStore({
 				reducer: reducers
 			});
 			const ids = ['2982', '2983'];
-			await store.dispatch(
+			const contacts = await store.dispatch(
 				fetchAndUpdateContacts(ids)
 			);
-			console.log(store.getState().contacts);
+			expect(contacts.payload).toBeDefined();
+			expect(contacts.payload).toHaveLength(2);
 			expect(store.getState().contacts.contacts[7]).toBeUndefined();
+			expect(store.getState().contacts.contacts).toMatchObject({});
 		});
 
 		test('Fetch Contact from Soap - known folder', async () => {
@@ -106,13 +112,13 @@ describe('Contact Slice', () => {
 			await store.dispatch(
 				fetchContactsByFolderId('7')
 			);
-			const contact = store.getState().contacts.contacts;
+			const previousState = store.getState().contacts.contacts[7][0];
 			await store.dispatch(
 				fetchAndUpdateContacts(ids)
 			);
 			expect(store.getState().contacts.contacts[7]).toBeDefined();
 			expect(store.getState().contacts.contacts[7]).toHaveLength(1);
-			expect(contact[7][0]).not.toMatchObject(store.getState().contacts.contacts[7][0]);
+			expect(previousState).not.toMatchObject(store.getState().contacts.contacts[7][0]);
 		});
 	});
 
@@ -127,19 +133,19 @@ describe('Contact Slice', () => {
 			);
 			expect(store.getState().contacts.contacts[7]).toBeDefined();
 			expect(store.getState().contacts.contacts[7]).toHaveLength(1);
-			const previousContact = store.getState().contacts.contacts[7][0];
+			const prevContact = store.getState().contacts.contacts[7][0];
 			const updatedContact = {
-				...previousContact,
+				...prevContact,
 				company: faker.company.companyName(),
 				firstName: faker.name.firstName(),
 				lastName: faker.name.lastName(),
 			};
 			await store.dispatch(
-				modifyContact(updatedContact)
+				modifyContact({ prevContact, updatedContact })
 			);
 			expect(store.getState().contacts.contacts[7]).toBeDefined();
 			expect(store.getState().contacts.contacts[7]).toHaveLength(1);
-			expect(previousContact).not.toMatchObject(store.getState().contacts.contacts[7][0]);
+			expect(prevContact).not.toMatchObject(store.getState().contacts.contacts[7][0]);
 		});
 
 		test('Update complex fields', async () => {
@@ -152,9 +158,9 @@ describe('Contact Slice', () => {
 			);
 			expect(store.getState().contacts.contacts[7]).toBeDefined();
 			expect(store.getState().contacts.contacts[7]).toHaveLength(1);
-			const previousContact = store.getState().contacts.contacts[7][0];
+			const prevContact = store.getState().contacts.contacts[7][0];
 			const updatedContact = {
-				...previousContact,
+				...prevContact,
 				company: faker.company.companyName(),
 				firstName: faker.name.firstName(),
 				lastName: faker.name.lastName(),
@@ -210,11 +216,11 @@ describe('Contact Slice', () => {
 				}
 			};
 			await store.dispatch(
-				modifyContact(updatedContact)
+				modifyContact({ prevContact, updatedContact })
 			);
 			expect(store.getState().contacts.contacts[7]).toBeDefined();
 			expect(store.getState().contacts.contacts[7]).toHaveLength(1);
-			expect(previousContact).not.toMatchObject(store.getState().contacts.contacts[7][0]);
+			expect(prevContact).not.toMatchObject(store.getState().contacts.contacts[7][0]);
 		});
 	});
 
@@ -229,10 +235,12 @@ describe('Contact Slice', () => {
 			);
 			expect(store.getState().contacts.contacts[7]).toBeDefined();
 			expect(store.getState().contacts.contacts[7]).toHaveLength(1);
+			const contact = store.getState().contacts.contacts[7][0];
 			await store.dispatch(
-				deleteContact(store.getState().contacts.contacts[7][0])
+				deleteContact({ contact, parent: contact.parent })
 			);
 			expect(store.getState().contacts.contacts[7]).toBeDefined();
+			expect(store.getState().contacts.contacts[3]).toBeUndefined();
 			expect(store.getState().contacts.contacts[7]).toHaveLength(0);
 		});
 
@@ -256,11 +264,9 @@ describe('Contact Slice', () => {
 			expect(store.getState().contacts.contacts[7]).toHaveLength(1);
 			expect(store.getState().contacts.contacts[3]).toHaveLength(0);
 			await store.dispatch(
-				deleteContact(store.getState().contacts.contacts[7][0])
+				deleteContact({ contact: store.getState().contacts.contacts[7][0], parent: store.getState().contacts.contacts[7][0].parent })
 			);
-			expect(store.getState().contacts.contacts[7]).toBeDefined();
 			expect(store.getState().contacts.contacts[7]).toHaveLength(0);
-			expect(store.getState().contacts.contacts[3]).toBeDefined();
 			expect(store.getState().contacts.contacts[3]).toHaveLength(1);
 		});
 
@@ -268,9 +274,9 @@ describe('Contact Slice', () => {
 			const store = configureStore({
 				reducer: reducers
 			});
-
 			expect(store.getState().contacts.contacts[7]).toBeUndefined();
 			expect(store.getState().contacts.contacts[3]).toBeUndefined();
+
 			await store.dispatch(
 				fetchContactsByFolderId('7')
 			);
@@ -284,18 +290,17 @@ describe('Contact Slice', () => {
 			expect(store.getState().contacts.contacts[3]).toBeDefined();
 			expect(store.getState().contacts.contacts[7]).toHaveLength(1);
 			expect(store.getState().contacts.contacts[3]).toHaveLength(0);
-
+			const contact = store.getState().contacts.contacts[7][0]
 			await store.dispatch(
-				deleteContact(store.getState().contacts.contacts[7][0])
+				deleteContact({ contact, parent: contact.parent })
 			);
-			expect(store.getState().contacts.contacts[7]).toBeDefined();
 			expect(store.getState().contacts.contacts[7]).toHaveLength(0);
-			expect(store.getState().contacts.contacts[3]).toBeDefined();
 			expect(store.getState().contacts.contacts[3]).toHaveLength(1);
 
 			await store.dispatch(
-				deleteContact(store.getState().contacts.contacts[3][0])
+				deleteContact({ contact: store.getState().contacts.contacts[3][0], parent: store.getState().contacts.contacts[3][0].parent })
 			);
+			expect(store.getState().contacts.contacts[7]).toHaveLength(0);
 			expect(store.getState().contacts.contacts[3]).toHaveLength(0);
 		});
 	});

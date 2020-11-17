@@ -13,13 +13,13 @@ import { ContactsFolder, Contact } from './contact';
 
 export type ContactsSlice = {
 	status: string;
-	contacts: {[k: string]: Contact[]};
+	contacts: {[k: string]: Contact[] };
 }
 
 export type SyncSlice = {
 	status: string;
 	intervalId: number;
-	token: string;
+	token: string | undefined;
 }
 
 export type FoldersSlice = {
