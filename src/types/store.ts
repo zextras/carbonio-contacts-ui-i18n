@@ -19,7 +19,7 @@ export type State = {
 
 export type ContactsSlice = {
 	status: string;
-	contacts: {[k: string]: Contact[]};
+	contacts: {[k: string]: Contact[] };
 }
 
 export type SyncSlice = {

@@ -122,7 +122,6 @@ export default function EditView({ panel, editPanelId, folderId }) {
 					return res;
 				})
 				.then((res) => {
-					console.log(res);
 					if (panel) {
 						replaceHistory(`/folder/${folderId}?preview=${res.payload[0].id}`);
 					}
@@ -142,7 +141,6 @@ export default function EditView({ panel, editPanelId, folderId }) {
 				.then((res) => {
 					if (!res.error) {
 						setSubmitting(false);
-						setSnack(true);
 					}
 					if (panel) {
 						replaceHistory(`/folder/${folderId}?preview=${res.payload[0].id}`);
@@ -150,7 +148,7 @@ export default function EditView({ panel, editPanelId, folderId }) {
 				})
 				.catch(report);
 		}
-	}, [folderId, panel, pushHistory, replaceHistory]);
+	}, [folderId, panel, pushHistory, replaceHistory, editContact]);
 
 	const defaultTypes = useMemo(() => [
 		{ label: t('work'), value: 'work' },
