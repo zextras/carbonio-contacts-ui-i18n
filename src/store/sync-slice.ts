@@ -12,10 +12,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import produce from 'immer';
 import { network } from '@zextras/zapp-shell';
+import { SyncSlice } from '../types/store';
 import { handleSyncData as handleFoldersSyncData } from './folders-slice';
 import { handleSyncData as handleContactsSyncData } from './contacts-slice';
 
-export const performSync = createAsyncThunk('sync/performSync', async (arg, { getState, dispatch }) => {
+export const performSync = createAsyncThunk('sync/performSync', async (arg, { getState, dispatch }: any) => {
 	const { status, token } = getState().sync;
 
 	if (status === 'syncing') {
@@ -34,7 +35,7 @@ export const performSync = createAsyncThunk('sync/performSync', async (arg, { ge
 				firstSync: !token, token: _token, folder, deleted
 			}));
 			await dispatch(handleContactsSyncData({
-				firstSync: !token, token: _token, folder, deleted, cn
+				firstSync: !token, cn
 			}));
 		}
 		return ({
@@ -47,23 +48,23 @@ export const performSync = createAsyncThunk('sync/performSync', async (arg, { ge
 	});
 });
 
-function performSyncPending(state) {
+function performSyncPending(state: SyncSlice) {
 	if (state.status === 'idle' || state.status === 'init') {
 		state.status = 'syncing';
 	}
 }
 
-function performSyncFulfilled(state, { payload }) {
+function performSyncFulfilled(state: SyncSlice, { payload }: any) {
 	const { token } = payload;
 	state.token = token;
 	state.status = state.intervalId > 0 ? 'idle' : 'stopped';
 }
 
-function performSyncRejected(state, action) {
+function performSyncRejected(state: SyncSlice) {
 	console.warn('performSyncRejected');
 }
 
-export const startSync = createAsyncThunk('sync/start', async (arg, { getState, dispatch }) => {
+export const startSync = createAsyncThunk('sync/start', async (arg, { getState, dispatch }: any) => {
 	const { status, intervalId } = getState().sync;
 	if (status === 'init' || status === 'stopped') {
 		await dispatch(performSync());
@@ -81,7 +82,7 @@ export const startSync = createAsyncThunk('sync/start', async (arg, { getState, 
 	});
 });
 
-export const stopSync = createAsyncThunk('sync/stop', (arg, { getState, dispatch }) => {
+export const stopSync = createAsyncThunk('sync/stop', (arg, { getState }: any) => {
 	const { status, intervalId } = getState().sync;
 	if (status === 'idle') {
 		clearInterval(intervalId);
@@ -103,13 +104,13 @@ export const stopSync = createAsyncThunk('sync/stop', (arg, { getState, dispatch
 	});
 });
 
-function startStopSyncFulfilled(state, { payload }) {
+function startStopSyncFulfilled(state: SyncSlice, { payload }: any) {
 	const { status, intervalId } = payload;
 	state.status = status;
 	state.intervalId = intervalId;
 }
 
-function setStatusR(state, { payload }) {
+function setStatusR(state: SyncSlice, { payload }: any) {
 	state.status = payload.status;
 }
 
@@ -119,16 +120,16 @@ export const syncSlice = createSlice({
 		status: 'init',
 		intervalId: -1,
 		token: undefined
-	},
+	} as SyncSlice,
 	reducers: {
 		setStatus: produce(setStatusR)
 	},
-	extraReducers: {
-		[performSync.pending]: produce(performSyncPending),
-		[performSync.fulfilled]: produce(performSyncFulfilled),
-		[performSync.rejected]: produce(performSyncRejected),
-		[startSync.fulfilled]: produce(startStopSyncFulfilled),
-		[stopSync.fulfilled]: produce(startStopSyncFulfilled)
+	extraReducers: (builder) => {
+		builder.addCase(performSync.pending, produce(performSyncPending));
+		builder.addCase(performSync.fulfilled, produce(performSyncFulfilled));
+		builder.addCase(performSync.rejected, produce(performSyncRejected));
+		builder.addCase(startSync.fulfilled, produce(startStopSyncFulfilled));
+		builder.addCase(stopSync.fulfilled, produce(startStopSyncFulfilled));
 	}
 });
 

@@ -131,19 +131,19 @@ describe('Contact Slice', () => {
 			);
 			expect(store.getState().contacts.contacts[7]).toBeDefined();
 			expect(store.getState().contacts.contacts[7]).toHaveLength(1);
-			const previousContact = store.getState().contacts.contacts[7][0];
+			const prevContact = store.getState().contacts.contacts[7][0];
 			const updatedContact = {
-				...previousContact,
+				...prevContact,
 				company: faker.company.companyName(),
 				firstName: faker.name.firstName(),
 				lastName: faker.name.lastName(),
 			};
 			await store.dispatch(
-				modifyContact({ previousContact, updatedContact })
+				modifyContact({ prevContact, updatedContact })
 			);
 			expect(store.getState().contacts.contacts[7]).toBeDefined();
 			expect(store.getState().contacts.contacts[7]).toHaveLength(1);
-			expect(previousContact).not.toMatchObject(store.getState().contacts.contacts[7][0]);
+			expect(prevContact).not.toMatchObject(store.getState().contacts.contacts[7][0]);
 		});
 
 		test('Update complex fields', async () => {
@@ -156,9 +156,9 @@ describe('Contact Slice', () => {
 			);
 			expect(store.getState().contacts.contacts[7]).toBeDefined();
 			expect(store.getState().contacts.contacts[7]).toHaveLength(1);
-			const previousContact = store.getState().contacts.contacts[7][0];
+			const prevContact = store.getState().contacts.contacts[7][0];
 			const updatedContact = {
-				...previousContact,
+				...prevContact,
 				company: faker.company.companyName(),
 				firstName: faker.name.firstName(),
 				lastName: faker.name.lastName(),
@@ -214,11 +214,11 @@ describe('Contact Slice', () => {
 				}
 			};
 			await store.dispatch(
-				modifyContact({ previousContact, updatedContact })
+				modifyContact({ prevContact, updatedContact })
 			);
 			expect(store.getState().contacts.contacts[7]).toBeDefined();
 			expect(store.getState().contacts.contacts[7]).toHaveLength(1);
-			expect(previousContact).not.toMatchObject(store.getState().contacts.contacts[7][0]);
+			expect(prevContact).not.toMatchObject(store.getState().contacts.contacts[7][0]);
 		});
 	});
 
@@ -233,8 +233,9 @@ describe('Contact Slice', () => {
 			);
 			expect(store.getState().contacts.contacts[7]).toBeDefined();
 			expect(store.getState().contacts.contacts[7]).toHaveLength(1);
+			const contact = store.getState().contacts.contacts[7][0];
 			await store.dispatch(
-				deleteContact({ contact: store.getState().contacts.contacts[7][0], parent: store.getState().contacts.contacts[7][0].parent })
+				deleteContact({ contact, parent: contact.parent })
 			);
 			expect(store.getState().contacts.contacts[7]).toBeDefined();
 			expect(store.getState().contacts.contacts[3]).toBeUndefined();

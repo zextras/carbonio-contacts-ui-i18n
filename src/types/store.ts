@@ -25,7 +25,7 @@ export type ContactsSlice = {
 export type SyncSlice = {
 	status: string;
 	intervalId: number;
-	token: string;
+	token: string | undefined;
 }
 
 export type FoldersSlice = {
