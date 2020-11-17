@@ -42,6 +42,8 @@ import { CompactView } from '../commons/contact-compact-view';
 import { report } from '../commons/report-exception';
 import { addContact, selectContact, modifyContact } from '../store/contacts-slice';
 
+const capitalize = (lower) => lower.replace(/^\w/, (c) => c.toUpperCase());
+
 const filterEmptyValues = (values) => reduce(
 	values,
 	(acc, v, k) => ((
@@ -62,6 +64,209 @@ const cleanMultivalueFields = (contact) => ({
 	phone: filterEmptyValues(contact.phone),
 	URL: filterEmptyValues(contact.URL)
 });
+
+const CustomStringField = ({ name, label }) => (
+	<Container padding={{ all: 'small' }}>
+		<Field name={name} id={name}>
+			{
+				({ field: { value }, form: { setFieldValue } }) => (
+					<Input
+						backgroundColor="gray5"
+						label={label}
+						value={value}
+						onChange={(ev) => setFieldValue(name, ev.target.value)}
+					/>
+				)
+			}
+		</Field>
+	</Container>
+);
+
+const ContactEditorRow = ({ children, wrap }) => (
+	<Row
+		orientation="horizontal"
+		mainAlignment="space-between"
+		crossAlignment="flex-start"
+		width="fill"
+		wrap={wrap || 'nowrap'}
+	>
+		{children}
+	</Row>
+);
+
+const CustomMultivalueField = ({
+	name,
+	label,
+	types,
+	typeField,
+	typeLabel,
+	subFields,
+	fieldLabels,
+	wrap
+}) => {
+	const [field, meta, helpers] = useField({ name });
+	const typeCounts = useMemo(() => reduce(
+		types,
+		(acc, type, k) => ({
+			...acc,
+			[type.value]: filter(field.value, (v) => v[typeLabel] === type.value).length
+		}),
+		{}
+	), [field.value, typeLabel, types]);
+	const emptyValue = useMemo(
+		() => reduce(
+			subFields,
+			(acc, val) => set(acc, val, ''),
+			typeField ? { [typeField]: types[0].value } : {}
+		),
+		[subFields, typeField, types]
+	);
+
+	const generateNewId = useCallback((type) => {
+		const substring = `${type}${capitalize(name)}`;
+		const recursiveIdIncrement = (candidateId, increment) => {
+			if (field.value[candidateId]) {
+				return recursiveIdIncrement(`${substring}${increment}`, increment + 1);
+			}
+			return candidateId;
+		};
+		return recursiveIdIncrement(`${substring}${typeCounts[type] > 0 ? typeCounts[type] + 1 : ''}`, 2);
+	}, [field.value, name, typeCounts]);
+
+	const addValue = useCallback(
+		() => {
+			helpers.setValue(
+				{
+					...field.value,
+					[(types && types[0].value)
+						? generateNewId(types[0].value)
+						: `${name}${Object.values(field.value).length > 0 ? Object.values(field.value).length + 1 : ''}`
+					]: emptyValue
+				}
+			);
+		},
+		[types, name, typeCounts, helpers, field.value, emptyValue]
+	);
+
+	const removeValue = useCallback(
+		(index) => {
+			helpers.setValue(omit(field.value, [index]));
+		},
+		[helpers, field]
+	);
+	const updateValue = useCallback(
+		(newString, subField, id) => {
+			if (newString === field.value[id][subField]) return;
+			if (subField === typeField) {
+				helpers.setValue(
+					{
+						...omit(field.value, [id]),
+						[generateNewId(newString)]: {
+							...field.value[id],
+							type: newString
+						}
+					}
+				);
+			}
+			else {
+				helpers.setValue({ ...field.value, [id]: { ...field.value[id], [subField]: newString } });
+			}
+		},
+		[field.value, generateNewId, helpers, typeField]
+	);
+
+	if (Object.values(field.value).length === 0) {
+		addValue();
+	}
+
+	return (
+		<FormSection label={label}>
+			{map(
+				Object.entries(field.value),
+				([id, item], index) => (
+					<ContactEditorRow wrap={wrap ? 'wrap' : 'nowrap'} key={`${label}${id}`}>
+						{map(
+							subFields,
+							(subField, subIndex) => (
+								<Padding
+									right="small"
+									top="small"
+									key={`${fieldLabels[subIndex]}${id}`}
+									style={{ width: wrap ? '32%' : '100%', flexGrow: 1 }}
+								>
+									<Input
+										backgroundColor="gray5"
+										label={fieldLabels[subIndex]}
+										value={item[subField]}
+										onChange={(ev) => updateValue(ev.target.value, subField, id)}
+									/>
+								</Padding>
+							)
+						)}
+						<Container
+							style={{ flexGrow: 1, minWidth: typeField ? '200px' : '104px' }}
+							width={typeField ? 'calc(32% + 8px)' : '104px'}
+							orientation="horizontal"
+							mainAlignment="space-between"
+							crossAlignment="flex-start"
+							padding={{ top: 'small', right: 'small' }}
+						>
+							<Padding
+								right="small"
+								style={{ width: 'calc(100% - 88px)' }}
+							>
+								{typeField && typeLabel && types && types.length > 0
+								&& (
+									<Select
+										items={types}
+										label={typeLabel}
+										onChange={(val) => updateValue(val, typeField, id)}
+										defaultSelection={find(types, ['value', field.value[id][typeField]])}
+									/>
+								)}
+							</Padding>
+							<Container
+								orientation="horizontal"
+								mainAlignment="flex-end"
+								height="fit"
+								width="88px"
+								style={{ minWidth: '88px' }}
+							>
+								{ index >= Object.entries(field.value).length - 1
+									? (
+										<>
+											<Padding right="small">
+												<IconButton
+													icon="Plus"
+													iconColor="gray6"
+													backgroundColor="primary"
+													onClick={() => addValue()}
+												/>
+											</Padding>
+											<IconButton
+												icon="Minus"
+												iconColor="gray6"
+												backgroundColor="secondary"
+												onClick={() => removeValue(id)}
+											/>
+										</>
+									)
+									: (
+										<IconButton
+											icon="Minus"
+											iconColor="gray6"
+											backgroundColor="secondary"
+											onClick={() => removeValue(id)}
+										/>
+									)}
+							</Container>
+						</Container>
+					</ContactEditorRow>
+				)
+			)}
+		</FormSection>
+	);
+};
 
 export default function EditView({ panel, editPanelId, folderId }) {
 	const { id } = useParams();
@@ -249,208 +454,3 @@ export default function EditView({ panel, editPanelId, folderId }) {
 		)
 		: null;
 }
-
-const ContactEditorRow = ({ children, wrap }) => (
-	<Row
-		orientation="horizontal"
-		mainAlignment="space-between"
-		crossAlignment="flex-start"
-		width="fill"
-		wrap={wrap || 'nowrap'}
-	>
-		{children}
-	</Row>
-);
-
-const CustomStringField = ({ name, label }) => (
-	<Container padding={{ all: 'small' }}>
-		<Field name={name} id={name}>
-			{
-				({ field: { value }, form: { setFieldValue } }) => (
-					<Input
-						backgroundColor="gray5"
-						label={label}
-						value={value}
-						onChange={(ev) => setFieldValue(name, ev.target.value)}
-					/>
-				)
-			}
-		</Field>
-	</Container>
-);
-
-const capitalize = (lower) => lower.replace(/^\w/, (c) => c.toUpperCase());
-
-const CustomMultivalueField = ({
-	name,
-	label,
-	types,
-	typeField,
-	typeLabel,
-	subFields,
-	fieldLabels,
-	wrap
-}) => {
-	const [field, meta, helpers] = useField({ name });
-	const typeCounts = useMemo(() => reduce(
-		types,
-		(acc, type, k) => ({
-			...acc,
-			[type.value]: filter(field.value, (v) => v[typeLabel] === type.value).length
-		}),
-		{}
-	), [field.value, typeLabel, types]);
-	const emptyValue = useMemo(
-		() => reduce(
-			subFields,
-			(acc, val) => set(acc, val, ''),
-			typeField ? { [typeField]: types[0].value } : {}
-		),
-		[subFields, typeField, types]
-	);
-
-	const generateNewId = useCallback((type) => {
-		const substring = `${type}${capitalize(name)}`;
-		const recursiveIdIncrement = (candidateId, increment) => {
-			if (field.value[candidateId]) {
-				return recursiveIdIncrement(`${substring}${increment}`, increment + 1);
-			}
-			return candidateId;
-		};
-		return recursiveIdIncrement(`${substring}${typeCounts[type] > 0 ? typeCounts[type] + 1 : ''}`, 2);
-	}, [field.value, name, typeCounts]);
-
-	const addValue = useCallback(
-		() => {
-			helpers.setValue(
-				{
-					...field.value,
-					[(types && types[0].value)
-						? generateNewId(types[0].value)
-						: `${name}${Object.values(field.value).length > 0 ? Object.values(field.value).length + 1 : ''}`
-					]: emptyValue
-				}
-			);
-		},
-		[types, name, typeCounts, helpers, field.value, emptyValue]
-	);
-
-	const removeValue = useCallback(
-		(index) => {
-			helpers.setValue(omit(field.value, [index]));
-		},
-		[helpers, field]
-	);
-	const updateValue = useCallback(
-		(newString, subField, id) => {
-			if (newString === field.value[id][subField]) return;
-			if (subField === typeField) {
-				helpers.setValue(
-					{
-						...omit(field.value, [id]),
-						[generateNewId(newString)]: {
-							...field.value[id],
-							type: newString
-						}
-					}
-				);
-			}
-			else {
-				helpers.setValue({ ...field.value, [id]: { ...field.value[id], [subField]: newString } });
-			}
-		},
-		[field.value, generateNewId, helpers, typeField]
-	);
-
-	if (Object.values(field.value).length === 0) {
-		addValue();
-	}
-
-	return (
-		<FormSection label={label}>
-			{map(
-				Object.entries(field.value),
-				([id, item], index) => (
-					<ContactEditorRow wrap={wrap ? 'wrap' : 'nowrap'} key={`${label}${id}`}>
-						{map(
-							subFields,
-							(subField, subIndex) => (
-								<Padding
-									right="small"
-									top="small"
-									key={`${fieldLabels[subIndex]}${id}`}
-									style={{ width: wrap ? '32%' : '100%', flexGrow: 1 }}
-								>
-									<Input
-										backgroundColor="gray5"
-										label={fieldLabels[subIndex]}
-										value={item[subField]}
-										onChange={(ev) => updateValue(ev.target.value, subField, id)}
-									/>
-								</Padding>
-							)
-						)}
-						<Container
-							style={{ flexGrow: 1, minWidth: typeField ? '200px' : '104px' }}
-							width={typeField ? 'calc(32% + 8px)' : '104px'}
-							orientation="horizontal"
-							mainAlignment="space-between"
-							crossAlignment="flex-start"
-							padding={{ top: 'small', right: 'small' }}
-						>
-							<Padding
-								right="small"
-								style={{ width: 'calc(100% - 88px)' }}
-							>
-								{typeField && typeLabel && types && types.length > 0
-								&& (
-									<Select
-										items={types}
-										label={typeLabel}
-										onChange={(val) => updateValue(val, typeField, id)}
-										defaultSelection={find(types, ['value', field.value[id][typeField]])}
-									/>
-								)}
-							</Padding>
-							<Container
-								orientation="horizontal"
-								mainAlignment="flex-end"
-								height="fit"
-								width="88px"
-								style={{ minWidth: '88px' }}
-							>
-								{ index >= Object.entries(field.value).length - 1
-									? (
-										<>
-											<Padding right="small">
-												<IconButton
-													icon="Plus"
-													iconColor="gray6"
-													backgroundColor="primary"
-													onClick={() => addValue()}
-												/>
-											</Padding>
-											<IconButton
-												icon="Minus"
-												iconColor="gray6"
-												backgroundColor="secondary"
-												onClick={() => removeValue(id)}
-											/>
-										</>
-									)
-									: (
-										<IconButton
-											icon="Minus"
-											iconColor="gray6"
-											backgroundColor="secondary"
-											onClick={() => removeValue(id)}
-										/>
-									)}
-							</Container>
-						</Container>
-					</ContactEditorRow>
-				)
-			)}
-		</FormSection>
-	);
-};
