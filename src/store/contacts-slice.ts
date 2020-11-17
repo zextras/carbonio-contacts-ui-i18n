@@ -269,16 +269,16 @@ function fetchContactsByFolderIdFullFilled(state: ContactsSlice, { payload }: Fe
 	if (contacts.length > 0) {
 		reduce(
 			contacts,
-			(acc, v) => {
-				if (!acc[v.parent]) {
-					acc[v.parent] = [];
+			(r, v) => {
+				if (!r[v.parent]) {
+					r[v.parent] = [];
 				}
-				const el = filter(acc[v.parent], (item) => item.id === v.id);
+				const el = filter(r[v.parent], (item) => item.id === v.id);
 				if (el.length > 0) {
-					return acc;
+					return r;
 				}
-				acc[v.parent].push(v);
-				return acc;
+				r[v.parent].push(v);
+				return r;
 			},
 			state.contacts,
 		);

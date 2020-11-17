@@ -9,7 +9,9 @@
  * *** END LICENSE BLOCK *****
  */
 
-import { lowerFirst, parseInt, pickBy, reduce, words } from 'lodash';
+import {
+	lowerFirst, parseInt, pickBy, reduce, words
+} from 'lodash';
 import {
 	Contact,
 	ContactAddress,
@@ -51,30 +53,30 @@ function contactUrlTypeFromString(s: string): ContactUrlType {
 	}
 }
 
-const getParts: (key: string) => [ContactAddressType, keyof ContactAddress, number] = (key) => {
+function getParts(key: string): [ContactAddressType, keyof ContactAddress, number] {
 	const [type, subType, index, opt]: string[] = words(key);
 	return [
 		type as ContactAddressType,
 		lowerFirst(subType === 'Postal' ? 'postalCode' : subType) as keyof ContactAddress,
 		(parseInt(index === 'Code' ? opt : index) || 1)
 	];
-};
+}
 
 function normalizeContactAddresses(c: SoapContact): ContactAddressMap {
 	return	reduce(
 		c._attrs as {[k: string]: string},
-		(acc: {[id: string]: ContactAddress}, attr: string, key) => {
+		(r: {[id: string]: ContactAddress}, attr: string, key) => {
 			if (ADDR_PART_REG.test(key)) {
 				const [type, subType, index] = getParts(key);
 				const id = `${type}Address${index > 1 ? index : ''}`;
-				if (typeof acc[id] === 'undefined') {
-					acc[id] = { [subType]: attr, type };
+				if (typeof r[id] === 'undefined') {
+					r[id] = { [subType]: attr, type };
 				}
 				else {
-					acc[id] = { ...acc[id], [subType]: attr };
+					r[id] = { ...r[id], [subType]: attr };
 				}
 			}
-			return acc;
+			return r;
 		},
 		{}
 	);

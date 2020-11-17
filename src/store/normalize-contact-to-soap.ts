@@ -1,4 +1,6 @@
-import { map, merge, parseInt, pick, reduce, replace, split, startsWith } from 'lodash';
+import {
+	map, merge, parseInt, pick, reduce
+} from 'lodash';
 import {
 	Contact,
 	ContactAddress,
@@ -42,7 +44,7 @@ export function normalizeContactUrlsToSoapOp(urls: ContactUrlMap): any {
 	);
 }
 
-const capitalize = (lower: string) => lower.replace(/^\w/, (c: string) => c.toUpperCase());
+const capitalize: (l: string) => string = (lower) => lower.replace(/^\w/, (c) => c.toUpperCase());
 
 const getKey: (k: string, v: ContactAddress, field: string) => string = (k, v, field) => {
 	const index = k.match(/(\d+)$/);

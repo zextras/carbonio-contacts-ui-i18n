@@ -50,15 +50,15 @@ export const fetchFolders = createAsyncThunk('folders/fetchFolders', async () =>
 	return findFolders(folder[0]);
 });
 
-function fetchFoldersPending(state: FoldersSlice) {
+function fetchFoldersPending(state: FoldersSlice): void {
 	state.status = 'syncing';
 }
 
-function fetchFoldersFullFilled(state: FoldersSlice) {
+function fetchFoldersFullFilled(state: FoldersSlice): void {
 	state.status = 'succeeded';
 }
 
-function fetchFoldersRejected(state: FoldersSlice) {
+function fetchFoldersRejected(state: FoldersSlice): void {
 	state.status = 'failed';
 }
 
@@ -103,7 +103,7 @@ export const handleSyncData = createAsyncThunk('folders/handleSyncData', async (
 	}
 });
 
-function setFoldersReducer(state: FoldersSlice, { payload }: any) {
+function setFoldersReducer(state: FoldersSlice, { payload }: any): void {
 	state.folders = {};
 	reduce(
 		payload,
@@ -115,18 +115,18 @@ function setFoldersReducer(state: FoldersSlice, { payload }: any) {
 	);
 }
 
-function updateFoldersReducer(state: FoldersSlice, { payload }: any) {
+function updateFoldersReducer(state: FoldersSlice, { payload }: any): void {
 	reduce(
 		payload,
-		(acc, v, k) => {
-			acc[v.zid] = v;
-			return acc;
+		(r, v, k) => {
+			r[v.zid] = v;
+			return r;
 		},
 		state.folders
 	);
 }
 
-function deleteFoldersReducer(state: FoldersSlice, { payload }: any) {
+function deleteFoldersReducer(state: FoldersSlice, { payload }: any): void {
 	forEach(
 		payload,
 		(id) => state.folders[id] && delete state.folders[id]
@@ -154,6 +154,6 @@ export const foldersSlice = createSlice({
 
 export default foldersSlice.reducer;
 
-export function selectFolder(state: FoldersSlice, id: number) {
+export function selectFolder(state: { folders: FoldersSlice }, id: string): ContactsFolder {
 	return state.folders.folders[id];
 }

@@ -46,7 +46,7 @@ export type ISoapFolderObj = {
 
 export type ISoapSyncFolderObj = {
 	absFolderPath: string;
-	acl: {};
+	acl: unknown;
 	activesyncdisabled: boolean;
 	color: number;
 	deletable: boolean;
@@ -58,11 +58,11 @@ export type ISoapSyncFolderObj = {
 	luuid: string;
 	md: number;
 	mdver: number;
-	meta: Array<{}>;
+	meta: Array<unknown>;
 	ms: number;
 	n: number;
 	name: string;
-	retentionPolicy: Array<{}>;
+	retentionPolicy: Array<unknown>;
 	rev: number;
 	s: number;
 	u: number;
@@ -70,6 +70,42 @@ export type ISoapSyncFolderObj = {
 	uuid: string;
 	view: IFolderView;
 	webOfflineSyncDays: number;
+};
+
+export type SoapContact = {
+	d: number;
+	fileAsStr: string;
+	id: string;
+	l: string;
+	rev: number;
+	_attrs: {
+		firstName?: string;
+		fullName?: string;
+		lastName?: string;
+		jobTitle?: string;
+		middleName?: string;
+		nickname?: string;
+		nameSuffix?: string;
+		namePrefix?: string;
+		mobilePhone?: string;
+		workPhone?: string;
+		otherPhone?: string;
+		department?: string;
+		email?: string;
+		notes?: string;
+		company?: string;
+		otherStreet?: string;
+		otherPostalCode?: string;
+		otherCity?: string;
+		otherState?: string;
+		otherCountry?: string;
+		image?: {
+			part: string;
+			ct: string;
+			s: number;
+			filename: string;
+		};
+	};
 };
 
 export type SyncResponseContactFolder = ISoapSyncFolderObj & {
@@ -111,10 +147,6 @@ export type SyncResponse = {
 	deleted?: Array<SyncResponseDeletedMap>;
 };
 
-export type FolderActionRequest = {
-	action: FolderActionRename |FolderActionMove | FolderActionDelete;
-};
-
 type FolderActionRename = {
 	op: 'rename';
 	id: string;
@@ -132,7 +164,11 @@ type FolderActionDelete = {
 	id: string;
 };
 
-export type CreateFolderRequest = {};
+export type FolderActionRequest = {
+	action: FolderActionRename |FolderActionMove | FolderActionDelete;
+};
+
+export type CreateFolderRequest = unknown;
 
 export type CreateFolderResponse = {
 	folder: Array<SyncResponseContactFolder>;
@@ -169,10 +205,6 @@ export type ModifyContactRequest = {
 	};
 };
 
-export type ContactActionRequest = {
-	action: ContactActionMove | ContactActionDelete;
-};
-
 type ContactActionMove = {
 	op: 'move';
 	id: string;
@@ -182,6 +214,10 @@ type ContactActionMove = {
 type ContactActionDelete = {
 	op: 'delete';
 	id: string;
+};
+
+export type ContactActionRequest = {
+	action: ContactActionMove | ContactActionDelete;
 };
 
 export type CreateContactResponse = {
@@ -221,40 +257,4 @@ export type GetContactRequest = {
 
 export type GetContactsResponse = {
 	cn: Array<SoapContact>;
-};
-
-export type SoapContact = {
-	d: number;
-	fileAsStr: string;
-	id: string;
-	l: string;
-	rev: number;
-	_attrs: {
-		firstName?: string;
-		fullName?: string;
-		lastName?: string;
-		jobTitle?: string;
-		middleName?: string;
-		nickname?: string;
-		nameSuffix?: string;
-		namePrefix?: string;
-		mobilePhone?: string;
-		workPhone?: string;
-		otherPhone?: string;
-		department?: string;
-		email?: string;
-		notes?: string;
-		company?: string;
-		otherStreet?: string;
-		otherPostalCode?: string;
-		otherCity?: string;
-		otherState?: string;
-		otherCountry?: string;
-		image?: {
-			part: string;
-			ct: string;
-			s: number;
-			filename: string;
-		};
-	};
 };

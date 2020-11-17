@@ -11,6 +11,8 @@
 
 import { configureStore } from '@reduxjs/toolkit';
 import faker from 'faker';
+import { network } from '@zextras/zapp-shell';
+import { useSelector } from 'react-redux';
 import reducers from './reducers';
 import {
 	addContact,

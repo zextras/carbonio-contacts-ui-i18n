@@ -15,9 +15,9 @@ import faker from 'faker';
 export function handleModifyContactRequest(req, res, ctxt) {
 	const _attrs = reduce(
 		req.body.Body.ModifyContactRequest.cn.a,
-		(acc, v) => {
-			acc[v.n] = v._content;
-			return acc;
+		(r, v) => {
+			r[v.n] = v._content;
+			return r;
 		},
 		{}
 	);
