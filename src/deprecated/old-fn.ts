@@ -1,3 +1,4 @@
+/* eslint-disable */
 /*
  * *** BEGIN LICENSE BLOCK *****
  * Copyright (C) 2011-2020 Zextras

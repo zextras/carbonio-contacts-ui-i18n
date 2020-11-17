@@ -15,7 +15,7 @@ import {
 	setCreateOptions,
 	store
 } from '@zextras/zapp-shell';
-import { startSync } from './store/sync-slice';
+import { startSync, stopSync } from './store/sync-slice';
 import mainMenuItems from './main-menu-items';
 import reducers from './store/reducers';
 
@@ -62,7 +62,15 @@ export default function App() {
 				},
 			}
 		}]);
+
+		return (() => {
+			console.log('Contacts app unmounted!');
+			store.store.dispatch(
+				stopSync()
+			);
+		});
 	}, []);
+
 	mainMenuItems(store);
 
 	return null;
