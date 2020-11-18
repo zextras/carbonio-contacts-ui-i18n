@@ -33,16 +33,14 @@ import {
 	IconButton,
 	Padding,
 	FormSection,
-	Snackbar,
-	Text, Select
+	Text,
+	Select
 } from '@zextras/zapp-ui';
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
 import { CompactView } from '../commons/contact-compact-view';
 import { report } from '../commons/report-exception';
 import { addContact, selectContact, modifyContact } from '../store/contacts-slice';
-
-const capitalize = (lower) => lower.replace(/^\w/, (c) => c.toUpperCase());
 
 const filterEmptyValues = (values) => reduce(
 	values,
@@ -65,6 +63,18 @@ const cleanMultivalueFields = (contact) => ({
 	URL: filterEmptyValues(contact.URL)
 });
 
+const ContactEditorRow = ({ children, wrap }) => (
+	<Row
+		orientation="horizontal"
+		mainAlignment="space-between"
+		crossAlignment="flex-start"
+		width="fill"
+		wrap={wrap || 'nowrap'}
+	>
+		{children}
+	</Row>
+);
+
 const CustomStringField = ({ name, label }) => (
 	<Container padding={{ all: 'small' }}>
 		<Field name={name} id={name}>
@@ -82,17 +92,7 @@ const CustomStringField = ({ name, label }) => (
 	</Container>
 );
 
-const ContactEditorRow = ({ children, wrap }) => (
-	<Row
-		orientation="horizontal"
-		mainAlignment="space-between"
-		crossAlignment="flex-start"
-		width="fill"
-		wrap={wrap || 'nowrap'}
-	>
-		{children}
-	</Row>
-);
+const capitalize = (lower) => lower.replace(/^\w/, (c) => c.toUpperCase());
 
 const CustomMultivalueField = ({
 	name,

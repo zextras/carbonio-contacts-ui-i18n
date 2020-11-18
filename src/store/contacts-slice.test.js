@@ -290,9 +290,9 @@ describe('Contact Slice', () => {
 			expect(store.getState().contacts.contacts[3]).toBeDefined();
 			expect(store.getState().contacts.contacts[7]).toHaveLength(1);
 			expect(store.getState().contacts.contacts[3]).toHaveLength(0);
-			const contact = store.getState().contacts.contacts[7][0]
+			const contactMainFolder = store.getState().contacts.contacts[7][0];
 			await store.dispatch(
-				deleteContact({ contact, parent: contact.parent })
+				deleteContact({ contact: contactMainFolder, parent: contactMainFolder.parent })
 			);
 			expect(store.getState().contacts.contacts[7]).toHaveLength(0);
 			expect(store.getState().contacts.contacts[3]).toHaveLength(1);

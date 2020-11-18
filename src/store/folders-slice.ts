@@ -145,10 +145,9 @@ export const foldersSlice = createSlice({
 		deleteFolders: produce(deleteFoldersReducer)
 	},
 	extraReducers: (builder) => {
-		builder
-			.addCase(handleSyncData.pending, produce(fetchFoldersPending))
-			.addCase(handleSyncData.fulfilled, produce(fetchFoldersFullFilled))
-			.addCase(handleSyncData.rejected, produce(fetchFoldersRejected));
+		builder.addCase(handleSyncData.pending, produce(fetchFoldersPending));
+		builder.addCase(handleSyncData.fulfilled, produce(fetchFoldersFullFilled));
+		builder.addCase(handleSyncData.rejected, produce(fetchFoldersRejected));
 	}
 });
 
