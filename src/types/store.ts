@@ -10,6 +10,7 @@
  */
 
 import { ContactsFolder, Contact } from './contact';
+import { SoapContact } from './soap';
 
 export type ContactsSlice = {
 	status: string;
@@ -32,3 +33,45 @@ export type State = {
 	folders: FoldersSlice;
 	contacts: ContactsSlice;
 }
+
+export type ModifyContactAction = {
+	meta: {
+		arg: {
+			updatedContact: Contact;
+			prevContact: Contact;
+		};
+		requestId: string;
+	};
+};
+
+export type AddContactRequest = {
+	meta: {
+		arg: Contact;
+		requestId: string;
+	};
+};
+
+export type AddContactAction = AddContactRequest & {
+	payload: SoapContact[];
+}
+
+export type DeleteContactAction = {
+	meta: {
+		arg: {
+			contact: Contact;
+			parent: string;
+		};
+		requestId: string;
+	};
+}
+
+export type GetContactAction = {
+	payload: Contact[];
+};
+
+export type FetchContactsByFolderId = {
+	payload: {
+		contacts: Contact[];
+		folderId: string;
+	};
+};

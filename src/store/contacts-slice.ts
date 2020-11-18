@@ -11,51 +11,17 @@ import {
 import produce from 'immer';
 import { Contact } from '../types/contact';
 import { SoapContact } from '../types/soap';
-import { ContactsSlice, State } from '../types/store';
+import {
+	AddContactRequest,
+	AddContactAction,
+	ContactsSlice,
+	DeleteContactAction,
+	FetchContactsByFolderId,
+	GetContactAction,
+	State, ModifyContactAction,
+} from '../types/store';
 import { normalizeContact } from './normalize-contact-from-soap';
 import { normalizeContactAttrsToSoapOp } from './normalize-contact-to-soap';
-
-
-type ModifyContactAction = {
-	meta: {
-		arg: {
-			updatedContact: Contact;
-			prevContact: Contact;
-		};
-		requestId: string;
-	};
-};
-type AddContactRequest = {
-	meta: {
-		arg: Contact;
-		requestId: string;
-	};
-};
-
-type AddContactAction = AddContactRequest & {
-	payload: SoapContact[];
-}
-
-type DeleteContactAction = {
-	meta: {
-		arg: {
-			contact: Contact;
-			parent: string;
-		};
-		requestId: string;
-	};
-}
-
-type GetContactAction = {
-	payload: Contact[];
-};
-
-type FetchContactsByFolderId = {
-	payload: {
-		contacts: Contact[];
-		folderId: string;
-	};
-};
 
 function GetIdsFromContacts(contacts: SoapContact[]): string[] {
 	const accValue: string[] = [];
