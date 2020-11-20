@@ -8,8 +8,7 @@
  * http://www.zextras.com/zextras-eula.html
  * *** END LICENSE BLOCK *****
  */
-
-export function generateEmptySync(token) {
+function generateEmptySync(token) {
 	return {
 		Body: {
 			SyncResponse: {
@@ -19,7 +18,23 @@ export function generateEmptySync(token) {
 	};
 }
 
-export const InitialSync = {
+function generateSyncWithOneContact() {
+	return {
+		Body: {
+			SyncResponse: {
+				cn: [
+					{
+						id: '2982',
+						l: '7'
+					}
+				],
+				firstSync: false,
+				token: '1'
+			},
+		},
+	};
+}
+const InitialSync = {
 	Body: {
 		SyncResponse: {
 			token: '0',
@@ -51,3 +66,33 @@ export const InitialSync = {
 		}
 	}
 };
+
+export function handleSyncRequest(req, res, ctxt) {
+	if (!req.body.Body.SyncRequest.token) {
+		return res(
+			ctxt.json(
+				InitialSync
+			)
+		);
+	}
+	switch (req.body.Body.SyncRequest.token) {
+		case '0':
+			return res(
+				ctxt.json(
+					generateEmptySync('1')
+				)
+			);
+		case '1':
+			return res(
+				ctxt.json(
+					generateSyncWithOneContact()
+				)
+			);
+		default:
+			return res(
+				ctxt.json(
+					generateEmptySync(req.body.Body.SyncRequest.token)
+				)
+			);
+	}
+}

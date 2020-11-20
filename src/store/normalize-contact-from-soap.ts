@@ -1,6 +1,6 @@
 /*
  * *** BEGIN LICENSE BLOCK *****
- * Copyright (C) 2011-2020 ZeXtras
+ * Copyright (C) 2011-2020 Zextras
  *
  * The contents of this file are subject to the ZeXtras EULA;
  * you may not use this file except in compliance with the EULA.
@@ -10,55 +10,22 @@
  */
 
 import {
-	forEach, pickBy, lowerFirst, parseInt, reduce, words
+	lowerFirst, parseInt, pickBy, reduce, words
 } from 'lodash';
-import { ContactsFolder } from './contacts-folder';
 import {
-	ContactAddress,
-	ContactUrlType,
-	ContactPhoneType,
 	Contact,
-	ContactEmailMap,
-	ContactPhoneMap,
-	ContactUrlMap,
+	ContactAddress,
 	ContactAddressMap,
-	ContactAddressType
-} from './contact';
-import { ISoapFolderObj, SoapContact, SyncResponseContactFolder } from '../soap';
+	ContactAddressType, ContactEmailMap, ContactPhoneMap,
+	ContactPhoneType, ContactUrlMap,
+	ContactUrlType,
+} from '../types/contact';
+import { SoapContact } from '../types/soap';
 
 const MAIL_REG = /^email(\d*)$/;
 const PHONE_REG = /^(.*)Phone(\d*)$/;
 const URL_REG = /^(.*)URL(\d*)$/;
 const ADDR_PART_REG = /^(.*)(City|Country|PostalCode|State|Street)(\d*)$/;
-
-function normalizeFolder(soapFolderObj: ISoapFolderObj): ContactsFolder {
-	return new ContactsFolder({
-		itemsCount: soapFolderObj.n,
-		name: soapFolderObj.name,
-		// _id: soapFolderObj.uuid,
-		id: soapFolderObj.id,
-		path: soapFolderObj.absFolderPath,
-		unreadCount: soapFolderObj.u || 0,
-		size: soapFolderObj.s,
-		parent: soapFolderObj.l
-	});
-}
-
-export function normalizeContactsFolders(f: SyncResponseContactFolder): ContactsFolder[] {
-	if (!f) return [];
-	let children: ContactsFolder[] = [];
-	if (f.folder) {
-		forEach(f.folder, (c: SyncResponseContactFolder) => {
-			const child = normalizeContactsFolders(c);
-			children = [...children, ...child];
-		});
-	}
-	if (f.id === '3' || (f.view && f.view === 'contact')) {
-		return [normalizeFolder(f), ...children];
-	}
-
-	return children;
-}
 
 function contactPhoneTypeFromString(s: string): ContactPhoneType {
 	if (!PHONE_REG.test(s)) return ContactPhoneType.OTHER;
@@ -73,6 +40,7 @@ function contactPhoneTypeFromString(s: string): ContactPhoneType {
 			return ContactPhoneType.OTHER;
 	}
 }
+
 function contactUrlTypeFromString(s: string): ContactUrlType {
 	if (!URL_REG.test(s)) return ContactUrlType.OTHER;
 	switch (s.match(URL_REG)![1]) {
@@ -85,30 +53,30 @@ function contactUrlTypeFromString(s: string): ContactUrlType {
 	}
 }
 
-const getParts: (key: string) => [ContactAddressType, keyof ContactAddress, number] = (key) => {
+function getParts(key: string): [ContactAddressType, keyof ContactAddress, number] {
 	const [type, subType, index, opt]: string[] = words(key);
 	return [
 		type as ContactAddressType,
 		lowerFirst(subType === 'Postal' ? 'postalCode' : subType) as keyof ContactAddress,
 		(parseInt(index === 'Code' ? opt : index) || 1)
 	];
-};
+}
 
 function normalizeContactAddresses(c: SoapContact): ContactAddressMap {
 	return	reduce(
 		c._attrs as {[k: string]: string},
-		(acc: {[id: string]: ContactAddress}, attr: string, key) => {
+		(r: {[id: string]: ContactAddress}, attr: string, key) => {
 			if (ADDR_PART_REG.test(key)) {
 				const [type, subType, index] = getParts(key);
 				const id = `${type}Address${index > 1 ? index : ''}`;
-				if (typeof acc[id] === 'undefined') {
-					acc[id] = { [subType]: attr, type };
+				if (typeof r[id] === 'undefined') {
+					r[id] = { [subType]: attr, type };
 				}
 				else {
-					acc[id] = { ...acc[id], [subType]: attr };
+					r[id] = { ...r[id], [subType]: attr };
 				}
 			}
-			return acc;
+			return r;
 		},
 		{}
 	);
@@ -156,7 +124,7 @@ function normalizeContactUrls(c: SoapContact): ContactUrlMap {
 }
 
 export function normalizeContact(c: SoapContact): Contact {
-	return new Contact({
+	return {
 		parent: c.l,
 		id: c.id,
 		address: normalizeContactAddresses(c),
@@ -176,5 +144,5 @@ export function normalizeContact(c: SoapContact): Contact {
 		nameSuffix: c._attrs.nameSuffix || '',
 		namePrefix: c._attrs.namePrefix || '',
 		URL: normalizeContactUrls(c)
-	});
+	};
 }
