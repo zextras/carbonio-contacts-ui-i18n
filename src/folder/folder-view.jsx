@@ -126,6 +126,7 @@ export default function FolderView() {
 	const editId = useQueryParam('edit');
 	const MemoPanel = useMemo(() => {
 		if (editId) {
+			console.log(editId);
 			return (
 				<ContactEditPanel
 					key={`contactEdit-${editId}`}
@@ -179,6 +180,7 @@ export default function FolderView() {
 						key={`contactList-${folderId}`}
 						folderId={folderId}
 					/>
+					ciao
 				</Container>
 				<VerticalDivider />
 				<Container

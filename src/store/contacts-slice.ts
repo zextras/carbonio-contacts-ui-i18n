@@ -228,6 +228,7 @@ function fetchContactsFullFilled(state: ContactsSlice, { payload }: GetContactAc
 		removeContactsFromStore(state, payload[0].id);
 	}
 	addContactToStore(state, payload);
+	state.status = 'succeeded';
 }
 
 function fetchContactsByFolderIdFullFilled(state: ContactsSlice, { payload }: FetchContactsByFolderId): void {
@@ -254,8 +255,8 @@ function fetchContactsByFolderIdFullFilled(state: ContactsSlice, { payload }: Fe
 	}
 }
 
-function fetchContactsRejected(state: ContactsSlice): ContactsSlice {
-	return state;
+function fetchContactsRejected(state: ContactsSlice): void {
+	state.status = 'rejected';
 }
 
 function addContactPending(state: ContactsSlice, { meta }: AddContactRequest): void {

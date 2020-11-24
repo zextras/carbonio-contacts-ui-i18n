@@ -18,10 +18,12 @@ import ContactPreviewHeader from './contact-preview-header';
 describe('Contact Preview Header', () => {
 	test('Render a contact header', async () => {
 		const displayName = `${faker.name.firstName()} ${faker.name.lastName()}`;
+		const ctxt = {};
 		shellTestEnv.render(
 			<ContactPreviewHeader
 				displayName={displayName}
-			/>
+			/>,
+			{ ctxt }
 		);
 		// Uncomment this line to see the DOM content.
 		// screen.debug();
