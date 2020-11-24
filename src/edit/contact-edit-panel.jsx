@@ -50,9 +50,9 @@ export default function ContactEditPanel({ editPanelId, folderId }) {
 	return (
 		<>
 			<ContactEditHeader editPanelId={editPanelId} folderId={folderId} />
-			<Container height="fit" style={{ maxHeight: '100%', overflowY: 'auto' }}>
+			{/*<Container height="fit" style={{ maxHeight: '100%', overflowY: 'auto' }}>
 				<EditView panel editPanelId={editPanelId} folderId={folderId} />
-			</Container>
+			</Container>*/}
 		</>
 	);
 }

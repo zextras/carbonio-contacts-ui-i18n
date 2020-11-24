@@ -279,7 +279,6 @@ export default function EditView({ panel, editPanelId, folderId }) {
 	}, [id, editPanelId]);
 
 	const { t } = useTranslation();
-	// const { db } = hooks.useAppContext();
 	const pushHistory = hooks.usePushHistoryCallback();
 	const replaceHistory = hooks.useReplaceHistoryCallback();
 

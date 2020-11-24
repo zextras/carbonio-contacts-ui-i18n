@@ -10,22 +10,25 @@
  */
 
 import React from 'react';
-import { act, screen, getByTestId } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { test as shellTestEnv } from '@zextras/zapp-shell';
-import faker from 'faker';
 import reducers from '../store/reducers';
-
 import ContactEditPanel from './contact-edit-panel';
+import { populateContactSlice } from '../mocks/populate-contacts-slice';
 
-jest.mock('react-virtualized', () => {
-	const ReactVirtualized = jest.requireActual('react-virtualized');
-	return {
-		...ReactVirtualized,
-		AutoSizer: ({
-			children,
-		}) => children({ height: 1000, width: 1000 }),
-	};
-});
+
+
+jest.mock('react-i18next', () => ({
+	// this mock makes sure any components using the translate hook can use it without a warning being shown
+	useTranslation: () => {
+		return {
+			t: (str) => str,
+			i18n: {
+				changeLanguage: () => new Promise(() => {}),
+			},
+		};
+	}
+}));
 
 describe('Edit view', () => {
 	test('Render editView', async () => {
@@ -63,29 +66,7 @@ describe('Edit view', () => {
 					},
 					contacts: {
 						status: 'succeeded',
-						contacts: {
-							7: [
-								{
-									parent: '7',
-									id: '2000',
-									address: {},
-									company: faker.company.companyName(),
-									department: faker.commerce.department(),
-									email: faker.internet.email(),
-									firstName: faker.name.firstName(),
-									middleName: '',
-									lastName: faker.name.lastName(),
-									nickName: faker.internet.userName(),
-									image: '',
-									jobTitle: faker.name.jobTitle(),
-									notes: '',
-									phone: {},
-									nameSuffix: faker.name.suffix(),
-									namePrefix: faker.name.prefix(),
-									URL: {}
-								}
-							]
-						}
+						contacts: populateContactSlice(7,1)
 					}
 				}
 			}

@@ -180,7 +180,6 @@ export default function FolderView() {
 						key={`contactList-${folderId}`}
 						folderId={folderId}
 					/>
-					ciao
 				</Container>
 				<VerticalDivider />
 				<Container

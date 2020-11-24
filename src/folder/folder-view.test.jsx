@@ -105,24 +105,14 @@ describe('Folder view', () => {
 			}
 		);
 		for (let i = 0; i < itemsCount; i += 1) {
-			expect(
-				getByTestId(document.documentElement, ctxt.current.store.getState().contacts.contacts[folderId][i].id)
-			).toBeInTheDocument();
-			expect(
-				getByTestId(document.documentElement, ctxt.current.store.getState().contacts.contacts[folderId][i].id)
-			).toBeVisible();
-			expect(
-				getByTestId(document.documentElement, ctxt.current.store.getState().contacts.contacts[folderId][i].id)
-			).not.toBeEmptyDOMElement();
-			expect(
-				getByTestId(document.documentElement, ctxt.current.store.getState().contacts.contacts[folderId][i].id)
-			).toHaveTextContent(ctxt.current.store.getState().contacts.contacts[folderId][i].firstName);
-			expect(
-				getByTestId(document.documentElement, ctxt.current.store.getState().contacts.contacts[folderId][i].id)
-			).toHaveTextContent(ctxt.current.store.getState().contacts.contacts[folderId][i].lastName);
-			expect(
-				getByTestId(document.documentElement, ctxt.current.store.getState().contacts.contacts[folderId][i].id)
-			).not.toHaveTextContent(ctxt.current.store.getState().contacts.contacts[folderId][i].company);
+			const contact = ctxt.current.store.getState().contacts.contacts[folderId][i];
+
+			expect(screen.getByTestId(contact.id)).toBeInTheDocument();
+			expect(screen.getByTestId(contact.id)).toBeVisible();
+			expect(screen.getByTestId(contact.id)).not.toBeEmptyDOMElement();
+			expect(screen.getByTestId(contact.id)).toHaveTextContent(contact.firstName);
+			expect(screen.getByTestId(contact.id)).toHaveTextContent(contact.lastName);
+			expect(screen.getByTestId(contact.id)).not.toHaveTextContent(contact.company);
 		}
 	});
 });
