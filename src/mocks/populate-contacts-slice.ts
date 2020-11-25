@@ -10,23 +10,24 @@
  */
 
 import faker from 'faker';
+import { Contact } from '../types/contact';
 
-export function populateContactSlice(parent, contactsNumber) {
+export function populateContactSlice(parent: string, contactsNumber: number, id?: string): { [k: string]: Contact[]} {
 	const contacts = [];
 	for (let i = 0; i < contactsNumber; i += 1) {
 		contacts.push({
 			parent,
-			id: faker.random.uuid(),
+			id: id || faker.random.uuid(),
 			address: {},
 			company: faker.company.companyName(),
 			department: faker.commerce.department(),
-			email: faker.internet.email(),
+			email: {},
 			firstName: faker.name.firstName(),
 			middleName: '',
 			lastName: faker.name.lastName(),
 			nickName: faker.internet.userName(),
 			image: '',
-			jobTitle: faker.name.jobTitle(),
+			jobTitle: '',
 			notes: '',
 			phone: {},
 			nameSuffix: faker.name.suffix(),

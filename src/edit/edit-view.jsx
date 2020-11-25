@@ -368,7 +368,7 @@ export default function EditView({ panel, editPanelId, folderId }) {
 	], [t]);
 
 	const formFactory = useCallback(({ isSubmitting, submitForm }) => (
-		<Container padding={{ all: 'medium' }} height="fit" crossAlignment="flex-start" background="gray6">
+		<Container padding={{ all: 'medium' }} height="fit" crossAlignment="flex-start" background="gray6" data-testid="EditContact">
 			<Row
 				orientation="horizontal"
 				mainAlignment="space-between"

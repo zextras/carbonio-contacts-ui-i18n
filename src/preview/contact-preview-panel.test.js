@@ -9,23 +9,23 @@
  * *** END LICENSE BLOCK *****
  */
 
-import React from 'react';
-import { act, screen } from '@testing-library/react';
 import { test as shellTestEnv } from '@zextras/zapp-shell';
+import React from 'react';
+import { screen } from '@testing-library/react';
 import reducers from '../store/reducers';
-import ContactEditPanel from './contact-edit-panel';
 import { populateContactSlice } from '../mocks/populate-contacts-slice';
+import ContactPreviewPanel from './contact-preview-panel';
 
-describe('Edit view', () => {
-	test('Render editView', async () => {
+describe('Preview Panel', () => {
+	test('Render preview', async () => {
 		const ctxt = {};
 		const folderId = 7;
 		const itemsCount = 1;
 
 		shellTestEnv.render(
-			<ContactEditPanel
-				editPanelId='2000'
-				folderId={ folderId }
+			<ContactPreviewPanel
+				contactInternalId='2000'
+				folderId={folderId}
 			/>,
 			{
 				ctxt,
@@ -60,14 +60,14 @@ describe('Edit view', () => {
 
 		const contact = ctxt.current.store.getState().contacts.contacts[folderId][0];
 
-		expect(screen.getByTestId('EditContact')).toBeInTheDocument();
-		expect(screen.getByTestId('EditContact')).toBeVisible();
-		expect(screen.getByTestId('EditContact')).not.toBeEmptyDOMElement();
-		expect(screen.getByTestId('EditContact')).toHaveTextContent(contact.firstName);
-		expect(screen.getByTestId('EditContact')).toHaveTextContent(contact.lastName);
-		expect(screen.getByTestId('EditContact')).toHaveTextContent(contact.company);
-		expect(screen.getByTestId('EditContact')).toHaveTextContent(contact.department);
-		expect(screen.getByTestId('EditContact')).toHaveTextContent(contact.nameSuffix);
-		expect(screen.getByTestId('EditContact')).toHaveTextContent(contact.namePrefix);
+		expect(screen.getByTestId('PreviewPanel')).toBeInTheDocument();
+		expect(screen.getByTestId('PreviewPanel')).toBeVisible();
+		expect(screen.getByTestId('PreviewPanel')).not.toBeEmptyDOMElement();
+		expect(screen.getByTestId('PreviewPanel')).toHaveTextContent(contact.firstName);
+		expect(screen.getByTestId('PreviewPanel')).toHaveTextContent(contact.lastName);
+		expect(screen.getByTestId('PreviewPanel')).toHaveTextContent(contact.company);
+		expect(screen.getByTestId('PreviewPanel')).toHaveTextContent(contact.department);
+		expect(screen.getByTestId('PreviewPanel')).toHaveTextContent(contact.nameSuffix);
+		expect(screen.getByTestId('PreviewPanel')).toHaveTextContent(contact.namePrefix);
 	});
 });

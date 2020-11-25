@@ -140,6 +140,7 @@ const ContactPreviewContent = ({ contact, onEdit, onDelete }) => {
 				background="gray6"
 				height="fit"
 				padding={{ all: 'medium' }}
+				data-testid='PreviewPanel'
 			>
 				<Row
 					width="fill"
