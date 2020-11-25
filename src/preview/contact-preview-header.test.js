@@ -12,14 +12,14 @@
 import React from 'react';
 import faker from 'faker';
 import { screen } from '@testing-library/react';
-import { test as shellTestEnv } from '@zextras/zapp-shell';
+import { testUtils } from '@zextras/zapp-shell';
 import ContactPreviewHeader from './contact-preview-header';
 
 describe('Contact Preview Header', () => {
 	test('Render a contact header', async () => {
 		const displayName = `${faker.name.firstName()} ${faker.name.lastName()}`;
 		const ctxt = {};
-		shellTestEnv.render(
+		testUtils.render(
 			<ContactPreviewHeader
 				displayName={displayName}
 			/>,

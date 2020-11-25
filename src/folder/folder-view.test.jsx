@@ -11,7 +11,7 @@
 
 import React from 'react';
 import { act, screen, getByTestId } from '@testing-library/react';
-import { test as shellTestEnv } from '@zextras/zapp-shell';
+import { testUtils } from '@zextras/zapp-shell';
 import FolderView from './folder-view';
 import reducers from '../store/reducers';
 import { populateContactSlice } from '../mocks/populate-contacts-slice';
@@ -29,7 +29,7 @@ jest.mock('react-virtualized', () => {
 describe('Folder view', () => {
 	test('Render an empty list', async () => {
 		const ctxt = {};
-		shellTestEnv.render(
+		testUtils.render(
 			<FolderView
 				folderId={'7'}
 			/>,
@@ -70,7 +70,7 @@ describe('Folder view', () => {
 		const folderId = 7;
 		const itemsCount = 10;
 
-		shellTestEnv.render(
+		testUtils.render(
 			<FolderView
 				folderId={folderId}
 			/>,

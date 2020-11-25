@@ -11,7 +11,7 @@
 
 import React from 'react';
 import { act, screen } from '@testing-library/react';
-import { test as shellTestEnv } from '@zextras/zapp-shell';
+import { testUtils } from '@zextras/zapp-shell';
 import reducers from '../store/reducers';
 import ContactEditPanel from './contact-edit-panel';
 import { populateContactSlice } from '../mocks/populate-contacts-slice';
@@ -22,7 +22,7 @@ describe('Edit view', () => {
 		const folderId = 7;
 		const itemsCount = 1;
 
-		shellTestEnv.render(
+		testUtils.render(
 			<ContactEditPanel
 				editPanelId='2000'
 				folderId={ folderId }
