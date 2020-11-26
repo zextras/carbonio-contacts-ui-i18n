@@ -21,42 +21,43 @@ describe('Edit view', () => {
 		const ctxt = {};
 		const folderId = 7;
 		const itemsCount = 1;
-
-		shellTestEnv.render(
-			<ContactEditPanel
-				editPanelId='2000'
-				folderId={ folderId }
-			/>,
-			{
-				ctxt,
-				reducer: reducers,
-				preloadedState: {
-					folders: {
-						status: 'succeeded',
+		act(() => {
+			shellTestEnv.render(
+				<ContactEditPanel
+					editPanelId='2000'
+					folderId={ folderId }
+				/>,
+				{
+					ctxt,
+					reducer: reducers,
+					preloadedState: {
 						folders: {
-							[folderId]: {
-								id: folderId,
-								itemsCount,
-								name: 'Contacts',
-								parent: '1',
-								path: '/Contacts',
-								size: 0,
-								unreadCount: 0
+							status: 'succeeded',
+							folders: {
+								[folderId]: {
+									id: folderId,
+									itemsCount,
+									name: 'Contacts',
+									parent: '1',
+									path: '/Contacts',
+									size: 0,
+									unreadCount: 0
+								}
 							}
+						},
+						sync: {
+							status: 'idle',
+							intervalId: 5,
+							token: '1'
+						},
+						contacts: {
+							status: 'succeeded',
+							contacts: populateContactSlice(7, 1, '2000')
 						}
-					},
-					sync: {
-						status: 'idle',
-						intervalId: 5,
-						token: '1'
-					},
-					contacts: {
-						status: 'succeeded',
-						contacts: populateContactSlice(7, 1, '2000')
 					}
 				}
-			}
-		);
+			);
+		});
 
 		const contact = ctxt.current.store.getState().contacts.contacts[folderId][0];
 

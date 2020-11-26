@@ -141,7 +141,7 @@ describe('Contact Slice', () => {
 				lastName: faker.name.lastName(),
 			};
 			await store.dispatch(
-				modifyContact({ prevContact, updatedContact })
+				modifyContact({ updatedContact, editContact: prevContact })
 			);
 			expect(store.getState().contacts.contacts[7]).toBeDefined();
 			expect(store.getState().contacts.contacts[7]).toHaveLength(1);

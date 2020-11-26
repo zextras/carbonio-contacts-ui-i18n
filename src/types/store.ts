@@ -37,8 +37,8 @@ export type State = {
 export type ModifyContactAction = {
 	meta: {
 		arg: {
+			editContact: Contact;
 			updatedContact: Contact;
-			prevContact: Contact;
 		};
 		requestId: string;
 	};

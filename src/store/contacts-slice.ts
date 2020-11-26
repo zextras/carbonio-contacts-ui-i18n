@@ -151,7 +151,7 @@ export const addContact = createAsyncThunk('contacts/addContact', async (contact
 	return cn;
 });
 
-export const modifyContact = createAsyncThunk('contacts/modifyContact', async ({ updatedContact, prevContact }: { updatedContact: Contact; prevContact: Contact }) => {
+export const modifyContact = createAsyncThunk('contacts/modifyContact', async ({ updatedContact, editContact }: { updatedContact: Contact; editContact: Contact }) => {
 	const { cn } = await network.soapFetch(
 		'ModifyContact',
 		{
@@ -276,8 +276,8 @@ function addContactRejected(state: ContactsSlice, { meta }: AddContactRequest): 
 }
 
 function updateContactPending(state: ContactsSlice, { meta }: ModifyContactAction): void {
-	const { parent } = meta.arg.prevContact;
-	const { id } = meta.arg.prevContact;
+	const { parent } = meta.arg.updatedContact;
+	const { id } = meta.arg.updatedContact;
 	const index = findIndex(state.contacts[parent], ['id', id]);
 	state.contacts[parent][index] = meta.arg.updatedContact;
 }
@@ -287,10 +287,10 @@ function updateContactFullFilled(state: ContactsSlice): ContactsSlice {
 }
 
 function updateContactRejected(state: ContactsSlice, { meta }: ModifyContactAction): void {
-	const { parent } = meta.arg.prevContact;
-	const { id } = meta.arg.prevContact;
+	const { parent } = meta.arg.editContact;
+	const { id } = meta.arg.editContact;
 	const index = findIndex(state.contacts[parent], ['id', id]);
-	state.contacts[parent][index] = meta.arg.prevContact;
+	state.contacts[parent][index] = meta.arg.editContact;
 }
 
 function deleteContactPending(state: ContactsSlice, { meta }: DeleteContactAction): void {

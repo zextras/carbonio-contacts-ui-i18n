@@ -126,7 +126,6 @@ export default function FolderView() {
 	const editId = useQueryParam('edit');
 	const MemoPanel = useMemo(() => {
 		if (editId) {
-			console.log(editId);
 			return (
 				<ContactEditPanel
 					key={`contactEdit-${editId}`}

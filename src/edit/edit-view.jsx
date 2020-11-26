@@ -314,7 +314,6 @@ export default function EditView({ panel, editPanelId, folderId }) {
 	}, [editId, setInitialContact, editContact]);
 
 	const onSubmit = useCallback((values, { setSubmitting }) => {
-		const prevContact = editContact;
 		const updatedContact = cleanMultivalueFields(values);
 		if (!updatedContact.id) {
 			dispatch(addContact({
@@ -339,7 +338,7 @@ export default function EditView({ panel, editPanelId, folderId }) {
 			dispatch(modifyContact(
 				{
 					updatedContact,
-					prevContact
+					editContact
 				}
 			))
 				.then((res) => {
@@ -443,6 +442,25 @@ export default function EditView({ panel, editPanelId, folderId }) {
 				background="gray6"
 				height="fill"
 			>
+				<form
+					initialValues={initialContact}
+					onSubmit={onSubmit}
+				>
+					{formFactory}
+				</form>
+			</Container>
+		)
+		: null;
+}
+
+/* return initialContact
+		? (
+			<Container
+				mainAlignment="flex-start"
+				crossAlignment="flex-start"
+				background="gray6"
+				height="fill"
+			>
 				<Formik
 					initialValues={initialContact}
 					onSubmit={onSubmit}
@@ -451,5 +469,4 @@ export default function EditView({ panel, editPanelId, folderId }) {
 				</Formik>
 			</Container>
 		)
-		: null;
-}
+		: null; */
