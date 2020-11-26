@@ -442,12 +442,12 @@ export default function EditView({ panel, editPanelId, folderId }) {
 				background="gray6"
 				height="fill"
 			>
-				<form
+				<Formik
 					initialValues={initialContact}
 					onSubmit={onSubmit}
 				>
 					{formFactory}
-				</form>
+				</Formik>
 			</Container>
 		)
 		: null;

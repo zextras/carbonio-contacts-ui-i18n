@@ -9,7 +9,7 @@
  * *** END LICENSE BLOCK *****
  */
 
-import { test as shellTestEnv } from '@zextras/zapp-shell';
+import { testUtils } from '@zextras/zapp-shell';
 import React from 'react';
 import { screen } from '@testing-library/react';
 import reducers from '../store/reducers';
@@ -22,7 +22,7 @@ describe('Preview Panel', () => {
 		const folderId = 7;
 		const itemsCount = 1;
 
-		shellTestEnv.render(
+		testUtils.render(
 			<ContactPreviewPanel
 				contactInternalId='2000'
 				folderId={folderId}
