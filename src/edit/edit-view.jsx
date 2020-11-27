@@ -1,26 +1,12 @@
-/*
- * *** BEGIN LICENSE BLOCK *****
- * Copyright (C) 2011-2020 ZeXtras
- *
- * The contents of this file are subject to the ZeXtras EULA;
- * you may not use this file except in compliance with the EULA.
- * You may obtain a copy of the EULA at
- * http://www.zextras.com/zextras-eula.html
- * *** END LICENSE BLOCK *****
- */
 import React, {
 	useCallback,
 	useEffect,
 	useMemo,
-	useState
+	useReducer,
+	useState,
 } from 'react';
 import { useParams } from 'react-router-dom';
 import { hooks } from '@zextras/zapp-shell';
-import {
-	Formik,
-	Field,
-	useField,
-} from 'formik';
 import { useTranslation } from 'react-i18next';
 import {
 	map, filter, reduce, set, omit, find
@@ -75,20 +61,14 @@ const ContactEditorRow = ({ children, wrap }) => (
 	</Row>
 );
 
-const CustomStringField = ({ name, label }) => (
+const CustomStringField = ({ label, value, dispatch }) => (
 	<Container padding={{ all: 'small' }}>
-		<Field name={name} id={name}>
-			{
-				({ field: { value }, form: { setFieldValue } }) => (
-					<Input
-						backgroundColor="gray5"
-						label={label}
-						value={value}
-						onChange={(ev) => setFieldValue(name, ev.target.value)}
-					/>
-				)
-			}
-		</Field>
+		<Input
+			backgroundColor="gray5"
+			label={label}
+			value={value}
+			onChange={(ev) => dispatch({ type: 'update', payload: ev.target })}
+		/>
 	</Container>
 );
 
@@ -102,9 +82,11 @@ const CustomMultivalueField = ({
 	typeLabel,
 	subFields,
 	fieldLabels,
-	wrap
+	wrap,
+	value,
+	dispatch
 }) => {
-	const [field, meta, helpers] = useField({ name });
+	const [field, setField] = useState({ name, label, types, typeField, typeLabel, subFields, fieldLabels, wrap, value });
 	const typeCounts = useMemo(() => reduce(
 		types,
 		(acc, type, k) => ({
@@ -113,6 +95,7 @@ const CustomMultivalueField = ({
 		}),
 		{}
 	), [field.value, typeLabel, types]);
+	console.log(name, field.value, typeCounts);
 	const emptyValue = useMemo(
 		() => reduce(
 			subFields,
@@ -135,7 +118,7 @@ const CustomMultivalueField = ({
 
 	const addValue = useCallback(
 		() => {
-			helpers.setValue(
+			setField(
 				{
 					...field.value,
 					[(types && types[0].value)
@@ -145,20 +128,19 @@ const CustomMultivalueField = ({
 				}
 			);
 		},
-		[types, name, typeCounts, helpers, field.value, emptyValue]
+		[types, name, typeCounts, setField, field.value, emptyValue]
 	);
-
 	const removeValue = useCallback(
 		(index) => {
-			helpers.setValue(omit(field.value, [index]));
+			setField(omit(field.value, [index]));
 		},
-		[helpers, field]
+		[setField, field]
 	);
 	const updateValue = useCallback(
 		(newString, subField, id) => {
 			if (newString === field.value[id][subField]) return;
 			if (subField === typeField) {
-				helpers.setValue(
+				setField(
 					{
 						...omit(field.value, [id]),
 						[generateNewId(newString)]: {
@@ -169,10 +151,10 @@ const CustomMultivalueField = ({
 				);
 			}
 			else {
-				helpers.setValue({ ...field.value, [id]: { ...field.value[id], [subField]: newString } });
+				setField({ ...field.value, [id]: { ...field.value[id], [subField]: newString } });
 			}
 		},
-		[field.value, generateNewId, helpers, typeField]
+		[field.value, generateNewId, setField, typeField]
 	);
 
 	if (Object.values(field.value).length === 0) {
@@ -267,17 +249,31 @@ const CustomMultivalueField = ({
 		</FormSection>
 	);
 };
+function reducer(state, action) {
+	switch (action.type) {
+		case 'setState':
+			return {
+				...state,
+				...action.payload.editContact
+			};
+		default:
+			return {
+				...state,
+				[action.payload.name]: action.payload.value
+			};
+	}
+}
 
 export default function EditView({ panel, editPanelId, folderId }) {
 	const { id } = useParams();
-	const dispatch = useDispatch();
+	const storeDispatch = useDispatch();
 	const editContact = useSelector((state) => selectContact(state, folderId, editPanelId));
 	const editId = useMemo(() => {
 		if (id) return id;
 		if (editPanelId) return editPanelId;
 		return undefined;
 	}, [id, editPanelId]);
-
+	const [contact, dispatch] = useReducer(reducer);
 	const { t } = useTranslation();
 	const pushHistory = hooks.usePushHistoryCallback();
 	const replaceHistory = hooks.useReplaceHistoryCallback();
@@ -307,23 +303,20 @@ export default function EditView({ panel, editPanelId, folderId }) {
 		let canSet = true;
 		if (editId && editId !== 'new' && editContact) {
 			canSet && setInitialContact(editContact);
+			dispatch({ type: 'setState', payload: { editContact } });
 		}
 		return () => {
 			canSet = false;
 		};
 	}, [editId, setInitialContact, editContact]);
 
-	const onSubmit = useCallback((values, { setSubmitting }) => {
-		const updatedContact = cleanMultivalueFields(values);
+	const onSubmit = useCallback(() => {
+		const updatedContact = cleanMultivalueFields(contact);
 		if (!updatedContact.id) {
-			dispatch(addContact({
+			storeDispatch(addContact({
 				...updatedContact,
 				_id: nanoid()
 			}))
-				.then((res) => {
-					setSubmitting(false);
-					return res;
-				})
 				.then((res) => {
 					if (panel) {
 						replaceHistory(`/folder/${folderId}?preview=${res.payload[0].id}`);
@@ -335,23 +328,20 @@ export default function EditView({ panel, editPanelId, folderId }) {
 				.catch(report);
 		}
 		else {
-			dispatch(modifyContact(
+			storeDispatch(modifyContact(
 				{
 					updatedContact,
 					editContact
 				}
 			))
 				.then((res) => {
-					if (!res.error) {
-						setSubmitting(false);
-					}
 					if (panel) {
 						replaceHistory(`/folder/${folderId}?preview=${res.payload[0].id}`);
 					}
 				})
 				.catch(report);
 		}
-	}, [folderId, panel, pushHistory, replaceHistory, editContact]);
+	}, [folderId, panel, pushHistory, replaceHistory, editContact, contact]);
 
 	const defaultTypes = useMemo(() => [
 		{ label: t('work'), value: 'work' },
@@ -365,76 +355,8 @@ export default function EditView({ panel, editPanelId, folderId }) {
 		{ label: t('home'), value: 'home' },
 		{ label: t('other'), value: 'other' },
 	], [t]);
-
-	const formFactory = useCallback(({ isSubmitting, submitForm }) => (
-		<Container padding={{ all: 'medium' }} height="fit" crossAlignment="flex-start" background="gray6" data-testid="EditContact">
-			<Row
-				orientation="horizontal"
-				mainAlignment="space-between"
-				width="fill"
-			>
-				<Container height="fit" width="fit">{!editId && <Text>{t('This contact will be created in the \'Contacts\' folder')}</Text> }</Container>
-				<Button label={t('Save')} onClick={submitForm} disabled={isSubmitting} />
-			</Row>
-			<Padding value="medium small">
-				<CompactView contact={initialContact} />
-			</Padding>
-			<ContactEditorRow>
-				<CustomStringField name="namePrefix" label={t('prefix')} />
-				<CustomStringField name="firstName" label={t('firstName')} />
-				<CustomStringField name="middleName" label={t('middleName')} />
-			</ContactEditorRow>
-			<ContactEditorRow>
-				<CustomStringField name="nickName" label={t('nickName')} />
-				<CustomStringField name="lastName" label={t('lastName')} />
-				<CustomStringField name="nameSuffix" label={t('suffix')} />
-			</ContactEditorRow>
-			<ContactEditorRow>
-				<CustomStringField name="jobTitle" label={t('jobTitle')} />
-				<CustomStringField name="department" label={t('department')} />
-				<CustomStringField name="company" label={t('company')} />
-			</ContactEditorRow>
-			<CustomMultivalueField
-				name="email"
-				label={t('email address')}
-				subFields={['mail']}
-				fieldLabels={[t('mail')]}
-			/>
-			<CustomMultivalueField
-				name="phone"
-				label={t('phone contact')}
-				typeLabel={t('name')}
-				typeField="type"
-				types={mobileTypes}
-				subFields={['number']}
-				fieldLabels={[t('number')]}
-			/>
-			<CustomMultivalueField
-				name="URL"
-				label={t('url')}
-				typeLabel={t('type')}
-				typeField="type"
-				types={defaultTypes}
-				subFields={['url']}
-				fieldLabels={[t('url')]}
-			/>
-			<CustomMultivalueField
-				name="address"
-				label={t('address')}
-				typeField="type"
-				typeLabel={t('type')}
-				types={defaultTypes}
-				subFields={['street', 'city', 'postalCode', 'country', 'state']}
-				fieldLabels={[t('street'), t('city'), t('postalCode'), t('country'), t('state')]}
-				wrap
-			/>
-			<ContactEditorRow>
-				<CustomStringField name="notes" label={t('notes')} />
-			</ContactEditorRow>
-		</Container>
-	), [initialContact, t]);
-
-	return initialContact
+	console.log(contact);
+	return initialContact && contact
 		? (
 			<Container
 				mainAlignment="flex-start"
@@ -442,31 +364,80 @@ export default function EditView({ panel, editPanelId, folderId }) {
 				background="gray6"
 				height="fill"
 			>
-				<Formik
-					initialValues={initialContact}
-					onSubmit={onSubmit}
-				>
-					{formFactory}
-				</Formik>
+				<Container padding={{ all: 'medium' }} height="fit" crossAlignment="flex-start" background="gray6" data-testid="EditContact">
+					<Row
+						orientation="horizontal"
+						mainAlignment="space-between"
+						width="fill"
+					>
+						<Container height="fit" width="fit">{!editId && <Text>{t('This contact will be created in the \'Contacts\' folder')}</Text> }</Container>
+						<Button label={t('Save')} onClick={onSubmit} disabled={false} />
+					</Row>
+					<Padding value="medium small">
+						<CompactView contact={initialContact} />
+					</Padding>
+					<ContactEditorRow>
+						<CustomStringField name="namePrefix" label={t('namePrefix')} value={contact.namePrefix} dispatch={dispatch}/>
+						<CustomStringField name="firstName" label={t('firstName')} value={contact.firstName} dispatch={dispatch}/>
+						<CustomStringField name="middleName" label={t('middleName')} value={contact.middleName} dispatch={dispatch}/>
+					</ContactEditorRow>
+					<ContactEditorRow>
+						<CustomStringField name="nickName" label={t('nickName')} value={contact.nickName} dispatch={dispatch}/>
+						<CustomStringField name="lastName" label={t('lastName')} value={contact.lastName} dispatch={dispatch}/>
+						<CustomStringField name="nameSuffix" label={t('suffix')} value={contact.nameSuffix} dispatch={dispatch}/>
+					</ContactEditorRow>
+					<ContactEditorRow>
+						<CustomStringField name="jobTitle" label={t('jobTitle')} value={contact.jobTitle} dispatch={dispatch}/>
+						<CustomStringField name="department" label={t('department')} value={contact.department} dispatch={dispatch}/>
+						<CustomStringField name="company" label={t('company')} value={contact.company} dispatch={dispatch}/>
+					</ContactEditorRow>
+					<CustomMultivalueField
+						name="email"
+						label={t('email address')}
+						subFields={['mail']}
+						fieldLabels={[t('mail')]}
+						value={contact.email}
+						dispatch={dispatch}
+					/>
+					<CustomMultivalueField
+						name="phone"
+						label={t('phone contact')}
+						typeLabel={t('name')}
+						typeField="type"
+						types={mobileTypes}
+						subFields={['number']}
+						fieldLabels={[t('number')]}
+						value={contact.phone}
+						dispatch={dispatch}
+					/>
+					<CustomMultivalueField
+						name="URL"
+						label={t('url')}
+						typeLabel={t('type')}
+						typeField="type"
+						types={defaultTypes}
+						subFields={['url']}
+						fieldLabels={[t('url')]}
+						value={contact.URL}
+						dispatch={dispatch}
+					/>
+					<CustomMultivalueField
+						name="address"
+						label={t('address')}
+						typeField="type"
+						typeLabel={t('type')}
+						types={defaultTypes}
+						subFields={['street', 'city', 'postalCode', 'country', 'state']}
+						fieldLabels={[t('street'), t('city'), t('postalCode'), t('country'), t('state')]}
+						wrap
+						value={contact.address}
+						dispatch={dispatch}
+					/>
+					<ContactEditorRow>
+						<CustomStringField name="notes" label={t('notes')} value={contact.notes} dispatch={dispatch}/>
+					</ContactEditorRow>
+				</Container>
 			</Container>
 		)
 		: null;
 }
-
-/* return initialContact
-		? (
-			<Container
-				mainAlignment="flex-start"
-				crossAlignment="flex-start"
-				background="gray6"
-				height="fill"
-			>
-				<Formik
-					initialValues={initialContact}
-					onSubmit={onSubmit}
-				>
-					{formFactory}
-				</Formik>
-			</Container>
-		)
-		: null; */
