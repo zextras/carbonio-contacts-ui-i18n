@@ -1,0 +1,13 @@
+Source: zextras-zapp-contacts
+Section: comm
+Priority: optional
+Maintainer: Zextras Packaging Services <gianluca.boiano@zextras.com>
+Uploaders: Zextras Packaging Services <gianluca.boiano@zextras.com>
+Standards-Version: 3.9.5
+Homepage: https://zextras.com
+
+Package: zextras-zapp-contacts
+Priority: optional
+Architecture: any
+Depends: zimbra-base, zextras-zapp-shell
+Description: Contacts app for Zextras
