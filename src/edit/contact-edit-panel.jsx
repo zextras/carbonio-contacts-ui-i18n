@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 import EditView from './edit-view';
 
 function ContactEditHeader({ editPanelId, folderId }) {
-	const { t } = useTranslation();
+	const [ t ] = useTranslation();
 	const replaceHistory = hooks.useReplaceHistoryCallback();
 
 	const onClose = useCallback(
@@ -36,7 +36,7 @@ function ContactEditHeader({ editPanelId, folderId }) {
 				</Padding>
 				<Row takeAvailableSpace mainAlignment="flex-start">
 					<Text size="medium">
-						{ t(editPanelId && editPanelId !== 'new' ? 'Edit Contact' : 'New Contact') }
+						{ editPanelId && editPanelId !== 'new' ? t('label.edit') : t('label.create') }
 					</Text>
 				</Row>
 				<IconButton icon="Close" size="small" onClick={onClose} />

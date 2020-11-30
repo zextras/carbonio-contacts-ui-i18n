@@ -1,33 +1,64 @@
 {
     "Save": "",
     "This contact will be created in the 'Contacts' folder": "",
+    "_name": "",
     "address": "Address",
+    "address_plural": "Address ({{count}})",
     "city": "",
     "company": "Company",
     "country": "",
     "department": "Department",
-    "edit": "",
     "email address": "",
     "firstName": "First Name",
     "home": "",
+    "job": {
+        "company": "Company",
+        "department": "Department",
+        "title": "Job Title"
+    },
     "jobTitle": "Job Title",
+    "label": {
+        "create": "New Contact",
+        "edit": "Edit"
+    },
     "lastName": "Last Name",
     "mail": "Email",
+    "mail_plural": "Email ({{count}})",
     "middleName": "Middle Name",
     "mobile": "",
-    "name": "",
+    "name": {
+        "first_name": "First name",
+        "last_name": "Last name",
+        "middle_name": "Middle name",
+        "nickName": "Nickname",
+        "prefix": "Prefix",
+        "suffix": "Suffix"
+    },
+    "namePrefix": "",
     "nickName": "Nickname",
     "notes": "Notes",
     "number": "",
+    "number_plural": "",
     "other": "",
-    "phone": "",
     "phone contact": "",
     "postalCode": "",
-    "prefix": "Prefix",
+    "section": {
+        "title": {
+            "address": "Address",
+            "address_plural": "Address ({{count}})",
+            "mail": "Email",
+            "mail_plural": "Email ({{count}})",
+            "phone_number": "Phone",
+            "phone_number_plural": "Phone ({{count}})",
+            "url": "Website",
+            "url_plural": "Website ({{count}})"
+        }
+    },
     "state": "",
     "street": "",
     "suffix": "Suffix",
     "type": "",
     "url": "Website",
+    "url_plural": "Website ({{count}})",
     "work": ""
 }

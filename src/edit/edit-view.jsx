@@ -402,7 +402,7 @@ export default function EditView({ panel, editPanelId, folderId }) {
 					<CustomMultivalueField
 						name="phone"
 						label={t('phone contact')}
-						typeLabel={t('name')}
+						typeLabel={t('_name')}
 						typeField="type"
 						types={mobileTypes}
 						subFields={['number']}
