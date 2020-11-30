@@ -9,7 +9,6 @@
  * *** END LICENSE BLOCK *****
  */
 
-
 import {
 	Avatar, IconButton, Row, Text
 } from '@zextras/zapp-ui';
