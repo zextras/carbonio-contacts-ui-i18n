@@ -61,10 +61,11 @@ const ContactEditorRow = ({ children, wrap }) => (
 	</Row>
 );
 
-const CustomStringField = ({ label, value, dispatch }) => (
+const CustomStringField = ({ name, label, value, dispatch }) => (
 	<Container padding={{ all: 'small' }}>
 		<Input
 			backgroundColor="gray5"
+			inputName={name}
 			label={label}
 			value={value}
 			onChange={(ev) => dispatch({ type: op.setInput, payload: ev.target })}
@@ -285,7 +286,7 @@ export default function EditView({ panel, editPanelId, folderId }) {
 		return undefined;
 	}, [id, editPanelId]);
 	const [contact, dispatch] = useReducer(reducer);
-	const { t } = useTranslation();
+	const [ t ] = useTranslation();
 	const pushHistory = hooks.usePushHistoryCallback();
 	const replaceHistory = hooks.useReplaceHistoryCallback();
 
@@ -336,16 +337,16 @@ export default function EditView({ panel, editPanelId, folderId }) {
 	}, [folderId, panel, pushHistory, replaceHistory, editContact, contact]);
 
 	const defaultTypes = useMemo(() => [
-		{ label: t('work'), value: 'work' },
-		{ label: t('home'), value: 'home' },
-		{ label: t('other'), value: 'other' },
+		{ label: t('types.work'), value: 'work' },
+		{ label: t('types.home'), value: 'home' },
+		{ label: t('types.other'), value: 'other' },
 	], [t]);
 
 	const mobileTypes = useMemo(() => [
-		{ label: t('mobile'), value: 'mobile' },
-		{ label: t('work'), value: 'work' },
-		{ label: t('home'), value: 'home' },
-		{ label: t('other'), value: 'other' },
+		{ label: t('types.mobile'), value: 'mobile' },
+		{ label: t('types.work'), value: 'work' },
+		{ label: t('types.home'), value: 'home' },
+		{ label: t('types.other'), value: 'other' },
 	], [t]);
 
 	return contact
@@ -363,64 +364,64 @@ export default function EditView({ panel, editPanelId, folderId }) {
 						width="fill"
 					>
 						<Container height="fit" width="fit">{!editId && <Text>{t('This contact will be created in the \'Contacts\' folder')}</Text> }</Container>
-						<Button label={t('Save')} onClick={onSubmit} disabled={false} />
+						<Button label={t('label.save')} onClick={onSubmit} disabled={false} />
 					</Row>
 					<Padding value="medium small">
 						<CompactView contact={contact} />
 					</Padding>
 					<ContactEditorRow>
-						<CustomStringField name="namePrefix" label={t('namePrefix')} value={contact.namePrefix} dispatch={dispatch}/>
-						<CustomStringField name="firstName" label={t('firstName')} value={contact.firstName} dispatch={dispatch}/>
-						<CustomStringField name="middleName" label={t('middleName')} value={contact.middleName} dispatch={dispatch}/>
+						<CustomStringField name="namePrefix" label={t('name.prefix')} value={contact.namePrefix} dispatch={dispatch}/>
+						<CustomStringField name="firstName" label={t('name.first_name')} value={contact.firstName} dispatch={dispatch}/>
+						<CustomStringField name="middleName" label={t('name.middle_name')} value={contact.middleName} dispatch={dispatch}/>
 					</ContactEditorRow>
 					<ContactEditorRow>
-						<CustomStringField name="nickName" label={t('nickName')} value={contact.nickName} dispatch={dispatch}/>
-						<CustomStringField name="lastName" label={t('lastName')} value={contact.lastName} dispatch={dispatch}/>
-						<CustomStringField name="nameSuffix" label={t('suffix')} value={contact.nameSuffix} dispatch={dispatch}/>
+						<CustomStringField name="nickName" label={t('name.nickName')} value={contact.nickName} dispatch={dispatch}/>
+						<CustomStringField name="lastName" label={t('name.last_name')} value={contact.lastName} dispatch={dispatch}/>
+						<CustomStringField name="nameSuffix" label={t('name.suffix')} value={contact.nameSuffix} dispatch={dispatch}/>
 					</ContactEditorRow>
 					<ContactEditorRow>
-						<CustomStringField name="jobTitle" label={t('jobTitle')} value={contact.jobTitle} dispatch={dispatch}/>
-						<CustomStringField name="department" label={t('department')} value={contact.department} dispatch={dispatch}/>
-						<CustomStringField name="company" label={t('company')} value={contact.company} dispatch={dispatch}/>
+						<CustomStringField name="jobTitle" label={t('job.title')} value={contact.jobTitle} dispatch={dispatch}/>
+						<CustomStringField name="department" label={t('job.department')} value={contact.department} dispatch={dispatch}/>
+						<CustomStringField name="company" label={t('job.company')} value={contact.company} dispatch={dispatch}/>
 					</ContactEditorRow>
 					<CustomMultivalueField
 						name="email"
-						label={t('email address')}
+						label={t('section.title.mail')}
 						subFields={['mail']}
-						fieldLabels={[t('mail')]}
+						fieldLabels={[t('mail', { count: Object.entries(contact.email).length })]}
 						value={contact.email}
 						dispatch={dispatch}
 					/>
 					<CustomMultivalueField
 						name="phone"
-						label={t('phone contact')}
-						typeLabel={t('_name')}
+						label={t('section.title.phone_number')}
+						typeLabel={t('select.default')}
 						typeField="type"
 						types={mobileTypes}
 						subFields={['number']}
-						fieldLabels={[t('number')]}
+						fieldLabels={[t('section.field.number'), { count: Object.entries(contact.phone).length }]}
 						value={contact.phone}
 						dispatch={dispatch}
 					/>
 					<CustomMultivalueField
 						name="URL"
-						label={t('url')}
-						typeLabel={t('type')}
+						label={t('section.title.url')}
+						typeLabel={t('select.default')}
 						typeField="type"
 						types={defaultTypes}
 						subFields={['url']}
-						fieldLabels={[t('url')]}
+						fieldLabels={[t('section.field.url'), { count: Object.entries(contact.URL).length }]}
 						value={contact.URL}
 						dispatch={dispatch}
 					/>
 					<CustomMultivalueField
 						name="address"
-						label={t('address')}
+						label={t('section.title.address')}
 						typeField="type"
-						typeLabel={t('type')}
+						typeLabel={t('select.default')}
 						types={defaultTypes}
 						subFields={['street', 'city', 'postalCode', 'country', 'state']}
-						fieldLabels={[t('street'), t('city'), t('postalCode'), t('country'), t('state')]}
+						fieldLabels={[t('section.field.street'), t('section.field.city'), t('section.field.postalCode'), t('section.field.country'), t('section.field.state'), { count: Object.entries(contact.address).length }]}
 						wrap
 						value={contact.address}
 						dispatch={dispatch}

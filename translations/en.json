@@ -1,48 +1,47 @@
 {
-    "Save": "",
     "This contact will be created in the 'Contacts' folder": "",
-    "_name": "",
+    "_name": "pippo",
     "address": "Address",
     "address_plural": "Address ({{count}})",
-    "city": "",
-    "company": "Company",
-    "country": "",
-    "department": "Department",
-    "email address": "",
-    "firstName": "First Name",
     "home": "",
     "job": {
         "company": "Company",
         "department": "Department",
         "title": "Job Title"
     },
-    "jobTitle": "Job Title",
     "label": {
         "create": "New Contact",
-        "edit": "Edit"
+        "edit": "Edit",
+        "save": "Save"
     },
-    "lastName": "Last Name",
     "mail": "Email",
     "mail_plural": "Email ({{count}})",
-    "middleName": "Middle Name",
     "mobile": "",
     "name": {
+        "firstName": "",
         "first_name": "First name",
+        "lastName": "",
         "last_name": "Last name",
+        "middleName": "",
         "middle_name": "Middle name",
         "nickName": "Nickname",
         "prefix": "Prefix",
         "suffix": "Suffix"
     },
-    "namePrefix": "",
-    "nickName": "Nickname",
     "notes": "Notes",
     "number": "",
     "number_plural": "",
     "other": "",
-    "phone contact": "",
-    "postalCode": "",
     "section": {
+        "field": {
+            "city": "City",
+            "country": "Country",
+            "number": "Number",
+            "postalCode": "PostalCode",
+            "state": "State",
+            "street": "Street",
+            "url": "Website"
+        },
         "title": {
             "address": "Address",
             "address_plural": "Address ({{count}})",
@@ -54,10 +53,21 @@
             "url_plural": "Website ({{count}})"
         }
     },
-    "state": "",
-    "street": "",
-    "suffix": "Suffix",
+    "select": {
+        "URL": "",
+        "address": "",
+        "default": "Select type",
+        "number": ""
+    },
     "type": "",
+    "types": {
+        "URL": "",
+        "home": "home",
+        "mobile": "mobile",
+        "number": "",
+        "other": "other",
+        "work": "work"
+    },
     "url": "Website",
     "url_plural": "Website ({{count}})",
     "work": ""
