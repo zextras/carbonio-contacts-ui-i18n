@@ -12,18 +12,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import EditView from './edit-view';
 
-export default function ContactEditPanel({ editPanelId, folderId }) {
-	return (
-		<>
-			<ContactEditHeader editPanelId={editPanelId} folderId={folderId} />
-			<Container height="fit" style={{ maxHeight: '100%', overflowY: 'auto' }}>
-				<EditView panel editPanelId={editPanelId} folderId={folderId} />
-			</Container>
-		</>
-	);
-};
-
-const ContactEditHeader = ({ editPanelId, folderId }) => {
+function ContactEditHeader({ editPanelId, folderId }) {
 	const { t } = useTranslation();
 	const replaceHistory = hooks.useReplaceHistoryCallback();
 
@@ -43,7 +32,7 @@ const ContactEditHeader = ({ editPanelId, folderId }) => {
 				padding={{ left: 'large', right: 'large' }}
 			>
 				<Padding right="medium">
-					<Icon size="medium" icon="EditOutline"/>
+					<Icon size="medium" icon="EditOutline" />
 				</Padding>
 				<Row takeAvailableSpace mainAlignment="flex-start">
 					<Text size="medium">
@@ -55,4 +44,15 @@ const ContactEditHeader = ({ editPanelId, folderId }) => {
 			<Divider />
 		</Container>
 	);
-};
+}
+
+export default function ContactEditPanel({ editPanelId, folderId }) {
+	return (
+		<>
+			<ContactEditHeader editPanelId={editPanelId} folderId={folderId} />
+			<Container height="fit" style={{ maxHeight: '100%', overflowY: 'auto' }}>
+				<EditView panel editPanelId={editPanelId} folderId={folderId} />
+			</Container>
+		</>
+	);
+}

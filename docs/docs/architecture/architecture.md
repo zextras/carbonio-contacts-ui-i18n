@@ -11,3 +11,8 @@ Each time a contact will be deleted, created, edited on the client, the changes 
 This update is handled by the operation stack handled by the Shell.
 
 Synchronisation will be implemented by using Zimbra SOAP API.
+
+The Contact App relies on centralized data management with redux benefiting from huge advantages:
+    - Manage and manipulate data easily
+    - Minimize errors
+    - Reduce server requests

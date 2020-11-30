@@ -9,28 +9,20 @@
  * *** END LICENSE BLOCK *****
  */
 import { rest } from 'msw';
-import { generateEmptySync, InitialSync } from './sync-response';
 import { handleGetContactsRequest } from './handle-get-contacts-request';
+import { handleContactActionRequest } from './handle-contact-action-request';
+import { handleCreateContactRequest } from './handle-create-contact-request';
+import { handleModifyContactRequest } from './handle-modify-contact-request';
+import { handleSearchRequest } from './handle-search-request';
+import { handleSyncRequest } from './handle-sync-request';
 
 const handlers = [
-	rest.post('/service/soap/SyncRequest', (req, res, ctxt) => {
-		if (!req.body.Body.SyncRequest.token) {
-			return res(
-				ctxt.json(
-					InitialSync
-				)
-			);
-		}
-		switch (req.body.Body.SyncRequest.token) {
-			default:
-				return res(
-					ctxt.json(
-						generateEmptySync(req.body.Body.SyncRequest.token)
-					)
-				);
-		}
-	}),
-	rest.post('/service/soap/GetContactsRequest', handleGetContactsRequest)
+	rest.post('/service/soap/SyncRequest', handleSyncRequest),
+	rest.post('/service/soap/GetContactsRequest', handleGetContactsRequest),
+	rest.post('/service/soap/SearchRequest', handleSearchRequest),
+	rest.post('/service/soap/CreateContactRequest', handleCreateContactRequest),
+	rest.post('/service/soap/ModifyContactRequest', handleModifyContactRequest),
+	rest.post('/service/soap/ContactActionRequest', handleContactActionRequest)
 ];
 
 export default handlers;
