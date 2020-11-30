@@ -2,8 +2,7 @@ import React, {
 	useCallback,
 	useEffect,
 	useMemo,
-	useReducer,
-	useState,
+	useReducer
 } from 'react';
 import { useParams } from 'react-router-dom';
 import { hooks } from '@zextras/zapp-shell';
@@ -27,6 +26,7 @@ import { nanoid } from '@reduxjs/toolkit';
 import { CompactView } from '../commons/contact-compact-view';
 import { report } from '../commons/report-exception';
 import { addContact, selectContact, modifyContact } from '../store/contacts-slice';
+import reducer, { op } from '../commons/form-reducer';
 
 const filterEmptyValues = (values) => reduce(
 	values,
@@ -67,7 +67,7 @@ const CustomStringField = ({ label, value, dispatch }) => (
 			backgroundColor="gray5"
 			label={label}
 			value={value}
-			onChange={(ev) => dispatch({ type: 'update', payload: ev.target })}
+			onChange={(ev) => dispatch({ type: op.setInput, payload: ev.target })}
 		/>
 	</Container>
 );
@@ -86,16 +86,15 @@ const CustomMultivalueField = ({
 	value,
 	dispatch
 }) => {
-	const [field, setField] = useState({ name, label, types, typeField, typeLabel, subFields, fieldLabels, wrap, value });
 	const typeCounts = useMemo(() => reduce(
 		types,
 		(acc, type, k) => ({
 			...acc,
-			[type.value]: filter(field.value, (v) => v[typeLabel] === type.value).length
+			[type.value]: filter(value, (v) => v[typeLabel] === type.value).length
 		}),
 		{}
-	), [field.value, typeLabel, types]);
-	console.log(name, field.value, typeCounts);
+	), [value, typeLabel, types]);
+
 	const emptyValue = useMemo(
 		() => reduce(
 			subFields,
@@ -108,63 +107,78 @@ const CustomMultivalueField = ({
 	const generateNewId = useCallback((type) => {
 		const substring = `${type}${capitalize(name)}`;
 		const recursiveIdIncrement = (candidateId, increment) => {
-			if (field.value[candidateId]) {
+			if (value[candidateId]) {
 				return recursiveIdIncrement(`${substring}${increment}`, increment + 1);
 			}
 			return candidateId;
 		};
 		return recursiveIdIncrement(`${substring}${typeCounts[type] > 0 ? typeCounts[type] + 1 : ''}`, 2);
-	}, [field.value, name, typeCounts]);
+	}, [value, name, typeCounts]);
 
 	const addValue = useCallback(
 		() => {
-			setField(
-				{
-					...field.value,
+			dispatch({
+				type: op.updateField,
+				payload: {
+					...value,
 					[(types && types[0].value)
 						? generateNewId(types[0].value)
-						: `${name}${Object.values(field.value).length > 0 ? Object.values(field.value).length + 1 : ''}`
+						: `${name}${Object.values(value).length > 0 ? Object.values(value).length + 1 : ''}`
 					]: emptyValue
-				}
-			);
+				},
+				name
+			});
 		},
-		[types, name, typeCounts, setField, field.value, emptyValue]
+		[types, name, typeCounts, dispatch, value, emptyValue]
 	);
+
 	const removeValue = useCallback(
 		(index) => {
-			setField(omit(field.value, [index]));
+			dispatch({
+				type: op.updateField,
+				payload: { ...omit(value, [index]) },
+				name
+			});
 		},
-		[setField, field]
+		[dispatch, value]
 	);
+
 	const updateValue = useCallback(
 		(newString, subField, id) => {
-			if (newString === field.value[id][subField]) return;
+			if (newString === value[id][subField]) return;
 			if (subField === typeField) {
-				setField(
-					{
-						...omit(field.value, [id]),
+				dispatch({
+					type: op.updateField,
+					payload: {
+						...omit(value, [id]),
 						[generateNewId(newString)]: {
-							...field.value[id],
+							...value[id],
 							type: newString
 						}
-					}
-				);
+					},
+					name
+				});
 			}
 			else {
-				setField({ ...field.value, [id]: { ...field.value[id], [subField]: newString } });
+				dispatch({
+					type: op.updateField,
+					payload: {
+						...value,
+						[id]: { ...value[id], [subField]: newString }
+					},
+					name
+				});
 			}
 		},
-		[field.value, generateNewId, setField, typeField]
+		[value, generateNewId, dispatch, typeField]
 	);
-
-	if (Object.values(field.value).length === 0) {
+	if (Object.values(value).length === 0) {
 		addValue();
 	}
-
 	return (
 		<FormSection label={label}>
 			{map(
-				Object.entries(field.value),
+				Object.entries(value),
 				([id, item], index) => (
 					<ContactEditorRow wrap={wrap ? 'wrap' : 'nowrap'} key={`${label}${id}`}>
 						{map(
@@ -180,7 +194,18 @@ const CustomMultivalueField = ({
 										backgroundColor="gray5"
 										label={fieldLabels[subIndex]}
 										value={item[subField]}
-										onChange={(ev) => updateValue(ev.target.value, subField, id)}
+										onChange={
+											(ev) => dispatch({
+												type: op.setSelect,
+												payload: {
+													ev: ev.target,
+													id,
+													fieldLabels,
+													name,
+													subFields
+												}
+											})
+										}
 									/>
 								</Padding>
 							)
@@ -203,7 +228,7 @@ const CustomMultivalueField = ({
 										items={types}
 										label={typeLabel}
 										onChange={(val) => updateValue(val, typeField, id)}
-										defaultSelection={find(types, ['value', field.value[id][typeField]])}
+										defaultSelection={find(types, ['value', value[id][typeField]])}
 									/>
 								)}
 							</Padding>
@@ -214,7 +239,7 @@ const CustomMultivalueField = ({
 								width="88px"
 								style={{ minWidth: '88px' }}
 							>
-								{ index >= Object.entries(field.value).length - 1
+								{ index >= Object.entries(value).length - 1
 									? (
 										<>
 											<Padding right="small">
@@ -249,20 +274,6 @@ const CustomMultivalueField = ({
 		</FormSection>
 	);
 };
-function reducer(state, action) {
-	switch (action.type) {
-		case 'setState':
-			return {
-				...state,
-				...action.payload.editContact
-			};
-		default:
-			return {
-				...state,
-				[action.payload.name]: action.payload.value
-			};
-	}
-}
 
 export default function EditView({ panel, editPanelId, folderId }) {
 	const { id } = useParams();
@@ -278,37 +289,18 @@ export default function EditView({ panel, editPanelId, folderId }) {
 	const pushHistory = hooks.usePushHistoryCallback();
 	const replaceHistory = hooks.useReplaceHistoryCallback();
 
-	const [initialContact, setInitialContact] = useState(editId && editId !== 'new'
-		? null
-		: {
-			parent: folderId || '7',
-			address: {},
-			email: {},
-			phone: {},
-			URL: {},
-			jobTitle: '',
-			department: '',
-			namePrefix: '',
-			company: '',
-			firstName: '',
-			middleName: '',
-			nickName: '',
-			lastName: '',
-			nameSuffix: '',
-			image: '',
-			notes: ''
-		});
-
 	useEffect(() => {
 		let canSet = true;
 		if (editId && editId !== 'new' && editContact) {
-			canSet && setInitialContact(editContact);
-			dispatch({ type: 'setState', payload: { editContact } });
+			canSet &&	dispatch({ type: op.setEditContact, payload: { editContact } });
+		}
+		else {
+			canSet && dispatch({ type: op.setEmptyContact, payload: {} });
 		}
 		return () => {
 			canSet = false;
 		};
-	}, [editId, setInitialContact, editContact]);
+	}, [editId, editContact]);
 
 	const onSubmit = useCallback(() => {
 		const updatedContact = cleanMultivalueFields(contact);
@@ -355,8 +347,8 @@ export default function EditView({ panel, editPanelId, folderId }) {
 		{ label: t('home'), value: 'home' },
 		{ label: t('other'), value: 'other' },
 	], [t]);
-	console.log(contact);
-	return initialContact && contact
+
+	return contact
 		? (
 			<Container
 				mainAlignment="flex-start"
@@ -374,7 +366,7 @@ export default function EditView({ panel, editPanelId, folderId }) {
 						<Button label={t('Save')} onClick={onSubmit} disabled={false} />
 					</Row>
 					<Padding value="medium small">
-						<CompactView contact={initialContact} />
+						<CompactView contact={contact} />
 					</Padding>
 					<ContactEditorRow>
 						<CustomStringField name="namePrefix" label={t('namePrefix')} value={contact.namePrefix} dispatch={dispatch}/>
