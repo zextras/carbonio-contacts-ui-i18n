@@ -11,16 +11,13 @@
 
 import React, { lazy, useEffect } from 'react';
 import {
-	setMainMenuItems,
 	setRoutes,
 	setCreateOptions,
-	setAppContext,
-	network
+	store
 } from '@zextras/zapp-shell';
-import { ContactsDb } from './db/contacts-db';
-import { ContactsDbSoapSyncProtocol } from './db/contacts-db-soap-sync-protocol';
+import { startSync, stopSync } from './store/sync-slice';
 import mainMenuItems from './main-menu-items';
-import { report } from './commons/report-exception';
+import reducers from './store/reducers';
 
 const lazyFolderView = lazy(() => (import(/* webpackChunkName: "folder-view" */ './folder/folder-view')));
 const lazyEditView = lazy(() => (import(/* webpackChunkName: "edit-view" */ './edit/edit-view')));
@@ -29,26 +26,11 @@ export default function App() {
 	console.log('Hello from contacts');
 
 	useEffect(() => {
-		setMainMenuItems([{
-			id: 'contacts-main',
-			icon: 'PeopleOutline',
-			to: '/',
-			label: 'Contacts',
-			children: []
-		}]);
+		store.setReducer(reducers);
+	}, []);
 
-		const db = new ContactsDb();
-		const syncProtocol = new ContactsDbSoapSyncProtocol(db, network.soapFetch);
-		db.registerSyncProtocol('soap-contacts', syncProtocol);
-		db.syncable.connect('soap-contacts', '/service/soap/SyncRequest');
-
-		setAppContext({
-			db
-		});
-
-		db
-			.observe(() => db.folders.where({ parent: '1' }).sortBy('name'))
-			.subscribe((folders) => mainMenuItems(folders, db));
+	useEffect(() => {
+		store.store.dispatch(startSync());
 
 		setRoutes([
 			{
@@ -80,7 +62,16 @@ export default function App() {
 				},
 			}
 		}]);
+
+		return (() => {
+			console.log('Contacts app unmounted!');
+			store.store.dispatch(
+				stopSync()
+			);
+		});
 	}, []);
+
+	mainMenuItems(store);
 
 	return null;
 }

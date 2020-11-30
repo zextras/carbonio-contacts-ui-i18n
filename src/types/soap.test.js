@@ -15,11 +15,10 @@ import {
 	normalizeContactAddressesToSoapOp,
 	normalizeContactUrlsToSoapOp,
 	normalizeContactAttrsToSoapOp,
-	normalizeContactChangesToSoapOp
-} from './soap';
+} from '../store/normalize-contact-to-soap';
 import {
-	Contact, ContactAddressType, ContactPhoneType, ContactUrlType
-} from './db/contact';
+	ContactAddressType, ContactPhoneType, ContactUrlType
+} from './contact';
 
 describe('SOAP Utils', () => {
 	test('Normalize Contact Mails for SOAP Operation', () => {
@@ -143,7 +142,7 @@ describe('SOAP Utils', () => {
 	});
 	test('Normalize Contact Attributes for SOAP Operation', () => {
 		expect(
-			normalizeContactAttrsToSoapOp(new Contact(
+			normalizeContactAttrsToSoapOp(
 				{
 					nameSuffix: 'nameSuffix',
 					namePrefix: 'namePrefix',
@@ -187,7 +186,7 @@ describe('SOAP Utils', () => {
 						}
 					}
 				}
-			))
+			)
 		).toStrictEqual(
 			[
 				{
@@ -273,58 +272,5 @@ describe('SOAP Utils', () => {
 			]
 
 		);
-	});
-
-	test('Normalize Contact Changes for SOAP Operation', () => {
-		expect(
-			normalizeContactChangesToSoapOp({
-				'email.email2': {
-					mail: 'mail2@mail.com'
-				},
-				'email.email.mail': 'mail@mail.com',
-				'phone.workPhone': {
-					type: ContactAddressType.WORK,
-					number: 'workPhone'
-				},
-				'phone.workPhone2.number': 'workPhone2',
-				'URL.workURL2': {
-					type: ContactAddressType.WORK,
-					url: 'workUrl2'
-				},
-				'URL.workUrl.url': 'workUrl',
-				'address.workAddress': {
-					city: 'workCity',
-					country: 'workCountry',
-					postalCode: 'workPostalCode',
-					state: 'workState',
-					street: 'workStreet',
-					type: 'work'
-				},
-				'address.otherAddress.city': 'otherCity',
-				'address.otherAddress.country': 'otherCountry',
-				'address.otherAddress.street': 'otherStreet',
-				'address.otherAddress.postalCode': 'otherPostalCode',
-				'address.otherAddress.state': 'otherState',
-				notes: 'notes'
-			})
-		).toStrictEqual([
-			{ _content: 'notes', n: 'notes' },
-			{ _content: 'mail2@mail.com', n: 'email2' },
-			{ _content: 'mail@mail.com', n: 'email' },
-			{ _content: 'workPhone', n: 'workPhone' },
-			{ _content: 'workPhone2', n: 'workPhone2' },
-			{ _content: 'workUrl2', n: 'workURL2' },
-			{ _content: 'workUrl', n: 'workUrl' },
-			{ _content: 'workCity', n: 'workCity' },
-			{ _content: 'workCountry', n: 'workCountry' },
-			{ _content: 'workPostalCode', n: 'workPostalCode' },
-			{ _content: 'workState', n: 'workState' },
-			{ _content: 'workStreet', n: 'workStreet' },
-			{ _content: 'otherCity', n: 'otherCity' },
-			{ _content: 'otherCountry', n: 'otherCountry' },
-			{ _content: 'otherStreet', n: 'otherStreet' },
-			{ _content: 'otherPostalCode', n: 'otherPostalCode' },
-			{ _content: 'otherState', n: 'otherState' },
-		]);
 	});
 });
