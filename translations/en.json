@@ -1,9 +1,6 @@
 {
-    "This contact will be created in the 'Contacts' folder": "",
-    "_name": "pippo",
     "address": "Address",
     "address_plural": "Address ({{count}})",
-    "home": "",
     "job": {
         "company": "Company",
         "department": "Department",
@@ -16,13 +13,12 @@
     },
     "mail": "Email",
     "mail_plural": "Email ({{count}})",
-    "mobile": "",
+    "message": {
+        "new_contact": "This contact will be created in the 'Contacts' folder"
+    },
     "name": {
-        "firstName": "",
         "first_name": "First name",
-        "lastName": "",
         "last_name": "Last name",
-        "middleName": "",
         "middle_name": "Middle name",
         "nickName": "Nickname",
         "prefix": "Prefix",
@@ -31,7 +27,6 @@
     "notes": "Notes",
     "number": "",
     "number_plural": "",
-    "other": "",
     "section": {
         "field": {
             "city": "City",
@@ -54,21 +49,14 @@
         }
     },
     "select": {
-        "URL": "",
-        "address": "",
-        "default": "Select type",
-        "number": ""
+        "default": "Select type"
     },
-    "type": "",
     "types": {
-        "URL": "",
         "home": "home",
         "mobile": "mobile",
-        "number": "",
         "other": "other",
         "work": "work"
     },
     "url": "Website",
-    "url_plural": "Website ({{count}})",
-    "work": ""
+    "url_plural": "Website ({{count}})"
 }

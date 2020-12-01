@@ -13,7 +13,8 @@ export const op = {
 	setEditContact: 'editContact',
 	setInput: 'setInput',
 	updateField: 'addField',
-	setSelect: 'setSelect'
+	setSelect: 'setSelect',
+	updateSelect: 'updateSelect'
 };
 
 export default function reducer(state, action) {
@@ -43,14 +44,14 @@ export default function reducer(state, action) {
 				...action.payload.editContact
 			};
 		case op.setSelect:
-			if (action.payload.fieldLabels.length > 1) {
+			if (action.payload.ev.name === 'address') {
 				return {
 					...state,
 					[action.payload.name]: {
 						...state[action.payload.name],
 						[action.payload.id]: {
 							...state[action.payload.name][action.payload.id],
-							[action.payload.ev.name]: action.payload.ev.value
+							[action.payload.subField]: action.payload.ev.value
 						}
 					}
 				};
@@ -60,11 +61,12 @@ export default function reducer(state, action) {
 				[action.payload.name]: {
 					...state[action.payload.name],
 					[action.payload.id]: {
-						[action.payload.ev.name]: action.payload.ev.value
+						[action.payload.subField]: action.payload.ev.value
 					}
 				}
 			};
 		case op.updateField:
+			console.log(action.payload, state);
 			return {
 				...state,
 				[action.name]: action.payload

@@ -116,6 +116,17 @@ const CustomMultivalueField = ({
 		return recursiveIdIncrement(`${substring}${typeCounts[type] > 0 ? typeCounts[type] + 1 : ''}`, 2);
 	}, [value, name, typeCounts]);
 
+	const generateNewUntypedId = useCallback(() => {
+		console.log(name);
+		const recursiveIdIncrement = (candidateId, increment) => {
+			if (value[candidateId] || candidateId === 'email1') {
+				return recursiveIdIncrement(`${name}${increment}`, increment + 1);
+			}
+			return candidateId;
+		};
+		return recursiveIdIncrement(!value[name] ? name : name + 2, 1);
+	}, [value, name, typeCounts]);
+
 	const addValue = useCallback(
 		() => {
 			dispatch({
@@ -124,7 +135,7 @@ const CustomMultivalueField = ({
 					...value,
 					[(types && types[0].value)
 						? generateNewId(types[0].value)
-						: `${name}${Object.values(value).length > 0 ? Object.values(value).length + 1 : ''}`
+						: generateNewUntypedId()
 					]: emptyValue
 				},
 				name
@@ -141,7 +152,7 @@ const CustomMultivalueField = ({
 				name
 			});
 		},
-		[dispatch, value]
+		[dispatch, value, name]
 	);
 
 	const updateValue = useCallback(
@@ -171,11 +182,13 @@ const CustomMultivalueField = ({
 				});
 			}
 		},
-		[value, generateNewId, dispatch, typeField]
+		[value, name, generateNewId, dispatch, typeField]
 	);
+
 	if (Object.values(value).length === 0) {
 		addValue();
 	}
+
 	return (
 		<FormSection label={label}>
 			{map(
@@ -192,6 +205,7 @@ const CustomMultivalueField = ({
 									style={{ width: wrap ? '32%' : '100%', flexGrow: 1 }}
 								>
 									<Input
+										inputName={name}
 										backgroundColor="gray5"
 										label={fieldLabels[subIndex]}
 										value={item[subField]}
@@ -201,9 +215,8 @@ const CustomMultivalueField = ({
 												payload: {
 													ev: ev.target,
 													id,
-													fieldLabels,
 													name,
-													subFields
+													subField
 												}
 											})
 										}
@@ -363,7 +376,7 @@ export default function EditView({ panel, editPanelId, folderId }) {
 						mainAlignment="space-between"
 						width="fill"
 					>
-						<Container height="fit" width="fit">{!editId && <Text>{t('This contact will be created in the \'Contacts\' folder')}</Text> }</Container>
+						<Container height="fit" width="fit">{!editId && <Text>{t('message.new_contact')}</Text> }</Container>
 						<Button label={t('label.save')} onClick={onSubmit} disabled={false} />
 					</Row>
 					<Padding value="medium small">
@@ -421,7 +434,7 @@ export default function EditView({ panel, editPanelId, folderId }) {
 						typeLabel={t('select.default')}
 						types={defaultTypes}
 						subFields={['street', 'city', 'postalCode', 'country', 'state']}
-						fieldLabels={[t('section.field.street'), t('section.field.city'), t('section.field.postalCode'), t('section.field.country'), t('section.field.state'), { count: Object.entries(contact.address).length }]}
+						fieldLabels={[t('section.field.street'), t('section.field.city'), t('section.field.postalCode'), t('section.field.country'), t('section.field.state')]}
 						wrap
 						value={contact.address}
 						dispatch={dispatch}
