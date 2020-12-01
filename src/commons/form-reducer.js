@@ -12,9 +12,8 @@ export const op = {
 	setEmptyContact: 'newContact',
 	setEditContact: 'editContact',
 	setInput: 'setInput',
-	updateField: 'addField',
+	setRowInput: 'addField',
 	setSelect: 'setSelect',
-	updateSelect: 'updateSelect'
 };
 
 export default function reducer(state, action) {
@@ -65,8 +64,7 @@ export default function reducer(state, action) {
 					}
 				}
 			};
-		case op.updateField:
-			console.log(action.payload, state);
+		case op.setRowInput:
 			return {
 				...state,
 				[action.name]: action.payload

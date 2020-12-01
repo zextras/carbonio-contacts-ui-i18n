@@ -105,7 +105,7 @@ const CustomMultivalueField = ({
 		[subFields, typeField, types]
 	);
 
-	const generateNewId = useCallback((type) => {
+	const generateNewTypedId = useCallback((type) => {
 		const substring = `${type}${capitalize(name)}`;
 		const recursiveIdIncrement = (candidateId, increment) => {
 			if (value[candidateId]) {
@@ -117,7 +117,6 @@ const CustomMultivalueField = ({
 	}, [value, name, typeCounts]);
 
 	const generateNewUntypedId = useCallback(() => {
-		console.log(name);
 		const recursiveIdIncrement = (candidateId, increment) => {
 			if (value[candidateId] || candidateId === 'email1') {
 				return recursiveIdIncrement(`${name}${increment}`, increment + 1);
@@ -130,11 +129,11 @@ const CustomMultivalueField = ({
 	const addValue = useCallback(
 		() => {
 			dispatch({
-				type: op.updateField,
+				type: op.setRowInput,
 				payload: {
 					...value,
 					[(types && types[0].value)
-						? generateNewId(types[0].value)
+						? generateNewTypedId(types[0].value)
 						: generateNewUntypedId()
 					]: emptyValue
 				},
@@ -147,7 +146,7 @@ const CustomMultivalueField = ({
 	const removeValue = useCallback(
 		(index) => {
 			dispatch({
-				type: op.updateField,
+				type: op.setRowInput,
 				payload: { ...omit(value, [index]) },
 				name
 			});
@@ -160,10 +159,10 @@ const CustomMultivalueField = ({
 			if (newString === value[id][subField]) return;
 			if (subField === typeField) {
 				dispatch({
-					type: op.updateField,
+					type: op.setRowInput,
 					payload: {
 						...omit(value, [id]),
-						[generateNewId(newString)]: {
+						[generateNewTypedId(newString)]: {
 							...value[id],
 							type: newString
 						}
@@ -173,7 +172,7 @@ const CustomMultivalueField = ({
 			}
 			else {
 				dispatch({
-					type: op.updateField,
+					type: op.setRowInput,
 					payload: {
 						...value,
 						[id]: { ...value[id], [subField]: newString }
@@ -182,7 +181,7 @@ const CustomMultivalueField = ({
 				});
 			}
 		},
-		[value, name, generateNewId, dispatch, typeField]
+		[value, name, generateNewTypedId, dispatch, typeField]
 	);
 
 	if (Object.values(value).length === 0) {
@@ -401,7 +400,7 @@ export default function EditView({ panel, editPanelId, folderId }) {
 						name="email"
 						label={t('section.title.mail')}
 						subFields={['mail']}
-						fieldLabels={[t('mail', { count: Object.entries(contact.email).length })]}
+						fieldLabels={[t('mail')]}
 						value={contact.email}
 						dispatch={dispatch}
 					/>
@@ -412,7 +411,7 @@ export default function EditView({ panel, editPanelId, folderId }) {
 						typeField="type"
 						types={mobileTypes}
 						subFields={['number']}
-						fieldLabels={[t('section.field.number'), { count: Object.entries(contact.phone).length }]}
+						fieldLabels={[t('section.field.number')]}
 						value={contact.phone}
 						dispatch={dispatch}
 					/>
@@ -423,7 +422,7 @@ export default function EditView({ panel, editPanelId, folderId }) {
 						typeField="type"
 						types={defaultTypes}
 						subFields={['url']}
-						fieldLabels={[t('section.field.url'), { count: Object.entries(contact.URL).length }]}
+						fieldLabels={[t('section.field.url')]}
 						value={contact.URL}
 						dispatch={dispatch}
 					/>
