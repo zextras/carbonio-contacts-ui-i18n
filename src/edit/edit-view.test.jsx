@@ -11,7 +11,7 @@
 
 import React from 'react';
 import { screen } from '@testing-library/react';
-import { testUtils } from '@zextras/zapp-shell';
+import { hooks, testUtils } from '@zextras/zapp-shell';
 import reducers from '../store/reducers';
 import ContactEditPanel from './contact-edit-panel';
 import { populateContactSlice } from '../mocks/populate-contacts-slice';
@@ -21,6 +21,8 @@ describe('Edit view', () => {
 		const ctxt = {};
 		const folderId = 7;
 		const itemsCount = 1;
+		hooks.useReplaceHistoryCallback.mockImplementation(() => jest.fn());
+		hooks.usePushHistoryCallback.mockImplementation(() => jest.fn());
 
 		testUtils.render(
 			<ContactEditPanel

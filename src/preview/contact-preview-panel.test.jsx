@@ -9,7 +9,7 @@
  * *** END LICENSE BLOCK *****
  */
 
-import { testUtils } from '@zextras/zapp-shell';
+import { testUtils, hooks } from '@zextras/zapp-shell';
 import React from 'react';
 import { screen } from '@testing-library/react';
 import reducers from '../store/reducers';
@@ -18,6 +18,7 @@ import ContactPreviewPanel from './contact-preview-panel';
 
 describe('Preview Panel', () => {
 	test('Render preview', async () => {
+		hooks.useReplaceHistoryCallback.mockImplementation(() => jest.fn());
 		const ctxt = {};
 		const folderId = 7;
 		const itemsCount = 1;
