@@ -25,8 +25,8 @@
         "suffix": "Suffix"
     },
     "notes": "Notes",
-    "number": "",
-    "number_plural": "",
+    "number": "Number",
+    "number_plural": "Number ({{count}})",
     "section": {
         "field": {
             "city": "City",
