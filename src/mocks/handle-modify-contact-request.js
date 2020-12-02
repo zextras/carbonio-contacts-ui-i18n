@@ -10,7 +10,6 @@
  */
 
 import { reduce } from 'lodash';
-import faker from 'faker';
 
 export function handleModifyContactRequest(req, res, ctxt) {
 	const _attrs = reduce(

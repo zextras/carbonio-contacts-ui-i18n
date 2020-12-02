@@ -51,6 +51,7 @@ export default function ContactListItem({ contact, style }) {
 					height="fill"
 					background="gray6"
 					orientation="horizontal"
+					data-testid={contact.id}
 				>
 					<Padding all="medium">
 						<Avatar
