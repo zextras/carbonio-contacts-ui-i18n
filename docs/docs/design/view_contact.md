@@ -27,6 +27,6 @@ Some components may require a version specific for each screen size, that items 
 
 ## Wireframes
 ### Desktop
-![desktop-wireframe](assets/design/view_contact/desktop.png)
+![desktop-wireframe](../assets/design/view_contact/desktop.png)
 ### Mobile
-![mobile-wireframe](assets/design/view_contact/mobile.png)
+![mobile-wireframe](../assets/design/view_contact/mobile.png)
