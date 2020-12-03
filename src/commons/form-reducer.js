@@ -10,13 +10,14 @@
  */
 export const op = {
 	setEmptyContact: 'newContact',
-	setEditContact: 'editContact',
+	setExistingContact: 'existingContact',
 	setInput: 'setInput',
 	setRowInput: 'addField',
 	setSelect: 'setSelect',
 };
 
 export default function reducer(state, action) {
+	console.log(action.payload, action.type, action.payload.name, action.payload.value);
 	switch (action.type) {
 		case op.setEmptyContact:
 			return {
@@ -37,30 +38,30 @@ export default function reducer(state, action) {
 				image: '',
 				notes: ''
 			};
-		case op.setEditContact:
+		case op.setExistingContact:
 			return {
 				...state,
-				...action.payload.editContact
+				...action.payload.existingContact
 			};
 		case op.setSelect:
 			if (action.payload.ev.name === 'address') {
 				return {
 					...state,
-					[action.payload.name]: {
-						...state[action.payload.name],
+					[action.payload.ev.name]: {
+						...state[action.payload.ev.name],
 						[action.payload.id]: {
-							...state[action.payload.name][action.payload.id],
-							[action.payload.subField]: action.payload.ev.value
+							...state[action.payload.ev.name][action.payload.id],
+							[action.payload.subField]: action.payload.ev.value||''
 						}
 					}
 				};
 			}
 			return {
 				...state,
-				[action.payload.name]: {
-					...state[action.payload.name],
+				[action.payload.ev.name]: {
+					...state[action.payload.ev.name],
 					[action.payload.id]: {
-						[action.payload.subField]: action.payload.ev.value
+						[action.payload.subField]: action.payload.ev.value||''
 					}
 				}
 			};
@@ -72,7 +73,7 @@ export default function reducer(state, action) {
 		case op.setInput:
 			return {
 				...state,
-				[action.payload.name]: action.payload.value
+				[action.payload.name]: action.payload.value||''
 			};
 		default:
 			return state;

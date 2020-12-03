@@ -61,7 +61,7 @@ const ContactEditorRow = ({ children, wrap }) => (
 	</Row>
 );
 
-const CustomStringField = ({ name, label, value, dispatch }) => (
+const CustomStringField = ({ name, label, value, dispatch }) => value &&(
 	<Container padding={{ all: 'small' }}>
 		<Input
 			backgroundColor="gray5"
@@ -87,6 +87,7 @@ const CustomMultivalueField = ({
 	value,
 	dispatch
 }) => {
+
 	const typeCounts = useMemo(() => reduce(
 		types,
 		(acc, type, k) => ({
@@ -135,12 +136,12 @@ const CustomMultivalueField = ({
 					[(types && types[0].value)
 						? generateNewTypedId(types[0].value)
 						: generateNewUntypedId()
-					]: emptyValue
+					]: emptyValue||''
 				},
 				name
 			});
 		},
-		[types, name, typeCounts, dispatch, value, emptyValue]
+		[types, name, dispatch, value, emptyValue]
 	);
 
 	const removeValue = useCallback(
@@ -184,11 +185,13 @@ const CustomMultivalueField = ({
 		[value, name, generateNewTypedId, dispatch, typeField]
 	);
 
-	if (Object.values(value).length === 0) {
-		addValue();
-	}
+	useEffect(() => {
+		if (Object.values(value).length === 0) {
+			addValue();
+		}
+	},[value]);
 
-	return (
+	return value && (
 		<FormSection label={label}>
 			{map(
 				Object.entries(value),
@@ -207,16 +210,11 @@ const CustomMultivalueField = ({
 										inputName={name}
 										backgroundColor="gray5"
 										label={fieldLabels[subIndex]}
-										value={item[subField]}
+										value={item[subField] || " "}
 										onChange={
 											(ev) => dispatch({
 												type: op.setSelect,
-												payload: {
-													ev: ev.target,
-													id,
-													name,
-													subField
-												}
+												payload: { ev: ev.target, id, subField }
 											})
 										}
 									/>
@@ -291,7 +289,7 @@ const CustomMultivalueField = ({
 export default function EditView({ panel, editPanelId, folderId }) {
 	const { id } = useParams();
 	const storeDispatch = useDispatch();
-	const editContact = useSelector((state) => selectContact(state, folderId, editPanelId));
+	const existingContact = useSelector((state) => selectContact(state, folderId, editPanelId));
 	const editId = useMemo(() => {
 		if (id) return id;
 		if (editPanelId) return editPanelId;
@@ -304,8 +302,8 @@ export default function EditView({ panel, editPanelId, folderId }) {
 
 	useEffect(() => {
 		let canSet = true;
-		if (editId && editId !== 'new' && editContact) {
-			canSet &&	dispatch({ type: op.setEditContact, payload: { editContact } });
+		if (editId && editId !== 'new' && existingContact) {
+			canSet &&	dispatch({ type: op.setExistingContact, payload: { existingContact } });
 		}
 		else {
 			canSet && dispatch({ type: op.setEmptyContact, payload: {} });
@@ -313,7 +311,7 @@ export default function EditView({ panel, editPanelId, folderId }) {
 		return () => {
 			canSet = false;
 		};
-	}, [editId, editContact]);
+	}, [editId, existingContact]);
 
 	const onSubmit = useCallback(() => {
 		const updatedContact = cleanMultivalueFields(contact);
@@ -336,7 +334,7 @@ export default function EditView({ panel, editPanelId, folderId }) {
 			storeDispatch(modifyContact(
 				{
 					updatedContact,
-					editContact
+					existingContact
 				}
 			))
 				.then((res) => {
@@ -346,7 +344,7 @@ export default function EditView({ panel, editPanelId, folderId }) {
 				})
 				.catch(report);
 		}
-	}, [folderId, panel, pushHistory, replaceHistory, editContact, contact]);
+	}, [folderId, panel, pushHistory, replaceHistory, existingContact, contact]);
 
 	const defaultTypes = useMemo(() => [
 		{ label: t('types.work'), value: 'work' },
@@ -382,26 +380,26 @@ export default function EditView({ panel, editPanelId, folderId }) {
 						<CompactView contact={contact} />
 					</Padding>
 					<ContactEditorRow>
-						<CustomStringField name="namePrefix" label={t('name.prefix')} value={contact.namePrefix} dispatch={dispatch}/>
-						<CustomStringField name="firstName" label={t('name.first_name')} value={contact.firstName} dispatch={dispatch}/>
-						<CustomStringField name="middleName" label={t('name.middle_name')} value={contact.middleName} dispatch={dispatch}/>
+						<CustomStringField name="namePrefix" label={t('name.prefix')} value={contact.namePrefix || " "} dispatch={dispatch}/>
+						<CustomStringField name="firstName" label={t('name.first_name')} value={contact.firstName || " "} dispatch={dispatch}/>
+						<CustomStringField name="middleName" label={t('name.middle_name')} value={contact.middleName || " "} dispatch={dispatch}/>
 					</ContactEditorRow>
 					<ContactEditorRow>
-						<CustomStringField name="nickName" label={t('name.nickName')} value={contact.nickName} dispatch={dispatch}/>
-						<CustomStringField name="lastName" label={t('name.last_name')} value={contact.lastName} dispatch={dispatch}/>
-						<CustomStringField name="nameSuffix" label={t('name.suffix')} value={contact.nameSuffix} dispatch={dispatch}/>
+						<CustomStringField name="nickName" label={t('name.nickName')} value={contact.nickName || " "} dispatch={dispatch}/>
+						<CustomStringField name="lastName" label={t('name.last_name')} value={contact.lastName || " "} dispatch={dispatch}/>
+						<CustomStringField name="nameSuffix" label={t('name.suffix')} value={contact.nameSuffix || " "} dispatch={dispatch}/>
 					</ContactEditorRow>
 					<ContactEditorRow>
-						<CustomStringField name="jobTitle" label={t('job.title')} value={contact.jobTitle} dispatch={dispatch}/>
-						<CustomStringField name="department" label={t('job.department')} value={contact.department} dispatch={dispatch}/>
-						<CustomStringField name="company" label={t('job.company')} value={contact.company} dispatch={dispatch}/>
+						<CustomStringField name="jobTitle" label={t('job.title')} value={contact.jobTitle || " "} dispatch={dispatch}/>
+						<CustomStringField name="department" label={t('job.department')} value={contact.department || " "} dispatch={dispatch}/>
+						<CustomStringField name="company" label={t('job.company')} value={contact.company || " "} dispatch={dispatch}/>
 					</ContactEditorRow>
 					<CustomMultivalueField
 						name="email"
 						label={t('section.title.mail')}
 						subFields={['mail']}
 						fieldLabels={[t('mail')]}
-						value={contact.email}
+						value={contact.email || " "}
 						dispatch={dispatch}
 					/>
 					<CustomMultivalueField
@@ -412,7 +410,7 @@ export default function EditView({ panel, editPanelId, folderId }) {
 						types={mobileTypes}
 						subFields={['number']}
 						fieldLabels={[t('section.field.number')]}
-						value={contact.phone}
+						value={contact.phone || " "}
 						dispatch={dispatch}
 					/>
 					<CustomMultivalueField
@@ -423,7 +421,7 @@ export default function EditView({ panel, editPanelId, folderId }) {
 						types={defaultTypes}
 						subFields={['url']}
 						fieldLabels={[t('section.field.url')]}
-						value={contact.URL}
+						value={contact.URL || " "}
 						dispatch={dispatch}
 					/>
 					<CustomMultivalueField
@@ -435,11 +433,11 @@ export default function EditView({ panel, editPanelId, folderId }) {
 						subFields={['street', 'city', 'postalCode', 'country', 'state']}
 						fieldLabels={[t('section.field.street'), t('section.field.city'), t('section.field.postalCode'), t('section.field.country'), t('section.field.state')]}
 						wrap
-						value={contact.address}
+						value={contact.address || " "}
 						dispatch={dispatch}
 					/>
 					<ContactEditorRow>
-						<CustomStringField name="notes" label={t('notes')} value={contact.notes} dispatch={dispatch}/>
+						<CustomStringField name="notes" label={t('notes')} value={contact.notes || " "} dispatch={dispatch}/>
 					</ContactEditorRow>
 				</Container>
 			</Container>
