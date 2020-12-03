@@ -20,8 +20,7 @@ import {
 	Divider,
 	Padding
 } from '@zextras/zapp-ui';
-import { trim, get, has } from 'lodash';
-import { Contact } from '../db/contact';
+import { trim } from 'lodash';
 import { useDisplayName } from '../commons/use-display-name';
 
 const InvisibleLink = styled(Link)`
@@ -46,12 +45,13 @@ export default function ContactListItem({ contact, style }) {
 	);
 	return (
 		<Container style={style}>
-			<InvisibleLink to={`/folder/${contact.parent}?preview=${contact._id}`}>
+			<InvisibleLink to={`/folder/${contact.parent}?preview=${contact.id}`}>
 				<Container
 					borderRadius="none"
 					height="fill"
 					background="gray6"
 					orientation="horizontal"
+					data-testid={contact.id}
 				>
 					<Padding all="medium">
 						<Avatar
@@ -81,7 +81,8 @@ export default function ContactListItem({ contact, style }) {
 }
 
 ContactListItem.propTypes = {
-	className: PropTypes.string,
+	// eslint-disable-next-line react/forbid-prop-types,react/require-default-props
 	style: PropTypes.any,
-	contact: PropTypes.instanceOf(Contact).isRequired
+	// eslint-disable-next-line react/forbid-prop-types
+	contact: PropTypes.any.isRequired /* instanceOf(Contact) */ // todo: modify this
 };

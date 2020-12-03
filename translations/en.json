@@ -1,34 +1,62 @@
 {
-  "Edit Contact": "Edit Contact",
-  "Save": "Save",
-  "This contact will be created in the 'Contacts' folder": "This contact will be created into the 'Contacts' folder",
-  "address": "Address",
-  "city": "City",
-  "company": "Company",
-  "country": "Country",
-  "department": "Department",
-  "edit": "Edit",
-  "email address": "Email",
-  "firstName": "First Name",
-  "home": "Home",
-  "jobTitle": "Job Title",
-  "lastName": "Last Name",
-  "mail": "Email",
-  "middleName": "Middle Name",
-  "mobile": "Mobile",
-  "name": "Name",
-  "nickName": "Nickname",
-  "notes": "Notes",
-  "number": "Number",
-  "other": "Other",
-  "phone": "Phone",
-  "phone contact": "Phone",
-  "postalCode": "Postal Code",
-  "prefix": "Prefix",
-  "state": "State",
-  "street": "Street",
-  "suffix": "Suffix",
-  "type": "Type",
-  "url": "Website",
-  "work": "Work"
+    "address": "Address",
+    "address_plural": "Address ({{count}})",
+    "job": {
+        "company": "Company",
+        "department": "Department",
+        "title": "Job Title"
+    },
+    "label": {
+        "create": "New Contact",
+        "edit": "Edit",
+        "save": "Save"
+    },
+    "mail": "Email",
+    "mail_plural": "Email ({{count}})",
+    "message": {
+        "new_contact": "This contact will be created in the 'Contacts' folder"
+    },
+    "name": {
+        "first_name": "First name",
+        "last_name": "Last name",
+        "middle_name": "Middle name",
+        "nickName": "Nickname",
+        "prefix": "Prefix",
+        "suffix": "Suffix"
+    },
+    "notes": "Notes",
+    "number": "Number",
+    "number_plural": "Number ({{count}})",
+    "section": {
+        "field": {
+            "city": "City",
+            "country": "Country",
+            "number": "Number",
+            "postalCode": "PostalCode",
+            "state": "State",
+            "street": "Street",
+            "url": "Website"
+        },
+        "title": {
+            "address": "Address",
+            "address_plural": "Address ({{count}})",
+            "mail": "Email",
+            "mail_plural": "Email ({{count}})",
+            "phone_number": "Phone",
+            "phone_number_plural": "Phone ({{count}})",
+            "url": "Website",
+            "url_plural": "Website ({{count}})"
+        }
+    },
+    "select": {
+        "default": "Select type"
+    },
+    "types": {
+        "home": "home",
+        "mobile": "mobile",
+        "other": "other",
+        "work": "work"
+    },
+    "url": "Website",
+    "url_plural": "Website ({{count}})"
 }

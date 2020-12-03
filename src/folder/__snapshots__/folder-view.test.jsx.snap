@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Folder view Render an empty list 1`] = `
+Object {
+  "contacts": Object {
+    "contacts": Object {
+      "7": Array [],
+    },
+    "status": "succeeded",
+  },
+  "folders": Object {
+    "folders": Object {
+      "7": Object {
+        "id": "7",
+        "name": "Contacts",
+        "parent": "1",
+        "path": "/Contacts",
+        "unreadCount": 0,
+      },
+    },
+    "status": "succeeded",
+  },
+  "sync": Object {
+    "intervalId": 5,
+    "status": "idle",
+    "token": "1",
+  },
+}
+`;
