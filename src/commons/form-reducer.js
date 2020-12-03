@@ -17,7 +17,6 @@ export const op = {
 };
 
 export default function reducer(state, action) {
-	console.log(action.payload, action.type, action.payload.name, action.payload.value);
 	switch (action.type) {
 		case op.setEmptyContact:
 			return {

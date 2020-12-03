@@ -61,13 +61,13 @@ const ContactEditorRow = ({ children, wrap }) => (
 	</Row>
 );
 
-const CustomStringField = ({ name, label, value, dispatch }) => value &&(
+const CustomStringField = ({ name, label, value, dispatch }) => (
 	<Container padding={{ all: 'small' }}>
 		<Input
 			backgroundColor="gray5"
 			inputName={name}
 			label={label}
-			value={value}
+			defaultValue={value}
 			onChange={(ev) => dispatch({ type: op.setInput, payload: ev.target })}
 		/>
 	</Container>
@@ -191,7 +191,7 @@ const CustomMultivalueField = ({
 		}
 	},[value]);
 
-	return value && (
+	return (
 		<FormSection label={label}>
 			{map(
 				Object.entries(value),
@@ -210,7 +210,7 @@ const CustomMultivalueField = ({
 										inputName={name}
 										backgroundColor="gray5"
 										label={fieldLabels[subIndex]}
-										value={item[subField] || " "}
+										defaultValue={item[subField]}
 										onChange={
 											(ev) => dispatch({
 												type: op.setSelect,
@@ -305,7 +305,7 @@ export default function EditView({ panel, editPanelId, folderId }) {
 		if (editId && editId !== 'new' && existingContact) {
 			canSet &&	dispatch({ type: op.setExistingContact, payload: { existingContact } });
 		}
-		else {
+		if (editId && editId === 'new') {
 			canSet && dispatch({ type: op.setEmptyContact, payload: {} });
 		}
 		return () => {
@@ -380,26 +380,26 @@ export default function EditView({ panel, editPanelId, folderId }) {
 						<CompactView contact={contact} />
 					</Padding>
 					<ContactEditorRow>
-						<CustomStringField name="namePrefix" label={t('name.prefix')} value={contact.namePrefix || " "} dispatch={dispatch}/>
-						<CustomStringField name="firstName" label={t('name.first_name')} value={contact.firstName || " "} dispatch={dispatch}/>
-						<CustomStringField name="middleName" label={t('name.middle_name')} value={contact.middleName || " "} dispatch={dispatch}/>
+						<CustomStringField name="namePrefix" label={t('name.prefix')} value={contact.namePrefix} dispatch={dispatch}/>
+						<CustomStringField name="firstName" label={t('name.first_name')} value={contact.firstName} dispatch={dispatch}/>
+						<CustomStringField name="middleName" label={t('name.middle_name')} value={contact.middleName} dispatch={dispatch}/>
 					</ContactEditorRow>
 					<ContactEditorRow>
-						<CustomStringField name="nickName" label={t('name.nickName')} value={contact.nickName || " "} dispatch={dispatch}/>
-						<CustomStringField name="lastName" label={t('name.last_name')} value={contact.lastName || " "} dispatch={dispatch}/>
-						<CustomStringField name="nameSuffix" label={t('name.suffix')} value={contact.nameSuffix || " "} dispatch={dispatch}/>
+						<CustomStringField name="nickName" label={t('name.nickName')} value={contact.nickName} dispatch={dispatch}/>
+						<CustomStringField name="lastName" label={t('name.last_name')} value={contact.lastName} dispatch={dispatch}/>
+						<CustomStringField name="nameSuffix" label={t('name.suffix')} value={contact.nameSuffix} dispatch={dispatch}/>
 					</ContactEditorRow>
 					<ContactEditorRow>
-						<CustomStringField name="jobTitle" label={t('job.title')} value={contact.jobTitle || " "} dispatch={dispatch}/>
-						<CustomStringField name="department" label={t('job.department')} value={contact.department || " "} dispatch={dispatch}/>
-						<CustomStringField name="company" label={t('job.company')} value={contact.company || " "} dispatch={dispatch}/>
+						<CustomStringField name="jobTitle" label={t('job.title')} value={contact.jobTitle} dispatch={dispatch}/>
+						<CustomStringField name="department" label={t('job.department')} value={contact.department} dispatch={dispatch}/>
+						<CustomStringField name="company" label={t('job.company')} value={contact.company} dispatch={dispatch}/>
 					</ContactEditorRow>
 					<CustomMultivalueField
 						name="email"
 						label={t('section.title.mail')}
 						subFields={['mail']}
 						fieldLabels={[t('mail')]}
-						value={contact.email || " "}
+						value={contact.email}
 						dispatch={dispatch}
 					/>
 					<CustomMultivalueField
@@ -410,7 +410,7 @@ export default function EditView({ panel, editPanelId, folderId }) {
 						types={mobileTypes}
 						subFields={['number']}
 						fieldLabels={[t('section.field.number')]}
-						value={contact.phone || " "}
+						value={contact.phone}
 						dispatch={dispatch}
 					/>
 					<CustomMultivalueField
@@ -421,7 +421,7 @@ export default function EditView({ panel, editPanelId, folderId }) {
 						types={defaultTypes}
 						subFields={['url']}
 						fieldLabels={[t('section.field.url')]}
-						value={contact.URL || " "}
+						value={contact.URL}
 						dispatch={dispatch}
 					/>
 					<CustomMultivalueField
@@ -433,11 +433,11 @@ export default function EditView({ panel, editPanelId, folderId }) {
 						subFields={['street', 'city', 'postalCode', 'country', 'state']}
 						fieldLabels={[t('section.field.street'), t('section.field.city'), t('section.field.postalCode'), t('section.field.country'), t('section.field.state')]}
 						wrap
-						value={contact.address || " "}
+						value={contact.address}
 						dispatch={dispatch}
 					/>
 					<ContactEditorRow>
-						<CustomStringField name="notes" label={t('notes')} value={contact.notes || " "} dispatch={dispatch}/>
+						<CustomStringField name="notes" label={t('notes')} value={contact.notes} dispatch={dispatch}/>
 					</ContactEditorRow>
 				</Container>
 			</Container>
