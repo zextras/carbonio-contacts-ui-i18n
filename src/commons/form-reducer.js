@@ -50,7 +50,7 @@ export default function reducer(state, action) {
 						...state[action.payload.ev.name],
 						[action.payload.id]: {
 							...state[action.payload.ev.name][action.payload.id],
-							[action.payload.subField]: action.payload.ev.value||''
+							[action.payload.subField]: action.payload.ev.value
 						}
 					}
 				};
@@ -60,7 +60,7 @@ export default function reducer(state, action) {
 				[action.payload.ev.name]: {
 					...state[action.payload.ev.name],
 					[action.payload.id]: {
-						[action.payload.subField]: action.payload.ev.value||''
+						[action.payload.subField]: action.payload.ev.value
 					}
 				}
 			};
@@ -72,7 +72,7 @@ export default function reducer(state, action) {
 		case op.setInput:
 			return {
 				...state,
-				[action.payload.name]: action.payload.value||''
+				[action.payload.name]: action.payload.value
 			};
 		default:
 			return state;

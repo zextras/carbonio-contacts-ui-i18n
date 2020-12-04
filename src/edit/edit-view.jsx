@@ -136,7 +136,7 @@ const CustomMultivalueField = ({
 					[(types && types[0].value)
 						? generateNewTypedId(types[0].value)
 						: generateNewUntypedId()
-					]: emptyValue||''
+					]: emptyValue
 				},
 				name
 			});
