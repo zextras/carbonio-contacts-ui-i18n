@@ -67,7 +67,7 @@ const CustomStringField = ({ name, label, value, dispatch }) => (
 			backgroundColor="gray5"
 			inputName={name}
 			label={label}
-			value={value}
+			defaultValue={value}
 			onChange={(ev) => dispatch({ type: op.setInput, payload: ev.target })}
 		/>
 	</Container>
@@ -87,6 +87,7 @@ const CustomMultivalueField = ({
 	value,
 	dispatch
 }) => {
+
 	const typeCounts = useMemo(() => reduce(
 		types,
 		(acc, type, k) => ({
@@ -140,7 +141,7 @@ const CustomMultivalueField = ({
 				name
 			});
 		},
-		[types, name, typeCounts, dispatch, value, emptyValue]
+		[types, name, dispatch, value, emptyValue]
 	);
 
 	const removeValue = useCallback(
@@ -184,9 +185,11 @@ const CustomMultivalueField = ({
 		[value, name, generateNewTypedId, dispatch, typeField]
 	);
 
-	if (Object.values(value).length === 0) {
-		addValue();
-	}
+	useEffect(() => {
+		if (Object.values(value).length === 0) {
+			addValue();
+		}
+	},[value]);
 
 	return (
 		<FormSection label={label}>
@@ -207,16 +210,11 @@ const CustomMultivalueField = ({
 										inputName={name}
 										backgroundColor="gray5"
 										label={fieldLabels[subIndex]}
-										value={item[subField]}
+										defaultValue={item[subField]}
 										onChange={
 											(ev) => dispatch({
 												type: op.setSelect,
-												payload: {
-													ev: ev.target,
-													id,
-													name,
-													subField
-												}
+												payload: { ev: ev.target, id, subField }
 											})
 										}
 									/>
@@ -291,7 +289,7 @@ const CustomMultivalueField = ({
 export default function EditView({ panel, editPanelId, folderId }) {
 	const { id } = useParams();
 	const storeDispatch = useDispatch();
-	const editContact = useSelector((state) => selectContact(state, folderId, editPanelId));
+	const existingContact = useSelector((state) => selectContact(state, folderId, editPanelId));
 	const editId = useMemo(() => {
 		if (id) return id;
 		if (editPanelId) return editPanelId;
@@ -304,16 +302,16 @@ export default function EditView({ panel, editPanelId, folderId }) {
 
 	useEffect(() => {
 		let canSet = true;
-		if (editId && editId !== 'new' && editContact) {
-			canSet &&	dispatch({ type: op.setEditContact, payload: { editContact } });
+		if (editId && editId !== 'new' && existingContact) {
+			canSet &&	dispatch({ type: op.setExistingContact, payload: { existingContact } });
 		}
-		else {
+		if (editId && editId === 'new') {
 			canSet && dispatch({ type: op.setEmptyContact, payload: {} });
 		}
 		return () => {
 			canSet = false;
 		};
-	}, [editId, editContact]);
+	}, [editId, existingContact]);
 
 	const onSubmit = useCallback(() => {
 		const updatedContact = cleanMultivalueFields(contact);
@@ -336,7 +334,7 @@ export default function EditView({ panel, editPanelId, folderId }) {
 			storeDispatch(modifyContact(
 				{
 					updatedContact,
-					editContact
+					existingContact
 				}
 			))
 				.then((res) => {
@@ -346,7 +344,7 @@ export default function EditView({ panel, editPanelId, folderId }) {
 				})
 				.catch(report);
 		}
-	}, [folderId, panel, pushHistory, replaceHistory, editContact, contact]);
+	}, [folderId, panel, pushHistory, replaceHistory, existingContact, contact]);
 
 	const defaultTypes = useMemo(() => [
 		{ label: t('types.work'), value: 'work' },
