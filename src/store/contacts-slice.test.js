@@ -264,7 +264,10 @@ describe('Contact Slice', () => {
 			expect(store.getState().contacts.contacts[7]).toHaveLength(1);
 			expect(store.getState().contacts.contacts[3]).toHaveLength(0);
 			await store.dispatch(
-				deleteContact({ contact: store.getState().contacts.contacts[7][0], parent: store.getState().contacts.contacts[7][0].parent })
+				deleteContact({
+					contact: store.getState().contacts.contacts[7][0],
+					parent: store.getState().contacts.contacts[7][0].parent
+				})
 			);
 			expect(store.getState().contacts.contacts[7]).toHaveLength(0);
 			expect(store.getState().contacts.contacts[3]).toHaveLength(1);
@@ -298,7 +301,10 @@ describe('Contact Slice', () => {
 			expect(store.getState().contacts.contacts[3]).toHaveLength(1);
 
 			await store.dispatch(
-				deleteContact({ contact: store.getState().contacts.contacts[3][0], parent: store.getState().contacts.contacts[3][0].parent })
+				deleteContact({
+					contact: store.getState().contacts.contacts[3][0],
+					parent: store.getState().contacts.contacts[3][0].parent
+				})
 			);
 			expect(store.getState().contacts.contacts[7]).toHaveLength(0);
 			expect(store.getState().contacts.contacts[3]).toHaveLength(0);

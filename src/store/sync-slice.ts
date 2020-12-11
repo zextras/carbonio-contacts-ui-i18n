@@ -48,19 +48,19 @@ export const performSync = createAsyncThunk('sync/performSync', async (arg, { ge
 	});
 });
 
-function performSyncPending(state: SyncSlice) {
+function performSyncPending(state: SyncSlice): void {
 	if (state.status === 'idle' || state.status === 'init') {
 		state.status = 'syncing';
 	}
 }
 
-function performSyncFulfilled(state: SyncSlice, { payload }: any) {
+function performSyncFulfilled(state: SyncSlice, { payload }: any): void {
 	const { token } = payload;
 	state.token = token;
 	state.status = state.intervalId > 0 ? 'idle' : 'stopped';
 }
 
-function performSyncRejected(state: SyncSlice) {
+function performSyncRejected(state: SyncSlice): void {
 	console.warn('performSyncRejected');
 }
 
@@ -104,13 +104,13 @@ export const stopSync = createAsyncThunk('sync/stop', (arg, { getState }: any) =
 	});
 });
 
-function startStopSyncFulfilled(state: SyncSlice, { payload }: any) {
+function startStopSyncFulfilled(state: SyncSlice, { payload }: any): void {
 	const { status, intervalId } = payload;
 	state.status = status;
 	state.intervalId = intervalId;
 }
 
-function setStatusR(state: SyncSlice, { payload }: any) {
+function setStatusR(state: SyncSlice, { payload }: any): void {
 	state.status = payload.status;
 }
 
