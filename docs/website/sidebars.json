@@ -12,7 +12,8 @@
       "design/view_contact"
     ],
     "Main": [
-      "main"
+      "main",
+      "CHANGELOG"
     ]
   }
 }
