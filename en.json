@@ -1,17 +1,15 @@
 {
-    "address": "Address",
-    "address_plural": "Address ({{count}})",
     "job": {
         "company": "Company",
         "department": "Department",
         "title": "Job Title"
     },
     "label": {
+        "create": "",
         "edit": "Edit",
         "save": ""
     },
     "mail": "Email",
-    "mail_plural": "Email ({{count}})",
     "message": {
         "new_contact": ""
     },
@@ -24,8 +22,6 @@
         "suffix": "Suffix"
     },
     "notes": "Notes",
-    "number": "Number",
-    "number_plural": "Number ({{count}})",
     "section": {
         "field": {
             "city": "",
@@ -38,23 +34,19 @@
         },
         "title": {
             "address": "Address",
-            "address_plural": "Address ({{count}})",
             "mail": "Email",
-            "mail_plural": "Email ({{count}})",
             "phone_number": "Phone",
-            "phone_number_plural": "Phone ({{count}})",
-            "url": "Website",
-            "url_plural": "Website ({{count}})"
+            "url": "Website"
         }
     },
     "select": {
         "default": ""
     },
     "types": {
-        "home": "",
-        "mobile": "",
-        "other": "",
-        "work": ""
+        "home": "home",
+        "mobile": "mobile",
+        "other": "other",
+        "work": "work"
     },
     "url": "Website",
     "url_plural": "Website ({{count}})"
