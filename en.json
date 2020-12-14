@@ -1,4 +1,6 @@
 {
+    "address": "",
+    "address_plural": "",
     "job": {
         "company": "Company",
         "department": "Department",
@@ -10,6 +12,7 @@
         "save": "Save"
     },
     "mail": "Email",
+    "mail_plural": "",
     "message": {
         "new_contact": "This contact will be created in the 'Contacts' folder"
     },
@@ -22,6 +25,8 @@
         "suffix": "Suffix"
     },
     "notes": "Notes",
+    "number": "",
+    "number_plural": "",
     "section": {
         "field": {
             "city": "City",
@@ -34,9 +39,13 @@
         },
         "title": {
             "address": "Address",
+            "address_plural": "",
             "mail": "Email",
+            "mail_plural": "",
             "phone_number": "Phone",
-            "url": "Website"
+            "phone_number_plural": "",
+            "url": "Website",
+            "url_plural": ""
         }
     },
     "select": {
@@ -47,5 +56,7 @@
         "mobile": "mobile",
         "other": "other",
         "work": "work"
-    }
+    },
+    "url": "",
+    "url_plural": ""
 }
