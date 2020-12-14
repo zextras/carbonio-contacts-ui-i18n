@@ -7,14 +7,13 @@
         "title": "Job Title"
     },
     "label": {
-        "create": "New Contact",
         "edit": "Edit",
-        "save": "Save"
+        "save": ""
     },
     "mail": "Email",
     "mail_plural": "Email ({{count}})",
     "message": {
-        "new_contact": "This contact will be created in the 'Contacts' folder"
+        "new_contact": ""
     },
     "name": {
         "first_name": "First name",
@@ -29,13 +28,13 @@
     "number_plural": "Number ({{count}})",
     "section": {
         "field": {
-            "city": "City",
-            "country": "Country",
-            "number": "Number",
-            "postalCode": "PostalCode",
-            "state": "State",
-            "street": "Street",
-            "url": "Website"
+            "city": "",
+            "country": "",
+            "number": "",
+            "postalCode": "",
+            "state": "",
+            "street": "",
+            "url": ""
         },
         "title": {
             "address": "Address",
@@ -49,13 +48,13 @@
         }
     },
     "select": {
-        "default": "Select type"
+        "default": ""
     },
     "types": {
-        "home": "home",
-        "mobile": "mobile",
-        "other": "other",
-        "work": "work"
+        "home": "",
+        "mobile": "",
+        "other": "",
+        "work": ""
     },
     "url": "Website",
     "url_plural": "Website ({{count}})"
