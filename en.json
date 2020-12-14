@@ -1,20 +1,20 @@
 {
-    "address": "",
-    "address_plural": "",
+    "address": "Address",
+    "address_plural": "Address ({{count}})",
     "job": {
         "company": "Company",
         "department": "Department",
         "title": "Job Title"
     },
     "label": {
-        "create": "",
+        "create": "New Contact",
         "edit": "Edit",
-        "save": ""
+        "save": "Save"
     },
     "mail": "Email",
-    "mail_plural": "",
+    "mail_plural": "Email ({{count}})",
     "message": {
-        "new_contact": ""
+        "new_contact": "This contact will be created in the 'Contacts' folder"
     },
     "name": {
         "first_name": "First name",
@@ -25,31 +25,31 @@
         "suffix": "Suffix"
     },
     "notes": "Notes",
-    "number": "",
-    "number_plural": "",
+    "number": "Number",
+    "number_plural": "Number ({{count}})",
     "section": {
         "field": {
-            "city": "",
-            "country": "",
-            "number": "",
-            "postalCode": "",
-            "state": "",
-            "street": "",
-            "url": ""
+            "city": "City",
+            "country": "Country",
+            "number": "Number",
+            "postalCode": "PostalCode",
+            "state": "State",
+            "street": "Street",
+            "url": "Website"
         },
         "title": {
             "address": "Address",
-            "address_plural": "",
+            "address_plural": "Address ({{count}})",
             "mail": "Email",
-            "mail_plural": "",
+            "mail_plural": "Email ({{count}})",
             "phone_number": "Phone",
-            "phone_number_plural": "",
+            "phone_number_plural": "Phone ({{count}})",
             "url": "Website",
-            "url_plural": ""
+            "url_plural": "Website ({{count}})"
         }
     },
     "select": {
-        "default": ""
+        "default": "Select type"
     },
     "types": {
         "home": "home",
