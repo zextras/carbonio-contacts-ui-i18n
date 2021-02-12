@@ -4,7 +4,7 @@
     "job": {
         "company": "Company",
         "department": "Department",
-        "title": "Job Title"
+        "title": "Job Role"
     },
     "label": {
         "create": "New Contact",
@@ -12,21 +12,18 @@
         "save": "Save"
     },
     "mail": "Email",
-    "mail_plural": "Email ({{count}})",
     "message": {
         "new_contact": "This contact will be created in the 'Contacts' folder"
     },
     "name": {
-        "first_name": "First name",
-        "last_name": "Last name",
+        "first_name": "First Name",
+        "last_name": "Last Name",
         "middle_name": "Middle name",
         "nickName": "Nickname",
         "prefix": "Prefix",
         "suffix": "Suffix"
     },
     "notes": "Notes",
-    "number": "Number",
-    "number_plural": "Number ({{count}})",
     "section": {
         "field": {
             "city": "City",
@@ -41,9 +38,7 @@
             "address": "Address",
             "address_plural": "Address ({{count}})",
             "mail": "Email",
-            "mail_plural": "Email ({{count}})",
             "phone_number": "Phone",
-            "phone_number_plural": "Phone ({{count}})",
             "url": "Website",
             "url_plural": "Website ({{count}})"
         }
