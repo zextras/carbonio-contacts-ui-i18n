@@ -18,7 +18,7 @@
     "name": {
         "first_name": "First Name",
         "last_name": "Last Name",
-        "middle_name": "Middle name",
+        "middle_name": "Middle Name",
         "nickName": "Nickname",
         "prefix": "Prefix",
         "suffix": "Suffix"
@@ -37,8 +37,8 @@
         "title": {
             "address": "Address",
             "address_plural": "Address ({{count}})",
-            "mail": "Email",
-            "phone_number": "Phone",
+            "mail": "Email address",
+            "phone_number": "Phone contact",
             "url": "Website",
             "url_plural": "Website ({{count}})"
         }
