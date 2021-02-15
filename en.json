@@ -1,6 +1,92 @@
 {
     "address": "Address",
     "address_plural": "Address ({{count}})",
+    "folder": {
+        "action": {
+            "delete": "Delete address book",
+            "edit": "Edit address book",
+            "empty": {
+                "folder": "Empty address book",
+                "trash": "Empty trash"
+            },
+            "move": "Move address book",
+            "new": "New address book"
+        },
+        "edit": {
+            "body": {
+                "properties": "Properties"
+            }
+        },
+        "folder": "folder",
+        "item": {
+            "root": "Root"
+        },
+        "modal": {
+            "delete": {
+                "body": {
+                    "message1": "Do you want to delete the address book selected?",
+                    "message2": "If you delete it, all the related content will be moved to trash and the address book will no longer be visible."
+                },
+                "footer": "Delete",
+                "title": "Delete"
+            },
+            "edit": {
+                "body": {
+                    "contacts": "Contacts",
+                    "item": {
+                        "root": "root"
+                    },
+                    "name": "Address book name",
+                    "select": "Select new destination",
+                    "type": "Type"
+                },
+                "footer": "Edit",
+                "item": {
+                    "empty": "No available items"
+                },
+                "title": "Edit"
+            },
+            "empty": {
+                "body": {
+                    "message1": "Do you want to empty the address book selected?",
+                    "message2": "If you empty it, all the related content will be moved to trash."
+                },
+                "footer": "Empty",
+                "title": {
+                    "folder": "Empty address book",
+                    "trash": "Empty trash"
+                }
+            },
+            "footer": {
+                "cancel": "cancel"
+            },
+            "item": {
+                "empty": "No items available"
+            },
+            "move": {
+                "body": {
+                    "message1": "Select an address book to move the considered one to:"
+                },
+                "footer": "Move",
+                "input": {
+                    "filter": "Filter address book"
+                },
+                "new": "New address Book",
+                "title": "Move"
+            },
+            "new": {
+                "body": {
+                    "message1": "New address book name",
+                    "message2": "Select an address book"
+                },
+                "footer": "Create",
+                "input": {
+                    "filter": "Filter address book"
+                },
+                "title": "Create new address book"
+            }
+        }
+    },
     "job": {
         "company": "Company",
         "department": "Department",
