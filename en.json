@@ -1,6 +1,4 @@
 {
-    "address": "Address",
-    "address_plural": "Address ({{count}})",
     "job": {
         "company": "Company",
         "department": "Department",
@@ -51,7 +49,5 @@
         "mobile": "mobile",
         "other": "other",
         "work": "work"
-    },
-    "url": "Website",
-    "url_plural": "Website ({{count}})"
+    }
 }
