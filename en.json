@@ -4,6 +4,7 @@
     "folder": {
         "action": {
             "delete": "Delete address book",
+            "delete_permanently": "Delete address book permanently",
             "edit": "Edit address book",
             "empty": {
                 "folder": "Empty address book",
@@ -24,8 +25,8 @@
         "modal": {
             "delete": {
                 "body": {
-                    "message1": "Do you want to delete the address book selected?",
-                    "message2": "If you delete it, all the related content will be moved to trash and the address book will no longer be visible."
+                    "message1": "Do you want to delete the address book selected? If you delete it, all the related content will be moved to trash and the address book will no longer be visible.",
+                    "message2": "Do you want to delete permanently the address book selected? If you delete it, all the related content will be permanently removed and the address book will no longer be recoverable."
                 },
                 "footer": "Delete",
                 "title": "Delete"
@@ -34,6 +35,7 @@
                 "body": {
                     "contacts": "Contacts",
                     "item": {
+                        "empty": "No path available",
                         "root": "root"
                     },
                     "name": "Address book name",
@@ -41,9 +43,6 @@
                     "type": "Type"
                 },
                 "footer": "Edit",
-                "item": {
-                    "empty": "No available items"
-                },
                 "title": "Edit"
             },
             "empty": {
@@ -52,10 +51,7 @@
                     "message2": "If you empty it, all the related content will be moved to trash."
                 },
                 "footer": "Empty",
-                "title": {
-                    "folder": "Empty address book",
-                    "trash": "Empty trash"
-                }
+                "title": "Empty"
             },
             "footer": {
                 "cancel": "cancel"
@@ -77,11 +73,11 @@
             "new": {
                 "body": {
                     "message1": "New address book name",
-                    "message2": "Select an address book"
+                    "message2": "Select an address book who will contain the newly created one:"
                 },
                 "footer": "Create",
                 "input": {
-                    "filter": "Filter address book"
+                    "name": "Insert address book name"
                 },
                 "title": "Create new address book"
             }
