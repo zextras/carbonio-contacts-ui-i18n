@@ -75,7 +75,8 @@
                 },
                 "footer": "Create",
                 "input": {
-                    "name": "Insert address book name"
+                    "name": "Insert address book name",
+                    "name_exist": "Name already exists in this path"
                 },
                 "title": "Create new address book"
             }
