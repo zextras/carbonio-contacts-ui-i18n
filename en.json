@@ -88,6 +88,8 @@
         "title": "Job Role"
     },
     "label": {
+        "cancel": "Cancel",
+        "contact_setting": "Contact Settings",
         "create": "New Contact",
         "edit": "Edit",
         "save": "Save"
@@ -126,6 +128,17 @@
     },
     "select": {
         "default": "Select type"
+    },
+    "settings": {
+        "contacts": {
+            "checkbox": {
+                "add_contact_to_emailed_contacts": "Add new contacts to \"Emailed Contacts\"",
+                "autocomplete_on_comma": "Select autocomplte match when a comma is typed",
+                "incl_addrs_in_glbl_addrs_list": "Include addresses in the Global Address List",
+                "include_add_in_shared_contact": "Include addresses in shared contacts",
+                "srch_glbl_addrs_list": "Initially search the Global Address List when using the contact picker"
+            }
+        }
     },
     "types": {
         "home": "home",
