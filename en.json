@@ -1,4 +1,7 @@
 {
+    "action": {
+        "send_msg": "Send mail"
+    },
     "folder": {
         "action": {
             "delete": "Delete address book",
