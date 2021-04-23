@@ -52,14 +52,17 @@
                 "title": "Empty"
             },
             "footer": {
-                "cancel": "cancel"
+                "cancel": "cancel",
+                "go_back": "Go back"
             },
             "item": {
                 "empty": "No items available"
             },
             "move": {
                 "body": {
-                    "message1": "Select an address book to move the considered one to:"
+                    "message1": "Select an address book to move the considered one to:",
+                    "message2": "",
+                    "message3": "Select a folder to move the considered one to:"
                 },
                 "footer": "Move",
                 "input": {
@@ -73,12 +76,14 @@
                     "message1": "New address book name",
                     "message2": "Select an address book who will contain the newly created one:"
                 },
+                "folder_properties": "Folder properties",
                 "footer": "Create",
                 "input": {
                     "name": "Insert address book name",
                     "name_exist": "Name already exists in this path"
                 },
-                "title": "Create new address book"
+                "title": "Create new address book",
+                "title2": "New folder creation"
             }
         }
     },
