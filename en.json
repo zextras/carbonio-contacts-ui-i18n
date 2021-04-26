@@ -61,7 +61,6 @@
             "move": {
                 "body": {
                     "message1": "Select an address book to move the considered one to:",
-                    "message2": "",
                     "message3": "Select a folder to move the considered one to:"
                 },
                 "footer": "Move",
@@ -76,7 +75,6 @@
                     "message1": "New address book name",
                     "message2": "Select an address book who will contain the newly created one:"
                 },
-                "folder_properties": "Folder properties",
                 "footer": "Create",
                 "input": {
                     "name": "Insert address book name",
@@ -102,6 +100,14 @@
     "mail": "Email",
     "message": {
         "new_contact": "This contact will be created in the 'Contacts' folder"
+    },
+    "messages": {
+        "snackbar": {
+            "contact_moved": "Contact moved successfully",
+            "contact_moved_error": "Something went wrong, this contact was not moved, please retry.",
+            "folder_created": "",
+            "folder_created_error": ""
+        }
     },
     "name": {
         "first_name": "First Name",
