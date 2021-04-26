@@ -104,9 +104,7 @@
     "messages": {
         "snackbar": {
             "contact_moved": "Contact moved successfully",
-            "contact_moved_error": "Something went wrong, this contact was not moved, please retry.",
-            "folder_created": "",
-            "folder_created_error": ""
+            "contact_moved_error": "Something went wrong, this contact was not moved, please retry."
         }
     },
     "name": {
