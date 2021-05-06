@@ -80,7 +80,7 @@
                     "name": "Insert address book name",
                     "name_exist": "Name already exists in this path"
                 },
-                "reate_footer": "Create and Move",
+                "create_footer": "Create and Move",
                 "title": "Create new address book",
                 "title2": "New folder creation"
             },
