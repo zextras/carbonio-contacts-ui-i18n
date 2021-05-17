@@ -83,8 +83,14 @@
                     "name": "Insert address book name",
                     "name_exist": "Name already exists in this path"
                 },
+                "create_footer": "Create and Move",
                 "title": "Create new address book",
                 "title2": "New folder creation"
+            },
+            "restore": {
+                "create_footer": "Create and Restore",
+                "footer": "Restore",
+                "title": "Restore"
             }
         }
     },
