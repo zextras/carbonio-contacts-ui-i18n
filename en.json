@@ -78,12 +78,12 @@
                     "message1": "New address book name",
                     "message2": "Select an address book who will contain the newly created one:"
                 },
+                "create_footer": "Create and Move",
                 "footer": "Create",
                 "input": {
                     "name": "Insert address book name",
                     "name_exist": "Name already exists in this path"
                 },
-                "create_footer": "Create and Move",
                 "title": "Create new address book",
                 "title2": "New folder creation"
             },
