@@ -24,7 +24,7 @@
             "delete": {
                 "body": {
                     "message1": "Do you want to delete the selected address book? If you delete it, the related content will be moved to the trash and the address book will no longer be visible.",
-                    "message2": "Do you want to delete permanently the address book selected? If you delete it, the related content will be permanently removed and the address book will no longer be recoverable."
+                    "message2": "Do you want to delete permanently the selected address book? If you delete it, the related content will be permanently removed and the address book will no longer be recoverable."
                 },
                 "footer": "Delete",
                 "title": "Delete"
@@ -133,7 +133,7 @@
         "contacts": {
             "checkbox": {
                 "add_contact_to_emailed_contacts": "Add new contacts to \"Emailed Contacts\"",
-                "autocomplete_on_comma": "Select autocomplte match when a comma is typed",
+                "autocomplete_on_comma": "Select autocomplete match when a comma is typed",
                 "incl_addrs_in_glbl_addrs_list": "Include addresses in the Global Address List",
                 "include_add_in_shared_contact": "Include addresses in shared contacts",
                 "srch_glbl_addrs_list": "Initially search the Global Address List when using the contact picker"
