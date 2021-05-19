@@ -23,8 +23,8 @@
         "modal": {
             "delete": {
                 "body": {
-                    "message1": "Do you want to delete the address book selected? If you delete it, all the related content will be moved to trash and the address book will no longer be visible.",
-                    "message2": "Do you want to delete permanently the address book selected? If you delete it, all the related content will be permanently removed and the address book will no longer be recoverable."
+                    "message1": "Do you want to delete the selected address book? If you delete it, the related content will be moved to the trash and the address book will no longer be visible.",
+                    "message2": "Do you want to delete permanently the selected address book? If you delete it, the related content will be permanently removed and the address book will no longer be recoverable."
                 },
                 "footer": "Delete",
                 "title": "Delete"
@@ -45,7 +45,7 @@
             },
             "empty": {
                 "body": {
-                    "message1": "Do you want to empty the address book selected?",
+                    "message1": "Do you want to empty the selected address book?",
                     "message2": "If you empty it, all the related content will be moved to trash."
                 },
                 "footer": "Empty",
@@ -67,18 +67,18 @@
                 "input": {
                     "filter": "Filter address book"
                 },
-                "new": "New address Book",
+                "new": "New address book",
                 "title": "Move"
             },
             "new": {
                 "body": {
                     "message1": "New address book name",
-                    "message2": "Select an address book who will contain the newly created one:"
+                    "message2": "Select an address book that will contain the newly created one:"
                 },
                 "footer": "Create",
                 "input": {
                     "name": "Insert address book name",
-                    "name_exist": "Name already exists in this path"
+                    "name_exist": "The name already exists in this path"
                 },
                 "create_footer": "Create and Move",
                 "title": "Create new address book",
@@ -94,7 +94,7 @@
     "job": {
         "company": "Company",
         "department": "Department",
-        "title": "Job Role"
+        "title": "Job role"
     },
     "label": {
         "cancel": "Cancel",
@@ -103,7 +103,7 @@
         "edit": "Edit",
         "save": "Save"
     },
-    "mail": "Email",
+    "mail": "E-mail",
     "message": {
         "new_contact": "This contact will be created in the 'Contacts' folder"
     },
@@ -114,9 +114,9 @@
         }
     },
     "name": {
-        "first_name": "First Name",
-        "last_name": "Last Name",
-        "middle_name": "Middle Name",
+        "first_name": "First name",
+        "last_name": "Last name",
+        "middle_name": "Middle name",
         "nickName": "Nickname",
         "prefix": "Prefix",
         "suffix": "Suffix"
@@ -127,7 +127,7 @@
             "city": "City",
             "country": "Country",
             "number": "Number",
-            "postalCode": "PostalCode",
+            "postalCode": "Postal code",
             "state": "State",
             "street": "Street",
             "url": "Website"
@@ -135,7 +135,7 @@
         "title": {
             "address": "Address",
             "address_plural": "Address ({{count}})",
-            "mail": "Email address",
+            "mail": "E-mail address",
             "phone_number": "Phone contact",
             "url": "Website",
             "url_plural": "Website ({{count}})"
@@ -148,7 +148,7 @@
         "contacts": {
             "checkbox": {
                 "add_contact_to_emailed_contacts": "Add new contacts to \"Emailed Contacts\"",
-                "autocomplete_on_comma": "Select autocomplte match when a comma is typed",
+                "autocomplete_on_comma": "Select autocomplete match when a comma is typed",
                 "incl_addrs_in_glbl_addrs_list": "Include addresses in the Global Address List",
                 "include_add_in_shared_contact": "Include addresses in shared contacts",
                 "srch_glbl_addrs_list": "Initially search the Global Address List when using the contact picker"
