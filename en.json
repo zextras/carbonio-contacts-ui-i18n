@@ -52,14 +52,16 @@
                 "title": "Empty"
             },
             "footer": {
-                "cancel": "cancel"
+                "cancel": "cancel",
+                "go_back": "Go back"
             },
             "item": {
                 "empty": "No items available"
             },
             "move": {
                 "body": {
-                    "message1": "Select an address book to move the considered one to:"
+                    "message1": "Select an address book to move the considered one to:",
+                    "message3": "Select a folder to move the considered one to:"
                 },
                 "footer": "Move",
                 "input": {
@@ -78,6 +80,7 @@
                     "name": "Insert address book name",
                     "name_exist": "The name already exists in this path"
                 },
+                "title2": "New folder creation",
                 "title": "Create a new address book"
             }
         }
@@ -97,6 +100,12 @@
     "mail": "E-mail",
     "message": {
         "new_contact": "This contact will be created in the 'Contacts' folder"
+    },
+    "messages": {
+        "snackbar": {
+            "contact_moved": "Contact moved successfully",
+            "contact_moved_error": "Something went wrong, this contact was not moved, please retry."
+        }
     },
     "name": {
         "first_name": "First name",
