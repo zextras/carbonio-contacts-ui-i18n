@@ -1,5 +1,6 @@
 {
     "action": {
+        "delete": "Delete",
         "send_msg": "Send mail"
     },
     "folder": {
