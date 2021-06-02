@@ -1,6 +1,8 @@
 {
     "action": {
         "delete": "Delete",
+        "move": "Move",
+        "restore": "Restore",
         "send_msg": "Send mail"
     },
     "folder": {
@@ -113,6 +115,8 @@
     },
     "messages": {
         "snackbar": {
+            "contact_deleted": "Contact deleted successfully",
+            "contact_deleted_error": "Something went wrong, this contact was not deleted, please retry.",
             "contact_moved": "Contact moved successfully",
             "contact_moved_error": "Something went wrong, this contact was not moved, please retry."
         }
