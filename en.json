@@ -1,4 +1,9 @@
 {
+    "'messages": {
+        "snackbar": {
+            "contact_moved'": "Contact successfully moved to \"{{name}}\""
+        }
+    },
     "action": {
         "delete": "Delete",
         "delete_permanently": "Delete Permanently",
@@ -125,11 +130,11 @@
         "snackbar": {
             "contact_deleted": "Contact deleted successfully",
             "contact_deleted_error": "Something went wrong, this contact was not deleted, please retry.",
-            "contact_deleted_permanently": "Contact permanently deleted",
-            "contact_deleted_permanently_error": "Something went wrong, this contact was not deleted permanently, please retry.",
-            "contact_moved": "Contact moved successfully",
+            "contact_deleted_permanently": "Permanent deletion completed successfully",
+            "contact_deleted_permanently_error": "Something went wrong, retry the action.",
+            "contact_moved": "Contact successfully move to {{name}}",
             "contact_moved_error": "Something went wrong, this contact was not moved, please retry.",
-            "contact_restored": "Contact restored successfully",
+            "contact_restored": "Contact successfully restore to {{name}}",
             "contact_restored_error": "Something went wrong, the contact was not restored, please retry."
         }
     },
