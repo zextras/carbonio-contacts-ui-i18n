@@ -1,6 +1,7 @@
 {
     "action": {
         "delete": "Delete",
+        "delete_permanently": "Delete Permanently",
         "move": "Move",
         "restore": "Restore",
         "send_msg": "Send mail"
@@ -114,11 +115,22 @@
         "new_contact": "This contact will be created in the 'Contacts' folder"
     },
     "messages": {
+        "modal": {
+            "delete": {
+                "if_delete_lost_forever": "By permanently deleting this contact you will not be able to recover it anymore, continue ?",
+                "sure_delete_contact": "Are you sure to delete this contact permanently ?",
+                "sure_delete_contact_plural": "Are you sure to delete the selected contacts permanently ?"
+            }
+        },
         "snackbar": {
             "contact_deleted": "Contact deleted successfully",
             "contact_deleted_error": "Something went wrong, this contact was not deleted, please retry.",
+            "contact_deleted_permanently": "Contact permanently deleted",
+            "contact_deleted_permanently_error": "Something went wrong, this contact was not deleted permanently, please retry.",
             "contact_moved": "Contact moved successfully",
-            "contact_moved_error": "Something went wrong, this contact was not moved, please retry."
+            "contact_moved_error": "Something went wrong, this contact was not moved, please retry.",
+            "contact_restored": "Contact restored successfully",
+            "contact_restored_error": "Something went wrong, the contact was not restored, please retry."
         }
     },
     "name": {
