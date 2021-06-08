@@ -8,6 +8,7 @@
         "delete": "Delete",
         "delete_permanently": "Delete Permanently",
         "move": "Move",
+        "open_trash": "Open trash folder",
         "restore": "Restore",
         "send_msg": "Send mail"
     },
@@ -134,6 +135,7 @@
             "contact_deleted_permanently_error": "Something went wrong, retry the action.",
             "contact_moved": "Contact successfully move to {{name}}",
             "contact_moved_error": "Something went wrong, this contact was not moved, please retry.",
+            "contact_moved_to_trash": "Contact moved to trash",
             "contact_restored": "Contact successfully restore to {{name}}",
             "contact_restored_error": "Something went wrong, the contact was not restored, please retry."
         }
