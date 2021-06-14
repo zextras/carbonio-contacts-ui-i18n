@@ -129,7 +129,6 @@
             }
         },
         "snackbar": {
-            "contact_deleted": "Contact deleted successfully",
             "contact_deleted_error": "Something went wrong, this contact was not deleted, please retry.",
             "contact_deleted_permanently": "Permanent deletion completed successfully",
             "contact_deleted_permanently_error": "Something went wrong, retry the action.",
