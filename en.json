@@ -5,187 +5,186 @@
         }
     },
     "action": {
-        "delete": "Delete",
-        "delete_permanently": "Delete Permanently",
-        "move": "Move",
-        "open_trash": "Open trash folder",
-        "restore": "Restore",
-        "send_msg": "Send mail"
+        "delete": "",
+        "delete_permanently": "",
+        "move": "",
+        "open_trash": "",
+        "restore": "",
+        "send_msg": ""
     },
     "folder": {
         "action": {
-            "delete": "Delete address book",
-            "delete_permanently": "Delete address book permanently",
-            "edit": "Edit address book",
+            "delete": "",
+            "delete_permanently": "",
+            "edit": "",
             "empty": {
-                "folder": "Empty address book",
-                "trash": "Empty trash"
+                "folder": "",
+                "trash": ""
             },
-            "move": "Move address book",
-            "new": "New address book"
+            "move": "",
+            "new": ""
         },
         "edit": {
             "body": {
-                "properties": "Properties"
+                "properties": ""
             }
         },
-        "folder": "folder",
+        "folder": "",
         "item": {
-            "root": "Root"
+            "root": ""
         },
         "modal": {
             "delete": {
                 "body": {
-                    "message1": "Do you want to delete the address book selected? If you delete it, all the related content will be moved to trash and the address book will no longer be visible.",
-                    "message2": "Do you want to delete permanently the address book selected? If you delete it, all the related content will be permanently removed and the address book will no longer be recoverable."
+                    "message1": "",
+                    "message2": ""
                 },
-                "footer": "Delete",
-                "title": "Delete"
+                "footer": "",
+                "title": ""
             },
             "edit": {
                 "body": {
-                    "contacts": "Contacts",
+                    "contacts": "",
                     "item": {
-                        "empty": "No path available",
-                        "root": "root"
+                        "empty": "",
+                        "root": ""
                     },
-                    "name": "Address book name",
-                    "select": "Select new destination",
-                    "type": "Type"
+                    "name": "",
+                    "select": "",
+                    "type": ""
                 },
-                "footer": "Edit",
-                "title": "Edit"
+                "footer": "",
+                "title": ""
             },
             "empty": {
                 "body": {
-                    "message1": "Do you want to empty the address book selected?",
-                    "message2": "If you empty it, all the related content will be moved to trash."
+                    "message1": "",
+                    "message2": ""
                 },
-                "footer": "Empty",
-                "title": "Empty"
+                "footer": "",
+                "title": ""
             },
             "footer": {
-                "cancel": "cancel",
-                "go_back": "Go back"
+                "cancel": "",
+                "go_back": ""
             },
             "item": {
-                "empty": "No items available"
+                "empty": ""
             },
             "move": {
                 "body": {
-                    "message1": "Select an address book to move the considered one to:",
-                    "message3": "Select a folder to move the considered one to:"
+                    "message1": "",
+                    "message3": ""
                 },
-                "footer": "Move",
+                "footer": "",
                 "input": {
-                    "filter": "Filter address book"
+                    "filter": ""
                 },
-                "new": "New address Book",
-                "title": "Move"
+                "new": "",
+                "title": ""
             },
             "new": {
                 "body": {
-                    "message1": "New address book name",
-                    "message2": "Select an address book who will contain the newly created one:"
+                    "message1": "",
+                    "message2": ""
                 },
-                "create_footer": "Create and Move",
-                "footer": "Create",
+                "create_footer": "",
+                "footer": "",
                 "input": {
-                    "name": "Insert address book name",
-                    "name_exist": "Name already exists in this path"
+                    "name": "",
+                    "name_exist": ""
                 },
-                "title": "Create new address book",
-                "title2": "New folder creation"
+                "title": "",
+                "title2": ""
             },
             "restore": {
-                "create_footer": "Create and Restore",
-                "footer": "Restore",
-                "title": "Restore"
+                "create_footer": "",
+                "footer": "",
+                "title": ""
             }
         }
     },
     "job": {
-        "company": "Company",
-        "department": "Department",
-        "title": "Job Role"
+        "company": "",
+        "department": "",
+        "title": ""
     },
     "label": {
         "cancel": "Cancel",
         "contact_setting": "Contact Settings",
-        "create": "New Contact",
-        "edit": "Edit",
+        "create": "",
+        "edit": "",
         "save": "Save"
     },
-    "mail": "Email",
+    "mail": "",
     "message": {
-        "new_contact": "This contact will be created in the 'Contacts' folder"
+        "new_contact": ""
     },
     "messages": {
         "modal": {
             "delete": {
-                "if_delete_lost_forever": "By permanently deleting this contact you will not be able to recover it anymore, continue ?",
-                "sure_delete_contact": "Are you sure to delete this contact permanently ?",
-                "sure_delete_contact_plural": "Are you sure to delete the selected contacts permanently ?"
+                "if_delete_lost_forever": "",
+                "sure_delete_contact": "",
+                "sure_delete_contact_plural": ""
             }
         },
         "snackbar": {
-            "contact_deleted": "Contact deleted successfully",
-            "contact_deleted_error": "Something went wrong, this contact was not deleted, please retry.",
-            "contact_deleted_permanently": "Permanent deletion completed successfully",
-            "contact_deleted_permanently_error": "Something went wrong, retry the action.",
-            "contact_moved": "Contact successfully move to {{name}}",
-            "contact_moved_error": "Something went wrong, this contact was not moved, please retry.",
-            "contact_moved_to_trash": "Contact moved to trash",
-            "contact_restored": "Contact successfully restore to {{name}}",
-            "contact_restored_error": "Something went wrong, the contact was not restored, please retry."
+            "contact_deleted_error": "",
+            "contact_deleted_permanently": "",
+            "contact_deleted_permanently_error": "",
+            "contact_moved": "",
+            "contact_moved_error": "",
+            "contact_moved_to_trash": "",
+            "contact_restored": "Contact successfully restore to \"{{name}}\"",
+            "contact_restored_error": ""
         }
     },
     "name": {
-        "first_name": "First Name",
-        "last_name": "Last Name",
-        "middle_name": "Middle Name",
-        "nickName": "Nickname",
-        "prefix": "Prefix",
-        "suffix": "Suffix"
+        "first_name": "",
+        "last_name": "",
+        "middle_name": "",
+        "nickName": "",
+        "prefix": "",
+        "suffix": ""
     },
-    "notes": "Notes",
+    "notes": "",
     "section": {
         "field": {
-            "city": "City",
-            "country": "Country",
-            "number": "Number",
-            "postalCode": "PostalCode",
-            "state": "State",
-            "street": "Street",
-            "url": "Website"
+            "city": "",
+            "country": "",
+            "number": "",
+            "postalCode": "",
+            "state": "",
+            "street": "",
+            "url": ""
         },
         "title": {
-            "address": "Address",
-            "address_plural": "Address ({{count}})",
-            "mail": "Email address",
-            "phone_number": "Phone contact",
-            "url": "Website",
-            "url_plural": "Website ({{count}})"
+            "address": "",
+            "address_plural": "",
+            "mail": "",
+            "phone_number": "",
+            "url": "",
+            "url_plural": ""
         }
     },
     "select": {
-        "default": "Select type"
+        "default": ""
     },
     "settings": {
         "contacts": {
             "checkbox": {
-                "add_contact_to_emailed_contacts": "Add new contacts to \"Emailed Contacts\"",
-                "autocomplete_on_comma": "Select autocomplte match when a comma is typed",
-                "incl_addrs_in_glbl_addrs_list": "Include addresses in the Global Address List",
-                "include_add_in_shared_contact": "Include addresses in shared contacts",
-                "srch_glbl_addrs_list": "Initially search the Global Address List when using the contact picker"
+                "add_contact_to_emailed_contacts": "",
+                "autocomplete_on_comma": "",
+                "incl_addrs_in_glbl_addrs_list": "",
+                "include_add_in_shared_contact": "",
+                "srch_glbl_addrs_list": ""
             }
         }
     },
     "types": {
-        "home": "home",
-        "mobile": "mobile",
-        "other": "other",
-        "work": "work"
+        "home": "",
+        "mobile": "",
+        "other": "",
+        "work": ""
     }
 }
