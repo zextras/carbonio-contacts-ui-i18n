@@ -24,11 +24,6 @@
             "move": "Move address book",
             "new": "New address book"
         },
-        "edit": {
-            "body": {
-                "properties": "Properties"
-            }
-        },
         "folder": "folder",
         "item": {
             "root": "Root"
@@ -65,7 +60,6 @@
                 "title": "Empty"
             },
             "footer": {
-                "cancel": "cancel",
                 "go_back": "Go back"
             },
             "item": {
@@ -148,6 +142,7 @@
         "suffix": "Suffix"
     },
     "notes": "Notes",
+    "of": "",
     "section": {
         "field": {
             "city": "City",
@@ -180,6 +175,38 @@
                 "srch_glbl_addrs_list": "Initially search the Global Address List when using the contact picker"
             }
         }
+    },
+    "share": {
+        "add": "Add",
+        "admin": "Admin",
+        "administer": "Administer",
+        "allowed_actions": "Allowed actions",
+        "contact_folder": "Address Book",
+        "contacts": "Contacts",
+        "create": "Create",
+        "delete": "Delete",
+        "filter_user": "Find users",
+        "find_contact_shares": "Find Contact Shares",
+        "find_shares": "Find Shares",
+        "find_shares_label": "Select which address book you want to see in contact’s tree",
+        "insert": "Insert",
+        "manager": "Manager",
+        "none": "None",
+        "owner": "Owner",
+        "read": "Read",
+        "remove_error": "Something went wrong,please retry",
+        "remove_from_this_list": "Remove from this list",
+        "role": "Role",
+        "share_added_succesfully": "Shared added successfully",
+        "share_info": "Shared address book's info",
+        "share_removed_succesfully": "Shared removed successfuly",
+        "shared_folders": "Shared Address Books",
+        "shared_item": "Shared Item",
+        "shared_items": "{{value}}'s shared address books",
+        "type": "Type",
+        "viewer": "Viewer",
+        "workflow": "Workflow",
+        "write": "Write"
     },
     "types": {
         "home": "home",
