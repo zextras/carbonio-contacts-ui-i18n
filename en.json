@@ -143,6 +143,9 @@
     },
     "notes": "Notes",
     "of": "",
+    "search": {
+        "results_for": "Results for:"
+    },
     "section": {
         "field": {
             "city": "City",
