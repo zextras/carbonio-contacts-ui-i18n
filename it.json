@@ -50,7 +50,8 @@
     "label": {
         "edit": "Modifica",
         "create": "Nuovo Contatto",
-        "save": "Salva"
+        "save": "Salva",
+        "cancel": "Annulla"
     },
     "job": {
         "title": "Titolo di Lavoro",
@@ -58,5 +59,33 @@
         "company": "Azienda"
     },
     "address": "Indirizzo",
-    "address_plural": "Indirizzi ({{count}})"
+    "address_plural": "Indirizzi ({{count}})",
+    "folder": {
+        "action": {
+            "empty": {
+                "trash": "Svuota cestino"
+            }
+        },
+        "modal": {
+            "edit": {
+                "footer": "Modifica",
+                "title": "Modifica"
+            },
+            "empty": {
+                "footer": "Svuota",
+                "title": "Svuota"
+            },
+            "move": {
+                "title": "Sposta",
+                "footer": "Sposta"
+            },
+            "new": {
+                "footer": "Crea",
+                "create_footer": "Crea e Sposta"
+            },
+            "delete": {
+                "title": "Elimina"
+            }
+        }
+    }
 }
