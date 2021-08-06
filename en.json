@@ -1,5 +1,15 @@
 {
+    "'messages": {
+        "snackbar": {
+            "contact_moved'": "Contact successfully moved to \"{{name}}\""
+        }
+    },
     "action": {
+        "delete": "Delete",
+        "delete_permanently": "Delete Permanently",
+        "move": "Move",
+        "open_trash": "Open trash folder",
+        "restore": "Restore",
         "send_msg": "Send mail"
     },
     "folder": {
@@ -13,11 +23,6 @@
             },
             "move": "Move address book",
             "new": "New address book"
-        },
-        "edit": {
-            "body": {
-                "properties": "Properties"
-            }
         },
         "folder": "folder",
         "item": {
@@ -55,7 +60,6 @@
                 "title": "Empty"
             },
             "footer": {
-                "cancel": "cancel",
                 "go_back": "Go back"
             },
             "item": {
@@ -111,9 +115,22 @@
         "new_contact": "This contact will be created in the 'Contacts' folder"
     },
     "messages": {
+        "modal": {
+            "delete": {
+                "if_delete_lost_forever": "By permanently deleting this contact you will not be able to recover it anymore, continue ?",
+                "sure_delete_contact": "Are you sure to delete this contact permanently ?",
+                "sure_delete_contact_plural": "Are you sure to delete the selected contacts permanently ?"
+            }
+        },
         "snackbar": {
-            "contact_moved": "Contact moved successfully",
-            "contact_moved_error": "Something went wrong, this contact was not moved, please retry."
+            "contact_deleted_error": "Something went wrong, this contact was not deleted, please retry.",
+            "contact_deleted_permanently": "Permanent deletion completed successfully",
+            "contact_deleted_permanently_error": "Something went wrong, retry the action.",
+            "contact_moved": "Contact successfully move to {{name}}",
+            "contact_moved_error": "Something went wrong, this contact was not moved, please retry.",
+            "contact_moved_to_trash": "Contact moved to trash",
+            "contact_restored": "Contact successfully restore to {{name}}",
+            "contact_restored_error": "Something went wrong, the contact was not restored, please retry."
         }
     },
     "name": {
@@ -125,6 +142,10 @@
         "suffix": "Suffix"
     },
     "notes": "Notes",
+    "of": "",
+    "search": {
+        "results_for": "Results for:"
+    },
     "section": {
         "field": {
             "city": "City",
@@ -157,6 +178,38 @@
                 "srch_glbl_addrs_list": "Initially search the Global Address List when using the contact picker"
             }
         }
+    },
+    "share": {
+        "add": "Add",
+        "admin": "Admin",
+        "administer": "Administer",
+        "allowed_actions": "Allowed actions",
+        "contact_folder": "Address Book",
+        "contacts": "Contacts",
+        "create": "Create",
+        "delete": "Delete",
+        "filter_user": "Find users",
+        "find_contact_shares": "Find Contact Shares",
+        "find_shares": "Find Shares",
+        "find_shares_label": "Select which address book you want to see in contact’s tree",
+        "insert": "Insert",
+        "manager": "Manager",
+        "none": "None",
+        "owner": "Owner",
+        "read": "Read",
+        "remove_error": "Something went wrong,please retry",
+        "remove_from_this_list": "Remove from this list",
+        "role": "Role",
+        "share_added_succesfully": "Shared added successfully",
+        "share_info": "Shared address book's info",
+        "share_removed_succesfully": "Shared removed successfuly",
+        "shared_folders": "Shared Address Books",
+        "shared_item": "Shared Item",
+        "shared_items": "{{value}}'s shared address books",
+        "type": "Type",
+        "viewer": "Viewer",
+        "workflow": "Workflow",
+        "write": "Write"
     },
     "types": {
         "home": "home",
