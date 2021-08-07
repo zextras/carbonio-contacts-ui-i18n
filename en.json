@@ -131,7 +131,7 @@
         },
         "snackbar": {
             "address_book_moved": "Address book moved to destination folder",
-            "contact_deleted_permanently": "Contact permanently deleted.",
+            "contact_deleted_permanently": "Contact permanently deleted",
             "contact_moved": "Contact moved to destination address book",
             "contact_moved_to_trash": "Contact moved to trash",
             "contact_restored": "Contact restored in destination address book",
