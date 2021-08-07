@@ -1,14 +1,9 @@
 {
-    "'messages": {
-        "snackbar": {
-            "contact_moved'": "Contact successfully moved to \"{{name}}\""
-        }
-    },
     "action": {
         "delete": "Delete",
         "delete_permanently": "Delete Permanently",
+        "goto_folder": "Go to folder",
         "move": "Move",
-        "open_trash": "Open trash folder",
         "restore": "Restore",
         "send_msg": "Send mail"
     },
@@ -96,6 +91,15 @@
                 "footer": "Restore",
                 "title": "Restore"
             }
+        },
+        "snackbar": {
+            "address_book_moved_to_trash": "Address book moved to trash",
+            "error": "Something went wrong, please try again",
+            "folder_edit": "Edits saved successfully",
+            "folder_empty": "Address book emptied successfullly",
+            "folder_new": "New address book created",
+            "settings_save_error": "",
+            "trash_empty": "Trash folder emptied successfully"
         }
     },
     "job": {
@@ -112,7 +116,10 @@
     },
     "mail": "Email",
     "message": {
-        "new_contact": "This contact will be created in the 'Contacts' folder"
+        "new_contact": "This contact will be created in the 'Contacts' folder",
+        "snackbar": {
+            "settings_saved": ""
+        }
     },
     "messages": {
         "modal": {
@@ -123,14 +130,12 @@
             }
         },
         "snackbar": {
-            "contact_deleted_error": "Something went wrong, this contact was not deleted, please retry.",
-            "contact_deleted_permanently": "Permanent deletion completed successfully",
-            "contact_deleted_permanently_error": "Something went wrong, retry the action.",
-            "contact_moved": "Contact successfully move to {{name}}",
-            "contact_moved_error": "Something went wrong, this contact was not moved, please retry.",
+            "address_book_moved": "Address book moved to destination folder",
+            "contact_deleted_permanently": "Contact permanently deleted.",
+            "contact_moved": "Contact moved to destination address book",
             "contact_moved_to_trash": "Contact moved to trash",
-            "contact_restored": "Contact successfully restore to {{name}}",
-            "contact_restored_error": "Something went wrong, the contact was not restored, please retry."
+            "contact_restored": "Contact restored in destination address book",
+            "error": "Something went wrong, please try again"
         }
     },
     "name": {
