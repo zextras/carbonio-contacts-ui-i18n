@@ -94,11 +94,9 @@
         },
         "snackbar": {
             "address_book_moved_to_trash": "Address book moved to trash",
-            "error": "Something went wrong, please try again",
             "folder_edit": "Edits saved successfully",
             "folder_empty": "Address book emptied successfullly",
             "folder_new": "New address book created",
-            "settings_save_error": "",
             "trash_empty": "Trash folder emptied successfully"
         }
     },
@@ -134,8 +132,7 @@
             "contact_deleted_permanently": "Contact permanently deleted",
             "contact_moved": "Contact moved to destination address book",
             "contact_moved_to_trash": "Contact moved to trash",
-            "contact_restored": "Contact restored in destination address book",
-            "error": "Something went wrong, please try again"
+            "contact_restored": "Contact restored in destination address book"
         }
     },
     "name": {
@@ -202,7 +199,6 @@
         "none": "None",
         "owner": "Owner",
         "read": "Read",
-        "remove_error": "Something went wrong,please retry",
         "remove_from_this_list": "Remove from this list",
         "role": "Role",
         "share_added_succesfully": "Shared added successfully",
@@ -215,6 +211,9 @@
         "viewer": "Viewer",
         "workflow": "Workflow",
         "write": "Write"
+    },
+    "snackbar": {
+        "error": "Something went wrong, please try again"
     },
     "types": {
         "home": "home",
