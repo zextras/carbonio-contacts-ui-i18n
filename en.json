@@ -125,7 +125,7 @@
     "message": {
         "new_contact": "This contact will be created in the 'Contacts' folder",
         "snackbar": {
-            "settings_saved": ""
+            "settings_saved": "Edits saved correctly"
         }
     },
     "messages": {
