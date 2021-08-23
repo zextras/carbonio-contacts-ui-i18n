@@ -5,7 +5,9 @@
         "edit_share": "Edit Access",
         "goto_folder": "Go to folder",
         "move": "Move",
+        "reset": "Reset",
         "restore": "Restore",
+        "search": "Search",
         "send_msg": "Send mail",
         "share_folder": "Share folder"
     },
@@ -105,6 +107,8 @@
         "title": "Job Role"
     },
     "label": {
+        "advance_filters": "1 Advanced filter",
+        "advance_filters_plural": "{{count}} Advanced filters",
         "cancel": "Cancel",
         "contact_setting": "Contact Settings",
         "create": "New Contact",
@@ -118,12 +122,15 @@
         "revoke_send_standard_msg": "Revoke access sending a custom notification",
         "revoke_share": "Revoke {{title}}'s share",
         "save": "Save",
+        "search_hint": "Search hints!",
         "share": "Share",
-        "shares_folder_edit": "Sharing of this address book"
+        "shares_folder_edit": "Sharing of this address book",
+        "single_advance_fillter": "Advanced Filters"
     },
     "mail": "Email",
     "message": {
         "new_contact": "This contact will be created in the 'Contacts' folder",
+        "search_hints": "Search hints we need to discuss about",
         "snackbar": {
             "settings_saved": "Edits saved correctly"
         }
@@ -159,7 +166,8 @@
     "notes": "Notes",
     "of": "",
     "search": {
-        "results_for": "Results for:"
+        "flagged": "Flagged",
+        "flagged_note": "Search for all contacts that are flagged."
     },
     "section": {
         "field": {
@@ -244,6 +252,9 @@
         "share_resend": "Share invite resent",
         "share_revoke": "Share access revoked",
         "share_updated": "Access rights updated"
+    },
+    "title": {
+        "advanced_filters": "Advanced Filters"
     },
     "tooltip": {
         "edit": "Edit access",
