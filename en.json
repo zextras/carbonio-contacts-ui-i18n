@@ -5,7 +5,7 @@
         "edit_share": "Edit Access",
         "goto_folder": "Go to folder",
         "move": "Move",
-        "reset": "Reset",
+        "reset_filters": "Reset Filters",
         "restore": "Restore",
         "search": "Search",
         "send_msg": "Send mail",
@@ -165,10 +165,6 @@
     },
     "notes": "Notes",
     "of": "",
-    "search": {
-        "flagged": "Flagged",
-        "flagged_note": "Search for all contacts that are flagged."
-    },
     "section": {
         "field": {
             "city": "City",
