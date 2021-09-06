@@ -1,1 +1,91 @@
-{}
+{
+    "types": {
+        "mobile": "cellulare",
+        "work": "lavoro",
+        "other": "altro",
+        "home": "casa"
+    },
+    "url": "Sito web",
+    "url_plural": "Siti web {{count}}",
+    "select": {
+        "default": "Seleziona tipo"
+    },
+    "section": {
+        "title": {
+            "url": "Sito web",
+            "url_plural": "Siti web {{count}}",
+            "phone_number": "Telefono",
+            "phone_number_plural": "Telefoni {{count}}",
+            "mail": "Email",
+            "mail_plural": "Email {{count}}",
+            "address": "Indirizzo",
+            "address_plural": "Indirizzi {{count}}"
+        },
+        "field": {
+            "url": "Sito Web",
+            "street": "Via",
+            "state": "Stato",
+            "postalCode": "Codice Postale",
+            "number": "Numero",
+            "country": "Paese",
+            "city": "Città"
+        }
+    },
+    "number": "numero",
+    "number_plural": "Numeri {{count}}",
+    "notes": "Note",
+    "name": {
+        "suffix": "Suffisso",
+        "prefix": "Prefisso",
+        "nickName": "Soprannome",
+        "middle_name": "Secondo nome",
+        "last_name": "Cognome",
+        "first_name": "Nome"
+    },
+    "message": {
+        "new_contact": "Questo contatto sarà creato nella cartella 'Contatti'"
+    },
+    "mail": "Email",
+    "mail_plural": "Email {{count}}",
+    "label": {
+        "edit": "Modifica",
+        "create": "Nuovo Contatto",
+        "save": "Salva",
+        "cancel": "Annulla"
+    },
+    "job": {
+        "title": "Titolo di Lavoro",
+        "department": "Dipartimento",
+        "company": "Azienda"
+    },
+    "address": "Indirizzo",
+    "address_plural": "Indirizzi ({{count}})",
+    "folder": {
+        "action": {
+            "empty": {
+                "trash": "Svuota cestino"
+            }
+        },
+        "modal": {
+            "edit": {
+                "footer": "Modifica",
+                "title": "Modifica"
+            },
+            "empty": {
+                "footer": "Svuota",
+                "title": "Svuota"
+            },
+            "move": {
+                "title": "Sposta",
+                "footer": "Sposta"
+            },
+            "new": {
+                "footer": "Crea",
+                "create_footer": "Crea e Sposta"
+            },
+            "delete": {
+                "title": "Elimina"
+            }
+        }
+    }
+}
