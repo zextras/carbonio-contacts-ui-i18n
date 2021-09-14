@@ -43,7 +43,10 @@
         "first_name": "Nome"
     },
     "message": {
-        "new_contact": "Questo contatto sarà creato nella cartella 'Contatti'"
+        "new_contact": "Questo contatto sarà creato nella cartella 'Contatti'",
+        "snackbar": {
+            "settings_saved": "Modifiche salvate correttamente"
+        }
     },
     "mail": "Email",
     "mail_plural": "Email {{count}}",
@@ -63,29 +66,88 @@
     "folder": {
         "action": {
             "empty": {
-                "trash": "Svuota cestino"
-            }
+                "trash": "Svuota cestino",
+                "folder": "Rubrica vuota"
+            },
+            "edit": "Modifica rubrica",
+            "delete_permanently": "Elimina rubrica definitivamente",
+            "delete": "Elimina rubrica",
+            "move": "Sposta rubrica",
+            "new": "Nuova rubrica"
         },
         "modal": {
             "edit": {
                 "footer": "Modifica",
-                "title": "Modifica"
+                "title": "Modifica",
+                "body": {
+                    "contacts": "Contatti",
+                    "item": {
+                        "empty": "Nessun percorso disponibile",
+                        "root": "root"
+                    },
+                    "type": "Tipo"
+                }
             },
             "empty": {
                 "footer": "Svuota",
-                "title": "Svuota"
+                "title": "Svuota",
+                "body": {
+                    "message1": "Vuoi svuotare questa rubrica?",
+                    "message2": "Se rimuovi il contenuto questo verrà spostato nel cestino."
+                }
             },
             "move": {
                 "title": "Sposta",
-                "footer": "Sposta"
+                "footer": "Sposta",
+                "input": {
+                    "filter": "Filtra rubrica"
+                },
+                "new": "Nuova rubrica",
+                "body": {
+                    "message1": "Seleziona una rubrica per spostarla in:",
+                    "message3": "Seleziona una cartella per spostarla in:"
+                }
             },
             "new": {
                 "footer": "Crea",
-                "create_footer": "Crea e Sposta"
+                "create_footer": "Crea e Sposta",
+                "body": {
+                    "message1": "Nuovo nome rubrica"
+                },
+                "input": {
+                    "name": "Inserisci nome rubrica",
+                    "name_exist": "Il nome esiste già in questo percorso"
+                }
             },
             "delete": {
-                "title": "Elimina"
+                "title": "Elimina",
+                "body": {
+                    "message2": "Vuoi eliminare questa rubrica? Se eliminata, il contenuto verrà rimosso definitivamente e la rubrica non sarà più recuperabile.",
+                    "message1": "Vuoi eliminare questa rubrica? Se eliminata, il contenuto verrà spostato nel cestino e la rubrica non sarà più visibile."
+                },
+                "footer": "Elimina"
+            },
+            "item": {
+                "empty": "Nessun elemento disponibile"
+            },
+            "footer": {
+                "go_back": "Indietro"
             }
+        },
+        "item": {
+            "root": "Root"
         }
+    },
+    "action": {
+        "send_msg": "Invia email",
+        "delete": "Cancella",
+        "delete_permanently": "Elimina definitivamente",
+        "move": "Sposta",
+        "restore": "Ripristina",
+        "edit_share": "Modifica Accesso",
+        "goto_folder": "Vai alla cartella",
+        "reset_filters": "Ripristina Filtri",
+        "search": "Cerca",
+        "share_folder": "Condividi cartella"
     }
 }
