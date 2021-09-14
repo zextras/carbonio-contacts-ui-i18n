@@ -1,1 +1,64 @@
-{}
+{
+    "action": {
+        "move": "ले जाएँ",
+        "delete": "डिलीट करें",
+        "restore": "वापस लाएँ",
+        "search": "सर्च करें"
+    },
+    "folder": {
+        "modal": {
+            "new": {
+                "footer": "बनाएँ"
+            },
+            "delete": {
+                "footer": "डिलीट करें",
+                "title": "डिलीट करें"
+            },
+            "edit": {
+                "body": {
+                    "contacts": "संपर्क",
+                    "type": "टाइप करें"
+                },
+                "footer": "बदलाव करें"
+            },
+            "move": {
+                "footer": "ले जाएँ",
+                "title": "ले जाएँ"
+            },
+            "restore": {
+                "footer": "वापस लाएँ",
+                "title": "वापस लाएँ"
+            }
+        }
+    },
+    "share": {
+        "add": "जोड़ें",
+        "type": "टाइप करें",
+        "admin": "एडमिन",
+        "contacts": "संपर्क",
+        "create": "बनाएँ",
+        "delete": "डिलीट करें",
+        "none": "कोई नहीं",
+        "owner": "ओनर",
+        "read": "पढ़ें"
+    },
+    "job": {
+        "company": "कंपनी"
+    },
+    "label": {
+        "cancel": "कैंसल करें",
+        "edit": "बदलाव करें",
+        "save": "सेव करें",
+        "share": "शेयर करें"
+    },
+    "name": {
+        "nickName": "उर्फनाम"
+    },
+    "notes": "नोट्स",
+    "section": {
+        "field": {
+            "country": "देश",
+            "state": "स्टेटस"
+        }
+    }
+}
