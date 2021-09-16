@@ -1,1 +1,64 @@
-{}
+{
+    "share": {
+        "owner": "Pemilik",
+        "read": "Baca",
+        "type": "Jenis",
+        "add": "Tambahkan",
+        "admin": "Admin",
+        "contacts": "Kontak",
+        "create": "Buat",
+        "delete": "Hapus",
+        "none": "Tidak ada"
+    },
+    "action": {
+        "delete": "Hapus",
+        "move": "Pindahkan",
+        "restore": "Pulihkan",
+        "search": "Cari"
+    },
+    "folder": {
+        "modal": {
+            "delete": {
+                "footer": "Hapus",
+                "title": "Hapus"
+            },
+            "edit": {
+                "body": {
+                    "contacts": "Kontak",
+                    "type": "Jenis"
+                },
+                "footer": "Edit"
+            },
+            "move": {
+                "footer": "Pindahkan",
+                "title": "Pindahkan"
+            },
+            "new": {
+                "footer": "Buat"
+            },
+            "restore": {
+                "footer": "Pulihkan",
+                "title": "Pulihkan"
+            }
+        }
+    },
+    "job": {
+        "company": "Perusahaan"
+    },
+    "label": {
+        "cancel": "Batal",
+        "edit": "Edit",
+        "save": "Simpan",
+        "share": "Bagikan"
+    },
+    "name": {
+        "nickName": "Nama panggilan"
+    },
+    "notes": "Catatan",
+    "section": {
+        "field": {
+            "country": "Negara",
+            "state": "Status"
+        }
+    }
+}
