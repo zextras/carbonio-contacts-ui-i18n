@@ -14,10 +14,10 @@
         "title": {
             "url": "Sito web",
             "url_plural": "Siti web {{count}}",
-            "phone_number": "Telefono",
-            "phone_number_plural": "Telefoni {{count}}",
-            "mail": "Email",
-            "mail_plural": "Email {{count}}",
+            "phone_number": "Contatto telefonico",
+            "phone_number_plural": "Contatti telefonici {{count}}",
+            "mail": "Indirizzo e-mail",
+            "mail_plural": "Inidirizzi e-mail {{count}}",
             "address": "Indirizzo",
             "address_plural": "Indirizzi {{count}}"
         },
@@ -54,10 +54,15 @@
         "edit": "Modifica",
         "create": "Nuovo Contatto",
         "save": "Salva",
-        "cancel": "Annulla"
+        "cancel": "Annulla",
+        "advance_filters": "1 Filtro avanzato",
+        "advance_filters_plural": "{{count}} Filtri avanzati",
+        "contact_setting": "Impostazioni di contatto",
+        "resend": "Invia di nuovo",
+        "revoke": "Revoca"
     },
     "job": {
-        "title": "Titolo di Lavoro",
+        "title": "Ruolo",
         "department": "Dipartimento",
         "company": "Azienda"
     },
@@ -112,12 +117,15 @@
                 "footer": "Crea",
                 "create_footer": "Crea e Sposta",
                 "body": {
-                    "message1": "Nuovo nome rubrica"
+                    "message1": "Nuovo nome rubrica",
+                    "message2": "Seleziona una rubrica che conterrà quella appena creata:"
                 },
                 "input": {
                     "name": "Inserisci nome rubrica",
                     "name_exist": "Il nome esiste già in questo percorso"
-                }
+                },
+                "title": "Crea nuova rubrica",
+                "title2": "Creazione di nuova cartella"
             },
             "delete": {
                 "title": "Elimina",
@@ -132,11 +140,23 @@
             },
             "footer": {
                 "go_back": "Indietro"
+            },
+            "restore": {
+                "create_footer": "Crea e Ripristina",
+                "footer": "Ripristina",
+                "title": "Ripristina"
             }
         },
         "item": {
             "root": "Root"
-        }
+        },
+        "snackbar": {
+            "trash_empty": "Cestino svuotato con successo",
+            "address_book_moved_to_trash": "Rubrica spostata nel cestino",
+            "folder_empty": "Rubrica svuotata con successo",
+            "folder_new": "Nuova rubrica creata"
+        },
+        "share_folder": "Condividi rubrica"
     },
     "action": {
         "send_msg": "Invia email",
@@ -149,5 +169,31 @@
         "reset_filters": "Ripristina Filtri",
         "search": "Cerca",
         "share_folder": "Condividi cartella"
+    },
+    "settings": {
+        "contacts": {
+            "checkbox": {
+                "add_contact_to_emailed_contacts": "Aggiungi nuovi contatti a \"Persone contattate via e-mail\"",
+                "autocomplete_on_comma": "Seleziona autocompletamento quando viene inserita una virgola",
+                "incl_addrs_in_glbl_addrs_list": "Includi indirizzi nella Lista Globale degli indirizzi",
+                "include_add_in_shared_contact": "Includi indirizzi nei contatti condivisi"
+            }
+        }
+    },
+    "share": {
+        "find_shares_label": "Seleziona le rubriche da visualizzare nella lista dei contatti",
+        "none": "Nessuno",
+        "add": "Aggiungi",
+        "admin": "Amministratore",
+        "administer": "Gestisci",
+        "allowed_actions": "Azioni consentite",
+        "contact_folder": "Rubrica",
+        "contacts": "Contatti",
+        "create": "Crea",
+        "delete": "Elimina",
+        "filter_user": "Trova utenti",
+        "find_shares": "Trova Condivisioni",
+        "insert": "Inserisci",
+        "manager": "Manager"
     }
 }
