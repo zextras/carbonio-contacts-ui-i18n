@@ -1,1 +1,64 @@
-{}
+{
+    "share": {
+        "contacts": "連絡先",
+        "add": "追加する",
+        "admin": "管理者",
+        "create": "作成する",
+        "delete": "削除する",
+        "none": "なし",
+        "owner": "オーナ",
+        "read": "既読",
+        "type": "タイプ"
+    },
+    "action": {
+        "delete": "削除する",
+        "move": "移動",
+        "restore": "復元する",
+        "search": "検索する"
+    },
+    "folder": {
+        "modal": {
+            "delete": {
+                "footer": "削除する",
+                "title": "削除する"
+            },
+            "edit": {
+                "body": {
+                    "contacts": "連絡先",
+                    "type": "タイプ"
+                },
+                "footer": "編集する"
+            },
+            "move": {
+                "footer": "移動",
+                "title": "移動"
+            },
+            "new": {
+                "footer": "作成する"
+            },
+            "restore": {
+                "footer": "復元する",
+                "title": "復元する"
+            }
+        }
+    },
+    "job": {
+        "company": "会社"
+    },
+    "label": {
+        "cancel": "キャンセル",
+        "edit": "編集する",
+        "save": "保存する",
+        "share": "シェアする"
+    },
+    "name": {
+        "nickName": "ニックネーム"
+    },
+    "notes": "注釈",
+    "section": {
+        "field": {
+            "country": "国",
+            "state": "ステータス"
+        }
+    }
+}
