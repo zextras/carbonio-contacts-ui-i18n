@@ -1,1 +1,64 @@
-{}
+{
+    "share": {
+        "none": "无",
+        "add": "添加",
+        "admin": "管理员",
+        "contacts": "联系人",
+        "create": "创建",
+        "delete": "删除",
+        "owner": "所有者",
+        "read": "读取",
+        "type": "类型"
+    },
+    "action": {
+        "delete": "删除",
+        "move": "移动",
+        "restore": "恢复",
+        "search": "搜索"
+    },
+    "folder": {
+        "modal": {
+            "delete": {
+                "footer": "删除",
+                "title": "删除"
+            },
+            "edit": {
+                "body": {
+                    "contacts": "联系人",
+                    "type": "类型"
+                },
+                "footer": "编辑"
+            },
+            "move": {
+                "footer": "移动",
+                "title": "移动"
+            },
+            "new": {
+                "footer": "创建"
+            },
+            "restore": {
+                "footer": "恢复",
+                "title": "恢复"
+            }
+        }
+    },
+    "job": {
+        "company": "公司"
+    },
+    "label": {
+        "cancel": "取消",
+        "edit": "编辑",
+        "save": "保存",
+        "share": "分享"
+    },
+    "name": {
+        "nickName": "昵称"
+    },
+    "notes": "备注",
+    "section": {
+        "field": {
+            "country": "国家",
+            "state": "状态"
+        }
+    }
+}
