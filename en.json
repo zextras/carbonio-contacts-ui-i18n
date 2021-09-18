@@ -111,7 +111,6 @@
         "advance_filters_plural": "{{count}} Advanced filters",
         "cancel": "Cancel",
         "contact_setting": "Contact Settings",
-        "create": "New Contact",
         "edit": "Edit",
         "edit_access": "Edit {{name}}'s access",
         "edit_folder_properties": "Edit {{name}}'s properties",
@@ -177,11 +176,9 @@
         },
         "title": {
             "address": "Address",
-            "address_plural": "Address ({{count}})",
             "mail": "Email address",
             "phone_number": "Phone contact",
-            "url": "Website",
-            "url_plural": "Website ({{count}})"
+            "url": "Website"
         }
     },
     "select": {
