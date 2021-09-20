@@ -1,1 +1,70 @@
-{}
+{
+    "folder": {
+        "modal": {
+            "restore": {
+                "footer": "Herstellen",
+                "title": "Herstellen"
+            },
+            "delete": {
+                "footer": "Openen met",
+                "title": "Openen met"
+            },
+            "edit": {
+                "body": {
+                    "contacts": "Contacten",
+                    "type": "Type"
+                },
+                "footer": "Bewerken"
+            },
+            "move": {
+                "footer": "Verplaatsen",
+                "title": "Verplaatsen"
+            },
+            "new": {
+                "footer": "Creëren"
+            }
+        }
+    },
+    "name": {
+        "nickName": "Bijnaam"
+    },
+    "notes": "Opmerkingen",
+    "share": {
+        "add": "Toevoegen",
+        "admin": "Admin",
+        "contacts": "Contacten",
+        "create": "Creëren",
+        "delete": "Openen met",
+        "manager": "Beheren",
+        "none": "Geen",
+        "owner": "Eigenaar",
+        "read": "Gelezen",
+        "type": "Type"
+    },
+    "action": {
+        "delete": "Openen met",
+        "delete_permanently": "Permanent Verwijderen",
+        "move": "Verplaatsen",
+        "restore": "Herstellen",
+        "search": "Zoeken"
+    },
+    "job": {
+        "company": "Bedrijf"
+    },
+    "label": {
+        "cancel": "Annuleren",
+        "edit": "Bewerken",
+        "save": "Opslaan",
+        "share": "Delen"
+    },
+    "section": {
+        "field": {
+            "country": "Land",
+            "state": "Status"
+        }
+    },
+    "types": {
+        "home": "startpagina",
+        "other": "ander"
+    }
+}
