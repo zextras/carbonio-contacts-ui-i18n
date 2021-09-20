@@ -1,1 +1,64 @@
-{}
+{
+    "action": {
+        "delete": "Excluir",
+        "move": "Mover",
+        "restore": "Restaurar",
+        "search": "Buscar"
+    },
+    "folder": {
+        "modal": {
+            "delete": {
+                "footer": "Excluir",
+                "title": "Excluir"
+            },
+            "edit": {
+                "body": {
+                    "contacts": "Contatos",
+                    "type": "Tipo"
+                },
+                "footer": "Editar"
+            },
+            "move": {
+                "footer": "Mover",
+                "title": "Mover"
+            },
+            "new": {
+                "footer": "Criar"
+            },
+            "restore": {
+                "footer": "Restaurar",
+                "title": "Restaurar"
+            }
+        }
+    },
+    "job": {
+        "company": "Empresa"
+    },
+    "label": {
+        "cancel": "Cancelar",
+        "edit": "Editar",
+        "save": "Salvar",
+        "share": "Compartilhar"
+    },
+    "share": {
+        "add": "Adicionar",
+        "admin": "Admin",
+        "contacts": "Contatos",
+        "owner": "Proprietário",
+        "read": "Leitura",
+        "type": "Tipo",
+        "create": "Criar",
+        "delete": "Excluir",
+        "none": "None"
+    },
+    "name": {
+        "nickName": "Apelido"
+    },
+    "notes": "Notas",
+    "section": {
+        "field": {
+            "country": "País",
+            "state": "Estado"
+        }
+    }
+}
