@@ -66,5 +66,10 @@
     "types": {
         "home": "startpagina",
         "other": "ander"
+    },
+    "message": {
+        "snackbar": {
+            "settings_saved": "Bewerkingen correct opgeslagen"
+        }
     }
 }
