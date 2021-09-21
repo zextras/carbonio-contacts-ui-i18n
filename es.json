@@ -1,1 +1,64 @@
-{}
+{
+    "label": {
+        "save": "Guardar",
+        "cancel": "Cancelar",
+        "edit": "Editar",
+        "share": "Compartir"
+    },
+    "share": {
+        "none": "None",
+        "add": "Agregar",
+        "admin": "Admin",
+        "contacts": "Contactos",
+        "create": "Crear",
+        "delete": "Eliminar",
+        "owner": "Propietario",
+        "read": "Leido",
+        "type": "Tipo"
+    },
+    "action": {
+        "delete": "Eliminar",
+        "move": "Mover",
+        "restore": "Restaurar",
+        "search": "Búsqueda"
+    },
+    "folder": {
+        "modal": {
+            "delete": {
+                "footer": "Eliminar",
+                "title": "Eliminar"
+            },
+            "edit": {
+                "body": {
+                    "contacts": "Contactos",
+                    "type": "Tipo"
+                },
+                "footer": "Editar"
+            },
+            "move": {
+                "footer": "Mover",
+                "title": "Mover"
+            },
+            "new": {
+                "footer": "Crear"
+            },
+            "restore": {
+                "footer": "Restaurar",
+                "title": "Restaurar"
+            }
+        }
+    },
+    "job": {
+        "company": "Organización"
+    },
+    "name": {
+        "nickName": "Apodo"
+    },
+    "notes": "Notas",
+    "section": {
+        "field": {
+            "country": "País",
+            "state": "Estado"
+        }
+    }
+}
