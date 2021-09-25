@@ -3,7 +3,10 @@
         "save": "Guardar",
         "cancel": "Cancelar",
         "edit": "Editar",
-        "share": "Compartir"
+        "share": "Compartir",
+        "edit_access": "Editar acceso de {{name}}",
+        "resend": "Reenviar",
+        "revoke": "Revocar"
     },
     "share": {
         "none": "None",
@@ -20,7 +23,8 @@
         "delete": "Eliminar",
         "move": "Mover",
         "restore": "Restaurar",
-        "search": "Búsqueda"
+        "search": "Búsqueda",
+        "delete_permanently": "Borrar permanentemente"
     },
     "folder": {
         "modal": {
@@ -45,6 +49,9 @@
             "restore": {
                 "footer": "Restaurar",
                 "title": "Restaurar"
+            },
+            "footer": {
+                "go_back": "Regresar"
             }
         }
     },
@@ -59,6 +66,11 @@
         "field": {
             "country": "País",
             "state": "Estado"
+        }
+    },
+    "message": {
+        "snackbar": {
+            "settings_saved": "Ediciones guardadas correctamente"
         }
     }
 }
