@@ -17,7 +17,14 @@
         "delete": "Eliminar",
         "owner": "Propietario",
         "read": "Leido",
-        "type": "Tipo"
+        "type": "Tipo",
+        "options": {
+            "share_calendar_with": {
+                "external_guests": "Invitados externos (ver solo)",
+                "internal_users_groups": "Usuarios o grupos internos",
+                "public": "Público (ver solo, no se necesita contraseña)"
+            }
+        }
     },
     "action": {
         "delete": "Eliminar",
