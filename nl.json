@@ -7,12 +7,20 @@
             },
             "delete": {
                 "footer": "Openen met",
-                "title": "Openen met"
+                "title": "Openen met",
+                "body": {
+                    "message1": "Wilt u het geselecteerde adresboek verwijderen? Als u het verwijdert, wordt de gerelateerde inhoud naar de prullenbak verplaatst en is het adresboek niet langer zichtbaar.",
+                    "message2": "Wilt u het geselecteerde adresboek definitief verwijderen? Als u het verwijdert, wordt de gerelateerde inhoud permanent verwijderd en kan het adresboek niet meer worden hersteld."
+                }
             },
             "edit": {
                 "body": {
                     "contacts": "Contacten",
-                    "type": "Type"
+                    "type": "Type",
+                    "item": {
+                        "empty": "Geen pad beschikbaar",
+                        "root": "wortel"
+                    }
                 },
                 "footer": "Bewerken"
             },
@@ -22,7 +30,27 @@
             },
             "new": {
                 "footer": "Creëren"
+            },
+            "empty": {
+                "body": {
+                    "message1": "Wilt u het geselecteerde adresboek leegmaken?",
+                    "message2": "Als u het leegmaakt, zal alle gerelateerde inhoud naar de prullenbak worden verplaatst."
+                }
             }
+        },
+        "action": {
+            "delete": "Adresboek verwijderen",
+            "delete_permanently": "Adresboek permanent verwijderen",
+            "edit": "Adresboek bewerken",
+            "empty": {
+                "folder": "Adresboek leegmaken",
+                "trash": "Prullenbak leegmaken"
+            },
+            "move": "Adresboek verplaatsen",
+            "new": "Nieuw adresboek"
+        },
+        "item": {
+            "root": "Wortel"
         }
     },
     "name": {
@@ -46,7 +74,12 @@
         "delete_permanently": "Permanent Verwijderen",
         "move": "Verplaatsen",
         "restore": "Herstellen",
-        "search": "Zoeken"
+        "search": "Zoeken",
+        "edit_share": "Toegang bewerken",
+        "goto_folder": "Ga naar map",
+        "reset_filters": "Filters resetten",
+        "send_msg": "Mail sturen",
+        "share_folder": "Map delen"
     },
     "job": {
         "company": "Bedrijf"
