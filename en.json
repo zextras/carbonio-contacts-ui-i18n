@@ -111,6 +111,7 @@
         "advance_filters_plural": "{{count}} Advanced filters",
         "cancel": "Cancel",
         "contact_setting": "Contact Settings",
+        "create": "",
         "edit": "Edit",
         "edit_access": "Edit {{name}}'s access",
         "edit_folder_properties": "Edit {{name}}'s properties",
@@ -164,6 +165,7 @@
     },
     "notes": "Notes",
     "of": "",
+    "results_for": "Results for:",
     "section": {
         "field": {
             "city": "City",
@@ -176,9 +178,11 @@
         },
         "title": {
             "address": "Address",
+            "address_plural": "",
             "mail": "Email address",
             "phone_number": "Phone contact",
-            "url": "Website"
+            "url": "Website",
+            "url_plural": ""
         }
     },
     "select": {
