@@ -4,7 +4,8 @@
         "delete": "डिलीट करें",
         "restore": "वापस लाएँ",
         "search": "सर्च करें",
-        "send_msg": "ई-मेल भेजें"
+        "send_msg": "ई-मेल भेजें",
+        "delete_permanently": "सदा के लिए मिटाएँ"
     },
     "folder": {
         "modal": {
@@ -34,6 +35,9 @@
             "empty": {
                 "footer": "रिक्त",
                 "title": "रिक्त"
+            },
+            "footer": {
+                "go_back": "वापस जाएँ"
             }
         },
         "item": {
@@ -67,7 +71,10 @@
         "edit": "बदलाव करें",
         "save": "सेव करें",
         "share": "शेयर करें",
-        "edit_folder_properties": "{{name}} के गुण में संशोधन"
+        "edit_folder_properties": "{{name}} के गुण में संशोधन",
+        "edit_access": "{{name}} के ऐक्सेस में संशोधन",
+        "resend": "दोबारा भेजें",
+        "revoke": "वापस लेना"
     },
     "name": {
         "nickName": "उर्फनाम"
