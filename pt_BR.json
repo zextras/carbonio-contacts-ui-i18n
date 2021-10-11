@@ -159,7 +159,7 @@
         "send_notification": "Enviar notificação sobre este compartilhamento",
         "share_added_succesfully": "Compartilhamento adicionado com sucesso",
         "share_info": "Informação da agenda de endereços compartilhada",
-        "share_note": "A mensagem padrão exibe seu nome, o nome do item compartilhado, as permissões concedidas aos destinatários e as informações de acesso, quando necessárias.",
+        "share_note": "A mensagem padrão exibe seu nome, o nome do item compartilhado, as permissões concedidas aos destinatários e as informações de acesso.",
         "share_removed_succesfully": "Compartilhamento removido com sucesso",
         "shared_folders": "Agendas de Endereços Compartilhadas",
         "shared_item": "Item Compartilhado",
@@ -200,7 +200,8 @@
     "message": {
         "snackbar": {
             "settings_saved": "Edições salvas corretamente"
-        }
+        },
+        "search_hints": "Dicas de pesquisa que precisamos conversar"
     },
     "mail": "E-mail",
     "messages": {
@@ -249,7 +250,7 @@
     "tooltip": {
         "revoke": "Revogar acesso",
         "edit": "Editar acesso",
-        "resend": "Reenviar notificação por e-mail sobre este compartilhamento"
+        "resend": "Enviar notificação por e-mail sobre este compartilhamento"
     },
     "title": {
         "advanced_filters": "Filtros Avançados"
