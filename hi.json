@@ -3,7 +3,8 @@
         "move": "ले जाएँ",
         "delete": "डिलीट करें",
         "restore": "वापस लाएँ",
-        "search": "सर्च करें"
+        "search": "सर्च करें",
+        "send_msg": "ई-मेल भेजें"
     },
     "folder": {
         "modal": {
@@ -27,8 +28,16 @@
             },
             "restore": {
                 "footer": "वापस लाएँ",
-                "title": "वापस लाएँ"
+                "title": "वापस लाएँ",
+                "create_footer": "बनाएँ और वापस लाएँ"
+            },
+            "empty": {
+                "footer": "रिक्त",
+                "title": "रिक्त"
             }
+        },
+        "item": {
+            "root": "मूल"
         }
     },
     "share": {
@@ -40,16 +49,25 @@
         "delete": "डिलीट करें",
         "none": "कोई नहीं",
         "owner": "ओनर",
-        "read": "पढ़ें"
+        "read": "पढ़ें",
+        "administer": "प्रशासन",
+        "allowed_actions": "अनुमत्त क्रियाएँ",
+        "insert": "सम्मिलित करना",
+        "manager": "प्रबंधक",
+        "role": "भूमिका",
+        "share_note": "आदर्श संदेश आपका नाम, साझा वस्तु का नाम, प्राप्तकर्ताओं को प्रदान अनुमतियाँ, और अगर आवश्यक हुआ तो साइन इन जानकारी प्रदर्शित करता है।",
+        "viewer": "दर्शक"
     },
     "job": {
-        "company": "कंपनी"
+        "company": "कंपनी",
+        "department": "विभाग"
     },
     "label": {
         "cancel": "कैंसल करें",
         "edit": "बदलाव करें",
         "save": "सेव करें",
-        "share": "शेयर करें"
+        "share": "शेयर करें",
+        "edit_folder_properties": "{{name}} के गुण में संशोधन"
     },
     "name": {
         "nickName": "उर्फनाम"
@@ -58,7 +76,15 @@
     "section": {
         "field": {
             "country": "देश",
-            "state": "स्टेटस"
+            "state": "स्टेटस",
+            "city": "नगर",
+            "number": "संख्या",
+            "postalCode": "पिन कोड",
+            "street": "गली"
+        },
+        "title": {
+            "address": "पता",
+            "address_plural": ""
         }
     }
 }
