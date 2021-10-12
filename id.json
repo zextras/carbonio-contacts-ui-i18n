@@ -1,7 +1,7 @@
 {
     "share": {
         "owner": "Pemilik",
-        "read": "Baca",
+        "read": "Dibaca",
         "type": "Jenis",
         "add": "Tambahkan",
         "admin": "Admin",
@@ -18,13 +18,28 @@
         "manager": "Pengelola",
         "options": {
             "share_calendar_with": {
-                "external_guests": "Tamu eksternal (lihat saja)",
-                "internal_users_groups": "Pengguna atau Grup Internal"
+                "external_guests": "Tamu eksternal (hanya lihat)",
+                "internal_users_groups": "Pengguna atau Grup Internal",
+                "public": "Publik (hanya lihat, tidak diperlukan kata sandi)"
             }
         },
         "recipients_address": "Alamat email penerima",
         "remove_from_this_list": "Hapus dari daftar ini",
-        "role": "Peran"
+        "role": "Peran",
+        "find_contact_shares": "Temukan Berbagi Kontak",
+        "find_shares": "Temukan Berbagi",
+        "share_note": "Pesan standar ini menampilkan nama Anda, nama item bersama, izin yang diberikan kepada penerima, dan informasi masuk.",
+        "send_notification": "Kirim pemberitahuan tentang berbagi ini",
+        "share_added_succesfully": "Berbagi berhasil ditambahkan",
+        "share_info": "Info buku alamat bersama",
+        "standard_message": "Tambahkan catatan ke pesan standar",
+        "viewer": "Pemirsa",
+        "workflow": "Alur kerja",
+        "shared_item": "Item Bersama",
+        "shared_items": "buku alamat {{value}} bersama",
+        "share_removed_succesfully": "Item bersama berhasil dihapus",
+        "shared_folders": "Buku Alamat Bersama",
+        "write": "Tulis"
     },
     "action": {
         "delete": "Hapus",
@@ -44,8 +59,8 @@
                 "footer": "Hapus",
                 "title": "Hapus",
                 "body": {
-                    "message2": "Apakah Anda ingin menghapus buku alamat yang dipilih secara permanen? Jika Anda menghapusnya, konten terkait akan dihapus secara permanen dan buku alamat tidak dapat dipulihkan kembali.",
-                    "message1": "Apakah Anda ingin menghapus buku alamat yang dipilih? Jika Anda menghapusnya, konten terkait akan dipindahkan ke tempat sampah dan buku alamat tidak terlihat lagi."
+                    "message2": "Apakah Anda ingin menghapus buku alamat yang dipilih secara permanen? Jika dihapus, konten terkait akan dihapus secara permanen dan buku alamat tidak dapat dipulihkan lagi.",
+                    "message1": "Apakah Anda ingin menghapus buku alamat yang dipilih? Jika dihapus, konten terkait akan dipindahkan ke tempat sampah dan buku alamat tidak terlihat lagi."
                 }
             },
             "edit": {
@@ -67,15 +82,15 @@
                 },
                 "new": "Buku alamat baru",
                 "body": {
-                    "message3": "Pilih satu folder sebagai tempat memindahkan file yang dikehendaki:",
-                    "message1": "Pilih satu buku alamat sebagai tempat memindahkan alamat yang dikehendaki:"
+                    "message3": "Pilih satu folder sebagai tempat memindahkan file yang diinginkan:",
+                    "message1": "Pilih satu buku alamat sebagai tempat memindahkan alamat yang diinginkan:"
                 }
             },
             "new": {
                 "footer": "Buat",
                 "body": {
                     "message1": "Nama buku alamat baru",
-                    "message2": "Pilih satu buku alamat untuk menyimpan alamat yang baru:"
+                    "message2": "Pilih satu buku alamat untuk menyimpan alamat baru:"
                 },
                 "input": {
                     "name": "Sisipkan nama buku alamat",
@@ -93,7 +108,7 @@
             "empty": {
                 "body": {
                     "message1": "Apakah Anda ingin mengosongkan buku alamat yang dipilih?",
-                    "message2": "Jika Anda mengosongkannya, semua konten terkait akan dipindahkan ke tempat sampah."
+                    "message2": "Jika dikosongkan, semua konten terkait akan dipindahkan ke tempat sampah."
                 },
                 "footer": "Kosongkan",
                 "title": "Kosongkan"
@@ -111,7 +126,7 @@
             "edit": "Edit buku alamat",
             "empty": {
                 "folder": "Kosongkan buku alamat",
-                "trash": "Kosongkan sampah"
+                "trash": "Kosongkan tempat sampah"
             },
             "move": "Pindahkan buku alamat",
             "new": "Buku alamat baru"
@@ -144,11 +159,11 @@
         "edit_access": "Edit akses {{name}}",
         "edit_folder_properties": "Edit properti {{name}}",
         "resend": "Kirim ulang",
-        "revoke": "Membatalkan",
-        "revoke_access_tooltip": "Batalkan akses yang mengirim pemberitahuan standar",
+        "revoke": "Batalkan",
+        "revoke_access_tooltip": "Batalkan akses dengan mengirim pemberitahuan standar",
         "search_hint": "Cari petunjuk!",
         "revoke_access_without_notification": "Batalkan akses tanpa mengirim pemberitahuan",
-        "revoke_send_standard_msg": "Batalkan akses tanpa mengirim pemberitahuan kustom",
+        "revoke_send_standard_msg": "Batalkan akses dengan mengirim pemberitahuan kustom",
         "revoke_share": "Batalkan berbagi {{title}}",
         "single_advance_fillter": "Filter Tingkat Lanjut",
         "shares_folder_edit": "Berbagi buku alamat ini"
@@ -183,9 +198,9 @@
         "snackbar": {
             "settings_saved": "Hasil edit disimpan dengan benar"
         },
-        "search_hints": "Search hints we need to discuss about"
+        "search_hints": "Cari petunjuk yang perlu didiskusikan"
     },
-    "mail": "Surel",
+    "mail": "Email",
     "messages": {
         "modal": {
             "delete": {
@@ -210,24 +225,36 @@
             "checkbox": {
                 "add_contact_to_emailed_contacts": "Tambahkan kontak baru ke \"Kontak Email\"",
                 "incl_addrs_in_glbl_addrs_list": "Sertakan alamat dalam Daftar Alamat Global",
-                "include_add_in_shared_contact": "Sertakan alamat ke dalam kontak yang dibagikan",
-                "srch_glbl_addrs_list": "Cari Daftar Alamat Global terlebih dahulu saat menggunakan pemilih kontak"
+                "include_add_in_shared_contact": "Sertakan alamat ke dalam kontak bersama",
+                "srch_glbl_addrs_list": "Cari Daftar Alamat Global terlebih dahulu saat menggunakan pemilih kontak",
+                "autocomplete_on_comma": "Pilih kecocokan autocomplete saat mengetik koma"
             }
         }
     },
     "select": {
-        "default": "Pilih tipe"
+        "default": "Pilih jenis"
     },
     "title": {
         "advanced_filters": "Filter Tingkat Lanjut"
     },
     "tooltip": {
         "edit": "Edit akses",
-        "revoke": "Batalkan akses"
+        "revoke": "Batalkan akses",
+        "resend": "Kirim pemberitahuan email tentang berbagi ini"
     },
     "types": {
         "home": "beranda",
         "mobile": "seluler",
-        "other": "lainnya"
+        "other": "lainnya",
+        "work": "pekerjaan"
+    },
+    "snackbar": {
+        "error": "Terjadi kesalahan, coba lagi",
+        "folder_edited": "Buku alamat berhasil diedit",
+        "folder_shared": "Buku alamat dibagikan",
+        "folder_shared_error": "Terjadi kesalahan, coba lagi",
+        "share_resend": "Undangan berbagi dikirim ulang",
+        "share_revoke": "Akses berbagi dibatalkan",
+        "share_updated": "Hak akses diperbarui"
     }
 }
