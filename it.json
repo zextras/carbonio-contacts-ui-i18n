@@ -166,7 +166,8 @@
             "folder_empty": "Rubrica svuotata correttamente",
             "folder_new": "Nuova rubrica creata"
         },
-        "share_folder": "Condividi rubrica"
+        "share_folder": "Condividi rubrica",
+        "type": "Cartella Contatti"
     },
     "action": {
         "send_msg": "Invia email",
@@ -185,7 +186,7 @@
             "checkbox": {
                 "add_contact_to_emailed_contacts": "Aggiungi nuovi contatti a \"Persone contattate via e-mail\"",
                 "autocomplete_on_comma": "Seleziona auto completamento quando viene inserita una virgola",
-                "incl_addrs_in_glbl_addrs_list": "Includi indirizzi nella Lista Globale degli indirizzi",
+                "incl_addrs_in_glbl_addrs_list": "Includi indirizzi nella Lista Globale degli indirizzi GAL",
                 "include_add_in_shared_contact": "Includi indirizzi nei contatti condivisi"
             }
         }
@@ -225,7 +226,10 @@
         "shared_item": "Elemento Condiviso",
         "standard_message": "Aggiungi nota a messaggio predefinito",
         "workflow": "Flusso di lavoro",
-        "write": "Scrivi"
+        "write": "Scrivi",
+        "share_note": "Il messaggio predefinito mostra il tuo nome, il nome dell'elemento condiviso, i permessi dati ai destinatari e le informazioni di accesso.",
+        "shared_folders": "Rubriche Condivise",
+        "type": "Tipo"
     },
     "messages": {
         "snackbar": {
@@ -260,6 +264,8 @@
         "advanced_filters": "Filtri Avanzati"
     },
     "tooltip": {
-        "edit": "Modifica accesso"
+        "edit": "Modifica accesso",
+        "resend": "Invia notifica per questa condivisione",
+        "revoke": "Revoca accesso"
     }
 }
