@@ -229,7 +229,7 @@
         "send_notification": "Send notification about this share",
         "share_added_succesfully": "Shared added successfully",
         "share_info": "Shared address book's info",
-        "share_note": "The standard message displays your name, the name of the shared item, pemissions granted to the recipients, and sign in information, if necessary.",
+        "share_note": "The standard message displays your name, the name of the shared item, permissions granted to the recipients, and sign-in information.",
         "share_removed_succesfully": "Shared removed successfuly",
         "shared_folders": "Shared Address Books",
         "shared_item": "Shared Item",
@@ -254,7 +254,7 @@
     },
     "tooltip": {
         "edit": "Edit access",
-        "resend": "Resend mail notification about this share",
+        "resend": "Send mail notification about this share",
         "revoke": "Revoke access"
     },
     "types": {
