@@ -1,1 +1,41 @@
-{}
+{
+    "action": {
+        "delete": "Sil",
+        "edit_share": "Erişimi Düzenle",
+        "goto_folder": "Klasöre git",
+        "reset_filters": "Filtreleri sıfırla",
+        "restore": "Geri yükle",
+        "delete_permanently": "Kalıcı olarak sil",
+        "move": "Taşı",
+        "search": "Ara"
+    },
+    "folder": {
+        "modal": {
+            "delete": {
+                "title": "Sil",
+                "footer": "Sil"
+            },
+            "footer": {
+                "go_back": "Geriye git"
+            },
+            "restore": {
+                "title": "Geri yükle",
+                "footer": "Geri yükle"
+            },
+            "new": {
+                "footer": "Oluştur"
+            },
+            "move": {
+                "title": "Taşı"
+            }
+        }
+    },
+    "share": {
+        "create": "Oluştur"
+    },
+    "message": {
+        "snackbar": {
+            "settings_saved": "Değişiklikler başarıyla kaydedildi"
+        }
+    }
+}
