@@ -113,7 +113,19 @@
         "contact_setting": "Kontakt Einstellungen",
         "revoke_share": "{{title}}'s Teilen widerrufen",
         "search_hint": "Suchhinweise!",
-        "shares_folder_edit": "Teilen dieses Adressbuches"
+        "shares_folder_edit": "Teilen dieses Adressbuches",
+        "cancel": "Abbrechen",
+        "edit": "Bearbeiten",
+        "advance_filters": "1 Fortgeschrittener filter",
+        "advance_filters_plural": "{{count}} Fortgeschrittene filter",
+        "create": "Neuer Kontakt",
+        "edit_folder_properties": "{{name}}'s Eigenschaften bearbeiten",
+        "save": "Speichern",
+        "share": "Teilen",
+        "revoke_access_tooltip": "Zugriff widerrufen mit einer Standardbenachrichtigung",
+        "revoke_access_without_notification": "Zugriff widerrufen ohne eine Benachrichtigung zu senden",
+        "revoke_send_standard_msg": "Zugriff widerrufen mit einer benutzerdefinierten Benachrichtigung",
+        "single_advance_fillter": "Fortgeschrittene Filter"
     },
     "message": {
         "snackbar": {
@@ -145,17 +157,27 @@
         "last_name": "Nachname",
         "middle_name": "Zweiter Vorname",
         "prefix": "Anrede",
-        "suffix": "Namenssuffix"
+        "suffix": "Namenssuffix",
+        "nickName": "Nickname",
+        "first_name": "Vorname"
     },
     "section": {
         "field": {
-            "url": "Website"
+            "url": "Website",
+            "city": "Stadt",
+            "country": "Land",
+            "number": "Nummer",
+            "postalCode": "Postleitzahl",
+            "state": "Status",
+            "street": "Straße"
         },
         "title": {
             "mail": "E-Mail Adresse",
             "phone_number": "Telefon Kontakt",
             "url": "Webseite",
-            "url_plural": "Webseiten ({{count}})"
+            "url_plural": "Webseiten ({{count}})",
+            "address": "Adresse",
+            "address_plural": ""
         }
     },
     "select": {
@@ -193,7 +215,20 @@
         "shared_item": "Geteiltes Element",
         "standard_message": "Notiz zur Standardnachricht hinzufügen",
         "workflow": "Workflow",
-        "write": "Schreiben"
+        "write": "Schreiben",
+        "add": "Hinzufügen",
+        "admin": "Admin",
+        "administer": "Verwalten",
+        "owner": "Besitzer",
+        "read": "Gelesen",
+        "type": "Typ",
+        "viewer": "Zuschauer",
+        "allowed_actions": "Erlaubte Aktionen",
+        "contacts": "Kontakte",
+        "create": "Erstellen",
+        "delete": "Löschen",
+        "manager": "Manager",
+        "none": "Keine"
     },
     "snackbar": {
         "error": "Etwas ist schiefgegangen,bitte versuchen Sie es erneut",
@@ -213,6 +248,9 @@
     "types": {
         "home": "Home",
         "other": "andere",
-        "work": "Arbeit"
-    }
+        "work": "Arbeit",
+        "mobile": "Mobil"
+    },
+    "mail": "E-mail",
+    "notes": "Notizen"
 }
