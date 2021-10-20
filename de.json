@@ -189,7 +189,8 @@
                 "add_contact_to_emailed_contacts": "Neue Kontakte zu \"Angeschriebene Kontakte\" hinzufügen",
                 "autocomplete_on_comma": "Wählen Sie ein Ergebnis der Autovervollständigung aus, wenn ein Komma eingegeben wird",
                 "incl_addrs_in_glbl_addrs_list": "Adressen in der Globalen Adressliste inkludieren",
-                "include_add_in_shared_contact": "Adressen in geteilte Kontakte inkludieren"
+                "include_add_in_shared_contact": "Adressen in geteilte Kontakte inkludieren",
+                "srch_glbl_addrs_list": "Zuerst die Globale Adressliste durchsuchen, wenn der Kontaktsammler verwendet wird"
             }
         }
     },
@@ -228,14 +229,21 @@
         "create": "Erstellen",
         "delete": "Löschen",
         "manager": "Manager",
-        "none": "Keine"
+        "none": "Keine",
+        "find_shares_label": "Wählen Sie aus, welches Adressbuch Sie im Kontaktbaum sehen möchten",
+        "share_added_succesfully": "Teilen erfolgreich hinzugefügt",
+        "share_info": "Informationen des Adressbuches geteilt",
+        "share_removed_succesfully": "Teilen erfolgreich entfernt",
+        "shared_items": "{{value}}s geteilte Adressbücher"
     },
     "snackbar": {
         "error": "Etwas ist schiefgegangen,bitte versuchen Sie es erneut",
         "folder_edited": "Adressbücher erfolgreich bearbeitet",
         "folder_shared": "Adressbuch geteilt",
         "folder_shared_error": "Etwas ist schiefgegangen,bitte versuchen Sie es erneut",
-        "share_updated": "Zugriffsrechte aktualisiert"
+        "share_updated": "Zugriffsrechte aktualisiert",
+        "share_resend": "Einladung zum Teilen erneut gesendet",
+        "share_revoke": "Gemeinsamen Zugriff widerrufen"
     },
     "title": {
         "advanced_filters": "Fortgeschrittene Filter"
