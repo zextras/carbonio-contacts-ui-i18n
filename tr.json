@@ -7,7 +7,8 @@
         "restore": "Geri yükle",
         "delete_permanently": "Kalıcı olarak sil",
         "move": "Taşı",
-        "search": "Ara"
+        "search": "Ara",
+        "share_folder": "Klasörü paylaş"
     },
     "folder": {
         "modal": {
@@ -28,6 +29,11 @@
             "move": {
                 "title": "Taşı"
             }
+        },
+        "action": {
+            "empty": {
+                "trash": "Çöp kutusunu boşalt"
+            }
         }
     },
     "share": {
@@ -37,5 +43,14 @@
         "snackbar": {
             "settings_saved": "Değişiklikler başarıyla kaydedildi"
         }
+    },
+    "label": {
+        "cancel": "İptal",
+        "edit": "Düzenle",
+        "edit_access": "{{name}}'in erişimini düzenle",
+        "resend": "Yeniden gönder",
+        "revoke": "İptal et",
+        "save": "Kaydet",
+        "share": "Paylaş"
     }
 }
