@@ -136,7 +136,12 @@
         "viewer": "Görüntüleyici",
         "workflow": "İş Akışı",
         "write": "Yazı",
-        "share_note": "Standart mesajda adınız, paylaşılan öğenin adı, alıcıya verilen izinler ve giriş bilgisi gösterilir."
+        "share_note": "Standart mesajda adınız, paylaşılan öğenin adı, alıcıya verilen izinler ve giriş bilgisi gösterilir.",
+        "find_shares_label": "Kişiler dizininde görmek istediğiniz adres defterini seçin",
+        "share_added_succesfully": "Paylaşım başarıyla eklendi",
+        "share_info": "Paylaşılan adres defteri bilgisi",
+        "share_removed_succesfully": "Paylaşım başarıyla kaldırıldı",
+        "shared_items": "{{value}}'in paylaşılan adres defterleri"
     },
     "message": {
         "snackbar": {
@@ -238,6 +243,22 @@
         "folder_edited": "Adres defteri başarıyla düzenlendi",
         "folder_shared": "Adres defteri paylaşıldı",
         "folder_shared_error": "Bir hata oluştu, lütfen tekrar deneyin",
-        "share_resend": "Paylaşım davetini yeniden gönder"
+        "share_resend": "Paylaşım davetini yeniden gönder",
+        "share_revoke": "Paylaşım erişimi iptal edildi",
+        "share_updated": "Erişim hakları güncellendi"
+    },
+    "title": {
+        "advanced_filters": "Gelişmiş Filtreler"
+    },
+    "tooltip": {
+        "edit": "Erişimi düzenle",
+        "resend": "Bu paylaşım hakkında e-posta bildirimi gönder",
+        "revoke": "Erişimi iptal et"
+    },
+    "types": {
+        "home": "Giriş",
+        "mobile": "Mobil",
+        "other": "diğer",
+        "work": "İş"
     }
 }
