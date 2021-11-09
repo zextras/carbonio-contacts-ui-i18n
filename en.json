@@ -107,6 +107,7 @@
         "title": "Job Role"
     },
     "label": {
+        "activate_selection_mode": "Activate selection mode",
         "advance_filters": "1 Advanced filter",
         "advance_filters_plural": "{{count}} Advanced filters",
         "cancel": "Cancel",
