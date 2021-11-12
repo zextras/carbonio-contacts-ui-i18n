@@ -137,7 +137,13 @@
         "advance_filters_plural": "{{count}} एड्वांस्ड फिल्टर",
         "contact_setting": "संपर्क सेटिंग्स",
         "create": "नया सम्पर्क",
-        "revoke_access_tooltip": "एक स्टैंडर्ड नोटिफिकेशन भेजकर एक्सेस बंद करें"
+        "revoke_access_tooltip": "एक स्टैंडर्ड नोटिफिकेशन भेजकर एक्सेस बंद करें",
+        "revoke_access_without_notification": "बिना किसी सूचना के एक्सेस खत्म करें",
+        "revoke_send_standard_msg": "एक कस्टम नोटिफिकेशन भेजकर एक्सेस बंद करें",
+        "revoke_share": "{{title}} की शेयरिंग बंद करें",
+        "search_hint": "सर्च करने के लिए हिंट!",
+        "shares_folder_edit": "इस एड्रेस बुक की शेयरिंग",
+        "single_advance_fillter": "एड्वान्स्ड फ़िल्टर"
     },
     "name": {
         "nickName": "उर्फनाम"
@@ -161,5 +167,6 @@
         "snackbar": {
             "settings_saved": "बदलाव ठीक से सेव हो गए"
         }
-    }
+    },
+    "mail": "ई-मेल"
 }
