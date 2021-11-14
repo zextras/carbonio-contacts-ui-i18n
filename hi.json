@@ -116,8 +116,32 @@
         "insert": "सम्मिलित करना",
         "manager": "प्रबंधक",
         "role": "भूमिका",
-        "share_note": "आदर्श संदेश आपका नाम, साझा वस्तु का नाम, प्राप्तकर्ताओं को प्रदान अनुमतियाँ, और अगर आवश्यक हुआ तो साइन इन जानकारी प्रदर्शित करता है।",
-        "viewer": "दर्शक"
+        "share_note": "स्टैंडर्ड मैसेज आपका नाम, शेयर किए आइटम का नाम, पाने वालों को दी गईं अनुमतियाँ और साइन-इन जानकारी दिखाता है।",
+        "viewer": "दर्शक",
+        "contact_folder": "एड्रेस बुक",
+        "filter_user": "यूज़र ढूंढें",
+        "find_contact_shares": "कांटैक्ट शेयर ढूंढें",
+        "find_shares": "शेयर ढूंढें",
+        "find_shares_label": "आप जिस एड्रेस बुक को कांटैक्ट के ट्री में देखना चाहते हैं उसे चुनें",
+        "options": {
+            "share_calendar_with": {
+                "external_guests": "बाहरी गेस्ट (सिर्फ देख सकते हैं)",
+                "internal_users_groups": "आंतरिक यूज़र या ग्रुप",
+                "public": "पब्लिक (केवल देख सकते हैं, किसी पासवर्ड की जरूरत नहीं)"
+            }
+        },
+        "recipients_address": "पाने वाले के ईमेल पते",
+        "send_notification": "इस शेयर के बारे में नोटिफिकेशन भेजें",
+        "share_added_succesfully": "शेयर्ड जोड़े गए",
+        "share_info": "शेयर्ड एड्रेस बुक की जानकारी",
+        "share_removed_succesfully": "शेयर किए गए हटाए गए",
+        "shared_folders": "शेयर की गई एड्रेस बुक्स",
+        "shared_item": "शेयर किए गए आइटम",
+        "shared_items": "{{value}} की शेयर्ड एड्रेस बुक्स",
+        "standard_message": "स्टैंडर्ड मैसेज में कोई नोट जोड़ें",
+        "workflow": "वर्कफ़्लो",
+        "write": "लिखें",
+        "remove_from_this_list": "इस लिस्ट से हटाएँ"
     },
     "job": {
         "company": "कंपनी",
@@ -132,7 +156,7 @@
         "edit_folder_properties": "{{name}} के गुण में संशोधन",
         "edit_access": "{{name}} के ऐक्सेस में संशोधन",
         "resend": "दोबारा भेजें",
-        "revoke": "वापस लेना",
+        "revoke": "बंद करें",
         "advance_filters": "1 एड्वांस्ड फिल्टर",
         "advance_filters_plural": "{{count}} एड्वांस्ड फिल्टर",
         "contact_setting": "संपर्क सेटिंग्स",
@@ -146,7 +170,12 @@
         "single_advance_fillter": "एड्वान्स्ड फ़िल्टर"
     },
     "name": {
-        "nickName": "उर्फनाम"
+        "nickName": "उर्फनाम",
+        "first_name": "नाम",
+        "last_name": "सरनेम",
+        "middle_name": "माध्यम नाम",
+        "prefix": "प्रीफ़िक्स",
+        "suffix": "सफ़िक्स"
     },
     "notes": "नोट्स",
     "section": {
@@ -156,17 +185,80 @@
             "city": "नगर",
             "number": "संख्या",
             "postalCode": "पिन कोड",
-            "street": "गली"
+            "street": "गली",
+            "url": "वेबसाइट"
         },
         "title": {
             "address": "पता",
-            "address_plural": ""
+            "address_plural": "",
+            "mail": "ई-मेल पता",
+            "phone_number": "फोन कांटैक्ट",
+            "url": "वेबसाइट",
+            "url_plural": "({{count}}) वेबसाइट"
         }
     },
     "message": {
         "snackbar": {
             "settings_saved": "बदलाव ठीक से सेव हो गए"
+        },
+        "search_hints": "सर्च हिंट जिनकी हमने चर्चा की थी"
+    },
+    "mail": "ई-मेल",
+    "messages": {
+        "modal": {
+            "delete": {
+                "if_delete_lost_forever": "इस कांटैक्ट को परमानेंट डिलीट करने के बाद आप इसे फिर वापस नहीं ला सकेंगे, जारी रखें?",
+                "sure_delete_contact": "क्या आप वाकई में इस कांटैक्ट को परमानेंट डिलीट करना चाहते हैं?",
+                "sure_delete_contact_plural": "क्या आप वाकई में चुने हुए कांटैक्ट्स को परमानेंट डिलीट करना चाहते हैं?"
+            }
+        },
+        "snackbar": {
+            "address_book_moved": "एड्रेस बुक गंतव्य फोल्डर में भेजा गया",
+            "contact_deleted_permanently": "कांटैक्ट परमानेंट डिलीट कर दिया गया",
+            "contact_moved": "कांटैक्ट गंतव्य एड्रेस बुक में भेजा गया",
+            "contact_moved_to_trash": "कांटैक्ट रद्दी में भेजा गया",
+            "contact_restored": "कांटैक्ट गंतव्य एड्रेस बुक में वापस लाया गया"
         }
     },
-    "mail": "ई-मेल"
+    "modal": {
+        "address_book_name": "एड्रेस बुक नाम",
+        "destination": "गंतव्य फोल्डर"
+    },
+    "select": {
+        "default": "टाइप सिलेक्ट करें"
+    },
+    "settings": {
+        "contacts": {
+            "checkbox": {
+                "add_contact_to_emailed_contacts": "\"ईमेल किए कांटैक्ट\" में नए कांटैक्ट जोड़ें",
+                "autocomplete_on_comma": "जब कॉमा टाइप किया जाए तो ऑटोकंप्लीट मैच चुनें",
+                "incl_addrs_in_glbl_addrs_list": "ग्ल्बोल एड्रेस लिस्ट में पते शामिल करें",
+                "include_add_in_shared_contact": "पते शेयर्ड कांटैक्ट में शामिल करें",
+                "srch_glbl_addrs_list": "कांटैक्ट ढूंढते समय पहले ग्लोबल एड्रेस लिस्ट में सर्च करें"
+            }
+        }
+    },
+    "snackbar": {
+        "error": "कुछ गड़बड़ हुई, दोबारा कोशिश करें",
+        "folder_edited": "एड्रेस बुक एडिट की गई",
+        "folder_shared": "एड्रेस बुक शेयर की गई",
+        "folder_shared_error": "कुछ गड़बड़ हुई, दोबारा कोशिश करें",
+        "share_resend": "शेयर इन्वाइट भेजा गया",
+        "share_revoke": "शेयर एक्सेस वापस ली गई",
+        "share_updated": "एक्सेस अधिकार अपडेट हुए"
+    },
+    "title": {
+        "advanced_filters": "एड्वान्स्ड फ़िल्टर"
+    },
+    "tooltip": {
+        "edit": "एक्सेस में बदलाव करें",
+        "resend": "इस शेयर के बारे में मेल नोटिफिकेशन भेजें",
+        "revoke": "एक्सेस बंद करें"
+    },
+    "types": {
+        "home": "होम",
+        "mobile": "मोबाइल",
+        "other": "अन्य",
+        "work": "काम"
+    }
 }
