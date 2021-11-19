@@ -107,11 +107,12 @@
         "title": "Job Role"
     },
     "label": {
+        "activate_selection_mode": "Activate selection mode",
         "advance_filters": "1 Advanced filter",
         "advance_filters_plural": "{{count}} Advanced filters",
         "cancel": "Cancel",
         "contact_setting": "Contact Settings",
-        "create": "",
+        "create": "Create",
         "edit": "Edit",
         "edit_access": "Edit {{name}}'s access",
         "edit_folder_properties": "Edit {{name}}'s properties",
@@ -165,6 +166,7 @@
     },
     "notes": "Notes",
     "of": "",
+    "results_for": "Results for:",
     "section": {
         "field": {
             "city": "City",
@@ -177,11 +179,11 @@
         },
         "title": {
             "address": "Address",
-            "address_plural": "",
+            "address_plural": "Addresses",
             "mail": "Email address",
             "phone_number": "Phone contact",
             "url": "Website",
-            "url_plural": ""
+            "url_plural": "Websites"
         }
     },
     "select": {
