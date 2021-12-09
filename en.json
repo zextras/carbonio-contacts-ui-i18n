@@ -11,6 +11,17 @@
         "send_msg": "Send mail",
         "share_folder": "Share folder"
     },
+    "displayer": {
+        "search_description1": "Or select “Advanced Filters” to refine your search.",
+        "search_description2": "Try to start another search.",
+        "search_description3": "Check the spelling and the filters' options or try with another keyword.",
+        "search_list_title1": "It looks like there are no results. Keep searching!",
+        "search_list_title2": "None of your items matches your search.",
+        "search_title1": "Start another search",
+        "search_title2": "We’re sorry but there are no results for your search",
+        "search_title3": "There are no results for your search.",
+        "search_title4": "Select one or more results to perform actions or display details."
+    },
     "folder": {
         "action": {
             "delete": "Delete address book",
@@ -123,7 +134,6 @@
         "revoke_send_standard_msg": "Revoke access sending a custom notification",
         "revoke_share": "Revoke {{title}}'s share",
         "save": "Save",
-        "search_hint": "Search hints!",
         "share": "Share",
         "shares_folder_edit": "Sharing of this address book",
         "single_advance_fillter": "Advanced Filters"
@@ -131,7 +141,6 @@
     "mail": "Email",
     "message": {
         "new_contact": "This contact will be created in the 'Contacts' folder",
-        "search_hints": "Search hints we need to discuss about",
         "snackbar": {
             "settings_saved": "Edits saved correctly"
         }
