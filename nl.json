@@ -138,7 +138,7 @@
         "viewer": "Viewer",
         "workflow": "Workflow",
         "write": "Schrijven",
-        "share_note": "Het standaardbericht toont uw naam, de naam van het gedeelde item, de machtigingen die aan de ontvangers zijn verleend en, indien nodig, de aanmeldingsinformatie."
+        "share_note": "Het standaardbericht toont uw naam, de naam van het gedeelde item, de machtigingen die aan de ontvangers zijn verleend en, indien nodig."
     },
     "action": {
         "delete": "Verwijderen",
@@ -260,5 +260,6 @@
         "edit": "Toegang bewerken",
         "resend": "Bericht over dit aandeel verzenden",
         "revoke": "Toegang intrekken"
-    }
+    },
+    "of": "van"
 }
