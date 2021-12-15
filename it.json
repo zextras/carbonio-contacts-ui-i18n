@@ -268,5 +268,6 @@
         "edit": "Modifica accesso",
         "resend": "Invia notifica per questa condivisione",
         "revoke": "Revoca accesso"
-    }
+    },
+    "of": "di"
 }
