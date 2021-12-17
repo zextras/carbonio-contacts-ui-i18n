@@ -1,14 +1,10 @@
 {
 	"action": {
-		"delete": "Delete",
 		"delete_permanently": "Delete Permanently",
-		"edit_share": "Edit Access",
 		"goto_folder": "Go to folder",
-		"move": "Move",
 		"reset_filters": "Reset Filters",
-		"restore": "Restore",
 		"search": "Search",
-		"send_msg": "Send email",
+		"send_msg": "Send e-mail",
 		"share_folder": "Share folder"
 	},
 	"folder": {
@@ -20,39 +16,27 @@
 				"folder": "Empty address book",
 				"trash": "Empty trash"
 			},
-			"move": "Move address book",
-			"new": "New address book"
-		},
-		"item": {
-			"root": "Root"
+			"move": "Move address book"
 		},
 		"modal": {
 			"delete": {
 				"body": {
 					"message1": "Do you want to delete the address book selected? If you delete it, all the related content will be moved to trash and the address book will no longer be visible.",
 					"message2": "Do you want to delete permanently the address book selected? If you delete it, all the related content will be permanently removed and the address book will no longer be recoverable."
-				},
-				"footer": "Delete",
-				"title": "Delete"
+				}
 			},
 			"edit": {
 				"body": {
-					"contacts": "Contacts",
 					"item": {
-						"empty": "No path available",
-						"root": "root"
-					},
-					"type": "Type"
-				},
-				"footer": "Edit"
+						"empty": "No path available"
+					}
+				}
 			},
 			"empty": {
 				"body": {
 					"message1": "Do you want to empty the address book selected?",
 					"message2": "If you empty it, all the related content will be moved to trash."
-				},
-				"footer": "Empty",
-				"title": "Empty"
+				}
 			},
 			"footer": {
 				"go_back": "Go back"
@@ -65,12 +49,9 @@
 					"message1": "Select an address book to move the considered one to:",
 					"message3": "Select a folder to move the considered one to:"
 				},
-				"footer": "Move",
 				"input": {
 					"filter": "Filter address book"
-				},
-				"new": "New address Book",
-				"title": "Move"
+				}
 			},
 			"new": {
 				"body": {
@@ -78,7 +59,6 @@
 					"message2": "Select an address book which will contain the newly created one:"
 				},
 				"create_footer": "Create and Move",
-				"footer": "Create",
 				"input": {
 					"name": "Insert address book name",
 					"name_exist": "Name already exists in this path"
@@ -87,9 +67,7 @@
 				"title2": "New folder creation"
 			},
 			"restore": {
-				"create_footer": "Create and Restore",
-				"footer": "Restore",
-				"title": "Restore"
+				"create_footer": "Create and Restore"
 			}
 		},
 		"share_folder": "Share address book",
@@ -112,23 +90,37 @@
 		"advanced_filters_plural": "{{count}} Advanced filters",
 		"cancel": "Cancel",
 		"contact_setting": "Contact Settings",
+		"contacts": "Contacts",
 		"create": "Create",
+		"delete": "Delete",
 		"edit": "Edit",
-		"edit_access": "Edit {{name}}'s access",
+		"edit_access": "Edit access",
+		"edit_access_name": "Edit {{name}}'s access",
 		"edit_folder_properties": "Edit {{name}}'s properties",
+		"email": "E-mail",
+		"empty": "Empty",
+		"error_try_again": "Something went wrong, please try again",
+		"move": "Move",
+		"new_address_book": "New address book",
+		"notes": "Notes",
+		"of": "of",
 		"resend": "Resend",
+		"restore": "Restore",
+		"results_for": "Results for:",
 		"revoke": "Revoke",
-		"revoke_access_tooltip": "Revoke access sending a standard notification",
-		"revoke_access_without_notification": "Revoke access without sending a notification",
-		"revoke_send_standard_msg": "Revoke access sending a custom notification",
+		"revoke_with_standard_msg": "Revoke access sending a standard notification",
+		"revoke_without_notification": "Revoke access without sending a notification",
+		"revoke_with_custom_msg": "Revoke access sending a custom notification",
 		"revoke_share": "Revoke {{title}}'s share",
+		"root": "Root",
 		"save": "Save",
 		"search_hint": "Search hints!",
 		"share": "Share",
 		"shares_folder_edit": "Sharing of this address book",
-		"single_advanced_filter": "Advanced Filter"
+		"single_advanced_filter": "Advanced Filter",
+		"type": "Type",
+		"website": "Website"
 	},
-	"mail": "Email",
 	"message": {
 		"new_contact": "This contact will be created in the 'Contacts' folder",
 		"search_hints": "Search hints we need to discuss about",
@@ -139,9 +131,9 @@
 	"messages": {
 		"modal": {
 			"delete": {
-				"if_delete_lost_forever": "By permanently deleting this contact you will not be able to recover it anymore, continue ?",
-				"sure_delete_contact": "Are you sure to delete this contact permanently ?",
-				"sure_delete_contact_plural": "Are you sure to delete the selected contacts permanently ?"
+				"if_delete_lost_forever": "By permanently deleting this contact you will not be able to recover it anymore, continue?",
+				"sure_delete_contact": "Are you sure to delete this contact permanently?",
+				"sure_delete_contact_plural": "Are you sure to delete the selected contacts permanently?"
 			}
 		},
 		"snackbar": {
@@ -164,9 +156,6 @@
 		"prefix": "Prefix",
 		"suffix": "Suffix"
 	},
-	"notes": "Notes",
-	"of": "",
-	"results_for": "Results for:",
 	"section": {
 		"field": {
 			"city": "City",
@@ -174,16 +163,13 @@
 			"number": "Number",
 			"postalCode": "PostalCode",
 			"state": "State",
-			"street": "Street",
-			"url": "Website"
+			"street": "Street"
 		},
 		"title": {
 			"address": "Address",
 			"address_plural": "Addresses",
-			"mail": "Email address",
-			"phone_number": "Phone contact",
-			"url": "Website",
-			"url_plural": "Websites"
+			"mail": "E-mail address",
+			"phone_number": "Phone contact"
 		}
 	},
 	"select": {
@@ -206,9 +192,6 @@
 		"administer": "Administer",
 		"allowed_actions": "Allowed actions",
 		"contact_folder": "Address Book",
-		"contacts": "Contacts",
-		"create": "Create",
-		"delete": "Delete",
 		"filter_user": "Find users",
 		"find_contact_shares": "Find Contact Shares",
 		"find_shares": "Find Shares",
@@ -225,7 +208,7 @@
 		},
 		"owner": "Owner",
 		"read": "Read",
-		"recipients_address": "Recipients’ email addresses",
+		"recipients_address": "Recipients’ e-mail addresses",
 		"remove_from_this_list": "Remove from this list",
 		"role": "Role",
 		"send_notification": "Send notification about this share",
@@ -237,16 +220,13 @@
 		"shared_item": "Shared Item",
 		"shared_items": "{{value}}'s shared address books",
 		"standard_message": "Add a note to standard message",
-		"type": "Type",
 		"viewer": "Viewer",
 		"workflow": "Workflow",
 		"write": "Write"
 	},
 	"snackbar": {
-		"error": "Something went wrong, please try again",
 		"folder_edited": "Address book edited successfully",
 		"folder_shared": "Address book shared",
-		"folder_shared_error": "Something went wrong, please try again",
 		"share_resend": "Share invite resent",
 		"share_revoke": "Share access revoked",
 		"share_updated": "Access rights updated"
@@ -255,7 +235,6 @@
 		"advanced_filters": "Advanced Filters"
 	},
 	"tooltip": {
-		"edit": "Edit access",
 		"resend": "Resend email notification about this share",
 		"revoke": "Revoke access"
 	},
