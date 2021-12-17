@@ -11,6 +11,36 @@
         "send_msg": "Send mail",
         "share_folder": "Share folder"
     },
+    "displayer": {
+        "description2": "Click the “NEW” button to start creating a new one.",
+        "description3": "Click the “NEW” button to create a new group of contacts.",
+        "description4": "Create a new one by clicking the “NEW” button.",
+        "description5": "Discover all the ways you can connect with other users.",
+        "description6": "Use the “Edit” mode to add any personal note to a contact.",
+        "description7": "Create a group of contacts by clicking the “NEW” button.",
+        "description8": "Select a contact or a group of contacts to send shared emails.",
+        "list_title1": "It looks like there are no contacts yet",
+        "list_title2": "The trash is empty",
+        "search_description1": "Or select “Advanced Filters” to refine your search.",
+        "search_description2": "Try to start another search.",
+        "search_description3": "Check the spelling and the filters' options or try with another keyword.",
+        "search_list_title1": "It looks like there are no results. Keep searching!",
+        "search_list_title2": "None of your items matches your search.",
+        "search_title1": "Start another search",
+        "search_title2": "We’re sorry but there are no results for your search",
+        "search_title3": "There are no results for your search.",
+        "search_title4": "Select one or more results to perform actions or display details.",
+        "title1": "Create a new contact by clicking the “NEW” button.",
+        "title10": "Select and restore contacts from the trash",
+        "title2": "Share all your works with your contacts.",
+        "title3": "Stay in touch with your colleagues.",
+        "title4": "Customize your contacts by adding personal notes",
+        "title5": "Select a contact",
+        "title6": "Customize a contact",
+        "title7": "Stay in touch with your colleagues",
+        "title8": "Sharing is caring",
+        "title9": "Click the trash icon to delete a contact."
+    },
     "folder": {
         "action": {
             "delete": "Delete address book",
@@ -123,7 +153,6 @@
         "revoke_send_standard_msg": "Revoke access sending a custom notification",
         "revoke_share": "Revoke {{title}}'s share",
         "save": "Save",
-        "search_hint": "Search hints!",
         "share": "Share",
         "shares_folder_edit": "Sharing of this address book",
         "single_advance_fillter": "Advanced Filters"
@@ -131,7 +160,6 @@
     "mail": "Email",
     "message": {
         "new_contact": "This contact will be created in the 'Contacts' folder",
-        "search_hints": "Search hints we need to discuss about",
         "snackbar": {
             "settings_saved": "Edits saved correctly"
         }
