@@ -18,7 +18,7 @@
                 "footer": "Sil",
                 "body": {
                     "message1": "Seçili adres defterini silmek istiyor musunuz? Silerseniz, ilgili içerik çöp kutusuna taşınacak ve adres defteri artık görüntülenmeyecek.",
-                    "message2": "Seçili adres defterini kalıcı olarak silmek istiyor musunuz? Silerseniz, ilgili içerik kalıcı olarak silinecek ve adres defteri artık kullanılamayacak."
+                    "message2": "Seçili adres defterini kalıcı olarak silmek istiyor musunuz? Silerseniz, tüm ilgili içerik kalıcı olarak silinecek ve adres defteri artık kullanılamayacak."
                 }
             },
             "footer": {
@@ -33,7 +33,7 @@
                 "footer": "Oluştur",
                 "body": {
                     "message1": "Yeni adres defteri adı",
-                    "message2": "Yeni oluşturulan kişinin bulunacağı adres defterini seçin:"
+                    "message2": "Yeni oluşturulan öğenin bulunacağı adres defterini seçin:"
                 },
                 "create_footer": "Oluştur ve Taşı",
                 "input": {
@@ -152,7 +152,7 @@
     "label": {
         "cancel": "İptal",
         "edit": "Düzenle",
-        "edit_access": "{{name}}'in erişimini düzenle",
+        "edit_access": "Erişimi düzenle",
         "resend": "Yeniden gönder",
         "revoke": "İptal et",
         "save": "Kaydet",
@@ -160,7 +160,7 @@
         "advance_filters": "1 Gelişmiş filtre",
         "advance_filters_plural": "{{count}} Gelişmiş filtre",
         "contact_setting": "Kişi Ayarları",
-        "create": "Yeni Kişi",
+        "create": "Oluştur",
         "edit_folder_properties": "{{name}}'in özelliklerini düzenle",
         "revoke_access_tooltip": "Standart bildirim göndererek erişim yetkisini kaldır",
         "revoke_access_without_notification": "Bildirim göndermeden erişim yetkisini kaldır",
@@ -168,7 +168,29 @@
         "revoke_share": "{{title}} paylaşımını iptal et",
         "search_hint": "İpuçlarında ara!",
         "shares_folder_edit": "Bu adres defteri paylaşımı",
-        "single_advance_fillter": "Gelişmiş Filtreler"
+        "single_advance_fillter": "Gelişmiş Filtreler",
+        "activate_selection_mode": "Seçim modunu aktive et",
+        "advanced_filters": "1 Gelişimiş filtre",
+        "advanced_filters_plural": "{{count}} Gelişimiş filtre",
+        "contacts": "Kişiler",
+        "empty": "Boşalt",
+        "delete": "Sil",
+        "edit_access_name": "{{name}}'in erişimini düzenle",
+        "email": "E-posta",
+        "error_try_again": "Bir sorun oluştu, lütfen tekrar deneyin",
+        "move": "Taşı",
+        "new_address_book": "Yeni adres defteri",
+        "notes": "Notlar",
+        "of": "—",
+        "restore": "Geri al",
+        "results_for": "Sonuçlar:",
+        "revoke_with_standard_msg": "Standart bildirim göndererek erişimi iptal edin",
+        "revoke_without_notification": "Bildirim göndermeden erişimi iptal edin",
+        "revoke_with_custom_msg": "Özel bildirim göndererek erişimi iptal edin",
+        "root": "Kök",
+        "single_advanced_filter": "Gelişmiş Filtreleme",
+        "type": "Tür",
+        "website": "Web sitesi"
     },
     "job": {
         "company": "Firma",
