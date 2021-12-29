@@ -52,9 +52,9 @@
     "mail_plural": "E-mail {{count}}",
     "label": {
         "edit": "Modifica",
-        "create": "Nuovo Contatto",
+        "create": "Crea",
         "save": "Salva",
-        "cancel": "Annulla",
+        "cancel": "Cancella",
         "advance_filters": "1 Filtro avanzato",
         "advance_filters_plural": "{{count}} Filtri avanzati",
         "contact_setting": "Impostazioni di contatto",
@@ -69,7 +69,12 @@
         "search_hint": "Cerca suggerimenti!",
         "share": "Condividi",
         "shares_folder_edit": "Condivisione di questa rubrica",
-        "single_advance_fillter": "Filtri Avanzati"
+        "single_advance_fillter": "Filtri Avanzati",
+        "empty": "Vuoto",
+        "error_try_again": "Qualcosa è andato storto, riprova",
+        "move": "Sposta",
+        "restore": "Ripristina",
+        "results_for": "Risultati per:"
     },
     "job": {
         "title": "Ruolo",
@@ -170,7 +175,7 @@
         "type": "Cartella Contatti"
     },
     "action": {
-        "send_msg": "Invia email",
+        "send_msg": "Invia e-mail",
         "delete": "Cancella",
         "delete_permanently": "Elimina definitivamente",
         "move": "Sposta",

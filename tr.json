@@ -18,7 +18,7 @@
                 "footer": "Sil",
                 "body": {
                     "message1": "Seçili adres defterini silmek istiyor musunuz? Silerseniz, ilgili içerik çöp kutusuna taşınacak ve adres defteri artık görüntülenmeyecek.",
-                    "message2": "Seçili adres defterini kalıcı olarak silmek istiyor musunuz? Silerseniz, ilgili içerik kalıcı olarak silinecek ve adres defteri artık kullanılamayacak."
+                    "message2": "Seçili adres defterini kalıcı olarak silmek istiyor musunuz? Silerseniz, tüm ilgili içerik kalıcı olarak silinecek ve adres defteri artık kullanılamayacak."
                 }
             },
             "footer": {
@@ -33,7 +33,7 @@
                 "footer": "Oluştur",
                 "body": {
                     "message1": "Yeni adres defteri adı",
-                    "message2": "Yeni oluşturulan kişinin bulunacağı adres defterini seçin:"
+                    "message2": "Yeni oluşturulan öğenin bulunacağı adres defterini seçin:"
                 },
                 "create_footer": "Oluştur ve Taşı",
                 "input": {
@@ -135,8 +135,8 @@
         "type": "Tür",
         "viewer": "Görüntüleyici",
         "workflow": "İş Akışı",
-        "write": "Yazı",
-        "share_note": "Standart mesajda adınız, paylaşılan öğenin adı, alıcıya verilen izinler ve giriş bilgisi gösterilir.",
+        "write": "Yaz",
+        "share_note": "Standart mesajda adınız, paylaşılan öğenin adı, alıcıya verilen izinler ve eğer gerekirse giriş bilgisi gösterilir.",
         "find_shares_label": "Kişiler dizininde görmek istediğiniz adres defterini seçin",
         "share_added_succesfully": "Paylaşım başarıyla eklendi",
         "share_info": "Paylaşılan adres defteri bilgisi",
@@ -152,7 +152,7 @@
     "label": {
         "cancel": "İptal",
         "edit": "Düzenle",
-        "edit_access": "{{name}}'in erişimini düzenle",
+        "edit_access": "Erişimi düzenle",
         "resend": "Yeniden gönder",
         "revoke": "İptal et",
         "save": "Kaydet",
@@ -160,15 +160,37 @@
         "advance_filters": "1 Gelişmiş filtre",
         "advance_filters_plural": "{{count}} Gelişmiş filtre",
         "contact_setting": "Kişi Ayarları",
-        "create": "Yeni Kişi",
+        "create": "Oluştur",
         "edit_folder_properties": "{{name}}'in özelliklerini düzenle",
         "revoke_access_tooltip": "Standart bildirim göndererek erişim yetkisini kaldır",
         "revoke_access_without_notification": "Bildirim göndermeden erişim yetkisini kaldır",
         "revoke_send_standard_msg": "Özel bildirim göndererek erişim yetkisini kaldır",
         "revoke_share": "{{title}} paylaşımını iptal et",
-        "search_hint": "İpuçlarında ara!",
+        "search_hint": "Arama ipuçları!",
         "shares_folder_edit": "Bu adres defteri paylaşımı",
-        "single_advance_fillter": "Gelişmiş Filtreler"
+        "single_advance_fillter": "Gelişmiş Filtreler",
+        "activate_selection_mode": "Seçim modunu aktive et",
+        "advanced_filters": "1 Gelişimiş filtre",
+        "advanced_filters_plural": "{{count}} Gelişimiş filtre",
+        "contacts": "Kişiler",
+        "empty": "Boşalt",
+        "delete": "Sil",
+        "edit_access_name": "{{name}}'in erişimini düzenle",
+        "email": "E-posta",
+        "error_try_again": "Bir sorun oluştu, lütfen tekrar deneyin",
+        "move": "Taşı",
+        "new_address_book": "Yeni adres defteri",
+        "notes": "Notlar",
+        "of": "—",
+        "restore": "Geri al",
+        "results_for": "Sonuçlar:",
+        "revoke_with_standard_msg": "Standart bildirim göndererek erişimi iptal edin",
+        "revoke_without_notification": "Bildirim göndermeden erişimi iptal edin",
+        "revoke_with_custom_msg": "Özel bildirim göndererek erişimi iptal edin",
+        "root": "Kök",
+        "single_advanced_filter": "Gelişmiş Filtreleme",
+        "type": "Tür",
+        "website": "Web sitesi"
     },
     "job": {
         "company": "Firma",
@@ -217,7 +239,7 @@
         },
         "title": {
             "address": "Adres",
-            "address_plural": "Adres ({{count}})",
+            "address_plural": "Adres",
             "mail": "E-posta adresi",
             "phone_number": "Telefon",
             "url": "Web Sitesi",
@@ -230,10 +252,10 @@
     "settings": {
         "contacts": {
             "checkbox": {
-                "add_contact_to_emailed_contacts": "\"E-posta Gönderilen Kişiler\" listesine yeni kişiler ekle",
+                "add_contact_to_emailed_contacts": "Yeni kişileri \"E-posta Gönderilen Kişiler\" listesine ekle",
                 "autocomplete_on_comma": "Virgül yazıldığında otomatik tamamlamada eşleşeni seç",
-                "incl_addrs_in_glbl_addrs_list": "Adresleri Global Adres Listesine ekle",
-                "include_add_in_shared_contact": "Adresleri paylaşılan kişilere ekle",
+                "incl_addrs_in_glbl_addrs_list": "Global Adres Listesindeki adresleri ekle",
+                "include_add_in_shared_contact": "Paylaşılan kişilerdeki adresleri ekle",
                 "srch_glbl_addrs_list": "Kişi seçerken öncelikle Global Adres Defterinde arama yap"
             }
         }
@@ -252,7 +274,7 @@
     },
     "tooltip": {
         "edit": "Erişimi düzenle",
-        "resend": "Bu paylaşım hakkında e-posta bildirimi gönder",
+        "resend": "Bu paylaşım hakkında e-posta bildirimini yeniden gönder",
         "revoke": "Erişimi iptal et"
     },
     "types": {
