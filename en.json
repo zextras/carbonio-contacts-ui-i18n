@@ -204,7 +204,7 @@
 		},
 		"title": {
 			"address": "Address",
-			"address_plural": "",
+			"address_plural": "Addresses",
 			"mail": "E-mail address",
 			"phone_number": "Phone contact"
 		}
