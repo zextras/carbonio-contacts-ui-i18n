@@ -119,8 +119,8 @@
             "phone_number": "Номер телефона",
             "mail": "Электронная почта",
             "address_0": "Адрес",
-            "address_1": "Адреса ({{count}})",
-            "address_2": "Адресов ({{count}})"
+            "address_1": "Адреса",
+            "address_2": "Адресов"
         }
     },
     "types": {
@@ -142,7 +142,7 @@
     "label": {
         "save": "Сохранить",
         "edit": "Редактировать",
-        "create": "Новый Контакт",
+        "create": "Создать",
         "cancel": "Отменить",
         "contact_setting": "Настройки Контактов",
         "revoke_access_tooltip": "Отозвать доступ, отправив стандартное уведомление",
@@ -153,13 +153,35 @@
         "advance_filters_0": "{{count}} Расширенный фильтр",
         "advance_filters_1": "{{count}} Расширенные фильтры",
         "advance_filters_2": "{{count}} Расширенных фильтров",
-        "edit_access": "Изменить права доступа {{name}}",
+        "edit_access": "Изменить права доступа",
         "edit_folder_properties": "Изменить свойства {{name}}",
         "revoke": "Отозвать",
         "share": "Поделиться",
         "shares_folder_edit": "Совместное использование этой адресной книги",
         "resend": "Отправить повторно",
-        "revoke_share": "Отозвать доступ {{title}}"
+        "revoke_share": "Отозвать доступ {{title}}",
+        "activate_selection_mode": "Активировать режим выбора",
+        "advanced_filters_0": "Расширенный фильтр",
+        "advanced_filters_1": "{{count}} Расширенные фильтры",
+        "advanced_filters_2": "{{count}} Расширенных фильтров",
+        "contacts": "Контакты",
+        "empty": "Пусто",
+        "error_try_again": "Что-то пошло не так, попробуйте еще раз",
+        "move": "Перенести",
+        "restore": "Восстановить",
+        "results_for": "Результаты поиска:",
+        "delete": "Удалить",
+        "edit_access_name": "Изменить права доступа {{name}}",
+        "email": "электронная почта",
+        "notes": "Заметки",
+        "revoke_without_notification": "Отменить доступ без отправки уведомления",
+        "revoke_with_custom_msg": "Отменить доступ, отправив персонализированное уведомление",
+        "root": "Root",
+        "single_advanced_filter": "Расширенный фильтр",
+        "type": "Тип",
+        "website": "Сайт",
+        "new_address_book": "Новая адресная книга",
+        "revoke_with_standard_msg": "Отменить доступ, отправив стандартное уведомление"
     },
     "job": {
         "title": "Должность",
