@@ -189,7 +189,8 @@
         "root": "Kök",
         "single_advanced_filter": "Gelişmiş Filtreleme",
         "type": "Tür",
-        "website": "Web sitesi"
+        "website": "Web sitesi",
+        "undo": "Geri Al"
     },
     "job": {
         "company": "Firma",
@@ -282,5 +283,12 @@
         "other": "diğer",
         "work": "İş"
     },
-    "of": "—"
+    "of": "—",
+    "contact_restored": "Kişi geri yüklendi",
+    "displayer": {
+        "description3": "Yeni bir kişiler grubu oluşturmak için \"YENİ\" tuşuna tıklayın.",
+        "description4": "\"YENİ\" tuşuna tıklayıp yeni bir tane oluşturun.",
+        "description5": "Diğer kullanıcılar ile tüm bağlantı yöntemlerini keşfedin.",
+        "description2": "Yeni bir tane oluşturmak için \"YENİ\" tuşuna tıklayın."
+    }
 }
