@@ -146,8 +146,7 @@
     "message": {
         "snackbar": {
             "settings_saved": "Değişiklikler başarıyla kaydedildi"
-        },
-        "search_hints": "Search hints we need to discuss about"
+        }
     },
     "label": {
         "cancel": "İptal",
