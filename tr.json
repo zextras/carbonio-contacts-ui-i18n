@@ -17,8 +17,8 @@
                 "title": "Sil",
                 "footer": "Sil",
                 "body": {
-                    "message1": "Seçili adres defterini silmek istiyor musunuz? Silerseniz, ilgili içerik çöp kutusuna taşınacak ve adres defteri artık görüntülenmeyecek.",
-                    "message2": "Seçili adres defterini kalıcı olarak silmek istiyor musunuz? Silerseniz, tüm ilgili içerik kalıcı olarak silinecek ve adres defteri artık kullanılamayacak."
+                    "message1": "Seçili adres defterini kalıcı olarak silmek istiyor musunuz? Silerseniz, ilgili içerik kalıcı olarak silinecek ve adres defteri artık geri alınamayacak.",
+                    "message2": "Seçili adres defterini kalıcı olarak silmek istiyor musunuz? Silerseniz, ilgili içerik kalıcı olarak silinecek ve adres defteri artık geri alınamayacak."
                 }
             },
             "footer": {
@@ -86,8 +86,9 @@
             "delete": "Adres defterini sil",
             "delete_permanently": "Adres defterini kalıcı olarak sil",
             "edit": "Adres defterini düzenle",
-            "move": "Adres defterini taşı",
-            "new": "Yeni adres defteri"
+            "move": "Taşı",
+            "new": "Yeni adres defteri",
+            "moved": "Adres defteri başarıyla taşındı"
         },
         "item": {
             "root": "Kök"
@@ -97,7 +98,8 @@
             "address_book_moved_to_trash": "Adres defteri çöp kutusuna taşındı",
             "folder_empty": "Adres defteri başarıyla boşaltıldı",
             "folder_new": "Yeni adres defteri oluşturuldu",
-            "trash_empty": "Çöp kutusu klasörü başarıyla boşaltıldı"
+            "trash_empty": "Çöp kutusu klasörü başarıyla boşaltıldı",
+            "address_book_permanently_deleted": "Adres defteri kalıcı olarak silindi"
         },
         "type": "Kişiler Klasörü"
     },
@@ -136,7 +138,7 @@
         "viewer": "Görüntüleyici",
         "workflow": "İş Akışı",
         "write": "Yaz",
-        "share_note": "Standart mesajda adınız, paylaşılan öğenin adı, alıcıya verilen izinler ve eğer gerekirse giriş bilgisi gösterilir.",
+        "share_note": "Standart mesajda adınız, paylaşılan öğenin adı, alıcıya verilen izinler ve giriş bilgisi gösterilir.",
         "find_shares_label": "Kişiler dizininde görmek istediğiniz adres defterini seçin",
         "share_added_succesfully": "Paylaşım başarıyla eklendi",
         "share_info": "Paylaşılan adres defteri bilgisi",
@@ -178,7 +180,7 @@
         "email": "E-posta",
         "error_try_again": "Bir sorun oluştu, lütfen tekrar deneyin",
         "move": "Taşı",
-        "new_address_book": "Yeni adres defteri",
+        "new_address_book": "Yeni Adres Defteri",
         "notes": "Notlar",
         "of": "—",
         "restore": "Geri al",
@@ -189,8 +191,15 @@
         "root": "Kök",
         "single_advanced_filter": "Gelişmiş Filtreleme",
         "type": "Tür",
-        "website": "Web sitesi",
-        "undo": "Geri Al"
+        "website": "Web Sitesi",
+        "website_plural": "Web Siteleri",
+        "undo": "Geri Al",
+        "Undo": "Geri Al",
+        "address_book_restored": "Adres defteri geri alındı",
+        "discard_changes": "DEĞİŞİKLİKLERİ UYGULAMA",
+        "new_contact_created": "Yeni kişi oluşturuldu",
+        "advanced_filter": "{{count}} Gelişmiş Filtre",
+        "advanced_filter_plural": "{{count}} Gelişmiş Filtreler"
     },
     "job": {
         "company": "Firma",
@@ -203,15 +212,15 @@
             "delete": {
                 "if_delete_lost_forever": "Bu kişiyi kalıcı olarak silerseniz geri alamazsınız, devam edilsin mi?",
                 "sure_delete_contact": "Bu kişiyi kalıcı olarak silmek istediğinizden emin misiniz?",
-                "sure_delete_contact_plural": "Seçili kişileri kalıcı olarak silmek istediğinizden emin misiniz?"
+                "sure_delete_contact_plural": "Bu kişileri kalıcı olarak silmek istediğinizden emin misiniz?"
             }
         },
         "snackbar": {
             "address_book_moved": "Adres defteri hedef klasöre taşındı",
             "contact_deleted_permanently": "Kişi kalıcı olarak silindi",
-            "contact_moved": "Kişi hedef adres defterine taşındı",
+            "contact_moved": "Kişi taşındı",
             "contact_moved_to_trash": "Kişi çöp kutusuna taşındı",
-            "contact_restored": "Kişi hedef adres defterine geri alındı"
+            "contact_restored": "Kişi geri yüklendi"
         }
     },
     "modal": {
@@ -274,7 +283,7 @@
     },
     "tooltip": {
         "edit": "Erişimi düzenle",
-        "resend": "Bu paylaşım hakkında e-posta bildirimini yeniden gönder",
+        "resend": "Bu paylaşım hakkında e-posta bildirimi gönder",
         "revoke": "Erişimi iptal et"
     },
     "types": {
@@ -289,6 +298,30 @@
         "description3": "Yeni bir kişiler grubu oluşturmak için \"YENİ\" tuşuna tıklayın.",
         "description4": "\"YENİ\" tuşuna tıklayıp yeni bir tane oluşturun.",
         "description5": "Diğer kullanıcılar ile tüm bağlantı yöntemlerini keşfedin.",
-        "description2": "Yeni bir tane oluşturmak için \"YENİ\" tuşuna tıklayın."
+        "description2": "Yeni bir tane oluşturmak için \"YENİ\" tuşuna tıklayın.",
+        "description6": "\"Düzenle\" modunu kullanarak bir kişiye kişisel not ekleyebilirsiniz.",
+        "description7": "\"YENİ\" tuşuna tıklayıp bir kişiler grubu oluşturun.",
+        "description8": "Paylaşılan e-postalar göndermek için kişi veya kişiler grubu seçin.",
+        "list_title1": "Henüz hiç kişi yok görünüyor",
+        "list_title2": "Çöp kutusu boş",
+        "search_description1": "Veya aramanızı detaylandırmak için “Gelişmiş Filtreler”i seçin.",
+        "search_description2": "Başka bir arama yapmayı deneyin.",
+        "search_description3": "Yazım hatalarını ve filtre seçeneklerini kontrol edin veya farklı kelimeler ile deneyin.",
+        "search_list_title1": "Sonuç bulunamadı. Yeniden aramayı deneyin!",
+        "search_list_title2": "Aramanız ile uyumlu öğe bulunamadı.",
+        "search_title1": "Farklı arama başlat",
+        "search_title2": "Üzgünüz, aramanız için sonuç bulunamadı",
+        "search_title3": "Aramanız için sonuç bulunamadı.",
+        "title1": "\"YENİ\" tuşuna tıklayıp yeni bir kişi oluşturun.",
+        "title10": "Çöp kutusundan kişileri seçin ve geri alın",
+        "title3": "İş arkadaşlarınız ile bağlantılı kalın.",
+        "title4": "Kişisel notlar ekleyerek kişilerinizi özelleştirin",
+        "title5": "Kişi seç",
+        "title6": "Kişiyi özelleştir",
+        "title8": "Paylaşmak iyidir",
+        "title9": "Kişiyi silmek için çöp kutusu simgesine tıklayın.",
+        "search_title4": "Detayları görüntülemek veya işlem yapmak için bir veya daha fazla sonuç seçin.",
+        "title2": "Tüm çalışmalarınızı kişileriniz ile paylaşın.",
+        "title7": "İş arkadaşlarınız ile bağlantılı kalın"
     }
 }
