@@ -186,14 +186,15 @@
         "website_2": "Сайтов",
         "new_address_book": "Новая адресная книга",
         "revoke_with_standard_msg": "Отменить доступ, отправив стандартное уведомление",
-        "discard_changes": "УДАЛИТЬ ИЗМЕНЕНИЯ",
+        "discard_changes": "ОТМЕНИТЬ ИЗМЕНЕНИЯ",
         "Undo": "Отменить",
         "new_contact_created": "Создан новый контакт",
         "undo": "Отменить",
         "address_book_restored": "Адресная книга восстановлена",
         "advanced_filter_0": "{{count}} Расширенный фильтр",
         "advanced_filter_1": "{{count}} Расширенных фильтра",
-        "advanced_filter_2": "{{count}} Расширенных фильтров"
+        "advanced_filter_2": "{{count}} Расширенных фильтров",
+        "search_activate_selection_mode": "Режим выбора пока недоступен в результатах поиска"
     },
     "job": {
         "title": "Должность",
