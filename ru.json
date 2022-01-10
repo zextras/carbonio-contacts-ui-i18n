@@ -194,7 +194,8 @@
         "advanced_filter_0": "{{count}} Расширенный фильтр",
         "advanced_filter_1": "{{count}} Расширенных фильтра",
         "advanced_filter_2": "{{count}} Расширенных фильтров",
-        "search_activate_selection_mode": "Режим выбора пока недоступен в результатах поиска"
+        "search_activate_selection_mode": "Режим выбора пока недоступен в результатах поиска",
+        "of": "из"
     },
     "job": {
         "title": "Должность",
