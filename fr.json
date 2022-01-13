@@ -1,1 +1,130 @@
-{}
+{
+    "action": {
+        "delete_permanently": "Supprimer définitivement",
+        "goto_folder": "Aller au dossier",
+        "search": "Recherche",
+        "share_folder": "Partager le dossier"
+    },
+    "displayer": {
+        "list_title2": "La corbeille est vide",
+        "search_description1": "Ou sélectionner \"Filtres avancés\" pour affiner votre recherche.",
+        "search_description2": "Essayer de lancer une autre recherche.",
+        "search_title1": "Lancer une autre recherche",
+        "search_list_title1": "Il semble qu'il n'y ait pas de résultats. Continuez à chercher !",
+        "search_list_title2": "Aucun de vos éléments ne correspond à votre recherche.",
+        "search_title2": "Nous sommes désolés mais il n'y a pas de résultats pour votre recherche",
+        "search_title3": "Il n'y a pas de résultats pour votre recherche.",
+        "search_title4": "Sélectionner un ou plusieurs résultats pour effectuer des actions ou afficher des détails.",
+        "title5": "sélectionner un contact"
+    },
+    "folder": {
+        "action": {
+            "move": "Déplacer"
+        },
+        "modal": {
+            "footer": {
+                "go_back": "Retour"
+            },
+            "new": {
+                "input": {
+                    "name_exist": "Le nom existe déjà dans ce chemin"
+                }
+            },
+            "restore": {
+                "create_footer": "Créer et restaurer"
+            }
+        }
+    },
+    "label": {
+        "edit": "Éditer",
+        "empty": "Vider",
+        "Undo": "Annuler",
+        "activate_selection_mode": "Activer le mode de sélection",
+        "cancel": "Annuler",
+        "contacts": "Contacts",
+        "create": "Créer",
+        "delete": "Effacer",
+        "discard_changes": "REJETER LES MODIFICATIONS",
+        "edit_access_name": "Modifier les accès de {{name}}",
+        "error_try_again": "Quelque chose s'est mal passé, veuillez recommencer",
+        "move": "Déplacer",
+        "notes": "Notes",
+        "of": "de",
+        "resend": "Renvoyer",
+        "restore": "Restaurer",
+        "results_for": "Résultats pour :",
+        "revoke": "Révoquer",
+        "revoke_with_custom_msg": "Révoquer l'accès en envoyant une notification personnalisée",
+        "revoke_with_standard_msg": "Révoquer les accès en envoyant une notification",
+        "revoke_without_notification": "Révoquer l'accès sans envoyer de notification",
+        "root": "Racine",
+        "save": "Sauvegarder",
+        "share": "Partager",
+        "single_advanced_filter": "Filtre avancé",
+        "type": "Type de rendez-vous",
+        "undo": "Annuler"
+    },
+    "name": {
+        "nickName": "Surnom",
+        "first_name": "Prénom",
+        "last_name": "Nom de famille"
+    },
+    "section": {
+        "field": {
+            "city": "Ville",
+            "country": "Pays",
+            "number": "Numéro",
+            "state": "État",
+            "street": "Voie"
+        },
+        "title": {
+            "address": "Adresse",
+            "address_plural": ""
+        }
+    },
+    "share": {
+        "standard_message": "Ajouter une note au message standard",
+        "viewer": "Visualisateur",
+        "write": "Ecrire",
+        "add": "Ajouter",
+        "admin": "Admin",
+        "administer": "Administrer",
+        "allowed_actions": "Actions autorisées",
+        "insert": "Insérer",
+        "manager": "Manager",
+        "none": "Aucun",
+        "options": {
+            "share_calendar_with": {
+                "external_guests": "Invité(e)s externes (vue seulement)",
+                "internal_users_groups": "Utilisateurs ou Groupes internes",
+                "public": "Public (affichage uniquement, pas de mot de passe requis)"
+            }
+        },
+        "owner": "Propriétaire",
+        "read": "Lire",
+        "recipients_address": "Adresses email des destinataires",
+        "remove_from_this_list": "Supprimer de cette liste",
+        "role": "Rôle",
+        "send_notification": "Envoyer une notification concernant ce partage"
+    },
+    "snackbar": {
+        "share_resend": "Invitation à partager renvoyée",
+        "share_revoke": "Accès au partage révoqué"
+    },
+    "title": {
+        "advanced_filters": "Filtres avancés"
+    },
+    "tooltip": {
+        "revoke": "Révoquer l'accès"
+    },
+    "job": {
+        "company": "Entreprise",
+        "department": "Département"
+    },
+    "message": {
+        "new_contact": "",
+        "snackbar": {
+            "settings_saved": "Modifications sauvées correctement"
+        }
+    }
+}
