@@ -18,7 +18,28 @@
         "revoke_share": "Revocar el uso compartido de {{title}}",
         "single_advance_fillter": "Filtros avanzados",
         "search_hint": "¡Sugerencias de búsqueda!",
-        "shares_folder_edit": "Compartir esta libreta de direcciones"
+        "shares_folder_edit": "Compartir esta libreta de direcciones",
+        "delete": "Eliminar",
+        "edit_access_name": "Editar acceso de {{name}}",
+        "email": "Correo electrónico",
+        "notes": "Notas",
+        "of": "de",
+        "restore": "Restaurar",
+        "results_for": "Resultados para:",
+        "revoke_with_standard_msg": "Revocar acceso enviando una notificación estándar",
+        "revoke_with_custom_msg": "Revocar acceso enviando una notificación personalizada",
+        "single_advanced_filter": "Filtro avanzado",
+        "type": "Tipo",
+        "website": "Página web",
+        "website_plural": "",
+        "Undo": "Deshacer",
+        "undo": "Deshacer",
+        "contacts": "Contactos",
+        "empty": "Vacía",
+        "error_try_again": "Algo fue mal, por favor, prueba de nuevo",
+        "move": "Mover",
+        "revoke_without_notification": "Revocar acceso sin enviar una notificación",
+        "root": "Raíz"
     },
     "share": {
         "none": "None",
@@ -80,7 +101,7 @@
                 "footer": "Eliminar",
                 "title": "Eliminar",
                 "body": {
-                    "message1": "¿Quieres borrar la libreta de direcciones seleccionada? Si la borras, el contenido relacionado se moverá al la papelera y la libreta de direcciones no será visible más.",
+                    "message1": "¿Quieres borrar la libreta de direcciones seleccionada? Si la borras, el contenido relacionado será eliminado y la libreta de direcciones no se podrá recuperar.",
                     "message2": "¿Quieres borrar la libreta de direcciones seleccionada permanentemente? Si la borras, el contenido relacionado será eliminado y la libreta de direcciones no se podrá recuperar."
                 }
             },
@@ -149,7 +170,7 @@
             "delete": "Borrar libreta de direcciones",
             "delete_permanently": "Borrar libreta de direcciones permanentemente",
             "edit": "Editar libreta de direcciones",
-            "move": "Mover libreta de direcciones",
+            "move": "Mover",
             "new": "Nueva libreta de direcciones"
         },
         "item": {
@@ -190,7 +211,7 @@
         },
         "title": {
             "address": "Dirección",
-            "address_plural": "Direcciones ({{count}})",
+            "address_plural": "Direcciones",
             "mail": "Dirección de correo electrónico",
             "phone_number": "Contacto telefónico",
             "url": "Página web",
@@ -208,9 +229,9 @@
         "snackbar": {
             "address_book_moved": "Libreta de direcciones movida a la carpeta de destino",
             "contact_deleted_permanently": "Contacto borrado permanentemente",
-            "contact_moved": "Contacto movido a la libreta de direcciones de destino",
+            "contact_moved": "Contacto movido",
             "contact_moved_to_trash": "Contacto movido a la papelera",
-            "contact_restored": "Contacto restaurado en la libreta de direcciones de destino"
+            "contact_restored": "Contacto restaurado"
         },
         "modal": {
             "delete": {
@@ -261,5 +282,8 @@
         "other": "otro",
         "work": "trabajo"
     },
-    "of": "de"
+    "of": "de",
+    "displayer": {
+        "title5": "Elegir un contacto"
+    }
 }
