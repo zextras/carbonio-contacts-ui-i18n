@@ -166,7 +166,27 @@
         "revoke_send_standard_msg": "Batalkan akses dengan mengirim pemberitahuan kustom",
         "revoke_share": "Batalkan berbagi {{title}}",
         "single_advance_fillter": "Filter Tingkat Lanjut",
-        "shares_folder_edit": "Berbagi buku alamat ini"
+        "shares_folder_edit": "Berbagi buku alamat ini",
+        "contacts": "Kontak",
+        "delete": "Hapus",
+        "edit_access_name": "Edit akses {{name}}",
+        "email": "Email",
+        "empty": "Kosong",
+        "error_try_again": "Terjadi kesalahan, coba lagi",
+        "move": "Pindahkan",
+        "notes": "Catatan",
+        "of": "dari",
+        "restore": "Pulihkan",
+        "results_for": "Hasil untuk:",
+        "revoke_with_standard_msg": "Batalkan akses dengan mengirim pemberitahuan standar",
+        "revoke_without_notification": "Batalkan akses tanpa mengirim pemberitahuan",
+        "revoke_with_custom_msg": "Batalkan akses dengan mengirim pemberitahuan kustom",
+        "root": "Root",
+        "type": "Jenis",
+        "single_advanced_filter": "Filter Lanjutan",
+        "website": "Situs Web",
+        "Undo": "Batalkan",
+        "undo": "Batalkan"
     },
     "name": {
         "nickName": "Nama panggilan",
@@ -256,5 +276,8 @@
         "share_resend": "Undangan berbagi dikirim ulang",
         "share_revoke": "Akses berbagi dibatalkan",
         "share_updated": "Hak akses diperbarui"
+    },
+    "displayer": {
+        "title5": "Pilih kontak"
     }
 }
