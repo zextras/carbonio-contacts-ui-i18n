@@ -99,7 +99,8 @@
         "discard_changes": "ELIMINA MODIFICHE",
         "undo": "Annulla",
         "website": "Sito Web",
-        "website_plural": ""
+        "website_plural": "",
+        "search_activate_selection_mode": "La Modalità Selezione non è ancora disponibile nei risultati di ricerca"
     },
     "job": {
         "title": "Ruolo",
