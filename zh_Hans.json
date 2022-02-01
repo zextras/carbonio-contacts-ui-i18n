@@ -168,7 +168,8 @@
         "shares_folder_edit": "共享此地址簿",
         "single_advance_fillter": "高级过滤条件",
         "error_try_again": "出现了一些错误，请重试",
-        "type": "类型"
+        "type": "类型",
+        "undo": "撤消"
     },
     "name": {
         "nickName": "昵称",
