@@ -263,7 +263,8 @@
         "share_note": "Il messaggio predefinito mostra il tuo nome, il nome dell'elemento condiviso, i permessi dati ai destinatari e le informazioni di accesso.",
         "shared_folders": "Rubriche Condivise",
         "type": "Tipo",
-        "shared_items": "Rubrica condivisa di {{value}}"
+        "shared_items": "Rubrica condivisa di {{value}}",
+        "viewer": "Vista"
     },
     "messages": {
         "snackbar": {
