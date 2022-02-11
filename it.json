@@ -220,7 +220,8 @@
                 "add_contact_to_emailed_contacts": "Aggiungi nuovi contatti a \"Persone contattate via e-mail\"",
                 "autocomplete_on_comma": "Seleziona auto completamento quando viene inserita una virgola",
                 "incl_addrs_in_glbl_addrs_list": "Includi indirizzi nella Lista Globale degli indirizzi GAL",
-                "include_add_in_shared_contact": "Includi indirizzi nei contatti condivisi"
+                "include_add_in_shared_contact": "Includi indirizzi nei contatti condivisi",
+                "srch_glbl_addrs_list": "Inizia la ricerca nella Lista Globale degli indirizzi GAL per la scelta dei contatti"
             }
         }
     },
