@@ -288,9 +288,9 @@
         "revoke": "Erişimi iptal et"
     },
     "types": {
-        "home": "Giriş",
+        "home": "Ev",
         "mobile": "Mobil",
-        "other": "diğer",
+        "other": "Diğer",
         "work": "İş"
     },
     "of": "—",
