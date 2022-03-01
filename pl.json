@@ -14,7 +14,7 @@
         "create": "Stwórz",
         "delete": "Usuń",
         "move": "Przenieś",
-        "of": "",
+        "of": "od",
         "resend": "Wyślij ponownie",
         "restore": "Przywróć",
         "results_for": "Wyniki dla:",
@@ -25,17 +25,18 @@
         "search_activate_selection_mode": "Tryb wyboru nie jest jeszcze dostępny w wynikach wyszukiwań",
         "empty": "Pusty",
         "error_try_again": "Coś poszło nie tak, spróbuj ponownie",
-        "undo": "Cofnij"
+        "undo": "Cofnij",
+        "type": "Typ"
     },
     "displayer": {
         "search_description1": "Lub wybierz \"Zaawansowane filtry\", aby urozmaicić wyniki wyszukiwania.",
         "search_title2": "Niestety nie udało znaleźć się żadnych wyników wyszukiwania",
         "search_description2": "Spróbuj rozpocząć kolejne wyszukiwanie.",
         "search_list_title1": "Wygląda na to, że nie ma żadnych wyników wyszukiwania. Nie poddawaj się!",
-        "search_list_title2": "Żaden z twoich przedmiotów nie odpowiada kryteriom wyszukiwania.",
+        "search_list_title2": "Żaden z twoich przedmiotów nie pasuje do kryteriów wyszukiwania.",
         "search_title1": "Rozpocznij kolejne wyszukiwanie",
         "search_title3": "Nie znaleziono wyników wyszukiwania.",
-        "search_title4": "Wybierz jeden lub więcej wyników, aby przeprowadzić czynność lub wyświetlić szczegóły."
+        "search_title4": "Wybierz jeden lub więcej wyników, aby przeprowadzić czynności lub wyświetlić szczegóły."
     },
     "action": {
         "search": "Wyszukaj",
@@ -50,9 +51,18 @@
         "options": {
             "share_calendar_with": {
                 "external_guests": "Goście spoza mojej domeny (mogą tylko wyświetlać)",
-                "internal_users_groups": "Użytkonicy lub Grupy z mojej domeny",
+                "internal_users_groups": "Użytkownicy lub Grupy z mojej domeny",
                 "public": "Publiczny (można tylko wyświetlać, hasło niewymagane)"
             }
-        }
+        },
+        "recipients_address": "Adresy e-mail odbiorców",
+        "share_note": "Domyślna wiadomość zawiera twoje imię, nazwę udostępnianiego przedmiotu, uprawnienia przyznane odbiorcom oraz informacje dot. logowania."
+    },
+    "snackbar": {
+        "share_resend": "Zaproszenie do udostępnienia zostało wysłane ponownie",
+        "share_revoke": "Dostęp do udostępniania został odebrany"
+    },
+    "tooltip": {
+        "revoke": "Odbierz dostęp"
     }
 }
