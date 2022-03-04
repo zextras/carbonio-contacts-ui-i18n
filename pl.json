@@ -3,7 +3,24 @@
         "modal": {
             "footer": {
                 "go_back": "Powrót"
+            },
+            "delete": {
+                "body": {
+                    "message1": "Czy na pewno chcesz usunąć tą książkę adresów? Jeśli ją usuniesz, powiązana zawartość zostanie trwale usunięta, a książki adresów nie będzie dało się już odzyskać.",
+                    "message2": "Czy na pewno chcesz trwale usunąć tą książkę adresów? Jeśli ją usuniesz, powiązana zawartość zostanie trwale usunięta, a książki adresów nie będzie dało się już odzyskać."
+                }
             }
+        },
+        "action": {
+            "delete_permanently": "Trwale usuń książkę adresów",
+            "delete": "Usuń książkę adresów",
+            "edit": "Edytuj książkę adresów",
+            "empty": {
+                "trash": "Opróżnij kosz",
+                "folder": "Opróżnij książkę adresów"
+            },
+            "move": "Przenieś",
+            "moved": "Książka adresów została przeniesiona pomyślnie"
         }
     },
     "label": {
@@ -29,18 +46,42 @@
         "type": "Typ"
     },
     "displayer": {
-        "search_description1": "Lub wybierz \"Zaawansowane filtry\", aby urozmaicić wyniki wyszukiwania.",
+        "search_description1": "Lub wybierz \"Zaawansowane filtry\", aby udoskonalić wyniki wyszukiwania.",
         "search_title2": "Niestety nie udało znaleźć się żadnych wyników wyszukiwania",
         "search_description2": "Spróbuj rozpocząć kolejne wyszukiwanie.",
         "search_list_title1": "Wygląda na to, że nie ma żadnych wyników wyszukiwania. Nie poddawaj się!",
         "search_list_title2": "Żaden z twoich przedmiotów nie pasuje do kryteriów wyszukiwania.",
         "search_title1": "Rozpocznij kolejne wyszukiwanie",
         "search_title3": "Nie znaleziono wyników wyszukiwania.",
-        "search_title4": "Wybierz jeden lub więcej wyników, aby przeprowadzić czynności lub wyświetlić szczegóły."
+        "search_title4": "Wybierz jeden lub więcej wyników, aby przeprowadzić czynności lub wyświetlić szczegóły.",
+        "description3": "Kliknij przycisk \"NOWY\", aby stworzyć nową grupę kontaktów.",
+        "description4": "Stwórz nowy, klikając przycisk \"NOWY\".",
+        "description6": "Użyj trybu \"Edytuj\", aby dodać prywatną notkę do kontaktu.",
+        "list_title1": "Wygląda na to, że nie masz jeszcze żadnych kontaktów",
+        "list_title2": "Kosz jest pusty",
+        "description7": "Stwórz grupę kontaktów klikając przycisk \"NOWY\".",
+        "description8": "Wybierz kontakt lub grupę kontaktów która będzie otrzymywać udostępniane e-maile.",
+        "title1": "Stwórz nowy kontakt klikając przycisk \"NOWY\".",
+        "title10": "Wybierz i odzyskaj kontakty z kosza",
+        "title2": "Udostępnij wszystkie swoje prace ze swoimi kontaktami.",
+        "title3": "Pozostać w kontakcie ze swoimi współpracownikami.",
+        "title4": "Dostosuj swoje kontakty dodając prywatne notki",
+        "title5": "Wybierz kontakt",
+        "title6": "Dostosuj kontakt",
+        "title7": "Pozostań w kontakcie ze swoimi współpracownikami",
+        "title8": "Wyślij udostępnionego e-maila",
+        "title9": "Kliknij ikonkę kosza, aby usunąć kontakt.",
+        "description2": "Kliknij przycisk \"NOWY\", aby stworzyć nowy kontakt.",
+        "description5": "Odkryj wszystkie sposoby, jakimi możesz komunikować się z innymi użytkownikami.",
+        "search_description3": "Sprawdź poprawność pisowni oraz ustawienia filtrów lub spróbuj wpisać inne słowo kluczowe."
     },
     "action": {
         "search": "Wyszukaj",
-        "share_folder": "Udostępnij folder"
+        "share_folder": "Udostępnij folder",
+        "delete_permanently": "Trwale usuń",
+        "goto_folder": "Idź do folderu",
+        "reset_filters": "Zresetuj Filtry",
+        "send_msg": "Wyślij e-maila"
     },
     "message": {
         "snackbar": {
@@ -64,5 +105,6 @@
     },
     "tooltip": {
         "revoke": "Odbierz dostęp"
-    }
+    },
+    "contact_restored": "Kontakt został odzyskany"
 }
