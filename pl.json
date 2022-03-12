@@ -49,7 +49,7 @@
                 "title2": "Tworzenie nowego folderu"
             },
             "restore": {
-                "create_footer": "Stwórz i Odzyskaj"
+                "create_footer": "Stwórz i Przywróć"
             }
         },
         "action": {
@@ -83,7 +83,7 @@
         "move": "Przenieś",
         "of": "od",
         "resend": "Wyślij ponownie",
-        "restore": "Odzyskaj",
+        "restore": "Przywróć",
         "results_for": "Wyniki dla:",
         "revoke": "Odbierz",
         "revoke_share": "Cofnij udostępnienie {{title}}",
@@ -95,7 +95,7 @@
         "undo": "Cofnij",
         "type": "Typ",
         "Undo": "Cofnij",
-        "address_book_restored": "Książka adresowa została odzyskana",
+        "address_book_restored": "Książka adresowa została przywrócona",
         "contact_setting": "Ustawienia Kontaktów",
         "contacts": "Kontakty",
         "edit_access": "Edytuj dostęp",
@@ -138,7 +138,7 @@
         "description7": "Stwórz grupę kontaktów klikając przycisk \"NOWY\".",
         "description8": "Wybierz kontakt lub grupę kontaktów która będzie otrzymywać udostępniane e-maile.",
         "title1": "Stwórz nowy kontakt klikając przycisk \"NOWY\".",
-        "title10": "Wybierz i odzyskaj kontakty z kosza",
+        "title10": "Wybierz i przywróć kontakty z kosza",
         "title2": "Udostępnij wszystkie swoje prace ze swoimi kontaktami.",
         "title3": "Pozostań w kontakcie ze swoimi współpracownikami.",
         "title4": "Dostosuj swoje kontakty dodając prywatne notki",
@@ -213,7 +213,7 @@
         "revoke": "Odbierz dostęp",
         "resend": "Wyślij powiadomienie mailowe dot. tego udostępnienia"
     },
-    "contact_restored": "Kontakt został odzyskany",
+    "contact_restored": "Kontakt został przywrócony",
     "job": {
         "company": "Firma",
         "department": "Dział",
@@ -222,7 +222,7 @@
     "messages": {
         "snackbar": {
             "contact_moved": "Kontakt został przeniesiony",
-            "contact_restored": "Kontakt został odzyskany",
+            "contact_restored": "Kontakt został przywrócony",
             "contact_deleted_permanently": "Kontakt został trwale usunięty",
             "contact_moved_to_trash": "Kontakt został przeniesiony do kosza",
             "address_book_moved": "Książka adresowa została przeniesiona do folderu docelowego"
