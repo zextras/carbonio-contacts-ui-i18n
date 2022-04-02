@@ -202,7 +202,11 @@
         "share_with": "シェア先",
         "new_contact": "新しい連絡先",
         "note": "メモ:",
-        "app_name": "連絡先"
+        "app_name": "連絡先",
+        "cannot_move": "同じフォルダに移動できません",
+        "edit_invalid_email": "メールが無効です。クリックして編集してください",
+        "select_color": "色を選択してください",
+        "edit_email": "メールを編集する"
     },
     "name": {
         "nickName": "ニックネーム",
