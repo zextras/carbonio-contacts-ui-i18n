@@ -117,6 +117,7 @@
         "logout_redirect_url": "Logout Redirect URL",
         "main_view": "This is a view",
         "maintenance": "Maintenance",
+        "management": "Management",
         "minutes": "Minutes",
         "mx_record_information_msg": "If your MX records point to a spam-relay or any other external non-zimbra server, enter the name of that server in \"Inbound SMTP Host Name\" field.",
         "name": "Name",
@@ -143,6 +144,7 @@
         "secondarybar_view": "This is a main view",
         "seconds": "Seconds",
         "serverl_and_volumes": "Server & Volumes",
+        "services": "Services",
         "signature_required": "Signature information is required.",
         "snackbar": {
             "share": {
