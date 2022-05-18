@@ -42,7 +42,6 @@ const DomainAuthentication: FC = () => {
 	const [t] = useTranslation();
 	const [isDirty, setIsDirty] = useState<boolean>(false);
 	const [zimbraAuthMech, setZimbraAuthMech] = useState<string>('');
-	const [zimbraAuthLdapSearchBindDn, setZimbraAuthLdapSearchBindDn] = useState<string>('');
 	const [zimbraPasswordChangeListener, setZimbraPasswordChangeListener] = useState<string>('');
 	const [zimbraAdminConsoleLoginURL, setZimbraAdminConsoleLoginURL] = useState<string>('');
 	const [zimbraAdminConsoleLogoutURL, setZimbraAdminConsoleLogoutURL] = useState<string>('');
@@ -59,6 +58,12 @@ const DomainAuthentication: FC = () => {
 	const [zimbraAuthFallbackToLocal, setZimbraAuthFallbackToLocal] = useState<boolean>(false);
 	const [zimbraForceClearCookies, setZimbraForceClearCookies] = useState<boolean>(false);
 	const [domainAuthData, setDomainAuthData]: any = useState({});
+	const [zimbraAuthLdapBindDn, setZimbraAuthLdapBindDn] = useState<string>('');
+	const [zimbraAuthLdapURL, setZimbraAuthLdapURL] = useState<string>('');
+	const [zimbraAuthLdapStartTlsEnabled, setZimbraAuthLdapStartTlsEnabled] =
+		useState<boolean>(false);
+	const [zimbraAuthLdapSearchFilter, setZimbraAuthLdapSearchFilter] = useState<string>('');
+	const [zimbraAuthLdapSearchBase, setZimbraAuthLdapSearchBase] = useState<string>('');
 	const createSnackbar: any = useContext(SnackbarManagerContext);
 	const domainInformation = useDomainStore((state) => state.domain?.a);
 	const setDomain = useDomainStore((state) => state.setDomain);
@@ -74,9 +79,6 @@ const DomainAuthentication: FC = () => {
 				setZimbraAuthMech(obj.zimbraAuthMech);
 			} else {
 				setZimbraAuthMech(ZimbraAuthMethod.INTERNAL);
-			}
-			if (obj.zimbraAuthLdapSearchBindDn) {
-				setZimbraAuthLdapSearchBindDn(obj.zimbraAuthLdapSearchBindDn);
 			}
 			if (obj.zimbraPasswordChangeListener) {
 				setZimbraPasswordChangeListener(obj.zimbraPasswordChangeListener);
@@ -128,6 +130,29 @@ const DomainAuthentication: FC = () => {
 			}
 			if (obj.zimbraForceClearCookies) {
 				setZimbraForceClearCookies(obj.zimbraForceClearCookies === 'TRUE');
+			}
+			if (obj.zimbraAuthLdapBindDn) {
+				setZimbraAuthLdapBindDn(obj.zimbraAuthLdapBindDn);
+			} else {
+				obj.zimbraAuthLdapBindDn = '';
+			}
+			if (obj.zimbraAuthLdapURL) {
+				setZimbraAuthLdapURL(obj.zimbraAuthLdapURL);
+			} else {
+				obj.zimbraAuthLdapURL = '';
+			}
+			if (obj.zimbraAuthLdapSearchFilter) {
+				setZimbraAuthLdapSearchFilter(obj.zimbraAuthLdapSearchFilter);
+			} else {
+				obj.zimbraAuthLdapSearchFilter = '';
+			}
+			if (obj.zimbraAuthLdapSearchBase) {
+				setZimbraAuthLdapSearchBase(obj.zimbraAuthLdapSearchBase);
+			} else {
+				obj.zimbraAuthLdapSearchBase = '';
+			}
+			if (obj.zimbraAuthLdapStartTlsEnabled) {
+				setZimbraAuthLdapStartTlsEnabled(obj.zimbraAuthLdapStartTlsEnabled === 'TRUE');
 			}
 			setDomainAuthData(obj);
 			setIsDirty(false);
@@ -233,9 +258,53 @@ const DomainAuthentication: FC = () => {
 		}
 	}, [domainAuthData, zimbraForceClearCookies]);
 
+	useEffect(() => {
+		if (!_.isEmpty(domainAuthData)) {
+			if (domainAuthData.zimbraAuthLdapBindDn !== zimbraAuthLdapBindDn) {
+				setIsDirty(true);
+			}
+		}
+	}, [domainAuthData, zimbraAuthLdapBindDn]);
+
+	useEffect(() => {
+		if (!_.isEmpty(domainAuthData)) {
+			if (domainAuthData.zimbraAuthLdapURL !== zimbraAuthLdapURL) {
+				setIsDirty(true);
+			}
+		}
+	}, [domainAuthData, zimbraAuthLdapURL]);
+
+	useEffect(() => {
+		if (!_.isEmpty(domainAuthData)) {
+			if (domainAuthData.zimbraAuthLdapSearchBase !== zimbraAuthLdapSearchBase) {
+				setIsDirty(true);
+			}
+		}
+	}, [domainAuthData, zimbraAuthLdapSearchBase]);
+
+	useEffect(() => {
+		if (!_.isEmpty(domainAuthData)) {
+			if (domainAuthData.zimbraAuthLdapSearchFilter !== zimbraAuthLdapSearchFilter) {
+				setIsDirty(true);
+			}
+		}
+	}, [domainAuthData, zimbraAuthLdapSearchFilter]);
+
+	useEffect(() => {
+		if (!_.isEmpty(domainAuthData)) {
+			const oldAuthLdapStartTlsValue = domainAuthData.zimbraAuthLdapStartTlsEnabled === 'TRUE';
+			if (oldAuthLdapStartTlsValue !== zimbraAuthLdapStartTlsEnabled) {
+				setIsDirty(true);
+			}
+		}
+	}, [domainAuthData, zimbraAuthLdapStartTlsEnabled]);
+
 	const forceClearCookies = useCallback(() => setZimbraForceClearCookies((c) => !c), []);
 	const authFallbackToLocal = useCallback(() => setZimbraAuthFallbackToLocal((c) => !c), []);
-
+	const authLdapStartTlsEnabled = useCallback(
+		() => setZimbraAuthLdapStartTlsEnabled((c) => !c),
+		[]
+	);
 	const onCancel = (): void => {
 		setZimbraPasswordChangeListener(domainAuthData.zimbraPasswordChangeListener);
 		setZimbraAdminConsoleLoginURL(domainAuthData.zimbraAdminConsoleLoginURL);
@@ -248,6 +317,11 @@ const DomainAuthentication: FC = () => {
 		setZimbraWebClientLogoutURLAllowedIP(domainAuthData.zimbraWebClientLogoutURLAllowedIP);
 		setZimbraAuthFallbackToLocal(domainAuthData.zimbraAuthFallbackToLocal === 'TRUE');
 		setZimbraForceClearCookies(domainAuthData.zimbraForceClearCookies === 'TRUE');
+		setZimbraAuthLdapBindDn(domainAuthData.zimbraAuthLdapBindDn);
+		setZimbraAuthLdapSearchBase(domainAuthData.zimbraAuthLdapSearchBase);
+		setZimbraAuthLdapSearchFilter(domainAuthData.zimbraAuthLdapSearchFilter);
+		setZimbraAuthLdapURL(domainAuthData.zimbraAuthLdapURL);
+		setZimbraAuthLdapStartTlsEnabled(domainAuthData.zimbraAuthLdapStartTlsEnabled === 'TRUE');
 		setIsDirty(false);
 	};
 
@@ -300,6 +374,26 @@ const DomainAuthentication: FC = () => {
 		attributes.push({
 			n: 'zimbraForceClearCookies',
 			_content: zimbraForceClearCookies ? 'TRUE' : 'FALSE'
+		});
+		attributes.push({
+			n: 'zimbraAuthLdapBindDn',
+			_content: zimbraAuthLdapBindDn
+		});
+		attributes.push({
+			n: 'zimbraAuthLdapURL',
+			_content: zimbraAuthLdapURL
+		});
+		attributes.push({
+			n: 'zimbraAuthLdapStartTlsEnabled',
+			_content: zimbraAuthLdapStartTlsEnabled ? 'TRUE' : 'FALSE'
+		});
+		attributes.push({
+			n: 'zimbraAuthLdapSearchFilter',
+			_content: zimbraAuthLdapSearchFilter
+		});
+		attributes.push({
+			n: 'zimbraAuthLdapSearchBase',
+			_content: zimbraAuthLdapSearchBase
 		});
 		body.a = attributes;
 		modifyDomain(body)
@@ -406,53 +500,59 @@ const DomainAuthentication: FC = () => {
 									/>
 								</Padding>
 							</ListRow>
-							{zimbraAuthMech !== ZimbraAuthMethod.INTERNAL && (
-								<ListRow>
-									<Padding vertical="small" horizontal="small" width="100%">
-										<Input
-											label={t('label.bind_dn_template', 'Bind DN Template')}
-											value={domainAuthData.zimbraAuthLdapBindDn}
-											disabled
-										/>
-									</Padding>
-									<Padding vertical="small" horizontal="small" width="100%">
-										<Input
-											label={t('label.url', 'URL')}
-											value={domainAuthData.zimbraAuthLdapURL}
-											disabled
-										/>
-									</Padding>
-								</ListRow>
-							)}
-							{zimbraAuthMech === ZimbraAuthMethod.LDAP && (
-								<>
-									<ListRow>
-										<Padding vertical="small" horizontal="small" width="100%">
-											<Input
-												label={t('label.start_tls', 'StartTLS')}
-												value={domainAuthData.zimbraAuthLdapStartTlsEnabled}
-												disabled
-											/>
-										</Padding>
-										<Padding vertical="small" horizontal="small" width="100%">
-											<Input
-												label={t('label.filter', 'Filter')}
-												value={domainAuthData.zimbraAuthLdapSearchFilter}
-												disabled
-											/>
-										</Padding>
-									</ListRow>
-									<ListRow>
-										<Padding vertical="small" horizontal="small" width="100%">
-											<Input
-												label={t('label.search_base', 'Search Base')}
-												value={domainAuthData.zimbraAuthLdapSearchBase}
-												disabled
-											/>
-										</Padding>
-									</ListRow>
-								</>
-							)}
+							<ListRow>
+								<Padding vertical="small" horizontal="small" width="100%">
+									<Input
+										label={t('label.bind_dn_template', 'Bind DN Template')}
+										value={zimbraAuthLdapBindDn}
+										background="gray5"
+										onChange={(e: any): any => {
+											setZimbraAuthLdapBindDn(e.target.value);
+										}}
+									/>
+								</Padding>
+								<Padding vertical="small" horizontal="small" width="100%">
+									<Input
+										label={t('label.url', 'URL')}
+										value={zimbraAuthLdapURL}
+										background="gray5"
+										onChange={(e: any): any => {
+											setZimbraAuthLdapURL(e.target.value);
+										}}
+									/>
+								</Padding>
+							</ListRow>
+							<ListRow>
+								<Padding vertical="small" horizontal="small" width="100%">
+									<Input
+										label={t('label.filter', 'Filter')}
+										value={zimbraAuthLdapSearchFilter}
+										background="gray5"
+										onChange={(e: any): any => {
+											setZimbraAuthLdapSearchFilter(e.target.value);
+										}}
+									/>
+								</Padding>
+								<Padding vertical="small" horizontal="small" width="100%">
+									<Input
+										label={t('label.search_base', 'Search Base')}
+										value={zimbraAuthLdapSearchBase}
+										background="gray5"
+										onChange={(e: any): any => {
+											setZimbraAuthLdapSearchBase(e.target.value);
+										}}
+									/>
+								</Padding>
+							</ListRow>
+							<ListRow>
+								<Padding vertical="small" horizontal="small" width="100%">
+									<Switch
+										value={zimbraAuthLdapStartTlsEnabled}
+										label={t('label.enable_start_tls', 'Enable StartTLS')}
+										onClick={authLdapStartTlsEnabled}
+									/>
+								</Padding>
+							</ListRow>
 							<ListRow>
 								<Padding vertical="small" horizontal="small" width="100%">
 									<Switch
@@ -465,20 +565,6 @@ const DomainAuthentication: FC = () => {
 									/>
 								</Padding>
 							</ListRow>
-							{zimbraAuthMech === ZimbraAuthMethod.LDAP && (
-								<ListRow>
-									<Padding vertical="small" horizontal="small" width="100%">
-										<Switch
-											value={zimbraAuthLdapSearchBindDn !== ''}
-											label={t(
-												'label.password_to_bind_external_server_msg',
-												'I want to use DN/Password to bind to External Server'
-											)}
-											disabled
-										/>
-									</Padding>
-								</ListRow>
-							)}
 							<ListRow>
 								<Padding vertical="small" horizontal="small" width="100%">
 									<Input
