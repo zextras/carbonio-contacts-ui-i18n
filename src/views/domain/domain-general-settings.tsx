@@ -142,6 +142,7 @@ const DomainGeneralSettings: FC = () => {
 	const [openDeleteDomainConfirmDialog, setOpenDeleteDomainConfirmDialog] =
 		useState<boolean>(false);
 	const [domainAccounts, setDomainAccounts] = useState<any[]>([]);
+	const [isRequstInProgress, setIsRequestInProgress] = useState<boolean>(false);
 
 	useEffect(() => {
 		if (!!cosList && cosList.length > 0) {
@@ -468,6 +469,7 @@ const DomainGeneralSettings: FC = () => {
 		deleteDomain(domainData.zimbraId)
 			.then((res) => res.json())
 			.then((resData) => {
+				setIsRequestInProgress(false);
 				setOpenDeleteDomainConfirmDialog(false);
 				setDomainAccounts([]);
 				createSnackbar({
@@ -484,6 +486,7 @@ const DomainGeneralSettings: FC = () => {
 	};
 
 	const onDeleteAccountAndDomain = (): void => {
+		setIsRequestInProgress(true);
 		const requests = domainAccounts.map((item: any): any => deleteAccount(item?.id));
 		Promise.all(requests).then((response) => {
 			deleteOnlyDomain();
@@ -491,12 +494,14 @@ const DomainGeneralSettings: FC = () => {
 	};
 
 	const onDeleteDomain = (): void => {
+		setIsRequestInProgress(true);
 		const type = 'accounts,distributionlists,aliases,resources,dynamicgroups';
 		const attrs =
 			'zimbraAliasTargetId,zimbraId,targetName,uid,type,description,displayName,zimbraId,zimbraMailHost,uid,description,zimbraIsAdminGroup,zimbraMailStatus,displayName,zimbraId,zimbraMailHost,uid,zimbraAccountStatus,description,zimbraCalResType,displayName,zimbraId,zimbraAliasTargetId,cn,sn,zimbraMailHost,uid,zimbraCOSId,zimbraAccountStatus,zimbraLastLogonTimestamp,description,zimbraIsSystemAccount,zimbraIsDelegatedAdminAccount,zimbraIsAdminAccount,zimbraIsSystemResource,zimbraAuthTokenValidityValue,zimbraIsExternalVirtualAccount,zimbraMailStatus,zimbraIsAdminGroup,zimbraCalResType,zimbraDomainType,zimbraDomainName,zimbraDomainStatus';
 		searchDirectory(attrs, type, domainName, '')
 			.then((response) => response.json())
 			.then((data) => {
+				setIsRequestInProgress(false);
 				if (data?.Body?.SearchDirectoryResponse?.searchTotal > 0) {
 					const accounts = data?.Body?.SearchDirectoryResponse?.account;
 					if (accounts && accounts.length > 0) {
@@ -542,12 +547,7 @@ const DomainGeneralSettings: FC = () => {
 					</Row>
 				</Container>
 			</Row>
-			<Row
-				orientation="horizontal"
-				width="100%"
-				padding={{ left: 'large', right: 'large' }}
-				background="gray6"
-			>
+			<Row orientation="horizontal" width="100%" background="gray6">
 				<Divider />
 			</Row>
 
@@ -853,6 +853,7 @@ const DomainGeneralSettings: FC = () => {
 														color="error"
 														isSmall
 														onClick={onDeleteDomain}
+														disabled={isRequstInProgress}
 													/>
 												</Container>
 											</Container>
@@ -904,6 +905,7 @@ const DomainGeneralSettings: FC = () => {
 														color="error"
 														isSmall
 														onClick={onDeleteAccountAndDomain}
+														disabled={isRequstInProgress}
 													/>
 												</Container>
 											</Container>
