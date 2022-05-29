@@ -30,7 +30,7 @@
         "edit_email": "Chỉnh sửa thư",
         "edit_folder_properties": "Chỉnh sửa tuỳ chỉnh {{name}}",
         "edit_invalid_email": "Thư sai, bấm để chỉnh sửa nó",
-        "email": "Thư",
+        "email": "Thư điện tử",
         "delete": "Xoá",
         "edit": "Chỉnh sửa",
         "edit_access": "Chỉnh sửa truy cập",
@@ -244,7 +244,7 @@
             "country": "Quốc gia",
             "number": "Số",
             "postalCode": "Mã bưu chính",
-            "state": "Bang",
+            "state": "Trạng thái",
             "street": "Đường/phố"
         },
         "title": {
