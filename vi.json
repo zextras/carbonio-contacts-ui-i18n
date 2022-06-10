@@ -232,8 +232,8 @@
     },
     "name": {
         "suffix": "Đuôi tên",
-        "last_name": "Họ (Last Name)",
-        "first_name": "Tên riêng (First Name)",
+        "last_name": "Họ",
+        "first_name": "Tên riêng",
         "middle_name": "Đệm (Middle Name)",
         "nickName": "Bí danh",
         "prefix": "Danh xưng"
