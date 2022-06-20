@@ -7,7 +7,7 @@
 import React, { FC, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@zextras/carbonio-design-system';
-import { VerticalWizard } from '../app/component/hwizard';
+import { HorizontalWizard } from '../app/component/hwizard';
 import Connection from './connection';
 import Summary from './summary';
 import { Section } from '../app/component/section';
@@ -46,6 +46,13 @@ const NewBucket: FC<{ setToggleBucket: any; title: string }> = ({ setToggleBucke
 			label: t('new_bucket_summary', 'SUMMARY'),
 			icon: 'AtOutline',
 			view: Summary,
+			canGoNext: (): any => true
+		},
+		{
+			name: '',
+			label: '',
+			icon: 'AtOutline',
+			view: Summary,
 			NextButton: (props: any) => (
 				<Button
 					{...props}
@@ -61,7 +68,7 @@ const NewBucket: FC<{ setToggleBucket: any; title: string }> = ({ setToggleBucke
 	const onComplete = useCallback(() => {}, []);
 
 	return (
-		<VerticalWizard
+		<HorizontalWizard
 			steps={wizardSteps}
 			Wrapper={WizardInSection}
 			onChange={setWizardData}

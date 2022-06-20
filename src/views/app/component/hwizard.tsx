@@ -7,7 +7,7 @@
 
 import React, { FC, useRef } from 'react';
 import useWizard from '../hooks/usewizard';
-import { VerticalWizardLayout } from './horizontal-wizard-layout';
+import { HorizontalWizardLayout } from './horizontal-wizard-layout';
 
 type Props = {
 	data: any;
@@ -65,6 +65,6 @@ const Wizard: React.FC<Props> = ({
 	);
 };
 
-export const VerticalWizard: React.FC<any> = (props) => (
-	<Wizard Layout={VerticalWizardLayout} {...props} />
+export const HorizontalWizard: React.FC<any> = (props) => (
+	<Wizard Layout={HorizontalWizardLayout} {...props} />
 );

@@ -69,7 +69,7 @@ const StepNavigator: FC<{
 					cursor: 'pointer'
 				}}
 			>
-				<Row padding="12px 8px" style={{ borderRadius: '50%' }}>
+				<Row padding={renderElement ? '12px 8px' : ''} style={{ borderRadius: '50%' }}>
 					<Icon icon={step.icon} color={color} size="large" />
 				</Row>
 				{renderElement && (
@@ -120,7 +120,7 @@ type Props = {
 	activeRef: any;
 };
 
-export const VerticalWizardLayout = React.forwardRef<HTMLDivElement, Props>(
+export const HorizontalWizardLayout = React.forwardRef<HTMLDivElement, Props>(
 	(
 		{
 			steps,
@@ -149,6 +149,7 @@ export const VerticalWizardLayout = React.forwardRef<HTMLDivElement, Props>(
 					const View = steps[stepIndex].view;
 					const isDone = stepIndex < currentStepIndex;
 					const isActive = currentStep === step.name;
+					console.log('__check', isActive, isDone);
 
 					const renderElement = (): any => {
 						if (
@@ -169,7 +170,7 @@ export const VerticalWizardLayout = React.forwardRef<HTMLDivElement, Props>(
 						<StepContainer
 							key={step.name}
 							height="auto"
-							minWidth={renderElement() ? '180px' : '100px'}
+							minWidth={renderElement() ? '120px' : '50px'}
 							minHeight="50px"
 						>
 							<StepNavigator
@@ -178,7 +179,8 @@ export const VerticalWizardLayout = React.forwardRef<HTMLDivElement, Props>(
 								isActive={isActive}
 								isLastStep={stepIndex === steps.length - 1}
 								onClick={(): any =>
-									!isActive && (isDone ? goToStep(step.name) : canGoNext() && goNext())
+									!isActive &&
+									(isDone ? goToStep(step.name) : (canGoNext() && goNext()) || goToStep(step.name))
 								}
 								goToStep={goToStep}
 								goNext={goNext}
