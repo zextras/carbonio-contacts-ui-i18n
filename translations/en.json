@@ -309,6 +309,7 @@
         "mail_size": "Mail Size",
         "mailbox_quota": "Mailbox Quota",
         "mailing_list": "Mailing List",
+        "mailing_list_already_in_list_error": "The Mailing List / User is already in the list",
         "mailing_lists": "Mailing Lists",
         "main_view": "This is a view",
         "maintenance": "Maintenance",

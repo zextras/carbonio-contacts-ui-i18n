@@ -26,7 +26,7 @@ import ListRow from '../../list/list-row';
 import Paginig from '../../components/paging';
 import { getDistributionList } from '../../../services/get-distribution-list';
 import { getDistributionListMembership } from '../../../services/get-distributionlists-membership-service';
-import { getDateFromStr, getFormatedDate, isValidEmail } from '../../utility/utils';
+import { getDateFromStr } from '../../utility/utils';
 import { searchDirectory } from '../../../services/search-directory-service';
 
 const MailingListDetailContainer = styled(Container)`
@@ -71,7 +71,7 @@ const MailingListDetailView: FC<any> = ({ selectedMailingList, setShowMailingLis
 
 	const [zimbraHideInGal, setZimbraHideInGal] = useState<boolean>(false);
 	const [zimbraMailAlias, setZimbraMailAlias] = useState<any>([]);
-	const [dlm, setDlm] = useState<any>([]);
+	const [dlm, setDlm] = useState<any[]>([]);
 	const [zimbraNotes, setZimbraNotes] = useState<string>('');
 	const [zimbraCreateTimestamp, setZimbraCreateTimestamp] = useState<string>('');
 	const [dlId, setdlId] = useState<string>('');
@@ -86,6 +86,7 @@ const MailingListDetailView: FC<any> = ({ selectedMailingList, setShowMailingLis
 	const [isRequstInProgress, setIsRequstInProgress] = useState<boolean>(false);
 	const [isAddToOwnerList, setIsAddToOwnerList] = useState<boolean>(false);
 	const [searchMailingListOrUser, setSearchMailingListOrUser] = useState<string>('');
+	const [isShowError, setIsShowError] = useState<boolean>(false);
 
 	const dlCreateDate = useMemo(
 		() =>
@@ -218,7 +219,7 @@ const MailingListDetailView: FC<any> = ({ selectedMailingList, setShowMailingLis
 			const allRows = dlm.map((item: any) => ({
 				id: item,
 				columns: [
-					<Text size="medium" weight="bold" key={item?.id} color="#828282">
+					<Text size="medium" weight="bold" key={item} color="#828282">
 						{item}
 					</Text>,
 					''
@@ -231,7 +232,7 @@ const MailingListDetailView: FC<any> = ({ selectedMailingList, setShowMailingLis
 	useEffect(() => {
 		if (ownersList && ownersList.length > 0) {
 			const allRows = ownersList.map((item: any) => ({
-				id: item?.id,
+				id: item?.name,
 				columns: [
 					<Text size="medium" weight="bold" key={item?.id} color="#828282">
 						{item?.name}
@@ -328,6 +329,11 @@ const MailingListDetailView: FC<any> = ({ selectedMailingList, setShowMailingLis
 		setDlMembershipList(e);
 	}, []);
 
+	const isEnableDeleteButton = useMemo(
+		() => !!(selectedDistributionListMember.length > 0 || selectedOwnerListMember.length > 0),
+		[selectedDistributionListMember, selectedOwnerListMember]
+	);
+
 	const onAddToList = useCallback((): void => {
 		const attrs = '';
 		const types = 'distributionlists,aliases,accounts,resources,dynamicgroups';
@@ -337,8 +343,8 @@ const MailingListDetailView: FC<any> = ({ selectedMailingList, setShowMailingLis
 			.then((data) => {
 				const accountExists =
 					data?.Body?.SearchDirectoryResponse?.dl || data?.Body?.SearchDirectoryResponse?.account;
-
-				if (accountExists[0]) {
+				if (!!accountExists && accountExists[0]) {
+					setIsShowError(false);
 					if (isAddToOwnerList) {
 						setOwnersList(
 							ownersList.concat({ id: accountExists[0]?.id, name: accountExists[0]?.name })
@@ -349,9 +355,24 @@ const MailingListDetailView: FC<any> = ({ selectedMailingList, setShowMailingLis
 						);
 						setDlm(dlm.concat(accountExists[0]?.name));
 					}
+				} else {
+					setIsShowError(true);
 				}
 			});
 	}, [isAddToOwnerList, searchMailingListOrUser, dlm, ownersList]);
+
+	const onDeleteFromList = (): void => {
+		if (selectedDistributionListMember.length > 0) {
+			const _dlm = dlm.filter((item: any) => !selectedDistributionListMember.includes(item));
+			setDlm(_dlm);
+		}
+		if (selectedOwnerListMember.length > 0) {
+			const _ownersList = ownersList.filter(
+				(item: any) => !selectedOwnerListMember.includes(item?.name)
+			);
+			setOwnersList(_ownersList);
+		}
+	};
 
 	return (
 		<MailingListDetailContainer background="gray5" mainAlignment="flex-start">
@@ -546,7 +567,8 @@ const MailingListDetailView: FC<any> = ({ selectedMailingList, setShowMailingLis
 									icon="Trash2Outline"
 									height={36}
 									width={36}
-									disabled
+									disabled={!isEnableDeleteButton}
+									onClick={onDeleteFromList}
 								/>
 							</Row>
 						</Row>
@@ -629,7 +651,11 @@ const MailingListDetailView: FC<any> = ({ selectedMailingList, setShowMailingLis
 					</Container>
 				}
 			>
-				<Container mainAlignment="flex-start" crossAlignment="flex-start" className="ddddd">
+				<Container
+					mainAlignment="flex-start"
+					crossAlignment="flex-start"
+					padding={{ all: 'medium' }}
+				>
 					<Text overflow="break-word" weight="regular">
 						{t(
 							'label.add_in_mailing_list_or_both',
@@ -637,7 +663,12 @@ const MailingListDetailView: FC<any> = ({ selectedMailingList, setShowMailingLis
 						)}
 					</Text>
 
-					<Container mainAlignment="flex-start" crossAlignment="flex-start" width="fill">
+					<Container
+						mainAlignment="flex-start"
+						crossAlignment="flex-start"
+						width="fill"
+						padding={{ top: 'medium' }}
+					>
 						<Input
 							value={searchMailingListOrUser}
 							background="gray5"
@@ -646,8 +677,24 @@ const MailingListDetailView: FC<any> = ({ selectedMailingList, setShowMailingLis
 							}}
 						/>
 					</Container>
+					{isShowError && (
+						<Container mainAlignment="flex-start" crossAlignment="flex-start" width="fill">
+							<Padding top="small">
+								<Text size="extrasmall" weight="regular" color="error">
+									{t(
+										'label.mailing_list_already_in_list_error',
+										'The Mailing List / User is already in the list'
+									)}
+								</Text>
+							</Padding>
+						</Container>
+					)}
 
-					<Container mainAlignment="flex-start" crossAlignment="flex-start">
+					<Container
+						mainAlignment="flex-start"
+						crossAlignment="flex-start"
+						padding={{ top: 'small' }}
+					>
 						<Switch
 							value={isAddToOwnerList}
 							label={t(
