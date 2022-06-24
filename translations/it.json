@@ -305,5 +305,9 @@
     "new_bucket_connection": "CONNESSIONE",
     "create_new_domain": "Crea Nuovo Dominio",
     "select_bucket_or_create_new_bucket": "sembra che tu non abbia ancora impostato un tipo di bucket. Clicca il bottone NUOVO BUCKET per crearne uno nuovo.",
-    "many_domain_info_msg": "Sembrano esserci molti domini! Quale vuoi visualizzare? Inizia a digitare il nome per filtrarli."
+    "many_domain_info_msg": "Sembrano esserci molti domini! Quale vuoi visualizzare? Inizia a digitare il nome per filtrarli.",
+    "backup": {
+        "compression_level": "Livello Compressione",
+        "backup_path": "Percorso Backup"
+    }
 }
