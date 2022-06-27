@@ -1,5 +1,7 @@
 {
     "label": {
-        "remove": "Poista"
+        "remove": "Poista",
+        "search": "Hae",
+        "details": "Yksityiskohdat"
     }
 }

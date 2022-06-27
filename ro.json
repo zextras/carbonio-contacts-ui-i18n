@@ -35,7 +35,55 @@
         "suspended": "Suspendat",
         "timezone": "Fus orar",
         "url": "URL",
-        "web_client": "Client web"
+        "web_client": "Client web",
+        "new_cos": "COS nouă",
+        "new_domain": "Domeniu nou",
+        "notes": "Note",
+        "notify_of_changes_made_via_delegated_access": "Notificare despre modificări efectuate prin acces delegat",
+        "out_of_office_cache_lifetime": "Durata memorării în cache a ieşirii pe teren",
+        "pending": "În aşteptare",
+        "preferences": "Preferinţe",
+        "reply/forward_using_format_of_the_original_message": "Răspuns/redirecţionare în formatul mesajului original",
+        "resources": "Resurse",
+        "retention_policy": "Politică de reţinere",
+        "search": "Căutare",
+        "server": "Server",
+        "servers": "Servere",
+        "show_time_zone_list_in_appointment_view": "Afişare listă fusuri orare în vizualizarea întâlnirii",
+        "time_zone": "Fus orar",
+        "type": "Tip",
+        "use_iCal_delegation_model_for_shared_calendars_for_CalDAV_interface": "Utilizare model de delegare iCal pentru calendarele partajate pentru interfaţa CalDAV",
+        "use_the_gal_when_autocompleting_addresses": "Utilizare GAL la completare automată adrese",
+        "virtual_hosts": "Gazde virtuale",
+        "volumes": "Volume",
+        "Notes": "Note",
+        "actions": "Acţiuni",
+        "address": "Adresă",
+        "advanced": "Avansat",
+        "allow_sending_cancellation_email_to_organizer": "Permite trimiterea unui mesaj de anulare la organizator",
+        "allow_sending_email_from_any_address": "Permite trimiterea mesajelor de la orice adresă",
+        "always_compose_in_new_window": "Compunere întotdeauna în fereastră nouă",
+        "always_show_the_mini-calendar": "Afişează întotdeauna mini-calendarul",
+        "automatically_add_forwarded_invites_to_calendar": "Adăugare automată în calendar a invitaţiilor redirecţionate",
+        "automatically_add_invites_with_PUBLISH_method": "Adăugare automată invitaţii cu metoda PUBLICARE",
+        "both": "Ambele",
+        "creation_date": "Data creării",
+        "default_appointment_visibility": "Vizibilitate implicită întâlniri",
+        "details": "Detalii",
+        "draft_auto_save_interval": "Interval de salvare automată ciornă",
+        "email": "Adresă de e-mail",
+        "enable_automatic_adding_of_contacts": "Activare adăugare automată persoane de contact",
+        "enable_mandatory_spell_check": "Activare verificare ortografică obligatorie",
+        "enable_past_due_reminders": "Activare mementouri pentru scadenţe depăşite",
+        "gal": "GAL",
+        "global": "Global",
+        "help": "Ajutor",
+        "home": "Acasă",
+        "initial_calendar_view": "Vizualizare iniţială calendar",
+        "mailbox_quota": "Cotă căsuţă poştală",
+        "members": "Membri",
+        "minimum_mail_polling_interval": "Interval minim de interogare ciclică a mesajelor",
+        "monitoring": "Monitorizare"
     },
     "core": {
         "subscription": {
@@ -52,11 +100,54 @@
         "general_information": "Informaţii generale",
         "mailbox_quota": "Cotă căsuţă poştală",
         "most_result_return_gal_search": "Majoritatea rezultatelor căutării în GAL",
-        "virtual_hosts": "Gazde virtuale"
+        "virtual_hosts": "Gazde virtuale",
+        "accounts": "Conturi",
+        "manage": "Gestionare",
+        "new_domain": "Domeniu nou",
+        "resources": "Resurse"
     },
     "buckets": {
         "connection": {
             "notes": "Note"
         }
+    },
+    "backup": {
+        "global": {
+            "headers": {
+                "advanced": "Avansat"
+            }
+        },
+        "schedule": "Planificare"
+    },
+    "cos": {
+        "calendar_options": "Opţiuni calendar",
+        "calender_features": "Caracteristici calendar",
+        "contact_features": "Caracteristici contact",
+        "contacts_options": "Opţiuni pentru contacte",
+        "display_external_images_in_HTML_mail": "Afişare imagini externe în mesaj HTML",
+        "display_warning_when_users_try_to_navigate_away_from_web_client": "Afişare avertisment când utilizatorii încearcă să părăsească clientul web",
+        "enable_keyboard_shortcuts": "Activare taste rapide",
+        "enable_message_deduping": "Activare eliminare mesaje duble",
+        "enable_toaster_notification_for_new_mail": "Activare notificare prin Toaster pentru e-mail nou",
+        "features": "Caracteristici",
+        "flash_browser_title_when_message_arrives": "Clipire titlu browser când soseşte un mesaj",
+        "general_features": "Caracteristici generale",
+        "general_information": "Informaţii generale",
+        "general_options": "Opţiuni generale",
+        "highlight_the_Mail_tab_when_message_arrives": "Evidenţiere tab Mesaje când soseşte un mesaj",
+        "index_junk_messages": "Indexare mesaje nedorite",
+        "language": "Limba",
+        "mail_features": "Caracteristici Mail",
+        "mail_options": "Opţiuni pentru mesaje",
+        "maximum_number_of_items_to_display_per_page": "Număr maxim de elementele afişate pe o pagină",
+        "number_of_items_to_display_per_page": "Număr elemente afişate pe o pagină",
+        "play_sound_when_message_arrives": "Redare sunet când soseşte un mesaj (necesită insert QuickTime sau Windows Media)",
+        "polling_interval": "Interval de interogare ciclică (timpul după care se verifică dacă sunt mesaje noi)",
+        "preferences": "Preferinţe",
+        "receiving_mail": "Primire mesaje",
+        "s_mime_features": "Caracteristici S/MIME",
+        "search_features": "Caracteristicile căutare",
+        "show_selection_checkbox_for_selecting_email_contact_voicemail_items_in_a_list_view_for_batch_operations": "Afişare casetă pentru selectarea mesajelor, a persoanelor de contact şi a mesajelor vocale într-o listă pentru operaţii în lot",
+        "view_mail_as_html": "Afişare mesaj ca HTML (când este posibil)"
     }
 }
