@@ -22,10 +22,12 @@ import logo from '../../../assets/gardian.svg';
 import Paginig from '../../components/paging';
 import { searchDirectory } from '../../../services/search-directory-service';
 import EditMailingListView from './edit-mailing-detail-view';
+import { useDomainStore } from '../../../store/domain/store';
 
 const DomainMailingList: FC = () => {
 	const [t] = useTranslation();
 	const createSnackbar: any = useContext(SnackbarManagerContext);
+	const domainName = useDomainStore((state) => state.domain?.name);
 	const [mailingList, setMailingList] = useState<any[]>([]);
 	const [offset, setOffset] = useState<number>(0);
 	const [limit, setLimit] = useState<number>(50);
@@ -80,7 +82,7 @@ const DomainMailingList: FC = () => {
 		const types = 'distributionlists,dynamicgroups';
 		const query = '(&(!(zimbraIsSystemAccount=TRUE)))';
 
-		searchDirectory(attrs, types, '', query, offset, limit, 'name')
+		searchDirectory(attrs, types, domainName || '', query, offset, limit, 'name')
 			.then((response) => response.json())
 			.then((data) => {
 				const dlList = data?.Body?.SearchDirectoryResponse?.dl;
@@ -119,18 +121,58 @@ const DomainMailingList: FC = () => {
 								>
 									{item?.name}
 								</Text>,
-								<Text size="medium" weight="light" key={item?.id} color="gray0">
+								<Text
+									size="medium"
+									weight="light"
+									key={item?.id}
+									color="gray0"
+									onClick={(event: { stopPropagation: () => void }): void => {
+										event.stopPropagation();
+										setSelectedMailingList(item);
+										setShowMailingListDetailView(true);
+									}}
+								>
 									{''}
 								</Text>,
-								<Text size="medium" weight="light" key={item?.id} color="gray0">
+								<Text
+									size="medium"
+									weight="light"
+									key={item?.id}
+									color="gray0"
+									onClick={(event: { stopPropagation: () => void }): void => {
+										event.stopPropagation();
+										setSelectedMailingList(item);
+										setShowMailingListDetailView(true);
+									}}
+								>
 									{item?.a?.find((a: any) => a?.n === 'zimbraMailStatus')?._content === 'enabled'
 										? t('label.can_receive', 'Can receive')
 										: ''}
 								</Text>,
-								<Text size="medium" weight="light" key={item?.id} color="gray0">
+								<Text
+									size="medium"
+									weight="light"
+									key={item?.id}
+									color="gray0"
+									onClick={(event: { stopPropagation: () => void }): void => {
+										event.stopPropagation();
+										setSelectedMailingList(item);
+										setShowMailingListDetailView(true);
+									}}
+								>
 									{''}
 								</Text>,
-								<Text size="medium" weight="light" key={item?.id} color="gray0">
+								<Text
+									size="medium"
+									weight="light"
+									key={item?.id}
+									color="gray0"
+									onClick={(event: { stopPropagation: () => void }): void => {
+										event.stopPropagation();
+										setSelectedMailingList(item);
+										setShowMailingListDetailView(true);
+									}}
+								>
 									{item?.a?.find((a: any) => a?.n === 'description')?._content}
 								</Text>
 							]
@@ -139,7 +181,7 @@ const DomainMailingList: FC = () => {
 					setMailingList(mList);
 				}
 			});
-	}, [t, offset, limit]);
+	}, [t, offset, limit, domainName]);
 
 	useEffect(() => {
 		getMailingList();
