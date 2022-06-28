@@ -428,6 +428,8 @@ const EditMailingListView: FC<any> = ({ selectedMailingList, setShowMailingListD
 				]
 			}));
 			setDlmTableRows(allRows);
+		} else {
+			setDlmTableRows([]);
 		}
 	}, [dlm]);
 
@@ -442,6 +444,8 @@ const EditMailingListView: FC<any> = ({ selectedMailingList, setShowMailingListD
 				]
 			}));
 			setOwnerTableRows(allRows);
+		} else {
+			setOwnerTableRows([]);
 		}
 	}, [ownersList]);
 
@@ -510,12 +514,14 @@ const EditMailingListView: FC<any> = ({ selectedMailingList, setShowMailingListD
 		if (selectedDistributionListMember.length > 0) {
 			const _dlm = dlm.filter((item: any) => !selectedDistributionListMember.includes(item));
 			setDlm(_dlm);
+			setSelectedDistributionListMember([]);
 		}
 		if (selectedOwnerListMember.length > 0) {
 			const _ownersList = ownersList.filter(
 				(item: any) => !selectedOwnerListMember.includes(item?.name)
 			);
 			setOwnersList(_ownersList);
+			setSelectedOwnerListMember([]);
 		}
 	};
 
@@ -1156,6 +1162,7 @@ const EditMailingListView: FC<any> = ({ selectedMailingList, setShowMailingListD
 							rows={dlmTableRows}
 							headers={memberHeaders}
 							showCheckbox={false}
+							selectedRows={selectedDistributionListMember}
 							onSelectionChange={(selected: any): void =>
 								setSelectedDistributionListMember(selected)
 							}
@@ -1169,6 +1176,7 @@ const EditMailingListView: FC<any> = ({ selectedMailingList, setShowMailingListD
 							rows={ownerTableRows}
 							headers={ownerHeaders}
 							showCheckbox={false}
+							selectedRows={selectedOwnerListMember}
 							onSelectionChange={(selected: any): void => setSelectedOwnerListMember(selected)}
 						/>
 					</Container>

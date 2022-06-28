@@ -143,11 +143,11 @@ const DomainListPanel: FC = () => {
 
 	const detailOptions = useMemo(
 		() => [
-			{
-				id: GENERAL_INFORMATION,
-				name: t('label.general_information', 'General Information'),
-				isSelected: isDomainSelect
-			},
+			// {
+			// 	id: GENERAL_INFORMATION,
+			// 	name: t('label.general_information', 'General Information'),
+			// 	isSelected: isDomainSelect
+			// },
 			{
 				id: GENERAL_SETTINGS,
 				name: t('label.general_settings', 'General Settings'),
