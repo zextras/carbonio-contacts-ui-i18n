@@ -10,9 +10,7 @@ import { Container, Button, useSnackbar } from '@zextras/carbonio-design-system'
 import styled from 'styled-components';
 import { useDomainStore } from '../../../../../store/domain/store';
 import { HorizontalWizard } from '../../../../app/component/hwizard';
-import CreateAccountDetailSection from './create-account-detail-section';
 import { Section } from '../../../../app/component/section';
-import CreateAccountSectionView from './account-create-section';
 import { AccountContext } from '../account-context';
 
 const AccountDetailContainer = styled(Container)`
@@ -35,7 +33,7 @@ const WizardInSection: FC<any> = ({ wizard, wizardFooter, setToggleWizardSection
 	const { t } = useTranslation();
 	return (
 		<Section
-			title={t('account.new.create_account_wizard', 'Create Account Wizard')}
+			title={t('account.edit.edit_account_wizard', 'Edit Account Wizard')}
 			padding={{ all: '0' }}
 			footer={wizardFooter}
 			divider
@@ -67,10 +65,10 @@ interface AccountDetailObj {
 }
 
 // eslint-disable-next-line no-empty-pattern
-const CreateAccount: FC<{
-	setShowCreateAccountView: any;
+const EditAccount: FC<{
+	setShowEditAccountView: any;
 	createAccountReq: any;
-}> = ({ setShowCreateAccountView, createAccountReq }) => {
+}> = ({ setShowEditAccountView, createAccountReq }) => {
 	const { t } = useTranslation();
 	const createSnackbar = useSnackbar();
 	const domainName = useDomainStore((state) => state.domain?.name);
@@ -96,10 +94,10 @@ const CreateAccount: FC<{
 	const wizardSteps = useMemo(
 		() => [
 			{
-				name: 'details',
-				label: t('label.details', 'DETAILS'),
-				icon: 'Edit2Outline',
-				view: CreateAccountDetailSection,
+				name: 'general',
+				label: t('label.general', 'GENERAL'),
+				icon: 'PersonOutline',
+				view: (props: any): ReactElement => <></>,
 				CancelButton: (props: any): ReactElement => (
 					<Button
 						{...props}
@@ -109,7 +107,7 @@ const CreateAccount: FC<{
 						color="secondary"
 						icon="CloseOutline"
 						iconPlacement="right"
-						onClick={(): void => setShowCreateAccountView(false)}
+						onClick={(): void => setShowEditAccountView(false)}
 					/>
 				),
 				PrevButton: (props: any): ReactElement => <></>,
@@ -123,97 +121,48 @@ const CreateAccount: FC<{
 				)
 			},
 			{
-				name: 'create',
-				label: t('label.create', 'CREATE'),
-				icon: 'PersonOutline',
-				view: CreateAccountSectionView,
-				CancelButton: (props: any) => (
-					<Button
-						{...props}
-						type="outlined"
-						key="wizard-cancel"
-						label={'CANCEL'}
-						color="secondary"
-						icon="CloseOutline"
-						iconPlacement="right"
-						onClick={(): void => setShowCreateAccountView(false)}
-					/>
-				),
+				name: 'configration',
+				label: t('label.configration', 'CONFIGRATION'),
+				icon: 'InfoOutline',
+				view: (props: any): ReactElement => <></>,
+				CancelButton: (props: any): ReactElement => <></>,
 				PrevButton: (props: any): ReactElement => <></>,
-				NextButton: (props: any) => (
-					<Button
-						{...props}
-						label={t('commons.create_with_there_data', 'CREATE WITH THESE DATA')}
-						icon="PersonOutline"
-						iconPlacement="right"
-						onClick={(): void => {
-							if (accountDetail?.password?.length < 6) {
-								createSnackbar({
-									key: 'error',
-									type: 'error',
-									label: t('label.password_lenght_msg', 'Password should be more then 5 character'),
-									autoHideTimeout: 3000,
-									hideButton: true,
-									replace: true
-								});
-							} else if (accountDetail?.password !== accountDetail?.repeatPassword) {
-								createSnackbar({
-									key: 'error',
-									type: 'error',
-									label: t(
-										'label.password_and repeat_password_not_match',
-										'Password and repeat password not match'
-									),
-									autoHideTimeout: 3000,
-									hideButton: true,
-									replace: true
-								});
-							} else {
-								createAccountReq(
-									{
-										givenName: accountDetail?.givenName,
-										initials: accountDetail?.initials,
-										sn: accountDetail?.sn,
-										zimbraPasswordMustChange: accountDetail?.zimbraPasswordMustChange
-											? 'TRUE'
-											: ' FALSE',
-										zimbraAccountStatus: accountDetail?.zimbraAccountStatus,
-										zimbraPrefLocale: accountDetail?.zimbraPrefLocale,
-										zimbraPrefTimeZoneId: accountDetail?.zimbraPrefTimeZoneId,
-										description: accountDetail?.description
-									},
-									`${accountDetail?.name}@${domainName}`,
-									accountDetail?.password || ''
-								);
-							}
-						}}
-					/>
-				)
+				NextButton: (props: any): ReactElement => <></>
+			},
+			{
+				name: 'login',
+				label: t('label.login', 'LOGIN'),
+				icon: 'InfoOutline',
+				view: (props: any): ReactElement => <></>,
+				CancelButton: (props: any): ReactElement => <></>,
+				PrevButton: (props: any): ReactElement => <></>,
+				NextButton: (props: any): ReactElement => <></>
+			},
+			{
+				name: 'feature',
+				label: t('label.feature', 'FEATURE'),
+				icon: 'InfoOutline',
+				view: (props: any): ReactElement => <></>,
+				CancelButton: (props: any): ReactElement => <></>,
+				PrevButton: (props: any): ReactElement => <></>,
+				NextButton: (props: any): ReactElement => <></>
+			},
+			{
+				name: 'user_preferences',
+				label: t('label.user_preferences', 'USER PREFERENCES'),
+				icon: 'InfoOutline',
+				view: (props: any): ReactElement => <></>,
+				CancelButton: (props: any): ReactElement => <></>,
+				PrevButton: (props: any): ReactElement => <></>,
+				NextButton: (props: any): ReactElement => <></>
 			}
 		],
-		[
-			accountDetail?.description,
-			accountDetail?.givenName,
-			accountDetail?.initials,
-			accountDetail?.name,
-			accountDetail?.password,
-			accountDetail?.repeatPassword,
-			accountDetail?.sn,
-			accountDetail?.zimbraAccountStatus,
-			accountDetail?.zimbraPasswordMustChange,
-			accountDetail?.zimbraPrefLocale,
-			accountDetail?.zimbraPrefTimeZoneId,
-			createAccountReq,
-			createSnackbar,
-			domainName,
-			setShowCreateAccountView,
-			t
-		]
+		[setShowEditAccountView, t]
 	);
 
 	const onComplete = useCallback(() => {
-		setShowCreateAccountView(false);
-	}, [setShowCreateAccountView]);
+		setShowEditAccountView(false);
+	}, [setShowEditAccountView]);
 
 	return (
 		<AccountDetailContainer background="gray5" mainAlignment="flex-start">
@@ -223,10 +172,10 @@ const CreateAccount: FC<{
 					Wrapper={WizardInSection}
 					onChange={setWizardData}
 					onComplete={onComplete}
-					setToggleWizardSection={setShowCreateAccountView}
+					setToggleWizardSection={setShowEditAccountView}
 				/>
 			</AccountContext.Provider>
 		</AccountDetailContainer>
 	);
 };
-export default CreateAccount;
+export default EditAccount;
