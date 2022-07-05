@@ -40,7 +40,7 @@ const EditMailingListContainer = styled(Container)`
 	z-index: 10;
 	position: absolute;
 	top: 43px;
-	right: 12px;
+	right: 1px;
 	bottom: 0px;
 	left: ${'max(calc(100% - 680px), 12px)'};
 	transition: left 0.2s ease-in-out;

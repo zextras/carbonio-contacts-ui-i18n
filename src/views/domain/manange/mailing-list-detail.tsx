@@ -454,7 +454,8 @@ const MailingListDetail: FC<any> = ({
 						<Input
 							label={t('label.displayed_name', 'Displayed Name')}
 							value={displayName}
-							background="gray5"
+							background="gray6"
+							readOnly
 							disabled
 						/>
 					</Container>
@@ -462,51 +463,39 @@ const MailingListDetail: FC<any> = ({
 						<Input
 							label={t('label.address', 'Address')}
 							value={distributionName}
-							background="gray5"
+							background="gray6"
 							disabled
 						/>
 					</Container>
 				</ListRow>
 				<ListRow>
 					<Container>
-						<Select
-							items={subscriptionUnsubscriptionRequestOptions}
-							background="gray5"
+						<Input
+							background="gray6"
 							label={t('label.new_subscription_requests', 'New subscriptions requests')}
-							showCheckbox={false}
 							disabled
-							onChange={(): void => {
-								null;
-							}}
-							selection={zimbraDistributionListSubscriptionPolicy}
+							readOnly
+							value={zimbraDistributionListSubscriptionPolicy?.label}
 						/>
 					</Container>
 					<Container padding={{ all: 'small' }}>
-						<Select
-							items={subscriptionUnsubscriptionRequestOptions}
-							background="gray5"
+						<Input
+							background="gray6"
 							label={t('label.unsubscribe_request', 'Unsubscription requests')}
-							showCheckbox={false}
-							onChange={(): void => {
-								null;
-							}}
+							readOnly
 							disabled
-							selection={zimbraDistributionListUnsubscriptionPolicy}
+							value={zimbraDistributionListUnsubscriptionPolicy?.label}
 						/>
 					</Container>
 				</ListRow>
 				<ListRow>
 					<Container padding={{ right: 'small', top: 'small' }}>
-						<Select
-							items={rightsOptions}
-							background="gray5"
+						<Input
+							background="gray6"
 							label={t('label.rights', 'Rights')}
-							showCheckbox={false}
-							onChange={(): void => {
-								null;
-							}}
+							readOnly
 							disabled
-							selection={zimbraMailStatus}
+							value={zimbraMailStatus?.label}
 						/>
 					</Container>
 				</ListRow>
@@ -539,7 +528,7 @@ const MailingListDetail: FC<any> = ({
 						<Input
 							label={t('label.members', 'Members')}
 							value={dlm.length}
-							background="gray5"
+							background="gray6"
 							disabled
 						/>
 					</Container>
@@ -547,7 +536,7 @@ const MailingListDetail: FC<any> = ({
 						<Input
 							label={t('label.alias_in_the_list', 'Alias in the List')}
 							value={zimbraMailAlias.length}
-							background="gray5"
+							background="gray6"
 							disabled
 						/>
 					</Container>
@@ -557,7 +546,7 @@ const MailingListDetail: FC<any> = ({
 						<Input
 							label={t('label.creation_date', 'Creation Date')}
 							value={dlCreateDate}
-							background="gray5"
+							background="gray6"
 							disabled
 						/>
 					</Container>
@@ -606,7 +595,7 @@ const MailingListDetail: FC<any> = ({
 						<Input
 							value={zimbraNotes}
 							label={t('label.notes', 'Notes')}
-							background="gray5"
+							background="gray6"
 							disabled
 						/>
 					</Container>
