@@ -30,8 +30,6 @@ const CreateAccountDetailSection: FC = () => {
 	const [t] = useTranslation();
 	const timezones = useMemo(() => timeZoneList(t), [t]);
 	const localeZone = useMemo(() => localeList(t), [t]);
-	// const [changeNameBool, setChangeNameBool] = useState<boolean>(false);
-	// const [changeDisplayNameBool, setChangeDisplayNameBool] = useState<boolean>(false);
 
 	const ACCOUNT_STATUS = useMemo(
 		() => [
