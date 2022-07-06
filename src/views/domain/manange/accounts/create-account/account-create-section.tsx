@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { FC, useMemo, useContext } from 'react';
+import React, { FC, useMemo, useContext, useState, useEffect } from 'react';
 import { Container, Input, Row, Select, Text, Icon } from '@zextras/carbonio-design-system';
 import { useTranslation } from 'react-i18next';
 import { find } from 'lodash';
@@ -15,9 +15,22 @@ const AccountCreateSection: FC = () => {
 	const conext = useContext(AccountContext);
 	const { accountDetail } = conext;
 	const domainName = useDomainStore((state) => state.domain?.name);
+	const cosList = useDomainStore((state) => state.cosList);
+	const [cosItems, setCosItems] = useState<any[]>([]);
 	const [t] = useTranslation();
 	const localeZone = useMemo(() => localeList(t), [t]);
-
+	useEffect(() => {
+		if (!!cosList && cosList.length > 0) {
+			const arrayItem: any[] = [];
+			cosList.forEach((item: any) => {
+				arrayItem.push({
+					label: item.name,
+					value: item.id
+				});
+			});
+			setCosItems(arrayItem);
+		}
+	}, [cosList]);
 	return (
 		<Container
 			mainAlignment="flex-start"
@@ -125,14 +138,20 @@ const AccountCreateSection: FC = () => {
 					</Row>
 				</Row>
 				<Row padding={{ top: 'large', left: 'large' }} width="100%">
-					<Select
-						background="gray6"
-						label={t('label.cos', 'COS')}
-						showCheckbox={false}
-						padding={{ right: 'medium' }}
-						defaultSelection={{ value: domainName, label: domainName }}
-						disabled
-					/>
+					{cosItems?.length === cosList?.length ? (
+						<Select
+							items={cosItems}
+							background="gray5"
+							label={t('label.default_class_of_service', 'Default Class of Service')}
+							showCheckbox={false}
+							defaultSelection={cosItems.find(
+								(item: any) => item.value === accountDetail?.zimbraCOSId
+							)}
+							disabled
+						/>
+					) : (
+						<></>
+					)}
 				</Row>
 				<Row padding={{ top: 'large', left: 'large' }} width="100%">
 					<Input

@@ -331,17 +331,21 @@ const CreateAccountDetailSection: FC = () => {
 						/>
 					</Row>
 					<Row width="64%" mainAlignment="flex-start">
-						<Select
-							items={cosItems}
-							background="gray5"
-							label={t('label.default_class_of_service', 'Default Class of Service')}
-							showCheckbox={false}
-							defaultSelection={cosItems.find(
-								(item: any) => item.value === accountDetail?.zimbraCOSId
-							)}
-							onChange={onCOSIdChange}
-							disabled={accountDetail?.defaultCOS}
-						/>
+						{cosItems?.length === cosList?.length ? (
+							<Select
+								items={cosItems}
+								background="gray5"
+								label={t('label.default_class_of_service', 'Default Class of Service')}
+								showCheckbox={false}
+								defaultSelection={cosItems.find(
+									(item: any) => item.value === accountDetail?.zimbraCOSId
+								)}
+								onChange={onCOSIdChange}
+								disabled={accountDetail?.defaultCOS}
+							/>
+						) : (
+							<></>
+						)}
 					</Row>
 				</Row>
 			</Row>
