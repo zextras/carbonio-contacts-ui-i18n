@@ -30,8 +30,6 @@ const CreateAccountDetailSection: FC = () => {
 	const [t] = useTranslation();
 	const timezones = useMemo(() => timeZoneList(t), [t]);
 	const localeZone = useMemo(() => localeList(t), [t]);
-	const [changeNameBool, setChangeNameBool] = useState<boolean>(false);
-	const [changeDisplayNameBool, setChangeDisplayNameBool] = useState<boolean>(false);
 
 	const ACCOUNT_STATUS = useMemo(
 		() => [
@@ -73,7 +71,7 @@ const CreateAccountDetailSection: FC = () => {
 	);
 	const changeAccName = useCallback(
 		(e) => {
-			setChangeNameBool(true);
+			setAccountDetail((prev: any) => ({ ...prev, changeNameBool: true }));
 			setAccountDetail((prev: any) => ({ ...prev, [e.target.name]: e.target.value }));
 		},
 		[setAccountDetail]
@@ -81,7 +79,7 @@ const CreateAccountDetailSection: FC = () => {
 
 	const changeAccDisplayName = useCallback(
 		(e) => {
-			setChangeDisplayNameBool(true);
+			setAccountDetail((prev: any) => ({ ...prev, changeDisplayNameBool: true }));
 			setAccountDetail((prev: any) => ({ ...prev, [e.target.name]: e.target.value }));
 		},
 		[setAccountDetail]
@@ -89,17 +87,17 @@ const CreateAccountDetailSection: FC = () => {
 
 	const combineName = useMemo(
 		() =>
-			!changeNameBool
+			!accountDetail?.changeNameBool
 				? `${accountDetail?.givenName || ''}${accountDetail?.initials || ''}${
 						accountDetail?.sn || ''
 				  }`
 				: accountDetail?.name,
 		[
+			accountDetail?.changeNameBool,
 			accountDetail?.givenName,
 			accountDetail?.initials,
 			accountDetail?.name,
-			accountDetail?.sn,
-			changeNameBool
+			accountDetail?.sn
 		]
 	);
 
@@ -124,13 +122,14 @@ const CreateAccountDetailSection: FC = () => {
 	}, [cosList]);
 
 	useEffect(() => {
-		!changeNameBool && setAccountDetail((prev: any) => ({ ...prev, name: combineName }));
-	}, [changeNameBool, combineName, setAccountDetail]);
+		!accountDetail?.changeNameBool &&
+			setAccountDetail((prev: any) => ({ ...prev, name: combineName }));
+	}, [accountDetail?.changeNameBool, combineName, setAccountDetail]);
 
 	useEffect(() => {
-		!changeDisplayNameBool &&
+		!accountDetail?.changeDisplayNameBool &&
 			setAccountDetail((prev: any) => ({ ...prev, displayName: combineDisplayName }));
-	}, [changeDisplayNameBool, combineDisplayName, setAccountDetail]);
+	}, [accountDetail?.changeDisplayNameBool, combineDisplayName, setAccountDetail]);
 
 	const onAccountStatusChange = (v: any): any => {
 		setAccountDetail((prev: any) => ({ ...prev, zimbraAccountStatus: v }));

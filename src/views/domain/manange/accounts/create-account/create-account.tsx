@@ -66,6 +66,8 @@ interface AccountDetailObj {
 	repeatPassword: string;
 	displayName: string;
 	zimbraCOSId: string;
+	changeNameBool: boolean;
+	changeDisplayNameBool: boolean;
 }
 
 // eslint-disable-next-line no-empty-pattern
@@ -92,7 +94,9 @@ const CreateAccount: FC<{
 		password: '',
 		repeatPassword: '',
 		displayName: '',
-		zimbraCOSId: ''
+		zimbraCOSId: '',
+		changeNameBool: false,
+		changeDisplayNameBool: false
 	});
 
 	const [wizardData, setWizardData] = useState();
