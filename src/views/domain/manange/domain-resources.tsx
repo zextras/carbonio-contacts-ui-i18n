@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { FC, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import React, { FC, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import {
 	Container,
 	Row,
@@ -23,6 +23,7 @@ import logo from '../../../assets/gardian.svg';
 import Paginig from '../../components/paging';
 import { searchDirectory } from '../../../services/search-directory-service';
 import { useDomainStore } from '../../../store/domain/store';
+import ResourceEditDetailView from './resource-edit-detail-view';
 
 const DomainResources: FC = () => {
 	const [t] = useTranslation();
@@ -33,6 +34,10 @@ const DomainResources: FC = () => {
 	const domainName = useDomainStore((state) => state.domain?.name);
 	const [searchString, setSearchString] = useState<string>('');
 	const [searchQuery, setSearchQuery] = useState<string>('');
+	const [selectedResourceList, setSelectedResourceList] = useState<any>({});
+	const [showResourceEditDetailView, setShowResourceEditDetailView] = useState<boolean>(false);
+	const [isEditMode, setIsEditMode] = useState<boolean>(false);
+	const timer = useRef<any>();
 	const headers: any[] = useMemo(
 		() => [
 			{
@@ -69,6 +74,26 @@ const DomainResources: FC = () => {
 		[t]
 	);
 
+	const doClickAction = useCallback((): void => {
+		setIsEditMode(false);
+	}, []);
+
+	const doDoubleClickAction = useCallback((): void => {
+		setIsEditMode(true);
+	}, []);
+
+	const handleClick = useCallback(
+		(event: any) => {
+			clearTimeout(timer.current);
+			if (event.detail === 1) {
+				timer.current = setTimeout(doClickAction, 200);
+			} else if (event.detail === 2) {
+				doDoubleClickAction();
+			}
+		},
+		[doClickAction, doDoubleClickAction]
+	);
+
 	const getResourceList = useCallback(
 		(zimbraDomainName: any, queryString: any): void => {
 			const attrs =
@@ -87,16 +112,60 @@ const DomainResources: FC = () => {
 							rList.push({
 								id: item?.id,
 								columns: [
-									<Text size="medium" weight="light" key={item?.id} color="gray0">
+									<Text
+										size="medium"
+										weight="light"
+										key={item?.id}
+										color="gray0"
+										onClick={(e: { stopPropagation: () => void }): void => {
+											e.stopPropagation();
+											setSelectedResourceList(item);
+											setShowResourceEditDetailView(true);
+											handleClick(e);
+										}}
+									>
 										{item?.a?.find((a: any) => a?.n === 'displayName')?._content}
 									</Text>,
-									<Text size="medium" weight="light" key={item?.id} color="gray0">
+									<Text
+										size="medium"
+										weight="light"
+										key={item?.id}
+										color="gray0"
+										onClick={(e: { stopPropagation: () => void }): void => {
+											e.stopPropagation();
+											setSelectedResourceList(item);
+											setShowResourceEditDetailView(true);
+											handleClick(e);
+										}}
+									>
 										{item?.name}
 									</Text>,
-									<Text size="medium" weight="light" key={item?.id} color="gray0">
+									<Text
+										size="medium"
+										weight="light"
+										key={item?.id}
+										color="gray0"
+										onClick={(e: { stopPropagation: () => void }): void => {
+											e.stopPropagation();
+											setSelectedResourceList(item);
+											setShowResourceEditDetailView(true);
+											handleClick(e);
+										}}
+									>
 										{item?.a?.find((a: any) => a?.n === 'zimbraAccountStatus')?._content}
 									</Text>,
-									<Text size="medium" weight="light" key={item?.id} color="gray0">
+									<Text
+										size="medium"
+										weight="light"
+										key={item?.id}
+										color="gray0"
+										onClick={(e: { stopPropagation: () => void }): void => {
+											e.stopPropagation();
+											setSelectedResourceList(item);
+											setShowResourceEditDetailView(true);
+											handleClick(e);
+										}}
+									>
 										{item?.a?.find((a: any) => a?.n === 'zimbraLastLogonTimestamp')?._content
 											? moment(
 													item?.a?.find((a: any) => a?.n === 'zimbraLastLogonTimestamp')?._content,
@@ -104,17 +173,30 @@ const DomainResources: FC = () => {
 											  ).format('YY/MM/DD | hh:MM')
 											: t('label.never_logged_in', 'Never logged In')}
 									</Text>,
-									<Text size="medium" weight="light" key={item?.id} color="gray0">
+									<Text
+										size="medium"
+										weight="light"
+										key={item?.id}
+										color="gray0"
+										onClick={(e: { stopPropagation: () => void }): void => {
+											e.stopPropagation();
+											setSelectedResourceList(item);
+											setShowResourceEditDetailView(true);
+											handleClick(e);
+										}}
+									>
 										{item?.a?.find((a: any) => a?.n === 'description')?._content}
 									</Text>
-								]
+								],
+								item,
+								clickable: true
 							});
 						});
 						setResourceList(rList);
 					}
 				});
 		},
-		[t, offset, limit]
+		[offset, limit, t, handleClick]
 	);
 
 	useEffect(() => {
@@ -162,15 +244,6 @@ const DomainResources: FC = () => {
 									icon="Plus"
 									height={36}
 									width={36}
-								/>
-							</Padding>
-							<Padding right="medium">
-								<Button
-									label={t('label.details', 'Details')}
-									color="primary"
-									type="outlined"
-									disabled
-									height={36}
 								/>
 							</Padding>
 							<Button
@@ -229,7 +302,8 @@ const DomainResources: FC = () => {
 								<Table
 									rows={resourceList}
 									headers={headers}
-									showCheckbox={false}
+									showCheckbox
+									multiSelect
 									style={{ overflow: 'auto', height: '100%' }}
 								/>
 							)}
@@ -271,10 +345,16 @@ const DomainResources: FC = () => {
 							mainAlignment="space-between"
 							crossAlignment="flex-start"
 							width="fill"
-							padding={{ all: 'large' }}
+							padding={{ top: 'large', bottom: 'large' }}
 						>
 							{resourceList && resourceList.length > 0 && (
-								<Row orientation="horizontal" width="100%" background="gray6">
+								<Row
+									orientation="horizontal"
+									crossAlignment="flex-start"
+									mainAlignment="flex-start"
+									width="100%"
+									background="gray6"
+								>
 									<Divider />
 									<Paginig totalItem={totalAccount} setOffset={setOffset} pageSize={limit} />
 								</Row>
@@ -283,6 +363,14 @@ const DomainResources: FC = () => {
 					</Container>
 				</Row>
 			</Container>
+			{showResourceEditDetailView && (
+				<ResourceEditDetailView
+					selectedResourceList={selectedResourceList}
+					setShowResourceEditDetailView={setShowResourceEditDetailView}
+					isEditMode={isEditMode}
+					setIsEditMode={setIsEditMode}
+				/>
+			)}
 		</Container>
 	);
 };
