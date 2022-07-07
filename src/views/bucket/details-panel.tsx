@@ -153,7 +153,6 @@ const DetailsPanel: FC<{
 	BucketDetail: any;
 }> = ({ setDetailsBucket, title, BucketDetail }) => {
 	const [t] = useTranslation();
-	console.log('__test list data', BucketDetail);
 
 	const [severSelection, setServerSelection] = useState([]);
 	const [bucketType, setBucketType] = useState();
