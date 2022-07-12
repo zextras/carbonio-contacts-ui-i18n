@@ -8,7 +8,7 @@ import { Container, Input, Row, Select, Text, Icon } from '@zextras/carbonio-des
 import { useTranslation } from 'react-i18next';
 import { find } from 'lodash';
 import { useDomainStore } from '../../../../../store/domain/store';
-import { AccountContext } from '../account-context';
+import { AccountContext } from './account-context';
 import { localeList } from '../../../../utility/utils';
 
 const AccountCreateSection: FC = () => {

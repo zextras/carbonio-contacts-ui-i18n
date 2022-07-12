@@ -418,6 +418,7 @@ const ManageAccounts: FC = () => {
 				<AccountDetailView
 					selectedAccount={selectedAccount}
 					setShowAccountDetailView={setShowAccountDetailView}
+					setShowEditAccountView={setShowEditAccountView}
 					STATUS_COLOR={STATUS_COLOR}
 				/>
 			)}
@@ -431,6 +432,8 @@ const ManageAccounts: FC = () => {
 				<EditAccount
 					setShowEditAccountView={setShowEditAccountView}
 					createAccountReq={createAccountReq}
+					selectedAccount={selectedAccount}
+					getAccountList={getAccountList}
 				/>
 			)}
 		</Container>

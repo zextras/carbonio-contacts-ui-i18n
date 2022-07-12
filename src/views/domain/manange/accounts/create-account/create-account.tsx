@@ -13,7 +13,7 @@ import { HorizontalWizard } from '../../../../app/component/hwizard';
 import CreateAccountDetailSection from './create-account-detail-section';
 import { Section } from '../../../../app/component/section';
 import CreateAccountSectionView from './account-create-section';
-import { AccountContext } from '../account-context';
+import { AccountContext } from './account-context';
 
 const AccountDetailContainer = styled(Container)`
 	z-index: 10;
