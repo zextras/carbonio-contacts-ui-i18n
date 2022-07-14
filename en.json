@@ -1,5 +1,8 @@
 {
     "account": {
+        "edit": {
+            "edit_account_wizard": "Edit Account Wizard"
+        },
         "new": {
             "create_account_wizard": "Create Account Wizard"
         }
@@ -8,7 +11,11 @@
         "change_password_for_next_login": "Must change password on the next login",
         "default_COS": "Default COS",
         "enable_activeSync_remote_access": "Enable ActiveSync remote access",
-        "generate_first_2FA_token": "Generate first 2FA token"
+        "generate_first_2FA_token": "Generate first 2FA token",
+        "hide_in_gal": "Hide in GAL",
+        "prevent_user_from_changing_password": "Prevent user from changing password",
+        "this_is_global_administrator": "This is a Global Administrator ",
+        "this_user_must_change_password": "This user must change password"
     },
     "backup": {
         "backup_path": "Backup Path",
@@ -261,6 +268,7 @@
         "class_of_Service": "Class of Service",
         "class_of_service": "Class of Service",
         "closed": "Closed",
+        "configration": "CONFIGRATION",
         "configuration": "Configuration",
         "connect_buckets": "Connect Buckets",
         "connection_is_created_verify_connector_fail": "CONNECTOR IS CREATED BUT VERIFICATION FAILED",
@@ -311,6 +319,7 @@
         "deligated_admin_help_url": "Deligated Admin Help URL",
         "description": "Description",
         "descriptive_name": "Descriptive Name",
+        "detail": "Detail",
         "detail_button": "DETAILS",
         "details": "Details",
         "device": "Device",
@@ -338,6 +347,7 @@
         "external_ldap": "External LDAP",
         "external_password_change_listener": "External Password change listener",
         "fall_back_to_local_msg": "Fall back to local password management in case of failure",
+        "feature": "FEATURE",
         "features": "Features",
         "filter": "Filter",
         "first_2FA_access_token_link": "First 2FA Access Token Link (send this to the user)",
@@ -347,6 +357,7 @@
         "gal_mode": "GAL Mode",
         "gal_settings": "GAL Settings",
         "gay_sync_account_name": "GAL Sync Account Name",
+        "general": "GENERAL",
         "general_Settings": "General Settings",
         "general_information": "General Information",
         "general_settings": "General Settings",
@@ -379,6 +390,7 @@
         "location": "Location",
         "locked": "Locked",
         "log": "Log",
+        "login": "LOGIN",
         "login_allowed_ip": "Login Allowed IP",
         "login_allowed_user_agent": "Login Allowed User Agent",
         "login_redirect_url": "Login Redirect URL",
@@ -455,6 +467,7 @@
         "require_list_owner_approval": "Require list owner approval",
         "resource": "Resource",
         "resources": "Resources",
+        "restart_replica": "RESTART REPLICA",
         "restore_account": "Restore Account",
         "restore_deleted_email": "Restore Deleted E-mail",
         "retention_policy": "Retention Policy",
@@ -509,6 +522,7 @@
         "subscriptions": "Subscriptions",
         "surname": "Surname",
         "suspended": "Suspended",
+        "the_last_changes_has_been_saved_successfully": "The last changes has been saved successfully",
         "this_account_owner_of_the_list": "this account will be a Owner of the list",
         "this_is_hidden_from_gal": "This list is hidden from GAL",
         "this_list_is_empty": "This list is empty.",
@@ -530,6 +544,8 @@
         "used_on_accounts": "Used on Accounts",
         "user": "User",
         "userName": "username (Auto-fill)",
+        "userName_auto_fill": "username (Auto-fill)",
+        "user_preferences": "USER PREFERENCES",
         "utility_view": "Test utility view 1",
         "utility_view2": "Test utility view 2",
         "utility_view3": "Test utility view 3",
@@ -540,6 +556,7 @@
         "view": "This is a view",
         "view_mail": "VIEW MAIL",
         "viewed_name": "Viewed Name (Auto-fill)",
+        "viewed_name_auto_fill": "Viewed Name (Auto-fill)",
         "virtual_host": "virtual host",
         "virtual_host_enable_info_msg": "Click to ADD button to enabled new one.",
         "virtual_host_info_msg": "Virtual hosts allow the system to establish a default domain for a user login.",
