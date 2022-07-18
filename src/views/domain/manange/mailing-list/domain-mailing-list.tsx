@@ -19,12 +19,12 @@ import {
 } from '@zextras/carbonio-design-system';
 import { Trans, useTranslation } from 'react-i18next';
 import { debounce } from 'lodash';
-import logo from '../../../assets/gardian.svg';
-import Paginig from '../../components/paging';
-import { searchDirectory } from '../../../services/search-directory-service';
+import logo from '../../../../assets/gardian.svg';
+import Paginig from '../../../components/paging';
+import { searchDirectory } from '../../../../services/search-directory-service';
 import EditMailingListView from './edit-mailing-detail-view';
-import { useDomainStore } from '../../../store/domain/store';
-import { RECORD_DISPLAY_LIMIT } from '../../../constants';
+import { useDomainStore } from '../../../../store/domain/store';
+import { RECORD_DISPLAY_LIMIT } from '../../../../constants';
 import MailingListDetail from './mailing-list-detail';
 
 const DomainMailingList: FC = () => {

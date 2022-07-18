@@ -24,18 +24,18 @@ import {
 } from '@zextras/carbonio-design-system';
 import { Trans, useTranslation } from 'react-i18next';
 import moment from 'moment';
-import { isEqual, isError } from 'lodash';
-import ListRow from '../../list/list-row';
-import Paginig from '../../components/paging';
-import { getDistributionList } from '../../../services/get-distribution-list';
-import { getDistributionListMembership } from '../../../services/get-distributionlists-membership-service';
-import { getDateFromStr } from '../../utility/utils';
-import { searchDirectory } from '../../../services/search-directory-service';
-import { modifyDistributionList } from '../../../services/modify-distributionlist-service';
-import { renameDistributionList } from '../../../services/rename-distributionlist-service';
-import { addDistributionListMember } from '../../../services/add-distributionlist-member-service';
-import { removeDistributionListMember } from '../../../services/remove-distributionlist-member-service';
-import { distributionListAction } from '../../../services/distribution-list-action-service';
+import { isEqual } from 'lodash';
+import ListRow from '../../../list/list-row';
+import Paginig from '../../../components/paging';
+import { getDistributionList } from '../../../../services/get-distribution-list';
+import { getDistributionListMembership } from '../../../../services/get-distributionlists-membership-service';
+import { getDateFromStr } from '../../../utility/utils';
+import { searchDirectory } from '../../../../services/search-directory-service';
+import { modifyDistributionList } from '../../../../services/modify-distributionlist-service';
+import { renameDistributionList } from '../../../../services/rename-distributionlist-service';
+import { addDistributionListMember } from '../../../../services/add-distributionlist-member-service';
+import { removeDistributionListMember } from '../../../../services/remove-distributionlist-member-service';
+import { distributionListAction } from '../../../../services/distribution-list-action-service';
 
 // eslint-disable-next-line no-shadow
 export enum SUBSCRIBE_UNSUBSCRIBE {
