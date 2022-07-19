@@ -526,6 +526,7 @@
         "time_zone": "Time Zone",
         "timezone": "Time Zone",
         "type": "Type",
+        "type_an_account_dot": "Type an account ...",
         "undo": "undo",
         "unlimited": "Unlimited",
         "unsaved_changes": "You have unsaved changes",
