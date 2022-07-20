@@ -230,11 +230,12 @@ const CreateMailingList: FC<{
 						label={t('label.create', 'CREATE')}
 						icon="PowerOutline"
 						iconPlacement="right"
+						disabled={!mailingListDetail?.prefixName || !mailingListDetail?.suffixName}
 					/>
 				)
 			}
 		],
-		[t, setShowCreateMailingListView]
+		[t, setShowCreateMailingListView, mailingListDetail?.prefixName, mailingListDetail?.suffixName]
 	);
 
 	const dynamicMailingListSizardSteps = useMemo(
@@ -302,11 +303,12 @@ const CreateMailingList: FC<{
 						label={t('label.create', 'CREATE')}
 						icon="PowerOutline"
 						iconPlacement="right"
+						disabled={!mailingListDetail?.prefixName || !mailingListDetail?.suffixName}
 					/>
 				)
 			}
 		],
-		[t, setShowCreateMailingListView]
+		[t, setShowCreateMailingListView, mailingListDetail?.prefixName, mailingListDetail?.suffixName]
 	);
 
 	const onComplete = useCallback(() => {
