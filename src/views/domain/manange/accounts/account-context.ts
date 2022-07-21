@@ -10,5 +10,9 @@ type AccountContext = {
 	directMemberList: any[];
 	inDirectMemberList: any[];
 	setAccountDetail: (arg: any) => void;
+	setDirectMemberList: (arg: any) => void;
+	setInDirectMemberList: (arg: any) => void;
+	setInitAccountDetail: (arg: any) => void;
+	initAccountDetail: any;
 };
 export const AccountContext = createContext({} as AccountContext);

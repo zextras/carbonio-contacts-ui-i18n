@@ -24,14 +24,21 @@ import { useDomainStore } from '../../../../store/domain/store';
 import Paginig from '../../../components/paging';
 import { accountListDirectory } from '../../../../services/account-list-directory-service';
 import { createAccountRequest } from '../../../../services/create-account';
+import { getAccountRequest } from '../../../../services/get-account';
+import { getAccountMembershipRequest } from '../../../../services/get-account-membership';
 import AccountDetailView from './account-detail-view';
 import CreateAccount from './create-account/create-account';
 import EditAccount from './edit-account/edit-account';
+import { AccountContext } from './account-context';
 
 const ManageAccounts: FC = () => {
 	const [t] = useTranslation();
 	const createSnackbar = useSnackbar();
 	const domainName = useDomainStore((state) => state.domain?.name);
+	const [accountDetail, setAccountDetail] = useState<any>({});
+	const [directMemberList, setDirectMemberList] = useState<any>({});
+	const [inDirectMemberList, setInDirectMemberList] = useState<any>({});
+	const [initAccountDetail, setInitAccountDetail] = useState<any>({});
 	const headers: any = useMemo(
 		() => [
 			{
@@ -112,6 +119,68 @@ const ManageAccounts: FC = () => {
 		if (item.zimbraIsSystemAccount === 'TRUE') return 'System';
 		return 'Normal';
 	}, []);
+	const getAccountDetail = useCallback(
+		(id): void => {
+			getAccountRequest(id)
+				.then((response: any) => response.json())
+				.then((data: any) => {
+					const obj: any = {};
+					// eslint-disable-next-line array-callback-return
+					data?.Body?.GetAccountResponse?.account?.[0]?.a?.map((ele: any) => {
+						if (obj[ele.n]) {
+							obj[ele.n] = `${obj[ele.n]}, ${ele._content}`;
+						} else {
+							obj[ele.n] = ele._content;
+						}
+					});
+					obj.zimbraPrefMailForwardingAddress = obj.zimbraPrefMailForwardingAddress
+						? obj.zimbraPrefMailForwardingAddress
+						: '';
+					obj.zimbraPrefCalendarForwardInvitesTo = obj.zimbraPrefCalendarForwardInvitesTo
+						? obj.zimbraPrefCalendarForwardInvitesTo
+						: '';
+
+					obj.password = '';
+					obj.repeatPassword = '';
+					setInitAccountDetail({ ...obj });
+					setAccountDetail({ ...obj });
+				})
+				// eslint-disable-next-line @typescript-eslint/no-empty-function
+				.catch((error) => {});
+		},
+		[setAccountDetail]
+	);
+	const getAccountMembership = useCallback(
+		(id): void => {
+			getAccountMembershipRequest(id)
+				.then((response: any) => response.json())
+				.then((data: any) => {
+					const directMemArr: any[] = [];
+					const inDirectMemArr: any[] = [];
+					// eslint-disable-next-line array-callback-return
+					data?.Body?.GetAccountMembershipResponse?.dl?.map((ele: any) => {
+						if (ele?.via)
+							inDirectMemArr.push({ label: ele?.name, closable: false, disabled: true });
+						else directMemArr.push({ label: ele?.name, closable: false, disabled: true });
+					});
+
+					setDirectMemberList(directMemArr);
+					setInDirectMemberList(inDirectMemArr);
+				})
+				// eslint-disable-next-line @typescript-eslint/no-empty-function
+				.catch((error) => {});
+		},
+		[setDirectMemberList, setInDirectMemberList]
+	);
+	const openDetailView = useCallback(
+		(acc: any): void => {
+			setSelectedAccount(acc);
+			setShowAccountDetailView(true);
+			getAccountDetail(acc?.id);
+			getAccountMembership(acc?.id);
+		},
+		[getAccountDetail, getAccountMembership]
+	);
 	const getAccountList = useCallback((): void => {
 		const type = 'accounts';
 		const attrs =
@@ -138,8 +207,7 @@ const ManageAccounts: FC = () => {
 									color="#414141"
 									onClick={(event: { stopPropagation: () => void }): void => {
 										event.stopPropagation();
-										setSelectedAccount(item);
-										setShowAccountDetailView(true);
+										openDetailView(item);
 									}}
 								>
 									{item?.name || ' '}
@@ -150,8 +218,7 @@ const ManageAccounts: FC = () => {
 									color="#414141"
 									onClick={(event: { stopPropagation: () => void }): void => {
 										event.stopPropagation();
-										setSelectedAccount(item);
-										setShowAccountDetailView(true);
+										openDetailView(item);
 									}}
 								>
 									{item?.displayName || <>&nbsp;</>}
@@ -162,8 +229,7 @@ const ManageAccounts: FC = () => {
 									color="#828282"
 									onClick={(event: { stopPropagation: () => void }): void => {
 										event.stopPropagation();
-										setSelectedAccount(item);
-										setShowAccountDetailView(true);
+										openDetailView(item);
 									}}
 								>
 									{accountUserType(item)}
@@ -174,8 +240,7 @@ const ManageAccounts: FC = () => {
 									color={STATUS_COLOR[item?.zimbraAccountStatus]?.color}
 									onClick={(event: { stopPropagation: () => void }): void => {
 										event.stopPropagation();
-										setSelectedAccount(item);
-										setShowAccountDetailView(true);
+										openDetailView(item);
 									}}
 								>
 									{STATUS_COLOR[item?.zimbraAccountStatus]?.label}
@@ -186,8 +251,7 @@ const ManageAccounts: FC = () => {
 									color="#414141"
 									onClick={(event: { stopPropagation: () => void }): void => {
 										event.stopPropagation();
-										setSelectedAccount(item);
-										setShowAccountDetailView(true);
+										openDetailView(item);
 									}}
 								>
 									{item?.description || <>&nbsp;</>}
@@ -202,7 +266,7 @@ const ManageAccounts: FC = () => {
 					setAccountList(accountListArr);
 				}
 			});
-	}, [STATUS_COLOR, accountUserType, domainName, limit, offset, searchQuery]);
+	}, [STATUS_COLOR, accountUserType, domainName, limit, offset, openDetailView, searchQuery]);
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const searchAccountList = useCallback(
 		debounce((searchText) => {
@@ -414,28 +478,42 @@ const ManageAccounts: FC = () => {
 					</Container>
 				</Row>
 			</Container>
-			{showAccountDetailView && (
-				<AccountDetailView
-					selectedAccount={selectedAccount}
-					setShowAccountDetailView={setShowAccountDetailView}
-					setShowEditAccountView={setShowEditAccountView}
-					STATUS_COLOR={STATUS_COLOR}
-				/>
-			)}
 			{showCreateAccountView && (
 				<CreateAccount
 					setShowCreateAccountView={setShowCreateAccountView}
 					createAccountReq={createAccountReq}
 				/>
 			)}
-			{showEditAccountView && (
-				<EditAccount
-					setShowEditAccountView={setShowEditAccountView}
-					createAccountReq={createAccountReq}
-					selectedAccount={selectedAccount}
-					getAccountList={getAccountList}
-				/>
-			)}
+			<AccountContext.Provider
+				value={{
+					accountDetail,
+					setAccountDetail,
+					directMemberList,
+					inDirectMemberList,
+					setDirectMemberList,
+					setInDirectMemberList,
+					initAccountDetail,
+					setInitAccountDetail
+				}}
+			>
+				{showAccountDetailView && (
+					<AccountDetailView
+						selectedAccount={selectedAccount}
+						setShowAccountDetailView={setShowAccountDetailView}
+						setShowEditAccountView={setShowEditAccountView}
+						STATUS_COLOR={STATUS_COLOR}
+					/>
+				)}
+
+				{showEditAccountView && (
+					<EditAccount
+						setShowEditAccountView={setShowEditAccountView}
+						createAccountReq={createAccountReq}
+						selectedAccount={selectedAccount}
+						getAccountList={getAccountList}
+					/>
+				)}
+			</AccountContext.Provider>
 		</Container>
 	);
 };

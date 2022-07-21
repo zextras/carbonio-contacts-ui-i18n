@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react';
+import React, { FC, ReactElement, useCallback, useEffect, useState, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
 	Container,
@@ -22,15 +22,15 @@ import {
 import { isEqual, reduce, remove } from 'lodash';
 import { useDomainStore } from '../../../../../store/domain/store';
 import { RouteLeavingGuard } from '../../../../ui-extras/nav-guard';
-import { AccountContext } from './account-context';
+
 import EditAccountGeneralSection from './edit-account-general-section';
 import EditAccountConfigrationSection from './edit-account-configration-section';
 import EditAccountUserPrefrencesSection from './edit-account-user-pref-section';
-import { getAccountRequest } from '../../../../../services/get-account';
-import { getAccountMembershipRequest } from '../../../../../services/get-account-membership';
+
 import { modifyAccountRequest } from '../../../../../services/modify-account';
 import { setPasswordRequest } from '../../../../../services/set-password';
-
+import { renameAccountRequest } from '../../../../../services/rename-account';
+import { AccountContext } from '../account-context';
 // eslint-disable-next-line no-empty-pattern
 const EditAccount: FC<{
 	setShowEditAccountView: any;
@@ -44,54 +44,9 @@ const EditAccount: FC<{
 	const [change, setChange] = useState('general');
 	const [click, setClick] = useState('');
 	const [isDirty, setIsDirty] = useState<boolean>(false);
-	const [initAccountDetail, setInitAccountDetail] = useState<any>({});
-	const [accountDetail, setAccountDetail] = useState<any>({});
-	const [directMemberList, setDirectMemberList] = useState<any>({});
-	const [inDirectMemberList, setInDirectMemberList] = useState<any>({});
+	const conext = useContext(AccountContext);
+	const { accountDetail, setAccountDetail, initAccountDetail, setInitAccountDetail } = conext;
 
-	const getAccountDetail = useCallback((id): void => {
-		getAccountRequest(id)
-			.then((response: any) => response.json())
-			.then((data: any) => {
-				const obj: any = {};
-				// eslint-disable-next-line array-callback-return
-				data?.Body?.GetAccountResponse?.account?.[0]?.a?.map((ele: any) => {
-					if (obj[ele.n]) {
-						obj[ele.n] = `${obj[ele.n]}, ${ele._content}`;
-					} else {
-						obj[ele.n] = ele._content;
-					}
-				});
-				obj.zimbraPrefMailForwardingAddress = obj.zimbraPrefMailForwardingAddress
-					? obj.zimbraPrefMailForwardingAddress
-					: '';
-				obj.zimbraPrefCalendarForwardInvitesTo = obj.zimbraPrefCalendarForwardInvitesTo
-					? obj.zimbraPrefCalendarForwardInvitesTo
-					: '';
-				setInitAccountDetail({ ...obj });
-				setAccountDetail({ ...obj });
-			})
-			// eslint-disable-next-line @typescript-eslint/no-empty-function
-			.catch((error) => {});
-	}, []);
-	const getAccountMembership = useCallback((id): void => {
-		getAccountMembershipRequest(id)
-			.then((response: any) => response.json())
-			.then((data: any) => {
-				const directMemArr: any[] = [];
-				const inDirectMemArr: any[] = [];
-				// eslint-disable-next-line array-callback-return
-				data?.Body?.GetAccountMembershipResponse?.dl?.map((ele: any) => {
-					if (ele?.via) inDirectMemArr.push({ label: ele?.name, closable: false, disabled: true });
-					else directMemArr.push({ label: ele?.name, closable: false, disabled: true });
-				});
-
-				setDirectMemberList(directMemArr);
-				setInDirectMemberList(inDirectMemArr);
-			})
-			// eslint-disable-next-line @typescript-eslint/no-empty-function
-			.catch((error) => {});
-	}, []);
 	useEffect(() => {
 		if (initAccountDetail?.zimbraId && !isEqual(accountDetail, initAccountDetail)) {
 			setIsDirty(true);
@@ -99,10 +54,7 @@ const EditAccount: FC<{
 			setIsDirty(false);
 		}
 	}, [accountDetail, initAccountDetail]);
-	useEffect(() => {
-		getAccountDetail(selectedAccount?.id);
-		getAccountMembership(selectedAccount?.id);
-	}, [getAccountDetail, selectedAccount, getAccountMembership]);
+
 	const ReusedDefaultTabBar: FC<{
 		item: any;
 		index: any;
@@ -157,35 +109,42 @@ const EditAccount: FC<{
 		);
 		const modifiedData: any = {};
 
-		if (modifiedKeys.includes('password') || modifiedKeys.includes('repeatPassword')) {
-			if (accountDetail?.password?.length < 6) {
-				createSnackbar({
-					key: 'error',
-					type: 'error',
-					label: t('label.password_lenght_msg', 'Password should be more then 5 character'),
-					autoHideTimeout: 3000,
-					hideButton: true,
-					replace: true
-				});
-				return;
+		if (accountDetail?.password || accountDetail?.repeatPassword) {
+			if (modifiedKeys.includes('password') || modifiedKeys.includes('repeatPassword')) {
+				if (accountDetail?.password?.length < 6) {
+					createSnackbar({
+						key: 'error',
+						type: 'error',
+						label: t('label.password_lenght_msg', 'Password should be more then 5 character'),
+						autoHideTimeout: 3000,
+						hideButton: true,
+						replace: true
+					});
+					return;
+				}
+				if (accountDetail?.password !== accountDetail?.repeatPassword) {
+					createSnackbar({
+						key: 'error',
+						type: 'error',
+						label: t(
+							'label.password_and repeat_password_not_match',
+							'Password and repeat password not match'
+						),
+						autoHideTimeout: 3000,
+						hideButton: true,
+						replace: true
+					});
+					return;
+				}
+				setPasswordRequest(initAccountDetail?.zimbraId, accountDetail?.password);
+				remove(modifiedKeys, (ele) => ele === 'password' || ele === 'repeatPassword');
 			}
-			if (accountDetail?.password !== accountDetail?.repeatPassword) {
-				createSnackbar({
-					key: 'error',
-					type: 'error',
-					label: t(
-						'label.password_and repeat_password_not_match',
-						'Password and repeat password not match'
-					),
-					autoHideTimeout: 3000,
-					hideButton: true,
-					replace: true
-				});
-				return;
-			}
-			setPasswordRequest(initAccountDetail?.zimbraId, accountDetail?.password);
-			remove(modifiedKeys, (ele) => ele === 'password' || ele === 'repeatPassword');
 		}
+		if (modifiedKeys.includes('uid')) {
+			renameAccountRequest(initAccountDetail?.zimbraId, `${accountDetail?.uid}@${domainName}`);
+			remove(modifiedKeys, (ele) => ele === 'uid');
+		}
+
 		modifiedKeys.forEach((ele: any) => {
 			modifiedData[ele] = accountDetail[ele];
 		});
@@ -228,15 +187,21 @@ const EditAccount: FC<{
 					replace: true
 				});
 			});
-	}, [accountDetail, createSnackbar, getAccountList, initAccountDetail, t]);
+	}, [
+		accountDetail,
+		createSnackbar,
+		domainName,
+		getAccountList,
+		initAccountDetail,
+		setInitAccountDetail,
+		t
+	]);
 	const onUndo = (): void => {
 		setAccountDetail({ ...initAccountDetail });
 	};
 
 	return (
-		<AccountContext.Provider
-			value={{ accountDetail, setAccountDetail, directMemberList, inDirectMemberList }}
-		>
+		<>
 			<Container
 				background="gray5"
 				mainAlignment="flex-start"
@@ -332,7 +297,7 @@ const EditAccount: FC<{
 				</Text>
 				<Text>{t('label.unsaved_changes_line2', 'All your unsaved changes will be lost')}</Text>
 			</RouteLeavingGuard>
-		</AccountContext.Provider>
+		</>
 	);
 };
 export default EditAccount;

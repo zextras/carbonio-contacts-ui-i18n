@@ -17,7 +17,7 @@ import {
 } from '@zextras/carbonio-design-system';
 import { setDefaults, useTranslation } from 'react-i18next';
 import { useDomainStore } from '../../../../../store/domain/store';
-import { AccountContext } from './account-context';
+import { AccountContext } from '../account-context';
 import { ACTIVE, CLOSED, LOCKED, MAINTENANCE, PENDING } from '../../../../../constants';
 import { timeZoneList, localeList } from '../../../../utility/utils';
 
@@ -246,7 +246,7 @@ const EditAccountGeneralSection: FC = () => {
 			<Row mainAlignment="flex-start" padding={{ top: 'large', left: 'small' }} width="100%">
 				<Row padding={{ top: 'large' }}>
 					<Text size="small" color="gray0" weight="bold">
-						Settings
+						{t('label.settings', 'Settings')}
 					</Text>
 				</Row>
 				<Row padding={{ top: 'large', left: 'large' }} width="100%" mainAlignment="space-between">

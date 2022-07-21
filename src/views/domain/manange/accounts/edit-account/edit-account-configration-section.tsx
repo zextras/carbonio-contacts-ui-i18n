@@ -13,9 +13,9 @@ import {
 	Divider,
 	Input
 } from '@zextras/carbonio-design-system';
-import { map, some, pick } from 'lodash';
-import { setDefaults, useTranslation } from 'react-i18next';
-import { AccountContext } from './account-context';
+import { map, some } from 'lodash';
+import { useTranslation } from 'react-i18next';
+import { AccountContext } from '../account-context';
 
 const emailRegex =
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars, max-len, no-control-regex

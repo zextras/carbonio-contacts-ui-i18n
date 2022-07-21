@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState, useContext } from 'react';
 import moment from 'moment';
 import {
 	Container,
@@ -19,6 +19,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { getMailboxQuota } from '../../../../services/account-list-directory-service';
+import { AccountContext } from './account-context';
 
 const AccountDetailContainer = styled(Container)`
 	z-index: 10;
@@ -43,6 +44,8 @@ const AccountDetailView: FC<any> = ({
 }) => {
 	const [t] = useTranslation();
 	const [usedQuota, setUsedQuota] = useState(0);
+	const conext = useContext(AccountContext);
+	const { accountDetail } = conext;
 
 	const getDataSourceDetail = useCallback((): void => {
 		getMailboxQuota(selectedAccount?.id)
@@ -88,28 +91,34 @@ const AccountDetailView: FC<any> = ({
 			>
 				<Row width="100%" mainAlignment="flex-end" crossAlignment="flex-end">
 					<Padding right="medium" top="large">
-						<IconButton
+						<Button
+							type="outlined"
 							iconColor="gray6"
-							backgroundColor="primary"
 							icon="EditAsNewOutline"
 							height={36}
+							label=""
 							width={36}
 							onClick={(): void => {
 								setShowAccountDetailView(false);
 								setShowEditAccountView(true);
 							}}
+							disabled={!accountDetail?.zimbraId || accountDetail?.zimbraId !== selectedAccount.id}
+							loading={!accountDetail?.zimbraId || accountDetail?.zimbraId !== selectedAccount.id}
+							style={{ padding: '8px 8px 8px 6px', display: 'block' }}
 						/>
 					</Padding>
 					<Padding right="medium">
-						<IconButton
-							iconColor="gray6"
-							backgroundColor="error"
+						<Button
+							type="outlined"
+							color="error"
 							icon="DeletePermanentlyOutline"
 							height={36}
+							label=""
 							width={36}
-							onClick={(): void => {
-								console.log('delete to be');
-							}}
+							// onClick={(): void => {}}
+							disabled={!accountDetail?.zimbraId || accountDetail?.zimbraId !== selectedAccount.id}
+							// loading={!accountDetail?.zimbraId || accountDetail?.zimbraId !== selectedAccount.id}
+							style={{ padding: '8px 8px 8px 6px', display: 'block' }}
 						/>
 					</Padding>
 					<Padding right="medium">
@@ -119,6 +128,7 @@ const AccountDetailView: FC<any> = ({
 							icon="EmailReadOutline"
 							iconPlacement="right"
 							color="primary"
+							disabled
 						/>
 					</Padding>
 					<Button
