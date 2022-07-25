@@ -14,6 +14,7 @@ import { Section } from '../../../app/component/section';
 import MailingListMembersSection from './mailing-list-members-section';
 import MailingListSettingsSection from './mailing-list-settings-sections';
 import MailingListCreateSection from './mailinglist-create-section';
+import { useDomainStore } from '../../../../store/domain/store';
 
 // eslint-disable-next-line no-shadow
 export enum SUBSCRIBE_UNSUBSCRIBE {
@@ -66,6 +67,7 @@ const CreateMailingList: FC<{
 }> = ({ setShowCreateMailingListView, createMailingListReq }) => {
 	const { t } = useTranslation();
 	const [wizardData, setWizardData] = useState();
+	const domainInformation = useDomainStore((state) => state.domain);
 
 	const [mailingListDetail, setMailingListDetail] = useState<MailingListDetailObj>({
 		name: '',
@@ -348,6 +350,12 @@ const CreateMailingList: FC<{
 	const onComplete = useCallback(() => {
 		setShowCreateMailingListView(false);
 	}, [setShowCreateMailingListView]);
+
+	useEffect(() => {
+		if (domainInformation?.name) {
+			setMailingListDetail((prev: any) => ({ ...prev, suffixName: domainInformation?.name }));
+		}
+	}, [domainInformation?.name]);
 
 	return (
 		<Container

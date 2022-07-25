@@ -3,16 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { FC, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import {
-	Container,
-	Text,
-	Input,
-	Row,
-	Switch,
-	Icon,
-	Dropdown
-} from '@zextras/carbonio-design-system';
+import React, { FC, useCallback, useContext, useState } from 'react';
+import { Container, Text, Input, Row, Switch, Icon } from '@zextras/carbonio-design-system';
 import { useTranslation } from 'react-i18next';
 import { debounce } from 'lodash';
 import { MailingListContext } from './mailinglist-context';
@@ -32,61 +24,6 @@ const MailingListSection: FC<any> = () => {
 		},
 		[setMailingListDetail]
 	);
-
-	const getDomainLists = (domainName: string): any => {
-		getDomainList(domainName)
-			.then((response) => response.json())
-			.then((data) => {
-				const searchResponse: any = data?.Body?.SearchDirectoryResponse;
-				if (!!searchResponse && searchResponse?.searchTotal > 0) {
-					setDomainList(searchResponse?.domain);
-				} else {
-					setDomainList([]);
-				}
-			});
-	};
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	const searchDomainCall = useCallback(
-		debounce((domain) => {
-			getDomainLists(domain);
-		}, 700),
-		[debounce]
-	);
-
-	useEffect(() => {
-		if (mailingListDetail?.suffixName) {
-			searchDomainCall(mailingListDetail?.suffixName);
-		}
-	}, [mailingListDetail?.suffixName, searchDomainCall]);
-
-	const items = domainList.map((domain: any, index) => ({
-		id: domain.id,
-		label: domain.name,
-		customComponent: (
-			<Row
-				top="9px"
-				right="large"
-				bottom="9px"
-				left="large"
-				style={{
-					fontFamily: 'roboto',
-					display: 'block',
-					textAlign: 'left',
-					height: 'inherit',
-					padding: '3px',
-					width: 'inherit'
-				}}
-				onClick={(): void => {
-					setMailingListDetail((prev: any) => ({
-						...prev,
-						suffixName: domain?.name
-					}));
-				}}
-			>
-				{domain?.name}
-			</Row>
-		)
-	}));
 
 	return (
 		<Container mainAlignment="flex-start">
@@ -157,28 +94,12 @@ const MailingListSection: FC<any> = () => {
 						orientation="horizontal"
 						padding={{ top: 'large', left: 'small' }}
 					>
-						<Dropdown
-							items={items}
-							placement="bottom-start"
-							maxWidth="300px"
-							disableAutoFocus
-							width="265px"
-							style={{
-								width: '100%'
-							}}
-						>
-							<Input
-								label={t('domain.type_here_a_domain', 'Type here a domain')}
-								onChange={(ev: any): void => {
-									setMailingListDetail((prev: any) => ({
-										...prev,
-										suffixName: ev.target.value
-									}));
-								}}
-								value={mailingListDetail?.suffixName}
-								backgroundColor="gray5"
-							/>
-						</Dropdown>
+						<Input
+							label={t('domain.type_here_a_domain', 'Type here a domain')}
+							value={mailingListDetail?.suffixName}
+							readOnly
+							backgroundColor="gray5"
+						/>
 					</Container>
 				</ListRow>
 				<ListRow>
