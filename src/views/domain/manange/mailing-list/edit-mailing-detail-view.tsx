@@ -1429,24 +1429,23 @@ const EditMailingListView: FC<any> = ({
 						</Container>
 					</Container>
 				</ListRow>
-				{/* {selectedMailingList?.dynamic && (
-    <ListRow>
-        <Container padding={{ top: 'small', bottom: 'small' }}>
-            <ChipInput
-                placeholder={t('label.owners_of_the_list', 'Owners of the List')}
-                value={ownerOfList}
-                onInputType={(e: any): void => {
-                    if (e.textContent && e.textContent !== '') {
-                        getOwnerOfListSearch(e.textContent);
-                    }
-                }}
-                options={searchOwnerMemberOfList}
-                onChange={onChangeOwnerOfListChipInput}
-                requireUniqueChips
-            />
-        </Container>
-    </ListRow>
-)} */}
+				<Row padding={{ top: 'small', bottom: 'medium' }}>
+					<Text size="medium" weight="bold" color="gray0">
+						{t('label.notes', 'Notes')}
+					</Text>
+				</Row>
+				<ListRow>
+					<Container padding={{ top: 'small', bottom: 'medium' }}>
+						<Input
+							value={zimbraNotes}
+							background="gray5"
+							onChange={(e: any): any => {
+								setZimbraNotes(e.target.value);
+							}}
+						/>
+					</Container>
+				</ListRow>
+
 				<Row padding={{ top: 'small', bottom: 'small' }}>
 					<Text size="medium" weight="bold" color="gray0">
 						{t('label.manage_list', 'Manage List')}
@@ -1489,7 +1488,7 @@ const EditMailingListView: FC<any> = ({
 							crossAlignment="flex-start"
 							width="100%"
 						>
-							<Row mainAlignment="flex-start" width="70%" crossAlignment="flex-start">
+							<Row mainAlignment="flex-start" width="60%" crossAlignment="flex-start">
 								<Input
 									label={t('label.i_am_looking_for_member', 'I’m looking for the member...')}
 									value={searchMember}
@@ -1499,36 +1498,34 @@ const EditMailingListView: FC<any> = ({
 									}}
 								/>
 							</Row>
-							<Row width="30%" mainAlignment="flex-start" crossAlignment="flex-start">
+							<Row width="40%" mainAlignment="flex-start" crossAlignment="flex-start">
 								<Padding left="large" right="large">
-									<IconButton
-										iconColor="primary"
-										backgroundColor="gray5"
-										icon="Plus"
+									<Button
+										type="outlined"
+										key="add-button"
+										label={t('label.add', 'Add')}
+										color="primary"
+										icon="PlusOutline"
 										height={44}
-										width={44}
+										iconPlacement="right"
 										onClick={(): void => {
 											setOpenAddMailingListDialog(true);
 										}}
 									/>
 								</Padding>
-								<Padding right="large">
-									<IconButton
-										iconColor="gray6"
-										backgroundColor="gray5"
-										icon="EditAsNewOutline"
-										height={44}
-										width={44}
-										disabled
-									/>
-								</Padding>
-								<IconButton
-									iconColor="error"
-									backgroundColor="gray5"
+
+								<Button
+									type="outlined"
+									key="add-button"
+									label={t('label.delete', 'Delete')}
+									color="error"
 									icon="Trash2Outline"
+									iconPlacement="right"
+									disabled={
+										selectedDistributionListMember.length === 0 &&
+										selectedOwnerListMember.length === 0
+									}
 									height={44}
-									width={44}
-									disabled={!isEnableDeleteButton}
 									onClick={onDeleteFromList}
 								/>
 							</Row>
@@ -1549,7 +1546,14 @@ const EditMailingListView: FC<any> = ({
 							/>
 						</Container>
 					)}
-
+				</ListRow>
+				<ListRow></ListRow>
+				{!selectedMailingList?.dynamic && (
+					<Container padding={{ all: 'small' }} mainAlignment="flex-end" crossAlignment="flex-end">
+						<Paginig totalItem={1} pageSize={10} setOffset={setMemberOffset} />
+					</Container>
+				)}
+				<ListRow>
 					<Container
 						padding={{
 							left: !selectedMailingList?.dynamic ? 'small' : '',
@@ -1567,38 +1571,14 @@ const EditMailingListView: FC<any> = ({
 						/>
 					</Container>
 				</ListRow>
+
 				<ListRow>
-					{!selectedMailingList?.dynamic && (
-						<Container
-							padding={{ all: 'small' }}
-							mainAlignment="flex-end"
-							crossAlignment="flex-end"
-						>
-							<Paginig totalItem={1} pageSize={10} setOffset={setMemberOffset} />
-						</Container>
-					)}
 					<Container
 						padding={{ all: 'small' }}
 						mainAlignment={selectedMailingList?.dynamic ? 'flex-start' : 'flex-end'}
 						crossAlignment={selectedMailingList?.dynamic ? 'flex-start' : 'flex-end'}
 					>
 						<Paginig totalItem={1} pageSize={10} setOffset={setOwnerOffset} />
-					</Container>
-				</ListRow>
-				<Row padding={{ top: 'small', bottom: 'small' }}>
-					<Text size="medium" weight="bold" color="gray0">
-						{t('label.notes', 'Notes')}
-					</Text>
-				</Row>
-				<ListRow>
-					<Container>
-						<Input
-							value={zimbraNotes}
-							background="gray5"
-							onChange={(e: any): any => {
-								setZimbraNotes(e.target.value);
-							}}
-						/>
 					</Container>
 				</ListRow>
 			</Container>
