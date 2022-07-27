@@ -9,8 +9,9 @@ import { useTranslation } from 'react-i18next';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import { replaceHistory } from '@zextras/carbonio-shell-ui';
 import logo from '../../assets/ninja_robo.svg';
+import ServersDetailPanel from './global-servers/server-detail-panel';
 // import DomainOperations from './domain-detail-operation';
-import { CREATE_NEW_DOMAIN_ROUTE_ID } from '../../constants';
+import { CREATE_NEW_DOMAIN_ROUTE_ID, SERVERS_LIST } from '../../constants';
 
 import CreateDomain from '../domain/create-new-domain';
 import BucketOperation from './bucket-detail-operation';
@@ -35,51 +36,6 @@ const BucketRoutePanel: FC = () => {
 			<Switch>
 				<Route exact path={`${path}/:operation`}>
 					<BucketOperation />
-				</Route>
-				<Route exact path={`${path}/${CREATE_NEW_DOMAIN_ROUTE_ID}`}>
-					<CreateDomain />
-				</Route>
-				<Route exact path={`${path}`}>
-					<Container>
-						<Text
-							overflow="break-word"
-							weight="normal"
-							size="large"
-							style={{ whiteSpace: 'pre-line', textAlign: 'center', fontFamily: 'roboto' }}
-						>
-							<img src={logo} alt="logo" />
-						</Text>
-						<Padding all="medium" width="47%">
-							<Text
-								color="gray1"
-								overflow="break-word"
-								weight="normal"
-								size="large"
-								width="60%"
-								style={{ whiteSpace: 'pre-line', textAlign: 'center', fontFamily: 'roboto' }}
-							>
-								{t(
-									'select_domain_or_create_new',
-									'Please select a domain to manage it or click Create button to create a new one.'
-								)}
-							</Text>
-						</Padding>
-						<Padding all="medium">
-							<Text
-								size="small"
-								overflow="break-word"
-								style={{ whiteSpace: 'pre-line', textAlign: 'center' }}
-							>
-								<Button
-									type="outlined"
-									label={t('label.create_new_domain', 'Creat New Domain')}
-									icon="Plus"
-									color="info"
-									onClick={createNewDomain}
-								/>
-							</Text>
-						</Padding>
-					</Container>
 				</Route>
 			</Switch>
 		</Container>

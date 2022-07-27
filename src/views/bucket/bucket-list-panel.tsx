@@ -60,6 +60,10 @@ const BucketListPanel: FC = () => {
 	}, []);
 
 	useEffect(() => {
+		setSelectedOperationItem(SERVERS_LIST);
+	}, []);
+
+	useEffect(() => {
 		if (isstoreselect) {
 			if (selectedOperationItem) {
 				replaceHistory(`/${selectedOperationItem}`);
