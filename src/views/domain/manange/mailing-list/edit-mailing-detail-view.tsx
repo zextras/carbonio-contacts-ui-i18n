@@ -37,6 +37,7 @@ import { removeDistributionListMember } from '../../../../services/remove-distri
 import { distributionListAction } from '../../../../services/distribution-list-action-service';
 import { RouteLeavingGuard } from '../../../ui-extras/nav-guard';
 import { RECORD_DISPLAY_LIMIT } from '../../../../constants';
+import { searchGal } from '../../../../services/search-gal-service';
 
 // eslint-disable-next-line no-shadow
 export enum SUBSCRIBE_UNSUBSCRIBE {
@@ -95,7 +96,7 @@ const EditMailingListView: FC<any> = ({
 	const [ownerErrorMessage, setOwnerErrorMessage] = useState<string>('');
 	const [zimbraIsACLGroup, setZimbraIsACLGroup] = useState<boolean>(false);
 	const [searchMemberResult, setSearchMemberResult] = useState<Array<any>>([]);
-
+	const [searchOwnerResult, setSearchOwnerResult] = useState<Array<any>>([]);
 	const dlCreateDate = useMemo(
 		() =>
 			!!zimbraCreateTimestamp && zimbraCreateTimestamp !== null && zimbraCreateTimestamp !== ''
@@ -1151,21 +1152,6 @@ const EditMailingListView: FC<any> = ({
 	}, [openAddMailingListDialog]);
 
 	useEffect(() => {
-		if (searchOwner?.length >= 0 && ownersList && ownersList.length > 0) {
-			const allRows = ownersList.filter((item: any) => item?.name.includes(searchOwner));
-			const searchOwnerRows = allRows.map((item: any) => ({
-				id: item?.name,
-				columns: [
-					<Text size="medium" weight="bold" key={item?.id} color="#828282">
-						{item?.name}
-					</Text>
-				]
-			}));
-			setOwnerTableRows(searchOwnerRows);
-		}
-	}, [searchOwner, ownersList]);
-
-	useEffect(() => {
 		if (selectedMailingList?.dynamic) {
 			setIsAddToOwnerList(true);
 		}
@@ -1190,6 +1176,32 @@ const EditMailingListView: FC<any> = ({
 				}}
 				onClick={(): void => {
 					setSearchMember(item?.name);
+				}}
+			>
+				{item?.name}
+			</Row>
+		)
+	}));
+
+	const searchOwnerList = searchOwnerResult.map((item: any, index) => ({
+		id: item.id,
+		label: item.name,
+		customComponent: (
+			<Row
+				top="9px"
+				right="large"
+				bottom="9px"
+				left="large"
+				style={{
+					fontFamily: 'roboto',
+					display: 'block',
+					textAlign: 'left',
+					height: 'inherit',
+					padding: '3px',
+					width: 'inherit'
+				}}
+				onClick={(): void => {
+					setSearchOwner(item?.name);
 				}}
 			>
 				{item?.name}
@@ -1260,6 +1272,63 @@ const EditMailingListView: FC<any> = ({
 			}
 		}
 	}, [searchMember, createSnackbar, t, dlm]);
+
+	const onAddOwner = useCallback((): void => {
+		if (searchOwner !== '') {
+			const allEmails: any[] = getAllEmailFromString(searchOwner);
+			if (allEmails !== null) {
+				const inValidEmailAddress = allEmails.filter((item: any) => !isValidEmail(item));
+				if (inValidEmailAddress && inValidEmailAddress.length > 0) {
+					createSnackbar({
+						key: 'error',
+						type: 'error',
+						label: `${t('label.invalid_email_address', 'Invalid email address')} ${
+							inValidEmailAddress[0]
+						}`,
+						autoHideTimeout: 3000,
+						hideButton: true,
+						replace: true
+					});
+				} else {
+					const sortedList = sortedUniq(allEmails);
+					setOwnersList(
+						ownersList.concat(sortedList.map((item: any) => ({ name: item, id: item })))
+					);
+				}
+			}
+		}
+	}, [searchOwner, createSnackbar, t, ownersList]);
+
+	const getSearchOwnerList = useCallback((searchKeyword) => {
+		searchGal(searchKeyword)
+			.then((response) => response.json())
+			.then((data) => {
+				const contactList = data?.Body?.SearchGalResponse?.cn;
+				if (contactList) {
+					let result: any[] = [];
+					result = contactList.map((item: any): any => ({
+						id: item?.id,
+						name: item?._attrs?.email
+					}));
+					setSearchOwnerResult(result);
+				} else {
+					setSearchOwnerResult([]);
+				}
+			});
+	}, []);
+
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	const searchOwnerCall = useCallback(
+		debounce((mem) => {
+			getSearchOwnerList(mem);
+		}, 700),
+		[debounce]
+	);
+	useEffect(() => {
+		if (searchOwner !== '') {
+			searchOwnerCall(searchOwner);
+		}
+	}, [searchOwner, searchOwnerCall]);
 
 	return (
 		<Container
@@ -1688,17 +1757,29 @@ const EditMailingListView: FC<any> = ({
 							width="100%"
 						>
 							<Row mainAlignment="flex-start" width="60%" crossAlignment="flex-start">
-								<Input
-									label={t(
-										'label.type_accounts_paste_them_here',
-										'Type the Accounts or paste them here'
-									)}
-									value={searchOwner}
-									background="gray5"
-									onChange={(e: any): any => {
-										setSearchOwner(e.target.value);
+								<Dropdown
+									items={searchOwnerList}
+									placement="bottom-start"
+									maxWidth="300px"
+									disableAutoFocus
+									width="265px"
+									style={{
+										width: '100%'
 									}}
-								/>
+								>
+									<Input
+										label={t(
+											'label.type_accounts_paste_them_here',
+											'Type the Accounts or paste them here'
+										)}
+										backgroundColor="gray5"
+										size="medium"
+										value={searchOwner}
+										onChange={(e: any): void => {
+											setSearchOwner(e.target.value);
+										}}
+									/>
+								</Dropdown>
 							</Row>
 							<Row width="40%" mainAlignment="flex-start" crossAlignment="flex-start">
 								<Padding left="large" right="large">
@@ -1710,10 +1791,7 @@ const EditMailingListView: FC<any> = ({
 										icon="PlusOutline"
 										height={44}
 										iconPlacement="right"
-										onClick={(): void => {
-											setIsAddToOwnerList(true);
-											setOpenAddMailingListDialog(true);
-										}}
+										onClick={onAddOwner}
 									/>
 								</Padding>
 
