@@ -1460,92 +1460,97 @@ const EditMailingListView: FC<any> = ({
 					</Container>
 				</ListRow>
 
-				<Row padding={{ top: 'small', bottom: 'small' }}>
-					<Text size="medium" weight="bold" color="gray0">
-						{t('label.who_is_in_this_list', "Who's in this list?")}
-					</Text>
-				</Row>
 				{!selectedMailingList?.dynamic && (
-					<ListRow>
-						<Container padding={{ top: 'small', bottom: 'small' }}>
-							<Input
-								label={t('label.this_list_is_member_of', 'This List is member of')}
-								value={dlMembershipListNames}
-								background="gray5"
-								readOnly
-							/>
-						</Container>
-					</ListRow>
+					<>
+						<Row padding={{ top: 'small', bottom: 'small' }}>
+							<Text size="medium" weight="bold" color="gray0">
+								{t('label.who_is_in_this_list', "Who's in this list?")}
+							</Text>
+						</Row>
+						<ListRow>
+							<Container padding={{ top: 'small', bottom: 'small' }}>
+								<Input
+									label={t('label.this_list_is_member_of', 'This List is member of')}
+									value={dlMembershipListNames}
+									background="gray5"
+									readOnly
+								/>
+							</Container>
+						</ListRow>
+					</>
 				)}
 
-				<Row padding={{ top: 'small', bottom: 'medium' }}>
-					<Text size="medium" weight="bold" color="gray0">
-						{t('label.accounts', 'Accounts')}
-					</Text>
-				</Row>
-
-				<Row
-					takeAvwidth="fill"
-					mainAlignment="flex-start"
-					width="100%"
-					padding={{ top: 'small', bottom: 'small' }}
-				>
-					<Container
-						orientation="vertical"
-						mainAlignment="space-around"
-						background="gray6"
-						height="58px"
-					>
-						<Row
-							orientation="horizontal"
-							mainAlignment="flex-start"
-							crossAlignment="flex-start"
-							width="100%"
-						>
-							<Row mainAlignment="flex-start" width="60%" crossAlignment="flex-start">
-								<Input
-									label={t(
-										'label.type_accounts_paste_them_here',
-										'Type the Accounts or paste them here'
-									)}
-									value={searchMember}
-									background="gray5"
-									onChange={(e: any): any => {
-										setSearchMember(e.target.value);
-									}}
-								/>
-							</Row>
-							<Row width="40%" mainAlignment="flex-start" crossAlignment="flex-start">
-								<Padding left="large" right="large">
-									<Button
-										type="outlined"
-										key="add-button"
-										label={t('label.add', 'Add')}
-										color="primary"
-										icon="PlusOutline"
-										height={44}
-										iconPlacement="right"
-										onClick={(): void => {
-											setOpenAddMailingListDialog(true);
-										}}
-									/>
-								</Padding>
-
-								<Button
-									type="outlined"
-									key="add-button"
-									label={t('label.delete', 'Delete')}
-									color="error"
-									icon="Trash2Outline"
-									iconPlacement="right"
-									disabled={selectedDistributionListMember.length === 0}
-									height={44}
-									onClick={onDeleteFromList}
-								/>
-							</Row>
+				{!selectedMailingList?.dynamic && (
+					<>
+						<Row padding={{ top: 'small', bottom: 'medium' }}>
+							<Text size="medium" weight="bold" color="gray0">
+								{t('label.accounts', 'Accounts')}
+							</Text>
 						</Row>
-					</Container>
-				</Row>
+						<Row
+							takeAvwidth="fill"
+							mainAlignment="flex-start"
+							width="100%"
+							padding={{ top: 'small', bottom: 'small' }}
+						>
+							<Container
+								orientation="vertical"
+								mainAlignment="space-around"
+								background="gray6"
+								height="58px"
+							>
+								<Row
+									orientation="horizontal"
+									mainAlignment="flex-start"
+									crossAlignment="flex-start"
+									width="100%"
+								>
+									<Row mainAlignment="flex-start" width="60%" crossAlignment="flex-start">
+										<Input
+											label={t(
+												'label.type_accounts_paste_them_here',
+												'Type the Accounts or paste them here'
+											)}
+											value={searchMember}
+											background="gray5"
+											onChange={(e: any): any => {
+												setSearchMember(e.target.value);
+											}}
+										/>
+									</Row>
+									<Row width="40%" mainAlignment="flex-start" crossAlignment="flex-start">
+										<Padding left="large" right="large">
+											<Button
+												type="outlined"
+												key="add-button"
+												label={t('label.add', 'Add')}
+												color="primary"
+												icon="PlusOutline"
+												height={44}
+												iconPlacement="right"
+												onClick={(): void => {
+													setOpenAddMailingListDialog(true);
+												}}
+											/>
+										</Padding>
+
+										<Button
+											type="outlined"
+											key="add-button"
+											label={t('label.delete', 'Delete')}
+											color="error"
+											icon="Trash2Outline"
+											iconPlacement="right"
+											disabled={selectedDistributionListMember.length === 0}
+											height={44}
+											onClick={onDeleteFromList}
+										/>
+									</Row>
+								</Row>
+							</Container>
+						</Row>
+					</>
+				)}
 				<ListRow>
 					{!selectedMailingList?.dynamic && (
 						<Container mainAlignment="flex-start" padding={{ top: 'small', bottom: 'small' }}>
