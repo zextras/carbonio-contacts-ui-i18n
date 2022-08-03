@@ -1217,10 +1217,22 @@ export const getFormatedDate = (date: Date): any => {
 };
 
 export const isValidEmail = (email: string): boolean => {
-	const re = /\S+@\S+\.\S+/;
+	const re = /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/;
+	// const re = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 	return re.test(email);
 };
 
+export const getAllEmailFromString = (str: string): any =>
+	str
+		.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+(.))/gi)
+		?.map((item: any) => item.replace('>', ''));
+
+export const getEmailDisplayNameFromString = (str: string): any => str.match(/".*?"|'.*?'/g);
+
+export const isValidLdapQuery = (query: string): boolean => {
+	const re = /\([^\\(\\)\\=]+=[^\\(\\)\\=]+\)/;
+	return re.test(query);
+};
 export const conversationGroupBy = (t: TFunction): Array<{ value?: string; label: string }> => [
 	{
 		label: t('label.message', 'Message'),
