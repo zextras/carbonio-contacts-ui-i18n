@@ -62,8 +62,8 @@ const BucketListTable: FC<{
 			volumes.map((v, i) => ({
 				id: i,
 				columns: [
-					// eslint-disable-next-line react/jsx-key
 					<Row
+						key={i}
 						onDoubleClick={(): any => {
 							onDoubleClick(i);
 						}}
@@ -74,8 +74,8 @@ const BucketListTable: FC<{
 					>
 						{v.bucketName}
 					</Row>,
-					// eslint-disable-next-line react/jsx-key
 					<Row
+						key={i}
 						onDoubleClick={(): any => {
 							onDoubleClick(i);
 						}}
