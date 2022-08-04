@@ -251,7 +251,7 @@ const BucketDetailPanel: FC = () => {
 				orientation="column"
 				crossAlignment="flex-start"
 				mainAlignment="flex-start"
-				style={{ overflowY: 'auto', marginLeft: '16px' }}
+				style={{ overflowY: 'auto' }}
 				background="white"
 			>
 				<Row mainAlignment="flex-start" padding={{ all: 'large' }}>
@@ -260,7 +260,7 @@ const BucketDetailPanel: FC = () => {
 					</Text>
 				</Row>
 				<Divider />
-				<Row padding="32px 12px 10px" width="100%">
+				<Row padding="32px 16px 16px 16px" width="100%">
 					<Select
 						items={BucketTypeItems}
 						background="gray5"
@@ -339,10 +339,17 @@ const BucketDetailPanel: FC = () => {
 							<img src={logo} alt="logo" />
 						</Text>
 						<Padding all="medium" width="47%">
-							<Text color="gray1" overflow="break-word" weight="normal" size="large" width="60%">
+							<Text
+								color="gray1"
+								overflow="break-word"
+								weight="normal"
+								size="large"
+								width="60%"
+								style={{ whiteSpace: 'pre-line', textAlign: 'center' }}
+							>
 								{t(
 									'select_bucket_or_create_new_bucket',
-									"It seems like you haven't setup a bucket type. Click NEW BUCKET button to create a new one."
+									"It seems like you haven't setup a bucket type. \n Click NEW BUCKET button to create a new one."
 								)}
 							</Text>
 						</Padding>
