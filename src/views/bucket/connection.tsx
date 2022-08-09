@@ -262,7 +262,7 @@ const Connection: FC<{
 					? BucketRegionsInAlibaba.find((s) => s.value === e)
 					: BucketRegions.find((s) => s.value === e);
 			setRegionsData(volumeObject);
-			onSelection({ region: volumeObject.value }, false);
+			onSelection({ region: volumeObject?.value }, false);
 		},
 		[bucketType, bucketTypeData, onSelection]
 	);
@@ -349,7 +349,7 @@ const Connection: FC<{
 						label={t('buckets.bucket_type', 'Bucket Type')}
 						onChange={(e: any): void => {
 							const volumeObject: any = BucketTypeItems.find((s) => s.value === e);
-							setBucketTypeData(volumeObject.value);
+							setBucketTypeData(volumeObject?.value);
 							onSelection({ storeType: bucketTypeData }, false);
 							onChangeBucketType(volumeObject);
 						}}

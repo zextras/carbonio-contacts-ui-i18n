@@ -217,17 +217,43 @@ const BucketDetailPanel: FC = () => {
 	return (
 		<>
 			{toggleWizardSection && (
-				<AbsoluteContainer orientation="vertical" background="gray5">
+				<Container
+					orientation="vertical"
+					background="gray5"
+					style={{
+						position: 'absolute',
+						maxWidth: '630px',
+						top: '43px',
+						right: '0px',
+						bottom: '0px',
+						zIndex: '1',
+						boxShadow: '0 0 12px -1px #888',
+						height: 'auto'
+					}}
+				>
 					<NewBucket
 						setToggleWizardSection={setToggleWizardSection}
 						setDetailsBucket={setDetailsBucket}
 						setConnectionData={setConnectionData}
 						bucketType={bucketType}
 					/>
-				</AbsoluteContainer>
+				</Container>
 			)}
 			{detailsBucket && (
-				<AbsoluteContainer orientation="vertical" background="gray5">
+				<Container
+					orientation="vertical"
+					background="gray5"
+					style={{
+						position: 'absolute',
+						maxWidth: '630px',
+						top: '43px',
+						right: '0px',
+						bottom: '0px',
+						zIndex: '1',
+						boxShadow: '0 0 12px -1px #888',
+						height: 'auto'
+					}}
+				>
 					<DetailsPanel
 						setDetailsBucket={setDetailsBucket}
 						title="Bucket Connection"
@@ -236,16 +262,29 @@ const BucketDetailPanel: FC = () => {
 						setOpen={setOpen}
 						setShowEditDetailView={setShowEditDetailView}
 					/>
-				</AbsoluteContainer>
+				</Container>
 			)}
 			{showEditDetailView && (
-				<AbsoluteContainer orientation="vertical" background="gray5">
+				<Container
+					orientation="vertical"
+					background="gray5"
+					style={{
+						position: 'absolute',
+						maxWidth: '630px',
+						top: '43px',
+						right: '0px',
+						bottom: '0px',
+						zIndex: '1',
+						boxShadow: '0 0 12px -1px #888',
+						height: 'auto'
+					}}
+				>
 					<EditBucketDetailPanel
 						setShowEditDetailView={setShowEditDetailView}
 						title="Bucket Connection"
 						bucketDetail={connectionData}
 					/>
-				</AbsoluteContainer>
+				</Container>
 			)}
 			<RelativeContainer
 				orientation="column"
@@ -260,14 +299,14 @@ const BucketDetailPanel: FC = () => {
 					</Text>
 				</Row>
 				<Divider />
-				<Row padding="32px 16px 16px 16px" width="100%">
+				<Row style={{ padding: '32px 16px 16px 16px' }} width="100%">
 					<Select
 						items={BucketTypeItems}
 						background="gray5"
 						label={t('buckets.bucket_type', 'Buckets Type')}
 						onChange={(e: any): void => {
 							const volumeObject: any = BucketTypeItems.find((s) => s.value === e);
-							setBucketType(volumeObject.value);
+							setBucketType(volumeObject?.value);
 						}}
 						showCheckbox={false}
 						padding={{ right: 'medium' }}
@@ -287,8 +326,7 @@ const BucketDetailPanel: FC = () => {
 							width="100%"
 							mainAlignment="flex-end"
 							orientation="horizontal"
-							padding="8px 14px"
-							style={{ gap: '8px' }}
+							style={{ gap: '8px', padding: '8px 14px' }}
 						>
 							<Button
 								type="outlined"
@@ -303,14 +341,14 @@ const BucketDetailPanel: FC = () => {
 						</Row>
 						{bucketList?.length !== 0 && (
 							<>
-								<Row width="100%" padding="3px 13px">
+								<Row width="100%" style={{ padding: '3px 13px' }}>
 									<Input
 										background="gray5"
 										label={t('buckets.filter_buckets_list', 'Filter Buckets List')}
 										CustomIcon={(): any => <Icon icon="FunnelOutline" size="large" color="grey" />}
 									/>
 								</Row>
-								<Row padding="16px 14px 0px 14px" width="100%">
+								<Row style={{ padding: '16px 14px 0px 14px' }} width="100%">
 									<BucketListTable
 										volumes={bucketList}
 										selectedRows={bucketselection}
