@@ -141,6 +141,7 @@ const RestoreDeleteAccountConfigSection: FC<any> = () => {
 											notificationReceiver: e.target.value
 										}));
 									}}
+									disabled={!restoreAccountDetail?.isEmailNotificationEnable}
 								/>
 							</Row>
 						</ListRow>
