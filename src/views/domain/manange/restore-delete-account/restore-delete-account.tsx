@@ -4,19 +4,31 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { FC, useCallback, useContext, useState } from 'react';
+import React, { FC, useCallback, useContext, useEffect, useState } from 'react';
 import { Container, SnackbarManagerContext } from '@zextras/carbonio-design-system';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 import RestoreAccountWizard from './restore-delete-account-wizard';
 import { doRestoreDeleteAccount } from '../../../../services/restore-delete-account-service';
 import { RestoreDeleteAccountContext } from './restore-delete-account-context';
 
 const RestoreDeleteAccount: FC = () => {
 	const [t] = useTranslation();
+	const history = useHistory();
 	const createSnackbar: any = useContext(SnackbarManagerContext);
 	const [showRestoreAccountWizard, setShowRestoreAccountWizard] = useState<boolean>(false);
 	const context = useContext(RestoreDeleteAccountContext);
 	const { restoreAccountDetail, setRestoreAccountDetail } = context;
+	const [isSuccess, setIsSuccess] = useState(false);
+
+	const backToFirstTab = useCallback(() => {
+		const lastloc = history?.location?.pathname;
+		history.push(lastloc.replace('/restore_deleted_email', ''));
+		setTimeout(() => {
+			history.push(lastloc);
+		}, 10);
+	}, [history]);
+
 	const resetAllFields = useCallback(() => {
 		setRestoreAccountDetail((prev: any) => ({
 			...prev,
@@ -33,6 +45,14 @@ const RestoreDeleteAccount: FC = () => {
 			notificationReceiver: ''
 		}));
 	}, [setRestoreAccountDetail]);
+
+	useEffect(() => {
+		if (isSuccess) {
+			backToFirstTab();
+			setIsSuccess(false);
+		}
+	}, [isSuccess, resetAllFields, backToFirstTab]);
+
 	const restoreAccountRequest = useCallback(
 		(
 			name,
@@ -84,11 +104,11 @@ const RestoreDeleteAccount: FC = () => {
 							hideButton: true,
 							replace: true
 						});
-						resetAllFields();
+						setIsSuccess(true);
 					}
 				});
 		},
-		[createSnackbar, t, resetAllFields]
+		[createSnackbar, t]
 	);
 
 	return (

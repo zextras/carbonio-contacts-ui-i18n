@@ -7,6 +7,7 @@
 import React, { FC, ReactElement, useCallback, useMemo, useState } from 'react';
 import { Container, Button } from '@zextras/carbonio-design-system';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 import { Section } from '../../../app/component/section';
 import { HorizontalWizard } from '../../../app/component/hwizard';
 import RestoreSelectAccountSection from './restore-delete-account-select-section';
@@ -38,7 +39,7 @@ const RestoreDeleteAccountWizard: FC<{
 }> = ({ setShowRestoreAccountWizard, restoreAccountRequest }) => {
 	const { t } = useTranslation();
 	const [wizardData, setWizardData] = useState();
-
+	const history = useHistory();
 	const onComplete = useCallback(() => {
 		console.log('Completed');
 	}, []);
@@ -84,6 +85,14 @@ const RestoreDeleteAccountWizard: FC<{
 		);
 	}, [restoreAccountDetail, restoreAccountRequest]);
 
+	const backToFirstTab = useCallback(() => {
+		const lastloc = history?.location?.pathname;
+		history.push(lastloc.replace('/restore_deleted_email', ''));
+		setTimeout(() => {
+			history.push(lastloc);
+		}, 100);
+	}, [history]);
+
 	const wizardSteps = useMemo(
 		() => [
 			{
@@ -100,9 +109,7 @@ const RestoreDeleteAccountWizard: FC<{
 						color="secondary"
 						icon="CloseOutline"
 						iconPlacement="right"
-						onClick={(): void => {
-							setShowRestoreAccountWizard(false);
-						}}
+						onClick={backToFirstTab}
 					/>
 				),
 				PrevButton: (props: any) => (
@@ -138,9 +145,7 @@ const RestoreDeleteAccountWizard: FC<{
 						color="secondary"
 						icon="CloseOutline"
 						iconPlacement="right"
-						onClick={(): void => {
-							setShowRestoreAccountWizard(false);
-						}}
+						onClick={backToFirstTab}
 					/>
 				),
 				PrevButton: (props: any) => (
@@ -175,9 +180,7 @@ const RestoreDeleteAccountWizard: FC<{
 						color="secondary"
 						icon="CloseOutline"
 						iconPlacement="right"
-						onClick={(): void => {
-							setShowRestoreAccountWizard(false);
-						}}
+						onClick={backToFirstTab}
 					/>
 				),
 				PrevButton: (props: any) => (
@@ -203,10 +206,10 @@ const RestoreDeleteAccountWizard: FC<{
 		],
 		[
 			t,
-			setShowRestoreAccountWizard,
 			onRestoreAccount,
 			restoreAccountDetail?.name,
-			restoreAccountDetail?.copyAccount
+			restoreAccountDetail?.copyAccount,
+			backToFirstTab
 		]
 	);
 

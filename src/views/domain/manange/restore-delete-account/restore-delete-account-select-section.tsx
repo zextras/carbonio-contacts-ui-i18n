@@ -94,7 +94,7 @@ const RestoreDeleteAccountSelectSection: FC<any> = () => {
 		},
 		[domainName, createSnackbar, accountLimit, accountOffset]
 	);
-	useEffect(() => {
+	useMemo(() => {
 		if (accounts && accounts.length > 0) {
 			const allRows = accounts.map((item: any) => ({
 				id: item?.id,
@@ -137,7 +137,7 @@ const RestoreDeleteAccountSelectSection: FC<any> = () => {
 		searchAccount(searchString);
 	}, [searchString, searchAccount]);
 
-	useEffect(() => {
+	useMemo(() => {
 		if (selectedAccountRows && selectedAccountRows.length > 0) {
 			const findAccount = accounts.find((ac: any) => ac?.id === selectedAccountRows[0]);
 			if (!!findAccount && findAccount?.id) {
@@ -150,7 +150,7 @@ const RestoreDeleteAccountSelectSection: FC<any> = () => {
 				}));
 			}
 		}
-	}, [selectedAccountRows, restoreAccountDetail, accounts, setRestoreAccountDetail]);
+	}, [selectedAccountRows, accounts, setRestoreAccountDetail]);
 
 	return (
 		<Container
@@ -190,7 +190,9 @@ const RestoreDeleteAccountSelectSection: FC<any> = () => {
 									headers={accountHeader}
 									showCheckbox={false}
 									selectedRows={selectedAccountRows}
-									onSelectionChange={(selected: any): void => setSelectedAccountRows(selected)}
+									onSelectionChange={(selected: any): void => {
+										setSelectedAccountRows(selected);
+									}}
 								/>
 							</Row>
 						</ListRow>
