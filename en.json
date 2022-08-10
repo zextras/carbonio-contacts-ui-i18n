@@ -666,6 +666,7 @@
         "resources": "Resources",
         "restart_replica": "RESTART REPLICA",
         "restore_account": "Restore Account",
+        "restore_account_has_added_operation_queue": "The restore account has been added on operation queue successfull",
         "restore_data_source": "Restore Data Source",
         "restore_deleted_email": "Restore Deleted E-mail",
         "retention_policy": "Retention Policy",
