@@ -46,15 +46,15 @@ const RestoreDeleteAccountWizard: FC<{
 		() => [
 			{
 				name: 'details',
-				label: t('label.mailing_list', 'Mailing List'),
-				icon: 'ListOutline',
+				label: t('label.select_an_account', 'Select An Account'),
+				icon: 'AtOutline',
 				view: RestoreSelectAccountSection,
 				CancelButton: (props: any): ReactElement => (
 					<Button
 						{...props}
 						type="outlined"
 						key="wizard-cancel"
-						label={'CANCEL'}
+						label={t('label.cancel', 'Cancel')}
 						color="secondary"
 						icon="CloseOutline"
 						iconPlacement="right"
@@ -66,9 +66,11 @@ const RestoreDeleteAccountWizard: FC<{
 				PrevButton: (props: any) => (
 					<Button
 						{...props}
-						label={t('label.next', 'NEXT')}
-						icon="ChevronRightOutline"
-						iconPlacement="right"
+						label={t('label.back', 'BACK')}
+						icon="ChevronLeftOutline"
+						color="secondary"
+						iconPlacement="left"
+						disabled
 					/>
 				),
 				NextButton: (props: any) => (
@@ -82,15 +84,15 @@ const RestoreDeleteAccountWizard: FC<{
 			},
 			{
 				name: 'members',
-				label: t('label.members', 'Members'),
-				icon: 'PeopleOutline',
+				label: t('label.config', 'Config'),
+				icon: 'OptionsOutline',
 				view: RestoreAccountConfigSection,
 				CancelButton: (props: any): ReactElement => (
 					<Button
 						{...props}
 						type="outlined"
 						key="wizard-cancel"
-						label={'CANCEL'}
+						label={t('label.cancel', 'Cancel')}
 						color="secondary"
 						icon="CloseOutline"
 						iconPlacement="right"
@@ -119,15 +121,15 @@ const RestoreDeleteAccountWizard: FC<{
 			},
 			{
 				name: 'create',
-				label: t('label.create', 'Create'),
-				icon: 'PowerOutline',
+				label: t('label.start', 'start'),
+				icon: 'ActivityOutline',
 				view: RestoreAccountStartSection,
 				CancelButton: (props: any): ReactElement => (
 					<Button
 						{...props}
 						type="outlined"
 						key="wizard-cancel"
-						label={'CANCEL'}
+						label={t('label.cancel', 'Cancel')}
 						color="secondary"
 						icon="CloseOutline"
 						iconPlacement="right"
@@ -148,7 +150,7 @@ const RestoreDeleteAccountWizard: FC<{
 				NextButton: (props: any) => (
 					<Button
 						{...props}
-						label={t('label.create', 'CREATE')}
+						label={t('label.restore_account', 'Restore Account')}
 						icon="PowerOutline"
 						iconPlacement="right"
 					/>
