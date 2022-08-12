@@ -81,8 +81,8 @@ const RestoreDeleteAccountSelectSection: FC<any> = () => {
 					let backupAccounts = data?.accounts;
 					let page = data?.maxPage;
 					if (!!domainName && !!data[domainName]) {
-						backupAccounts = data[domainName];
-						page = data[domainName]?.maxPage;
+						backupAccounts = data[domainName]?.response?.accounts;
+						page = data[domainName]?.response?.maxPage;
 					}
 					if (error) {
 						createSnackbar({
