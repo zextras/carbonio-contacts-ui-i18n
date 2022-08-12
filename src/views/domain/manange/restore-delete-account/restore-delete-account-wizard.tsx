@@ -88,7 +88,7 @@ const RestoreDeleteAccountWizard: FC<{
 
 	const backToFirstTab = useCallback(() => {
 		const lastloc = history?.location?.pathname;
-		history.push(lastloc.replace('/restore_deleted_email', ''));
+		history.push(lastloc.replace('/restore_account', ''));
 		setTimeout(() => {
 			history.push(lastloc);
 		}, 100);

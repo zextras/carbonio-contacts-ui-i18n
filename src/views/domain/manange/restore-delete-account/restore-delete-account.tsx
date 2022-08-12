@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { FC, useCallback, useContext, useEffect, useState } from 'react';
+import React, { FC, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { Container, SnackbarManagerContext } from '@zextras/carbonio-design-system';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
@@ -23,7 +23,7 @@ const RestoreDeleteAccount: FC = () => {
 
 	const backToFirstTab = useCallback(() => {
 		const lastloc = history?.location?.pathname;
-		history.push(lastloc.replace('/restore_deleted_email', ''));
+		history.push(lastloc.replace('/restore_account', ''));
 		setTimeout(() => {
 			history.push(lastloc);
 		}, 10);
@@ -46,12 +46,12 @@ const RestoreDeleteAccount: FC = () => {
 		}));
 	}, [setRestoreAccountDetail]);
 
-	useEffect(() => {
+	useMemo(() => {
 		if (isSuccess) {
 			backToFirstTab();
 			setIsSuccess(false);
 		}
-	}, [isSuccess, resetAllFields, backToFirstTab]);
+	}, [isSuccess, backToFirstTab]);
 
 	const restoreAccountRequest = useCallback(
 		(

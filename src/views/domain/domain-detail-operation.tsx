@@ -96,7 +96,7 @@ const DomainOperations: FC = () => {
 						return <DomainMailingList />;
 					case RESOURCES:
 						return <DomainResources />;
-					case RESTORE_DELETED_EMAIL:
+					case RESTORE_ACCOUNT:
 						return <RestoreAccount />;
 					default:
 						return null;
