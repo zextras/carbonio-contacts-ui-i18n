@@ -53,8 +53,10 @@ const CosServerPools: FC = () => {
 			});
 	};
 
-	useEffect(() => {
+	useMemo(() => {
 		if (serverList && serverList.length > 0) {
+			console.log('[serverList]: ', serverList);
+			console.log('[serverList][zimbraMailHostPoolList]: ', zimbraMailHostPoolList);
 			const allRows = serverList.map((item: any) => ({
 				id: item?.id,
 				columns: [

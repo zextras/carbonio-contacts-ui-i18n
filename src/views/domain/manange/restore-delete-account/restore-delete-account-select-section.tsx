@@ -78,7 +78,12 @@ const RestoreDeleteAccountSelectSection: FC<any> = () => {
 				.then((response) => response.json())
 				.then((data) => {
 					const error = data?.all_server?.error?.message;
-					const backupAccounts = data?.accounts;
+					let backupAccounts = data?.accounts;
+					let page = data?.maxPage;
+					if (!!domainName && !!data[domainName]) {
+						backupAccounts = data[domainName]?.response?.accounts;
+						page = data[domainName]?.response?.maxPage;
+					}
 					if (error) {
 						createSnackbar({
 							key: 'error',
@@ -92,10 +97,10 @@ const RestoreDeleteAccountSelectSection: FC<any> = () => {
 					if (backupAccounts && Array.isArray(backupAccounts) && backupAccounts.length > 0) {
 						setAccounts(backupAccounts);
 					}
-					if (data?.maxPage) {
-						const num: number = data?.maxPage;
+					if (page) {
+						const num: number = page;
 						setTotalItem(num * accountLimit);
-					} else if (data?.maxPage === 0) {
+					} else if (page === 0) {
 						setTotalItem(1);
 					}
 				});
