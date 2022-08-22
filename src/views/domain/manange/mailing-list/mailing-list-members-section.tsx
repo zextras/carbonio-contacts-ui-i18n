@@ -15,7 +15,7 @@ import {
 	SnackbarManagerContext
 } from '@zextras/carbonio-design-system';
 import { useTranslation } from 'react-i18next';
-import { debounce, sortedUniq } from 'lodash';
+import { debounce, sortedUniq, uniq } from 'lodash';
 import ListRow from '../../../list/list-row';
 import {
 	getAllEmailFromString,
@@ -78,9 +78,8 @@ const MailingListMembersSection: FC<any> = () => {
 
 	const onAdd = useCallback((): void => {
 		if (member !== '') {
-			const allEmails: any[] =
-				member.includes('"') || member.includes("'") ? getAllEmailFromString(member) : [member];
-
+			const specialChars = /[ `'"<>,;]/;
+			const allEmails: any[] = specialChars.test(member) ? getAllEmailFromString(member) : [member];
 			if (allEmails !== null && allEmails !== undefined) {
 				const inValidEmailAddress = allEmails.filter((item: any) => !isValidEmail(item));
 				if (inValidEmailAddress && inValidEmailAddress.length > 0) {
@@ -96,7 +95,8 @@ const MailingListMembersSection: FC<any> = () => {
 					});
 				} else {
 					const sortedList = sortedUniq(allEmails);
-					setDlm(dlm.concat(sortedList));
+					setDlm(uniq(dlm.concat(sortedList)));
+					setMember('');
 				}
 			} else if (allEmails === undefined) {
 				createSnackbar({

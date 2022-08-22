@@ -5,830 +5,1601 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { FC, useState } from 'react';
+import React, { FC, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import {
 	Container,
 	Divider,
 	Row,
 	Text,
 	Input,
-	Icon,
 	Select,
 	Switch,
-	Padding
+	Padding,
+	SnackbarManagerContext,
+	Button
 } from '@zextras/carbonio-design-system';
 import { useTranslation } from 'react-i18next';
+import _ from 'lodash';
 import ListRow from '../list/list-row';
+import {
+	appointmentReminder,
+	charactorSet,
+	conversationGroupBy,
+	timeZoneList
+} from '../utility/utils';
+import { useCosStore } from '../../store/cos/store';
+import { modifyCos } from '../../services/modify-cos-service';
 
 const CosPreferences: FC = () => {
 	const [t] = useTranslation();
-	const [checked1, setChecked1] = useState(true);
-	const [selected, setSelected] = useState(1);
+	const [isDirty, setIsDirty] = useState<boolean>(false);
+	const createSnackbar: any = useContext(SnackbarManagerContext);
+	const cosInformation = useCosStore((state) => state.cos?.a);
+	const [cosData, setCosData]: any = useState({});
+	const setCos = useCosStore((state) => state.setCos);
+	const [cosPreferences, setCosPreferences] = useState<any>({
+		zimbraPrefMessageViewHtmlPreferred: 'FALSE',
+		zimbraPrefGroupMailBy: '',
+		zimbraPrefMailDefaultCharset: '',
+		zimbraPrefMessageIdDedupingEnabled: 'FALSE',
+		zimbraPrefMailToasterEnabled: 'FALSE',
+		zimbraPrefMailPollingInterval: '',
+		zimbraMailMinPollingInterval: '',
+		zimbraPrefMailSendReadReceipts: '',
+		zimbraPrefSaveToSent: 'FALSE',
+		zimbraAllowAnyFromAddress: 'FALSE',
+		zimbraPrefAutoAddAddressEnabled: 'FALSE',
+		zimbraPrefGalAutoCompleteEnabled: 'FALSE',
+		zimbraPrefCalendarFirstDayOfWeek: '',
+		zimbraPrefTimeZoneId: '',
+		zimbraPrefCalendarInitialView: '',
+		zimbraPrefCalendarApptVisibility: '',
+		zimbraPrefCalendarDefaultApptDuration: '',
+		zimbraPrefCalendarApptReminderWarningTime: '',
+		zimbraPrefCalendarShowPastDueReminders: 'FALSE',
+		zimbraPrefCalendarToasterEnabled: 'FALSE',
+		zimbraPrefCalendarAllowCancelEmailToSelf: 'FALSE',
+		zimbraPrefCalendarAllowPublishMethodInvite: 'FALSE',
+		zimbraPrefCalendarAllowForwardedInvite: 'FALSE',
+		zimbraPrefCalendarAutoAddInvites: 'FALSE',
+		zimbraPrefCalendarReminderSoundsEnabled: 'FALSE',
+		zimbraPrefCalendarSendInviteDeniedAutoReply: 'FALSE',
+		zimbraPrefCalendarNotifyDelegatedChanges: 'FALSE',
+		zimbraPrefCalendarUseQuickAdd: 'FALSE',
+		zimbraPrefAppleIcalDelegationEnabled: 'FALSE',
+		zimbraPrefUseTimeZoneListInCalendar: 'FALSE'
+	});
+	const [zimbraPrefMailPollingIntervalNum, setZimbraPrefMailPollingIntervalNum] = useState(
+		cosPreferences?.zimbraMailMinPollingInterval?.slice(0, -1) || ''
+	);
+	const [prefMailPollingIntervalType, setPrefMailPollingIntervalType] = useState(
+		cosPreferences?.zimbraMailMinPollingInterval?.slice(-1) || ''
+	);
+	const GROUP_BY = useMemo(() => conversationGroupBy(t), [t]);
+	const CHARACTOR_SET = useMemo(() => charactorSet(), []);
+	const timezones = useMemo(() => timeZoneList(t), [t]);
+	const APPOINTMENT_REMINDER = useMemo(() => appointmentReminder(t), [t]);
+
+	const TIME_TYPES = useMemo(
+		() => [
+			{ label: `${t('label.days', 'Days')}`, value: 'd' },
+			{ label: `${t('label.hours', 'Hours')}`, value: 'h' },
+			{ label: `${t('label.minutes', 'Minutes')}`, value: 'm' },
+			{ label: `${t('label.seconds', 'Seconds')}`, value: 's' }
+		],
+		[t]
+	);
+
+	const DefaultViewOptions = useMemo(
+		() => [
+			{ label: t('cos.default_view.month', 'Month View'), value: 'month' },
+			{ label: t('cos.default_view.week', 'Week View'), value: 'week' },
+			{ label: t('cos.default_view.day', 'Day View'), value: 'day' },
+			{ label: t('cos.default_view.work_week', 'Work Week View'), value: 'workWeek' },
+			{ label: t('cos.default_view.list', 'List View'), value: 'list' }
+		],
+		[t]
+	);
+	const APPOINTMENT_VISIBILITY = useMemo(
+		() => [
+			{ label: t('label.public', 'Public'), value: 'public' },
+			{ label: t('label.private', 'Private'), value: 'private' }
+		],
+		[t]
+	);
+	const FIRST_DAY_OF_WEEK = useMemo(
+		() => [
+			{ label: t('label.week_day.sunday', 'Sunday'), value: '0' },
+			{ label: t('label.week_day.monday', 'Monday'), value: '1' },
+			{ label: t('label.week_day.tuesday', 'Tuesday'), value: '2' },
+			{ label: t('label.week_day.wednesday', 'Wednesday'), value: '3' },
+			{ label: t('label.week_day.thursday', 'Thursday'), value: '4' },
+			{ label: t('label.week_day.friday', 'Friday'), value: '5' },
+			{ label: t('label.week_day.saturday', 'Saturday'), value: '6' }
+		],
+		[t]
+	);
+
+	const DEFAULT_APPOINTMENT_DURATION = useMemo(
+		() => [
+			{ label: `30 ${t('label.minutes', 'minutes')}`, value: '30m' },
+			{ label: `60 ${t('label.minutes', 'minutes')}`, value: '60m' },
+			{ label: `90 ${t('label.minutes', 'minutes')}`, value: '90m' },
+			{ label: `120 ${t('label.minutes', 'minutes')}`, value: '120m' }
+		],
+		[t]
+	);
+
+	const SEND_READ_RECEIPTS = useMemo(
+		() => [
+			{ label: t('label.prompt', 'Prompt'), value: 'prompt' },
+			{ label: t('label.always', 'Always'), value: 'always' },
+			{ label: t('label.never', 'Never'), value: 'never' }
+		],
+		[t]
+	);
+
+	const POLLING_INTERVAL = useMemo(
+		() => [
+			{
+				label: t('cos.as_new_mail_arrives', 'As New Mail Arrives'),
+				value: '',
+				disabled: true
+			},
+			{ label: `2 ${t('label.minutes', 'minutes')}`, value: '2m' },
+			{ label: `3 ${t('label.minutes', 'minutes')}`, value: '3m' },
+			{ label: `4 ${t('label.minutes', 'minutes')}`, value: '4m' },
+			{ label: `5 ${t('label.minutes', 'minutes')}`, value: '5m' },
+			{ label: `6 ${t('label.minutes', 'minutes')}`, value: '6m' },
+			{ label: `7 ${t('label.minutes', 'minutes')}`, value: '7m' },
+			{ label: `8 ${t('label.minutes', 'minutes')}`, value: '8m' },
+			{ label: `9 ${t('label.minutes', 'minutes')}`, value: '9m' },
+			{ label: `10 ${t('label.minutes', 'minutes')}`, value: '10m' },
+			{ label: `15 ${t('label.minutes', 'minutes')}`, value: '15m' },
+			{
+				label: t('cos.manuallly', 'Manually'),
+				value: '31536000s'
+			}
+		],
+		[t]
+	);
+
+	const changeSwitchOption = useCallback(
+		(key: string): void => {
+			setCosPreferences((prev: any) => ({
+				...prev,
+				[key]: cosPreferences[key] === 'TRUE' ? 'FALSE' : 'TRUE'
+			}));
+		},
+		[cosPreferences, setCosPreferences]
+	);
+
+	const onGroupByChange = useCallback(
+		(v: string): void => {
+			setCosPreferences((prev: any) => ({ ...prev, zimbraPrefGroupMailBy: v }));
+		},
+		[setCosPreferences]
+	);
+
+	const onCharactorSetChange = useCallback(
+		(v: string): void => {
+			setCosPreferences((prev: any) => ({ ...prev, zimbraPrefMailDefaultCharset: v }));
+		},
+		[setCosPreferences]
+	);
+
+	const onPollingIntervalChange = useCallback(
+		(v: string): void => {
+			setCosPreferences((prev: any) => ({ ...prev, zimbraPrefMailPollingInterval: v }));
+		},
+		[setCosPreferences]
+	);
+
+	const onPrefMailPollingIntervalTypeChange = useCallback(
+		(v: string) => {
+			setCosPreferences((prev: any) => ({
+				...prev,
+				zimbraMailMinPollingInterval: zimbraPrefMailPollingIntervalNum
+					? `${zimbraPrefMailPollingIntervalNum}${v}`
+					: ''
+			}));
+		},
+		[zimbraPrefMailPollingIntervalNum, setCosPreferences]
+	);
+	const onPrefMailPollingIntervalNumChange = useCallback(
+		(e) => {
+			setCosPreferences((prev: any) => ({
+				...prev,
+				zimbraMailMinPollingInterval: e.target.value
+					? `${e.target.value}${prefMailPollingIntervalType}`
+					: ''
+			}));
+			setZimbraPrefMailPollingIntervalNum(e.target.value);
+		},
+		[setCosPreferences, prefMailPollingIntervalType]
+	);
+
+	const onMailSendReadReceipts = useCallback(
+		(v: string) => {
+			setCosPreferences((prev: any) => ({
+				...prev,
+				zimbraPrefMailSendReadReceipts: v
+			}));
+		},
+		[setCosPreferences]
+	);
+
+	const onPrefTimeZoneChange = useCallback(
+		(v: string): void => {
+			setCosPreferences((prev: any) => ({ ...prev, zimbraPrefTimeZoneId: v }));
+		},
+		[setCosPreferences]
+	);
+
+	const onCalendarDefaultApptDurationChange = useCallback(
+		(v: string): void => {
+			setCosPreferences((prev: any) => ({
+				...prev,
+				zimbraPrefCalendarDefaultApptDuration: v
+			}));
+		},
+		[setCosPreferences]
+	);
+
+	const onReminderWarningTimeChange = useCallback(
+		(v: string): void => {
+			setCosPreferences((prev: any) => ({
+				...prev,
+				zimbraPrefCalendarApptReminderWarningTime: v
+			}));
+		},
+		[setCosPreferences]
+	);
+
+	const onCalendarInitialViewChange = useCallback(
+		(v: string): void => {
+			setCosPreferences((prev: any) => ({ ...prev, zimbraPrefCalendarInitialView: v }));
+		},
+		[setCosPreferences]
+	);
+
+	const onFirstDayOfWeekChange = useCallback(
+		(v: string): void => {
+			setCosPreferences((prev: any) => ({ ...prev, zimbraPrefCalendarFirstDayOfWeek: v }));
+		},
+		[setCosPreferences]
+	);
+
+	const onAppointmentVisibilityChange = useCallback(
+		(v: string): void => {
+			setCosPreferences((prev: any) => ({ ...prev, zimbraPrefCalendarApptVisibility: v }));
+		},
+		[setCosPreferences]
+	);
+
+	const setValue = useCallback(
+		(key: string, value: any): void => {
+			setCosPreferences((prev: any) => ({ ...prev, [key]: value }));
+		},
+		[setCosPreferences]
+	);
+
+	const setInitalValues = useCallback(
+		(obj: any): void => {
+			if (obj) {
+				setValue(
+					'zimbraPrefMessageViewHtmlPreferred',
+					obj?.zimbraPrefMessageViewHtmlPreferred ? obj.zimbraPrefMessageViewHtmlPreferred : 'FALSE'
+				);
+				setValue(
+					'zimbraPrefGroupMailBy',
+					obj?.zimbraPrefGroupMailBy ? obj?.zimbraPrefGroupMailBy : ''
+				);
+				setValue(
+					'zimbraPrefMailDefaultCharset',
+					obj?.zimbraPrefMailDefaultCharset ? obj?.zimbraPrefMailDefaultCharset : ''
+				);
+				setValue(
+					'zimbraPrefMessageIdDedupingEnabled',
+					obj?.zimbraPrefMessageIdDedupingEnabled
+						? obj?.zimbraPrefMessageIdDedupingEnabled
+						: 'FALSE'
+				);
+				setValue(
+					'zimbraPrefMailToasterEnabled',
+					obj?.zimbraPrefMailToasterEnabled ? obj.zimbraPrefMailToasterEnabled : 'FALSE'
+				);
+				setValue(
+					'zimbraPrefMailPollingInterval',
+					obj?.zimbraPrefMailPollingInterval ? obj?.zimbraPrefMailPollingInterval : ''
+				);
+				setValue(
+					'zimbraMailMinPollingInterval',
+					obj?.zimbraMailMinPollingInterval ? obj?.zimbraMailMinPollingInterval : ''
+				);
+				setValue(
+					'zimbraPrefMailSendReadReceipts',
+					obj?.zimbraPrefMailSendReadReceipts ? obj?.zimbraPrefMailSendReadReceipts : ''
+				);
+				setValue(
+					'zimbraPrefSaveToSent',
+					obj?.zimbraPrefSaveToSent ? obj?.zimbraPrefSaveToSent : 'FALSE'
+				);
+				setValue(
+					'zimbraAllowAnyFromAddress',
+					obj?.zimbraAllowAnyFromAddress ? obj?.zimbraAllowAnyFromAddress : 'FALSE'
+				);
+				setValue(
+					'zimbraPrefAutoAddAddressEnabled',
+					obj?.zimbraPrefAutoAddAddressEnabled ? obj?.zimbraPrefAutoAddAddressEnabled : 'FALSE'
+				);
+				setValue(
+					'zimbraPrefGalAutoCompleteEnabled',
+					obj?.zimbraPrefGalAutoCompleteEnabled ? obj?.zimbraPrefGalAutoCompleteEnabled : 'FALSE'
+				);
+				setValue(
+					'zimbraPrefCalendarFirstDayOfWeek',
+					obj?.zimbraPrefCalendarFirstDayOfWeek ? obj?.zimbraPrefCalendarFirstDayOfWeek : ''
+				);
+				setValue(
+					'zimbraPrefTimeZoneId',
+					obj?.zimbraPrefTimeZoneId ? obj?.zimbraPrefTimeZoneId : ''
+				);
+				setValue(
+					'zimbraPrefCalendarInitialView',
+					obj?.zimbraPrefCalendarInitialView ? obj?.zimbraPrefCalendarInitialView : ''
+				);
+				setValue(
+					'zimbraPrefCalendarApptVisibility',
+					obj?.zimbraPrefCalendarApptVisibility ? obj?.zimbraPrefCalendarApptVisibility : ''
+				);
+				setValue(
+					'zimbraPrefCalendarDefaultApptDuration',
+					obj?.zimbraPrefCalendarDefaultApptDuration
+						? obj?.zimbraPrefCalendarDefaultApptDuration
+						: ''
+				);
+				setValue(
+					'zimbraPrefCalendarApptReminderWarningTime',
+					obj?.zimbraPrefCalendarApptReminderWarningTime
+						? obj?.zimbraPrefCalendarApptReminderWarningTime
+						: ''
+				);
+				setValue(
+					'zimbraPrefCalendarShowPastDueReminders',
+					obj?.zimbraPrefCalendarShowPastDueReminders
+						? obj?.zimbraPrefCalendarShowPastDueReminders
+						: 'FALSE'
+				);
+				setValue(
+					'zimbraPrefCalendarToasterEnabled',
+					obj?.zimbraPrefCalendarToasterEnabled ? obj?.zimbraPrefCalendarToasterEnabled : 'FALSE'
+				);
+				setValue(
+					'zimbraPrefCalendarAllowCancelEmailToSelf',
+					obj?.zimbraPrefCalendarAllowCancelEmailToSelf
+						? obj?.zimbraPrefCalendarAllowCancelEmailToSelf
+						: 'FALSE'
+				);
+				setValue(
+					'zimbraPrefCalendarAllowPublishMethodInvite',
+					obj?.zimbraPrefCalendarAllowPublishMethodInvite
+						? obj?.zimbraPrefCalendarAllowPublishMethodInvite
+						: 'FALSE'
+				);
+				setValue(
+					'zimbraPrefCalendarAllowForwardedInvite',
+					obj?.zimbraPrefCalendarAllowForwardedInvite
+						? obj?.zimbraPrefCalendarAllowForwardedInvite
+						: 'FALSE'
+				);
+				setValue(
+					'zimbraPrefCalendarAutoAddInvites',
+					obj?.zimbraPrefCalendarAutoAddInvites ? obj?.zimbraPrefCalendarAutoAddInvites : 'FALSE'
+				);
+				setValue(
+					'zimbraPrefCalendarReminderSoundsEnabled',
+					obj?.zimbraPrefCalendarReminderSoundsEnabled
+						? obj?.zimbraPrefCalendarReminderSoundsEnabled
+						: 'FALSE'
+				);
+				setValue(
+					'zimbraPrefCalendarSendInviteDeniedAutoReply',
+					obj?.zimbraPrefCalendarSendInviteDeniedAutoReply
+						? obj?.zimbraPrefCalendarSendInviteDeniedAutoReply
+						: 'FALSE'
+				);
+				setValue(
+					'zimbraPrefCalendarNotifyDelegatedChanges',
+					obj?.zimbraPrefCalendarNotifyDelegatedChanges
+						? obj?.zimbraPrefCalendarNotifyDelegatedChanges
+						: 'FALSE'
+				);
+				setValue(
+					'zimbraPrefCalendarUseQuickAdd',
+					obj?.zimbraPrefCalendarUseQuickAdd ? obj?.zimbraPrefCalendarUseQuickAdd : 'FALSE'
+				);
+				setValue(
+					'zimbraPrefAppleIcalDelegationEnabled',
+					obj?.zimbraPrefAppleIcalDelegationEnabled
+						? obj?.zimbraPrefAppleIcalDelegationEnabled
+						: 'FALSE'
+				);
+				setValue(
+					'zimbraPrefUseTimeZoneListInCalendar',
+					obj?.zimbraPrefUseTimeZoneListInCalendar
+						? obj?.zimbraPrefUseTimeZoneListInCalendar
+						: 'FALSE'
+				);
+			}
+		},
+		[setValue]
+	);
+
+	useEffect(() => {
+		if (!!cosInformation && cosInformation.length > 0) {
+			const obj: any = {};
+			cosInformation.map((item: any) => {
+				obj[item?.n] = item._content;
+				return '';
+			});
+			if (!obj.zimbraPrefMessageViewHtmlPreferred) {
+				obj.zimbraPrefMessageViewHtmlPreferred = 'FALSE';
+			}
+			if (!obj.zimbraPrefGroupMailBy) {
+				obj.zimbraPrefGroupMailBy = '';
+			}
+			if (!obj.zimbraPrefMailDefaultCharset) {
+				obj.zimbraPrefMailDefaultCharset = '';
+			}
+			if (!obj.zimbraPrefMessageIdDedupingEnabled) {
+				obj.zimbraPrefMessageIdDedupingEnabled = 'FALSE';
+			}
+			if (!obj.zimbraPrefMailToasterEnabled) {
+				obj.zimbraPrefMailToasterEnabled = 'FALSE';
+			}
+			if (!obj.zimbraPrefMailPollingInterval) {
+				obj.zimbraPrefMailPollingInterval = '';
+			}
+			if (!obj.zimbraMailMinPollingInterval) {
+				obj.zimbraMailMinPollingInterval = '';
+				obj.zimbraMailMinPollingIntervalType = {};
+			}
+			if (!obj.zimbraPrefMailSendReadReceipts) {
+				obj.zimbraPrefMailSendReadReceipts = '';
+			}
+			if (!obj.zimbraPrefSaveToSent) {
+				obj.zimbraPrefSaveToSent = 'FALSE';
+			}
+			if (!obj.zimbraAllowAnyFromAddress) {
+				obj.zimbraAllowAnyFromAddress = 'FALSE';
+			}
+			if (!obj.zimbraPrefAutoAddAddressEnabled) {
+				obj.zimbraPrefAutoAddAddressEnabled = 'FALSE';
+			}
+			if (!obj.zimbraPrefGalAutoCompleteEnabled) {
+				obj.zimbraPrefGalAutoCompleteEnabled = 'FALSE';
+			}
+			if (!obj.zimbraPrefCalendarFirstDayOfWeek) {
+				obj.zimbraPrefCalendarFirstDayOfWeek = '';
+			}
+			if (!obj.zimbraPrefTimeZoneId) {
+				obj.zimbraPrefTimeZoneId = '';
+			}
+			if (!obj.zimbraPrefCalendarInitialView) {
+				obj.zimbraPrefCalendarInitialView = '';
+			}
+			if (!obj.zimbraPrefCalendarApptVisibility) {
+				obj.zimbraPrefCalendarApptVisibility = '';
+			}
+			if (!obj.zimbraPrefCalendarDefaultApptDuration) {
+				obj.zimbraPrefCalendarDefaultApptDuration = '';
+			}
+			if (!obj.zimbraPrefCalendarApptReminderWarningTime) {
+				obj.zimbraPrefCalendarApptReminderWarningTime = '';
+			}
+			if (!obj.zimbraPrefCalendarShowPastDueReminders) {
+				obj.zimbraPrefCalendarShowPastDueReminders = 'FALSE';
+			}
+			if (!obj.zimbraPrefCalendarToasterEnabled) {
+				obj.zimbraPrefCalendarToasterEnabled = 'FALSE';
+			}
+			if (!obj.zimbraPrefCalendarAllowCancelEmailToSelf) {
+				obj.zimbraPrefCalendarAllowCancelEmailToSelf = 'FALSE';
+			}
+			if (!obj.zimbraPrefCalendarAllowPublishMethodInvite) {
+				obj.zimbraPrefCalendarAllowPublishMethodInvite = 'FALSE';
+			}
+			if (!obj.zimbraPrefCalendarAllowForwardedInvite) {
+				obj.zimbraPrefCalendarAllowForwardedInvite = 'FALSE';
+			}
+			if (!obj.zimbraPrefCalendarAutoAddInvites) {
+				obj.zimbraPrefCalendarAutoAddInvites = 'FALSE';
+			}
+			if (!obj.zimbraPrefCalendarReminderSoundsEnabled) {
+				obj.zimbraPrefCalendarReminderSoundsEnabled = 'FALSE';
+			}
+			if (!obj.zimbraPrefCalendarSendInviteDeniedAutoReply) {
+				obj.zimbraPrefCalendarSendInviteDeniedAutoReply = 'FALSE';
+			}
+			if (!obj.zimbraPrefCalendarNotifyDelegatedChanges) {
+				obj.zimbraPrefCalendarNotifyDelegatedChanges = 'FALSE';
+			}
+			if (!obj.zimbraPrefCalendarUseQuickAdd) {
+				obj.zimbraPrefCalendarUseQuickAdd = 'FALSE';
+			}
+			if (!obj.zimbraPrefAppleIcalDelegationEnabled) {
+				obj.zimbraPrefAppleIcalDelegationEnabled = 'FALSE';
+			}
+			if (!obj.zimbraPrefUseTimeZoneListInCalendar) {
+				obj.zimbraPrefUseTimeZoneListInCalendar = 'FALSE';
+			}
+			setCosData(obj);
+			setInitalValues(obj);
+			setZimbraPrefMailPollingIntervalNum(obj?.zimbraMailMinPollingInterval?.slice(0, -1));
+			setPrefMailPollingIntervalType(obj?.zimbraMailMinPollingInterval?.slice(-1));
+			setIsDirty(false);
+		}
+	}, [cosInformation, setInitalValues]);
+
+	useEffect(() => {
+		if (
+			cosData.zimbraPrefMessageViewHtmlPreferred !== undefined &&
+			cosData.zimbraPrefMessageViewHtmlPreferred !==
+				cosPreferences.zimbraPrefMessageViewHtmlPreferred
+		) {
+			setIsDirty(true);
+		}
+	}, [
+		cosPreferences.zimbraPrefMessageViewHtmlPreferred,
+		cosData.zimbraPrefMessageViewHtmlPreferred
+	]);
+
+	useEffect(() => {
+		if (
+			cosData.zimbraPrefGroupMailBy !== undefined &&
+			!_.isEqual(cosData.zimbraPrefGroupMailBy, cosPreferences.zimbraPrefGroupMailBy)
+		) {
+			setIsDirty(true);
+		}
+	}, [cosData.zimbraPrefGroupMailBy, cosPreferences.zimbraPrefGroupMailBy]);
+
+	useEffect(() => {
+		if (
+			cosData.zimbraPrefMailDefaultCharset !== undefined &&
+			!_.isEqual(cosData.zimbraPrefMailDefaultCharset, cosPreferences.zimbraPrefMailDefaultCharset)
+		) {
+			setIsDirty(true);
+		}
+	}, [cosData.zimbraPrefMailDefaultCharset, cosPreferences.zimbraPrefMailDefaultCharset]);
+
+	useEffect(() => {
+		if (
+			cosData.zimbraPrefMessageIdDedupingEnabled !== undefined &&
+			cosData.zimbraPrefMessageIdDedupingEnabled !==
+				cosPreferences.zimbraPrefMessageIdDedupingEnabled
+		) {
+			setIsDirty(true);
+		}
+	}, [
+		cosData.zimbraPrefMessageIdDedupingEnabled,
+		cosPreferences.zimbraPrefMessageIdDedupingEnabled
+	]);
+
+	useEffect(() => {
+		if (
+			cosData.zimbraPrefMailToasterEnabled !== undefined &&
+			cosData.zimbraPrefMailToasterEnabled !== cosPreferences.zimbraPrefMailToasterEnabled
+		) {
+			setIsDirty(true);
+		}
+	}, [cosData.zimbraPrefMailToasterEnabled, cosPreferences.zimbraPrefMailToasterEnabled]);
+
+	useEffect(() => {
+		if (
+			cosData.zimbraPrefMailPollingInterval !== undefined &&
+			!_.isEqual(
+				cosData.zimbraPrefMailPollingInterval,
+				cosPreferences.zimbraPrefMailPollingInterval
+			)
+		) {
+			setIsDirty(true);
+		}
+	}, [cosData.zimbraPrefMailPollingInterval, cosPreferences.zimbraPrefMailPollingInterval]);
+
+	useEffect(() => {
+		if (
+			cosData.zimbraMailMinPollingInterval !== undefined &&
+			cosData.zimbraMailMinPollingInterval !== cosPreferences.zimbraMailMinPollingInterval
+		) {
+			setIsDirty(true);
+		}
+	}, [cosData.zimbraMailMinPollingInterval, cosPreferences.zimbraMailMinPollingInterval]);
+
+	useEffect(() => {
+		if (
+			cosData.zimbraPrefMailSendReadReceipts !== undefined &&
+			!_.isEqual(
+				cosData.zimbraPrefMailSendReadReceipts,
+				cosPreferences.zimbraPrefMailSendReadReceipts
+			)
+		) {
+			setIsDirty(true);
+		}
+	}, [cosData.zimbraPrefMailSendReadReceipts, cosPreferences.zimbraPrefMailSendReadReceipts]);
+
+	useEffect(() => {
+		if (
+			cosData.zimbraPrefSaveToSent !== undefined &&
+			cosData.zimbraPrefSaveToSent !== cosPreferences.zimbraPrefSaveToSent
+		) {
+			setIsDirty(true);
+		}
+	}, [cosData.zimbraPrefSaveToSent, cosPreferences.zimbraPrefSaveToSent]);
+
+	useEffect(() => {
+		if (
+			cosData.zimbraAllowAnyFromAddress !== undefined &&
+			cosData.zimbraAllowAnyFromAddress !== cosPreferences.zimbraAllowAnyFromAddress
+		) {
+			setIsDirty(true);
+		}
+	}, [cosData.zimbraAllowAnyFromAddress, cosPreferences.zimbraAllowAnyFromAddress]);
+
+	useEffect(() => {
+		if (
+			cosData.zimbraPrefAutoAddAddressEnabled !== undefined &&
+			cosData.zimbraPrefAutoAddAddressEnabled !== cosPreferences.zimbraPrefAutoAddAddressEnabled
+		) {
+			setIsDirty(true);
+		}
+	}, [cosData.zimbraPrefAutoAddAddressEnabled, cosPreferences.zimbraPrefAutoAddAddressEnabled]);
+
+	useEffect(() => {
+		if (
+			cosData.zimbraPrefGalAutoCompleteEnabled !== undefined &&
+			cosData.zimbraPrefGalAutoCompleteEnabled !== cosPreferences.zimbraPrefGalAutoCompleteEnabled
+		) {
+			setIsDirty(true);
+		}
+	}, [cosData.zimbraPrefGalAutoCompleteEnabled, cosPreferences.zimbraPrefGalAutoCompleteEnabled]);
+
+	useEffect(() => {
+		if (
+			cosData.zimbraPrefCalendarFirstDayOfWeek !== undefined &&
+			!_.isEqual(
+				cosData.zimbraPrefCalendarFirstDayOfWeek,
+				cosPreferences.zimbraPrefCalendarFirstDayOfWeek
+			)
+		) {
+			setIsDirty(true);
+		}
+	}, [cosData.zimbraPrefCalendarFirstDayOfWeek, cosPreferences.zimbraPrefCalendarFirstDayOfWeek]);
+
+	useEffect(() => {
+		if (
+			cosData.zimbraPrefTimeZoneId !== undefined &&
+			!_.isEqual(cosData.zimbraPrefTimeZoneId, cosPreferences.zimbraPrefTimeZoneId)
+		) {
+			setIsDirty(true);
+		}
+	}, [cosData.zimbraPrefTimeZoneId, cosPreferences.zimbraPrefTimeZoneId]);
+
+	useEffect(() => {
+		if (
+			cosData.zimbraPrefCalendarInitialView !== undefined &&
+			!_.isEqual(
+				cosData.zimbraPrefCalendarInitialView,
+				cosPreferences.zimbraPrefCalendarInitialView
+			)
+		) {
+			setIsDirty(true);
+		}
+	}, [cosData.zimbraPrefCalendarInitialView, cosPreferences.zimbraPrefCalendarInitialView]);
+
+	useEffect(() => {
+		if (
+			cosData.zimbraPrefCalendarApptVisibility !== undefined &&
+			!_.isEqual(
+				cosData.zimbraPrefCalendarApptVisibility,
+				cosPreferences.zimbraPrefCalendarApptVisibility
+			)
+		) {
+			setIsDirty(true);
+		}
+	}, [cosData.zimbraPrefCalendarApptVisibility, cosPreferences.zimbraPrefCalendarApptVisibility]);
+
+	useEffect(() => {
+		if (
+			cosData.zimbraPrefCalendarDefaultApptDuration !== undefined &&
+			!_.isEqual(
+				cosData.zimbraPrefCalendarDefaultApptDuration,
+				cosPreferences.zimbraPrefCalendarDefaultApptDuration
+			)
+		) {
+			setIsDirty(true);
+		}
+	}, [
+		cosData.zimbraPrefCalendarDefaultApptDuration,
+		cosPreferences.zimbraPrefCalendarDefaultApptDuration
+	]);
+
+	useEffect(() => {
+		if (
+			cosData.zimbraPrefCalendarApptReminderWarningTime !== undefined &&
+			!_.isEqual(
+				cosData.zimbraPrefCalendarApptReminderWarningTime,
+				cosPreferences.zimbraPrefCalendarApptReminderWarningTime
+			)
+		) {
+			setIsDirty(true);
+		}
+	}, [
+		cosData.zimbraPrefCalendarApptReminderWarningTime,
+		cosPreferences.zimbraPrefCalendarApptReminderWarningTime
+	]);
+
+	useEffect(() => {
+		if (
+			cosData.zimbraPrefCalendarShowPastDueReminders !== undefined &&
+			cosData.zimbraPrefCalendarShowPastDueReminders !==
+				cosPreferences.zimbraPrefCalendarShowPastDueReminders
+		) {
+			setIsDirty(true);
+		}
+	}, [
+		cosData.zimbraPrefCalendarShowPastDueReminders,
+		cosPreferences.zimbraPrefCalendarShowPastDueReminders
+	]);
+
+	useEffect(() => {
+		if (
+			cosData.zimbraPrefCalendarToasterEnabled !== undefined &&
+			cosData.zimbraPrefCalendarToasterEnabled !== cosPreferences.zimbraPrefCalendarToasterEnabled
+		) {
+			setIsDirty(true);
+		}
+	}, [cosData.zimbraPrefCalendarToasterEnabled, cosPreferences.zimbraPrefCalendarToasterEnabled]);
+
+	useEffect(() => {
+		if (
+			cosData.zimbraPrefCalendarAllowCancelEmailToSelf !== undefined &&
+			cosData.zimbraPrefCalendarAllowCancelEmailToSelf !==
+				cosPreferences.zimbraPrefCalendarAllowCancelEmailToSelf
+		) {
+			setIsDirty(true);
+		}
+	}, [
+		cosData.zimbraPrefCalendarAllowCancelEmailToSelf,
+		cosPreferences.zimbraPrefCalendarAllowCancelEmailToSelf
+	]);
+
+	useEffect(() => {
+		if (
+			cosData.zimbraPrefCalendarAllowPublishMethodInvite !== undefined &&
+			cosData.zimbraPrefCalendarAllowPublishMethodInvite !==
+				cosPreferences.zimbraPrefCalendarAllowPublishMethodInvite
+		) {
+			setIsDirty(true);
+		}
+	}, [
+		cosData.zimbraPrefCalendarAllowPublishMethodInvite,
+		cosPreferences.zimbraPrefCalendarAllowPublishMethodInvite
+	]);
+
+	useEffect(() => {
+		if (
+			cosData.zimbraPrefCalendarAutoAddInvites !== undefined &&
+			cosData.zimbraPrefCalendarAutoAddInvites !== cosPreferences.zimbraPrefCalendarAutoAddInvites
+		) {
+			setIsDirty(true);
+		}
+	}, [cosData.zimbraPrefCalendarAutoAddInvites, cosPreferences.zimbraPrefCalendarAutoAddInvites]);
+
+	useEffect(() => {
+		if (
+			cosData.zimbraPrefCalendarAllowForwardedInvite !== undefined &&
+			cosData.zimbraPrefCalendarAllowForwardedInvite !==
+				cosPreferences.zimbraPrefCalendarAllowForwardedInvite
+		) {
+			setIsDirty(true);
+		}
+	}, [
+		cosData.zimbraPrefCalendarAllowForwardedInvite,
+		cosPreferences.zimbraPrefCalendarAllowForwardedInvite
+	]);
+
+	useEffect(() => {
+		if (
+			cosData.zimbraPrefCalendarReminderSoundsEnabled !== undefined &&
+			cosData.zimbraPrefCalendarReminderSoundsEnabled !==
+				cosPreferences.zimbraPrefCalendarReminderSoundsEnabled
+		) {
+			setIsDirty(true);
+		}
+	}, [
+		cosData.zimbraPrefCalendarReminderSoundsEnabled,
+		cosPreferences.zimbraPrefCalendarReminderSoundsEnabled
+	]);
+
+	useEffect(() => {
+		if (
+			cosData.zimbraPrefCalendarSendInviteDeniedAutoReply !== undefined &&
+			cosData.zimbraPrefCalendarSendInviteDeniedAutoReply !==
+				cosPreferences.zimbraPrefCalendarSendInviteDeniedAutoReply
+		) {
+			setIsDirty(true);
+		}
+	}, [
+		cosData.zimbraPrefCalendarSendInviteDeniedAutoReply,
+		cosPreferences.zimbraPrefCalendarSendInviteDeniedAutoReply
+	]);
+
+	useEffect(() => {
+		if (
+			cosData.zimbraPrefCalendarNotifyDelegatedChanges !== undefined &&
+			cosData.zimbraPrefCalendarNotifyDelegatedChanges !==
+				cosPreferences.zimbraPrefCalendarNotifyDelegatedChanges
+		) {
+			setIsDirty(true);
+		}
+	}, [
+		cosData.zimbraPrefCalendarNotifyDelegatedChanges,
+		cosPreferences.zimbraPrefCalendarNotifyDelegatedChanges
+	]);
+
+	useEffect(() => {
+		if (
+			cosData.zimbraPrefCalendarUseQuickAdd !== undefined &&
+			cosData.zimbraPrefCalendarUseQuickAdd !== cosPreferences.zimbraPrefCalendarUseQuickAdd
+		) {
+			setIsDirty(true);
+		}
+	}, [cosData.zimbraPrefCalendarUseQuickAdd, cosPreferences.zimbraPrefCalendarUseQuickAdd]);
+
+	useEffect(() => {
+		if (
+			cosData.zimbraPrefAppleIcalDelegationEnabled !== undefined &&
+			cosData.zimbraPrefAppleIcalDelegationEnabled !==
+				cosPreferences.zimbraPrefAppleIcalDelegationEnabled
+		) {
+			setIsDirty(true);
+		}
+	}, [
+		cosData.zimbraPrefAppleIcalDelegationEnabled,
+		cosPreferences.zimbraPrefAppleIcalDelegationEnabled
+	]);
+
+	useEffect(() => {
+		if (
+			cosData.zimbraPrefUseTimeZoneListInCalendar !== undefined &&
+			cosData.zimbraPrefUseTimeZoneListInCalendar !==
+				cosPreferences.zimbraPrefUseTimeZoneListInCalendar
+		) {
+			setIsDirty(true);
+		}
+	}, [
+		cosData.zimbraPrefUseTimeZoneListInCalendar,
+		cosPreferences.zimbraPrefUseTimeZoneListInCalendar
+	]);
+
+	const onCancel = (): void => {
+		setInitalValues(cosData);
+		setZimbraPrefMailPollingIntervalNum(cosData?.zimbraMailMinPollingInterval?.slice(0, -1));
+		setPrefMailPollingIntervalType(cosData?.zimbraMailMinPollingInterval?.slice(-1));
+		setIsDirty(false);
+	};
+
+	const onSave = (): void => {
+		const body: any = {};
+		body._jsns = 'urn:zimbraAdmin';
+		const attributes: any[] = [];
+		const id = {
+			_content: cosData.zimbraId
+		};
+		body.id = id;
+		Object.keys(cosPreferences).map((ele: any) =>
+			attributes.push({ n: ele, _content: cosPreferences[ele] })
+		);
+		body.a = attributes;
+		modifyCos(body)
+			.then((response) => response.json())
+			.then((data) => {
+				createSnackbar({
+					key: 'success',
+					type: 'success',
+					label: t('label.change_save_success_msg', 'The change has been saved successfully'),
+					autoHideTimeout: 3000,
+					hideButton: true,
+					replace: true
+				});
+				const cos: any = data?.Body?.ModifyCosResponse?.cos[0];
+				if (cos) {
+					setCos(cos);
+				} else {
+					createSnackbar({
+						key: 'error',
+						type: 'error',
+						label: data?.Body?.Fault?.Reason?.Text,
+						autoHideTimeout: 3000,
+						hideButton: true,
+						replace: true
+					});
+				}
+				setIsDirty(false);
+			})
+			.catch((error) => {
+				createSnackbar({
+					key: 'error',
+					type: 'error',
+					label: t('label.something_wrong_error_msg', 'Something went wrong. Please try again.'),
+					autoHideTimeout: 3000,
+					hideButton: true,
+					replace: true
+				});
+			});
+	};
 
 	return (
-		<Container mainAlignment="flex-start" crossAlignment="flex-start">
-			<Row mainAlignment="flex-start" padding={{ all: 'large' }}>
-				<Text size="medium" weight="bold">
-					{t('cos.preferences', 'Preferences')}
-				</Text>
+		<Container mainAlignment="flex-start" background="gray6">
+			<Row takeAvwidth="fill" mainAlignment="flex-start" width="100%">
+				<Container
+					orientation="vertical"
+					mainAlignment="space-around"
+					background="gray6"
+					height="58px"
+				>
+					<Row orientation="horizontal" width="100%" padding={{ all: 'large' }}>
+						<Row mainAlignment="flex-start" width="50%" crossAlignment="flex-start">
+							<Text size="medium" weight="bold" color="gray0">
+								{t('cos.preferences', 'Preferences')}
+							</Text>
+						</Row>
+						<Row width="50%" mainAlignment="flex-end" crossAlignment="flex-end">
+							<Padding right="small">
+								{isDirty && (
+									<Button
+										label={t('label.cancel', 'Cancel')}
+										color="secondary"
+										onClick={onCancel}
+									/>
+								)}
+							</Padding>
+							{isDirty && (
+								<Button label={t('label.save', 'Save')} color="primary" onClick={onSave} />
+							)}
+						</Row>
+					</Row>
+				</Container>
 			</Row>
-			<Divider />
+			<Row orientation="horizontal" width="100%" background="gray6">
+				<Divider />
+			</Row>
 			<Container
-				orientation="column"
-				crossAlignment="flex-start"
 				mainAlignment="flex-start"
-				style={{ overflow: 'auto' }}
 				width="100%"
+				orientation="vertical"
+				style={{ overflow: 'auto' }}
 			>
-				<Container
-					mainAlignment="flex-start"
-					crossAlignment="flex-start"
-					padding={{ top: 'extralarge', right: 'large', bottom: 'large', left: 'large' }}
-					width="100%"
-				>
-					<Text size="small" weight="bold">
-						{t('cos.general_options', 'General Options')}
-					</Text>
-					<Row takeAvwidth="fill" mainAlignment="flex-start" width="100%">
-						<Container
-							height="fit"
-							crossAlignment="flex-start"
-							background="gray6"
-							padding={{ left: 'small', right: 'small', top: 'small' }}
-						>
-							<ListRow>
-								<Container padding={{ all: 'small' }}>
-									<Select
-										// items={items}
-										background="gray5"
-										label={t('cos.type_of_UI', 'Type of UI')}
-										onChange={setSelected}
-										defaultSelection={{ value: '1', label: 'Carbonio' }}
-									/>
-								</Container>
-								<Container padding={{ all: 'small' }}>
-									<Input
-										label={t('label.initial_mail_serach', 'initial Mail Serach')}
-										value="in:inbox"
-										background="gray5"
-									/>
-								</Container>
-							</ListRow>
-							<Row
-								mainAlignment="flex-start"
-								orientation="vertical"
-								crossAlignment="flex-start"
-								padding={{ top: 'small', bottom: 'small', left: 'large' }}
-							>
-								<Padding bottom="large">
-									<Switch
-										value={checked1}
-										onClick={() => setChecked1(!checked1)}
-										label={t('cos.show_search_string', 'Show Search String')}
-									/>
-								</Padding>
-								<Padding bottom="large">
-									<Switch
-										value={checked1}
-										onClick={() => setChecked1(!checked1)}
-										label={t('cos.show_IMAP_search_folder', 'Show IMAP Search Folder')}
-									/>
-								</Padding>
-
-								<Padding bottom="large">
-									<Switch
-										value={checked1}
-										onClick={() => setChecked1(!checked1)}
-										label={t('cos.enable_keyboard_shortcuts', 'Enable keyboard shortcuts')}
-									/>
-								</Padding>
-								<Padding bottom="large">
-									<Switch
-										value={checked1}
-										onClick={() => setChecked1(!checked1)}
-										label={t(
-											'cos.display_warning_when_users_try_to_navigate_away_from_web_client',
-											'Display a warning when users try to navigate away from web client'
-										)}
-									/>
-								</Padding>
-								<Padding bottom="large">
-									<Switch
-										value={checked1}
-										onClick={() => setChecked1(!checked1)}
-										label={t(
-											'cos.display_a_warning_when_administrators_try_to_navigate_away_from_Zimbra_Administration_Console',
-											'Display a warning when administrators try to navigate away from Zimbra Administration Console'
-										)}
-									/>
-								</Padding>
-								<Padding bottom="large">
-									<Switch
-										value={checked1}
-										onClick={() => setChecked1(!checked1)}
-										label={t(
-											'cos.show_selection_checkbox_for_selecting_email_contact_voicemail_items_in_a_list_view_for_batch_operations',
-											'Show selection checkbox for selecting email, contact, voicemail items in a list view for batch operations'
-										)}
-									/>
-								</Padding>
-								<Switch
-									value={checked1}
-									onClick={() => setChecked1(!checked1)}
-									label={t('cos.index_junk_messages', 'Index Junk Messages')}
-								/>
-							</Row>
-							<Row
-								width="100%"
-								mainAlignment="flex-start"
-								orientation="vertical"
-								crossAlignment="flex-start"
-								padding={{ top: 'small', bottom: 'large', left: 'small', right: 'small' }}
-							>
-								<Select
-									// items={items}
-									background="gray5"
-									label={t('cos.language', 'Language')}
-									onChange={setSelected}
-									defaultSelection={{ value: '1', label: 'English (UK)' }}
-								/>
-							</Row>
-						</Container>
-					</Row>
-					<Divider />
-				</Container>
-				<Container
-					mainAlignment="flex-start"
-					crossAlignment="flex-start"
-					padding={{ top: 'large', right: 'large', bottom: 'large', left: 'large' }}
-					width="100%"
-				>
-					<Text size="small" weight="bold">
-						{t('cos.standard_html_client', 'Standard (HTML) Client')}
-					</Text>
-					<Row takeAvwidth="fill" mainAlignment="flex-start" width="100%">
-						<Container
-							height="fit"
-							crossAlignment="flex-start"
-							background="gray6"
-							padding={{ top: 'small', bottom: 'small', left: 'small', right: 'small' }}
-						>
-							<ListRow>
-								<Container padding={{ all: 'small' }}>
-									<Select
-										// items={items}
-										background="gray5"
-										label={t(
-											'cos.maximum_number_of_items_to_display_per_page',
-											'Maximum number of items to display per page'
-										)}
-										onChange={setSelected}
-										defaultSelection={{ value: '1', label: '100' }}
-									/>
-								</Container>
-								<Container padding={{ all: 'small' }}>
-									<Select
-										// items={items}
-										background="gray5"
-										label={t(
-											'cos.number_of_items_to_display_per_page',
-											'Number of items to display per page'
-										)}
-										onChange={setSelected}
-										defaultSelection={{ value: '1', label: '25' }}
-									/>
-								</Container>
-							</ListRow>
-						</Container>
-					</Row>
-					<Divider />
-				</Container>
-				<Container
-					mainAlignment="flex-start"
-					crossAlignment="flex-start"
-					padding={{ top: 'large', right: 'large', left: 'large', bottom: 'large' }}
-					width="100%"
-				>
-					<Text size="small" weight="bold">
-						{t('cos.mail_options', 'Mail Options')}
-					</Text>
-					<Row takeAvwidth="fill" mainAlignment="flex-start" width="100%">
-						<Container height="fit" crossAlignment="flex-start" background="gray6">
-							<Row
-								mainAlignment="flex-start"
-								orientation="vertical"
-								crossAlignment="flex-start"
-								padding={{ top: 'large', left: 'large' }}
-							>
-								<Padding bottom="large">
-									<Switch
-										value={checked1}
-										onClick={() => setChecked1(!checked1)}
-										label={t('cos.view_mail_as_html', 'View mail as HTML (when possible)')}
-									/>
-								</Padding>
-								<Switch
-									value={checked1}
-									onClick={() => setChecked1(!checked1)}
-									label={t(
-										'cos.display_external_images_in_HTML_mail',
-										'Display external images in HTML mail'
-									)}
-								/>
-							</Row>
-							<Container
-								height="fit"
-								crossAlignment="flex-start"
-								background="gray6"
-								padding={{ top: 'small', bottom: 'small', left: 'small', right: 'small' }}
-							>
-								<ListRow>
-									<Container padding={{ all: 'small' }}>
-										<Select
-											// items={items}
-											background="gray5"
-											label={t('cos.group_mail', 'Group Mail')}
-											onChange={setSelected}
-											defaultSelection={{ value: '1', label: 'Conversation' }}
-										/>
-									</Container>
-									<Container padding={{ all: 'small' }}>
-										<Select
-											// items={items}
-											background="gray5"
-											label={t(
-												'cos.number_of_items_to_display_per_page',
-												'Number of items to display per page'
-											)}
-											onChange={setSelected}
-											defaultSelection={{ value: '1', label: '25' }}
-										/>
-									</Container>
-								</ListRow>
-							</Container>
-							<Row
-								mainAlignment="flex-start"
-								orientation="vertical"
-								crossAlignment="flex-start"
-								padding={{ left: 'large' }}
-							>
-								<Padding bottom="large">
-									<Switch
-										value={checked1}
-										onClick={() => setChecked1(!checked1)}
-										label={t(
-											'cos.enable_toaster_notification_for_new_mail',
-											'Enable toaster notification for new mail'
-										)}
-									/>
-								</Padding>
-								<Switch
-									value={checked1}
-									onClick={() => setChecked1(!checked1)}
-									label={t('cos.enable_message_deduping', 'Enable Message Deduping')}
-								/>
-							</Row>
-							<Row
-								width="100%"
-								mainAlignment="flex-start"
-								orientation="vertical"
-								crossAlignment="flex-start"
-								padding={{ top: 'large', bottom: 'large', left: 'large', right: 'large' }}
-							>
-								<Input
-									label={t(
-										'label.number_of_items_to_fetch_when_scrolling',
-										'Number of items to fetch when scrolling'
-									)}
-									value="50"
-									background="gray5"
-								/>
-							</Row>
-						</Container>
-					</Row>
-					<Divider />
-				</Container>
-				<Container
-					mainAlignment="flex-start"
-					crossAlignment="flex-start"
-					padding={{ top: 'large', right: 'large', bottom: 'large', left: 'large' }}
-					width="100%"
-				>
-					<Text size="small" weight="bold">
-						{t('cos.receiving_mail', 'Receiving mail')}
-					</Text>
-					<Row takeAvwidth="fill" mainAlignment="flex-start" width="100%">
-						<Container height="fit" crossAlignment="flex-start" background="gray6">
-							<Row
-								mainAlignment="flex-start"
-								orientation="vertical"
-								crossAlignment="flex-start"
-								padding={{ top: 'large', left: 'large' }}
-							>
-								<Padding bottom="large">
-									<Switch
-										value={checked1}
-										onClick={() => setChecked1(!checked1)}
-										label={t(
-											'cos.play_sound_when_message_arrives',
-											'Play a sound when a message arrives (requires QuickTime or Windows Media plugin)'
-										)}
-									/>
-								</Padding>
-								<Padding bottom="large">
-									<Switch
-										value={checked1}
-										onClick={() => setChecked1(!checked1)}
-										label={t(
-											'cos.highlight_the_Mail_tab_when_message_arrives',
-											'Highlight the Mail tab when a message arrives'
-										)}
-									/>
-								</Padding>
-								<Switch
-									value={checked1}
-									onClick={() => setChecked1(!checked1)}
-									label={t(
-										'cos.flash_browser_title_when_message_arrives',
-										'Flash the browser title when a message arrives'
-									)}
-								/>
-							</Row>
-							<Row
-								width="100%"
-								mainAlignment="flex-start"
-								orientation="vertical"
-								crossAlignment="flex-start"
-								padding={{ top: 'large', left: 'large', right: 'large' }}
-							>
-								<Select
-									// items={items}
-									background="gray5"
-									label={t(
-										'cos.polling_interval',
-										'Polling interval (time after which to check for new mail)'
-									)}
-									onChange={setSelected}
-									defaultSelection={{ value: '1', label: '5 minutes' }}
-								/>
-							</Row>
-							<Container
-								height="fit"
-								crossAlignment="flex-start"
-								background="gray6"
-								padding={{ top: 'small', left: 'small', right: 'small' }}
-							>
-								<ListRow>
-									<Container padding={{ all: 'small' }} width="30%">
-										<Input
-											label={t(
-												'label.minimum_mail_polling_interval',
-												'Minimum mail polling interval'
-											)}
-											value="2"
-											background="gray5"
-										/>
-									</Container>
-									<Container padding={{ all: 'small' }} width="20%">
-										<Select
-											// items={items}
-											background="gray5"
-											label={t('cos.preferences', 'Preferences')}
-											onChange={setSelected}
-											defaultSelection={{ value: '1', label: 'minutes' }}
-										/>
-									</Container>
-									<Container padding={{ all: 'small' }} width="30%">
-										<Input
-											label={t(
-												'label.out_of_office_cache_lifetime',
-												'Out of office cache lifetime'
-											)}
-											value="2"
-											background="gray5"
-										/>
-									</Container>
-									<Container padding={{ all: 'small' }} width="20%">
-										<Select
-											// items={items}
-											background="gray5"
-											label={t('cos.range_time', 'Range Time')}
-											onChange={setSelected}
-											defaultSelection={{ value: '1', label: 'Days' }}
-										/>
-									</Container>
-								</ListRow>
-							</Container>
-							<Row
-								width="100%"
-								mainAlignment="flex-start"
-								orientation="vertical"
-								crossAlignment="flex-start"
-								padding={{ top: 'small', bottom: 'large', left: 'large', right: 'large' }}
-							>
-								<Select
-									// items={items}
-									background="gray5"
-									label={t('cos.send_read_receipts', 'Send read receipts')}
-									onChange={setSelected}
-									defaultSelection={{ value: '1', label: 'Prompt' }}
-								/>
-							</Row>
-						</Container>
-					</Row>
-					<Divider />
-				</Container>
-				<Container
-					mainAlignment="flex-start"
-					crossAlignment="flex-start"
-					padding={{ top: 'large', right: 'large', bottom: 'large', left: 'large' }}
-					width="100%"
-				>
-					<Text size="small" weight="bold">
-						{t('cos.sending_mail', 'Sending Mail')}
-					</Text>
-					<Row takeAvwidth="fill" mainAlignment="flex-start" width="100%">
-						<Container height="fit" crossAlignment="flex-start" background="gray6">
-							<Row
-								mainAlignment="flex-start"
-								orientation="vertical"
-								crossAlignment="flex-start"
-								padding={{ top: 'large', left: 'large' }}
-							>
-								<Padding bottom="large">
-									<Switch
-										value={checked1}
-										onClick={() => setChecked1(!checked1)}
-										label={t('label.save_to_sent_folder', 'Save to Sent Folder')}
-									/>
-								</Padding>
-								<Padding bottom="large">
-									<Switch
-										value={checked1}
-										onClick={() => setChecked1(!checked1)}
-										label={t(
-											'label.allow_sending_email_from_any_address',
-											'Allow sending email from any address'
-										)}
-									/>
-								</Padding>
-							</Row>
-						</Container>
-					</Row>
-					<Divider />
-				</Container>
-				<Container
-					mainAlignment="flex-start"
-					crossAlignment="flex-start"
-					padding={{ top: 'large', right: 'large', bottom: 'large', left: 'large' }}
-					width="100%"
-				>
-					<Text size="small" weight="bold">
-						{t('cos.composing_mail', 'Composing Mail')}
-					</Text>
-					<Row takeAvwidth="fill" mainAlignment="flex-start" width="100%">
-						<Container height="fit" crossAlignment="flex-start" background="gray6">
-							<Row
-								mainAlignment="flex-start"
-								orientation="vertical"
-								crossAlignment="flex-start"
-								padding={{ top: 'large', left: 'large' }}
-							>
-								<Switch
-									value={checked1}
-									onClick={() => setChecked1(!checked1)}
-									label={t('label.always_compose_in_new_window', 'Always compose in new window')}
-								/>
-							</Row>
-							<Container
-								height="fit"
-								crossAlignment="flex-start"
-								background="gray6"
-								padding={{ top: 'small', bottom: 'small', left: 'small', right: 'small' }}
-							>
-								<ListRow>
-									<Container padding={{ all: 'small' }}>
-										<Select
-											// items={items}
-											background="gray5"
-											label={t('label.always_compose_mail_using', 'Always compose mail using')}
-											onChange={setSelected}
-											defaultSelection={{ value: '1', label: 'HTML' }}
-										/>
-									</Container>
-									<Container padding={{ all: 'small' }}>
-										<Select
-											// items={items}
-											background="gray5"
-											label={t('label.default_font_family', 'Default Font Family')}
-											onChange={setSelected}
-											defaultSelection={{ value: '1', label: 'Roboto' }}
-										/>
-									</Container>
-									<Container padding={{ all: 'small' }}>
-										<Select
-											// items={items}
-											background="gray5"
-											label={t('label.default_font_size', 'Default Font Size')}
-											onChange={setSelected}
-											defaultSelection={{ value: '1', label: '12 pt' }}
-										/>
-									</Container>
-									<Container padding={{ all: 'small' }}>
-										<Input
-											label={t('label.default_font_color', 'Default Font Color')}
-											value="#414141"
-											background="gray5"
-											CustomIcon={() => <Icon icon="Square2" size="large" color="primary" />}
-										/>
-									</Container>
-								</ListRow>
-							</Container>
-
-							<Row
-								mainAlignment="flex-start"
-								orientation="vertical"
-								crossAlignment="flex-start"
-								padding={{ left: 'large' }}
-							>
-								<Padding bottom="large">
-									<Switch
-										value={checked1}
-										onClick={() => setChecked1(!checked1)}
-										label={t(
-											'label.reply/forward_using_format_of_the_original_message',
-											'Reply/forward using format of the original message'
-										)}
-									/>
-								</Padding>
-								<Switch
-									value={checked1}
-									onClick={() => setChecked1(!checked1)}
-									label={t('label.enable_mandatory_spell_check', 'Enable mandatory spell check')}
-								/>
-							</Row>
-							<Container
-								height="fit"
-								crossAlignment="flex-start"
-								background="gray6"
-								padding={{ top: 'small', bottom: 'small', left: 'small', right: 'small' }}
-							>
-								<ListRow>
-									<Container padding={{ all: 'small' }} width="50%">
-										<Input
-											label={t(
-												'label.maximum_length_of_mail_signature',
-												'Maximum length of mail signature'
-											)}
-											value="10240"
-											background="gray5"
-										/>
-									</Container>
-									<Container padding={{ all: 'small' }} width="30%">
-										<Input
-											label={t('label.draft_auto_save_interval', 'Draft auto save interval')}
-											value="2"
-											background="gray5"
-										/>
-									</Container>
-									<Container padding={{ all: 'small' }} width="20%">
-										<Select
-											// items={items}
-											background="gray5"
-											label={t('label.range_time', 'Range Time')}
-											onChange={setSelected}
-											defaultSelection={{ value: '1', label: 'minutes' }}
-										/>
-									</Container>
-								</ListRow>
-							</Container>
-						</Container>
-					</Row>
-					<Divider />
-				</Container>
-				<Container
+				<Row
 					mainAlignment="flex-start"
 					crossAlignment="flex-start"
 					padding={{ all: 'large' }}
 					width="100%"
 				>
-					<Text size="small" weight="bold">
-						{t('cos.contacts_options', 'Contacts Options')}
+					<Text size="extralarge" weight="bold">
+						{t('label.mailing_options', 'Mail Options')}
 					</Text>
 					<Row takeAvwidth="fill" mainAlignment="flex-start" width="100%">
-						<Container height="fit" crossAlignment="flex-start" background="gray6">
-							<Row
-								mainAlignment="flex-start"
-								orientation="vertical"
-								crossAlignment="flex-start"
-								padding={{ top: 'large', left: 'large' }}
-							>
-								<Padding bottom="large">
-									<Switch
-										value={checked1}
-										onClick={() => setChecked1(!checked1)}
-										label={t(
-											'label.enable_automatic_adding_of_contacts',
-											'Enable automatic adding of contacts'
-										)}
-									/>
-								</Padding>
-								<Padding bottom="large">
-									<Switch
-										value={checked1}
-										onClick={() => setChecked1(!checked1)}
-										label={t(
-											'label.use_the_gal_when_autocompleting_addresses',
-											'Use the GAL when autocompleting addresses'
-										)}
-									/>
-								</Padding>
-							</Row>
-							<Divider />
+						<Container
+							height="fit"
+							crossAlignment="flex-start"
+							background="gray6"
+							padding={{ top: 'large' }}
+						>
+							<Switch
+								value={cosPreferences?.zimbraPrefMessageViewHtmlPreferred === 'TRUE'}
+								onClick={(): void => changeSwitchOption('zimbraPrefMessageViewHtmlPreferred')}
+								label={t('cos.view_mail_as_html', 'View mail as HTML')}
+							/>
 						</Container>
 					</Row>
-				</Container>
-				<Container
+					<Row takeAvwidth="fill" mainAlignment="flex-start" width="100%">
+						<Container
+							height="fit"
+							crossAlignment="flex-start"
+							background="gray6"
+							padding={{ top: 'large' }}
+						>
+							<ListRow>
+								<Container padding={{ right: 'small' }}>
+									<Select
+										background="gray5"
+										label={t('cos.display_by', 'Display by')}
+										showCheckbox={false}
+										items={GROUP_BY}
+										selection={
+											cosPreferences?.zimbraPrefGroupMailBy === ''
+												? GROUP_BY[-1]
+												: GROUP_BY.find(
+														// eslint-disable-next-line max-len
+														(item: any) => item.value === cosPreferences?.zimbraPrefGroupMailBy
+												  )
+										}
+										onChange={onGroupByChange}
+									/>
+								</Container>
+								<Container padding={{ left: 'small' }}>
+									<Select
+										background="gray5"
+										label={t('cos.default_charset', 'Default Charset')}
+										showCheckbox={false}
+										items={CHARACTOR_SET}
+										selection={
+											cosPreferences?.zimbraPrefMailDefaultCharset === ''
+												? CHARACTOR_SET[-1]
+												: CHARACTOR_SET.find(
+														// eslint-disable-next-line max-len
+														(item: any) =>
+															item.value === cosPreferences?.zimbraPrefMailDefaultCharset
+												  )
+										}
+										onChange={onCharactorSetChange}
+									/>
+								</Container>
+							</ListRow>
+						</Container>
+					</Row>
+					<Row takeAvwidth="fill" mainAlignment="flex-start" width="100%">
+						<Container
+							height="fit"
+							crossAlignment="flex-start"
+							background="gray6"
+							padding={{ top: 'large', bottom: 'large' }}
+						>
+							<ListRow>
+								<Container crossAlignment="flex-start" padding={{ right: 'small' }}>
+									<Switch
+										value={cosPreferences?.zimbraPrefMessageIdDedupingEnabled === 'TRUE'}
+										onClick={(): void => changeSwitchOption('zimbraPrefMessageIdDedupingEnabled')}
+										label={t(
+											'cos.auto_delete_duplicate_messages',
+											'Auto-Delete duplicate messages'
+										)}
+									/>
+								</Container>
+								<Container crossAlignment="flex-start" padding={{ left: 'small' }}>
+									<Switch
+										value={cosPreferences?.zimbraPrefMailToasterEnabled === 'TRUE'}
+										onClick={(): void => changeSwitchOption('zimbraPrefMailToasterEnabled')}
+										label={t(
+											'cos.enable_notification_for_new_email',
+											`Enable notification for new email`
+										)}
+									/>
+								</Container>
+							</ListRow>
+						</Container>
+					</Row>
+					<Divider />
+				</Row>
+				<Row
 					mainAlignment="flex-start"
 					crossAlignment="flex-start"
-					padding={{ top: 'large', right: 'large', bottom: 'large', left: 'large' }}
+					padding={{ all: 'large' }}
 					width="100%"
 				>
-					<Text size="small" weight="bold">
-						{t('cos.calendar_options', 'Calendar Options')}
+					<Text size="extralarge" weight="bold">
+						{t('label.receiving_mails', 'Receiving Mails')}
 					</Text>
 					<Row takeAvwidth="fill" mainAlignment="flex-start" width="100%">
-						<Container height="fit" crossAlignment="flex-start" background="gray6">
-							<Row
-								width="100%"
-								mainAlignment="flex-start"
-								orientation="vertical"
-								crossAlignment="flex-start"
-								padding={{ top: 'large', left: 'large', right: 'large' }}
-							>
-								<Select
-									// items={items}
-									background="gray5"
-									label={t('label.time_zone', 'Time Zone')}
-									onChange={setSelected}
-									defaultSelection={{ value: '1', label: 'GMT/UTC Coordinated Universal Time' }}
-								/>
-							</Row>
-							<Container
-								height="fit"
-								crossAlignment="flex-start"
-								background="gray6"
-								padding={{ top: 'small', bottom: 'small', left: 'small', right: 'small' }}
-							>
-								<ListRow>
-									<Container padding={{ all: 'small' }}>
-										<Select
-											// items={items}
-											background="gray5"
-											label={t('label.show_reminder', 'Show Reminder')}
-											onChange={setSelected}
-											defaultSelection={{ value: '1', label: '5 minutes' }}
-										/>
-									</Container>
-									<Container padding={{ all: 'small' }}>
-										<Select
-											// items={items}
-											background="gray5"
-											label={t('label.initial_calendar_view', 'Initial calendar view')}
-											onChange={setSelected}
-											defaultSelection={{ value: '1', label: 'Work Week' }}
-										/>
-									</Container>
-									<Container padding={{ all: 'small' }}>
-										<Select
-											// items={items}
-											background="gray5"
-											label={t('label.first_day_of_Week', 'First day of Week')}
-											onChange={setSelected}
-											defaultSelection={{ value: '1', label: 'Monday' }}
-										/>
-									</Container>
-									<Container padding={{ all: 'small' }}>
-										<Select
-											// items={items}
-											background="gray5"
-											label={t(
-												'label.default_appointment_visibility',
-												'Default appointment visibility'
-											)}
-											onChange={setSelected}
-											defaultSelection={{ value: '1', label: 'Public' }}
-										/>
-									</Container>
-								</ListRow>
-							</Container>
-							<Row
-								mainAlignment="flex-start"
-								orientation="vertical"
-								crossAlignment="flex-start"
-								padding={{ left: 'large' }}
-							>
-								<Padding bottom="large">
-									<Switch
-										value={checked1}
-										onClick={() => setChecked1(!checked1)}
-										label={t(
-											'label.use_iCal_delegation_model_for_shared_calendars_for_CalDAV_interface',
-											'Use iCal delegation model for shared calendars for CalDAV interface'
-										)}
+						<Container
+							height="fit"
+							crossAlignment="flex-start"
+							background="gray6"
+							padding={{ top: 'large' }}
+						>
+							<ListRow>
+								<Container padding={{ right: 'small' }}>
+									<Input
+										inputName="zimbraPrefMailMinPollingInterval"
+										label={t('cos.minimum_mail_polling_interval', 'Minimum mail polling interval')}
+										backgroundColor="gray5"
+										value={zimbraPrefMailPollingIntervalNum}
+										type="number"
+										onChange={onPrefMailPollingIntervalNumChange}
 									/>
-								</Padding>
-								<Padding bottom="large">
-									<Switch
-										value={checked1}
-										onClick={() => setChecked1(!checked1)}
-										label={t('label.enable_past_due_reminders', 'Enable past due reminders')}
+								</Container>
+								<Container padding={{ left: 'small' }}>
+									<Select
+										items={TIME_TYPES}
+										background="gray5"
+										label={t('cos.days_hours_minutes_sec', 'Days / Hours / Minutes / Sec')}
+										showCheckbox={false}
+										selection={
+											prefMailPollingIntervalType === ''
+												? TIME_TYPES[-1]
+												: TIME_TYPES.find(
+														// eslint-disable-next-line max-len
+														(item: any) => item.value === prefMailPollingIntervalType
+												  )
+										}
+										onChange={onPrefMailPollingIntervalTypeChange}
 									/>
-								</Padding>
-								<Padding bottom="large">
-									<Switch
-										value={checked1}
-										onClick={() => setChecked1(!checked1)}
-										label={t(
-											'label.enable_toaster_notification_for_new_calendar_events',
-											'enable toaster notification for new calendar events'
-										)}
-									/>
-								</Padding>
-								<Padding bottom="large">
-									<Switch
-										value={checked1}
-										onClick={() => setChecked1(!checked1)}
-										label={t(
-											'label.allow_sending_cancellation_email_to_organizer',
-											'Allow sending cancellation email to organizer'
-										)}
-									/>
-								</Padding>
-								<Padding bottom="large">
-									<Switch
-										value={checked1}
-										onClick={() => setChecked1(!checked1)}
-										label={t(
-											'label.automatically_add_invites_with_PUBLISH_method',
-											'Automatically add invites with PUBLISH method'
-										)}
-									/>
-								</Padding>
-								<Padding bottom="large">
-									<Switch
-										value={checked1}
-										onClick={() => setChecked1(!checked1)}
-										label={t(
-											'label.automatically_add_forwarded_invites_to_calendar',
-											'Automatically add forwarded invites to calendar'
-										)}
-									/>
-								</Padding>
-								<Padding bottom="large">
-									<Switch
-										value={checked1}
-										onClick={() => setChecked1(!checked1)}
-										label={t(
-											'label.notify_of_changes_made_via_delegated_access',
-											'Notify of changes made via delegated access'
-										)}
-									/>
-								</Padding>
-								<Padding bottom="large">
-									<Switch
-										value={checked1}
-										onClick={() => setChecked1(!checked1)}
-										label={t(
-											'label.always_show_the_mini-calendar',
-											'Always show the mini-calendar'
-										)}
-									/>
-								</Padding>
-								<Padding bottom="large">
-									<Switch
-										value={checked1}
-										onClick={() => setChecked1(!checked1)}
-										label={t(
-											'label.use_the_QuickAdd_dialog_when_creating_new_appointments',
-											'use the QuickAdd dialog when creating new appointments'
-										)}
-									/>
-								</Padding>
-								<Padding bottom="large">
-									<Switch
-										value={checked1}
-										onClick={() => setChecked1(!checked1)}
-										label={t(
-											'label.show_time_zone_list_in_appointment_view',
-											'Show time zone list in appointment view'
-										)}
-									/>
-								</Padding>
-							</Row>
+								</Container>
+							</ListRow>
 						</Container>
 					</Row>
-				</Container>
+					<Row takeAvwidth="fill" mainAlignment="center" width="100%">
+						<Container
+							height="fit"
+							crossAlignment="flex-start"
+							background="gray6"
+							padding={{ top: 'large', bottom: 'large' }}
+						>
+							<ListRow>
+								<Container crossAlignment="flex-start" padding={{ right: 'small' }}>
+									<Select
+										items={POLLING_INTERVAL}
+										background="gray5"
+										label={t('cos.polling_interval', 'Polling interval')}
+										showCheckbox={false}
+										selection={
+											cosPreferences?.zimbraPrefMailPollingInterval === ''
+												? POLLING_INTERVAL[-1]
+												: POLLING_INTERVAL.find(
+														// eslint-disable-next-line max-len
+														(item: any) =>
+															item.value === cosPreferences?.zimbraPrefMailPollingInterval
+												  )
+										}
+										onChange={onPollingIntervalChange}
+									/>
+								</Container>
+								<Container padding={{ left: 'small' }}>
+									<Select
+										items={SEND_READ_RECEIPTS}
+										background="gray5"
+										label={t('cos.send_read_receipts', 'Send read receipts')}
+										showCheckbox={false}
+										selection={
+											cosPreferences?.zimbraPrefMailSendReadReceipts === ''
+												? SEND_READ_RECEIPTS[-1]
+												: SEND_READ_RECEIPTS.find(
+														(item: any) =>
+															// eslint-disable-next-line max-len
+															item.value === cosPreferences?.zimbraPrefMailSendReadReceipts
+												  )
+										}
+										onChange={onMailSendReadReceipts}
+									/>
+								</Container>
+							</ListRow>
+						</Container>
+					</Row>
+					<Divider />
+				</Row>
+				<Row
+					mainAlignment="flex-start"
+					crossAlignment="flex-start"
+					padding={{ all: 'large' }}
+					width="100%"
+				>
+					<Text size="extralarge" weight="bold">
+						{t('label.sending_mails', 'Sending Mails')}
+					</Text>
+					<Row takeAvwidth="fill" mainAlignment="flex-start" width="100%">
+						<Container
+							height="fit"
+							crossAlignment="flex-start"
+							background="gray6"
+							padding={{ top: 'large', bottom: 'large' }}
+						>
+							<ListRow>
+								<Container crossAlignment="flex-start" padding={{ right: 'small' }}>
+									<Switch
+										value={cosPreferences?.zimbraPrefSaveToSent === 'TRUE'}
+										onClick={(): void => changeSwitchOption('zimbraPrefSaveToSent')}
+										label={t('cos.save_to_Sent', `Save to sent`)}
+									/>
+								</Container>
+								<Container crossAlignment="flex-start" padding={{ left: 'small' }}>
+									<Switch
+										value={cosPreferences?.zimbraAllowAnyFromAddress === 'TRUE'}
+										onClick={(): void => changeSwitchOption('zimbraAllowAnyFromAddress')}
+										label={t(
+											'cos.allow_sending_from_any_address',
+											'Allow sending from any address'
+										)}
+									/>
+								</Container>
+							</ListRow>
+						</Container>
+					</Row>
+					<Divider />
+				</Row>
+				<Row
+					mainAlignment="flex-start"
+					crossAlignment="flex-start"
+					padding={{ all: 'large' }}
+					width="100%"
+				>
+					<Text size="extralarge" weight="bold">
+						{t('label.contact_options', 'Contact Options')}
+					</Text>
+					<Row takeAvwidth="fill" mainAlignment="flex-start" width="100%">
+						<Container
+							height="fit"
+							crossAlignment="flex-start"
+							background="gray6"
+							padding={{ top: 'large', bottom: 'large' }}
+						>
+							<ListRow>
+								<Container crossAlignment="flex-start" padding={{ right: 'small' }}>
+									<Switch
+										value={cosPreferences?.zimbraPrefAutoAddAddressEnabled === 'TRUE'}
+										onClick={(): void => changeSwitchOption('zimbraPrefAutoAddAddressEnabled')}
+										label={t('cos.enable_auto_add_contacts', `Enable auto-add contacts`)}
+									/>
+								</Container>
+								<Container crossAlignment="flex-start" padding={{ left: 'small' }}>
+									<Switch
+										value={cosPreferences?.zimbraPrefGalAutoCompleteEnabled === 'TRUE'}
+										onClick={(): void => changeSwitchOption('zimbraPrefGalAutoCompleteEnabled')}
+										label={t('cos.use_gal_to_auto_fill', 'Use GAL to auto-fill')}
+									/>
+								</Container>
+							</ListRow>
+						</Container>
+					</Row>
+					<Divider />
+				</Row>
+				<Row
+					mainAlignment="flex-start"
+					crossAlignment="flex-start"
+					padding={{ all: 'large' }}
+					width="100%"
+				>
+					<Text size="extralarge" weight="bold">
+						{t('label.calendar_options', 'Calendar Options')}
+					</Text>
+					<Row takeAvwidth="fill" mainAlignment="flex-start" width="100%">
+						<Container
+							height="fit"
+							crossAlignment="flex-start"
+							background="gray6"
+							padding={{ top: 'large' }}
+						>
+							<ListRow>
+								<Container padding={{ right: 'small' }}>
+									<Select
+										items={timezones}
+										background="gray5"
+										label={t('label.time_zone', 'Time Zone')}
+										showCheckbox={false}
+										selection={
+											cosPreferences?.zimbraPrefTimeZoneId === ''
+												? timezones[-1]
+												: timezones.find(
+														// eslint-disable-next-line max-len
+														(item: any) => item.value === cosPreferences?.zimbraPrefTimeZoneId
+												  )
+										}
+										onChange={onPrefTimeZoneChange}
+									/>
+								</Container>
+								<Container padding={{ left: 'small' }}>
+									<Select
+										items={DEFAULT_APPOINTMENT_DURATION}
+										background="gray5"
+										label={t(
+											'label.appointments_default_duration',
+											'Appointment’s Default Duration'
+										)}
+										showCheckbox={false}
+										selection={
+											cosPreferences?.zimbraPrefCalendarDefaultApptDuration === ''
+												? DEFAULT_APPOINTMENT_DURATION[-1]
+												: DEFAULT_APPOINTMENT_DURATION.find(
+														(item: any) =>
+															// eslint-disable-next-line max-len
+															item.value === cosPreferences?.zimbraPrefCalendarDefaultApptDuration
+												  )
+										}
+										onChange={onCalendarDefaultApptDurationChange}
+									/>
+								</Container>
+							</ListRow>
+						</Container>
+					</Row>
+					<Row takeAvwidth="fill" mainAlignment="flex-start" width="100%">
+						<Container
+							height="fit"
+							crossAlignment="flex-start"
+							background="gray6"
+							padding={{ top: 'large' }}
+						>
+							<ListRow>
+								<Container padding={{ right: 'small' }}>
+									<Select
+										items={APPOINTMENT_REMINDER}
+										background="gray5"
+										label={t('label.remind_appointments_timer', 'Remind Appointments Timer')}
+										showCheckbox={false}
+										selection={
+											cosPreferences?.zimbraPrefCalendarApptReminderWarningTime === ''
+												? APPOINTMENT_REMINDER[-1]
+												: APPOINTMENT_REMINDER.find(
+														// eslint-disable-next-line max-len
+														(item: any) =>
+															item.value ===
+															cosPreferences?.zimbraPrefCalendarApptReminderWarningTime
+												  )
+										}
+										onChange={onReminderWarningTimeChange}
+									/>
+								</Container>
+								<Container padding={{ left: 'small' }}>
+									<Select
+										items={DefaultViewOptions}
+										background="gray5"
+										label={t('label.initial_calendar_view', 'Initial Calendar View')}
+										showCheckbox={false}
+										selection={
+											cosPreferences?.zimbraPrefCalendarInitialView === ''
+												? DefaultViewOptions[-1]
+												: DefaultViewOptions.find(
+														// eslint-disable-next-line max-len
+														(item: any) =>
+															item.value === cosPreferences?.zimbraPrefCalendarInitialView
+												  )
+										}
+										onChange={onCalendarInitialViewChange}
+									/>
+								</Container>
+							</ListRow>
+						</Container>
+					</Row>
+					<Row takeAvwidth="fill" mainAlignment="flex-start" width="100%">
+						<Container
+							height="fit"
+							crossAlignment="flex-start"
+							background="gray6"
+							padding={{ top: 'large' }}
+						>
+							<ListRow>
+								<Container padding={{ right: 'small' }}>
+									<Select
+										items={FIRST_DAY_OF_WEEK}
+										background="gray5"
+										label={t('label.first_day_of_week', 'First Day of Week')}
+										showCheckbox={false}
+										selection={
+											cosPreferences?.zimbraPrefCalendarFirstDayOfWeek === ''
+												? FIRST_DAY_OF_WEEK[-1]
+												: FIRST_DAY_OF_WEEK.find(
+														(item: any) =>
+															// eslint-disable-next-line max-len
+															item.value === cosPreferences?.zimbraPrefCalendarFirstDayOfWeek
+												  )
+										}
+										onChange={onFirstDayOfWeekChange}
+									/>
+								</Container>
+								<Container padding={{ left: 'small' }}>
+									<Select
+										items={APPOINTMENT_VISIBILITY}
+										background="gray5"
+										label={t(
+											'label.default_appointment_visibility',
+											'Default Appointment visibility'
+										)}
+										showCheckbox={false}
+										selection={
+											cosPreferences?.zimbraPrefCalendarApptVisibility === ''
+												? APPOINTMENT_VISIBILITY[-1]
+												: APPOINTMENT_VISIBILITY.find(
+														(item: any) =>
+															// eslint-disable-next-line max-len
+															item.value === cosPreferences?.zimbraPrefCalendarApptVisibility
+												  )
+										}
+										onChange={onAppointmentVisibilityChange}
+									/>
+								</Container>
+							</ListRow>
+						</Container>
+					</Row>
+					<Row takeAvwidth="fill" mainAlignment="flex-start" width="100%">
+						<Container
+							height="fit"
+							crossAlignment="flex-start"
+							background="gray6"
+							padding={{ top: 'large' }}
+						>
+							<ListRow>
+								<Container crossAlignment="flex-start" padding={{ right: 'small' }}>
+									<Switch
+										value={cosPreferences?.zimbraPrefCalendarShowPastDueReminders === 'TRUE'}
+										onClick={(): void =>
+											changeSwitchOption('zimbraPrefCalendarShowPastDueReminders')
+										}
+										label={t('cos.enable_past_due_reminders', `Enable past-due reminders`)}
+									/>
+								</Container>
+								<Container crossAlignment="flex-start" padding={{ left: 'small' }}>
+									<Switch
+										value={cosPreferences?.zimbraPrefCalendarToasterEnabled === 'TRUE'}
+										onClick={(): void => changeSwitchOption('zimbraPrefCalendarToasterEnabled')}
+										label={t(
+											'cos.enable_notification_for_new_appointment',
+											'Enable notification for new appointment'
+										)}
+									/>
+								</Container>
+							</ListRow>
+						</Container>
+					</Row>
+					<Row takeAvwidth="fill" mainAlignment="flex-start" width="100%">
+						<Container
+							height="fit"
+							crossAlignment="flex-start"
+							background="gray6"
+							padding={{ top: 'large' }}
+						>
+							<ListRow>
+								<Container crossAlignment="flex-start" padding={{ right: 'small' }}>
+									<Switch
+										value={cosPreferences?.zimbraPrefCalendarAllowCancelEmailToSelf === 'TRUE'}
+										onClick={(): void =>
+											changeSwitchOption('zimbraPrefCalendarAllowCancelEmailToSelf')
+										}
+										label={t(
+											'cos.allow_sending_cancellation_mail',
+											`Allow sending cancellation mail`
+										)}
+									/>
+								</Container>
+								<Container crossAlignment="flex-start" padding={{ left: 'small' }}>
+									<Switch
+										value={cosPreferences?.zimbraPrefCalendarAllowPublishMethodInvite === 'TRUE'}
+										onClick={(): void =>
+											changeSwitchOption('zimbraPrefCalendarAllowPublishMethodInvite')
+										}
+										label={t(
+											'cos.add_invites_with_publish_method',
+											'Add invites with PUBLISH method'
+										)}
+									/>
+								</Container>
+							</ListRow>
+						</Container>
+					</Row>
+					<Row takeAvwidth="fill" mainAlignment="flex-start" width="100%">
+						<Container
+							height="fit"
+							crossAlignment="flex-start"
+							background="gray6"
+							padding={{ top: 'large' }}
+						>
+							<ListRow>
+								<Container crossAlignment="flex-start" padding={{ right: 'small' }}>
+									<Switch
+										value={cosPreferences?.zimbraPrefCalendarAllowForwardedInvite === 'TRUE'}
+										onClick={(): void =>
+											changeSwitchOption('zimbraPrefCalendarAllowForwardedInvite')
+										}
+										label={t(
+											'cos.add_forwarded_invites_to_calendar',
+											`Add forwarded invites to calendar`
+										)}
+									/>
+								</Container>
+								<Container crossAlignment="flex-start" padding={{ left: 'small' }}>
+									<Switch
+										value={cosPreferences?.zimbraPrefCalendarReminderSoundsEnabled === 'TRUE'}
+										onClick={(): void =>
+											changeSwitchOption('zimbraPrefCalendarReminderSoundsEnabled')
+										}
+										label={t('cos.audible_reminder_notification', 'Audible reminder notification')}
+									/>
+								</Container>
+							</ListRow>
+						</Container>
+					</Row>
+					<Row takeAvwidth="fill" mainAlignment="flex-start" width="100%">
+						<Container
+							height="fit"
+							crossAlignment="flex-start"
+							background="gray6"
+							padding={{ top: 'large' }}
+						>
+							<ListRow>
+								<Container crossAlignment="flex-start" padding={{ right: 'small' }}>
+									<Switch
+										value={cosPreferences?.zimbraPrefCalendarAutoAddInvites === 'TRUE'}
+										onClick={(): void => changeSwitchOption('zimbraPrefCalendarAutoAddInvites')}
+										label={t('cos.add_appointments_when_invited', `Add appointments when invited`)}
+									/>
+								</Container>
+								<Container crossAlignment="flex-start" padding={{ left: 'small' }}>
+									<Switch
+										value={cosPreferences?.zimbraPrefCalendarSendInviteDeniedAutoReply === 'TRUE'}
+										onClick={(): void =>
+											changeSwitchOption('zimbraPrefCalendarSendInviteDeniedAutoReply')
+										}
+										label={t(
+											'cos.auto_decline_if_inviter_is_blacklisted',
+											'Auto-decline if inviter is blacklisted'
+										)}
+									/>
+								</Container>
+							</ListRow>
+						</Container>
+					</Row>
+					<Row takeAvwidth="fill" mainAlignment="flex-start" width="100%">
+						<Container
+							height="fit"
+							crossAlignment="flex-start"
+							background="gray6"
+							padding={{ top: 'large' }}
+						>
+							<ListRow>
+								<Container crossAlignment="flex-start" padding={{ right: 'small' }}>
+									<Switch
+										value={cosPreferences?.zimbraPrefCalendarNotifyDelegatedChanges === 'TRUE'}
+										onClick={(): void =>
+											changeSwitchOption('zimbraPrefCalendarNotifyDelegatedChanges')
+										}
+										label={t(
+											'cos.notify_changes_by_delegated_access',
+											`Notify changes by delegated access`
+										)}
+									/>
+								</Container>
+								<Container crossAlignment="flex-start" padding={{ left: 'small' }}>
+									<Switch
+										value={cosPreferences?.zimbraPrefCalendarUseQuickAdd === 'TRUE'}
+										onClick={(): void => changeSwitchOption('zimbraPrefCalendarUseQuickAdd')}
+										label={t(
+											'cos.use_quickadd_dialog_in_creation',
+											'Use QuickAdd dialog in creation'
+										)}
+									/>
+								</Container>
+							</ListRow>
+						</Container>
+					</Row>
+					<Row takeAvwidth="fill" mainAlignment="flex-start" width="100%">
+						<Container
+							height="fit"
+							crossAlignment="flex-start"
+							background="gray6"
+							padding={{ top: 'large', bottom: 'large' }}
+						>
+							<ListRow>
+								<Container crossAlignment="flex-start" padding={{ right: 'small' }}>
+									<Switch
+										value={cosPreferences?.zimbraPrefAppleIcalDelegationEnabled === 'TRUE'}
+										onClick={(): void => changeSwitchOption('zimbraPrefAppleIcalDelegationEnabled')}
+										label={t(
+											'cos.use_ical_delegation_model_for_shared_calendars',
+											`Use iCal delegation model for shared calendars`
+										)}
+									/>
+								</Container>
+								<Container crossAlignment="flex-start" padding={{ left: 'small' }}>
+									<Switch
+										value={cosPreferences?.zimbraPrefUseTimeZoneListInCalendar === 'TRUE'}
+										onClick={(): void => changeSwitchOption('zimbraPrefUseTimeZoneListInCalendar')}
+										label={t('cos.show_time_zone_lists_in_view', 'Show time zone lists in view')}
+									/>
+								</Container>
+							</ListRow>
+						</Container>
+					</Row>
+					<Divider />
+				</Row>
 			</Container>
 		</Container>
 	);

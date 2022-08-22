@@ -164,7 +164,7 @@ const MailingListSection: FC<any> = () => {
 						padding={{ top: 'large', right: 'small' }}
 					>
 						<Input
-							label={t('label.list_name_auto_fill', 'List Name (Auto-fill)')}
+							label={t('label.list_name', 'List Name')}
 							backgroundColor="gray5"
 							value={mailingListDetail?.prefixName}
 							size="medium"

@@ -233,7 +233,7 @@ const Connection: FC<{
 	}, [bucketType, bucketTypeData, showURL]);
 
 	useEffect(() => {
-		if (bucketType !== '') {
+		if (bucketType !== undefined) {
 			const volumeObject: any = BucketTypeItems.find((s) => s.value === bucketType);
 			setBucketTypeData(volumeObject?.label);
 			onSelection({ storeType: bucketType }, false);
@@ -262,7 +262,7 @@ const Connection: FC<{
 					? BucketRegionsInAlibaba.find((s) => s.value === e)
 					: BucketRegions.find((s) => s.value === e);
 			setRegionsData(volumeObject);
-			onSelection({ region: volumeObject.value }, false);
+			onSelection({ region: volumeObject?.value }, false);
 		},
 		[bucketType, bucketTypeData, onSelection]
 	);
@@ -332,7 +332,7 @@ const Connection: FC<{
 
 	return (
 		<Container mainAlignment="flex-start" padding={{ horizontal: 'large' }}>
-			{bucketType !== '' ? (
+			{bucketType !== undefined ? (
 				<Row padding={{ top: 'extralarge' }} width="100%">
 					<Input
 						label={t('label.bucket_type', 'Bucket Type')}
@@ -349,7 +349,7 @@ const Connection: FC<{
 						label={t('buckets.bucket_type', 'Bucket Type')}
 						onChange={(e: any): void => {
 							const volumeObject: any = BucketTypeItems.find((s) => s.value === e);
-							setBucketTypeData(volumeObject.value);
+							setBucketTypeData(volumeObject?.value);
 							onSelection({ storeType: bucketTypeData }, false);
 							onChangeBucketType(volumeObject);
 						}}

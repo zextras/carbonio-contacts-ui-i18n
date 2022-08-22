@@ -109,7 +109,9 @@ const DomainGeneralSettings: FC = () => {
 		zimbraHelpAdminURL: '',
 		zimbraHelpDelegatedURL: '',
 		zimbraPublicServiceHostname: '',
-		description: ''
+		description: '',
+		zimbraDomainMaxAccounts: '',
+		zimbraDomainAggregateQuota: ''
 	});
 	const [selectedTimeZone, setSelectedTimeZone]: any = useState(timezones[0]);
 	const [selectedPublicServiceProtocol, setSelectedPublicServiceProtocol]: any = useState(
@@ -133,6 +135,8 @@ const DomainGeneralSettings: FC = () => {
 		useState<boolean>(false);
 	const [domainAccounts, setDomainAccounts] = useState<any[]>([]);
 	const [isRequstInProgress, setIsRequestInProgress] = useState<boolean>(false);
+	const [zimbraDomainMaxAccounts, setZimbraDomainMaxAccounts] = useState<string>('');
+	const [zimbraMailDomainQuota, setZimbraMailDomainQuota] = useState<string>('');
 
 	useEffect(() => {
 		if (!!cosList && cosList.length > 0) {
@@ -238,6 +242,21 @@ const DomainGeneralSettings: FC = () => {
 				obj.zimbraDomainDefaultCOSId = '';
 				setZimbraDomainDefaultCOSId('');
 			}
+
+			if (obj.zimbraDomainMaxAccounts) {
+				setZimbraDomainMaxAccounts(obj.zimbraDomainMaxAccounts);
+			} else {
+				obj.zimbraDomainMaxAccounts = '';
+				setZimbraDomainMaxAccounts('');
+			}
+
+			if (obj.zimbraDomainAggregateQuota) {
+				setZimbraMailDomainQuota(obj.zimbraDomainAggregateQuota);
+			} else {
+				obj.zimbraMailDomainQuota = '';
+				setZimbraMailDomainQuota('');
+			}
+
 			setDomainData(obj);
 			setIsDirty(false);
 		}
@@ -324,6 +343,18 @@ const DomainGeneralSettings: FC = () => {
 		}
 	}, [domainData, zimbraDomainDefaultCOSId]);
 
+	useEffect(() => {
+		if (domainData.zimbraDomainMaxAccounts !== zimbraDomainMaxAccounts) {
+			setIsDirty(true);
+		}
+	}, [domainData, zimbraDomainMaxAccounts]);
+
+	useEffect(() => {
+		if (domainData.zimbraDomainAggregateQuota !== zimbraMailDomainQuota) {
+			setIsDirty(true);
+		}
+	}, [domainData, zimbraMailDomainQuota]);
+
 	const onCancel = (): void => {
 		setLoading(true);
 		setTimeout(() => setLoading(false), 10);
@@ -340,6 +371,8 @@ const DomainGeneralSettings: FC = () => {
 		setZimbraHelpAdminURL(domainData.zimbraHelpAdminURL);
 		setZimbraHelpDelegatedURL(domainData.zimbraHelpDelegatedURL);
 		setPublicServiceHostName(domainData.zimbraPublicServiceHostname);
+		setZimbraDomainMaxAccounts(domainData.zimbraDomainMaxAccounts);
+		setZimbraMailDomainQuota(domainData.zimbraDomainAggregateQuota);
 		setDescription(domainData.description);
 		const getItem = cosItems.find(
 			(item: any) => item.value === domainData.zimbraDomainDefaultCOSId
@@ -397,12 +430,24 @@ const DomainGeneralSettings: FC = () => {
 			n: 'description',
 			_content: description
 		});
+		attributes.push({
+			n: 'zimbraDomainMaxAccounts',
+			_content: zimbraDomainMaxAccounts
+		});
+		attributes.push({
+			n: 'zimbraDomainAggregateQuota',
+			_content: zimbraMailDomainQuota
+		});
 		if (zimbraDomainDefaultCOSId && zimbraDomainDefaultCOSId !== '') {
 			attributes.push({
 				n: 'zimbraDomainDefaultCOSId',
 				_content: zimbraDomainDefaultCOSId
 			});
 		}
+		attributes.push({
+			n: 'zimbraPublicServiceHostname',
+			_content: publicServiceHostName
+		});
 		body.a = attributes;
 		modifyDomain(body)
 			.then((response) => response.json())
@@ -602,6 +647,35 @@ const DomainGeneralSettings: FC = () => {
 
 							<ListRow>
 								<Container padding={{ all: 'small' }}>
+									<Input
+										label={t(
+											'label.max_account_you_can_manage_is',
+											'The max accounts you can manage is...'
+										)}
+										value={zimbraDomainMaxAccounts}
+										background="gray6"
+										onChange={(e: any): any => {
+											setZimbraDomainMaxAccounts(e.target.value);
+										}}
+									/>
+								</Container>
+								<Container padding={{ all: 'small' }}>
+									<Input
+										label={t(
+											'label."max_email_quota_you_can_manage_is',
+											'The max email quota you can manage is...'
+										)}
+										value={zimbraMailDomainQuota}
+										background="gray6"
+										onChange={(e: any): any => {
+											setZimbraMailDomainQuota(e.target.value);
+										}}
+									/>
+								</Container>
+							</ListRow>
+
+							<ListRow>
+								<Container padding={{ all: 'small' }}>
 									<Select
 										items={serviceProtocolItems}
 										background="gray5"
@@ -739,7 +813,7 @@ const DomainGeneralSettings: FC = () => {
 										showCheckbox={false}
 										onChange={(e: any): any => {
 											setZimbraDomainDefaultCOSId(
-												cosItems.find((item: any) => item.value === e).value
+												cosItems.find((item: any) => item.value === e)?.value
 											);
 										}}
 										selection={

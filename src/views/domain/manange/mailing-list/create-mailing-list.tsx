@@ -130,7 +130,7 @@ const CreateMailingList: FC<{
 						{...props}
 						type="outlined"
 						key="wizard-cancel"
-						label={'CANCEL'}
+						label={t('label.cancel', 'Cancel')}
 						color="secondary"
 						icon="CloseOutline"
 						iconPlacement="right"
@@ -159,7 +159,7 @@ const CreateMailingList: FC<{
 						{...props}
 						type="outlined"
 						key="wizard-cancel"
-						label={'CANCEL'}
+						label={t('label.cancel', 'Cancel')}
 						color="secondary"
 						icon="CloseOutline"
 						iconPlacement="right"
@@ -196,7 +196,7 @@ const CreateMailingList: FC<{
 						{...props}
 						type="outlined"
 						key="wizard-cancel"
-						label={'CANCEL'}
+						label={t('label.cancel', 'Cancel')}
 						color="secondary"
 						icon="CloseOutline"
 						iconPlacement="right"
@@ -233,7 +233,7 @@ const CreateMailingList: FC<{
 						{...props}
 						type="outlined"
 						key="wizard-cancel"
-						label={'CANCEL'}
+						label={t('label.cancel', 'Cancel')}
 						color="secondary"
 						icon="CloseOutline"
 						iconPlacement="right"

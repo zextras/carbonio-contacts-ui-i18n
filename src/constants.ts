@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-export const APP_ID = 'carbonio-admin-manage-ui';
+export const APP_ID = 'carbonio-admin-console-ui';
 export const MAIN_ROUTE = 'example';
 export const SECONDARY_ROUTE = 'something';
 export const MANAGE = 'manage';
@@ -87,3 +87,7 @@ export const EMC = 'EMC';
 export const SUCCESS = 'successWithVerify';
 export const ERROR = 'errorOnVerify';
 export const FAIL = 'fail';
+export const ENABLED = 'enabled';
+export const DISABLED = 'disabled';
+export const SERVER_DETAIL_VIEW = 'server-detail';
+export const CLOBAL_CONFIG_DETAIL_VIEW = 'global-config-detail';

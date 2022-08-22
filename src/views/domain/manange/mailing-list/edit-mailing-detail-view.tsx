@@ -23,7 +23,7 @@ import {
 } from '@zextras/carbonio-design-system';
 import { Trans, useTranslation } from 'react-i18next';
 import moment from 'moment';
-import { debounce, isEqual, sortedUniq, uniqBy } from 'lodash';
+import { debounce, isEqual, sortedUniq, uniq, uniqBy } from 'lodash';
 import ListRow from '../../../list/list-row';
 import Paginig from '../../../components/paging';
 import { getDistributionList } from '../../../../services/get-distribution-list';
@@ -1279,10 +1279,10 @@ const EditMailingListView: FC<any> = ({
 
 	const onAdd = useCallback((): void => {
 		if (searchMember !== '') {
-			const allEmails: any[] =
-				searchMember.includes('"') || searchMember.includes("'")
-					? getAllEmailFromString(searchMember)
-					: [searchMember];
+			const specialChars = /[ `'"<>,;]/;
+			const allEmails: any[] = specialChars.test(searchMember)
+				? getAllEmailFromString(searchMember)
+				: [searchMember];
 			if (allEmails !== null && allEmails !== undefined) {
 				const inValidEmailAddress = allEmails.filter((item: any) => !isValidEmail(item));
 				if (inValidEmailAddress && inValidEmailAddress.length > 0) {
@@ -1303,7 +1303,7 @@ const EditMailingListView: FC<any> = ({
 					);
 				} else {
 					const sortedList = sortedUniq(allEmails);
-					setDlm(dlm.concat(sortedList));
+					setDlm(uniq(dlm.concat(sortedList)));
 					setIsShowMemberError(false);
 					setSearchMember('');
 					setMemberErrorMessage('');
@@ -1322,10 +1322,10 @@ const EditMailingListView: FC<any> = ({
 
 	const onAddOwner = useCallback((): void => {
 		if (searchOwner !== '') {
-			const allEmails: any[] =
-				searchOwner.includes('"') || searchOwner.includes("'")
-					? getAllEmailFromString(searchOwner)
-					: [searchOwner];
+			const specialChars = /[ `'"<>,;]/;
+			const allEmails: any[] = specialChars.test(searchOwner)
+				? getAllEmailFromString(searchOwner)
+				: [searchOwner];
 			if (allEmails !== null && allEmails !== undefined) {
 				const inValidEmailAddress = allEmails.filter((item: any) => !isValidEmail(item));
 				if (inValidEmailAddress && inValidEmailAddress.length > 0) {
@@ -1348,7 +1348,7 @@ const EditMailingListView: FC<any> = ({
 					setIsShowOwnerError(false);
 					const sortedList = sortedUniq(allEmails);
 					setOwnersList(
-						ownersList.concat(sortedList.map((item: any) => ({ name: item, id: item })))
+						uniq(ownersList.concat(sortedList.map((item: any) => ({ name: item, id: item }))))
 					);
 					setSearchOwner('');
 					setMemberErrorMessage('');
