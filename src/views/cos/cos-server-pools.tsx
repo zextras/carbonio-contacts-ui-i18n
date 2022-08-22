@@ -55,8 +55,6 @@ const CosServerPools: FC = () => {
 
 	useMemo(() => {
 		if (serverList && serverList.length > 0) {
-			console.log('[serverList]: ', serverList);
-			console.log('[serverList][zimbraMailHostPoolList]: ', zimbraMailHostPoolList);
 			const allRows = serverList.map((item: any) => ({
 				id: item?.id,
 				columns: [
@@ -76,7 +74,6 @@ const CosServerPools: FC = () => {
 					</Text>
 				]
 			}));
-			console.log('[serverList][allRows]: ', allRows);
 			setServerTableRows(allRows);
 		}
 	}, [serverList, zimbraMailHostPoolList, t]);
@@ -107,11 +104,7 @@ const CosServerPools: FC = () => {
 
 	const onFilterApply = useCallback(
 		(e) => {
-			console.log('[serverList][onFilterApply]: ', e);
-			if (e.length === 0) {
-				setServerTableRows([]);
-				setSelectedTableRows([]);
-			} else if (e.length > 1) {
+			if (e.length > 1) {
 				const allRows = serverList.map((item: any) => ({
 					id: item?.id,
 					columns: [
