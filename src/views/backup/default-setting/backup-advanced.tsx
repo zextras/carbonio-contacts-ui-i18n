@@ -131,7 +131,10 @@ const BackupAdvanced: FC = () => {
 									crossAlignment="flex-start"
 									padding={{ all: 'small' }}
 								>
-									<Switch value label={t('backup.ldap_dump', 'LDAP Dump')} />
+									<Switch
+										value={globalConfig.ldapDumpEnabled}
+										label={t('backup.ldap_dump', 'LDAP Dump')}
+									/>
 								</Container>
 							</ListRow>
 							<ListRow>
@@ -142,7 +145,7 @@ const BackupAdvanced: FC = () => {
 									padding={{ all: 'small' }}
 								>
 									<Switch
-										value
+										value={globalConfig.ZxBackup_BackupCustomizations}
 										label={t('backup.server_configurations', 'Server Configurations')}
 									/>
 								</Container>
@@ -155,7 +158,7 @@ const BackupAdvanced: FC = () => {
 									padding={{ all: 'small' }}
 								>
 									<Switch
-										value
+										value={globalConfig.ZxBackup_PurgeCustomizations}
 										label={t('backup.purge_old_configurations', 'Purge Old Configurations')}
 									/>
 								</Container>
@@ -167,14 +170,17 @@ const BackupAdvanced: FC = () => {
 									crossAlignment="flex-start"
 									padding={{ all: 'small' }}
 								>
-									<Switch value label={t('backup.save_index', 'Save Index')} />
+									<Switch
+										value={globalConfig.backupSaveIndex}
+										label={t('backup.save_index', 'Save Index')}
+									/>
 								</Container>
 							</ListRow>
 							<ListRow>
 								<Container padding={{ all: 'small' }}>
 									<Input
 										label={t('backup.metatdata_size', 'Metadata Size')}
-										value="20"
+										value={globalConfig.ZxBackup_MaxMetadataSize}
 										background="gray5"
 									/>
 								</Container>
@@ -183,7 +189,7 @@ const BackupAdvanced: FC = () => {
 								<Container padding={{ all: 'small' }}>
 									<Input
 										label={t('backup.max_waiting_time', 'Max Waiting Time')}
-										value="6000 ms"
+										value={globalConfig.ZxBackup_MaxWaitingTime}
 										background="gray5"
 									/>
 								</Container>
@@ -192,7 +198,7 @@ const BackupAdvanced: FC = () => {
 								<Container padding={{ all: 'small' }}>
 									<Input
 										label={t('backup.max_operations_account', 'Max Operations / Account')}
-										value="50"
+										value={globalConfig.ZxBackup_MaxOperationPerAccount}
 										background="gray5"
 									/>
 								</Container>
@@ -203,7 +209,9 @@ const BackupAdvanced: FC = () => {
 										items={compressLevelItems}
 										background="gray5"
 										label={t('backup.compression_level', 'Compression Level')}
-										defaultSelection={compressLevelItems[0]}
+										defaultSelection={compressLevelItems.find(
+											(item: any) => item.value === globalConfig?.backupCompressionLevel
+										)}
 										showCheckbox={false}
 									/>
 								</Container>
@@ -212,7 +220,7 @@ const BackupAdvanced: FC = () => {
 								<Container padding={{ all: 'small' }}>
 									<Input
 										label={t('backup.threads_for_items', 'Threads For Items')}
-										value="5"
+										value={globalConfig.backupNumberThreadsForAccounts}
 										background="gray5"
 									/>
 								</Container>
@@ -221,7 +229,7 @@ const BackupAdvanced: FC = () => {
 								<Container padding={{ all: 'small' }}>
 									<Input
 										label={t('backup.threads_for_account', 'Threads For Account')}
-										value="5"
+										value={globalConfig.backupNumberThreadsForAccounts}
 										background="gray5"
 									/>
 								</Container>
@@ -233,7 +241,10 @@ const BackupAdvanced: FC = () => {
 									crossAlignment="flex-start"
 									padding={{ all: 'small' }}
 								>
-									<Switch value label={t('backup.on_the_fly_metadata', 'On the Fly Metadata')} />
+									<Switch
+										value={globalConfig.backupOnTheFlyMetadata}
+										label={t('backup.on_the_fly_metadata', 'On the Fly Metadata')}
+									/>
 								</Container>
 							</ListRow>
 							<ListRow>
@@ -243,7 +254,10 @@ const BackupAdvanced: FC = () => {
 									crossAlignment="flex-start"
 									padding={{ all: 'small' }}
 								>
-									<Switch value label={t('backup.metadata_archiving', 'Metadata Archiving')} />
+									<Switch
+										value={globalConfig.scheduledMetadataArchivingEnabled}
+										label={t('backup.metadata_archiving', 'Metadata Archiving')}
+									/>
 								</Container>
 							</ListRow>
 						</Container>

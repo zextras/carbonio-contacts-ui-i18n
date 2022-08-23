@@ -25,7 +25,7 @@ const BackupDetailOperation: FC = () => {
 	const setGlobalConfig = useBackupStore((state) => state.setGlobalConfig);
 
 	const getGlobalConfig = useCallback((): void => {
-		const serverName = 'np-s03.demo.zextras.io';
+		const serverName = window.location.hostname;
 		dumpGlobalConfig(serverName)
 			.then((response: any) => response.json())
 			.then((data: any) => {
