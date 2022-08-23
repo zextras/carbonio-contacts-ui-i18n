@@ -18,10 +18,12 @@ import {
 	Select
 } from '@zextras/carbonio-design-system';
 import ListRow from '../../list/list-row';
+import { useBackupStore } from '../../../store/backup/store';
 
 const BackupAdvanced: FC = () => {
 	const [t] = useTranslation();
 	const [isDirty, setIsDirty] = useState<boolean>(false);
+	const globalConfig = useBackupStore((state) => state.globalConfig);
 
 	const compressLevelItems = useMemo(
 		() => [
@@ -108,7 +110,7 @@ const BackupAdvanced: FC = () => {
 								<Container padding={{ all: 'small' }}>
 									<Input
 										label={t('backup.latency_high_threshold', 'Latency High Threshold')}
-										value="300000 ms"
+										value={`${globalConfig.backupLatencyHighThreshold} ms`}
 										background="gray5"
 									/>
 								</Container>
@@ -117,7 +119,7 @@ const BackupAdvanced: FC = () => {
 								<Container padding={{ all: 'small' }}>
 									<Input
 										label={t('backup.latency_low_threshold', 'Latency Low Threshold')}
-										value="60000 ms"
+										value={`${globalConfig.backupLatencyLowThreshold} ms`}
 										background="gray5"
 									/>
 								</Container>
