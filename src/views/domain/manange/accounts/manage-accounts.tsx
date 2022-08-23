@@ -316,9 +316,8 @@ const ManageAccounts: FC = () => {
 	const createAccountReq = useCallback(
 		(attr, name, password): void => {
 			createAccountRequest(attr, name, password)
-				.then((response) => response.json())
 				.then((data) => {
-					const isCreateAccount = data?.Body?.CreateAccountResponse;
+					const isCreateAccount = data;
 					if (isCreateAccount) {
 						setShowCreateAccountView(false);
 						createSnackbar({
