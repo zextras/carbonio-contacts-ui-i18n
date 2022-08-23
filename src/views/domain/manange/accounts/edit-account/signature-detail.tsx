@@ -13,7 +13,8 @@ import {
 	Table,
 	Button,
 	Padding,
-	Modal
+	Modal,
+	useSnackbar
 } from '@zextras/carbonio-design-system';
 import { Trans, useTranslation } from 'react-i18next';
 import ListRow from '../../../../list/list-row';
@@ -33,6 +34,7 @@ export const SignatureDetail: FC<any> = ({
 	hideSearchBar
 }) => {
 	const [t] = useTranslation();
+	const createSnackbar = useSnackbar();
 	const [selectedSignature, setSelectedSignature] = useState<any>([]);
 	const [isEditSignature, setIsEditSignature] = useState<boolean>(false);
 	const [signatureName, setSignatureName] = useState<string>('');
@@ -146,9 +148,24 @@ export const SignatureDetail: FC<any> = ({
 			createSignature(accountId, signatureName, signatureContent)
 				.then((response) => response.json())
 				.then((data) => {
-					const signatureItem = data?.Body?.CreateSignatureResponse?.signature[0];
-					addSignatureIntoList(signatureItem);
-					setIsOpenCreateEditSignatureDialog(false);
+					console.log({ data });
+					if (data?.Body?.Reason?.Text) {
+						createSnackbar({
+							key: 'error',
+							type: 'error',
+							label: data?.Body?.Fault?.Reason?.Text,
+							autoHideTimeout: 3000,
+							hideButton: true,
+							replace: true
+						});
+					} else {
+						const signatureItem = data?.Body?.CreateSignatureResponse?.signature[0];
+						addSignatureIntoList(signatureItem);
+						setIsOpenCreateEditSignatureDialog(false);
+					}
+				})
+				.catch((error) => {
+					console.log({ error });
 				});
 		} else {
 			const lastId = signatureList.length > 0 ? signatureList[signatureList.length - 1].id : 0;
@@ -166,7 +183,14 @@ export const SignatureDetail: FC<any> = ({
 			addSignatureIntoList(item);
 			setIsOpenCreateEditSignatureDialog(false);
 		}
-	}, [accountId, signatureName, signatureContent, addSignatureIntoList, signatureList]);
+	}, [
+		accountId,
+		signatureName,
+		signatureContent,
+		createSnackbar,
+		addSignatureIntoList,
+		signatureList
+	]);
 
 	const modifySignatureIntoList = useCallback(
 		(id: any, name: any, content: any) => {

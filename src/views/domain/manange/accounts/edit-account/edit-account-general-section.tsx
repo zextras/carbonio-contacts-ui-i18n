@@ -26,8 +26,9 @@ const EditAccountGeneralSection: FC = () => {
 	const domainName = useDomainStore((state) => state.domain?.name);
 	const cosList = useDomainStore((state) => state.cosList);
 	const [cosItems, setCosItems] = useState<any[]>([]);
-	const [defaultCOS, setDefaultCOS] = useState<boolean>(true);
 	const { accountDetail, setAccountDetail } = conext;
+	const [defaultCOS, setDefaultCOS] = useState<boolean>(!accountDetail?.zimbraCOSId);
+
 	const [t] = useTranslation();
 	const timezones = useMemo(() => timeZoneList(t), [t]);
 	const localeZone = useMemo(() => localeList(t), [t]);
@@ -281,13 +282,13 @@ const EditAccountGeneralSection: FC = () => {
 				<Row padding={{ top: 'large', left: 'large' }} width="100%" mainAlignment="space-between">
 					<Row width="48%" mainAlignment="flex-start">
 						<Switch
-							value={defaultCOS}
+							defaultValue={defaultCOS}
 							onClick={onCOSSwitchChanges}
 							label={t('account_details.default_COS', 'Default COS')}
 						/>
 					</Row>
 					<Row width="48%" mainAlignment="flex-start">
-						{accountDetail?.zimbraId ? (
+						{cosItems?.length ? (
 							<Select
 								items={cosItems}
 								background="gray5"

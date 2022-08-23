@@ -101,10 +101,14 @@ const AccountCreateSection: FC = () => {
 							label={t('label.status', 'Status')}
 							showCheckbox={false}
 							padding={{ right: 'medium' }}
-							defaultSelection={{
-								value: `${accountDetail?.zimbraAccountStatus}`,
-								label: `${accountDetail?.zimbraAccountStatus}`
-							}}
+							defaultSelection={
+								accountDetail?.zimbraAccountStatus
+									? {
+											value: `${accountDetail?.zimbraAccountStatus}`,
+											label: `${accountDetail?.zimbraAccountStatus}`
+									  }
+									: null
+							}
 							disabled
 						/>
 					</Row>
@@ -129,10 +133,14 @@ const AccountCreateSection: FC = () => {
 							label={t('label.time_zone', 'Time Zone')}
 							showCheckbox={false}
 							padding={{ right: 'medium' }}
-							defaultSelection={{
-								value: `${accountDetail?.zimbraPrefTimeZoneId}`,
-								label: `${accountDetail?.zimbraPrefTimeZoneId}`
-							}}
+							defaultSelection={
+								accountDetail?.zimbraPrefTimeZoneId
+									? {
+											value: `${accountDetail?.zimbraPrefTimeZoneId}`,
+											label: `${accountDetail?.zimbraPrefTimeZoneId}`
+									  }
+									: null
+							}
 							disabled
 						/>
 					</Row>

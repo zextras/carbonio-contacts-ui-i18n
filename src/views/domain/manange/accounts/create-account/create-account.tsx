@@ -155,7 +155,11 @@ const CreateAccount: FC<{
 						icon="PersonOutline"
 						iconPlacement="right"
 						onClick={(): void => {
-							if (accountDetail?.password?.length < 6) {
+							if (
+								accountDetail?.password &&
+								accountDetail?.repeatPassword &&
+								accountDetail?.password?.length < 6
+							) {
 								createSnackbar({
 									key: 'error',
 									type: 'error',
