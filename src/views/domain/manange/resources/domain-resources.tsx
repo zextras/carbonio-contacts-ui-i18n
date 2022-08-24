@@ -286,7 +286,7 @@ const DomainResources: FC = () => {
 								requests.push(createSignature(resourceId, item?.name, item?.content[0]?._content));
 							});
 							Promise.all(requests)
-								.then((responses) => Promise.all(responses.map((response) => response.json())))
+								.then((responses) => Promise.all(responses))
 								.then((resData) => {
 									if (
 										zimbraPrefCalendarAutoAcceptSignatureId?.value === '' &&

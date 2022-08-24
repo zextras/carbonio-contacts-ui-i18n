@@ -248,13 +248,11 @@ const ResourceEditDetailView: FC<any> = ({
 	}, [selectedResourceList?.id]);
 
 	const getSignatureDetail = useCallback((): void => {
-		getSingatures(selectedResourceList?.id)
-			.then((response) => response.json())
-			.then((data) => {
-				const signatureResponse = data?.Body?.GetSignaturesResponse?.signature || [];
-				generateSignatureList(signatureResponse);
-				setSignatureData(signatureResponse);
-			});
+		getSingatures(selectedResourceList?.id).then((data) => {
+			const signatureResponse = data?.Body?.GetSignaturesResponse?.signature || [];
+			generateSignatureList(signatureResponse);
+			setSignatureData(signatureResponse);
+		});
 	}, [selectedResourceList?.id]);
 
 	useEffect(() => {

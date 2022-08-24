@@ -125,14 +125,14 @@ const serverDetailPanel: FC = () => {
 		fetchSoap('GetAllServersRequest', {
 			...(!service ? { _jsns: 'urn:zimbraAdmin' } : { _jsns: 'urn:zimbraAdmin', service })
 		}).then((response) => {
-			const serverResponseData = response.GetAllServersResponse.server;
+			const serverResponseData = response.Body.GetAllServersResponse.server;
 			fetchSoap('zextras', {
 				_jsns: 'urn:zimbraAdmin',
 				module: 'ZxPowerstore',
 				action: 'getAllVolumes',
 				targetServers: 'all_servers'
 			}).then((res) => {
-				const responseData = JSON.parse(res.response.content);
+				const responseData = JSON.parse(res.Body.response.content);
 				if (responseData.ok) {
 					const data = responseData.response[serverResponseData[0].name].response;
 					const primaries = data.primaries.length;

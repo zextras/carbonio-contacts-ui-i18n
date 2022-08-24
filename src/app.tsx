@@ -5,7 +5,18 @@
  */
 
 import React, { FC, lazy, Suspense, useCallback, useEffect, useMemo } from 'react';
-import { addRoute, registerActions, setAppContext, Spinner } from '@zextras/carbonio-shell-ui';
+import {
+	addRoute,
+	registerActions,
+	setAppContext,
+	Spinner,
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
+	getSoapFetchRequest,
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
+	postSoapFetchRequest
+} from '@zextras/carbonio-shell-ui';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import {
@@ -479,55 +490,35 @@ const App: FC = () => {
 
 	const checkIsBackupModuleEnable = useCallback(
 		(servers) => {
-			fetch(`/service/extension/zextras_admin/core/getAllServers?module=zxbackup`, {
-				method: 'GET',
-				credentials: 'include'
-			})
-				.then((response) => response.json())
-				.then((data) => {
-					const backupServer = data?.servers;
-					if (backupServer && Array.isArray(backupServer) && backupServer.length > 0) {
-						setBackupModuleEnable(true);
-					} else {
-						setBackupModuleEnable(false);
-					}
-				});
+			getSoapFetchRequest(
+				`/service/extension/zextras_admin/core/getAllServers?module=zxbackup`
+			).then((data: any) => {
+				const backupServer = data?.servers;
+				if (backupServer && Array.isArray(backupServer) && backupServer.length > 0) {
+					setBackupModuleEnable(true);
+				} else {
+					setBackupModuleEnable(false);
+				}
+			});
 		},
 		[setBackupModuleEnable]
 	);
 	const getGlobalConfig = useCallback(
 		(serverName) => {
-			fetch(`/service/admin/soap/zextras`, {
-				method: 'POST',
-				credentials: 'include',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({
-					Header: {
-						context: {
-							_jsns: 'urn:zimbra',
-							session: {}
-						}
-					},
-					Body: {
-						zextras: {
-							_jsns: 'urn:zimbraAdmin',
-							module: 'ZxConfig',
-							action: 'dump_global_config',
-							targetServers: serverName
-						}
-					}
-				})
-			})
-				.then((response) => response.json())
-				.then((data) => {
-					const responseData = JSON.parse(data?.Body?.response?.content);
-					const globalConfig = responseData?.response[serverName]?.response;
-					if (globalConfig) {
-						setGlobalConfig(globalConfig);
-					}
-				});
+			postSoapFetchRequest(`/service/admin/soap/zextras`, {
+				zextras: {
+					_jsns: 'urn:zimbraAdmin',
+					module: 'ZxConfig',
+					action: 'dump_global_config',
+					targetServers: serverName
+				}
+			}).then((data: any) => {
+				const responseData = JSON.parse(data?.Body?.response?.content);
+				const globalConfig = responseData?.response[serverName]?.response;
+				if (globalConfig) {
+					setGlobalConfig(globalConfig);
+				}
+			});
 		},
 		[setGlobalConfig]
 	);

@@ -191,7 +191,7 @@ const EditBucketDetailPanel: FC<{
 			targetServers: server,
 			bucketId: bucketDetail.uuid
 		}).then((res) => {
-			const response = JSON.parse(res.response.content);
+			const response = JSON.parse(res.Body.response.content);
 			if (response.ok && response.response[server] && response.response[server].ok) {
 				setVerify('success');
 				setButtonLabel(t('label.verify_connector_verified', ' VERIFIED'));
@@ -253,7 +253,7 @@ const EditBucketDetailPanel: FC<{
 			region: bucketDetail?.region !== undefined ? regionData.value : '',
 			targetServer: server
 		}).then((res: any) => {
-			const updateResData = JSON.parse(res.response.content);
+			const updateResData = JSON.parse(res.Body.response.content);
 			if (updateResData.ok) {
 				getBucketListType();
 				setToggleForGetAPICall(!toggleForGetAPICall);

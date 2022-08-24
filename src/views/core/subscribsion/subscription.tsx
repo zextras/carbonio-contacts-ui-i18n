@@ -115,7 +115,7 @@ const Subscription: FC = () => {
 			action: 'getLicenseInfo',
 			targetServers: server
 		}).then((res) => {
-			const response = JSON.parse(res.response.content);
+			const response = JSON.parse(res.Body.response.content);
 			if (response.ok && response.response[server] && response.response[server].ok) {
 				const formatModules = Object.keys(response.response[server].response.modules).map(
 					(module) => ({
@@ -135,7 +135,7 @@ const Subscription: FC = () => {
 			action: 'getVersion',
 			targetServers: server
 		}).then((res) => {
-			const response = JSON.parse(res.response.content);
+			const response = JSON.parse(res.Body.response.content);
 			if (response.ok && response.response[server] && response.response[server].ok) {
 				setVersion(response.response[server].response.version);
 			}
@@ -157,7 +157,7 @@ const Subscription: FC = () => {
 		})
 			.then((res) => {
 				setDisableActiveBtn(false);
-				const response = JSON.parse(res.response.content);
+				const response = JSON.parse(res.Body.response.content);
 				if (response.ok && response.response[server] && response.response[server].ok) {
 					createSnackbar({
 						key: 1,
@@ -186,7 +186,7 @@ const Subscription: FC = () => {
 			iamsure: true,
 			targetServers: server
 		}).then((res) => {
-			const response = JSON.parse(res.response.content);
+			const response = JSON.parse(res.Body.response.content);
 			if (response.ok && response.response[server] && response.response[server].ok) {
 				createSnackbar({
 					key: 1,

@@ -4,14 +4,18 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import {
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
+	postSoapWithoutBodyFetchRequest
+} from '@zextras/carbonio-shell-ui';
+
 export const doRestoreDeleteAccount = async (dataItem: unknown): Promise<any> => {
-	const data = JSON.stringify(dataItem);
-	return fetch(`/service/extension/zextras_admin/backup/doRestoreOnNewAccount`, {
-		method: 'POST',
-		credentials: 'include',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: data
-	});
+	const data: any = dataItem;
+	return postSoapWithoutBodyFetchRequest(
+		`/service/extension/zextras_admin/backup/doRestoreOnNewAccount`,
+		{
+			...data
+		}
+	);
 };

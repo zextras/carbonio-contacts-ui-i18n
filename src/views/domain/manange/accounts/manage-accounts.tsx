@@ -97,13 +97,11 @@ const ManageAccounts: FC = () => {
 		}
 	};
 	const getSignatureDetail = useCallback((id): void => {
-		getSingatures(id)
-			.then((response) => response.json())
-			.then((data) => {
-				const signatureResponse = data?.Body?.GetSignaturesResponse?.signature || [];
-				generateSignatureList(signatureResponse);
-				setSignatureData(signatureResponse);
-			});
+		getSingatures(id).then((data) => {
+			const signatureResponse = data?.Body?.GetSignaturesResponse?.signature || [];
+			generateSignatureList(signatureResponse);
+			setSignatureData(signatureResponse);
+		});
 	}, []);
 
 	// useEffect(() => {

@@ -143,7 +143,7 @@ const BucketDetailPanel: FC = () => {
 			targetServer: server,
 			showSecrets: true
 		}).then((res: any) => {
-			const response = JSON.parse(res.response.content);
+			const response = JSON.parse(res.Body.response.content);
 			if (response.ok) {
 				setBucketList(response.response.values);
 			} else {
@@ -164,7 +164,7 @@ const BucketDetailPanel: FC = () => {
 			bucketConfigurationId: bucketDeleteName?.uuid,
 			targetServer: server
 		}).then((res: any) => {
-			const response = JSON.parse(res.response.content);
+			const response = JSON.parse(res.Body.response.content);
 			if (response.ok) {
 				getBucketListType();
 				createSnackbar({

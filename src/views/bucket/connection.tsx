@@ -82,7 +82,7 @@ const Connection: FC<{
 				prefix,
 				targetServer: server
 			}).then((res: any) => {
-				const response = JSON.parse(res.response.content);
+				const response = JSON.parse(res.Body.response.content);
 				if (response.ok) {
 					const data = response.response.message;
 					const responseData = data.split("'");
@@ -95,7 +95,7 @@ const Connection: FC<{
 						targetServers: server,
 						bucketId: responseData[1]
 					}).then((responseVerify) => {
-						const responseVerifyData = JSON.parse(responseVerify.response.content);
+						const responseVerifyData = JSON.parse(responseVerify.Body.response.content);
 						if (
 							responseVerifyData.ok &&
 							responseVerifyData.response[server] &&

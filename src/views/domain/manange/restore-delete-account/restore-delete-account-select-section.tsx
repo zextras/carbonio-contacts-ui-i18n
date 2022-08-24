@@ -15,8 +15,12 @@ import {
 	Divider
 } from '@zextras/carbonio-design-system';
 import { useTranslation } from 'react-i18next';
-
 import { debounce } from 'lodash';
+import {
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
+	getSoapFetchRequest
+} from '@zextras/carbonio-shell-ui';
 import ListRow from '../../../list/list-row';
 import Paginig from '../../../components/paging';
 import { useDomainStore } from '../../../../store/domain/store';
@@ -68,42 +72,36 @@ const RestoreDeleteAccountSelectSection: FC<any> = () => {
 
 	const getBackupAccounts = useCallback(
 		(searchText) => {
-			fetch(
-				`/service/extension/zextras_admin/backup/getBackupAccounts?page=${accountOffset}&pageSize=${accountLimit}&domains=${domainName}&targetServers=all_servers&filter=${searchText}`,
-				{
-					method: 'GET',
-					credentials: 'include'
+			getSoapFetchRequest(
+				`/service/extension/zextras_admin/backup/getBackupAccounts?page=${accountOffset}&pageSize=${accountLimit}&domains=${domainName}&targetServers=all_servers&filter=${searchText}`
+			).then((data: any) => {
+				const error = data?.all_server?.error?.message;
+				let backupAccounts = data?.accounts;
+				let page = data?.maxPage;
+				if (!!domainName && !!data[domainName]) {
+					backupAccounts = data[domainName]?.response?.accounts;
+					page = data[domainName]?.response?.maxPage;
 				}
-			)
-				.then((response) => response.json())
-				.then((data) => {
-					const error = data?.all_server?.error?.message;
-					let backupAccounts = data?.accounts;
-					let page = data?.maxPage;
-					if (!!domainName && !!data[domainName]) {
-						backupAccounts = data[domainName]?.response?.accounts;
-						page = data[domainName]?.response?.maxPage;
-					}
-					if (error) {
-						createSnackbar({
-							key: 'error',
-							type: 'error',
-							label: error,
-							autoHideTimeout: 3000,
-							hideButton: true,
-							replace: true
-						});
-					}
-					if (backupAccounts && Array.isArray(backupAccounts) && backupAccounts.length > 0) {
-						setAccounts(backupAccounts);
-					}
-					if (page) {
-						const num: number = page;
-						setTotalItem(num * accountLimit);
-					} else if (page === 0) {
-						setTotalItem(1);
-					}
-				});
+				if (error) {
+					createSnackbar({
+						key: 'error',
+						type: 'error',
+						label: error,
+						autoHideTimeout: 3000,
+						hideButton: true,
+						replace: true
+					});
+				}
+				if (backupAccounts && Array.isArray(backupAccounts) && backupAccounts.length > 0) {
+					setAccounts(backupAccounts);
+				}
+				if (page) {
+					const num: number = page;
+					setTotalItem(num * accountLimit);
+				} else if (page === 0) {
+					setTotalItem(1);
+				}
+			});
 		},
 		[domainName, createSnackbar, accountLimit, accountOffset]
 	);
