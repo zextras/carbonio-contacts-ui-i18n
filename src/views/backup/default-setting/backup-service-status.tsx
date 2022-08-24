@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
 	Container,
@@ -14,83 +14,133 @@ import {
 	Divider,
 	Switch
 } from '@zextras/carbonio-design-system';
+import { isEqual, reduce } from 'lodash';
 import ListRow from '../../list/list-row';
 import { useBackupStore } from '../../../store/backup/store';
+import { RouteLeavingGuard } from '../../ui-extras/nav-guard';
 
 const BackupServiceStatus: FC = () => {
 	const [t] = useTranslation();
 	const [isDirty, setIsDirty] = useState<boolean>(false);
 	const globalConfig = useBackupStore((state) => state.globalConfig);
+	const setGlobalConfig = useBackupStore((state) => state.setGlobalConfig);
+	const [initbackupDetail, setInitBackupDetail] = useState<any>({});
 	const onCancel = (): void => {
 		console.log('onCancel');
+		setInitBackupDetail({ ...globalConfig });
 	};
 	const onSave = (): void => {
 		console.log('onSave');
+
+		const modifiedKeys: any = reduce(
+			globalConfig,
+			function (result, value, key): any {
+				return isEqual(value, initbackupDetail[key]) ? result : [...result, key];
+			},
+			[]
+		);
+		setGlobalConfig(initbackupDetail);
 	};
-	console.log(globalConfig);
+	useEffect(() => {
+		if (!initbackupDetail?.privateKeyAlgorithm && globalConfig?.privateKeyAlgorithm) {
+			setInitBackupDetail({ ...globalConfig });
+		}
+	}, [globalConfig, initbackupDetail]);
+	useEffect(() => {
+		if (!isEqual(globalConfig, initbackupDetail)) {
+			setIsDirty(true);
+		} else {
+			setIsDirty(false);
+		}
+	}, [globalConfig, initbackupDetail]);
+
+	const changeSwitchOption = useCallback(
+		(key: string): void => {
+			setInitBackupDetail((prev: any) => ({
+				...prev,
+				[key]: initbackupDetail[key] !== true
+			}));
+		},
+		[initbackupDetail]
+	);
+
 	return (
-		<Container padding={{ all: 'large' }} mainAlignment="flex-start" background="gray6">
-			<Row takeAvwidth="fill" mainAlignment="flex-start" width="100%">
-				<Container
-					orientation="vertical"
-					mainAlignment="space-around"
-					background="gray6"
-					height="58px"
-				>
-					<Row orientation="horizontal" width="100%" padding={{ all: 'extrasmall' }}>
-						<Row mainAlignment="flex-start" width="50%" crossAlignment="flex-start">
-							<Text size="medium" weight="bold" color="gray0">
-								{t('label.service_status', 'Service Status')}
-							</Text>
-						</Row>
-						<Row width="50%" mainAlignment="flex-end" crossAlignment="flex-end">
-							<Padding right="small">
+		<>
+			<Container padding={{ all: 'large' }} mainAlignment="flex-start" background="gray6">
+				<Row takeAvwidth="fill" mainAlignment="flex-start" width="100%">
+					<Container
+						orientation="vertical"
+						mainAlignment="space-around"
+						background="gray6"
+						height="58px"
+					>
+						<Row orientation="horizontal" width="100%" padding={{ all: 'extrasmall' }}>
+							<Row mainAlignment="flex-start" width="50%" crossAlignment="flex-start">
+								<Text size="medium" weight="bold" color="gray0">
+									{t('label.service_status', 'Service Status')}
+								</Text>
+							</Row>
+							<Row width="50%" mainAlignment="flex-end" crossAlignment="flex-end">
+								<Padding right="small">
+									{isDirty && (
+										<Button
+											label={t('label.cancel', 'Cancel')}
+											color="secondary"
+											onClick={onCancel}
+										/>
+									)}
+								</Padding>
 								{isDirty && (
-									<Button
-										label={t('label.cancel', 'Cancel')}
-										color="secondary"
-										onClick={onCancel}
-									/>
+									<Button label={t('label.save', 'Save')} color="primary" onClick={onSave} />
 								)}
-							</Padding>
-							{isDirty && (
-								<Button label={t('label.save', 'Save')} color="primary" onClick={onSave} />
-							)}
+							</Row>
 						</Row>
-					</Row>
+					</Container>
+				</Row>
+				<Row orientation="horizontal" width="100%" background="gray6">
+					<Divider />
+				</Row>
+				<Container
+					orientation="column"
+					crossAlignment="flex-start"
+					mainAlignment="flex-start"
+					style={{ overflow: 'auto' }}
+					width="100%"
+					padding={{ top: 'extralarge' }}
+				>
+					<ListRow>
+						<Switch
+							label={t('backup.realtime_scanner', 'RealTime Scanner')}
+							value={initbackupDetail.ZxBackup_RealTimeScanner}
+							onClick={(): void => changeSwitchOption('ZxBackup_RealTimeScanner')}
+						/>
+					</ListRow>
+					<ListRow>
+						<Switch
+							value={globalConfig.ZxAdmin_ModuleEnabledAtStartup}
+							label={t('backup.module_enable_at_startup', 'Module Enabled at Startup')}
+							onClick={(): void => changeSwitchOption('ZxAdmin_ModuleEnabledAtStartup')}
+						/>
+					</ListRow>
+					<ListRow>
+						<Switch
+							value={globalConfig.ZxBackup_DoSmartScanOnStartup}
+							label={t('backup.smart_scan_at_startup', 'SmartScan at Startup')}
+							onClick={(): void => changeSwitchOption('ZxBackup_DoSmartScanOnStartup')}
+						/>
+					</ListRow>
 				</Container>
-			</Row>
-			<Row orientation="horizontal" width="100%" background="gray6">
-				<Divider />
-			</Row>
-			<Container
-				orientation="column"
-				crossAlignment="flex-start"
-				mainAlignment="flex-start"
-				style={{ overflow: 'auto' }}
-				width="100%"
-				padding={{ top: 'extralarge' }}
-			>
-				<ListRow>
-					<Switch
-						label={t('backup.realtime_scanner', 'RealTime Scanner')}
-						value={globalConfig.ZxBackup_RealTimeScanner}
-					/>
-				</ListRow>
-				<ListRow>
-					<Switch
-						value={globalConfig.ZxAdmin_ModuleEnabledAtStartup}
-						label={t('backup.module_enable_at_startup', 'Module Enabled at Startup')}
-					/>
-				</ListRow>
-				<ListRow>
-					<Switch
-						value={globalConfig.ZxBackup_DoSmartScanOnStartup}
-						label={t('backup.smart_scan_at_startup', 'SmartScan at Startup')}
-					/>
-				</ListRow>
 			</Container>
-		</Container>
+			<RouteLeavingGuard when={isDirty} onSave={onSave}>
+				<Text>
+					{t(
+						'label.unsaved_changes_line1',
+						'Are you sure you want to leave this page without saving?'
+					)}
+				</Text>
+				<Text>{t('label.unsaved_changes_line2', 'All your unsaved changes will be lost')}</Text>
+			</RouteLeavingGuard>
+		</>
 	);
 };
 export default BackupServiceStatus;
