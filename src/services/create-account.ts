@@ -20,6 +20,9 @@ export const createAccountRequest = async (
 			a: attrList
 		}
 	};
+	if (!password) {
+		delete request.CreateAccountRequest.password;
+	}
 
 	return fetch(`/service/admin/soap/CreateAccountRequest`, {
 		method: 'POST',
