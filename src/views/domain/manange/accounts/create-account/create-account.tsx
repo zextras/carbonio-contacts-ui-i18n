@@ -13,6 +13,7 @@ import { HorizontalWizard } from '../../../../app/component/hwizard';
 import CreateAccountDetailSection from './create-account-detail-section';
 import { Section } from '../../../../app/component/section';
 import CreateAccountSectionView from './account-create-section';
+import CreateOtpSectionView from './account-otp-section';
 import { AccountContext } from './account-context';
 
 const AccountDetailContainer = styled(Container)`
@@ -201,6 +202,34 @@ const CreateAccount: FC<{
 								);
 							}
 						}}
+					/>
+				)
+			},
+			{
+				name: 'otp',
+				label: t('label.otp', 'OTP'),
+				icon: 'KeyOutline',
+				view: CreateOtpSectionView,
+				CancelButton: (props: any) => (
+					<Button
+						{...props}
+						type="outlined"
+						key="wizard-cancel"
+						label={'CANCEL'}
+						color="secondary"
+						icon="CloseOutline"
+						iconPlacement="right"
+						onClick={(): void => setShowCreateAccountView(false)}
+					/>
+				),
+				PrevButton: (props: any): ReactElement => <></>,
+				NextButton: (props: any) => (
+					<Button
+						{...props}
+						label={t('commons.create_with_there_data', 'CREATE WITH THESE DATA')}
+						icon="PersonOutline"
+						iconPlacement="right"
+						// onClick={(): void => {}}
 					/>
 				)
 			}
