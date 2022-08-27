@@ -249,7 +249,6 @@
         "title": "Poste"
     },
     "message": {
-        "new_contact": "",
         "snackbar": {
             "settings_saved": "Modifications enregistrées correctement"
         }
