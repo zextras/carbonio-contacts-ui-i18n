@@ -23,6 +23,7 @@ import {
 	MONITORING,
 	MTA,
 	OPERATIONS,
+	PRIVACY_ROUTE_ID,
 	SERVICES_ROUTE_ID,
 	STORAGES_ROUTE_ID,
 	SUBSCRIPTIONS_ROUTE_ID
@@ -380,6 +381,18 @@ const App: FC = () => {
 			// @ts-ignore
 			primarybarSection: { ...managementSection },
 			tooltip: SubscriptionTooltipView
+		});
+		addRoute({
+			route: PRIVACY_ROUTE_ID,
+			position: 5,
+			visible: true,
+			label: t('label.privacy', 'Privacy'),
+			primaryBar: 'ShieldOutline',
+			appView: AppView,
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore
+			primarybarSection: { ...managementSection },
+			tooltip: StorageTooltipView
 		});
 		addRoute({
 			route: BACKUP_ROUTE_ID,

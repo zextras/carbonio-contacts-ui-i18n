@@ -24,6 +24,7 @@ import {
 	DOMAINS_ROUTE_ID,
 	MANAGE_APP_ID,
 	MONITORING,
+	PRIVACY_ROUTE_ID,
 	SERVICES_ROUTE_ID,
 	STORAGES_ROUTE_ID,
 	SUBSCRIPTIONS_ROUTE_ID
@@ -41,6 +42,7 @@ import { getAllServers } from '../services/get-all-servers-service';
 import { useServerStore } from '../store/server/store';
 import { useGlobalConfigStore } from '../store/global-config/store';
 import { useBackupModuleStore } from '../store/backup-module/store';
+import PrivacyView from './privacy/privacy-view';
 
 const DetailViewContainer = styled(Container)`
 	max-width: ${({ isPrimaryBarExpanded }): number => (isPrimaryBarExpanded ? 981 : 1125)}px;
@@ -97,6 +99,15 @@ const AppView: FC = () => {
 						<Container style={{ maxWidth: '100%' }}>
 							<Suspense fallback={<Spinner />}>
 								<BucketRoutePanel />
+							</Suspense>
+						</Container>
+					</Container>
+				</Route>
+				<Route path={`/${MANAGE_APP_ID}/${PRIVACY_ROUTE_ID}`}>
+					<Container orientation="horizontal" mainAlignment="flex-start">
+						<Container style={{ maxWidth: '100%' }}>
+							<Suspense fallback={<Spinner />}>
+								<PrivacyView />
 							</Suspense>
 						</Container>
 					</Container>
