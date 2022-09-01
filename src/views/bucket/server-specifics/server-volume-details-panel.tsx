@@ -9,10 +9,8 @@ import {
 	Input,
 	Row,
 	IconButton,
-	Button,
 	Divider,
 	Padding,
-	Icon,
 	Text,
 	Switch
 } from '@zextras/carbonio-design-system';
@@ -94,7 +92,7 @@ const ServerVolumeDetailsPanel: FC<{
 						padding={{ all: 'extralarge' }}
 						style={{ height: 'fit-content' }}
 					>
-						<Padding>
+						<Padding right="large">
 							<Container style={{ border: '1px solid #2b73d2' }}>
 								<IconButton
 									iconColor="primary"
@@ -108,6 +106,16 @@ const ServerVolumeDetailsPanel: FC<{
 								/>
 							</Container>
 						</Padding>
+						<Container width="fit" height="fit" style={{ border: '1px solid #d74942' }}>
+							<IconButton
+								iconColor="error"
+								backgroundColor="gray6"
+								icon="Trash2Outline"
+								height={44}
+								width={44}
+								onClick={(): any => setOpen(true)}
+							/>
+						</Container>
 					</Container>
 					<Container
 						padding={{ horizontal: 'large', top: 'extralarge', bottom: 'large' }}
@@ -167,17 +175,6 @@ const ServerVolumeDetailsPanel: FC<{
 								color="secondary"
 							/>
 						</Row>
-						<Container orientation="horizontal" mainAlignment="flex-end" crossAlignment="flex-end">
-							<Button
-								icon="CloseOutline"
-								iconPlacement="left"
-								type="outlined"
-								label={t('label.button_delete', 'DELETE')}
-								color="error"
-								width="fill"
-								onClick={(): any => setOpen(true)}
-							/>
-						</Container>
 					</Container>
 				</Container>
 			)}

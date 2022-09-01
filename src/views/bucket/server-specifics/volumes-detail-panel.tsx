@@ -98,7 +98,9 @@ const VolumeListTable: FC<{
 const VolumesDetailPanel: FC = () => {
 	const [t] = useTranslation();
 	const selectedServerName = useBucketVolumeStore((state) => state.selectedServerName);
-	const [volumeselection, setVolumeselection] = useState('');
+	const [priamryVolumeSelection, setPriamryVolumeSelection] = useState('');
+	const [secondaryVolumeSelection, setSecondaryVolumeSelection] = useState('');
+	const [indexerVolumeSelection, setIndexerVolumeSelection] = useState('');
 	const [toggleWizardSection, setToggleWizardSection] = useState(false);
 	const [detailsVolume, setDetailsVolume] = useState(false);
 	const [createMailstoresVolumeData, setCreateMailstoresVolumeData] = useState();
@@ -167,7 +169,6 @@ const VolumesDetailPanel: FC = () => {
 				isCurrent: volumeDetail?.isCurrent ? 1 : 0
 			}
 		}).then((res: any) => {
-			console.log('__res', res);
 			GetAllVolumesRequest();
 		});
 	};
@@ -246,20 +247,6 @@ const VolumesDetailPanel: FC = () => {
 						>
 							<Button
 								type="outlined"
-								label={t('label.delete_button', 'DELETE')}
-								icon="CloseOutline"
-								color="error"
-								disabled
-							/>
-							<Button
-								type="outlined"
-								label={t('label.edit_button', 'EDIT')}
-								icon="EditOutline"
-								color="secondary"
-								disabled
-							/>
-							<Button
-								type="outlined"
 								label={t('label.new_volume_button', 'NEW VOLUME')}
 								icon="PlusOutline"
 								color="primary"
@@ -278,9 +265,9 @@ const VolumesDetailPanel: FC = () => {
 							<VolumeListTable
 								volumes={volumeList?.primaries}
 								headers={tableHeader}
-								selectedRows={volumeselection}
+								selectedRows={priamryVolumeSelection}
 								onSelectionChange={(selected: any): any => {
-									setVolumeselection(selected);
+									setPriamryVolumeSelection(selected);
 								}}
 								onClick={(i: any): any => {
 									handleClick(i, volumeList?.primaries);
@@ -342,9 +329,9 @@ const VolumesDetailPanel: FC = () => {
 							<VolumeListTable
 								volumes={volumeList?.secondaries}
 								headers={tableHeader}
-								selectedRows={volumeselection}
+								selectedRows={secondaryVolumeSelection}
 								onSelectionChange={(selected: any): any => {
-									setVolumeselection(selected);
+									setSecondaryVolumeSelection(selected);
 								}}
 								onClick={(i: any): any => {
 									handleClick(i, volumeList?.secondaries);
@@ -372,9 +359,9 @@ const VolumesDetailPanel: FC = () => {
 							<IndexerVolumeTable
 								volumes={volumeList?.indexes}
 								headers={indexerHeaders}
-								selectedRows={volumeselection}
+								selectedRows={indexerVolumeSelection}
 								onSelectionChange={(selected: any): any => {
-									setVolumeselection(selected);
+									setIndexerVolumeSelection(selected);
 								}}
 								onClick={(i: any): any => {
 									handleClick(i, volumeList?.indexes);
