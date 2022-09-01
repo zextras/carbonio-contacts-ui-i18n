@@ -12,12 +12,14 @@ import {
 	Button,
 	Text,
 	Divider,
-	Switch
+	Switch,
+	useSnackbar
 } from '@zextras/carbonio-design-system';
 import { isEqual, reduce } from 'lodash';
 import ListRow from '../../list/list-row';
 import { useBackupStore } from '../../../store/backup/store';
 import { RouteLeavingGuard } from '../../ui-extras/nav-guard';
+import { modifyBackupRequest } from '../../../services/modify-backup';
 
 const BackupServiceStatus: FC = () => {
 	const [t] = useTranslation();
@@ -25,13 +27,12 @@ const BackupServiceStatus: FC = () => {
 	const globalConfig = useBackupStore((state) => state.globalConfig);
 	const setGlobalConfig = useBackupStore((state) => state.setGlobalConfig);
 	const [initbackupDetail, setInitBackupDetail] = useState<any>({});
+	const createSnackbar = useSnackbar();
 	const onCancel = (): void => {
 		console.log('onCancel');
 		setInitBackupDetail({ ...globalConfig });
 	};
 	const onSave = (): void => {
-		console.log('onSave');
-
 		const modifiedKeys: any = reduce(
 			globalConfig,
 			function (result, value, key): any {
@@ -39,7 +40,42 @@ const BackupServiceStatus: FC = () => {
 			},
 			[]
 		);
-		setGlobalConfig(initbackupDetail);
+		const modifiedData: any = {};
+		modifiedKeys.forEach((ele: any) => {
+			modifiedData[ele] = initbackupDetail[ele];
+		});
+		modifyBackupRequest(modifiedData)
+			.then(function (response) {
+				return response.status !== 200 ? response.json() : response;
+			})
+			.then((data) => {
+				if (data.status === 200) {
+					setGlobalConfig(initbackupDetail);
+					createSnackbar({
+						key: 'success',
+						type: 'success',
+						label: t(
+							'label.the_last_changes_has_been_saved_successfully',
+							'The last changes has been saved successfully'
+						),
+						autoHideTimeout: 3000,
+						hideButton: true,
+						replace: true
+					});
+				} else {
+					createSnackbar({
+						key: 'error',
+						type: 'error',
+						label:
+							data?.errors?.[0]?.error ||
+							data?.statusText ||
+							t('label.something_wrong_error_msg', 'Something went wrong. Please try again.'),
+						autoHideTimeout: 3000,
+						hideButton: true,
+						replace: true
+					});
+				}
+			});
 	};
 	useEffect(() => {
 		if (!initbackupDetail?.privateKeyAlgorithm && globalConfig?.privateKeyAlgorithm) {
@@ -117,14 +153,14 @@ const BackupServiceStatus: FC = () => {
 					</ListRow>
 					<ListRow>
 						<Switch
-							value={globalConfig.ZxAdmin_ModuleEnabledAtStartup}
+							value={initbackupDetail.ZxBackup_ModuleEnabledAtStartup}
 							label={t('backup.module_enable_at_startup', 'Module Enabled at Startup')}
-							onClick={(): void => changeSwitchOption('ZxAdmin_ModuleEnabledAtStartup')}
+							onClick={(): void => changeSwitchOption('ZxBackup_ModuleEnabledAtStartup')}
 						/>
 					</ListRow>
 					<ListRow>
 						<Switch
-							value={globalConfig.ZxBackup_DoSmartScanOnStartup}
+							value={initbackupDetail.ZxBackup_DoSmartScanOnStartup}
 							label={t('backup.smart_scan_at_startup', 'SmartScan at Startup')}
 							onClick={(): void => changeSwitchOption('ZxBackup_DoSmartScanOnStartup')}
 						/>

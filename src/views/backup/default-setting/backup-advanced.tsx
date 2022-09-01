@@ -13,7 +13,7 @@ import {
 	Text,
 	Input,
 	Button,
-	SnackbarManagerContext,
+	useSnackbar,
 	Switch,
 	Select
 } from '@zextras/carbonio-design-system';
@@ -21,6 +21,7 @@ import { isEqual, reduce, cloneDeep } from 'lodash';
 import ListRow from '../../list/list-row';
 import { useBackupStore } from '../../../store/backup/store';
 import { RouteLeavingGuard } from '../../ui-extras/nav-guard';
+import { modifyBackupRequest } from '../../../services/modify-backup';
 
 const BackupAdvanced: FC = () => {
 	const [t] = useTranslation();
@@ -28,13 +29,13 @@ const BackupAdvanced: FC = () => {
 	const globalConfig = useBackupStore((state) => state.globalConfig);
 	const setGlobalConfig = useBackupStore((state) => state.setGlobalConfig);
 	const [initbackupDetail, setInitBackupDetail] = useState<any>({});
+	const createSnackbar = useSnackbar();
+
 	const onCancel = (): void => {
 		console.log('onCancel');
 		setInitBackupDetail({ ...globalConfig });
 	};
 	const onSave = (): void => {
-		console.log('onSave');
-
 		const modifiedKeys: any = reduce(
 			globalConfig,
 			function (result, value, key): any {
@@ -42,7 +43,42 @@ const BackupAdvanced: FC = () => {
 			},
 			[]
 		);
-		setGlobalConfig(initbackupDetail);
+		const modifiedData: any = {};
+		modifiedKeys.forEach((ele: any) => {
+			modifiedData[ele] = initbackupDetail[ele];
+		});
+		modifyBackupRequest(modifiedData)
+			.then(function (response) {
+				return response.status !== 200 ? response.json() : response;
+			})
+			.then((data) => {
+				if (data.status === 200) {
+					setGlobalConfig(initbackupDetail);
+					createSnackbar({
+						key: 'success',
+						type: 'success',
+						label: t(
+							'label.the_last_changes_has_been_saved_successfully',
+							'The last changes has been saved successfully'
+						),
+						autoHideTimeout: 3000,
+						hideButton: true,
+						replace: true
+					});
+				} else {
+					createSnackbar({
+						key: 'error',
+						type: 'error',
+						label:
+							data?.errors?.[0]?.error ||
+							data?.statusText ||
+							t('label.something_wrong_error_msg', 'Something went wrong. Please try again.'),
+						autoHideTimeout: 3000,
+						hideButton: true,
+						replace: true
+					});
+				}
+			});
 	};
 	useEffect(() => {
 		if (!initbackupDetail?.privateKeyAlgorithm && globalConfig?.privateKeyAlgorithm) {

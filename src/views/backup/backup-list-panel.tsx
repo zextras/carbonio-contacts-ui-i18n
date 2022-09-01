@@ -19,7 +19,7 @@ import ListItems from '../list/list-items';
 
 const BackupListPanel: FC = () => {
 	const [t] = useTranslation();
-	const [selectedOperationItem, setSelectedOperationItem] = useState('');
+	const [selectedOperationItem, setSelectedOperationItem] = useState(SERVICE_STATUS);
 	const [isDefaultSettingsExpanded, setIsDefaultSettingsExpanded] = useState(true);
 	const [isServerSettingsEpanded, setIsServerSettingsEpanded] = useState(true);
 	const [isActionExpanded, setIsActionExpanded] = useState(true);
@@ -69,10 +69,6 @@ const BackupListPanel: FC = () => {
 	useEffect(() => {
 		replaceHistory(`/${selectedOperationItem}`);
 	}, [selectedOperationItem]);
-
-	useEffect(() => {
-		setSelectedOperationItem(SERVICE_STATUS);
-	}, []);
 
 	const toggleDefaultSettingsView = (): void => {
 		setIsDefaultSettingsExpanded(!isDefaultSettingsExpanded);

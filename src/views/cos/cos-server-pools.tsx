@@ -387,25 +387,15 @@ const CosServerPools: FC = () => {
 					</ListRow>
 					{zimbraMailHostPool && (
 						<>
-							<Row
-								takeAvwidth="fill"
-								mainAlignment="flex-start"
-								width="100%"
-								padding={{ top: 'small', bottom: 'small' }}
-							>
-								<Container
-									orientation="vertical"
-									mainAlignment="space-around"
-									background="gray6"
-									height="58px"
-								>
-									<Row
-										orientation="horizontal"
-										mainAlignment="flex-start"
-										crossAlignment="flex-start"
-										width="100%"
-									>
-										<Row mainAlignment="flex-start" width="70%" crossAlignment="flex-start">
+							<Row takeAvwidth="fill" mainAlignment="flex-start" width="100%">
+								<Container orientation="vertical" mainAlignment="space-around" height="56px">
+									<Row orientation="horizontal" width="100%">
+										<Row
+											padding={{ right: 'small' }}
+											mainAlignment="flex-start"
+											width="65%"
+											crossAlignment="flex-start"
+										>
 											<Input
 												value={searchServer}
 												label={t('cos.search_a_specific_server', 'Search a specific server')}
@@ -417,9 +407,8 @@ const CosServerPools: FC = () => {
 												}}
 											/>
 										</Row>
-
-										<Row width="30%" mainAlignment="flex-start" crossAlignment="flex-start">
-											<Padding left="large" right="large">
+										<Row padding={{ all: 'small' }} width="35%">
+											<Padding left="small" right="large">
 												<Button
 													type="outlined"
 													key="add-button"

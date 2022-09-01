@@ -22,6 +22,7 @@ import { useBackupStore } from '../../store/backup/store';
 
 const BackupDetailOperation: FC = () => {
 	const { operation }: { operation: string } = useParams();
+	const globalConfig = useBackupStore((state) => state.globalConfig);
 	const setGlobalConfig = useBackupStore((state) => state.setGlobalConfig);
 
 	const getGlobalConfig = useCallback((): void => {
@@ -37,9 +38,11 @@ const BackupDetailOperation: FC = () => {
 				}
 			});
 	}, [setGlobalConfig]);
+
 	useEffect(() => {
-		getGlobalConfig();
-	}, [getGlobalConfig]);
+		!globalConfig?.privateKeyAlgorithm && getGlobalConfig();
+	}, [getGlobalConfig, globalConfig?.privateKeyAlgorithm]);
+
 	return (
 		<>
 			{((): any => {
