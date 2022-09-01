@@ -126,10 +126,6 @@ const VolumesDetailPanel: FC = () => {
 		setOpen(false);
 	};
 
-	const deleteHandler = (): any => {
-		console.log('__deleted');
-	};
-
 	const GetAllVolumesRequest = useCallback((): void => {
 		fetchSoap('GetAllVolumesRequest', {
 			_jsns: 'urn:zimbraAdmin'
@@ -153,6 +149,23 @@ const VolumesDetailPanel: FC = () => {
 		GetAllVolumesRequest();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+	const deleteHandler = (id: any): any => {
+		fetchSoap('DeleteVolumeRequest', {
+			_jsns: 'urn:zimbraAdmin',
+			module: 'ZxCore',
+			action: 'DeleteVolumeRequest',
+			id
+		}).then(() => {
+			setOpen(false);
+			createSnackbar({
+				key: '1',
+				type: 'success',
+				label: t('label.volume_deleted', 'Volume deleted successfully')
+			});
+			setToggleDetailPage(false);
+			GetAllVolumesRequest();
+		});
+	};
 
 	const CreateVolumeRequest = (volumeDetail: {
 		id: any;
@@ -231,7 +244,7 @@ const VolumesDetailPanel: FC = () => {
 					<DeleteVolumeModel
 						open={open}
 						closeHandler={closeHandler}
-						saveHandler={deleteHandler}
+						deleteHandler={deleteHandler}
 						volumeDetail={volume}
 					/>
 				)}

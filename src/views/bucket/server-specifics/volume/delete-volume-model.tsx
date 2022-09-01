@@ -10,10 +10,12 @@ import { useTranslation } from 'react-i18next';
 const DeleteVolumeModel: FC<{
 	open: boolean;
 	closeHandler: any;
-	saveHandler: any;
+	deleteHandler: any;
 	volumeDetail: any;
-}> = ({ open, closeHandler, saveHandler, volumeDetail }) => {
+}> = ({ open, closeHandler, deleteHandler, volumeDetail }) => {
 	const [t] = useTranslation();
+	console.log('__detail', volumeDetail);
+
 	return (
 		<>
 			<Modal
@@ -41,7 +43,7 @@ const DeleteVolumeModel: FC<{
 								label={t('lable.delete_button', 'DELETE')}
 								color="error"
 								onClick={(): void => {
-									saveHandler();
+									deleteHandler(volumeDetail.id);
 								}}
 							/>
 						</Row>
