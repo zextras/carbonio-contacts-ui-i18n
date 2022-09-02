@@ -9,6 +9,7 @@ import {
 	Input,
 	Row,
 	IconButton,
+	Button,
 	Divider,
 	Padding,
 	Text,
@@ -21,9 +22,16 @@ import { INDEXERES, PRIMARIES, SECONDARIES } from '../../../constants';
 const ServerVolumeDetailsPanel: FC<{
 	setToggleDetailPage: any;
 	volumeDetail: any;
+	modifyVolumeToggle: any;
 	setmodifyVolumeToggle: any;
 	setOpen: any;
-}> = ({ setToggleDetailPage, volumeDetail, setmodifyVolumeToggle, setOpen }) => {
+}> = ({
+	setToggleDetailPage,
+	volumeDetail,
+	modifyVolumeToggle,
+	setmodifyVolumeToggle,
+	setOpen
+}) => {
 	const { t } = useTranslation();
 	const [detailData, setDetailData] = useState({
 		name: '',
@@ -63,7 +71,7 @@ const ServerVolumeDetailsPanel: FC<{
 
 	useEffect(() => {
 		getVolumeDetailData();
-	}, [getVolumeDetailData, volumeDetail]);
+	}, [getVolumeDetailData, volumeDetail, modifyVolumeToggle]);
 
 	return (
 		<>
@@ -93,28 +101,45 @@ const ServerVolumeDetailsPanel: FC<{
 						style={{ height: 'fit-content' }}
 					>
 						<Padding right="large">
-							<Container style={{ border: '1px solid #2b73d2' }}>
-								<IconButton
-									iconColor="primary"
-									backgroundColor="gray6"
-									icon="EditAsNewOutline"
-									height={44}
-									width={44}
-									onClick={(): void => {
-										setmodifyVolumeToggle(true);
-									}}
-								/>
-							</Container>
+							<Button
+								type="outlined"
+								iconColor="gray6"
+								icon="EditAsNewOutline"
+								height={36}
+								label=""
+								width={36}
+								style={{ padding: '8px 8px 8px 6px', display: 'block' }}
+								onClick={(): void => {
+									setmodifyVolumeToggle(true);
+								}}
+								disabled={!detailData?.id || volumeDetail.id !== detailData?.id}
+								loading={!detailData?.id || volumeDetail.id !== detailData?.id}
+							/>
 						</Padding>
-						<Container width="fit" height="fit" style={{ border: '1px solid #d74942' }}>
-							<IconButton
+						<Container width="fit" height="fit">
+							<Button
+								type="outlined"
+								color="error"
+								icon="Trash2Outline"
+								height={36}
+								label=""
+								width={36}
+								onClick={(): any => setOpen(true)}
+								style={{
+									padding: '8px 8px 8px 6px',
+									display: 'block'
+								}}
+								disabled={!detailData?.id || volumeDetail.id !== detailData?.id}
+								loading={!detailData?.id || volumeDetail.id !== detailData?.id}
+							/>
+							{/* <Button
 								iconColor="error"
 								backgroundColor="gray6"
 								icon="Trash2Outline"
-								height={44}
-								width={44}
+								height={36}
+								width={36}
 								onClick={(): any => setOpen(true)}
-							/>
+							/> */}
 						</Container>
 					</Container>
 					<Container

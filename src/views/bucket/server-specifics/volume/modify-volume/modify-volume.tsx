@@ -75,6 +75,7 @@ const ModifyVolume: FC<{
 				label: t('label.volume_edited', 'Volume edited successfully')
 			});
 			GetAllVolumesRequest();
+			setmodifyVolumeToggle(false);
 		});
 		updatePreviousDetail();
 	};

@@ -212,6 +212,7 @@ const VolumesDetailPanel: FC = () => {
 					<ServerVolumeDetailsPanel
 						volumeDetail={volume}
 						setToggleDetailPage={setToggleDetailPage}
+						modifyVolumeToggle={modifyVolumeToggle}
 						setmodifyVolumeToggle={setmodifyVolumeToggle}
 						setOpen={setOpen}
 					/>
@@ -331,7 +332,7 @@ const VolumesDetailPanel: FC = () => {
 								<Button
 									type="outlined"
 									width="fill"
-									label={t('label.new_volumeset_as_primary_button', 'SET AS PRIMARY')}
+									label={t('label.set_as_primary_button', 'SET AS PRIMARY')}
 									icon="ArrowheadUp"
 									iconPlacement="left"
 									color="secondary"
