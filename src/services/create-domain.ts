@@ -4,24 +4,17 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import { soapFetch } from '@zextras/carbonio-shell-ui';
+
 export const createDomain = async (name: string, a?: Array<any>): Promise<any> => {
 	const request: any = {
-		CreateDomainRequest: {
-			_jsns: 'urn:zimbraAdmin',
-			name
-		}
+		_jsns: 'urn:zimbraAdmin',
+		name
 	};
 	if (a) {
-		request.CreateDomainRequest.a = a;
+		request.a = a;
 	}
-	return fetch(`/service/admin/soap/CreateDomainRequest`, {
-		method: 'POST',
-		credentials: 'include',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			Body: request
-		})
+	return soapFetch(`CreateDomain`, {
+		...request
 	});
 };

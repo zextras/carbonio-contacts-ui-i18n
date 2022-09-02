@@ -78,46 +78,42 @@ const DomainGalSettings: FC = () => {
 	const [dataSourceName, setDataSourceName] = useState<string>('');
 
 	const getGalAccount = (accountId: string): void => {
-		getAccount(accountId)
-			.then((response) => response.json())
-			.then((data) => {
-				const galAccount: any = data?.Body?.GetAccountResponse?.account[0];
-				if (galAccount) {
-					setZimbraGalAccountName(galAccount?.name);
-					if (galAccount?.a) {
-						const obj: any = {};
-						galAccount?.a.map((item: any) => {
-							obj[item?.n] = item._content;
-							return '';
-						});
-						if (obj?.zimbraMailHost) {
-							setMailServerName(obj?.zimbraMailHost);
-						} else {
-							setMailServerName('');
-						}
+		getAccount(accountId).then((data) => {
+			const galAccount: any = data?.account[0];
+			if (galAccount) {
+				setZimbraGalAccountName(galAccount?.name);
+				if (galAccount?.a) {
+					const obj: any = {};
+					galAccount?.a.map((item: any) => {
+						obj[item?.n] = item._content;
+						return '';
+					});
+					if (obj?.zimbraMailHost) {
+						setMailServerName(obj?.zimbraMailHost);
+					} else {
+						setMailServerName('');
 					}
 				}
-			});
+			}
+		});
 	};
 
 	const getDomainDataSource = (accountId: string): void => {
-		getDatasource(accountId)
-			.then((response) => response.json())
-			.then((data) => {
-				const dataSource: any = data?.Body?.GetDataSourcesResponse?.dataSource[0];
-				if (dataSource && dataSource?.id) {
-					setDataSourceId(dataSource?.id);
-					if (dataSource?._attrs && dataSource?._attrs?.zimbraDataSourcePollingInterval) {
-						setZimbraDataSourcePollingInterval(dataSource?._attrs?.zimbraDataSourcePollingInterval);
-					}
-					if (dataSource?._attrs && dataSource?._attrs?.zimbraDataSourceName) {
-						setDataSourceName(dataSource?._attrs?.zimbraDataSourceName);
-					}
-				} else {
-					setZimbraDataSourcePollingInterval('');
-					setDataSourceName('');
+		getDatasource(accountId).then((data) => {
+			const dataSource: any = data?.dataSource[0];
+			if (dataSource && dataSource?.id) {
+				setDataSourceId(dataSource?.id);
+				if (dataSource?._attrs && dataSource?._attrs?.zimbraDataSourcePollingInterval) {
+					setZimbraDataSourcePollingInterval(dataSource?._attrs?.zimbraDataSourcePollingInterval);
 				}
-			});
+				if (dataSource?._attrs && dataSource?._attrs?.zimbraDataSourceName) {
+					setDataSourceName(dataSource?._attrs?.zimbraDataSourceName);
+				}
+			} else {
+				setZimbraDataSourcePollingInterval('');
+				setDataSourceName('');
+			}
+		});
 	};
 
 	useEffect(() => {
@@ -224,7 +220,7 @@ const DomainGalSettings: FC = () => {
 			requests.push(modifyDataSource(dataSourceBody));
 		}
 		Promise.all(requests)
-			.then((results) => Promise.all(results.map((r) => r.json())))
+			.then((results) => Promise.all(results))
 			.then((results) => {
 				const domain: any = results[0]?.Body?.ModifyDomainResponse?.domain[0];
 				if (domain) {

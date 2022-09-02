@@ -193,13 +193,11 @@ export const SignatureDetail: FC<any> = ({
 
 	const _createSignature = useCallback((): void => {
 		if (resourceId) {
-			createSignature(resourceId, signatureName, signatureContent)
-				.then((response) => response.json())
-				.then((data) => {
-					const signatureItem = data?.Body?.CreateSignatureResponse?.signature[0];
-					addSignatureIntoList(signatureItem);
-					setIsOpenCreateEditSignatureDialog(false);
-				});
+			createSignature(resourceId, signatureName, signatureContent).then((data) => {
+				const signatureItem = data?.Body?.CreateSignatureResponse?.signature[0];
+				addSignatureIntoList(signatureItem);
+				setIsOpenCreateEditSignatureDialog(false);
+			});
 		} else {
 			const lastId = signatureList.length > 0 ? signatureList[signatureList.length - 1].id : 0;
 			const newId = +lastId + 1;
@@ -252,15 +250,15 @@ export const SignatureDetail: FC<any> = ({
 
 	const _modifySignature = useCallback(() => {
 		if (resourceId) {
-			modifySignature(resourceId, selectedSignature[0], signatureName, signatureContent)
-				.then((response) => response.json())
-				.then((data) => {
+			modifySignature(resourceId, selectedSignature[0], signatureName, signatureContent).then(
+				(data) => {
 					const _signature = data?.Body?.ModifySignatureResponse;
 					if (_signature) {
 						modifySignatureIntoList(selectedSignature[0], signatureName, signatureContent);
 					}
 					setIsOpenCreateEditSignatureDialog(false);
-				});
+				}
+			);
 		} else {
 			modifySignatureIntoList(selectedSignature[0], signatureName, signatureContent);
 			setIsOpenCreateEditSignatureDialog(false);

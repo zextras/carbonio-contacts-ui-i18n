@@ -5,6 +5,12 @@
  */
 
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+import {
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
+	fetchExternalSoap
+} from '@zextras/carbonio-shell-ui';
+
 export const modifyBackupRequest = async (modifiedData: any): Promise<any> => {
 	// const attrList: { attribute: string; value: string }[] = [];
 	const request: any = {};
@@ -14,12 +20,7 @@ export const modifyBackupRequest = async (modifiedData: any): Promise<any> => {
 			configType: 'global'
 		};
 	});
-	return fetch(`/service/extension/zextras_admin/core/attribute/set`, {
-		method: 'POST',
-		credentials: 'include',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify(request)
+	return fetchExternalSoap(`/service/extension/zextras_admin/core/attribute/set`, {
+		...request
 	});
 };

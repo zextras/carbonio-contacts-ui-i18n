@@ -4,19 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import { soapFetch } from '@zextras/carbonio-shell-ui';
+
 export const deleteAccount = async (accountId: string): Promise<any> =>
-	fetch(`/service/admin/soap/DeleteAccountRequest`, {
-		method: 'POST',
-		credentials: 'include',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			Body: {
-				DeleteAccountRequest: {
-					_jsns: 'urn:zimbraAdmin',
-					id: accountId
-				}
-			}
-		})
+	soapFetch(`DeleteAccount`, {
+		_jsns: 'urn:zimbraAdmin',
+		id: accountId
 	});

@@ -3,27 +3,22 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+
+import {
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
+	postSoapFetchRequest
+} from '@zextras/carbonio-shell-ui';
+
 declare global {
 	interface Window {
 		csrfToken: string;
 	}
 }
 export const fetchSoap = async (api: string, body: unknown): Promise<any> =>
-	fetch(`/service/admin/soap/${api}`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			Body: {
-				[api]: body
-			},
-			Header: {
-				context: {
-					_jsns: 'urn:zimbra'
-				}
-			}
-		})
-	})
-		.then((res) => res.json())
-		.then((res) => res.Body);
+	postSoapFetchRequest(
+		`/service/admin/soap/${api}`,
+
+		body,
+		api
+	);

@@ -4,22 +4,13 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import { soapFetch } from '@zextras/carbonio-shell-ui';
+
 export const getDomainInformation = async (domainId: string): Promise<any> =>
-	fetch(`/service/admin/soap/GetDomainRequest`, {
-		method: 'POST',
-		credentials: 'include',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			Body: {
-				GetDomainRequest: {
-					_jsns: 'urn:zimbraAdmin',
-					domain: {
-						by: 'id',
-						_content: domainId
-					}
-				}
-			}
-		})
+	soapFetch(`GetDomain`, {
+		_jsns: 'urn:zimbraAdmin',
+		domain: {
+			by: 'id',
+			_content: domainId
+		}
 	});

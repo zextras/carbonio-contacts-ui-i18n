@@ -3,30 +3,22 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import {
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
+	postSoapFetchRequest
+} from '@zextras/carbonio-shell-ui';
+
 export const getSingatures = async (accountId: string): Promise<any> => {
 	const request: any = {
-		GetSignaturesRequest: {
-			_jsns: 'urn:zimbraAccount'
-		}
+		_jsns: 'urn:zimbraAccount'
 	};
-	return fetch(`/service/admin/soap/GetSignaturesRequest`, {
-		method: 'POST',
-		credentials: 'include',
-		headers: {
-			'Content-Type': 'application/json'
+	return postSoapFetchRequest(
+		`/service/admin/soap/GetSignaturesRequest`,
+		{
+			...request
 		},
-		body: JSON.stringify({
-			Header: {
-				context: {
-					_jsns: 'urn:zimbra',
-					session: {},
-					account: {
-						by: 'id',
-						_content: accountId
-					}
-				}
-			},
-			Body: request
-		})
-	});
+		'GetSignaturesRequest',
+		accountId
+	);
 };

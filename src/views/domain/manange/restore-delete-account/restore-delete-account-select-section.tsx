@@ -16,8 +16,12 @@ import {
 	Button
 } from '@zextras/carbonio-design-system';
 import { useTranslation } from 'react-i18next';
-
 import { debounce } from 'lodash';
+import {
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
+	getSoapFetchRequest
+} from '@zextras/carbonio-shell-ui';
 import ListRow from '../../../list/list-row';
 import Paginig from '../../../components/paging';
 import { useDomainStore } from '../../../../store/domain/store';
@@ -73,63 +77,57 @@ const RestoreDeleteAccountSelectSection: FC<any> = () => {
 		(searchText) => {
 			setIsRequestInProgress(true);
 			setAccounts([]);
-			fetch(
-				`/service/extension/zextras_admin/backup/getBackupAccounts?page=${accountOffset}&pageSize=${accountLimit}&domains=${domainName}&targetServers=all_servers&filter=${searchText}`,
-				{
-					method: 'GET',
-					credentials: 'include'
-				}
-			)
-				.then((response) => response.json())
-				.then((data) => {
-					setIsRequestInProgress(false);
-					const error = data?.all_server?.error?.message;
-					let backupAccounts = data?.accounts;
-					let page = data?.maxPage;
+			getSoapFetchRequest(
+				`/service/extension/zextras_admin/backup/getBackupAccounts?page=${accountOffset}&pageSize=${accountLimit}&domains=${domainName}&targetServers=all_servers&filter=${searchText}`
+			).then((data: any) => {
+				setIsRequestInProgress(false);
+				const error = data?.all_server?.error?.message;
+				let backupAccounts = data?.accounts;
+				let page = data?.maxPage;
 
-					/* Take account list and maxPage from multiserver environment  */
-					if (backupAccounts === undefined && !!data) {
-						const allServers = Object.keys(data);
-						let allServerAccounts: any[] = [];
-						const maxPageList: any[] = [];
-						allServers.forEach((item: string) => {
-							if (data[item]?.response?.accounts) {
-								allServerAccounts = allServerAccounts.concat(data[item]?.response?.accounts);
-							}
-							if (data[item]?.response?.maxPage) {
-								maxPageList.push(data[item]?.response?.maxPage);
-							}
-						});
-						if (allServerAccounts && allServerAccounts.length > 0) {
-							backupAccounts = allServerAccounts;
-							if (maxPageList && maxPageList.length > 0) {
-								const max = Math.max(...maxPageList);
-								if (max) {
-									page = max;
-								}
+				/* Take account list and maxPage from multiserver environment  */
+				if (backupAccounts === undefined && !!data) {
+					const allServers = Object.keys(data);
+					let allServerAccounts: any[] = [];
+					const maxPageList: any[] = [];
+					allServers.forEach((item: string) => {
+						if (data[item]?.response?.accounts) {
+							allServerAccounts = allServerAccounts.concat(data[item]?.response?.accounts);
+						}
+						if (data[item]?.response?.maxPage) {
+							maxPageList.push(data[item]?.response?.maxPage);
+						}
+					});
+					if (allServerAccounts && allServerAccounts.length > 0) {
+						backupAccounts = allServerAccounts;
+						if (maxPageList && maxPageList.length > 0) {
+							const max = Math.max(...maxPageList);
+							if (max) {
+								page = max;
 							}
 						}
 					}
-					if (error) {
-						createSnackbar({
-							key: 'error',
-							type: 'error',
-							label: error,
-							autoHideTimeout: 3000,
-							hideButton: true,
-							replace: true
-						});
-					}
-					if (backupAccounts && Array.isArray(backupAccounts) && backupAccounts.length > 0) {
-						setAccounts(backupAccounts);
-					}
-					if (page) {
-						const num: number = page;
-						setTotalItem(num * accountLimit);
-					} else if (page === 0) {
-						setTotalItem(1);
-					}
-				});
+				}
+				if (error) {
+					createSnackbar({
+						key: 'error',
+						type: 'error',
+						label: error,
+						autoHideTimeout: 3000,
+						hideButton: true,
+						replace: true
+					});
+				}
+				if (backupAccounts && Array.isArray(backupAccounts) && backupAccounts.length > 0) {
+					setAccounts(backupAccounts);
+				}
+				if (page) {
+					const num: number = page;
+					setTotalItem(num * accountLimit);
+				} else if (page === 0) {
+					setTotalItem(1);
+				}
+			});
 		},
 		[domainName, createSnackbar, accountLimit, accountOffset]
 	);

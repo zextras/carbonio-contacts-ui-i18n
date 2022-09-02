@@ -4,24 +4,17 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import { soapFetch } from '@zextras/carbonio-shell-ui';
+
 export const modifyCalendarResource = async (resourceId: string, a?: any[]): Promise<any> => {
 	const request: any = {
-		ModifyCalendarResourceRequest: {
-			_jsns: 'urn:zimbraAdmin',
-			id: resourceId
-		}
+		_jsns: 'urn:zimbraAdmin',
+		id: resourceId
 	};
 	if (a) {
-		request.ModifyCalendarResourceRequest.a = a;
+		request.a = a;
 	}
-	return fetch(`/service/admin/soap/ModifyCalendarResourceRequest`, {
-		method: 'POST',
-		credentials: 'include',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			Body: request
-		})
+	return soapFetch(`ModifyCalendarResource`, {
+		...request
 	});
 };

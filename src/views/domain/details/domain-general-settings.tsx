@@ -450,7 +450,6 @@ const DomainGeneralSettings: FC = () => {
 		});
 		body.a = attributes;
 		modifyDomain(body)
-			.then((response) => response.json())
 			.then((data) => {
 				createSnackbar({
 					key: 'success',
@@ -460,7 +459,7 @@ const DomainGeneralSettings: FC = () => {
 					hideButton: true,
 					replace: true
 				});
-				const domain: any = data?.Body?.ModifyDomainResponse?.domain[0];
+				const domain: any = data?.domain[0];
 				if (domain) {
 					setDomain(domain);
 				}
@@ -469,7 +468,9 @@ const DomainGeneralSettings: FC = () => {
 				createSnackbar({
 					key: 'error',
 					type: 'error',
-					label: t('label.something_wrong_error_msg', 'Something went wrong. Please try again.'),
+					label: error?.message
+						? error?.message
+						: t('label.something_wrong_error_msg', 'Something went wrong. Please try again.'),
 					autoHideTimeout: 3000,
 					hideButton: true,
 					replace: true
@@ -478,23 +479,21 @@ const DomainGeneralSettings: FC = () => {
 	};
 
 	const deleteOnlyDomain = (): void => {
-		deleteDomain(domainData.zimbraId)
-			.then((res) => res.json())
-			.then((resData) => {
-				setIsRequestInProgress(false);
-				setOpenDeleteDomainConfirmDialog(false);
-				setDomainAccounts([]);
-				createSnackbar({
-					key: 'success',
-					type: 'success',
-					label: t('label.delete_domain_success_msg', 'Domain has been delete successfully'),
-					autoHideTimeout: 3000,
-					hideButton: true,
-					replace: true
-				});
-				removeDomain();
-				replaceHistory(`/${DOMAINS_ROUTE_ID}`);
+		deleteDomain(domainData.zimbraId).then((resData) => {
+			setIsRequestInProgress(false);
+			setOpenDeleteDomainConfirmDialog(false);
+			setDomainAccounts([]);
+			createSnackbar({
+				key: 'success',
+				type: 'success',
+				label: t('label.delete_domain_success_msg', 'Domain has been delete successfully'),
+				autoHideTimeout: 3000,
+				hideButton: true,
+				replace: true
 			});
+			removeDomain();
+			replaceHistory(`/${DOMAINS_ROUTE_ID}`);
+		});
 	};
 
 	const onDeleteAccountAndDomain = (): void => {
@@ -518,23 +517,21 @@ const DomainGeneralSettings: FC = () => {
 		const type = 'accounts,distributionlists,aliases,resources,dynamicgroups';
 		const attrs =
 			'zimbraAliasTargetId,zimbraId,targetName,uid,type,description,displayName,zimbraId,zimbraMailHost,uid,description,zimbraIsAdminGroup,zimbraMailStatus,displayName,zimbraId,zimbraMailHost,uid,zimbraAccountStatus,description,zimbraCalResType,displayName,zimbraId,zimbraAliasTargetId,cn,sn,zimbraMailHost,uid,zimbraCOSId,zimbraAccountStatus,zimbraLastLogonTimestamp,description,zimbraIsSystemAccount,zimbraIsDelegatedAdminAccount,zimbraIsAdminAccount,zimbraIsSystemResource,zimbraAuthTokenValidityValue,zimbraIsExternalVirtualAccount,zimbraMailStatus,zimbraIsAdminGroup,zimbraCalResType,zimbraDomainType,zimbraDomainName,zimbraDomainStatus';
-		searchDirectory(attrs, type, domainName, '')
-			.then((response) => response.json())
-			.then((data) => {
-				setIsRequestInProgress(false);
-				if (data?.Body?.SearchDirectoryResponse?.searchTotal > 0) {
-					const accounts = data?.Body?.SearchDirectoryResponse?.account;
-					if (accounts && accounts.length > 0) {
-						setDomainAccounts(accounts);
-						setOpenConfirmDialog(false);
-						setOpenDeleteDomainConfirmDialog(true);
-					} else {
-						deleteOnlyDomain();
-					}
-				} else if (data?.Body?.SearchDirectoryResponse?.searchTotal === 0) {
+		searchDirectory(attrs, type, domainName, '').then((data) => {
+			setIsRequestInProgress(false);
+			if (data?.searchTotal > 0) {
+				const accounts = data?.account;
+				if (accounts && accounts.length > 0) {
+					setDomainAccounts(accounts);
+					setOpenConfirmDialog(false);
+					setOpenDeleteDomainConfirmDialog(true);
+				} else {
 					deleteOnlyDomain();
 				}
-			});
+			} else if (data?.searchTotal === 0) {
+				deleteOnlyDomain();
+			}
+		});
 	};
 
 	return (

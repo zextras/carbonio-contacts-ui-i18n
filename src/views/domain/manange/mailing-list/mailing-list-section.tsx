@@ -63,40 +63,38 @@ const MailingListSection: FC<any> = () => {
 			'accounts,distributionlists,dynamicgroups,accounts,aliases,dynamicgroups,resources',
 			'',
 			query
-		)
-			.then((response) => response.json())
-			.then((data) => {
-				const allList: any[] = [];
-				const account = data?.Body?.SearchDirectoryResponse?.account;
-				const dl = data?.Body?.SearchDirectoryResponse?.dl;
-				const alias = data?.Body?.SearchDirectoryResponse?.alias;
-				const calresource = data?.Body?.SearchDirectoryResponse?.calresource;
-				const errorFault = data?.Body?.Fault;
-				if (errorFault) {
-					setIsShowLdapQueryMessage(true);
-					setLdapQueryErrorMessage(t('label.query_is_not_valid', 'Query is not valid'));
-				} else {
-					setIsShowLdapQueryMessage(false);
-					setLdapQueryErrorMessage('');
-				}
-				if (dl) {
-					dl.map((item: any) => allList.push({ id: item?.id, name: item?.name }));
-				}
-				if (account) {
-					account.map((item: any) => allList.push({ id: item?.id, name: item?.name }));
-				}
-				if (alias) {
-					alias.map((item: any) => allList.push({ id: item?.id, name: item?.name }));
-				}
-				if (calresource) {
-					calresource.map((item: any) => allList.push({ id: item?.id, name: item?.name }));
-				}
-				if (allList && allList.length > 0) {
-					setDynamicListMember(allList);
-				} else {
-					setDynamicListMember([]);
-				}
-			});
+		).then((data) => {
+			const allList: any[] = [];
+			const account = data?.account;
+			const dl = data?.dl;
+			const alias = data?.alias;
+			const calresource = data?.calresource;
+			const errorFault = data?.Body?.Fault;
+			if (errorFault) {
+				setIsShowLdapQueryMessage(true);
+				setLdapQueryErrorMessage(t('label.query_is_not_valid', 'Query is not valid'));
+			} else {
+				setIsShowLdapQueryMessage(false);
+				setLdapQueryErrorMessage('');
+			}
+			if (dl) {
+				dl.map((item: any) => allList.push({ id: item?.id, name: item?.name }));
+			}
+			if (account) {
+				account.map((item: any) => allList.push({ id: item?.id, name: item?.name }));
+			}
+			if (alias) {
+				alias.map((item: any) => allList.push({ id: item?.id, name: item?.name }));
+			}
+			if (calresource) {
+				calresource.map((item: any) => allList.push({ id: item?.id, name: item?.name }));
+			}
+			if (allList && allList.length > 0) {
+				setDynamicListMember(allList);
+			} else {
+				setDynamicListMember([]);
+			}
+		});
 	}, [mailingListDetail?.memberURL, t]);
 
 	useEffect(() => {

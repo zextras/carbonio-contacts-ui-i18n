@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { FC, useCallback, useEffect, useState, useMemo, useRef } from 'react';
+import React, { FC, useCallback, useEffect, useState, useMemo, useRef, useContext } from 'react';
 import {
 	Container,
 	Input,
@@ -57,16 +57,14 @@ const CosListPanel: FC = () => {
 	const prevCosRef = useRef();
 
 	const getCosLists = (cos: string): any => {
-		getCosList(cos)
-			.then((res) => res.json())
-			.then((data) => {
-				const searchResponse: any = data?.Body?.SearchDirectoryResponse;
-				if (!!searchResponse && searchResponse?.searchTotal > 0) {
-					setCosList(searchResponse?.cos);
-				} else {
-					setCosList([]);
-				}
-			});
+		getCosList(cos).then((data) => {
+			const searchResponse: any = data;
+			if (!!searchResponse && searchResponse?.searchTotal > 0) {
+				setCosList(searchResponse?.cos);
+			} else {
+				setCosList([]);
+			}
+		});
 	};
 
 	useEffect(() => {

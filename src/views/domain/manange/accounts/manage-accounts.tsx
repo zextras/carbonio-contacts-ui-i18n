@@ -97,13 +97,11 @@ const ManageAccounts: FC = () => {
 		}
 	};
 	const getSignatureDetail = useCallback((id): void => {
-		getSingatures(id)
-			.then((response) => response.json())
-			.then((data) => {
-				const signatureResponse = data?.Body?.GetSignaturesResponse?.signature || [];
-				generateSignatureList(signatureResponse);
-				setSignatureData(signatureResponse);
-			});
+		getSingatures(id).then((data) => {
+			const signatureResponse = data?.Body?.GetSignaturesResponse?.signature || [];
+			generateSignatureList(signatureResponse);
+			setSignatureData(signatureResponse);
+		});
 	}, []);
 
 	// useEffect(() => {
@@ -146,11 +144,10 @@ const ManageAccounts: FC = () => {
 	const getAccountDetail = useCallback(
 		(id): void => {
 			getAccountRequest(id)
-				.then((response: any) => response.json())
 				.then((data: any) => {
 					const obj: any = {};
 					// eslint-disable-next-line array-callback-return
-					data?.Body?.GetAccountResponse?.account?.[0]?.a?.map((ele: any) => {
+					data?.account?.[0]?.a?.map((ele: any) => {
 						if (obj[ele.n]) {
 							obj[ele.n] = `${obj[ele.n]}, ${ele._content}`;
 						} else {
@@ -170,19 +167,29 @@ const ManageAccounts: FC = () => {
 					setAccountDetail({ ...obj });
 				})
 				// eslint-disable-next-line @typescript-eslint/no-empty-function
-				.catch((error) => {});
+				.catch((error) => {
+					createSnackbar({
+						key: 'error',
+						type: 'error',
+						label: error?.message
+							? error?.message
+							: t('label.something_wrong_error_msg', 'Something went wrong. Please try again.'),
+						autoHideTimeout: 3000,
+						hideButton: true,
+						replace: true
+					});
+				});
 		},
-		[setAccountDetail]
+		[setAccountDetail, createSnackbar, t]
 	);
 	const getAccountMembership = useCallback(
 		(id): void => {
 			getAccountMembershipRequest(id)
-				.then((response: any) => response.json())
 				.then((data: any) => {
 					const directMemArr: any[] = [];
 					const inDirectMemArr: any[] = [];
 					// eslint-disable-next-line array-callback-return
-					data?.Body?.GetAccountMembershipResponse?.dl?.map((ele: any) => {
+					data?.dl?.map((ele: any) => {
 						if (ele?.via)
 							inDirectMemArr.push({ label: ele?.name, closable: false, disabled: true });
 						else directMemArr.push({ label: ele?.name, closable: false, disabled: true });
@@ -192,9 +199,20 @@ const ManageAccounts: FC = () => {
 					setInDirectMemberList(inDirectMemArr);
 				})
 				// eslint-disable-next-line @typescript-eslint/no-empty-function
-				.catch((error) => {});
+				.catch((error) => {
+					createSnackbar({
+						key: 'error',
+						type: 'error',
+						label: error?.message
+							? error?.message
+							: t('label.something_wrong_error_msg', 'Something went wrong. Please try again.'),
+						autoHideTimeout: 3000,
+						hideButton: true,
+						replace: true
+					});
+				});
 		},
-		[setDirectMemberList, setInDirectMemberList]
+		[setDirectMemberList, setInDirectMemberList, t, createSnackbar]
 	);
 	const openDetailView = useCallback(
 		(acc: any): void => {
@@ -210,87 +228,85 @@ const ManageAccounts: FC = () => {
 		const type = 'accounts';
 		const attrs =
 			'displayName,zimbraId,zimbraAliasTargetId,cn,sn,zimbraMailHost,uid,zimbraCOSId,zimbraAccountStatus,zimbraLastLogonTimestamp,description,zimbraIsSystemAccount,zimbraIsDelegatedAdminAccount,zimbraIsAdminAccount,zimbraIsSystemResource,zimbraAuthTokenValidityValue,zimbraIsExternalVirtualAccount,zimbraMailStatus,zimbraIsAdminGroup,zimbraCalResType,zimbraDomainType,zimbraDomainName,zimbraDomainStatus,zimbraIsDelegatedAdminAccount,zimbraIsAdminAccount,zimbraIsSystemResource,zimbraIsSystemAccount,zimbraIsExternalVirtualAccount,zimbraCreateTimestamp,zimbraLastLogonTimestamp,zimbraMailQuota,zimbraNotes';
-		accountListDirectory(attrs, type, domainName, searchQuery, offset, limit)
-			.then((response) => response.json())
-			.then((data) => {
-				const accountListResponse: any = data?.Body?.SearchDirectoryResponse?.account || [];
-				if (accountListResponse && Array.isArray(accountListResponse)) {
-					const accountListArr: any = [];
-					setTotalAccount(data?.Body?.SearchDirectoryResponse?.searchTotal || 0);
-					accountListResponse.map((item: any): any => {
-						item?.a?.map((ele: any) => {
-							// eslint-disable-next-line no-param-reassign
-							item[ele?.n] = ele._content;
-							return '';
-						});
-						accountListArr.push({
-							id: item?.id,
-							columns: [
-								<Text
-									size="medium"
-									key={item?.id}
-									color="#414141"
-									onClick={(event: { stopPropagation: () => void }): void => {
-										event.stopPropagation();
-										openDetailView(item);
-									}}
-								>
-									{item?.name || ' '}
-								</Text>,
-								<Text
-									size="medium"
-									key={item?.id}
-									color="#414141"
-									onClick={(event: { stopPropagation: () => void }): void => {
-										event.stopPropagation();
-										openDetailView(item);
-									}}
-								>
-									{item?.displayName || <>&nbsp;</>}
-								</Text>,
-								<Text
-									size="medium"
-									key={item?.id}
-									color="#828282"
-									onClick={(event: { stopPropagation: () => void }): void => {
-										event.stopPropagation();
-										openDetailView(item);
-									}}
-								>
-									{accountUserType(item)}
-								</Text>,
-								<Text
-									size="medium"
-									key={item?.id}
-									color={STATUS_COLOR[item?.zimbraAccountStatus]?.color}
-									onClick={(event: { stopPropagation: () => void }): void => {
-										event.stopPropagation();
-										openDetailView(item);
-									}}
-								>
-									{STATUS_COLOR[item?.zimbraAccountStatus]?.label}
-								</Text>,
-								<Text
-									size="medium"
-									key={item?.id}
-									color="#414141"
-									onClick={(event: { stopPropagation: () => void }): void => {
-										event.stopPropagation();
-										openDetailView(item);
-									}}
-								>
-									{item?.description || <>&nbsp;</>}
-								</Text>
-							],
-							item,
-							clickable: true
-						});
+		accountListDirectory(attrs, type, domainName, searchQuery, offset, limit).then((data) => {
+			const accountListResponse: any = data?.account || [];
+			if (accountListResponse && Array.isArray(accountListResponse)) {
+				const accountListArr: any = [];
+				setTotalAccount(data.searchTotal || 0);
+				accountListResponse.map((item: any): any => {
+					item?.a?.map((ele: any) => {
+						// eslint-disable-next-line no-param-reassign
+						item[ele?.n] = ele._content;
 						return '';
 					});
-					// setAccountList([]);
-					setAccountList(accountListArr);
-				}
-			});
+					accountListArr.push({
+						id: item?.id,
+						columns: [
+							<Text
+								size="medium"
+								key={item?.id}
+								color="#414141"
+								onClick={(event: { stopPropagation: () => void }): void => {
+									event.stopPropagation();
+									openDetailView(item);
+								}}
+							>
+								{item?.name || ' '}
+							</Text>,
+							<Text
+								size="medium"
+								key={item?.id}
+								color="#414141"
+								onClick={(event: { stopPropagation: () => void }): void => {
+									event.stopPropagation();
+									openDetailView(item);
+								}}
+							>
+								{item?.displayName || <>&nbsp;</>}
+							</Text>,
+							<Text
+								size="medium"
+								key={item?.id}
+								color="#828282"
+								onClick={(event: { stopPropagation: () => void }): void => {
+									event.stopPropagation();
+									openDetailView(item);
+								}}
+							>
+								{accountUserType(item)}
+							</Text>,
+							<Text
+								size="medium"
+								key={item?.id}
+								color={STATUS_COLOR[item?.zimbraAccountStatus]?.color}
+								onClick={(event: { stopPropagation: () => void }): void => {
+									event.stopPropagation();
+									openDetailView(item);
+								}}
+							>
+								{STATUS_COLOR[item?.zimbraAccountStatus]?.label}
+							</Text>,
+							<Text
+								size="medium"
+								key={item?.id}
+								color="#414141"
+								onClick={(event: { stopPropagation: () => void }): void => {
+									event.stopPropagation();
+									openDetailView(item);
+								}}
+							>
+								{item?.description || <>&nbsp;</>}
+							</Text>
+						],
+						item,
+						clickable: true
+					});
+					return '';
+				});
+				// setAccountList([]);
+				setAccountList(accountListArr);
+			}
+		});
 	}, [STATUS_COLOR, accountUserType, domainName, limit, offset, openDetailView, searchQuery]);
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const searchAccountList = useCallback(
@@ -318,9 +334,8 @@ const ManageAccounts: FC = () => {
 	const createAccountReq = useCallback(
 		(attr, name, password): void => {
 			createAccountRequest(attr, name, password)
-				.then((response) => response.json())
 				.then((data) => {
-					const isCreateAccount = data?.Body?.CreateAccountResponse;
+					const isCreateAccount = data;
 					if (isCreateAccount) {
 						setShowCreateAccountView(false);
 						createSnackbar({
@@ -334,15 +349,6 @@ const ManageAccounts: FC = () => {
 							hideButton: true,
 							replace: true
 						});
-					} else {
-						createSnackbar({
-							key: 'error',
-							type: 'error',
-							label: data?.Body?.Fault?.Reason?.Text,
-							autoHideTimeout: 3000,
-							hideButton: true,
-							replace: true
-						});
 					}
 					getAccountList();
 				})
@@ -350,7 +356,9 @@ const ManageAccounts: FC = () => {
 					createSnackbar({
 						key: 'error',
 						type: 'error',
-						label: t('label.something_wrong_error_msg', 'Something went wrong. Please try again.'),
+						label: error?.message
+							? error?.message
+							: t('label.something_wrong_error_msg', 'Something went wrong. Please try again.'),
 						autoHideTimeout: 3000,
 						hideButton: true,
 						replace: true

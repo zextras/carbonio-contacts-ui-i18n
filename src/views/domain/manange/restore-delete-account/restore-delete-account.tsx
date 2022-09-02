@@ -80,37 +80,35 @@ const RestoreDeleteAccount: FC = () => {
 				body.dstAccountName = copyAccount;
 			}
 			setIsRequestWorkInProgress(true);
-			doRestoreDeleteAccount(body)
-				.then((response) => response.json())
-				.then((data) => {
-					const error = data?.error?.details?.cause || data?.error?.message;
-					const success = data?.operationId;
-					setIsRequestWorkInProgress(false);
-					if (error) {
-						createSnackbar({
-							key: 'error',
-							type: 'error',
-							label: error,
-							autoHideTimeout: 3000,
-							hideButton: true,
-							replace: true
-						});
-					}
-					if (success) {
-						createSnackbar({
-							key: 'success',
-							type: 'success',
-							label: t(
-								'label.restore_account_has_added_operation_queue',
-								'The restore account has been added on operation queue successfull'
-							),
-							autoHideTimeout: 3000,
-							hideButton: true,
-							replace: true
-						});
-						setIsSuccess(true);
-					}
-				});
+			doRestoreDeleteAccount(body).then((data) => {
+				const error = data?.error?.details?.cause || data?.error?.message;
+				const success = data?.operationId;
+				setIsRequestWorkInProgress(false);
+				if (error) {
+					createSnackbar({
+						key: 'error',
+						type: 'error',
+						label: error,
+						autoHideTimeout: 3000,
+						hideButton: true,
+						replace: true
+					});
+				}
+				if (success) {
+					createSnackbar({
+						key: 'success',
+						type: 'success',
+						label: t(
+							'label.restore_account_has_added_operation_queue',
+							'The restore account has been added on operation queue successfull'
+						),
+						autoHideTimeout: 3000,
+						hideButton: true,
+						replace: true
+					});
+					setIsSuccess(true);
+				}
+			});
 		},
 		[createSnackbar, t]
 	);

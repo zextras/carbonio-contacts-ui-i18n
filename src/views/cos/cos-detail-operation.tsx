@@ -3,8 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { SnackbarManagerContext } from '@zextras/carbonio-design-system';
+import { useTranslation } from 'react-i18next';
 import {
 	GENERAL_INFORMATION,
 	FEATURES,
@@ -23,6 +25,8 @@ import CosServerPools from './cos-server-pools';
 
 const CosDetailOperation: FC = () => {
 	const { operation, cosId }: { operation: string; cosId: string } = useParams();
+	const createSnackbar: any = useContext(SnackbarManagerContext);
+	const [t] = useTranslation();
 	const setCos = useCosStore((state) => state.setCos);
 	const setTotalAccount = useCosStore((state) => state.setTotalAccount);
 	const setTotalDomain = useCosStore((state) => state.setTotalDomain);
@@ -33,12 +37,10 @@ const CosDetailOperation: FC = () => {
 			if (isDefaultCos) {
 				query = `(|(!(zimbraDomainDefaultCOSId=*))(zimbraDomainDefaultCOSId=${id}))`;
 			}
-			searchDirectory('', 'domains', '', query, 0, -1)
-				.then((response) => response.json())
-				.then((data) => {
-					const totalDomain = data?.Body?.SearchDirectoryResponse?.searchTotal || 0;
-					setTotalDomain(totalDomain);
-				});
+			searchDirectory('', 'domains', '', query, 0, -1).then((data) => {
+				const totalDomain = data?.searchTotal || 0;
+				setTotalDomain(totalDomain);
+			});
 		},
 		[setTotalDomain]
 	);
@@ -49,12 +51,10 @@ const CosDetailOperation: FC = () => {
 			if (isDefaultCos) {
 				query = `(&(|(&(!(zimbraCOSId=*))(!(zimbraIsExternalVirtualAccount=TRUE)))(zimbraCOSId=${id}))(!(zimbraIsSystemAccount=TRUE)))`;
 			}
-			searchDirectory('', 'accounts', '', query, 0, -1)
-				.then((response) => response.json())
-				.then((data) => {
-					const totalAccount = data?.Body?.SearchDirectoryResponse?.searchTotal || 0;
-					setTotalAccount(totalAccount);
-				});
+			searchDirectory('', 'accounts', '', query, 0, -1).then((data) => {
+				const totalAccount = data?.searchTotal || 0;
+				setTotalAccount(totalAccount);
+			});
 		},
 		[setTotalAccount]
 	);
@@ -62,17 +62,28 @@ const CosDetailOperation: FC = () => {
 	const getSelectedCosInformation = useCallback(
 		(id: any): any => {
 			getCosGeneralInformation(id)
-				.then((response) => response.json())
 				.then((data) => {
-					const cos = data?.Body?.GetCosResponse?.cos[0];
+					const cos = data?.cos[0];
 					if (cos) {
 						setCos(cos);
 						getTotalAccount(cos.id, !!cos?.isDefaultCos);
 						getTotalDomain(cos.id, !!cos?.isDefaultCos);
 					}
+				})
+				.catch((error) => {
+					createSnackbar({
+						key: 'error',
+						type: 'error',
+						label: error.message
+							? error.message
+							: t('label.something_wrong_error_msg', 'Something went wrong. Please try again.'),
+						autoHideTimeout: 3000,
+						hideButton: true,
+						replace: true
+					});
 				});
 		},
-		[getTotalAccount, getTotalDomain, setCos]
+		[getTotalAccount, getTotalDomain, setCos, t, createSnackbar]
 	);
 
 	useEffect(() => {

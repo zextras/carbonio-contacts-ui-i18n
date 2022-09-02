@@ -27,16 +27,14 @@ const BackupDetailOperation: FC = () => {
 
 	const getGlobalConfig = useCallback((): void => {
 		const serverName = window.location.hostname;
-		dumpGlobalConfig(serverName)
-			.then((response: any) => response.json())
-			.then((data: any) => {
-				if (data?.Body?.response?.content) {
-					const parseData = JSON.parse(data.Body.response.content);
-					if (parseData?.response?.[serverName]?.response) {
-						setGlobalConfig(parseData?.response?.[serverName]?.response);
-					}
+		dumpGlobalConfig(serverName).then((data: any) => {
+			if (data?.Body?.response?.content) {
+				const parseData = JSON.parse(data.Body.response.content);
+				if (parseData?.response?.[serverName]?.response) {
+					setGlobalConfig(parseData?.response?.[serverName]?.response);
 				}
-			});
+			}
+		});
 	}, [setGlobalConfig]);
 
 	useEffect(() => {

@@ -132,7 +132,7 @@ const serverDetailPanel: FC = () => {
 				action: 'getAllVolumes',
 				targetServers: 'all_servers'
 			}).then((res) => {
-				const responseData = JSON.parse(res.response.content);
+				const responseData = JSON.parse(res.Body.response.content);
 				if (responseData.ok) {
 					if (allServersList.length !== 0) {
 						const serverList = allServersList.map((item) => {

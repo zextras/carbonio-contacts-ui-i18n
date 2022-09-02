@@ -122,134 +122,132 @@ const DomainMailingList: FC = () => {
 		const types = 'distributionlists,dynamicgroups';
 		const query = `${searchQuery}(&(!(zimbraIsSystemAccount=TRUE)))`;
 		setMailingListItem([]);
-		searchDirectory(attrs, types, domainName || '', query, offset, limit, 'name')
-			.then((response) => response.json())
-			.then((data) => {
-				const dlList = data?.Body?.SearchDirectoryResponse?.dl;
-				if (dlList) {
-					if (data?.Body?.SearchDirectoryResponse?.searchTotal) {
-						setTotalAccount(data?.Body?.SearchDirectoryResponse?.searchTotal);
-					}
-					const mList: any[] = [];
-					dlList.forEach((item: any, index: number) => {
-						mList.push({
-							id: item?.id,
-							columns: [
-								<Row
-									mainAlignment="flex-start"
-									crossAlignment="flex-start"
-									key={item?.id}
-									style={{ cursor: 'pointer' }}
-									onClick={(e: { stopPropagation: () => void }): void => {
-										e.stopPropagation();
-										setSelectedMailingList(item);
-										setSelectedFromRow(item);
-										handleClick(e);
-									}}
-								>
-									<Text size="medium" weight="light" key={`${item?.id}display-child`} color="gray0">
-										{item?.a?.find((a: any) => a?.n === 'displayName')?._content}
-									</Text>
-								</Row>,
-								<Row
-									mainAlignment="flex-start"
-									crossAlignment="flex-start"
-									key={`${item?.id}-address`}
-									style={{ cursor: 'pointer' }}
-									onClick={(e: { stopPropagation: () => void }): void => {
-										e.stopPropagation();
-										setSelectedMailingList(item);
-										setSelectedFromRow(item);
-										handleClick(e);
-									}}
-								>
-									<Text size="medium" weight="light" key={`${item?.id}address-child`} color="gray0">
-										{item?.name}
-									</Text>
-								</Row>,
-								<Row
-									mainAlignment="flex-start"
-									crossAlignment="flex-start"
-									key={`${item?.id}-member`}
-									style={{ cursor: 'pointer' }}
-									onClick={(e: { stopPropagation: () => void }): void => {
-										e.stopPropagation();
-										setSelectedMailingList(item);
-										setSelectedFromRow(item);
-										handleClick(e);
-									}}
-								>
-									<Text size="medium" weight="light" key={`${item?.id}member-child`} color="gray0">
-										{''}
-									</Text>
-								</Row>,
-								<Row
-									mainAlignment="flex-start"
-									crossAlignment="flex-start"
-									key={`${item?.id}-status`}
-									style={{ cursor: 'pointer' }}
-									onClick={(e: { stopPropagation: () => void }): void => {
-										e.stopPropagation();
-										setSelectedMailingList(item);
-										setSelectedFromRow(item);
-										handleClick(e);
-									}}
-								>
-									<Text size="medium" weight="light" key={`${item?.id}status-child`} color="gray0">
-										{item?.a?.find((a: any) => a?.n === 'zimbraMailStatus')?._content === 'enabled'
-											? t('label.can_receive', 'Can receive')
-											: ''}
-									</Text>
-								</Row>,
-								<Row
-									mainAlignment="flex-start"
-									crossAlignment="flex-start"
-									key={`${item?.id}-gal`}
-									style={{ cursor: 'pointer' }}
-									onClick={(e: { stopPropagation: () => void }): void => {
-										e.stopPropagation();
-										setSelectedMailingList(item);
-										setSelectedFromRow(item);
-										handleClick(e);
-									}}
-								>
-									<Text size="medium" weight="light" key={`${item?.id}gal-child`} color="gray0">
-										{''}
-									</Text>
-								</Row>,
-								<Row
-									mainAlignment="flex-start"
-									crossAlignment="flex-start"
-									key={`${item?.id}-description`}
-									style={{ cursor: 'pointer' }}
-									onClick={(e: { stopPropagation: () => void }): void => {
-										e.stopPropagation();
-										setSelectedMailingList(item);
-										setSelectedFromRow(item);
-										handleClick(e);
-									}}
-								>
-									<Text
-										size="medium"
-										weight="light"
-										key={`${item?.id}description-child`}
-										color="gray0"
-									>
-										{item?.a?.find((a: any) => a?.n === 'description')?._content}
-									</Text>
-								</Row>
-							]
-						});
-					});
-					setMailingList(mList);
-					setMailingListItem(dlList);
-					setIsUpdateRecord(false);
-				} else {
-					setTotalAccount(0);
-					setMailingList([]);
-					setIsUpdateRecord(false);
+		searchDirectory(attrs, types, domainName || '', query, offset, limit, 'name').then((data) => {
+			const dlList = data?.dl;
+			if (dlList) {
+				if (data?.searchTotal) {
+					setTotalAccount(data?.searchTotal);
 				}
-			});
+				const mList: any[] = [];
+				dlList.forEach((item: any, index: number) => {
+					mList.push({
+						id: item?.id,
+						columns: [
+							<Row
+								mainAlignment="flex-start"
+								crossAlignment="flex-start"
+								key={item?.id}
+								style={{ cursor: 'pointer' }}
+								onClick={(e: { stopPropagation: () => void }): void => {
+									e.stopPropagation();
+									setSelectedMailingList(item);
+									setSelectedFromRow(item);
+									handleClick(e);
+								}}
+							>
+								<Text size="medium" weight="light" key={`${item?.id}display-child`} color="gray0">
+									{item?.a?.find((a: any) => a?.n === 'displayName')?._content}
+								</Text>
+							</Row>,
+							<Row
+								mainAlignment="flex-start"
+								crossAlignment="flex-start"
+								key={`${item?.id}-address`}
+								style={{ cursor: 'pointer' }}
+								onClick={(e: { stopPropagation: () => void }): void => {
+									e.stopPropagation();
+									setSelectedMailingList(item);
+									setSelectedFromRow(item);
+									handleClick(e);
+								}}
+							>
+								<Text size="medium" weight="light" key={`${item?.id}address-child`} color="gray0">
+									{item?.name}
+								</Text>
+							</Row>,
+							<Row
+								mainAlignment="flex-start"
+								crossAlignment="flex-start"
+								key={`${item?.id}-member`}
+								style={{ cursor: 'pointer' }}
+								onClick={(e: { stopPropagation: () => void }): void => {
+									e.stopPropagation();
+									setSelectedMailingList(item);
+									setSelectedFromRow(item);
+									handleClick(e);
+								}}
+							>
+								<Text size="medium" weight="light" key={`${item?.id}member-child`} color="gray0">
+									{''}
+								</Text>
+							</Row>,
+							<Row
+								mainAlignment="flex-start"
+								crossAlignment="flex-start"
+								key={`${item?.id}-status`}
+								style={{ cursor: 'pointer' }}
+								onClick={(e: { stopPropagation: () => void }): void => {
+									e.stopPropagation();
+									setSelectedMailingList(item);
+									setSelectedFromRow(item);
+									handleClick(e);
+								}}
+							>
+								<Text size="medium" weight="light" key={`${item?.id}status-child`} color="gray0">
+									{item?.a?.find((a: any) => a?.n === 'zimbraMailStatus')?._content === 'enabled'
+										? t('label.can_receive', 'Can receive')
+										: ''}
+								</Text>
+							</Row>,
+							<Row
+								mainAlignment="flex-start"
+								crossAlignment="flex-start"
+								key={`${item?.id}-gal`}
+								style={{ cursor: 'pointer' }}
+								onClick={(e: { stopPropagation: () => void }): void => {
+									e.stopPropagation();
+									setSelectedMailingList(item);
+									setSelectedFromRow(item);
+									handleClick(e);
+								}}
+							>
+								<Text size="medium" weight="light" key={`${item?.id}gal-child`} color="gray0">
+									{''}
+								</Text>
+							</Row>,
+							<Row
+								mainAlignment="flex-start"
+								crossAlignment="flex-start"
+								key={`${item?.id}-description`}
+								style={{ cursor: 'pointer' }}
+								onClick={(e: { stopPropagation: () => void }): void => {
+									e.stopPropagation();
+									setSelectedMailingList(item);
+									setSelectedFromRow(item);
+									handleClick(e);
+								}}
+							>
+								<Text
+									size="medium"
+									weight="light"
+									key={`${item?.id}description-child`}
+									color="gray0"
+								>
+									{item?.a?.find((a: any) => a?.n === 'description')?._content}
+								</Text>
+							</Row>
+						]
+					});
+				});
+				setMailingList(mList);
+				setMailingListItem(dlList);
+				setIsUpdateRecord(false);
+			} else {
+				setTotalAccount(0);
+				setMailingList([]);
+				setIsUpdateRecord(false);
+			}
+		});
 	}, [t, offset, limit, domainName, searchQuery, handleClick]);
 
 	useEffect(() => {
@@ -461,14 +459,29 @@ const DomainMailingList: FC = () => {
 				});
 			}
 			createMailingList(dynamic, name, attributes)
-				.then((response) => response.json())
 				.then((data) => {
-					let type = 'success';
+					const type = 'success';
 					let message = '';
-					if (data?.Body?.Fault?.Reason?.Text) {
-						type = 'error';
-						const text = data?.Body?.Fault?.Reason?.Text;
-
+					const mlId = data?.dl[0]?.id;
+					addMemberToMailingList(members, owners, mlId, allOwnersList);
+					setShowCreateMailingListView(false);
+					message = t('label.the_has_been_created_success', {
+						name,
+						defaultValue: 'The {{name}} has been created successfull'
+					});
+					createSnackbar({
+						key: 'success',
+						type,
+						label: message,
+						autoHideTimeout: 3000,
+						hideButton: true,
+						replace: true
+					});
+				})
+				.catch((error) => {
+					let message = '';
+					if (error?.message) {
+						const text = error?.message;
 						if (text.includes('no such domain')) {
 							message = t('label.specified_domain_not_exist', 'Specified domain does not exist');
 						} else if (text.includes('email address already exists')) {
@@ -479,19 +492,13 @@ const DomainMailingList: FC = () => {
 						} else {
 							message = text;
 						}
-					} else {
-						const mlId = data?.Body?.CreateDistributionListResponse?.dl[0]?.id;
-						addMemberToMailingList(members, owners, mlId, allOwnersList);
-						setShowCreateMailingListView(false);
-						message = t('label.the_has_been_created_success', {
-							name,
-							defaultValue: 'The {{name}} has been created successfull'
-						});
 					}
 					createSnackbar({
-						key: type,
-						type,
-						label: message,
+						key: 'error',
+						type: 'error',
+						label:
+							message ||
+							t('label.something_wrong_error_msg', 'Something went wrong. Please try again.'),
 						autoHideTimeout: 3000,
 						hideButton: true,
 						replace: true

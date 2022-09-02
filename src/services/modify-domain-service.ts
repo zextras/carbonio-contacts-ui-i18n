@@ -4,16 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import { soapFetch } from '@zextras/carbonio-shell-ui';
+
 export const modifyDomain = async (body: JSON): Promise<any> =>
-	fetch(`/service/admin/soap/ModifyDomainRequest`, {
-		method: 'POST',
-		credentials: 'include',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			Body: {
-				ModifyDomainRequest: body
-			}
-		})
+	soapFetch(`ModifyDomain`, {
+		...body
 	});

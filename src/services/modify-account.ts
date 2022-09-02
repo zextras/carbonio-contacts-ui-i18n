@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import { soapFetch } from '@zextras/carbonio-shell-ui';
+
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 export const modifyAccountRequest = async (id: string, modifiedData: any): Promise<any> => {
 	const attrList: { n: string; _content: string }[] = [];
@@ -19,27 +21,12 @@ export const modifyAccountRequest = async (id: string, modifiedData: any): Promi
 		}
 	});
 	const request: any = {
-		ModifyAccountRequest: {
-			_jsns: 'urn:zimbraAdmin',
-			id,
-			a: attrList
-		}
+		_jsns: 'urn:zimbraAdmin',
+		id,
+		a: attrList
 	};
 
-	return fetch(`/service/admin/soap/ModifyAccountRequest`, {
-		method: 'POST',
-		credentials: 'include',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			Header: {
-				context: {
-					_jsns: 'urn:zimbra',
-					session: {}
-				}
-			},
-			Body: request
-		})
+	return soapFetch(`ModifyAccount`, {
+		...request
 	});
 };

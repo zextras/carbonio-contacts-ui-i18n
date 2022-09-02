@@ -113,96 +113,94 @@ const DomainResources: FC = () => {
 			const types = 'resources';
 			const query = `${queryString}(&(!(zimbraIsSystemAccount=TRUE)))`;
 
-			searchDirectory(attrs, types, zimbraDomainName, query, offset, limit, 'name')
-				.then((response) => response.json())
-				.then((data) => {
-					const resourceListResponse = data?.Body?.SearchDirectoryResponse?.calresource || [];
-					if (resourceListResponse && Array.isArray(resourceListResponse)) {
-						setTotalAccount(data?.Body?.SearchDirectoryResponse?.searchTotal);
-						const rList: any[] = [];
-						resourceListResponse.forEach((item: any, index: number) => {
-							rList.push({
-								id: item?.id,
-								columns: [
-									<Text
-										size="medium"
-										weight="light"
-										key={item?.id}
-										color="gray0"
-										onClick={(e: { stopPropagation: () => void }): void => {
-											e.stopPropagation();
-											setSelectedResourceList(item);
-											handleClick(e);
-										}}
-									>
-										{item?.a?.find((a: any) => a?.n === 'displayName')?._content}
-									</Text>,
-									<Text
-										size="medium"
-										weight="light"
-										key={item?.id}
-										color="gray0"
-										onClick={(e: { stopPropagation: () => void }): void => {
-											e.stopPropagation();
-											setSelectedResourceList(item);
-											handleClick(e);
-										}}
-									>
-										{item?.name}
-									</Text>,
-									<Text
-										size="medium"
-										weight="light"
-										key={item?.id}
-										color="gray0"
-										onClick={(e: { stopPropagation: () => void }): void => {
-											e.stopPropagation();
-											setSelectedResourceList(item);
-											handleClick(e);
-										}}
-									>
-										{item?.a?.find((a: any) => a?.n === 'zimbraAccountStatus')?._content}
-									</Text>,
-									<Text
-										size="medium"
-										weight="light"
-										key={item?.id}
-										color="gray0"
-										onClick={(e: { stopPropagation: () => void }): void => {
-											e.stopPropagation();
-											setSelectedResourceList(item);
-											handleClick(e);
-										}}
-									>
-										{item?.a?.find((a: any) => a?.n === 'zimbraLastLogonTimestamp')?._content
-											? moment(
-													item?.a?.find((a: any) => a?.n === 'zimbraLastLogonTimestamp')?._content,
-													'YYYYMMDDHHmmss.Z'
-											  ).format('YY/MM/DD | hh:MM')
-											: t('label.never_logged_in', 'Never logged In')}
-									</Text>,
-									<Text
-										size="medium"
-										weight="light"
-										key={item?.id}
-										color="gray0"
-										onClick={(e: { stopPropagation: () => void }): void => {
-											e.stopPropagation();
-											setSelectedResourceList(item);
-											handleClick(e);
-										}}
-									>
-										{item?.a?.find((a: any) => a?.n === 'description')?._content}
-									</Text>
-								],
-								item,
-								clickable: true
-							});
+			searchDirectory(attrs, types, zimbraDomainName, query, offset, limit, 'name').then((data) => {
+				const resourceListResponse = data?.calresource || [];
+				if (resourceListResponse && Array.isArray(resourceListResponse)) {
+					setTotalAccount(data?.searchTotal);
+					const rList: any[] = [];
+					resourceListResponse.forEach((item: any, index: number) => {
+						rList.push({
+							id: item?.id,
+							columns: [
+								<Text
+									size="medium"
+									weight="light"
+									key={item?.id}
+									color="gray0"
+									onClick={(e: { stopPropagation: () => void }): void => {
+										e.stopPropagation();
+										setSelectedResourceList(item);
+										handleClick(e);
+									}}
+								>
+									{item?.a?.find((a: any) => a?.n === 'displayName')?._content}
+								</Text>,
+								<Text
+									size="medium"
+									weight="light"
+									key={item?.id}
+									color="gray0"
+									onClick={(e: { stopPropagation: () => void }): void => {
+										e.stopPropagation();
+										setSelectedResourceList(item);
+										handleClick(e);
+									}}
+								>
+									{item?.name}
+								</Text>,
+								<Text
+									size="medium"
+									weight="light"
+									key={item?.id}
+									color="gray0"
+									onClick={(e: { stopPropagation: () => void }): void => {
+										e.stopPropagation();
+										setSelectedResourceList(item);
+										handleClick(e);
+									}}
+								>
+									{item?.a?.find((a: any) => a?.n === 'zimbraAccountStatus')?._content}
+								</Text>,
+								<Text
+									size="medium"
+									weight="light"
+									key={item?.id}
+									color="gray0"
+									onClick={(e: { stopPropagation: () => void }): void => {
+										e.stopPropagation();
+										setSelectedResourceList(item);
+										handleClick(e);
+									}}
+								>
+									{item?.a?.find((a: any) => a?.n === 'zimbraLastLogonTimestamp')?._content
+										? moment(
+												item?.a?.find((a: any) => a?.n === 'zimbraLastLogonTimestamp')?._content,
+												'YYYYMMDDHHmmss.Z'
+										  ).format('YY/MM/DD | hh:MM')
+										: t('label.never_logged_in', 'Never logged In')}
+								</Text>,
+								<Text
+									size="medium"
+									weight="light"
+									key={item?.id}
+									color="gray0"
+									onClick={(e: { stopPropagation: () => void }): void => {
+										e.stopPropagation();
+										setSelectedResourceList(item);
+										handleClick(e);
+									}}
+								>
+									{item?.a?.find((a: any) => a?.n === 'description')?._content}
+								</Text>
+							],
+							item,
+							clickable: true
 						});
-						setResourceList(rList);
-						setIsUpdateRecord(false);
-					}
-				});
+					});
+					setResourceList(rList);
+					setIsUpdateRecord(false);
+				}
+			});
 		},
 		[offset, limit, t, handleClick]
 	);
@@ -279,9 +277,8 @@ const DomainResources: FC = () => {
 			zimbraPrefCalendarAutoDenySignatureId
 		) => {
 			createResource(name, password, attr)
-				.then((response) => response.json())
 				.then((data) => {
-					const resourceId = data?.Body?.CreateCalendarResourceResponse?.calresource[0]?.id;
+					const resourceId = data?.calresource[0]?.id;
 					if (resourceId) {
 						if (signatureList && signatureList.length > 0) {
 							const requests: any[] = [];
@@ -289,7 +286,7 @@ const DomainResources: FC = () => {
 								requests.push(createSignature(resourceId, item?.name, item?.content[0]?._content));
 							});
 							Promise.all(requests)
-								.then((responses) => Promise.all(responses.map((response) => response.json())))
+								.then((responses) => Promise.all(responses))
 								.then((resData) => {
 									if (
 										zimbraPrefCalendarAutoAcceptSignatureId?.value === '' &&
@@ -335,14 +332,13 @@ const DomainResources: FC = () => {
 											attrList.push({ n: ele, _content: signtureAttr[ele] })
 										);
 										modifyCalendarResource(resourceId, attrList)
-											.then((response) => response.json())
 											.then((modifyData) => {
 												setShowCreateResourceView(false);
 												successSnackBar(resourceName);
 												setIsUpdateRecord(true);
 											})
 											.catch((error) => {
-												errorSnackBar();
+												errorSnackBar(error?.message);
 											});
 									}
 								})
@@ -354,12 +350,10 @@ const DomainResources: FC = () => {
 							successSnackBar(resourceName);
 							setIsUpdateRecord(true);
 						}
-					} else {
-						errorSnackBar(data?.Body?.Fault?.Reason?.Text);
 					}
 				})
 				.catch((error) => {
-					errorSnackBar();
+					errorSnackBar(error?.message);
 				});
 		},
 		[errorSnackBar, successSnackBar]

@@ -48,11 +48,9 @@ const AccountDetailView: FC<any> = ({
 	const { accountDetail } = conext;
 
 	const getDataSourceDetail = useCallback((): void => {
-		getMailboxQuota(selectedAccount?.id)
-			.then((response) => response.json())
-			.then((data) => {
-				setUsedQuota(data?.Body?.GetMailboxResponse?.mbox?.[0]?.s || 0);
-			});
+		getMailboxQuota(selectedAccount?.id).then((data) => {
+			setUsedQuota(data?.mbox?.[0]?.s || 0);
+		});
 	}, [selectedAccount?.id]);
 	useEffect(() => {
 		getDataSourceDetail();

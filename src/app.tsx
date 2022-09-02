@@ -5,7 +5,18 @@
  */
 
 import React, { FC, lazy, Suspense, useCallback, useEffect, useMemo } from 'react';
-import { addRoute, registerActions, setAppContext, Spinner } from '@zextras/carbonio-shell-ui';
+import {
+	addRoute,
+	registerActions,
+	setAppContext,
+	Spinner,
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
+	getSoapFetchRequest,
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
+	postSoapFetchRequest
+} from '@zextras/carbonio-shell-ui';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import {
@@ -36,7 +47,6 @@ import { useServerStore } from './store/server/store';
 import { useGlobalConfigStore } from './store/global-config/store';
 import { useBackupModuleStore } from './store/backup-module/store';
 import { getAllServers } from './services/get-all-servers-service';
-import { getConfig } from './services/get-config';
 import { useConfigStore } from './store/config/store';
 import { getAllConfig } from './services/get-all-config';
 
@@ -498,70 +508,48 @@ const App: FC = () => {
 
 	const checkIsBackupModuleEnable = useCallback(
 		(servers) => {
-			fetch(`/service/extension/zextras_admin/core/getAllServers?module=zxbackup`, {
-				method: 'GET',
-				credentials: 'include'
-			})
-				.then((response) => response.json())
-				.then((data) => {
-					const backupServer = data?.servers;
-					if (backupServer && Array.isArray(backupServer) && backupServer.length > 0) {
-						setBackupModuleEnable(true);
-					} else {
-						setBackupModuleEnable(false);
-					}
-				});
+			getSoapFetchRequest(
+				`/service/extension/zextras_admin/core/getAllServers?module=zxbackup`
+			).then((data: any) => {
+				const backupServer = data?.servers;
+				if (backupServer && Array.isArray(backupServer) && backupServer.length > 0) {
+					setBackupModuleEnable(true);
+				} else {
+					setBackupModuleEnable(false);
+				}
+			});
 		},
 		[setBackupModuleEnable]
 	);
 	const getGlobalConfig = useCallback(
 		(serverName) => {
-			fetch(`/service/admin/soap/zextras`, {
-				method: 'POST',
-				credentials: 'include',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({
-					Header: {
-						context: {
-							_jsns: 'urn:zimbra',
-							session: {}
-						}
-					},
-					Body: {
-						zextras: {
-							_jsns: 'urn:zimbraAdmin',
-							module: 'ZxConfig',
-							action: 'dump_global_config',
-							targetServers: serverName
-						}
-					}
-				})
-			})
-				.then((response) => response.json())
-				.then((data) => {
-					const responseData = JSON.parse(data?.Body?.response?.content);
-					const globalConfig = responseData?.response[serverName]?.response;
-					if (globalConfig) {
-						setGlobalConfig(globalConfig);
-					}
-				});
+			postSoapFetchRequest(`/service/admin/soap/zextras`, {
+				zextras: {
+					_jsns: 'urn:zimbraAdmin',
+					module: 'ZxConfig',
+					action: 'dump_global_config',
+					targetServers: serverName
+				}
+			}).then((data: any) => {
+				const responseData = JSON.parse(data?.Body?.response?.content);
+				const globalConfig = responseData?.response[serverName]?.response;
+				if (globalConfig) {
+					setGlobalConfig(globalConfig);
+				}
+			});
 		},
 		[setGlobalConfig]
 	);
 
 	const getAllServersRequest = useCallback(() => {
-		getAllServers()
-			.then((response) => response.json())
-			.then((data) => {
-				const server = data?.Body?.GetAllServersResponse?.server;
-				if (server && Array.isArray(server) && server.length > 0) {
-					setServerList(server);
-					checkIsBackupModuleEnable(server);
-					getGlobalConfig(server[0]?.name);
-				}
-			});
+		getAllServers().then((data) => {
+			const server = data?.server;
+			if (server && Array.isArray(server) && server.length > 0) {
+				setServerList(server);
+				checkIsBackupModuleEnable(server);
+				getGlobalConfig(server[0]?.name);
+			}
+		});
 	}, [setServerList, getGlobalConfig, checkIsBackupModuleEnable]);
 
 	useEffect(() => {
@@ -569,17 +557,12 @@ const App: FC = () => {
 	}, [getAllServersRequest]);
 
 	const getAllConfigRequest = useCallback(() => {
-		getAllConfig()
-			.then((response) => response.json())
-			.then((data) => {
-				if (
-					data?.Body?.GetAllConfigResponse?.a &&
-					Array.isArray(data?.Body?.GetAllConfigResponse?.a)
-				) {
-					const allConfig = data?.Body?.GetAllConfigResponse?.a;
-					setConfig(allConfig);
-				}
-			});
+		getAllConfig().then((data) => {
+			if (data?.a && Array.isArray(data?.a)) {
+				const allConfig = data?.a;
+				setConfig(allConfig);
+			}
+		});
 	}, [setConfig]);
 
 	useEffect(() => {

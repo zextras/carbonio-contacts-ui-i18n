@@ -4,23 +4,16 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import { soapFetch } from '@zextras/carbonio-shell-ui';
+
 export const renameDistributionList = async (dlId: string, newName?: string): Promise<any> => {
 	const request: any = {
-		RenameDistributionListRequest: {
-			_jsns: 'urn:zimbraAdmin',
-			id: dlId,
-			newName
-		}
+		_jsns: 'urn:zimbraAdmin',
+		id: dlId,
+		newName
 	};
 
-	return fetch(`/service/admin/soap/RenameDistributionListRequest`, {
-		method: 'POST',
-		credentials: 'include',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			Body: request
-		})
+	return soapFetch(`RenameDistributionList`, {
+		...request
 	});
 };

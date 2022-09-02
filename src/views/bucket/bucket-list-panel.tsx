@@ -134,7 +134,7 @@ const BucketListPanel: FC = () => {
 		fetchSoap('GetAllServersRequest', {
 			...(!service ? { _jsns: 'urn:zimbraAdmin' } : { _jsns: 'urn:zimbraAdmin', service })
 		}).then((response) => {
-			const serverResponseData = response.GetAllServersResponse.server;
+			const serverResponseData = response?.Body?.GetAllServersResponse.server;
 			if (serverResponseData.length !== 0) {
 				setVolumeList(serverResponseData);
 				setAllServersList(serverResponseData);

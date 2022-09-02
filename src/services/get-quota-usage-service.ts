@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import { soapFetch } from '@zextras/carbonio-shell-ui';
+
 export const getQuotaUsage = async (
 	domainName: string,
 	offset?: number,
@@ -11,30 +13,15 @@ export const getQuotaUsage = async (
 	propSortBy?: string
 ): Promise<any> => {
 	const request: any = {
-		GetQuotaUsageRequest: {
-			_jsns: 'urn:zimbraAdmin',
-			sortBy: propSortBy || 'totalUsed',
-			offset: offset || 0,
-			limit: limit || 50,
-			refresh: '1',
-			domain: domainName,
-			allServers: '1'
-		}
+		_jsns: 'urn:zimbraAdmin',
+		sortBy: propSortBy || 'totalUsed',
+		offset: offset || 0,
+		limit: limit || 50,
+		refresh: '1',
+		domain: domainName,
+		allServers: '1'
 	};
-	return fetch(`/service/admin/soap/GetQuotaUsageRequest`, {
-		method: 'POST',
-		credentials: 'include',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			Header: {
-				context: {
-					_jsns: 'urn:zimbra',
-					session: {}
-				}
-			},
-			Body: request
-		})
+	return soapFetch(`GetQuotaUsage`, {
+		...request
 	});
 };

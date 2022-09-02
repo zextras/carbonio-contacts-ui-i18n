@@ -4,19 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import { soapFetch } from '@zextras/carbonio-shell-ui';
+
 export const modifyConfig = async (a: Array<any>): Promise<any> =>
-	fetch(`/service/admin/soap/ModifyConfigRequest`, {
-		method: 'POST',
-		credentials: 'include',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			Body: {
-				ModifyConfigRequest: {
-					_jsns: 'urn:zimbraAdmin',
-					a
-				}
-			}
-		})
+	soapFetch(`ModifyConfig`, {
+		_jsns: 'urn:zimbraAdmin',
+		a
 	});

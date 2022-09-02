@@ -4,40 +4,31 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import {
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
+	postSoapFetchRequest
+} from '@zextras/carbonio-shell-ui';
+
 export const modifySignature = async (
 	id: string,
 	signatureId: string,
 	signaturName: string,
 	content: string
 ): Promise<any> =>
-	fetch(`/service/admin/soap/ModifySignatureRequest`, {
-		method: 'POST',
-		credentials: 'include',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			Header: {
-				context: {
-					_jsns: 'urn:zimbra',
-					account: {
-						by: 'id',
-						_content: id
-					}
-				}
-			},
-			Body: {
-				ModifySignatureRequest: {
-					_jsns: 'urn:zimbraAccount',
-					signature: {
-						name: signaturName,
-						id: signatureId,
-						content: {
-							type: 'text/plain',
-							_content: content
-						}
-					}
+	postSoapFetchRequest(
+		`/service/admin/soap/ModifySignatureRequest`,
+		{
+			_jsns: 'urn:zimbraAccount',
+			signature: {
+				name: signaturName,
+				id: signatureId,
+				content: {
+					type: 'text/plain',
+					_content: content
 				}
 			}
-		})
-	});
+		},
+		'ModifySignatureRequest',
+		id
+	);

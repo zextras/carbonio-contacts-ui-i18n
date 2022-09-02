@@ -4,18 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import { soapFetch } from '@zextras/carbonio-shell-ui';
+
 export const getAllConfig = async (): Promise<any> =>
-	fetch(`/service/admin/soap/GetAllConfigRequest`, {
-		method: 'POST',
-		credentials: 'include',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			Body: {
-				GetAllConfigRequest: {
-					_jsns: 'urn:zimbraAdmin'
-				}
-			}
-		})
+	soapFetch(`GetAllConfig`, {
+		_jsns: 'urn:zimbraAdmin'
 	});

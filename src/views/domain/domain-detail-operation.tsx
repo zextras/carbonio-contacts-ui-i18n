@@ -40,14 +40,12 @@ const DomainOperations: FC = () => {
 
 	const getSelectedDomainInformation = useCallback(
 		(id: any): any => {
-			getDomainInformation(id)
-				.then((response) => response.json())
-				.then((data) => {
-					const domain = data?.Body?.GetDomainResponse?.domain[0];
-					if (domain) {
-						setDomain(domain);
-					}
-				});
+			getDomainInformation(id).then((data) => {
+				const domain = data?.domain[0];
+				if (domain) {
+					setDomain(domain);
+				}
+			});
 		},
 		[setDomain]
 	);
@@ -56,14 +54,12 @@ const DomainOperations: FC = () => {
 		const attrs = 'cn,description';
 		const types = 'coses';
 
-		searchDirectory(attrs, types, '', '')
-			.then((response) => response.json())
-			.then((data) => {
-				const cosLists = data?.Body?.SearchDirectoryResponse?.cos;
-				if (cosLists) {
-					setCosList(cosLists);
-				}
-			});
+		searchDirectory(attrs, types, '', '').then((data) => {
+			const cosLists = data?.cos;
+			if (cosLists) {
+				setCosList(cosLists);
+			}
+		});
 	}, [setCosList]);
 
 	useEffect(() => {

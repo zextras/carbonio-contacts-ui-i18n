@@ -4,30 +4,19 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import {
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
+	postSoapFetchRequest
+} from '@zextras/carbonio-shell-ui';
+
 export const dumpGlobalConfig = async (serverName: string): Promise<any> => {
 	const request: any = {
-		zextras: {
-			_jsns: 'urn:zimbraAdmin',
-			module: 'ZxConfig',
-			action: 'dump_global_config',
-			targetServers: serverName
-		}
+		_jsns: 'urn:zimbraAdmin',
+		module: 'ZxConfig',
+		action: 'dump_global_config',
+		targetServers: serverName
 	};
 
-	return fetch(`/service/admin/soap/zextras`, {
-		method: 'POST',
-		credentials: 'include',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			Header: {
-				context: {
-					_jsns: 'urn:zimbra',
-					session: {}
-				}
-			},
-			Body: request
-		})
-	});
+	return postSoapFetchRequest(`/service/admin/soap/zextras`, request, 'zextras');
 };

@@ -146,7 +146,7 @@ export const SignatureDetail: FC<any> = ({
 	const _createSignature = useCallback((): void => {
 		if (accountId) {
 			createSignature(accountId, signatureName, signatureContent)
-				.then((response) => response.json())
+				// 	.then((response) => response.json())
 				.then((data) => {
 					console.log({ data });
 					if (data?.Body?.Reason?.Text) {
@@ -226,15 +226,15 @@ export const SignatureDetail: FC<any> = ({
 
 	const _modifySignature = useCallback(() => {
 		if (accountId) {
-			modifySignature(accountId, selectedSignature[0], signatureName, signatureContent)
-				.then((response) => response.json())
-				.then((data) => {
+			modifySignature(accountId, selectedSignature[0], signatureName, signatureContent).then(
+				(data) => {
 					const _signature = data?.Body?.ModifySignatureResponse;
 					if (_signature) {
 						modifySignatureIntoList(selectedSignature[0], signatureName, signatureContent);
 					}
 					setIsOpenCreateEditSignatureDialog(false);
-				});
+				}
+			);
 		} else {
 			modifySignatureIntoList(selectedSignature[0], signatureName, signatureContent);
 			setIsOpenCreateEditSignatureDialog(false);

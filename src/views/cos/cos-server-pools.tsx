@@ -43,14 +43,12 @@ const CosServerPools: FC = () => {
 	const [searchServer, setSearchServer] = useState<string>('');
 
 	const getAllServer = (): any => {
-		getAllServers()
-			.then((res) => res.json())
-			.then((data) => {
-				const server = data?.Body?.GetAllServersResponse?.server;
-				if (!!data && server && Array.isArray(server)) {
-					setServerList(server);
-				}
-			});
+		getAllServers().then((data) => {
+			const server = data?.server;
+			if (!!data && server && Array.isArray(server)) {
+				setServerList(server);
+			}
+		});
 	};
 
 	useMemo(() => {
@@ -214,9 +212,8 @@ const CosServerPools: FC = () => {
 	const onModifyCOS = useCallback(
 		(body) => {
 			modifyCos(body)
-				.then((response) => response.json())
 				.then((data) => {
-					const cos: any = data?.Body?.ModifyCosResponse?.cos[0];
+					const cos: any = data?.cos[0];
 					if (cos) {
 						createSnackbar({
 							key: 'success',
@@ -230,18 +227,21 @@ const CosServerPools: FC = () => {
 							replace: true
 						});
 						setCos(cos);
-					} else {
-						createSnackbar({
-							key: 'error',
-							type: 'error',
-							label: data?.Body?.Fault?.Reason?.Text,
-							autoHideTimeout: 3000,
-							hideButton: true,
-							replace: true
-						});
 					}
 					setOpenConfirmDialog(false);
 					setSelectedTableRows([]);
+				})
+				.catch((error) => {
+					createSnackbar({
+						key: 'error',
+						type: 'error',
+						label: error?.message
+							? error?.message
+							: t('label.something_wrong_error_msg', 'Something went wrong. Please try again.'),
+						autoHideTimeout: 3000,
+						hideButton: true,
+						replace: true
+					});
 				});
 		},
 		[createSnackbar, t, setCos]

@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import { soapFetch } from '@zextras/carbonio-shell-ui';
+
 export const searchDirectory = async (
 	attr: string,
 	type: string,
@@ -14,40 +16,25 @@ export const searchDirectory = async (
 	sortBy?: string
 ): Promise<any> => {
 	const request: any = {
-		SearchDirectoryRequest: {
-			_jsns: 'urn:zimbraAdmin',
-			limit: limit || 50,
-			offset: offset || 0,
-			sortAscending: '1',
-			applyCos: 'false',
-			applyConfig: 'false',
-			attrs: attr,
-			types: type
-		}
+		_jsns: 'urn:zimbraAdmin',
+		limit: limit || 50,
+		offset: offset || 0,
+		sortAscending: '1',
+		applyCos: 'false',
+		applyConfig: 'false',
+		attrs: attr,
+		types: type
 	};
 	if (domainName !== '') {
-		request.SearchDirectoryRequest.domain = domainName;
+		request.domain = domainName;
 	}
 	if (query !== '') {
-		request.SearchDirectoryRequest.query = query;
+		request.query = query;
 	}
 	if (sortBy !== '') {
-		request.SearchDirectoryRequest.sortBy = sortBy;
+		request.sortBy = sortBy;
 	}
-	return fetch(`/service/admin/soap/SearchDirectoryRequest`, {
-		method: 'POST',
-		credentials: 'include',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			Header: {
-				context: {
-					_jsns: 'urn:zimbra',
-					session: {}
-				}
-			},
-			Body: request
-		})
+	return soapFetch(`SearchDirectory`, {
+		...request
 	});
 };

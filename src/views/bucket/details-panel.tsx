@@ -182,7 +182,7 @@ const DetailsPanel: FC<{
 			targetServers: server,
 			bucketId: bucketDetail.uuid
 		}).then((res) => {
-			const response = JSON.parse(res.response.content);
+			const response = JSON.parse(res.Body.response.content);
 			if (response.ok && response.response[server] && response.response[server].ok) {
 				setVerify('success');
 				setButtonLabel(t('label.verify_connector_verified', ' VERIFIED'));

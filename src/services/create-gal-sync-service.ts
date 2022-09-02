@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import { soapFetch } from '@zextras/carbonio-shell-ui';
+
 export const createGalSyncAccount = async (
 	name: string,
 	folder: string,
@@ -14,27 +16,18 @@ export const createGalSyncAccount = async (
 	a?: Array<any>
 ): Promise<any> => {
 	const request: any = {
-		CreateGalSyncAccountRequest: {
-			_jsns: 'urn:zimbraAdmin',
-			name,
-			folder,
-			domain: domainName,
-			server,
-			type,
-			account
-		}
+		_jsns: 'urn:zimbraAdmin',
+		name,
+		folder,
+		domain: domainName,
+		server,
+		type,
+		account
 	};
 	if (a) {
-		request.CreateGalSyncAccountRequest.a = a;
+		request.a = a;
 	}
-	return fetch(`/service/admin/soap/CreateGalSyncAccountRequest`, {
-		method: 'POST',
-		credentials: 'include',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			Body: request
-		})
+	return soapFetch(`CreateGalSyncAccount`, {
+		...request
 	});
 };

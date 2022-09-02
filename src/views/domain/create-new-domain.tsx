@@ -77,31 +77,29 @@ const CreateDomain: FC = () => {
 				_content: 'domain.tld'
 			}
 		];
-		createObjectAttribute(target, domain)
-			.then((response) => response.json())
-			.then((data) => {
-				const obj: any = {};
-				const allData = data?.Body?.GetCreateObjectAttrsResponse?.setAttrs[0]?.a;
-				if (allData && allData.length > 0) {
-					allData.map((item: any) => {
-						if (item?.default) {
-							obj[item?.n] = item.default;
-						} else {
-							obj[item?.n] = [];
-						}
-						return '';
-					});
-					const hostnames = obj?.zimbraPublicServiceHostname[0]?.v;
-					if (hostnames && Array.isArray(hostnames)) {
-						const hostNameList = hostnames.map((item): any => ({
-							label: item?._content,
-							value: item?._content
-						}));
-						setZimbraPublicServiceHostnameList(hostNameList);
+		createObjectAttribute(target, domain).then((data) => {
+			const obj: any = {};
+			const allData = data?.setAttrs[0]?.a;
+			if (allData && allData.length > 0) {
+				allData.map((item: any) => {
+					if (item?.default) {
+						obj[item?.n] = item.default;
+					} else {
+						obj[item?.n] = [];
 					}
-					setCreateObjectAttributeData(obj);
+					return '';
+				});
+				const hostnames = obj?.zimbraPublicServiceHostname[0]?.v;
+				if (hostnames && Array.isArray(hostnames)) {
+					const hostNameList = hostnames.map((item): any => ({
+						label: item?._content,
+						value: item?._content
+					}));
+					setZimbraPublicServiceHostnameList(hostNameList);
 				}
-			});
+				setCreateObjectAttributeData(obj);
+			}
+		});
 	};
 
 	const onPublicServiceProtocolChange = (v: any): any => {
@@ -128,7 +126,7 @@ const CreateDomain: FC = () => {
 	};
 
 	const routeToDomain = (resp: any): void => {
-		const domainId = resp?.Body?.CreateDomainResponse?.domain[0]?.id;
+		const domainId = resp?.domain[0]?.id;
 		if (domainId) {
 			replaceHistory(`/${domainId}/general_settings`);
 		} else {
@@ -169,7 +167,6 @@ const CreateDomain: FC = () => {
 		});
 
 		createDomain(domainName, attributes)
-			.then((response) => response.json())
 			.then((data) => {
 				if (zimbraPublisServiceHostname && galSyncAccountName !== '' && dataSourceName) {
 					attributes = [];
@@ -190,12 +187,10 @@ const CreateDomain: FC = () => {
 						account,
 						GAL_MODE.INTERNAL,
 						attributes
-					)
-						.then((response) => response.json())
-						.then((resp) => {
-							showSuccessSnackBar();
-							routeToDomain(data);
-						});
+					).then((resp) => {
+						showSuccessSnackBar();
+						routeToDomain(data);
+					});
 				} else {
 					const domain: any = data?.Body?.CreateDomainResponse?.domain[0];
 					if (domain) {
@@ -217,7 +212,9 @@ const CreateDomain: FC = () => {
 				createSnackbar({
 					key: 'error',
 					type: 'error',
-					label: t('label.something_wrong_error_msg', 'Something went wrong. Please try again.'),
+					label: error?.message
+						? error?.message
+						: t('label.something_wrong_error_msg', 'Something went wrong. Please try again.'),
 					autoHideTimeout: 3000,
 					hideButton: true,
 					replace: true

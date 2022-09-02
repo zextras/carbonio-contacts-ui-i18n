@@ -4,29 +4,16 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import { soapFetch } from '@zextras/carbonio-shell-ui';
+
 export const setPasswordRequest = async (id: string, newPassword: string): Promise<any> => {
 	const request: any = {
-		SetPasswordRequest: {
-			_jsns: 'urn:zimbraAdmin',
-			id,
-			newPassword
-		}
+		_jsns: 'urn:zimbraAdmin',
+		id,
+		newPassword
 	};
 
-	return fetch(`/service/admin/soap/SetPasswordRequest`, {
-		method: 'POST',
-		credentials: 'include',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			Header: {
-				context: {
-					_jsns: 'urn:zimbra',
-					session: {}
-				}
-			},
-			Body: request
-		})
+	return soapFetch(`SetPassword`, {
+		...request
 	});
 };

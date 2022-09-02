@@ -4,16 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import { soapFetch } from '@zextras/carbonio-shell-ui';
+
 export const renameCos = async (body: JSON): Promise<any> =>
-	fetch(`/service/admin/soap/RanemCosRequest`, {
-		method: 'POST',
-		credentials: 'include',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			Body: {
-				RenameCosRequest: body
-			}
-		})
+	soapFetch(`RenameCos`, {
+		...body
 	});

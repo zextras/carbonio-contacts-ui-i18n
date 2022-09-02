@@ -109,59 +109,57 @@ const DomainMailboxQuotaSetting: FC = () => {
 
 	const getQuotaUsageInformation = useCallback(
 		(domainName: string): void => {
-			getQuotaUsage(domainName, offset, limit)
-				.then((response) => response.json())
-				.then((data) => {
-					const usedQuota: any = data?.Body?.GetQuotaUsageResponse?.account;
-					if (usedQuota && Array.isArray(usedQuota)) {
-						const quota: any = [];
-						if (data?.Body?.GetQuotaUsageResponse?.searchTotal) {
-							setTotalAccount(data?.Body?.GetQuotaUsageResponse?.searchTotal);
-						}
-						usedQuota.map((item: any, index): any => {
-							let diskUsed: any = 0;
-							let quotaLimit: any = 0;
-							let percentage: any = 0;
-
-							if (item?.used) {
-								diskUsed = ((item?.used || 0) / BYTE_PER_MB).toFixed(2);
-							}
-
-							if (item?.limit === 0) {
-								quotaLimit = t('label.unlimited', 'Unlimited');
-								percentage = 0;
-							} else {
-								if (item?.limit >= BYTE_PER_MB) {
-									quotaLimit = ((item?.limit || 0) / BYTE_PER_MB).toFixed();
-								} else {
-									quotaLimit = 1;
-								}
-								percentage = ((diskUsed * 100) / quotaLimit).toFixed();
-							}
-							diskUsed += ` ${t('label.mb', 'MB')}`;
-							quotaLimit += ` ${t('label.mb', 'MB')}`;
-							percentage += '%';
-							quota.push({
-								id: index.toString(),
-								columns: [
-									'',
-									<Text size="medium" weight="bold" key={item?.id} color="#828282">
-										{item?.name}
-									</Text>,
-									<Text size="medium" weight="bold" key={item?.id} color="#828282">
-										{diskUsed}
-									</Text>,
-									<Text size="medium" weight="bold" key={item?.id} color="#828282">
-										{`${quotaLimit} / ${percentage}`}
-									</Text>
-								]
-							});
-							return '';
-						});
-						setUsageQuota([]);
-						setUsageQuota(quota);
+			getQuotaUsage(domainName, offset, limit).then((data) => {
+				const usedQuota: any = data?.account;
+				if (usedQuota && Array.isArray(usedQuota)) {
+					const quota: any = [];
+					if (data?.Body?.GetQuotaUsageResponse?.searchTotal) {
+						setTotalAccount(data?.Body?.GetQuotaUsageResponse?.searchTotal);
 					}
-				});
+					usedQuota.map((item: any, index): any => {
+						let diskUsed: any = 0;
+						let quotaLimit: any = 0;
+						let percentage: any = 0;
+
+						if (item?.used) {
+							diskUsed = ((item?.used || 0) / BYTE_PER_MB).toFixed(2);
+						}
+
+						if (item?.limit === 0) {
+							quotaLimit = t('label.unlimited', 'Unlimited');
+							percentage = 0;
+						} else {
+							if (item?.limit >= BYTE_PER_MB) {
+								quotaLimit = ((item?.limit || 0) / BYTE_PER_MB).toFixed();
+							} else {
+								quotaLimit = 1;
+							}
+							percentage = ((diskUsed * 100) / quotaLimit).toFixed();
+						}
+						diskUsed += ` ${t('label.mb', 'MB')}`;
+						quotaLimit += ` ${t('label.mb', 'MB')}`;
+						percentage += '%';
+						quota.push({
+							id: index.toString(),
+							columns: [
+								'',
+								<Text size="medium" weight="bold" key={item?.id} color="#828282">
+									{item?.name}
+								</Text>,
+								<Text size="medium" weight="bold" key={item?.id} color="#828282">
+									{diskUsed}
+								</Text>,
+								<Text size="medium" weight="bold" key={item?.id} color="#828282">
+									{`${quotaLimit} / ${percentage}`}
+								</Text>
+							]
+						});
+						return '';
+					});
+					setUsageQuota([]);
+					setUsageQuota(quota);
+				}
+			});
 		},
 		[t, offset, limit]
 	);
@@ -294,7 +292,6 @@ const DomainMailboxQuotaSetting: FC = () => {
 		});
 		body.a = attributes;
 		modifyDomain(body)
-			.then((response) => response.json())
 			.then((data) => {
 				createSnackbar({
 					key: 'success',
@@ -304,10 +301,22 @@ const DomainMailboxQuotaSetting: FC = () => {
 					hideButton: true,
 					replace: true
 				});
-				const domain: any = data?.Body?.ModifyDomainResponse?.domain[0];
+				const domain: any = data?.domain[0];
 				if (domain) {
 					setDomain(domain);
 				}
+			})
+			.catch((error) => {
+				createSnackbar({
+					key: 'error',
+					type: 'error',
+					label: error?.message
+						? error?.message
+						: t('label.something_wrong_error_msg', 'Something went wrong. Please try again.'),
+					autoHideTimeout: 3000,
+					hideButton: true,
+					replace: true
+				});
 			});
 	};
 

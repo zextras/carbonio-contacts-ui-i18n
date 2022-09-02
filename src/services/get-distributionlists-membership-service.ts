@@ -4,25 +4,18 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import { soapFetch } from '@zextras/carbonio-shell-ui';
+
 export const getDistributionListMembership = async (dlId: string): Promise<any> => {
 	const request: any = {
-		GetDistributionListMembershipRequest: {
-			_jsns: 'urn:zimbraAdmin',
-			dl: {
-				by: 'id',
-				_content: dlId
-			}
+		_jsns: 'urn:zimbraAdmin',
+		dl: {
+			by: 'id',
+			_content: dlId
 		}
 	};
 
-	return fetch(`/service/admin/soap/GetDistributionListMembershipRequest`, {
-		method: 'POST',
-		credentials: 'include',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			Body: request
-		})
+	return soapFetch(`GetDistributionListMembership`, {
+		...request
 	});
 };

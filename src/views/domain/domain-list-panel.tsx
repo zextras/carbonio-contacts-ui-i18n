@@ -67,16 +67,14 @@ const DomainListPanel: FC = () => {
 	const [isManageListExpanded, setIsManageListExpanded] = useState(true);
 	const getBackupModuleEnable = useBackupModuleStore((state) => state.backupModuleEnable);
 	const getDomainLists = (domainName: string): any => {
-		getDomainList(domainName)
-			.then((response) => response.json())
-			.then((data) => {
-				const searchResponse: any = data?.Body?.SearchDirectoryResponse;
-				if (!!searchResponse && searchResponse?.searchTotal > 0) {
-					setDomainList(searchResponse?.domain);
-				} else {
-					setDomainList([]);
-				}
-			});
+		getDomainList(domainName).then((data) => {
+			const searchResponse: any = data;
+			if (!!searchResponse && searchResponse?.searchTotal > 0) {
+				setDomainList(searchResponse?.domain);
+			} else {
+				setDomainList([]);
+			}
+		});
 	};
 
 	useEffect(() => {

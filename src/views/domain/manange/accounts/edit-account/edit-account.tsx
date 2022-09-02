@@ -150,9 +150,8 @@ const EditAccount: FC<{
 			modifiedData[ele] = accountDetail[ele];
 		});
 		modifyAccountRequest(initAccountDetail?.zimbraId, modifiedData)
-			.then((response) => response.json())
 			.then((data) => {
-				if (data?.Body?.ModifyAccountResponse) {
+				if (data) {
 					// setShowCreateAccountView(false);
 					createSnackbar({
 						key: 'success',
@@ -167,22 +166,15 @@ const EditAccount: FC<{
 					});
 					setInitAccountDetail({ ...accountDetail });
 					getAccountList();
-				} else {
-					createSnackbar({
-						key: 'error',
-						type: 'error',
-						label: data?.Body?.Fault?.Reason?.Text,
-						autoHideTimeout: 3000,
-						hideButton: true,
-						replace: true
-					});
 				}
 			})
 			.catch((error) => {
 				createSnackbar({
 					key: 'error',
 					type: 'error',
-					label: t('label.something_wrong_error_msg', 'Something went wrong. Please try again.'),
+					label: error?.message
+						? error?.message
+						: t('label.something_wrong_error_msg', 'Something went wrong. Please try again.'),
 					autoHideTimeout: 3000,
 					hideButton: true,
 					replace: true
