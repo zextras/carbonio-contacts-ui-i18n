@@ -162,7 +162,8 @@
         "note": "Note :",
         "options": "Options",
         "share_with": "Partager avec",
-        "app_name": "Contacts"
+        "app_name": "Contacts",
+        "tag": "Etiquette"
     },
     "name": {
         "nickName": "Surnom",
