@@ -179,8 +179,10 @@
         },
         "create_new_bucket": "NEW BUCKET",
         "filter_buckets_list": "Filter Buckets List",
+        "invalid_compression_thresold": "Compression Threshold is required",
         "invalid_prefix": "Prefix should not contains space, the allowed letters are a-z,A-z and special characters /-.",
         "invalid_volume_name": "Please fill the volume name field.",
+        "invalid_volume_path": "Volume path is required",
         "new": {
             "bucket_connection": "Bucket Connection"
         },
@@ -620,6 +622,7 @@
         "enable_automatic_adding_of_contacts": "Enable automatic adding of contacts",
         "enable_compression": "Enable Compression",
         "enable_current": "Enable as Current",
+        "enable_current_helptext": "Enabling this option will disable the current active volume.",
         "enable_mandatory_spell_check": "Enable mandatory spell check",
         "enable_past_due_reminders": "Enable past due reminders",
         "enable_start_tls": "Enable StartTLS",
