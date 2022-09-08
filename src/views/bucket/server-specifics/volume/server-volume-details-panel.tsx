@@ -56,21 +56,21 @@ const ServerVolumeDetailsPanel: FC<{
 			id: volumeDetail?.id
 		})
 			.then((response) => {
-				if (response.Body.GetVolumeResponse.volume[0].type === 1) {
+				if (response?.Body?.GetVolumeResponse?.volume[0]?.type === 1) {
 					setTypeLabel(PRIMARIES);
-				} else if (response.Body.GetVolumeResponse.volume[0].type === 2) {
+				} else if (response?.Body?.GetVolumeResponse?.volume[0]?.type === 2) {
 					setTypeLabel(SECONDARIES);
-				} else if (response.Body.GetVolumeResponse.volume[0].type === 10) {
+				} else if (response?.Body?.GetVolumeResponse?.volume[0]?.type === 10) {
 					setTypeLabel(INDEXERES);
 				}
 				setDetailData({
-					name: response.Body.GetVolumeResponse.volume[0].name,
-					id: response.Body.GetVolumeResponse.volume[0].id,
-					type: response.Body.GetVolumeResponse.volume[0].type,
-					compressBlobs: response.Body.GetVolumeResponse.volume[0].compressBlobs,
-					isCurrent: response.Body.GetVolumeResponse.volume[0].isCurrent,
-					rootpath: response.Body.GetVolumeResponse.volume[0].rootpath,
-					compressionThreshold: response.Body.GetVolumeResponse.volume[0].compressionThreshold
+					name: response?.Body?.GetVolumeResponse?.volume[0]?.name,
+					id: response?.Body?.GetVolumeResponse?.volume[0]?.id,
+					type: response?.Body?.GetVolumeResponse?.volume[0]?.type,
+					compressBlobs: response?.Body?.GetVolumeResponse?.volume[0]?.compressBlobs,
+					isCurrent: response?.Body?.GetVolumeResponse?.volume[0]?.isCurrent,
+					rootpath: response?.Body?.GetVolumeResponse?.volume[0]?.rootpath,
+					compressionThreshold: response?.Body?.GetVolumeResponse?.volume[0]?.compressionThreshold
 				});
 			})
 			.catch((error) => {

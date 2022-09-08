@@ -37,6 +37,7 @@ const VolumeListTable: FC<{
 	headers: any;
 	onClick: any;
 }> = ({ volumes, selectedRows, onSelectionChange, headers, onClick }) => {
+	const [t] = useTranslation();
 	const tableRows = useMemo(
 		() =>
 			volumes.map((v, i) => ({
@@ -87,7 +88,7 @@ const VolumeListTable: FC<{
 			/>
 			{tableRows.length === 0 && (
 				<Row padding={{ top: 'extralarge', horizontal: 'extralarge' }} width="fill">
-					<Text>Empty Table</Text>
+					<Text>{t('label.empty_table', 'Empty Table')}</Text>
 				</Row>
 			)}
 		</Container>
@@ -169,13 +170,13 @@ const VolumesDetailPanel: FC = () => {
 			_jsns: 'urn:zimbraAdmin'
 		})
 			.then((response) => {
-				const primaries = response.Body.GetAllVolumesResponse.volume.filter(
+				const primaries = response?.Body?.GetAllVolumesResponse?.volume.filter(
 					(item: any) => item.type === 1
 				);
-				const secondaries = response.Body.GetAllVolumesResponse.volume.filter(
+				const secondaries = response?.Body?.GetAllVolumesResponse?.volume.filter(
 					(item: any) => item.type === 2
 				);
-				const indexes = response.Body.GetAllVolumesResponse.volume.filter(
+				const indexes = response?.Body?.GetAllVolumesResponse?.volume.filter(
 					(item: any) => item.type === 10
 				);
 				setVolumeList({
@@ -208,7 +209,7 @@ const VolumesDetailPanel: FC = () => {
 			id
 		})
 			.then((res) => {
-				if (res.Body.DeleteVolumeResponse._jsns === 'urn:zimbraAdmin') {
+				if (res?.Body?.DeleteVolumeResponse?._jsns === 'urn:zimbraAdmin') {
 					createSnackbar({
 						key: '1',
 						type: 'success',
