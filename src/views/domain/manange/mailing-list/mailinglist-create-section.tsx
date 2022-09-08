@@ -232,9 +232,28 @@ const MailingListCreateSection: FC<any> = () => {
 						</Container>
 					</ListRow>
 				)}
-
-				<ListRow>
-					{!mailingListDetail?.dynamic && (
+				{mailingListDetail?.dynamic && (
+					<ListRow>
+						{!mailingListDetail?.dynamic && (
+							<Container
+								mainAlignment="flex-start"
+								crossAlignment="flex-start"
+								orientation="horizontal"
+								padding={{ top: 'large', right: 'small' }}
+							>
+								<Input
+									label={t('label.share_message_to_new_member', 'Share message to new members')}
+									backgroundColor="gray6"
+									size="medium"
+									value={
+										mailingListDetail?.zimbraDistributionListSendShareMessageToNewMembers
+											? t('label.yes', 'Yes')
+											: t('label.no', 'No')
+									}
+									readOnly
+								/>
+							</Container>
+						)}
 						<Container
 							mainAlignment="flex-start"
 							crossAlignment="flex-start"
@@ -242,53 +261,15 @@ const MailingListCreateSection: FC<any> = () => {
 							padding={{ top: 'large', right: 'small' }}
 						>
 							<Input
-								label={t('label.share_message_to_new_member', 'Share message to new members')}
+								label={t('label.hidden_from_gal', 'Hidden from GAL')}
 								backgroundColor="gray6"
 								size="medium"
 								value={
-									mailingListDetail?.zimbraDistributionListSendShareMessageToNewMembers
-										? t('label.yes', 'Yes')
-										: t('label.no', 'No')
+									mailingListDetail?.zimbraHideInGal ? t('label.yes', 'Yes') : t('label.no', 'No')
 								}
 								readOnly
 							/>
 						</Container>
-					)}
-					<Container
-						mainAlignment="flex-start"
-						crossAlignment="flex-start"
-						orientation="horizontal"
-						padding={{ top: 'large', right: 'small' }}
-					>
-						<Input
-							label={t('label.hidden_from_gal', 'Hidden from GAL')}
-							backgroundColor="gray6"
-							size="medium"
-							value={
-								mailingListDetail?.zimbraHideInGal ? t('label.yes', 'Yes') : t('label.no', 'No')
-							}
-							readOnly
-						/>
-					</Container>
-					<Container
-						mainAlignment="flex-start"
-						crossAlignment="flex-start"
-						orientation="horizontal"
-						padding={{ top: 'large', right: 'small' }}
-					>
-						<Input
-							label={t('label.can_receive_email', 'Can receive email')}
-							backgroundColor="gray6"
-							size="medium"
-							value={
-								mailingListDetail?.zimbraMailStatus ? t('label.yes', 'Yes') : t('label.no', 'No')
-							}
-							readOnly
-						/>
-					</Container>
-				</ListRow>
-				{!mailingListDetail?.dynamic && (
-					<ListRow>
 						<Container
 							mainAlignment="flex-start"
 							crossAlignment="flex-start"
@@ -296,30 +277,17 @@ const MailingListCreateSection: FC<any> = () => {
 							padding={{ top: 'large', right: 'small' }}
 						>
 							<Input
-								label={t('label.new_subscription_requests', 'New subscriptions requests')}
+								label={t('label.can_receive_email', 'Can receive email')}
 								backgroundColor="gray6"
 								size="medium"
-								value={subscription}
-								readOnly
-							/>
-						</Container>
-						<Container
-							mainAlignment="flex-start"
-							crossAlignment="flex-start"
-							orientation="horizontal"
-							padding={{ top: 'large', right: 'small' }}
-						>
-							<Input
-								label={t('label.unsubscribe_request', 'Unsubscription requests')}
-								backgroundColor="gray6"
-								size="medium"
-								value={unSubscription}
+								value={
+									mailingListDetail?.zimbraMailStatus ? t('label.yes', 'Yes') : t('label.no', 'No')
+								}
 								readOnly
 							/>
 						</Container>
 					</ListRow>
 				)}
-
 				{mailingListDetail?.dynamic && (
 					<>
 						<ListRow>
@@ -398,6 +366,95 @@ const MailingListCreateSection: FC<any> = () => {
 						<Table rows={ownerMember} headers={ownerTableHeader} showCheckbox={false} />
 					</Container>
 				</ListRow>
+
+				{!mailingListDetail?.dynamic && (
+					<ListRow>
+						{!mailingListDetail?.dynamic && (
+							<Container
+								mainAlignment="flex-start"
+								crossAlignment="flex-start"
+								orientation="horizontal"
+								padding={{ top: 'large', right: 'small' }}
+							>
+								<Input
+									label={t('label.share_message_to_new_member', 'Share message to new members')}
+									backgroundColor="gray6"
+									size="medium"
+									value={
+										mailingListDetail?.zimbraDistributionListSendShareMessageToNewMembers
+											? t('label.yes', 'Yes')
+											: t('label.no', 'No')
+									}
+									readOnly
+								/>
+							</Container>
+						)}
+						<Container
+							mainAlignment="flex-start"
+							crossAlignment="flex-start"
+							orientation="horizontal"
+							padding={{ top: 'large', right: 'small' }}
+						>
+							<Input
+								label={t('label.hidden_from_gal', 'Hidden from GAL')}
+								backgroundColor="gray6"
+								size="medium"
+								value={
+									mailingListDetail?.zimbraHideInGal ? t('label.yes', 'Yes') : t('label.no', 'No')
+								}
+								readOnly
+							/>
+						</Container>
+						<Container
+							mainAlignment="flex-start"
+							crossAlignment="flex-start"
+							orientation="horizontal"
+							padding={{ top: 'large', right: 'small' }}
+						>
+							<Input
+								label={t('label.can_receive_email', 'Can receive email')}
+								backgroundColor="gray6"
+								size="medium"
+								value={
+									mailingListDetail?.zimbraMailStatus ? t('label.yes', 'Yes') : t('label.no', 'No')
+								}
+								readOnly
+							/>
+						</Container>
+					</ListRow>
+				)}
+				{!mailingListDetail?.dynamic && (
+					<ListRow>
+						<Container
+							mainAlignment="flex-start"
+							crossAlignment="flex-start"
+							orientation="horizontal"
+							padding={{ top: 'large', right: 'small' }}
+						>
+							<Input
+								label={t('label.new_subscription_requests', 'New subscriptions requests')}
+								backgroundColor="gray6"
+								size="medium"
+								value={subscription}
+								readOnly
+							/>
+						</Container>
+						<Container
+							mainAlignment="flex-start"
+							crossAlignment="flex-start"
+							orientation="horizontal"
+							padding={{ top: 'large', right: 'small' }}
+						>
+							<Input
+								label={t('label.unsubscribe_request', 'Unsubscription requests')}
+								backgroundColor="gray6"
+								size="medium"
+								value={unSubscription}
+								readOnly
+							/>
+						</Container>
+					</ListRow>
+				)}
 			</Container>
 		</Container>
 	);
