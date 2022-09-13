@@ -342,7 +342,10 @@ const MailingListSettingsSection: FC<any> = () => {
 					>
 						<Switch
 							value={mailingListDetail?.zimbraDistributionListSendShareMessageToNewMembers}
-							label={t('label.share_message_to_new_member', 'Share message to new members')}
+							label={t(
+								'label.send_new_members_notification_for_share_assigned_to_this_group',
+								'Send new members a notification for the share/delegation assigned to this group'
+							)}
 							onClick={(): void => {
 								setMailingListDetail((prev: any) => ({
 									...prev,
@@ -383,7 +386,7 @@ const MailingListSettingsSection: FC<any> = () => {
 					>
 						<Switch
 							value={mailingListDetail?.zimbraMailStatus}
-							label={t('label.can_receive_email', 'Can receive email')}
+							label={t('label.this_list_can_receive_email', 'This list can receive emails')}
 							onClick={(): void => {
 								setMailingListDetail((prev: any) => ({
 									...prev,

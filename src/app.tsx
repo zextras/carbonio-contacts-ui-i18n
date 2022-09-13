@@ -105,9 +105,6 @@ const App: FC = () => {
 				header: t('label.default_settings', 'Default Settings'),
 				options: [
 					{
-						label: t('label.service_status', 'Service Status')
-					},
-					{
 						label: t('label.server_config', 'Server Config')
 					},
 					{
@@ -273,7 +270,7 @@ const App: FC = () => {
 						label: t('label.service_status', 'Service_Status')
 					},
 					{
-						label: t('label.volumes', 'Volumes')
+						label: t('label.data_volumes', 'Data Volumes')
 					},
 					{
 						label: t('label.hsm_policies', 'HSM Policies')

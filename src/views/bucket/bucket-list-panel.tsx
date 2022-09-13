@@ -11,7 +11,7 @@ import { replaceHistory } from '@zextras/carbonio-shell-ui';
 import styled from 'styled-components';
 import ListPanelItem from '../list/list-panel-item';
 import ListItems from '../list/list-items';
-import { BUCKET_LIST, SERVERS_LIST, VOLUME, HMS_SETTINGS, INDEXER_SETTINGS } from '../../constants';
+import { BUCKET_LIST, SERVERS_LIST, VOLUME, HSM_SETTINGS, INDEXER_SETTINGS, DATA_VOLUMES } from '../../constants';
 import { fetchSoap } from '../../services/bucket-service';
 import { useBucketVolumeStore } from '../../store/bucket-volume/store';
 import { useBucketServersListStore } from '../../store/bucket-server-list/store';
@@ -36,7 +36,7 @@ const BucketListPanel: FC = () => {
 			setIsStoreSelect(true);
 			setSelectedServerName(volume?.name);
 			setSearchVolumeName(volume?.name);
-			setSelectedOperationItem(VOLUME);
+			setSelectedOperationItem(DATA_VOLUMES);
 			setIsStoreVolumeSelect(true);
 			setIsVolumeListExpand(false);
 		},
@@ -87,13 +87,13 @@ const BucketListPanel: FC = () => {
 	const serverSpecificOption = useMemo(
 		() => [
 			{
-				id: VOLUME,
-				name: t('label.volume', 'Volume'),
+				id: DATA_VOLUMES,
+				name: t('label.data_volumes', 'Data Volumes'),
 				isSelected: isStoreVolumeSelect
 			},
 			{
-				id: HMS_SETTINGS,
-				name: t('label.hms_settings', 'HMS Settings'),
+				id: HSM_SETTINGS,
+				name: t('label.hsm_settings', 'HSM Settings'),
 				isSelected: isStoreVolumeSelect
 			},
 			{
@@ -169,7 +169,7 @@ const BucketListPanel: FC = () => {
 					/>
 				)}
 				<ListPanelItem
-					title={t('label.server_specific', 'Server Specific')}
+					title={t('label.server_details', 'Server Details')}
 					isListExpanded={isServerSpecificListExpand}
 					setToggleView={toggleServerSpecific}
 				/>
@@ -188,8 +188,8 @@ const BucketListPanel: FC = () => {
 							>
 								<Input
 									label={t(
-										'label.I_want_to_see_this_server_details',
-										`i want to see this server’s details`
+										'label.select_a_server',
+										'Select a Server'
 									)}
 									CustomIcon={(): any => (
 										<Icon

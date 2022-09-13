@@ -277,7 +277,10 @@ const MailingListCreateSection: FC<any> = () => {
 							padding={{ top: 'large', right: 'small' }}
 						>
 							<Input
-								label={t('label.can_receive_email', 'Can receive email')}
+								label={t(
+									'label.send_new_members_notification_for_share_assigned_to_this_group',
+									'Send new members a notification for the share/delegation assigned to this group'
+								)}
 								backgroundColor="gray6"
 								size="medium"
 								value={

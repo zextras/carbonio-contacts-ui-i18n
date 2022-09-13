@@ -13,51 +13,27 @@ import {
 	Text,
 	Icon,
 	Switch,
-	Divider
+	Divider,
+	Tooltip,
+	ChipInput
 } from '@zextras/carbonio-design-system';
 import { setDefaults, useTranslation } from 'react-i18next';
 import { useDomainStore } from '../../../../../store/domain/store';
 import { AccountContext } from '../account-context';
-import { ACTIVE, CLOSED, LOCKED, MAINTENANCE, PENDING } from '../../../../../constants';
-import { timeZoneList, localeList } from '../../../../utility/utils';
+import { timeZoneList, localeList, AccountStatus } from '../../../../utility/utils';
 
 const EditAccountGeneralSection: FC = () => {
 	const conext = useContext(AccountContext);
+	const { accountDetail, setAccountDetail, directMemberList, inDirectMemberList } = conext;
 	const domainName = useDomainStore((state) => state.domain?.name);
 	const cosList = useDomainStore((state) => state.cosList);
 	const [cosItems, setCosItems] = useState<any[]>([]);
-	const { accountDetail, setAccountDetail } = conext;
 	const [defaultCOS, setDefaultCOS] = useState<boolean>(!accountDetail?.zimbraCOSId);
 
 	const [t] = useTranslation();
 	const timezones = useMemo(() => timeZoneList(t), [t]);
 	const localeZone = useMemo(() => localeList(t), [t]);
-
-	const ACCOUNT_STATUS = useMemo(
-		() => [
-			{
-				label: 'Active',
-				value: ACTIVE
-			},
-			{
-				label: 'Maintenance',
-				value: MAINTENANCE
-			},
-			{
-				label: 'Locked',
-				value: LOCKED
-			},
-			{
-				label: 'Closed',
-				value: CLOSED
-			},
-			{
-				label: 'Pending',
-				value: PENDING
-			}
-		],
-		[]
-	);
+	const ACCOUNT_STATUS = useMemo(() => AccountStatus(t), [t]);
 
 	const changeSwitchOption = useCallback(
 		(key: string): void => {
@@ -196,6 +172,11 @@ const EditAccountGeneralSection: FC = () => {
 							onClick={(): void => changeSwitchOption('zimbraHideInGal')}
 							label={t('account_details.hide_in_gal', 'Hide in GAL')}
 						/>
+						<Tooltip placement="top" label={t('label.global_address_list', 'Global Address List')}>
+							<Text size="small" color="#414141" style={{ 'text-decoration': 'underline' }}>
+								({t('label.what_is_a_gal', "What's a GAL?")})
+							</Text>
+						</Tooltip>
 					</Row>
 					<Row width="48%" mainAlignment="flex-start">
 						<Switch
@@ -344,6 +325,40 @@ const EditAccountGeneralSection: FC = () => {
 			<Row width="100%" padding={{ top: 'large' }}>
 				<Divider color="gray2" />
 			</Row>
+			<Row padding={{ top: 'large' }} width="100%" mainAlignment="space-between">
+				<Text size="small" color="gray0" weight="bold">
+					{t('label.mailing_list', 'Mailing List')}
+				</Text>
+			</Row>
+			<Row padding={{ top: 'large', left: 'large' }} width="100%" mainAlignment="space-between">
+				<Row width="100%" mainAlignment="space-between">
+					<ChipInput
+						placeholder={t(
+							'account_details.this_account_is_a_direct_member_of',
+							'This account is a direct member of'
+						)}
+						background="gray5"
+						defaultValue={directMemberList}
+						disabled
+					/>
+				</Row>
+			</Row>
+			<Row padding={{ top: 'large', left: 'large' }} width="100%" mainAlignment="space-between">
+				<Row width="100%" mainAlignment="space-between">
+					<ChipInput
+						placeholder={t(
+							'account_details.this_account_is_a_in_direct_member_of',
+							'This account is a in direct member of'
+						)}
+						background="gray5"
+						defaultValue={inDirectMemberList}
+						disabled
+					/>
+				</Row>
+			</Row>
+			<Row width="100%" padding={{ top: 'medium' }}>
+				<Divider color="gray2" />
+			</Row>
 			<Row
 				mainAlignment="flex-start"
 				padding={{ top: 'large', left: 'small', bottom: 'large' }}
@@ -358,11 +373,11 @@ const EditAccountGeneralSection: FC = () => {
 					<Input
 						background="gray5"
 						height="85px"
-						label={t('label.description', 'Description')}
-						defaultValue={accountDetail?.description}
-						value={accountDetail?.description}
+						label={t('label.notes', 'Notes')}
+						defaultValue={accountDetail?.zimbraNotes}
+						value={accountDetail?.zimbraNotes}
 						onChange={changeAccDetail}
-						inputName="description"
+						inputName="zimbraNotes"
 					/>
 				</Row>
 			</Row>
