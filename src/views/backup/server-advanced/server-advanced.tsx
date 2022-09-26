@@ -25,6 +25,7 @@ import {
 import ListRow from '../../list/list-row';
 import { useServerStore } from '../../../store/server/store';
 import { updateBackup } from '../../../services/update-backup';
+import { SERVER } from '../../../constants';
 
 const ServerAdvanced: FC = () => {
 	const { operation, server }: { operation: string; server: string } = useParams();
@@ -231,7 +232,9 @@ const ServerAdvanced: FC = () => {
 		setBackupCompressionLevel(currentBackupValue.backupCompressionLevel);
 		setBackupNumberThreadsForItems(currentBackupValue.backupNumberThreadsForItems);
 		setBackupNumberThreadsForAccounts(currentBackupValue.backupNumberThreadsForAccounts);
-
+		setIncludeIndex(currentBackupValue?.includeIndex);
+		setPurgeOldConfiguration(currentBackupValue?.purgeOldConfiguration);
+		setServerConfiguration(currentBackupValue?.serverConfiguration);
 		setIsDirty(false);
 	}, [
 		currentBackupValue?.ldapDumpEnabled,
@@ -244,7 +247,10 @@ const ServerAdvanced: FC = () => {
 		currentBackupValue?.backupMaxOperationPerAccount,
 		currentBackupValue?.backupCompressionLevel,
 		currentBackupValue?.backupNumberThreadsForItems,
-		currentBackupValue?.backupNumberThreadsForAccounts
+		currentBackupValue?.backupNumberThreadsForAccounts,
+		currentBackupValue?.includeIndex,
+		currentBackupValue?.purgeOldConfiguration,
+		currentBackupValue?.serverConfiguration
 	]);
 
 	useEffect(() => {
@@ -346,12 +352,54 @@ const ServerAdvanced: FC = () => {
 		}
 	}, [currentBackupValue.backupNumberThreadsForAccounts, backupNumberThreadsForAccounts]);
 
+	useEffect(() => {
+		if (
+			currentBackupValue.includeIndex !== undefined &&
+			currentBackupValue.includeIndex !== includeIndex
+		) {
+			setIsDirty(true);
+		}
+	}, [currentBackupValue.includeIndex, includeIndex]);
+
+	useEffect(() => {
+		if (
+			currentBackupValue.purgeOldConfiguration !== undefined &&
+			currentBackupValue.purgeOldConfiguration !== purgeOldConfiguration
+		) {
+			setIsDirty(true);
+		}
+	}, [currentBackupValue.purgeOldConfiguration, purgeOldConfiguration]);
+
+	useEffect(() => {
+		if (
+			currentBackupValue.serverConfiguration !== undefined &&
+			currentBackupValue.serverConfiguration !== serverConfiguration
+		) {
+			setIsDirty(true);
+		}
+	}, [currentBackupValue.serverConfiguration, serverConfiguration]);
+
 	const onSave = useCallback(() => {
 		const body: any = {
 			ldapDumpEnabled: {
 				value: ldapDumpEnabled,
 				objectName: server,
-				configType: 'server'
+				configType: SERVER
+			},
+			ZxBackup_BackupCustomizations: {
+				value: serverConfiguration,
+				objectName: server,
+				configType: SERVER
+			},
+			ZxBackup_PurgeCustomizations: {
+				value: purgeOldConfiguration,
+				objectName: server,
+				configType: SERVER
+			},
+			backupSaveIndex: {
+				value: includeIndex,
+				objectName: server,
+				configType: SERVER
 			}
 		};
 
@@ -371,7 +419,15 @@ const ServerAdvanced: FC = () => {
 					replace: true
 				});
 			});
-	}, [ldapDumpEnabled, createSnackbar, t, server]);
+	}, [
+		ldapDumpEnabled,
+		createSnackbar,
+		t,
+		server,
+		serverConfiguration,
+		purgeOldConfiguration,
+		includeIndex
+	]);
 
 	return (
 		<Container mainAlignment="flex-start" background="gray6">
