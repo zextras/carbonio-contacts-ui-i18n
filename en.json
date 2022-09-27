@@ -152,6 +152,7 @@
         "smart_scan_configuration": "SmartScan Configuration",
         "space_threshold_mb": "Space Threshold (MB)",
         "start_service": "Start service",
+        "stop_service": "Stop service",
         "store_server_configurations_in_the_backup": "Store Server Configuration in the backup",
         "the_service_is_stopped": "The service is stopped",
         "this_module_is_enable_at_the_startup": "This module is enabled at the startup",
