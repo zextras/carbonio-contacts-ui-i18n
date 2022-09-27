@@ -32,6 +32,7 @@ import ListRow from '../../list/list-row';
 import { useServerStore } from '../../../store/server/store';
 import { updateBackup } from '../../../services/update-backup';
 import { SERVER } from '../../../constants';
+import { RouteLeavingGuard } from '../../ui-extras/nav-guard';
 
 const BackupConfiguration: FC = () => {
 	const { operation, server }: { operation: string; server: string } = useParams();
@@ -975,6 +976,15 @@ const BackupConfiguration: FC = () => {
 					</ListRow>
 				</Container>
 			</Container>
+			<RouteLeavingGuard when={isDirty} onSave={onSave}>
+				<Text>
+					{t(
+						'label.unsaved_changes_line1',
+						'Are you sure you want to leave this page without saving?'
+					)}
+				</Text>
+				<Text>{t('label.unsaved_changes_line2', 'All your unsaved changes will be lost')}</Text>
+			</RouteLeavingGuard>
 		</Container>
 	);
 };
