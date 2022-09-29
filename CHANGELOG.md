@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.9.2](https://github.com/zextras/carbonio-admin-console-ui/compare/v0.9.1...v0.9.2) (2022-09-29)
+
+
+### Features
+
+* design added for configuration and advanced ([02f60bb](https://github.com/zextras/carbonio-admin-console-ui/commit/02f60bb2ef0f368a7a3735f7b37b504e597bae45))
+
+
+### Bug Fixes
+
+* resolve conflict ([ea052e5](https://github.com/zextras/carbonio-admin-console-ui/commit/ea052e589eae4fb049cd88ce01c803102ad183ca))
+* translation and typo issues ([#155](https://github.com/zextras/carbonio-admin-console-ui/issues/155)) ([0d61a20](https://github.com/zextras/carbonio-admin-console-ui/commit/0d61a20c9394dbd5815d9816ec3e6f95366cf38b))
+* typo issues ([#153](https://github.com/zextras/carbonio-admin-console-ui/issues/153)) ([2259155](https://github.com/zextras/carbonio-admin-console-ui/commit/225915570c7ce38ddb8336103b85081c2ddc9afd))
+
 ### 0.9.1 (2022-09-22)
 
 
