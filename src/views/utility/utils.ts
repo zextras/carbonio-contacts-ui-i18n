@@ -975,6 +975,49 @@ export const volumeTypeList = [
 	}
 ];
 
+export const volumeAllocationList = [
+	{
+		label: 'Local',
+		value: 1
+	},
+	{
+		label: 'External',
+		value: 2
+	},
+	{
+		label: 'Sproxy',
+		value: 3
+	},
+	{
+		label: 'Centralized',
+		value: 4
+	}
+];
+
+export const volumeConfigHeader = [
+	{
+		id: 'name',
+		label: 'Name',
+		width: '33%',
+		bold: true,
+		align: 'left'
+	},
+	{
+		id: 'hsm_scheduled',
+		label: 'HSM Scheduled',
+		width: '33%',
+		align: 'center',
+		bold: true
+	},
+	{
+		id: 'indexer',
+		label: 'Indexer',
+		width: '33%',
+		align: 'center',
+		bold: true
+	}
+];
+
 export const localeList = (
 	t: TFunction
 ): Array<{ id: string; name: string; localName: string; value: string; label: string }> => [
