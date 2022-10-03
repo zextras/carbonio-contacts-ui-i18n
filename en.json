@@ -299,7 +299,7 @@
             "subscription_last_check": "Subscription Last Check",
             "subscription_type": "Subscription Type",
             "token": "Token",
-            "version": "Zextras version"
+            "version": "Module version"
         }
     },
     "cos": {
