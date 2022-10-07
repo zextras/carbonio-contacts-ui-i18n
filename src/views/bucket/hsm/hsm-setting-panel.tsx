@@ -19,11 +19,17 @@ import {
 } from '@zextras/carbonio-design-system';
 import { Trans, useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
+import {
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
+	getSoapFetchRequest
+} from '@zextras/carbonio-shell-ui';
 import { fetchSoap } from '../../../services/bucket-service';
 import ListRow from '../../list/list-row';
 import CreateHsmPolicy from './create-hsm-policy/create-hsm-policy';
 import EditHsmPolicy from './edit-hsm-policy/edit-hsm-policy';
 import DeleteHsmPolicy from './delete-policy/delete-hsm-policy';
+import { useServerStore } from '../../../store/server/store';
 
 const HSMsettingPanel: FC = () => {
 	const { operation, server }: { operation: string; server: string } = useParams();
@@ -33,6 +39,13 @@ const HSMsettingPanel: FC = () => {
 	const [showCreateHsmPolicyView, setShowCreateHsmPolicyView] = useState<boolean>(false);
 	const [showEditHsmPolicyView, setShowEditHsmPolicyView] = useState<boolean>(false);
 	const [showDeletePolicyView, setShowDeletePolicyView] = useState<boolean>(false);
+	const serverList = useServerStore((state) => state.serverList);
+	const [isPowerstoreMoveSchedulerEnabled, setIsPowerstoreMoveSchedulerEnabled] =
+		useState<boolean>(false);
+	const [powerstoreMoveSchedulerValue, setPowerstoreMoveSchedulerValue] = useState<string>('');
+	const [powerstoreSpaceThreshold, setPowerstoreSpaceThreshold] = useState<number>(0);
+	const [deduplicateAfterScheduledMoveBlobs, setDeduplicateAfterScheduledMoveBlobs] =
+		useState<boolean>(false);
 	const headers = useMemo(
 		() => [
 			{
@@ -56,6 +69,68 @@ const HSMsettingPanel: FC = () => {
 			}
 		});
 	}, [server]);
+
+	const getZxPowerStoreServers = useCallback(() => {
+		getSoapFetchRequest(
+			`/service/extension/zextras_admin/core/getAllServers?module=zxpowerstore`
+		).then((data: any) => {
+			const serv = data?.servers;
+			if (serv && serv.length > 0) {
+				serverList.forEach((item: any) => {
+					const id = item?.id;
+					const selectedServer = serv.find((sItem: any) => sItem[id]);
+					if (selectedServer && selectedServer[id]) {
+						const values = selectedServer[id];
+						if (values) {
+							const attributes = values?.ZxPowerstore?.attributes;
+							if (attributes) {
+								if (attributes?.powerstoreMoveScheduler) {
+									const schedulerEnabled =
+										attributes?.powerstoreMoveScheduler?.value?.['cron-enabled'];
+									if (schedulerEnabled) {
+										setIsPowerstoreMoveSchedulerEnabled(true);
+									} else {
+										setIsPowerstoreMoveSchedulerEnabled(false);
+									}
+
+									const schedulePattern =
+										attributes?.powerstoreMoveScheduler?.value?.['cron-pattern'];
+									if (schedulePattern) {
+										setPowerstoreMoveSchedulerValue(schedulePattern);
+									} else {
+										setPowerstoreMoveSchedulerValue('');
+									}
+								}
+								if (attributes?.ZxPowerstore_SpaceThreshold) {
+									const spaceThreshold = attributes?.ZxPowerstore_SpaceThreshold?.value;
+									if (spaceThreshold) {
+										setPowerstoreSpaceThreshold(spaceThreshold);
+									} else {
+										setPowerstoreSpaceThreshold(0);
+									}
+								}
+
+								if (attributes?.deduplicateAfterScheduledMoveBlobs) {
+									const duplicate = attributes?.deduplicateAfterScheduledMoveBlobs;
+									if (duplicate) {
+										setDeduplicateAfterScheduledMoveBlobs(true);
+									} else {
+										setDeduplicateAfterScheduledMoveBlobs(false);
+									}
+								}
+							}
+						}
+					}
+				});
+			}
+		});
+	}, [serverList]);
+
+	useEffect(() => {
+		if (server && serverList && serverList.length > 0) {
+			getZxPowerStoreServers();
+		}
+	}, [server, getZxPowerStoreServers, serverList]);
 
 	useEffect(() => {
 		getHSMList();
@@ -126,12 +201,25 @@ const HSMsettingPanel: FC = () => {
 				</ListRow>
 				<ListRow>
 					<Padding bottom="large">
-						<Switch label={t('hsm.enable_scheduler', 'Enable Scheduler')} value />
+						<Switch
+							label={t('hsm.enable_scheduler', 'Enable Scheduler')}
+							value={isPowerstoreMoveSchedulerEnabled}
+							onClick={(): void =>
+								setIsPowerstoreMoveSchedulerEnabled(!isPowerstoreMoveSchedulerEnabled)
+							}
+						/>
 					</Padding>
 				</ListRow>
 				<ListRow>
 					<Container padding={{ bottom: 'large' }}>
-						<Input label={t('hsm.schedule', 'Schedule')} background="gray5" />
+						<Input
+							label={t('hsm.schedule', 'Schedule')}
+							background="gray5"
+							value={powerstoreMoveSchedulerValue}
+							onChange={(e: any): void => {
+								setPowerstoreMoveSchedulerValue(e.target.value);
+							}}
+						/>
 					</Container>
 				</ListRow>
 				<ListRow>
@@ -140,7 +228,10 @@ const HSMsettingPanel: FC = () => {
 							'hsm.apply_duplication_after_scheduledhsm',
 							'Apply Deduplication after scheduled HSM'
 						)}
-						value
+						value={deduplicateAfterScheduledMoveBlobs}
+						onClick={(): void =>
+							setDeduplicateAfterScheduledMoveBlobs(!deduplicateAfterScheduledMoveBlobs)
+						}
 					/>
 				</ListRow>
 				<ListRow>
@@ -222,6 +313,10 @@ const HSMsettingPanel: FC = () => {
 						<Input
 							label={t('hsm.minimum_space_threshold', 'Minimum Space Threshold')}
 							background="gray5"
+							value={powerstoreSpaceThreshold}
+							onChange={(e: any): void => {
+								setPowerstoreSpaceThreshold(e.target.value);
+							}}
 						/>
 					</Container>
 				</ListRow>
