@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.9.3](https://github.com/zextras/carbonio-admin-console-ui/compare/v0.9.2...v0.9.3) (2022-10-06)
+
+
+### Bug Fixes
+
+* backup and cos tooltip ([0e4b8d0](https://github.com/zextras/carbonio-admin-console-ui/commit/0e4b8d0acae195579274fdffad8054abfe065c94))
+* backup routing issue ([fac4885](https://github.com/zextras/carbonio-admin-console-ui/commit/fac4885d3897778758fde05aef95a47477db5450))
+* disable all the items in Account features panel ([a21c678](https://github.com/zextras/carbonio-admin-console-ui/commit/a21c678e875f8319886e08a0ae1cb603f4e3f167))
+* disable all the items in COS features panel ([e9ec9af](https://github.com/zextras/carbonio-admin-console-ui/commit/e9ec9af840e16bfa085dd93c946110a2398fa97c))
+* disbale close button in case account is already closed ([7cf1938](https://github.com/zextras/carbonio-admin-console-ui/commit/7cf19383fba678d41c2d1de0281e515a842c35be))
+* fix tooltip on DOMAIN icon according to real menu ([d43b58e](https://github.com/zextras/carbonio-admin-console-ui/commit/d43b58ebdb59de14d7ca1ec77f5628571c14f1f2))
+* mailstores panel and breadcrums ([dd30b12](https://github.com/zextras/carbonio-admin-console-ui/commit/dd30b120525b53fde35b0c813efad990245b3a98))
+* translation string ([edfcbaf](https://github.com/zextras/carbonio-admin-console-ui/commit/edfcbaf5dc1755a357804c51f6065a41cb3f0008))
+* translation string ([f049ccc](https://github.com/zextras/carbonio-admin-console-ui/commit/f049ccc26dbe6770d95ef1b581f7ea3332e85ecb))
+
 ### [0.9.2](https://github.com/zextras/carbonio-admin-console-ui/compare/v0.9.1...v0.9.2) (2022-09-29)
 
 
