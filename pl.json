@@ -95,7 +95,7 @@
         "undo": "Cofnij",
         "type": "Typ",
         "address_book_restored": "Książka adresowa została przywrócona",
-        "contact_setting": "Ustawienia Kontaktów",
+        "contact_setting": "Ustawienia kontaktów",
         "contacts": "Kontakty",
         "edit_access": "Edytuj dostęp",
         "edit_access_name": "Edytuj dostęp do {{name}}",
@@ -313,7 +313,7 @@
                 "autocomplete_on_comma": "Wybierz automatycznie uzupełnioną frazę, kiedy wpisany zostanie przecinek",
                 "incl_addrs_in_glbl_addrs_list": "Uwzględnij adresy w Globalnej Liście Adresów",
                 "include_add_in_shared_contact": "Uwzględnij adresy w udostępnionych kontaktach",
-                "add_contact_to_emailed_contacts": "Dodaj nowe kontakty do \"Kontakty do których wysłano e-maila\"",
+                "add_contact_to_emailed_contacts": "Dodawaj nowe kontakty do \"Kontakty do których wysłano e-maila\"",
                 "srch_glbl_addrs_list": "Wstępnie przeszukaj Globalną Listę Adresów podczas wybierania kontaktów"
             }
         }
