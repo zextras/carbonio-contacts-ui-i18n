@@ -32,6 +32,8 @@ import CreateHsmPolicy from './create-hsm-policy/create-hsm-policy';
 import EditHsmPolicy from './edit-hsm-policy/edit-hsm-policy';
 import DeleteHsmPolicy from './delete-policy/delete-hsm-policy';
 import { useServerStore } from '../../../store/server/store';
+import { SERVER } from '../../../constants';
+import { updateBackup } from '../../../services/update-backup';
 
 const HSMsettingPanel: FC = () => {
 	const { operation, server }: { operation: string; server: string } = useParams();
@@ -221,8 +223,92 @@ const HSMsettingPanel: FC = () => {
 	]);
 
 	const onSave = useCallback(() => {
-		setIsDirty(false);
-	}, []);
+		setIsRequestInProgress(true);
+		const body: any = {
+			/* powerstoreMoveScheduler: {
+				value: {
+					'cron-pattern': powerstoreMoveSchedulerValue,
+					'cron-enabled': isPowerstoreMoveSchedulerEnabled
+				},
+				objectName: server,
+				configType: SERVER
+			}, */
+			ZxPowerstore_SpaceThreshold: {
+				value: powerstoreSpaceThreshold,
+				objectName: server,
+				configType: SERVER
+			},
+			deduplicateAfterScheduledMoveBlobs: {
+				value: deduplicateAfterScheduledMoveBlobs,
+				objectName: server,
+				configType: SERVER
+			}
+		};
+		updateBackup(body)
+			.then((data: any) => {
+				setIsRequestInProgress(false);
+				if ((data?.errors && Array.isArray(data?.errors)) || data?.error) {
+					let errorMessage = t(
+						'label.something_wrong_error_msg',
+						'Something went wrong. Please try again.'
+					);
+					if (data?.errors && Array.isArray(data?.errors) && data?.errors[0]?.error) {
+						errorMessage = data?.errors[0]?.error;
+					} else if (data?.error) {
+						errorMessage = data?.error;
+					}
+					createSnackbar({
+						key: 'error',
+						type: 'error',
+						label: errorMessage,
+						autoHideTimeout: 3000,
+						hideButton: true,
+						replace: true
+					});
+				} else {
+					setIsDirty(false);
+					setOldValues((prev: any) => ({
+						...prev,
+						isPowerstoreMoveSchedulerEnabled,
+						powerstoreMoveSchedulerValue,
+						powerstoreSpaceThreshold,
+						deduplicateAfterScheduledMoveBlobs
+					}));
+					createSnackbar({
+						key: 'success',
+						type: 'success',
+						label: t(
+							'label.the_last_changes_has_been_saved_successfully',
+							'Changes have been saved successfully'
+						),
+						autoHideTimeout: 3000,
+						hideButton: true,
+						replace: true
+					});
+				}
+			})
+			.catch((error: any) => {
+				setIsRequestInProgress(false);
+				createSnackbar({
+					key: 'error',
+					type: 'error',
+					label: error
+						? error?.error
+						: t('label.something_wrong_error_msg', 'Something went wrong. Please try again.'),
+					autoHideTimeout: 3000,
+					hideButton: true,
+					replace: true
+				});
+			});
+	}, [
+		powerstoreMoveSchedulerValue,
+		isPowerstoreMoveSchedulerEnabled,
+		powerstoreSpaceThreshold,
+		server,
+		deduplicateAfterScheduledMoveBlobs,
+		createSnackbar,
+		t
+	]);
 
 	useEffect(() => {
 		if (
@@ -399,7 +485,12 @@ const HSMsettingPanel: FC = () => {
 				width="100%"
 				padding={{ left: 'large', right: 'large', bottom: 'medium', top: 'medium' }}
 			>
-				<Container orientation="vertical" mainAlignment="space-around" background="gray6">
+				<Container
+					orientation="vertical"
+					mainAlignment="space-around"
+					background="gray6"
+					height="40px"
+				>
 					<Row orientation="horizontal" width="100%" padding={{ all: 'extrasmall' }}>
 						<Row mainAlignment="flex-start" width="50%" crossAlignment="flex-start">
 							<Text size="medium" weight="bold" color="gray0">
@@ -423,7 +514,13 @@ const HSMsettingPanel: FC = () => {
 								)}
 							</Padding>
 							{isDirty && (
-								<Button label={t('label.save', 'Save')} color="primary" onClick={onSave} />
+								<Button
+									label={t('label.save', 'Save')}
+									color="primary"
+									onClick={onSave}
+									disabled={isRequestInProgress}
+									loading={isRequestInProgress}
+								/>
 							)}
 						</Row>
 					</Row>
