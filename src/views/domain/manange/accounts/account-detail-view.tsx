@@ -29,6 +29,7 @@ import { modifyAccountRequest } from '../../../../services/modify-account';
 import { getDelegateAuthRequest } from '../../../../services/get-delegate-auth-request';
 import { endSession } from '../../../../services/end-session';
 import { getSessions } from '../../../../services/get-sessions';
+import Paginig from '../../../components/paging';
 
 const AccountDetailContainer = styled(Container)`
 	z-index: 10;
@@ -217,24 +218,26 @@ const AccountDetailView: FC<any> = ({
 	}, [accountDetail?.zimbraId, createSnackbar, t, onSuccess]);
 
 	const getAllUserSession = useCallback(() => {
-		const sessionType = 'admin';
-		getSessions(sessionType).then((resp: any) => {
-			if (resp && resp?.s) {
-				const existingSession = resp?.s;
-				if (existingSession) {
-					const session: UserSession[] = [];
-					existingSession.forEach((element: any) => {
-						session.push({
-							ip: '',
-							name: element?.name,
-							sid: element?.sid,
-							service: '',
-							zid: element?.zid
+		const sessionType: string[] = ['admin', 'imap', 'soap'];
+		sessionType.forEach((item: string) => {
+			getSessions(item).then((resp: any) => {
+				if (resp && resp?.s) {
+					const existingSession = resp?.s;
+					if (existingSession) {
+						const session: UserSession[] = [];
+						existingSession.forEach((element: any) => {
+							session.push({
+								ip: '',
+								name: element?.name,
+								sid: element?.sid,
+								service: '',
+								zid: element?.zid
+							});
 						});
-					});
-					setUserSessionList(session);
+						setUserSessionList((prev: any) => [...prev, ...session]);
+					}
 				}
-			}
+			});
 		});
 	}, []);
 
@@ -273,7 +276,9 @@ const AccountDetailView: FC<any> = ({
 			.then((resp: any) => {
 				setIsRequestInProgress(false);
 				if (resp && resp?._jsns) {
-					getAllUserSession();
+					setUserSessionList((prev: any) => [
+						...prev.filter((item: UserSession) => item?.sid !== selectedSession[0])
+					]);
 					setSelectedSession([]);
 					createSnackbar({
 						key: 'success',
@@ -299,7 +304,7 @@ const AccountDetailView: FC<any> = ({
 					replace: true
 				});
 			});
-	}, [selectedSession, t, createSnackbar, getAllUserSession]);
+	}, [selectedSession, t, createSnackbar]);
 
 	return (
 		<AccountDetailContainer background="gray5" mainAlignment="flex-start">
@@ -562,7 +567,7 @@ const AccountDetailView: FC<any> = ({
 					mainAlignment="flex-start"
 					crossAlignment="flex-start"
 				>
-					<Container width="60%">
+					<Container width="70%">
 						<Input
 							label={t('label.i_m_looking_for_the_session', 'I`m looking for the session ...')}
 							backgroundColor="gray5"
@@ -570,7 +575,7 @@ const AccountDetailView: FC<any> = ({
 							value=""
 						></Input>
 					</Container>
-					<Container width="40%">
+					<Container width="30%" mainAlignment="flex-end" crossAlignment="flex-end">
 						<Button
 							label={t('label.end_session', 'End Session')}
 							color="error"
@@ -600,6 +605,20 @@ const AccountDetailView: FC<any> = ({
 							setSelectedSession(selected);
 						}}
 					></Table>
+				</Row>
+
+				<Row
+					padding={{ top: 'extralarge' }}
+					width="100%"
+					mainAlignment="flex-end"
+					crossAlignment="flex-end"
+				>
+					<Paginig
+						totalItem={1}
+						setOffset={(): void => {
+							console.log('setOffset for paging');
+						}}
+					/>
 				</Row>
 
 				<Row padding={{ top: 'extralarge' }}>

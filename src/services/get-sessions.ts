@@ -11,5 +11,6 @@ export const getSessions = async (type: string, offset?: number, limit?: number)
 		_jsns: 'urn:zimbraAdmin',
 		type,
 		offset: offset || 0,
-		limit: limit || 50
+		sortBy: 'nameAsc',
+		refresh: 1
 	});
