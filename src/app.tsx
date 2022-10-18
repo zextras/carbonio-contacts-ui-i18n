@@ -53,6 +53,7 @@ import { getAllServers } from './services/get-all-servers-service';
 import { useConfigStore } from './store/config/store';
 import { getAllConfig } from './services/get-all-config';
 import { useAuthIsAdvanced } from './store/auth-advanced/store';
+import { useBucketServersListStore } from './store/bucket-server-list/store';
 
 const LazyAppView = lazy(() => import('./views/app-view'));
 
@@ -70,6 +71,7 @@ const App: FC = () => {
 	const setBackupModuleEnable = useBackupModuleStore((state) => state.setBackupModuleEnable);
 	const setIsAdvavanced = useAuthIsAdvanced((state) => state.setIsAdvavanced);
 	const setBackupServerList = useBackupModuleStore((state) => state.setBackupServerList);
+	const { setAllServersList, setVolumeList } = useBucketServersListStore((state) => state);
 	const setConfig = useConfigStore((state) => state.setConfig);
 	const allConfig = useAllConfig();
 	useEffect(() => {
@@ -561,10 +563,12 @@ const App: FC = () => {
 			if (server && Array.isArray(server) && server.length > 0) {
 				setServerList(server);
 				checkIsBackupModuleEnable(server);
+				setAllServersList(server);
+				setVolumeList(server);
 				getGlobalConfig(server[0]?.name);
 			}
 		});
-	}, [setServerList, getGlobalConfig, checkIsBackupModuleEnable]);
+	}, [setServerList, checkIsBackupModuleEnable, setAllServersList, setVolumeList, getGlobalConfig]);
 
 	useEffect(() => {
 		getAllServersRequest();

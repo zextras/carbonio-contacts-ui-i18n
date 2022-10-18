@@ -275,11 +275,12 @@
     },
     "core": {
         "subscription": {
-            "active": "Active",
+            "activate": "Activate",
+            "activation": "Activation",
             "bundle": "Bundle",
             "company_name": "Company Name",
             "customer": "Customer",
-            "deactive": "Deactive",
+            "deactivate": "Deactivate",
             "email_buyer": "Email Buyer",
             "emissionDate": "Emission date",
             "features": "Other features",
@@ -774,6 +775,7 @@
         "eligible_servers": "Eligible Servers",
         "email": "Email",
         "email_addready_exists": "Email address {{name}} already exists",
+        "email_address": "Email address",
         "email_notification": "E-mail Notifications",
         "empty_table": "Empty Table",
         "enabed_address": "Enabled Address",
@@ -950,8 +952,10 @@
         "out_of_office_message": "Out of office message",
         "owners": "Owners",
         "owners_description": "Owners can manage the mailing list's members (adding and removing emails) and modify its options.",
+        "owners_description_msg_1": "Owners can add and remove members, change displayname and description, change list visibility (ie. to hide in gal), change the ownership, modify the subscription/unsubscription behaviour.",
         "owners_manage_add_list": "Owners can add and remove members, change the displayed name and description, change list visibility (ie. hide from gal), change the ownership, modify the subscription/unsubscription behavior",
         "owners_settings": "Mailing List's owners settings",
+        "owners_settings_lbl": "Owners’ Settings",
         "page ": "You have accepted the share request",
         "page_": "You have accepted the share request",
         "password": "Password",
@@ -1122,7 +1126,7 @@
         "virtual_host_name": "Virtual Host Name",
         "virtual_host_note": "Please note, that removal of a virtual host takes effect only after mailbox server is restarted.",
         "virtual_host_user_msg": "Any user that logs in while using a URL with one of the hostnames below will be assumed to be in this domain, {{domainName}}",
-        "virtual_host_user_msg_1": "For example, you can make the service available both for mail.example.com and webamil.example.com.",
+        "virtual_host_user_msg_1": "For example, you can make the service available both for mail.example.com and webmail.example.com.",
         "virtual_host_user_msg_2": "Virtual hosts must be unique for the domain, so the system can understand which domain the user belongs to and we can show the customized option for the domain",
         "virtual_hosts": "Virtual Hosts",
         "volume": "Volume",
@@ -1400,6 +1404,16 @@
         },
         "serverName_volumes": "{{serverName}} Volumes",
         "serverName_volumes_create_mailstores_volume": "{{serverName}} Create Mailstores Volume",
+        "server_list_header": {
+            "HSM Scheduling": "HSM Scheduling",
+            "description": "Description",
+            "index": "Index",
+            "indexer": "Indexer",
+            "primary": "Primary",
+            "secondary": "Secondary",
+            "server": "Server",
+            "server_name": "Server Name"
+        },
         "volume_allocation_list": {
             "centralized": "Centralized",
             "external": "External",
@@ -1426,7 +1440,7 @@
         },
         "volume_type": {
             "index": "Index",
-            "primary": "Priamry",
+            "primary": "Primary",
             "secondary": "Secondary"
         }
     },
