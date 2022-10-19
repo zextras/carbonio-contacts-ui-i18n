@@ -1106,6 +1106,7 @@
         "unsaved_changes_line1": "Are you sure you want to leave this page without saving?",
         "unsaved_changes_line2": "All your unsaved changes will be lost",
         "unsubscribe_request": "Unsubscription requests",
+        "update": "Update",
         "url": "URL",
         "use_iCal_delegation_model_for_shared_calendars_for_CalDAV_interface": "Use iCal delegation model for shared calendars for CalDAV interface",
         "use_last_available_status": "Use last available status",

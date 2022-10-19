@@ -177,10 +177,6 @@ const EditHsmPolicyVolumesSection: FC<{
 		}
 	}, [currentPolicy, hsmDetail?.isVolumeLoaded, setHsmDetail]);
 
-	useEffect(() => {
-		console.log('>>>>>>>>>>>>>>>', hsmDetail);
-	}, [hsmDetail]);
-
 	return (
 		<Container
 			mainAlignment="flex-start"

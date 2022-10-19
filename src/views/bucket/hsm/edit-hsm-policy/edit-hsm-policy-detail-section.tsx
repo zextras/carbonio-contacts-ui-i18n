@@ -14,6 +14,7 @@ import {
 	Table,
 	Button
 } from '@zextras/carbonio-design-system';
+import { cloneDeep } from 'lodash';
 import React, { FC, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -39,6 +40,7 @@ const EditHsmPolicyDetailSection: FC<{
 	const [isShowDateScale, setIsShowDateScale] = useState<boolean>(true);
 	const [value, setValue] = useState<string>();
 	const [selectedPolicies, setSelectedPolicies] = useState<Array<any>>([]);
+	const [isUpdatePolicyCriteria, setIsUpdatePolicyCriteria] = useState<boolean>(false);
 
 	useEffect(() => {
 		if (!isDocument || !isContactEnable || !isMessageEnable || !isEventEnable) {
@@ -148,15 +150,15 @@ const EditHsmPolicyDetailSection: FC<{
 		() => [
 			{
 				label: t('hsm.days', 'Days'),
-				value: 'days'
+				value: 'day'
 			},
 			{
 				label: t('hsm.months', 'Months'),
-				value: 'months'
+				value: 'month'
 			},
 			{
 				label: t('hsm.years', 'Years'),
-				value: 'years'
+				value: 'year'
 			}
 		],
 		[t]
@@ -211,15 +213,21 @@ const EditHsmPolicyDetailSection: FC<{
 		}
 	};
 
-	const onScaleChange = (v: any): any => {
-		const it = scaleOptions.find((item: any) => item.value === v);
-		setSelectedScale(it);
-	};
+	const onScaleChange = useCallback(
+		(v: any): any => {
+			const it = scaleOptions.find((item: any) => item.value === v);
+			setSelectedScale(it);
+		},
+		[scaleOptions]
+	);
 
-	const onDateScaleChange = (v: any): any => {
-		const it = dateScaleOption.find((item: any) => item.value === v);
-		setSelectedScale(it);
-	};
+	const onDateScaleChange = useCallback(
+		(v: any): any => {
+			const it = dateScaleOption.find((item: any) => item.value === v);
+			setSelectedScale(it);
+		},
+		[dateScaleOption]
+	);
 
 	const onClickAll = useCallback(
 		(check: boolean) => {
@@ -282,6 +290,48 @@ const EditHsmPolicyDetailSection: FC<{
 		setSelectedPolicies([]);
 		setIsDirty(true);
 	}, [selectedPolicies, policyCriteria, setIsDirty]);
+
+	useEffect(() => {
+		if (selectedPolicies.length > 0) {
+			setIsUpdatePolicyCriteria(true);
+			const policy = policyCriteria[selectedPolicies[0]];
+			console.log('>>>', policy);
+			const it = options.find((item: any) => item.value === policy?.option);
+			setSelectedOption(it);
+			if (policy) {
+				if (policy?.option === 'after' || policy?.option === 'before') {
+					setIsShowDateScale(true);
+					onDateScaleChange(policy?.scale);
+				} else {
+					setIsShowDateScale(false);
+					onScaleChange(policy?.scale);
+				}
+				setValue(policy?.dateScale);
+			}
+		} else {
+			setIsUpdatePolicyCriteria(false);
+		}
+	}, [selectedPolicies, policyCriteria, onScaleChange, onDateScaleChange, options]);
+
+	const onUpdate = useCallback(() => {
+		setPolicyCriteria([]);
+		const data = {
+			option: selectedOption?.value,
+			scale: selectedScale?.value,
+			dateScale: value
+		};
+		const _policy = cloneDeep(policyCriteria);
+		_policy[selectedPolicies[0]] = data;
+		setPolicyCriteria(_policy);
+		setIsUpdatePolicyCriteria(false);
+		setValue('');
+		setSelectedPolicies([]);
+		setIsDirty(true);
+	}, [selectedOption, selectedScale, value, selectedPolicies, policyCriteria, setIsDirty]);
+
+	useEffect(() => {
+		console.log('>>>>>>>>>', hsmDetail);
+	}, [hsmDetail]);
 
 	return (
 		<Container
@@ -451,15 +501,28 @@ const EditHsmPolicyDetailSection: FC<{
 					/>
 				</Container>
 				<Container style={{ border: '1px solid #2b73d2' }} width="fit">
-					<Button
-						type="outlined"
-						label={t('label.add', 'Add')}
-						icon="PlusOutline"
-						iconPlacement="right"
-						color="primary"
-						height={46}
-						onClick={onAdd}
-					/>
+					{!isUpdatePolicyCriteria && (
+						<Button
+							type="outlined"
+							label={t('label.add', 'Add')}
+							icon="PlusOutline"
+							iconPlacement="right"
+							color="primary"
+							height={46}
+							onClick={onAdd}
+						/>
+					)}
+					{isUpdatePolicyCriteria && (
+						<Button
+							type="outlined"
+							label={t('label.update', 'Update')}
+							icon="PlusOutline"
+							iconPlacement="right"
+							color="primary"
+							height={46}
+							onClick={onUpdate}
+						/>
+					)}
 				</Container>
 				<Padding left="small">
 					<Container style={{ border: '1px solid rgb(215, 73, 66)' }} width="fit">
