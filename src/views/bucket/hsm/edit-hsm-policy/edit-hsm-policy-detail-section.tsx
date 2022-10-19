@@ -35,7 +35,7 @@ const EditHsmPolicyDetailSection: FC<{
 	const [isContactEnable, setIsContactEnable] = useState<boolean>(hsmDetail?.isContactEnabled);
 	const [isDocument, setIsDocument] = useState<boolean>(hsmDetail?.isDocumentEnabled);
 	const [policyCriteriaRows, setPolicyCriteriaRows] = useState<Array<any>>();
-	const [policyCriteria, setPolicyCriteria] = useState<Array<any>>(hsmDetail?.policyCriteria);
+	const [policyCriteria, setPolicyCriteria] = useState<Array<any>>([]);
 	const [isShowDateScale, setIsShowDateScale] = useState<boolean>(true);
 	const [value, setValue] = useState<string>();
 	const [selectedPolicies, setSelectedPolicies] = useState<Array<any>>([]);
@@ -56,7 +56,7 @@ const EditHsmPolicyDetailSection: FC<{
 		}
 	}, [isDocument, isContactEnable, isMessageEnable, isEventEnable, setHsmDetail]);
 
-	useEffect(() => {
+	useMemo(() => {
 		if (currentPolicy) {
 			if (currentPolicy?.hsmType) {
 				if (currentPolicy?.hsmType.length === 4) {
@@ -81,7 +81,7 @@ const EditHsmPolicyDetailSection: FC<{
 
 			if (currentPolicy?.hsmQuery) {
 				const queries = currentPolicy?.hsmQuery.split(' ');
-				if (queries && queries.length > 0) {
+				if (queries && queries.length > 0 && hsmDetail?.isDataLoaded === false) {
 					queries.forEach((element: string) => {
 						if (
 							element !== '' &&
@@ -104,10 +104,16 @@ const EditHsmPolicyDetailSection: FC<{
 							]);
 						}
 					});
+				} else {
+					setPolicyCriteria(hsmDetail?.policyCriteria);
 				}
 			}
+			setHsmDetail((prev: any) => ({
+				...prev,
+				isDataLoaded: true
+			}));
 		}
-	}, [currentPolicy]);
+	}, [currentPolicy, setHsmDetail, hsmDetail?.isDataLoaded, hsmDetail?.policyCriteria]);
 
 	useEffect(() => {
 		setHsmDetail((prev: any) => ({
@@ -259,14 +265,12 @@ const EditHsmPolicyDetailSection: FC<{
 	}, [policyCriteria, t]);
 
 	const onAdd = useCallback(() => {
-		setPolicyCriteria((prev) => [
-			...prev,
-			{
-				option: selectedOption?.value,
-				scale: selectedScale?.value,
-				dateScale: value
-			}
-		]);
+		const data = {
+			option: selectedOption?.value,
+			scale: selectedScale?.value,
+			dateScale: value
+		};
+		setPolicyCriteria((prev) => [...prev, data]);
 		setIsDirty(true);
 	}, [selectedOption?.value, selectedScale?.value, value, setIsDirty]);
 

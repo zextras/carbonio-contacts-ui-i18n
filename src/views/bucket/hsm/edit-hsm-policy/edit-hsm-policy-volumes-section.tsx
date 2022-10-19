@@ -16,16 +16,28 @@ import { Trans, useTranslation } from 'react-i18next';
 import ListRow from '../../../list/list-row';
 import { HSMContext } from '../hsm-context/hsm-context';
 
-const EditHsmPolicyVolumesSection: FC<any> = () => {
+const EditHsmPolicyVolumesSection: FC<{
+	currentPolicy: any;
+	setIsDirty: any;
+}> = ({ currentPolicy, setIsDirty }) => {
 	const [t] = useTranslation();
 	const context = useContext(HSMContext);
 	const { hsmDetail, setHsmDetail } = context;
-	const [showSourceVolume, setShowSourceVolume] = useState<boolean>(true);
-	const [showDestinationVolume, setShowDestinationVolume] = useState<boolean>(true);
+	const [showSourceVolume, setShowSourceVolume] = useState<boolean>(
+		hsmDetail?.sourceVolume.length > 0
+	);
+	const [showDestinationVolume, setShowDestinationVolume] = useState<boolean>(
+		hsmDetail?.destinationVolume.length > 0
+	);
 	const [volumeRows, setVolumeRows] = useState<Array<any>>([]);
-	const [selectedDestinationVolume, setSelectedDestinationVolume] = useState<Array<any>>([]);
-	const [selectedSourceVolume, setSelectedSourceVolume] = useState<Array<any>>([]);
+	const [selectedDestinationVolume, setSelectedDestinationVolume] = useState<Array<any>>(
+		hsmDetail?.destinationVolume.map((item: any) => item?.id)
+	);
+	const [selectedSourceVolume, setSelectedSourceVolume] = useState<Array<any>>(
+		hsmDetail?.sourceVolume.map((item: any) => item?.id)
+	);
 	const createSnackbar: any = useContext(SnackbarManagerContext);
+
 	const headers = useMemo(
 		() => [
 			{
@@ -35,19 +47,19 @@ const EditHsmPolicyVolumesSection: FC<any> = () => {
 				bold: true
 			},
 			{
-				id: 'name',
+				id: 'allocation',
 				label: t('hsm.allocation', 'Allocation'),
 				width: '25%',
 				bold: true
 			},
 			{
-				id: 'name',
+				id: 'type',
 				label: t('hsm.type', 'Type'),
 				width: '25%',
 				bold: true
 			},
 			{
-				id: 'name',
+				id: 'current',
 				label: t('hsm.current', 'Current'),
 				width: '25%',
 				bold: true
@@ -55,6 +67,7 @@ const EditHsmPolicyVolumesSection: FC<any> = () => {
 		],
 		[t]
 	);
+
 	const getVoumeType = useCallback(
 		(type: number): string => {
 			if (type === 1) {
@@ -67,6 +80,7 @@ const EditHsmPolicyVolumesSection: FC<any> = () => {
 		},
 		[t]
 	);
+
 	useEffect(() => {
 		const volumeList = hsmDetail?.allVolumes;
 		if (volumeList && volumeList.length > 0) {
@@ -99,32 +113,73 @@ const EditHsmPolicyVolumesSection: FC<any> = () => {
 	}, [hsmDetail?.allVolumes, getVoumeType, t]);
 
 	useEffect(() => {
-		if (Array.isArray(hsmDetail?.allVolumes)) {
-			const sourceVol = hsmDetail?.allVolumes?.filter((item: any) =>
-				selectedSourceVolume?.includes(item?.id)
-			);
-			if (sourceVol) {
-				setHsmDetail((prev: any) => ({
-					...prev,
-					sourceVolume: sourceVol
-				}));
-			}
+		const sourceVol = hsmDetail?.allVolumes?.filter((item: any) =>
+			selectedSourceVolume?.includes(item?.id)
+		);
+		if (sourceVol && sourceVol.length > 0) {
+			setHsmDetail((prev: any) => ({
+				...prev,
+				sourceVolume: sourceVol
+			}));
+		} else {
+			setHsmDetail((prev: any) => ({
+				...prev,
+				sourceVolume: []
+			}));
 		}
-	}, [hsmDetail?.allVolumes, selectedSourceVolume, setHsmDetail]);
+	}, [selectedSourceVolume, hsmDetail?.allVolumes, setHsmDetail]);
 
 	useEffect(() => {
 		if (Array.isArray(hsmDetail?.allVolumes)) {
 			const destVol = hsmDetail?.allVolumes?.filter((item: any) =>
 				selectedDestinationVolume?.includes(item?.id)
 			);
-			if (destVol) {
+			if (destVol && destVol.length > 0) {
 				setHsmDetail((prev: any) => ({
 					...prev,
 					destinationVolume: destVol
 				}));
+			} else {
+				setHsmDetail((prev: any) => ({
+					...prev,
+					destinationVolume: []
+				}));
 			}
 		}
 	}, [hsmDetail?.allVolumes, selectedDestinationVolume, setHsmDetail]);
+
+	useMemo(() => {
+		if (currentPolicy && currentPolicy?.hsmQuery && hsmDetail?.isVolumeLoaded === false) {
+			const queries = currentPolicy?.hsmQuery.split(' ');
+			if (queries && queries.length > 0) {
+				setHsmDetail((prev: any) => ({
+					...prev,
+					isVolumeLoaded: true
+				}));
+				queries.forEach((element: string) => {
+					if (
+						element !== '' &&
+						(element.startsWith('source') || element.startsWith('destination'))
+					) {
+						const option = element.split(':')[0];
+						const valueItem = element.split(':')[1];
+						if (option.startsWith('source')) {
+							setSelectedSourceVolume(valueItem.split(',').map((item: any) => +item));
+							setShowSourceVolume(true);
+						}
+						if (option.startsWith('destination')) {
+							setSelectedDestinationVolume(valueItem.split(',').map((item: any) => +item));
+							setShowDestinationVolume(true);
+						}
+					}
+				});
+			}
+		}
+	}, [currentPolicy, hsmDetail?.isVolumeLoaded, setHsmDetail]);
+
+	useEffect(() => {
+		console.log('>>>>>>>>>>>>>>>', hsmDetail);
+	}, [hsmDetail]);
 
 	return (
 		<Container
@@ -177,6 +232,7 @@ const EditHsmPolicyVolumesSection: FC<any> = () => {
 							headers={headers}
 							selectedRows={selectedSourceVolume}
 							onSelectionChange={(selected: any): void => {
+								setIsDirty(true);
 								const available = selectedDestinationVolume.filter((item: any) =>
 									selected?.includes(item)
 								);
@@ -249,6 +305,7 @@ const EditHsmPolicyVolumesSection: FC<any> = () => {
 							multiSelect={false}
 							selectedRows={selectedDestinationVolume}
 							onSelectionChange={(selected: any): void => {
+								setIsDirty(true);
 								const available = selectedSourceVolume.filter((item: any) =>
 									selected?.includes(item)
 								);

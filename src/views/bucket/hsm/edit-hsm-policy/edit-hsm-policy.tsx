@@ -44,6 +44,8 @@ interface hsmDetailObj {
 	policyCriteria: Array<any>;
 	sourceVolume: Array<any>;
 	destinationVolume: Array<any>;
+	isDataLoaded: boolean;
+	isVolumeLoaded: boolean;
 }
 
 const EditHsmPolicy: FC<{
@@ -76,7 +78,9 @@ const EditHsmPolicy: FC<{
 		isDocumentEnabled: false,
 		policyCriteria: [],
 		sourceVolume: [],
-		destinationVolume: []
+		destinationVolume: [],
+		isDataLoaded: false,
+		isVolumeLoaded: false
 	});
 
 	useEffect(() => {
@@ -215,7 +219,12 @@ const EditHsmPolicy: FC<{
 							{change === 'details' && (
 								<EditHsmPolicyDetailSection currentPolicy={currentPolicy} setIsDirty={setIsDirty} />
 							)}
-							{change === 'volumes' && <EditHsmPolicyVolumesSection />}
+							{change === 'volumes' && (
+								<EditHsmPolicyVolumesSection
+									currentPolicy={currentPolicy}
+									setIsDirty={setIsDirty}
+								/>
+							)}
 						</Container>
 					</HSMContext.Provider>
 				</Container>
