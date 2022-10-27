@@ -108,13 +108,13 @@ const BucketListPanel: FC = () => {
 				name: t('label.data_volumes', 'Data Volumes'),
 				isSelected: isStoreVolumeSelect
 			}
-			/* ,
+			 ,
 			{
 				id: HSM_SETTINGS,
 				name: t('label.hsm_settings', 'HSM Settings'),
 				isSelected: isStoreVolumeSelect
-			},
-			{
+			}
+			/* {
 				id: INDEXER_SETTINGS,
 				name: t('label.indexer_settings', 'Indexer Settings'),
 				isSelected: isStoreVolumeSelect
@@ -134,7 +134,7 @@ const BucketListPanel: FC = () => {
 	useEffect(() => {
 		if (isStoreSelect) {
 			if (selectedOperationItem) {
-				if (selectedOperationItem === DATA_VOLUMES) {
+				if (selectedOperationItem === DATA_VOLUMES || selectedOperationItem === HSM_SETTINGS) {
 					globalCarbonioSendAnalytics &&
 						matomo.trackEvent('trackViewPage', `${selectedOperationItem}`);
 					replaceHistory(`${searchVolumeName}/${selectedOperationItem}`);
