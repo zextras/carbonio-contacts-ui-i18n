@@ -16,9 +16,9 @@ export const endSession = async (
 		{
 			_jsns: 'urn:zimbraAccount',
 			sessionId,
-			logoff: '0',
-			all: '0',
-			excludeCurrent: '0'
+			logoff: 1,
+			all: 0,
+			excludeCurrent: 0
 		},
 		accountName,
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -26,5 +26,8 @@ export const endSession = async (
 		undefined,
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore
-		token
+		token,
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore
+		true
 	);
