@@ -1118,6 +1118,7 @@
         "this_list_is_member_of": "This List is part of",
         "time_zone": "Time Zone",
         "timezone": "Time Zone",
+        "total_acc_rights_with_delete_distribution_list_helper_text": "This list has <bold>{{totalAccRights}}</bold> shared accounts rights. <br /> If you delete it all rights will be lost.",
         "type": "Type",
         "type_accounts_paste_them_here": "Type the Accounts or paste them here",
         "type_an_account_dot": "Type an account ...",
