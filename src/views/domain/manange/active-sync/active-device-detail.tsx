@@ -14,14 +14,16 @@ import {
 	Input,
 	SnackbarManagerContext,
 	IconButton,
-	Select
+	Select,
+	Tooltip
 } from '@zextras/carbonio-design-system';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import moment from 'moment';
 import ListRow from '../../../list/list-row';
 import { getMobileDeviceDetail } from '../../../../services/get-mobile-device-detail';
-import { ZX_MOBILE } from '../../../../constants';
+import { RESET_DEVICE, SUSPEND_DEVICE, WIPE_DEVICE, ZX_MOBILE } from '../../../../constants';
+import ActiveDeviceConfirmation from './active-device-confirmation';
 
 const DeviceDetailContainer = styled(Container)`
 	z-index: 10;
@@ -73,6 +75,10 @@ const ActiveDeviceDetail: FC<{
 	const [t] = useTranslation();
 	const createSnackbar: any = useContext(SnackbarManagerContext);
 	const [mobileDeviceDetail, setMobileDeviceDetail] = useState<MobileDeviceDetail>();
+	const [isShowConfirmBox, setIsShowConfirmBox] = useState<boolean>(false);
+	const [operationType, setOperationType] = useState<string>('');
+	const [isDetailRequestInProgess, setIsDetailRequestInProgess] = useState<boolean>(false);
+	const [isOperationRequestInProgress, setIsOperationRequestInProgress] = useState<boolean>(false);
 
 	const abqStatusOptions: any[] = useMemo(
 		() => [
@@ -111,12 +117,14 @@ const ActiveDeviceDetail: FC<{
 
 	useEffect(() => {
 		if (selectedMobileDeviceDetail) {
+			setIsDetailRequestInProgess(true);
 			getMobileDeviceDetail(
 				ZX_MOBILE,
 				selectedMobileDeviceDetail?.accountName,
 				selectedMobileDeviceDetail?.deviceId
 			)
 				.then((res: any) => {
+					setIsDetailRequestInProgess(false);
 					if (res?.Body?.response?.content) {
 						const content: any = JSON.parse(res?.Body?.response?.content);
 						if (content?.response && content?.ok) {
@@ -125,6 +133,7 @@ const ActiveDeviceDetail: FC<{
 					}
 				})
 				.catch((error: any) => {
+					setIsDetailRequestInProgess(false);
 					createSnackbar({
 						key: 'error',
 						type: 'error',
@@ -174,40 +183,75 @@ const ActiveDeviceDetail: FC<{
 			<Divider />
 			<ListRow>
 				<Container padding={{ top: 'large' }}>
-					<Button
-						type="outlined"
-						key="add-button"
-						label={t('label.wipe_device', 'Wipe Device')}
-						color="primary"
-						icon="SmartphoneOutline"
-						height={44}
-						width={186}
-						iconPlacement="right"
-					/>
+					<Tooltip
+						placement="bottom"
+						label={t(
+							'label.wipe_device_factory_settings',
+							'Wipe the device to the factory settings'
+						)}
+					>
+						<Button
+							type="outlined"
+							key="add-button"
+							label={t('label.wipe_device', 'Wipe Device')}
+							color="primary"
+							icon="SmartphoneOutline"
+							height={44}
+							width={186}
+							iconPlacement="right"
+							loading={isDetailRequestInProgess}
+							disable={isDetailRequestInProgess}
+							onClick={(): void => {
+								setOperationType(WIPE_DEVICE);
+								setIsShowConfirmBox(true);
+							}}
+						/>
+					</Tooltip>
 				</Container>
 				<Container padding={{ top: 'large' }}>
-					<Button
-						type="outlined"
-						key="add-button"
-						label={t('label.reset_device', 'Reset Device')}
-						color="primary"
-						icon="HistoryOutline"
-						height={44}
-						width={186}
-						iconPlacement="right"
-					/>
+					<Tooltip
+						placement="bottom"
+						label={t('label.logoff_from_every_device', 'Log off from every device')}
+					>
+						<Button
+							type="outlined"
+							key="add-button"
+							label={t('label.reset_device', 'Reset Device')}
+							color="primary"
+							icon="HistoryOutline"
+							height={44}
+							width={186}
+							iconPlacement="right"
+							onClick={(): void => {
+								setOperationType(RESET_DEVICE);
+								setIsShowConfirmBox(true);
+							}}
+							loading={isDetailRequestInProgess}
+							disable={isDetailRequestInProgess}
+						/>
+					</Tooltip>
 				</Container>
 				<Container padding={{ top: 'large' }}>
-					<Button
-						type="outlined"
-						key="add-button"
-						label={t('label.suspend', 'Suspend')}
-						color="primary"
-						icon="AlertTriangleOutline"
-						height={44}
-						width={186}
-						iconPlacement="right"
-					/>
+					<Tooltip
+						placement="top"
+						label={t('label.active_sync_active_paused', 'The activesync is active / paused')}
+					>
+						<Button
+							type="outlined"
+							key="add-button"
+							label={t('label.suspend', 'Suspend')}
+							color="primary"
+							icon="AlertTriangleOutline"
+							height={44}
+							width={186}
+							iconPlacement="right"
+							onClick={(): void => {
+								setOperationType(SUSPEND_DEVICE);
+							}}
+							loading={isDetailRequestInProgess}
+							disable={isDetailRequestInProgess}
+						/>
+					</Tooltip>
 				</Container>
 			</ListRow>
 			<Container mainAlignment="flex-start" crossAlignment="flex-start" padding={{ all: 'large' }}>
@@ -337,6 +381,15 @@ const ActiveDeviceDetail: FC<{
 						/>
 					</Container>
 				</ListRow>
+				{isShowConfirmBox && (
+					<ActiveDeviceConfirmation
+						operationType={operationType}
+						setIsShowConfirmBox={setIsShowConfirmBox}
+						isShowConfirmBox={isShowConfirmBox}
+						mobileDeviceDetail={mobileDeviceDetail}
+						isOperationRequestInProgress={isOperationRequestInProgress}
+					/>
+				)}
 			</Container>
 		</DeviceDetailContainer>
 	);

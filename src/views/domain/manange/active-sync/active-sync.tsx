@@ -51,6 +51,7 @@ const ActiveSync: FC = () => {
 	const [isShowDeviceDetail, setIsShowDeviceDetail] = useState<boolean>(false);
 	const [selectedMobileDevice, setSelectedMobileDevice] = useState<Array<any>>([]);
 	const [selectedMobileDeviceDetail, setSelectedMobileDeviceDetail] = useState<any>();
+
 	const headers: any[] = useMemo(
 		() => [
 			{

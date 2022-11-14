@@ -137,3 +137,6 @@ export const LOCAL_VALUE = 'LOCAL';
 export const MOUNTPOINT = 'mountpoint';
 export const S3_BUCKET = 's3_bucket';
 export const ZX_MOBILE = 'ZxMobile';
+export const WIPE_DEVICE = 'wipe device';
+export const RESET_DEVICE = 'reset device';
+export const SUSPEND_DEVICE = 'suspend device';
