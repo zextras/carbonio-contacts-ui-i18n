@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { FC, useContext, useEffect, useMemo, useState } from 'react';
+import React, { FC, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import {
 	Container,
 	Divider,
@@ -24,6 +24,9 @@ import ListRow from '../../../list/list-row';
 import { getMobileDeviceDetail } from '../../../../services/get-mobile-device-detail';
 import { RESET_DEVICE, SUSPEND_DEVICE, WIPE_DEVICE, ZX_MOBILE } from '../../../../constants';
 import ActiveDeviceConfirmation from './active-device-confirmation';
+import { resetDevice } from '../../../../services/reset-device';
+import { suspendDevice } from '../../../../services/suspend-device';
+import { wipeDevice } from '../../../../services/wipe-device';
 
 const DeviceDetailContainer = styled(Container)`
 	z-index: 10;
@@ -71,7 +74,8 @@ type MobileDeviceDetail = {
 const ActiveDeviceDetail: FC<{
 	setIsShowDeviceDetail: any;
 	selectedMobileDeviceDetail: any;
-}> = ({ setIsShowDeviceDetail, selectedMobileDeviceDetail }) => {
+	setRefreshDeviceList: any;
+}> = ({ setIsShowDeviceDetail, selectedMobileDeviceDetail, setRefreshDeviceList }) => {
 	const [t] = useTranslation();
 	const createSnackbar: any = useContext(SnackbarManagerContext);
 	const [mobileDeviceDetail, setMobileDeviceDetail] = useState<MobileDeviceDetail>();
@@ -79,6 +83,7 @@ const ActiveDeviceDetail: FC<{
 	const [operationType, setOperationType] = useState<string>('');
 	const [isDetailRequestInProgess, setIsDetailRequestInProgess] = useState<boolean>(false);
 	const [isOperationRequestInProgress, setIsOperationRequestInProgress] = useState<boolean>(false);
+	const [wipeDeviceConfirmation, setWipeDeviceConfirmation] = useState<boolean>(false);
 
 	const abqStatusOptions: any[] = useMemo(
 		() => [
@@ -157,6 +162,139 @@ const ActiveDeviceDetail: FC<{
 			}
 		}
 	}, [mobileDeviceDetail, statusOptions]);
+
+	const resetUI = useCallback(() => {
+		setRefreshDeviceList(true);
+	}, [setRefreshDeviceList]);
+
+	const resetDeviceOperation = useCallback(() => {
+		resetDevice(
+			ZX_MOBILE,
+			mobileDeviceDetail?.accountName || '',
+			mobileDeviceDetail?.deviceId || ''
+		)
+			.then((res: any) => {
+				setIsOperationRequestInProgress(false);
+				setIsShowConfirmBox(false);
+				if (res?.Body?.response?.content) {
+					const content: any = JSON.parse(res?.Body?.response?.content);
+					if (content?.response && content?.ok) {
+						createSnackbar({
+							key: 'success',
+							type: 'success',
+							label: t('label.change_save_success_msg', 'The change has been saved successfully'),
+							autoHideTimeout: 3000,
+							hideButton: true,
+							replace: true
+						});
+						resetUI();
+					}
+				}
+			})
+			.catch((error: any) => {
+				setIsOperationRequestInProgress(false);
+				createSnackbar({
+					key: 'error',
+					type: 'error',
+					label: error
+						? error?.error
+						: t('label.something_wrong_error_msg', 'Something went wrong. Please try again.'),
+					autoHideTimeout: 3000,
+					hideButton: true,
+					replace: true
+				});
+			});
+	}, [mobileDeviceDetail, t, createSnackbar, resetUI]);
+
+	const suspendDeviceOperation = useCallback(() => {
+		suspendDevice(
+			ZX_MOBILE,
+			mobileDeviceDetail?.accountName || '',
+			mobileDeviceDetail?.deviceId || ''
+		)
+			.then((res: any) => {
+				setIsOperationRequestInProgress(false);
+				setIsShowConfirmBox(false);
+				if (res?.Body?.response?.content) {
+					const content: any = JSON.parse(res?.Body?.response?.content);
+					if (content?.ok) {
+						createSnackbar({
+							key: 'success',
+							type: 'success',
+							label: t('label.change_save_success_msg', 'The change has been saved successfully'),
+							autoHideTimeout: 3000,
+							hideButton: true,
+							replace: true
+						});
+						resetUI();
+					}
+				}
+			})
+			.catch((error: any) => {
+				setIsOperationRequestInProgress(false);
+				createSnackbar({
+					key: 'error',
+					type: 'error',
+					label: error
+						? error?.error
+						: t('label.something_wrong_error_msg', 'Something went wrong. Please try again.'),
+					autoHideTimeout: 3000,
+					hideButton: true,
+					replace: true
+				});
+			});
+	}, [mobileDeviceDetail, t, createSnackbar, resetUI]);
+
+	const wipeDeviceOperation = useCallback(() => {
+		wipeDevice(
+			ZX_MOBILE,
+			mobileDeviceDetail?.accountName || '',
+			mobileDeviceDetail?.deviceId || '',
+			wipeDeviceConfirmation
+		)
+			.then((res: any) => {
+				setIsOperationRequestInProgress(false);
+				setIsShowConfirmBox(false);
+				if (res?.Body?.response?.content) {
+					const content: any = JSON.parse(res?.Body?.response?.content);
+					if (content?.ok) {
+						createSnackbar({
+							key: 'success',
+							type: 'success',
+							label: t('label.change_save_success_msg', 'The change has been saved successfully'),
+							autoHideTimeout: 3000,
+							hideButton: true,
+							replace: true
+						});
+						resetUI();
+					}
+				}
+			})
+			.catch((error: any) => {
+				setIsOperationRequestInProgress(false);
+				createSnackbar({
+					key: 'error',
+					type: 'error',
+					label: error
+						? error?.error
+						: t('label.something_wrong_error_msg', 'Something went wrong. Please try again.'),
+					autoHideTimeout: 3000,
+					hideButton: true,
+					replace: true
+				});
+			});
+	}, [mobileDeviceDetail, t, createSnackbar, wipeDeviceConfirmation, resetUI]);
+
+	const doDeviceOperation = useCallback(() => {
+		setIsOperationRequestInProgress(true);
+		if (operationType === RESET_DEVICE) {
+			resetDeviceOperation();
+		} else if (operationType === SUSPEND_DEVICE) {
+			suspendDeviceOperation();
+		} else if (operationType === WIPE_DEVICE) {
+			wipeDeviceOperation();
+		}
+	}, [operationType, resetDeviceOperation, suspendDeviceOperation, wipeDeviceOperation]);
 
 	return (
 		<DeviceDetailContainer background="gray6" mainAlignment="flex-start">
@@ -247,6 +385,7 @@ const ActiveDeviceDetail: FC<{
 							iconPlacement="right"
 							onClick={(): void => {
 								setOperationType(SUSPEND_DEVICE);
+								suspendDeviceOperation();
 							}}
 							loading={isDetailRequestInProgess}
 							disable={isDetailRequestInProgess}
@@ -388,6 +527,8 @@ const ActiveDeviceDetail: FC<{
 						isShowConfirmBox={isShowConfirmBox}
 						mobileDeviceDetail={mobileDeviceDetail}
 						isOperationRequestInProgress={isOperationRequestInProgress}
+						doDeviceOperation={doDeviceOperation}
+						setWipeDeviceConfirmation={setWipeDeviceConfirmation}
 					/>
 				)}
 			</Container>

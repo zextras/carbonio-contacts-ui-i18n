@@ -19,6 +19,7 @@ import {
 } from '@zextras/carbonio-design-system';
 import { useTranslation, Trans } from 'react-i18next';
 import moment from 'moment';
+import { cloneDeep } from 'lodash';
 import gardian from '../../../../assets/gardian.svg';
 import { getAllDevices } from '../../../../services/get-all-devices';
 import ActiveDeviceDetail from './active-device-detail';
@@ -51,6 +52,7 @@ const ActiveSync: FC = () => {
 	const [isShowDeviceDetail, setIsShowDeviceDetail] = useState<boolean>(false);
 	const [selectedMobileDevice, setSelectedMobileDevice] = useState<Array<any>>([]);
 	const [selectedMobileDeviceDetail, setSelectedMobileDeviceDetail] = useState<any>();
+	const [refreshDeviceList, setRefreshDeviceList] = useState<boolean>(false);
 
 	const headers: any[] = useMemo(
 		() => [
@@ -126,26 +128,83 @@ const ActiveSync: FC = () => {
 	}, [getAllDeviceList]);
 
 	useEffect(() => {
+		if (refreshDeviceList) {
+			setRefreshDeviceList(false);
+			setIsShowDeviceDetail(false);
+			setSelectedMobileDevice([]);
+			getAllDeviceList();
+		}
+	}, [refreshDeviceList, getAllDeviceList, selectedMobileDevice]);
+
+	useMemo(() => {
 		if (allMobileDevices.length > 0) {
 			const allRows = allMobileDevices.map((item: MobileDevice) => ({
 				id: item?.firstSeen,
 				columns: [
-					<Text size="medium" weight="bold" key={item}>
+					<Text
+						size="medium"
+						weight="bold"
+						key={item}
+						onClick={(event: { stopPropagation: () => void }): void => {
+							event.stopPropagation();
+							setSelectedMobileDevice([item?.firstSeen]);
+						}}
+					>
 						{item?.accountName}
 					</Text>,
-					<Text size="medium" weight="bold" key={item}>
+					<Text
+						size="medium"
+						weight="bold"
+						key={item}
+						onClick={(event: { stopPropagation: () => void }): void => {
+							event.stopPropagation();
+							setSelectedMobileDevice([item?.firstSeen]);
+						}}
+					>
 						{item?.deviceId}
 					</Text>,
-					<Text size="medium" weight="bold" key={item}>
+					<Text
+						size="medium"
+						weight="bold"
+						key={item}
+						onClick={(event: { stopPropagation: () => void }): void => {
+							event.stopPropagation();
+							setSelectedMobileDevice([item?.firstSeen]);
+						}}
+					>
 						{item?.accountEmail}
 					</Text>,
-					<Text size="medium" weight="bold" key={item}>
+					<Text
+						size="medium"
+						weight="bold"
+						key={item}
+						onClick={(event: { stopPropagation: () => void }): void => {
+							event.stopPropagation();
+							setSelectedMobileDevice([item?.firstSeen]);
+						}}
+					>
 						{moment(item?.lastSeen).format('YY/MM/DD | hh:mm:ss a')}
 					</Text>,
-					<Text size="medium" weight="bold" key={item}>
+					<Text
+						size="medium"
+						weight="bold"
+						key={item}
+						onClick={(event: { stopPropagation: () => void }): void => {
+							event.stopPropagation();
+							setSelectedMobileDevice([item?.firstSeen]);
+						}}
+					>
 						{''}
 					</Text>,
-					<Text size="medium" weight="bold" key={item}>
+					<Text
+						size="medium"
+						weight="bold"
+						key={item}
+						onClick={(event: { stopPropagation: () => void }): void => {
+							event.stopPropagation();
+							setSelectedMobileDevice([item?.firstSeen]);
+						}}
+					>
 						{item?.status === 1 ? t('label.enabled', 'Enabled') : t('label.disabled', 'Disabled')}
 					</Text>
 				]
@@ -162,6 +221,7 @@ const ActiveSync: FC = () => {
 				(item: MobileDevice) => item?.firstSeen === selectedMobileDevice[0]
 			);
 			if (mobileDevice) {
+				setRefreshDeviceList(false);
 				setSelectedMobileDeviceDetail(mobileDevice);
 				setIsShowDeviceDetail(true);
 			}
@@ -245,13 +305,7 @@ const ActiveSync: FC = () => {
 						wrap="nowrap"
 						padding={{ top: 'large' }}
 					>
-						<Table
-							rows={allDeviceRow}
-							headers={headers}
-							showCheckbox={false}
-							multiSelect={false}
-							onSelectionChange={(selected: any): void => setSelectedMobileDevice(selected)}
-						/>
+						<Table rows={allDeviceRow} headers={headers} showCheckbox={false} multiSelect={false} />
 					</Row>
 					{allDeviceRow.length === 0 && (
 						<Container orientation="column" crossAlignment="center" mainAlignment="center">
@@ -295,21 +349,13 @@ const ActiveSync: FC = () => {
 							</Row>
 						</Container>
 					)}
-					{/* <Row
-						takeAvwidth="fill"
-						mainAlignment="flex-start"
-						width="100%"
-						wrap="nowrap"
-						padding={{ top: 'large' }}
-					>
-						<Paginig totalItem={1} pageSize={10} setOffset={setOffset} />
-					</Row> */}
 				</Container>
 			</Container>
 			{isShowDeviceDetail && (
 				<ActiveDeviceDetail
 					setIsShowDeviceDetail={setIsShowDeviceDetail}
 					selectedMobileDeviceDetail={selectedMobileDeviceDetail}
+					setRefreshDeviceList={setRefreshDeviceList}
 				/>
 			)}
 		</Container>

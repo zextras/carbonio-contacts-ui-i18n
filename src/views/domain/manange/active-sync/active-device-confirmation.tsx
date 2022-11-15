@@ -15,12 +15,16 @@ const ActiveDeviceConfirmation: FC<{
 	isShowConfirmBox: boolean;
 	mobileDeviceDetail: any;
 	isOperationRequestInProgress: boolean;
+	doDeviceOperation: any;
+	setWipeDeviceConfirmation: any;
 }> = ({
 	operationType,
 	setIsShowConfirmBox,
 	isShowConfirmBox,
 	mobileDeviceDetail,
-	isOperationRequestInProgress
+	isOperationRequestInProgress,
+	doDeviceOperation,
+	setWipeDeviceConfirmation
 }) => {
 	const [t] = useTranslation();
 	const [title, setTitle] = useState<string>('title');
@@ -70,14 +74,18 @@ const ActiveDeviceConfirmation: FC<{
 								disabled={isOperationRequestInProgress}
 								height={36}
 								type="outlined"
+								onClick={(): void => {
+									doDeviceOperation();
+								}}
 							/>
 						</Padding>
 						<Button
 							label={noOperationTitle}
 							color="primary"
-							loading={isOperationRequestInProgress}
-							disabled={isOperationRequestInProgress}
 							height={36}
+							onClick={(): void => {
+								setIsShowConfirmBox(false);
+							}}
 						/>
 					</Container>
 				</Container>
@@ -119,6 +127,7 @@ const ActiveDeviceConfirmation: FC<{
 						value={awareResetSetting}
 						onClick={(): void => {
 							setAwareResetSetting(!awareResetSetting);
+							setWipeDeviceConfirmation(!awareResetSetting);
 						}}
 					/>
 				</Padding>
