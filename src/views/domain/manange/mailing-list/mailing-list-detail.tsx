@@ -163,6 +163,8 @@ const MailingListDetail: FC<any> = ({
 	const [ownerOffset, setOwnerOffset] = useState<number>(0);
 	const [memberURL, setMemberURL] = useState<string>();
 	const [isDeleteBtnLoading, setIsDeleteBtnLoading] = useState<boolean>(false);
+	const [granteeTotalRights, setGranteeTotalRights] = useState(0);
+	const [targetTotalRights, setTargetTotalRights] = useState(0);
 
 	const onRightsChange = useCallback(
 		(v: any): any => {
@@ -448,14 +450,54 @@ const MailingListDetail: FC<any> = ({
 		getGrant(getGrantBody)
 			.then((data: any) => {
 				if (data && data?.grant && Array.isArray(data?.grant)) {
-					const rights = data?.grant?.map((items: any) => items?.right?.length);
-					const rightLenght = rights?.values();
-					let totalRights = 0;
+					let granteeTotal = 0;
+
+					const granteeRights = data?.grant?.map((items: any) => items?.right?.length);
+					const granteeRightLenght = granteeRights?.values();
+
 					// eslint-disable-next-line no-restricted-syntax
-					for (const value of rightLenght) {
-						totalRights += value;
+					for (const value of granteeRightLenght) {
+						granteeTotal += value;
 					}
-					setTotalGrantRights(totalRights);
+					setGranteeTotalRights(granteeTotal);
+				}
+				setIsOpenDeleteDialog(true);
+				setIsDeleteBtnLoading(false);
+			})
+			.catch((error) => {
+				createSnackbar({
+					key: 'error',
+					type: 'error',
+					label: error?.message
+						? error?.message
+						: t('label.something_wrong_error_msg', 'Something went wrong. Please try again.'),
+					autoHideTimeout: 3000,
+					hideButton: true,
+					replace: true
+				});
+				setIsDeleteBtnLoading(false);
+			});
+
+		// get grants' rights as target
+		const getGrantBodyTarget: any = {};
+		const target = {
+			type: 'dl',
+			by: 'name',
+			_content: selectedMailingList?.name
+		};
+		getGrantBodyTarget.target = target;
+		getGrant(getGrantBodyTarget)
+			.then((resFromTarget: any) => {
+				if (resFromTarget && resFromTarget?.grant && Array.isArray(resFromTarget?.grant)) {
+					let targetTotal = 0;
+					const targetRights = resFromTarget?.grant?.map((items: any) => items?.right?.length);
+					const targetRightLenght = targetRights?.values();
+
+					// eslint-disable-next-line no-restricted-syntax
+					for (const value of targetRightLenght) {
+						targetTotal += value;
+					}
+					setTargetTotalRights(targetTotal);
 				}
 				setIsOpenDeleteDialog(true);
 				setIsDeleteBtnLoading(false);
@@ -474,6 +516,11 @@ const MailingListDetail: FC<any> = ({
 				setIsDeleteBtnLoading(false);
 			});
 	}, [createSnackbar, selectedMailingList?.name, t]);
+
+	useEffect(() => {
+		const totalRights = targetTotalRights + granteeTotalRights;
+		setTotalGrantRights(totalRights);
+	}, [granteeTotalRights, targetTotalRights]);
 
 	return (
 		<Container
