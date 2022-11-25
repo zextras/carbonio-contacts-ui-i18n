@@ -148,7 +148,8 @@
         "edit_tag": "Edit Tag",
         "delete_tag_name": "Tag \"{{name}}\" löschen",
         "delete_tag": "Delete tag",
-        "create_tag": "Tag erstellen"
+        "create_tag": "Tag erstellen",
+        "no_name": "Kein Name"
     },
     "message": {
         "snackbar": {
