@@ -186,7 +186,8 @@
         "edit_tag": "टैग बदलें",
         "delete_tag_name": "\"{{name}}\" टैग डिलीट करें",
         "delete_tag": "टैग डिलीट करें",
-        "create_tag": "टैग बनाएँ"
+        "create_tag": "टैग बनाएँ",
+        "no_name": "नाम नहीं है"
     },
     "name": {
         "nickName": "उर्फनाम",
