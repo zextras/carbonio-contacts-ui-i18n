@@ -185,7 +185,8 @@
         "delete_tag_name": "\"{{name}}\" タグを削除する",
         "delete_tag": "タグを削除する",
         "create_tag": "タグを作成する",
-        "no_data": "データがありません"
+        "no_data": "データがありません",
+        "no_name": "名前がありません"
     },
     "name": {
         "nickName": "ニックネーム",
