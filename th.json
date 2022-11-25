@@ -141,7 +141,8 @@
         "edit_tag": "แก้ไขแท็ก",
         "delete_tag_name": "ลบแท็ก \"{{name}}\"",
         "delete_tag": "ลบแท็ก",
-        "create_tag": "สร้างแท็ก"
+        "create_tag": "สร้างแท็ก",
+        "no_name": "ไม่มีชื่อ"
     },
     "share": {
         "read": "อ่าน",
