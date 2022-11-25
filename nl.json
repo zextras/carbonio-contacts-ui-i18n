@@ -194,7 +194,8 @@
         "edit_tag": "Tag bewerken",
         "delete_tag_name": "\"{{name}}\" tag verwijderen",
         "delete_tag": "Tag verwijderen",
-        "create_tag": "Tag creëren"
+        "create_tag": "Tag creëren",
+        "no_name": "Geen Naam"
     },
     "section": {
         "field": {
