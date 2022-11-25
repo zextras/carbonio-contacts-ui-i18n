@@ -61,7 +61,8 @@
         "edit_tag": "Editar etiqueta",
         "delete_tag_name": "Eliminar etiqueta \"{{name}}\"",
         "delete_tag": "Eliminar etiqueta",
-        "create_tag": "Crear Etiqueta"
+        "create_tag": "Crear Etiqueta",
+        "no_name": "Sin Nombre"
     },
     "share": {
         "none": "None",
