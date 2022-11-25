@@ -148,7 +148,8 @@
         "edit_tag": "Editar Etiqueta",
         "delete_tag_name": "Excluir etiqueta \"{{name}}\"",
         "delete_tag": "Excluir Etiqueta",
-        "create_tag": "Criar Etiqueta"
+        "create_tag": "Criar Etiqueta",
+        "no_name": "Sem Nome"
     },
     "share": {
         "add": "Adicionar",
