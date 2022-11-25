@@ -184,7 +184,8 @@
         "edit_tag": "编辑标签",
         "delete_tag_name": "删除“{{name}}”标签",
         "delete_tag": "删除标签",
-        "create_tag": "创建标签"
+        "create_tag": "创建标签",
+        "no_name": "无名称"
     },
     "name": {
         "nickName": "昵称",
