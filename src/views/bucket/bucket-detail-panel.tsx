@@ -27,24 +27,26 @@ import DetailsPanel from './details-panel';
 import { fetchSoap } from '../../services/bucket-service';
 import EditBucketDetailPanel from './edit-bucket-details-panel';
 import { AbsoluteContainer } from '../components/styled';
+import { Tooltip } from '@zextras/carbonio-design-system';
 
 const RelativeContainer = styled(Container)`
 	position: relative;
 `;
 
-const headers = [
+const headers = (t: any): Array<object> => [
+	{
+		id: 'label',
+		label: t('label.label', 'Label'),
+		bold: true
+	},
 	{
 		id: 'name',
-		label: 'Name',
-		width: '90%',
+		label: t('label.label', 'Name'),
 		bold: true
 	},
 	{
 		id: 'type',
-		label: 'Type',
-		i18nAllLabel: 'All',
-		width: '10%',
-		align: 'center',
+		label: t('label.label', 'Type'),
 		bold: true
 	}
 ];
@@ -62,30 +64,47 @@ const BucketListTable: FC<{
 			volumes.map((v, i) => ({
 				id: i,
 				columns: [
-					<Row
-						key={i}
-						onDoubleClick={(): any => {
-							onDoubleClick(i);
-						}}
-						onClick={(): any => {
-							onClick(i);
-						}}
-						style={{ textAlign: 'left', justifyContent: 'flex-start' }}
-					>
-						{v.bucketName}
-					</Row>,
-					<Row
-						key={i}
-						onDoubleClick={(): any => {
-							onDoubleClick(i);
-						}}
-						onClick={(): any => {
-							onClick(i);
-						}}
-						style={{ textAlign: 'center' }}
-					>
-						{v.storeType}
-					</Row>
+					<Tooltip placement="bottom" label={v.notes} key={i}>
+						<Row
+							onDoubleClick={(): any => {
+								onDoubleClick(i);
+							}}
+							onClick={(): any => {
+								onClick(i);
+							}}
+							style={{ textAlign: 'left', justifyContent: 'flex-start' }}
+						>
+							{v.label}
+						</Row>
+					</Tooltip>,
+					<Tooltip placement="bottom" label={v.notes} key={i}>
+						<Row
+							key={i}
+							onDoubleClick={(): any => {
+								onDoubleClick(i);
+							}}
+							onClick={(): any => {
+								onClick(i);
+							}}
+							style={{ textAlign: 'left', justifyContent: 'flex-start' }}
+						>
+							{v.bucketName}
+						</Row>
+					</Tooltip>,
+					<Tooltip placement="bottom" label={v.notes} key={i}>
+						<Row
+							key={i}
+							onDoubleClick={(): any => {
+								onDoubleClick(i);
+							}}
+							onClick={(): any => {
+								onClick(i);
+							}}
+							style={{ textAlign: 'left', justifyContent: 'flex-start' }}
+						>
+							{v.storeType}
+						</Row>
+					</Tooltip>
 				],
 				clickable: true
 			})),
@@ -94,8 +113,9 @@ const BucketListTable: FC<{
 
 	return (
 		<Container crossAlignment="flex-start">
+			{console.log('_dd headers', headers(t))}
 			<Table
-				headers={headers}
+				headers={headers(t)}
 				rows={tableRows}
 				showCheckbox={false}
 				multiSelect={false}
@@ -252,6 +272,10 @@ const BucketDetailPanel: FC = () => {
 			setBucketList(allBucketList);
 		}
 	};
+
+	useEffect(() => {
+		console.log('_dd bucketList', bucketList);
+	}, [bucketList]);
 
 	return (
 		<>
