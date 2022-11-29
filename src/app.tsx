@@ -450,18 +450,34 @@ const App: FC = () => {
 			primarybarSection: { ...managementSection },
 			tooltip: CosTooltipView
 		});
-		addRoute({
-			route: SUBSCRIPTIONS_ROUTE_ID,
-			position: 4,
-			visible: true,
-			label: t('label.subscriptions', 'Subscriptions'),
-			primaryBar: 'AwardOutline',
-			appView: AppView,
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore
-			primarybarSection: { ...managementSection },
-			tooltip: SubscriptionTooltipView
-		});
+		if (isAdvanced) {
+			addRoute({
+				route: SUBSCRIPTIONS_ROUTE_ID,
+				position: 4,
+				visible: true,
+				label: t('label.subscriptions', 'Subscriptions'),
+				primaryBar: 'AwardOutline',
+				appView: AppView,
+				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+				// @ts-ignore
+				primarybarSection: { ...managementSection },
+				tooltip: SubscriptionTooltipView
+			});
+
+			addRoute({
+				route: BACKUP_ROUTE_ID,
+				position: 1,
+				visible: true,
+				label: t('label.backup', 'Backup'),
+				// primaryBar: 'HistoryOutline',
+				primaryBar: backupPrimaryBar,
+				appView: AppView,
+				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+				// @ts-ignore
+				primarybarSection: { ...servicesSection },
+				tooltip: BackupTooltipView
+			});
+		}
 		addRoute({
 			route: PRIVACY_ROUTE_ID,
 			position: 5,
@@ -472,19 +488,6 @@ const App: FC = () => {
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-ignore
 			primarybarSection: { ...managementSection }
-		});
-		addRoute({
-			route: BACKUP_ROUTE_ID,
-			position: 1,
-			visible: true,
-			label: t('label.backup', 'Backup'),
-			// primaryBar: 'HistoryOutline',
-			primaryBar: backupPrimaryBar,
-			appView: AppView,
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore
-			primarybarSection: { ...servicesSection },
-			tooltip: BackupTooltipView
 		});
 
 		/* addRoute({
@@ -534,7 +537,8 @@ const App: FC = () => {
 		StorageTooltipView,
 		SubscriptionTooltipView,
 		logAndQueuesSection,
-		backupPrimaryBar
+		backupPrimaryBar,
+		isAdvanced
 	]);
 
 	useEffect(() => {
