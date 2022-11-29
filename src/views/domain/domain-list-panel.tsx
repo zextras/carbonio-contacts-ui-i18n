@@ -46,6 +46,7 @@ import { useBackupModuleStore } from '../../store/backup-module/store';
 import MatomoTracker from '../../matomo-tracker';
 import { useGlobalConfigStore } from '../../store/global-config/store';
 import GlobalListPanel from './global-list-panel';
+import { useAuthIsAdvanced } from '../../store/auth-advanced/store';
 
 const SelectItem = styled(Row)``;
 
@@ -71,6 +72,7 @@ const DomainListPanel: FC = () => {
 	const domainInformation = useDomainStore((state) => state.domain);
 	const [isDetailListExpanded, setIsDetailListExpanded] = useState(true);
 	const [isManageListExpanded, setIsManageListExpanded] = useState(true);
+	const isAdvanced = useAuthIsAdvanced((state) => state.isAdvanced);
 
 	useEffect(() => {
 		globalCarbonioSendAnalytics && matomo.trackPageView(`${DOMAINS_ROUTE_ID}`);
@@ -265,12 +267,20 @@ const DomainListPanel: FC = () => {
 		[t]
 	);
 
+	const manageItems = useMemo(
+		() =>
+			!isAdvanced
+				? allManageOptions.filter((item: any) => item?.id !== RESTORE_ACCOUNT)
+				: allManageOptions,
+		[allManageOptions, isAdvanced]
+	);
+
 	const manageOptions = useMemo(
 		() =>
 			!getBackupModuleEnable
-				? allManageOptions.filter((item: any) => item?.id !== RESTORE_DELETED_EMAIL)
-				: allManageOptions,
-		[getBackupModuleEnable, allManageOptions]
+				? manageItems.filter((item: any) => item?.id !== RESTORE_DELETED_EMAIL)
+				: manageItems,
+		[getBackupModuleEnable, manageItems]
 	);
 
 	const toggleDetailView = (): void => {
