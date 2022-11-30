@@ -511,15 +511,12 @@ const EditBucketDetailPanel: FC<{
 			</Container>
 			<Container padding={{ all: 'large' }} mainAlignment="flex-start" crossAlignment="flex-start">
 				<Row padding={{ top: 'small' }} width="100%">
-					<Select
-						inputName="storeType"
-						items={bucketTypeItems}
-						background="gray6"
-						label={t('buckets.bucket_type', 'Buckets Type')}
-						onChange={onBucketTypeSelectionChange}
-						selection={bucketType}
-						showCheckbox={false}
-						padding={{ right: 'medium' }}
+					<Input
+						background="gray5"
+						label={t('label.bucket_type', 'Bucket Type')}
+						inputName="label"
+						value={bucketDetail?.storeType}
+						readOnly
 					/>
 				</Row>
 				<Row width={'100%'} padding={{ top: 'large' }} mainAlignment="flex-start">
@@ -609,6 +606,15 @@ const EditBucketDetailPanel: FC<{
 						/>
 					</Row>
 				)}
+				<Row padding={{ top: 'small' }} width="100%">
+					<Input
+						background="gray5"
+						label={t('label.prefix', 'Prefix')}
+						inputName="label"
+						value={bucketDetail?.prefix || ''}
+						readOnly
+					/>
+				</Row>
 				<Row width={'100%'} padding={{ top: 'large' }} mainAlignment="flex-start">
 					<Input
 						background="gray5"
