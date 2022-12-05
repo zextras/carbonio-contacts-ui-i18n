@@ -17,7 +17,6 @@ const WizardInSection: FC<any> = ({ wizard, wizardFooter, setToggleWizardSection
 		<Section
 			title={t('virtual_hosts.load_and_verify_certificate', 'Load and Verify Certificate')}
 			padding={{ all: '0' }}
-			footer={wizardFooter}
 			divider
 			showClose
 			onClose={(): void => {

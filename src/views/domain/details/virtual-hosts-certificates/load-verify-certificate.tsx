@@ -5,6 +5,7 @@
  */
 
 import {
+	SnackbarManagerContext,
 	Button,
 	FileLoader,
 	Input,
@@ -14,7 +15,10 @@ import {
 	Select,
 	Container
 } from '@zextras/carbonio-design-system';
-import React, { FC, useCallback, useMemo, useState } from 'react';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { postSoapFetchRequest, soapFetch } from '@zextras/carbonio-shell-ui';
+import React, { FC, useCallback, useContext, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ICertificateContent } from '../../../../../types';
 import {
@@ -30,6 +34,7 @@ const LoadAndVerifyCert: FC<any> = () => {
 	const { t } = useTranslation();
 	const [selectedCertType, setSelectedCertType] = useState<string>('');
 	const [verifyBtnLoading, setVerifyBtnLoading] = useState(false);
+	const createSnackbar: any = useContext(SnackbarManagerContext);
 	const [objDomainCertificate, setObjDomainCertificate] = useState<ICertificateContent>({
 		fileName: '',
 		content: ''
@@ -100,9 +105,39 @@ const LoadAndVerifyCert: FC<any> = () => {
 		fileReader.readAsText(file);
 	};
 
-	const verifyCertificateHandler = useCallback(() => {
+	const verifyCertificateHandler = useCallback((): void => {
 		setVerifyBtnLoading(true);
-	}, []);
+		// if (
+		// 	objDomainCertificate.content === '' ||
+		// 	objDomainCertificateCaChain.content === '' ||
+		// 	objDomainCertificatePrivateKey.content === ''
+		// ) {
+		// 	createSnackbar({
+		// 		key: 'error',
+		// 		type: 'error',
+		// 		label: t(
+		// 			'domain.certificate_content_error',
+		// 			'Domain certificate , CA Chain or Private key is invalid'
+		// 		),
+		// 		autoHideTimeout: 3000,
+		// 		hideButton: true,
+		// 		replace: true
+		// 	});
+		// } else {
+		soapFetch(`VerifyCertKey`, {
+			_jsns: 'urn:zimbraAdmin',
+			ca: objDomainCertificateCaChain.content,
+			cert: objDomainCertificate.content,
+			privkey: objDomainCertificatePrivateKey.content
+		}).then((data: any) => {
+			console.log('_dd responseData', data?.verifyRe);
+		});
+		// }
+	}, [
+		objDomainCertificate.content,
+		objDomainCertificateCaChain.content,
+		objDomainCertificatePrivateKey.content
+	]);
 
 	return (
 		<Container padding={{ all: 'small' }}>
