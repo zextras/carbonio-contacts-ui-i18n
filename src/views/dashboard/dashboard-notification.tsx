@@ -1,0 +1,48 @@
+/*
+ * SPDX-FileCopyrightText: 2022 Zextras <https://www.zextras.com>
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+import React, { FC } from 'react';
+import { Container, Icon, Button } from '@zextras/carbonio-design-system';
+import { useTranslation } from 'react-i18next';
+import ListRow from '../list/list-row';
+import NotificationView from '../app/shared/notification-view';
+
+const DashboardNotification: FC = () => {
+	const [t] = useTranslation();
+	return (
+		<Container background="gray6">
+			<ListRow>
+				<Container
+					padding={{ all: 'large' }}
+					mainAlignment="flex-start"
+					crossAlignment="flex-start"
+				>
+					<ListRow>
+						<Container mainAlignment="flex-start" crossAlignment="flex-start" width="2.2rem">
+							<Icon icon="BellOutline" height={'1.5rem'} width="1.5rem" />
+						</Container>
+						<Container mainAlignment="flex-start" crossAlignment="flex-start">
+							{t('dashboard.your_notifications', 'Your Notifications')}
+						</Container>
+					</ListRow>
+				</Container>
+				<Container mainAlignment="flex-end" crossAlignment="flex-end">
+					<Button
+						type="ghost"
+						label={t('dashboard.go_to_notification', 'Go to notification')}
+						color="primary"
+					/>
+				</Container>
+			</ListRow>
+
+			<ListRow>
+				<NotificationView />
+			</ListRow>
+		</Container>
+	);
+};
+
+export default DashboardNotification;
