@@ -470,6 +470,9 @@
     "create_new_bucket": "NEW BUCKET",
     "create_new_cos": "CREATE NEW COS",
     "create_new_domain": "Create New Domain",
+    "dashboard": {
+        "quick_access_default_domain": "Quick Access to {defaultDomain}"
+    },
     "domain": {
         "account_gal_synchronization": "Account Name of GAL Synchronization",
         "account_list": "Accounts List",
@@ -1022,6 +1025,7 @@
         "on_startup_and_scheduled": "On Startup & Scheduled",
         "on_startup_only": "On Startup Only",
         "only_there_users": "Only these users",
+        "open": "Open",
         "operation_now_in_queue": "The operation is now in the queue",
         "operations": "Operations",
         "otp": "OTP",
@@ -1558,5 +1562,6 @@
         }
     },
     "welcome_to_carbonio": "Welcome {{adminName}} to Carbonio {{carbonioVersion}}!",
-    "welcome_to_carbonio_display_name": "Welcome {{adminName}}!"
+    "welcome_to_carbonio_display_name": "Welcome {{adminName}}!",
+    "welcome_to_carbonio_information": "Welcome {{adminName}} to Carbonio!"
 }
