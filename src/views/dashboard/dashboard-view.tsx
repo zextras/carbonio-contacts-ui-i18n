@@ -16,6 +16,7 @@ import ListRow from '../list/list-row';
 import CarbonioVersionInformation from './carbonio-version-information-view';
 import QuickAccess from './quick-access-view';
 import DashboardNotification from './dashboard-notification';
+import DashboardServerList from './dashboard-server-list-view';
 
 const Dashboard: FC = () => {
 	const [t] = useTranslation();
@@ -79,6 +80,10 @@ const Dashboard: FC = () => {
 
 			<ListRow>
 				<DashboardNotification />
+			</ListRow>
+
+			<ListRow>
+				<DashboardServerList />
 			</ListRow>
 		</Container>
 	);
