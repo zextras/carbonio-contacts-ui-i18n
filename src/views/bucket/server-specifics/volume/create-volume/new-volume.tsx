@@ -126,7 +126,7 @@ const NewVolume: FC<{
 				rootpath: volumeDetail?.path,
 				type: volumeDetail?.volumeMain,
 				compressBlobs: volumeDetail?.isCompression ? 1 : 0,
-				compressionThreshold: volumeDetail?.compressionThreshold,
+				compressionThreshold: volumeDetail?.isCompression ? volumeDetail?.compressionThreshold : 0,
 				isCurrent: volumeDetail?.isCurrent ? 1 : 0
 			});
 			setCreateMailstoresVolumeData(volumeDetail);

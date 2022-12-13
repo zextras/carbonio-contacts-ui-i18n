@@ -27,7 +27,7 @@ import { AbsoluteContainer } from '../../../components/styled';
 import ServerVolumeDetailsPanel from './server-volume-details-panel';
 import { fetchSoap } from '../../../../services/bucket-service';
 import IndexerVolumeTable from './indexer-volume-table';
-import { volTableHeader, indexerHeaders } from '../../../utility/utils';
+import { volTableHeader, indexerHeaders, volumeTypeList } from '../../../utility/utils';
 import { useBucketVolumeStore } from '../../../../store/bucket-volume/store';
 import NewVolume from './create-volume/new-volume';
 import ModifyVolume from './modify-volume/modify-volume';
@@ -36,6 +36,7 @@ import { useServerStore } from '../../../../store/server/store';
 import CreateMailstoresVolume from './create-volume/advanced-create-volume/create-mailstores-volume';
 import { VolumeContext } from './create-volume/volume-context';
 import { useAuthIsAdvanced } from '../../../../store/auth-advanced/store';
+import { useBucketServersListStore } from '../../../../store/bucket-server-list/store';
 
 const RelativeContainer = styled(Container)`
 	position: relative;
@@ -133,6 +134,7 @@ const VolumesDetailPanel: FC = () => {
 	const isAdvanced = useAuthIsAdvanced((state) => state.isAdvanced);
 	const volIndexerHeaders = useMemo(() => indexerHeaders(t), [t]);
 	const volPrimarySecondaryHeaders = useMemo(() => volTableHeader(t), [t]);
+	const volTypeList = useMemo(() => volumeTypeList(t), [t]);
 	const [priamryVolumeSelection, setPriamryVolumeSelection] = useState('');
 	const [secondaryVolumeSelection, setSecondaryVolumeSelection] = useState('');
 	const [indexerVolumeSelection, setIndexerVolumeSelection] = useState('');
@@ -185,6 +187,7 @@ const VolumesDetailPanel: FC = () => {
 		secondaries: []
 	});
 	const createSnackbar = useSnackbar();
+	const serverName = useBucketServersListStore((state) => state.volumeList)[0].name;
 
 	const changeSelectedVolume = (): any => {
 		if (volume?.type === 1 && volume.id !== 0) {
@@ -294,6 +297,78 @@ const VolumesDetailPanel: FC = () => {
 		getAllVolumesRequest();
 	}, [getAllVolumesRequest]);
 
+	const CreateAdvancedRequest = async (attr: any): Promise<any> => {
+		const volumeType = volTypeList
+			.filter((item) => item.value === attr?.volumeType)[0]
+			.label.toLowerCase();
+
+		await fetchSoap('zextras', {
+			_jsns: 'urn:zimbraAdmin',
+			module: 'ZxPowerstore',
+			action: 'doCreateVolume',
+			targetServers: serverName,
+			volumeName: attr?.volumeName,
+			volumeType,
+			storeType: attr?.storeType,
+			bucketConfigurationId: attr?.bucketConfigurationId,
+			volumePrefix: attr?.volumePrefix,
+			centralized: attr?.centralized
+		})
+			.then(async (res: any) => {
+				if (attr?.isCurrent === 1) {
+					await fetchSoap('SetCurrentVolumeRequest', {
+						_jsns: 'urn:zimbraAdmin',
+						module: 'ZxCore',
+						action: 'SetCurrentVolumeRequest',
+						id: attr?.bucketConfigurationId,
+						type: attr?.volumeType
+					})
+						.then(() => {
+							createSnackbar({
+								key: '1',
+								type: 'success',
+								label: t('label.volume_active', '{{volumeName}} is Currently active', {
+									volumeName: attr?.volumeName
+								})
+							});
+						})
+						.catch((error) => {
+							createSnackbar({
+								key: 'error',
+								type: 'error',
+								label: t('label.volume_detail_error', '{{message}}', {
+									message: error
+								}),
+								autoHideTimeout: 5000
+							});
+						});
+				}
+				getAllVolumesRequest();
+				createSnackbar({
+					key: '1',
+					type: 'success',
+					label: t('label.volume_created', 'Volume created successfully')
+				});
+				setToggleWizardLocal(false);
+				setToggleWizardExternal(false);
+				setDetailsVolume(false);
+				return res;
+			})
+			.catch((error) => {
+				createSnackbar({
+					key: 'error',
+					type: 'error',
+					label: error?.message
+						? error?.message
+						: t('label.volume_detail_error', '{{message}}', {
+								message: error
+						  }),
+					autoHideTimeout: 5000
+				});
+				return error;
+			});
+	};
+
 	const CreateVolumeRequest = async (attr: any): Promise<any> => {
 		await soapFetch(
 			'CreateVolume',
@@ -388,7 +463,7 @@ const VolumesDetailPanel: FC = () => {
 						setDetailsVolume={setDetailsVolume}
 						setCreateMailstoresVolumeData={setCreateMailstoresVolumeData}
 						volName={selectedServerName}
-						CreateVolumeRequest={CreateVolumeRequest}
+						CreateAdvancedRequest={CreateAdvancedRequest}
 					/>
 				</AbsoluteContainer>
 			)}

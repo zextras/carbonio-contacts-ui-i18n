@@ -64,14 +64,14 @@ const CreateMailstoresVolume: FC<{
 	setDetailsVolume: any;
 	volName: any;
 	setCreateMailstoresVolumeData: any;
-	CreateVolumeRequest: any;
+	CreateAdvancedRequest: any;
 }> = ({
 	setToggleWizardExternal,
 	setToggleWizardLocal,
 	setDetailsVolume,
 	volName,
 	setCreateMailstoresVolumeData,
-	CreateVolumeRequest
+	CreateAdvancedRequest
 }) => {
 	const { t } = useTranslation();
 	const isAllocationToggle = useBucketVolumeStore((state) => state.isAllocationToggle);
@@ -211,16 +211,18 @@ const CreateMailstoresVolume: FC<{
 
 	const onComplete = useCallback(
 		(data) => {
-			CreateVolumeRequest({
-				name: advancedVolumeDetail?.volumeName,
-				type: advancedVolumeDetail?.volumeMain,
-				bucket_configuration_id: advancedVolumeDetail?.bucketId,
-				prefix: advancedVolumeDetail?.prefix,
-				centralized: advancedVolumeDetail?.centralized
+			CreateAdvancedRequest({
+				volumeName: advancedVolumeDetail?.volumeName,
+				volumeType: advancedVolumeDetail?.volumeMain,
+				storeType: advancedVolumeDetail.unusedBucketType,
+				bucketConfigurationId: advancedVolumeDetail?.bucketId,
+				volumePrefix: advancedVolumeDetail?.prefix,
+				centralized: advancedVolumeDetail?.centralized,
+				isCurrent: advancedVolumeDetail?.isCurrent ? 1 : 0
 			});
 			setCreateMailstoresVolumeData(advancedVolumeDetail);
 		},
-		[CreateVolumeRequest, advancedVolumeDetail, setCreateMailstoresVolumeData]
+		[CreateAdvancedRequest, advancedVolumeDetail, setCreateMailstoresVolumeData]
 	);
 
 	return (
