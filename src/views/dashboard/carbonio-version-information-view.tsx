@@ -23,7 +23,7 @@ const CarbonioVersionInformation: FC<{
 				overflow="break-word"
 				weight="light"
 				size="large"
-				style={{ fontSize: '36px', fontFamily: 'roboto' }}
+				style={{ fontSize: '2.25rem', fontFamily: 'roboto' }}
 			>
 				{t('welcome_to_carbonio_information', {
 					adminName: userName,

@@ -159,7 +159,7 @@ const DashboardServerList: FC<{
 					mainAlignment="space-between"
 					crossAlignment="flex-start"
 					width="fill"
-					height="calc(100vh - 400px)"
+					height="calc(100vh - 25rem)"
 				>
 					<Table
 						rows={serverListRow}

@@ -30,7 +30,6 @@ import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import { isEmpty } from 'lodash';
 import {
-	ERROR,
 	NOTIFICATION_ALL,
 	NOTIFICATION_ERROR,
 	NOTIFICATION_INFORMATION,
@@ -58,7 +57,7 @@ const ReusedDefaultTabBar: FC<{
 			orientation="horizontal"
 			mainAlignment="flex-start"
 			crossAlignment="flex-start"
-			padding={{ all: 'small' }}
+			padding={{ all: 'medium' }}
 			takeAvailableSpace
 		>
 			<Container width="2rem" padding={{ right: 'small' }}>
@@ -76,7 +75,7 @@ const ReusedDefaultTabBar: FC<{
 					color={selected ? 'primary' : 'gray'}
 					takeAvailableSpace
 				>
-					{item.label}
+					{item.label} ({item?.count})
 				</Text>
 			</Container>
 		</Container>
@@ -108,34 +107,47 @@ const NotificationView: FC<{
 	const [notificationRows, setNotificationRows] = useState<Array<any>>([]);
 	const [showNotificationDetail, setShowNotificationDetail] = useState<boolean>(false);
 	const [selectedNotification, setSelectedNotification] = useState<any>({});
+	const [notificationCount, setNotificationCount] = useState<any>({
+		warning: 0,
+		error: 0,
+		information: 0,
+		all: 0
+	});
 	const timer = useRef<any>();
 
-	const items = [
-		{
-			id: NOTIFICATION_ALL,
-			icon: 'KeypadOutline',
-			label: t('notification.all', 'ALL'),
-			CustomComponent: ReusedDefaultTabBar
-		},
-		{
-			id: NOTIFICATION_INFORMATION,
-			icon: 'InfoOutline',
-			label: t('notification.information', 'INFORMATION'),
-			CustomComponent: ReusedDefaultTabBar
-		},
-		{
-			id: NOTIFICATION_WARNING,
-			icon: 'AlertTriangleOutline',
-			label: t('notification.warning', 'WARNING'),
-			CustomComponent: ReusedDefaultTabBar
-		},
-		{
-			id: NOTIFICATION_ERROR,
-			icon: 'CloseCircleOutline',
-			label: t('notification.error', 'ERROR'),
-			CustomComponent: ReusedDefaultTabBar
-		}
-	];
+	const items = useMemo(
+		() => [
+			{
+				id: NOTIFICATION_ALL,
+				icon: 'KeypadOutline',
+				label: t('notification.all', 'ALL'),
+				count: notificationCount?.all,
+				CustomComponent: ReusedDefaultTabBar
+			},
+			{
+				id: NOTIFICATION_INFORMATION,
+				icon: 'InfoOutline',
+				label: t('notification.information', 'INFORMATION'),
+				count: notificationCount?.information,
+				CustomComponent: ReusedDefaultTabBar
+			},
+			{
+				id: NOTIFICATION_WARNING,
+				icon: 'AlertTriangleOutline',
+				label: t('notification.warning', 'WARNING'),
+				count: notificationCount?.warning,
+				CustomComponent: ReusedDefaultTabBar
+			},
+			{
+				id: NOTIFICATION_ERROR,
+				icon: 'CloseCircleOutline',
+				label: t('notification.error', 'ERROR'),
+				count: notificationCount?.error,
+				CustomComponent: ReusedDefaultTabBar
+			}
+		],
+		[t, notificationCount]
+	);
 
 	const headers: any[] = useMemo(
 		() => [
@@ -176,7 +188,24 @@ const NotificationView: FC<{
 						// eslint-disable-next-line array-callback-return
 						Object.keys(content?.response).map((ele: any) => {
 							if (content?.response[ele] && content?.response[ele]?.response?.notifications) {
-								setNotificationList(content?.response[ele]?.response?.notifications);
+								const allNotification = content?.response[ele]?.response?.notifications;
+								setNotificationList(allNotification);
+								const info = allNotification.filter(
+									(item: Notification) => item?.level === NOTIFICATION_INFORMATION
+								);
+								const warn = allNotification.filter(
+									(item: Notification) => item?.level === NOTIFICATION_WARNING
+								);
+								const error = allNotification.filter(
+									(item: Notification) => item?.level === NOTIFICATION_ERROR
+								);
+
+								setNotificationCount({
+									all: allNotification.length,
+									information: info.length,
+									warning: warn.length,
+									error: error.length
+								});
 							}
 						});
 					}
@@ -214,12 +243,15 @@ const NotificationView: FC<{
 					(item: Notification) => item?.level === NOTIFICATION_WARNING
 				);
 				setFilterdNotification(list);
-			} else if (change === ERROR) {
+			} else if (change === NOTIFICATION_ERROR) {
 				const list = notificationList.filter(
 					(item: Notification) => item?.level === NOTIFICATION_ERROR
 				);
+
 				setFilterdNotification(list);
 			}
+		} else {
+			setFilterdNotification([]);
 		}
 	}, [change, notificationList]);
 
@@ -389,7 +421,7 @@ const NotificationView: FC<{
 					mainAlignment="space-between"
 					crossAlignment="flex-start"
 					width="fill"
-					height="calc(100vh - 340px)"
+					height="calc(100vh - 21.25rem)"
 					padding={{ all: isAddPadding ? 'large' : '' }}
 				>
 					<Table

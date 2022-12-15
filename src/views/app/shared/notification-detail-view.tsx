@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import {
 	Container,
 	Text,
@@ -31,13 +31,14 @@ const NotificationDetail: FC<{
 			mainAlignment="flex-start"
 			style={{
 				position: 'absolute',
-				left: `${'max(calc(100% - 680px), 12px)'}`,
-				top: '0px',
+				left: `${'max(calc(100% - 42.5rem), 0.75rem)'}`,
+				top: '0rem',
 				height: '100%',
 				width: `42rem`,
 				overflow: 'hidden',
 				transition: 'left 0.2s ease-in-out',
-				'box-shadow': '-6px 4px 5px 0px rgba(0, 0, 0, 0.1)'
+				'box-shadow': '-0.375rem 0.25rem 0.313rem 0rem rgba(0, 0, 0, 0.1)',
+				'z-index': '9'
 			}}
 		>
 			<Row
@@ -46,7 +47,7 @@ const NotificationDetail: FC<{
 				orientation="horizontal"
 				background="white"
 				width="fill"
-				height="48px"
+				height="3.25rem"
 			>
 				<Row padding={{ horizontal: 'small' }}></Row>
 				<Row takeAvailableSpace mainAlignment="flex-start">
@@ -65,9 +66,9 @@ const NotificationDetail: FC<{
 					/>
 				</Row>
 			</Row>
-			<Row>
-				<Divider color="gray3" />
-			</Row>
+			<ListRow>
+				<Divider />
+			</ListRow>
 			<ListRow>
 				<Container
 					mainAlignment="flex-end"
@@ -140,7 +141,7 @@ const NotificationDetail: FC<{
 				wrap="nowrap"
 			>
 				<Container
-					height="calc(100vh - 400px)"
+					height="calc(100vh - 26rem)"
 					style={{ overflow: 'auto' }}
 					dangerouslySetInnerHTML={{ __html: notification?.text.replace(/(\r\n|\r|\n)/g, '<br>') }}
 				></Container>

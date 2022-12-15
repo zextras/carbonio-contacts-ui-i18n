@@ -12,7 +12,6 @@ import ListRow from '../list/list-row';
 
 export const ActionContainer = styled(Container)`
 	background: ${({ theme, bgColor }): string => theme.avatarColors[bgColor]};
-	'borderRadius':0.5rem ;
 `;
 
 export const OperationContainer = styled(Container)`
@@ -62,6 +61,7 @@ const QuickAccess: FC<{
 								crossAlignment="flex-start"
 								width={'21.75rem'}
 								bgColor={item?.bgColor}
+								style={{ borderRadius: '0.5rem' }}
 							>
 								<ListRow>
 									<Container padding={{ all: 'large' }}>
