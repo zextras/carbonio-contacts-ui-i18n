@@ -1372,7 +1372,10 @@
         "list": "List",
         "manage": "Manage",
         "mark_as_read": "Mark as read",
+        "mark_as_unread": "Mark as unread",
         "notification_details": "Notification Details",
+        "notification_mark_read_successfully": "Notification mark as read successfully",
+        "notification_mark_unread_successfully": "Notification mark as unread successfully",
         "notifications_list": "Notifications’ List",
         "warning": "WARNING"
     },

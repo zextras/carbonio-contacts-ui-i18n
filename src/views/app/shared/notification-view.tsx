@@ -28,7 +28,7 @@ import React, {
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
-import { isEmpty } from 'lodash';
+import { cloneDeep, isEmpty } from 'lodash';
 import {
 	NOTIFICATION_ALL,
 	NOTIFICATION_ERROR,
@@ -39,6 +39,7 @@ import { getAllNotifications } from '../../../services/get-all-notifications';
 import ListRow from '../../list/list-row';
 import NotificationDetail from './notification-detail-view';
 import { copyTextToClipboard } from '../../utility/utils';
+import { readUnreadNotification } from '../../../services/read-unread-notification';
 
 const ReusedDefaultTabBar: FC<{
 	item: any;
@@ -107,6 +108,7 @@ const NotificationView: FC<{
 	const [notificationRows, setNotificationRows] = useState<Array<any>>([]);
 	const [showNotificationDetail, setShowNotificationDetail] = useState<boolean>(false);
 	const [selectedNotification, setSelectedNotification] = useState<any>({});
+	const [isRequestInProgress, setIsRequestInProgress] = useState<boolean>(false);
 	const [notificationCount, setNotificationCount] = useState<any>({
 		warning: 0,
 		error: 0,
@@ -283,7 +285,7 @@ const NotificationView: FC<{
 					<Text
 						size="small"
 						color="gray0"
-						weight="bold"
+						weight={item?.ack ? 'regular' : 'bold'}
 						key={item}
 						onClick={(event: any): void => {
 							setSelectedNotification(item);
@@ -295,7 +297,7 @@ const NotificationView: FC<{
 					<Text
 						size="small"
 						color="gray0"
-						weight="bold"
+						weight={item?.ack ? 'regular' : 'bold'}
 						key={item}
 						onClick={(event: { stopPropagation: () => void }): void => {
 							setSelectedNotification(item);
@@ -306,7 +308,7 @@ const NotificationView: FC<{
 					</Text>,
 					<Text
 						size="small"
-						weight="bold"
+						weight={item?.ack ? 'regular' : 'bold'}
 						color="gray0"
 						key={item}
 						onClick={(event: { stopPropagation: () => void }): void => {
@@ -318,7 +320,7 @@ const NotificationView: FC<{
 					</Text>,
 					<Text
 						size="small"
-						weight="bold"
+						weight={item?.ack ? 'regular' : 'bold'}
 						color="gray0"
 						key={item}
 						onClick={(event: { stopPropagation: () => void }): void => {
@@ -360,6 +362,58 @@ const NotificationView: FC<{
 	const copyNotification = useCallback(() => {
 		copyNotificationOperation(selectedNotification);
 	}, [selectedNotification, copyNotificationOperation]);
+
+	const markAsReadUnread = useCallback(
+		(item: any) => {
+			setIsRequestInProgress(true);
+			readUnreadNotification(item?.id, !item?.ack)
+				.then((res) => {
+					const content = JSON.parse(res?.Body?.response?.content);
+					if (content?.ok) {
+						setIsRequestInProgress(false);
+						const message = item?.ack
+							? t(
+									'notification.notification_mark_unread_successfully',
+									'Notification mark as unread successfully'
+							  )
+							: t(
+									'notification.notification_mark_read_successfully',
+									'Notification mark as read successfully'
+							  );
+						createSnackbar({
+							key: 'success',
+							type: 'success',
+							label: message,
+							autoHideTimeout: 3000,
+							hideButton: true,
+							replace: true
+						});
+						const allData = notificationList.map((nf: Notification) => {
+							if (nf?.id === item?.id) {
+								// eslint-disable-next-line no-param-reassign
+								nf.ack = !item?.ack;
+							}
+							return nf;
+						});
+						setNotificationList(allData);
+					}
+				})
+				.catch((error: any) => {
+					setIsRequestInProgress(false);
+					createSnackbar({
+						key: 'error',
+						type: 'error',
+						label: error
+							? error?.error
+							: t('label.something_wrong_error_msg', 'Something went wrong. Please try again.'),
+						autoHideTimeout: 3000,
+						hideButton: true,
+						replace: true
+					});
+				});
+		},
+		[createSnackbar, t, notificationList]
+	);
 
 	return (
 		<Container background="gray6">
@@ -438,6 +492,8 @@ const NotificationView: FC<{
 					notification={selectedNotification}
 					setShowNotificationDetail={setShowNotificationDetail}
 					copyNotificationOperation={copyNotificationOperation}
+					markAsReadUnread={markAsReadUnread}
+					isRequestInProgress={isRequestInProgress}
 				/>
 			)}
 		</Container>

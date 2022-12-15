@@ -23,7 +23,15 @@ const NotificationDetail: FC<{
 	notification: any;
 	setShowNotificationDetail: (arg: boolean) => void;
 	copyNotificationOperation: (args: any) => void;
-}> = ({ notification, setShowNotificationDetail, copyNotificationOperation }) => {
+	markAsReadUnread: (args: any) => void;
+	isRequestInProgress: boolean;
+}> = ({
+	notification,
+	setShowNotificationDetail,
+	copyNotificationOperation,
+	markAsReadUnread,
+	isRequestInProgress
+}) => {
 	const [t] = useTranslation();
 	return (
 		<Container
@@ -89,11 +97,19 @@ const NotificationDetail: FC<{
 					<Padding left="large">
 						<Button
 							type="outlined"
-							label={t('notification.mark_as_read', 'Mark as read')}
+							label={
+								notification?.ack
+									? t('notification.mark_as_unread', 'Mark as unread')
+									: t('notification.mark_as_read', 'Mark as read')
+							}
 							icon="EmailReadOutline"
 							iconPlacement="right"
 							color="primary"
-							disabled
+							disabled={isRequestInProgress}
+							loading={isRequestInProgress}
+							onClick={(): void => {
+								markAsReadUnread(notification);
+							}}
 						/>
 					</Padding>
 				</Container>

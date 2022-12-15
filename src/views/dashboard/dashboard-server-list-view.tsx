@@ -4,12 +4,13 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { FC, useEffect, useMemo, useState } from 'react';
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { Container, Icon, Button, Table, Text } from '@zextras/carbonio-design-system';
 import { useTranslation } from 'react-i18next';
 import ListRow from '../list/list-row';
 import { useServerStore } from '../../store/server/store';
 import { Server } from '../../../types';
+import { getVersionInfo } from '../../services/get-version-info';
 
 const DashboardServerList: FC<{
 	goToMailStoreServerList: () => void;
@@ -17,6 +18,15 @@ const DashboardServerList: FC<{
 	const [t] = useTranslation();
 	const serverList = useServerStore((state) => state.serverList || []);
 	const [serverListRow, setServerListRow] = useState<Array<any>>([]);
+	const getVersionInformation = useCallback(() => {
+		getVersionInfo().then((res) => {
+			console.log('[res]:', res);
+		});
+	}, []);
+	useEffect(() => {
+		getVersionInformation();
+	}, [getVersionInformation]);
+
 	useEffect(() => {
 		if (serverList.length > 0) {
 			const allRows = serverList.map((item: Server) => ({
@@ -32,17 +42,6 @@ const DashboardServerList: FC<{
 						}}
 					>
 						{item?.name}
-					</Text>,
-					<Text
-						size="small"
-						color="gray0"
-						weight="bold"
-						key={item}
-						onClick={(event: { stopPropagation: () => void }): void => {
-							event.stopPropagation();
-						}}
-					>
-						{''}
 					</Text>,
 					<Text
 						size="small"
@@ -90,12 +89,6 @@ const DashboardServerList: FC<{
 			{
 				id: 'server_name',
 				label: t('dashboard.server_name', 'Server name'),
-				width: '20%',
-				bold: true
-			},
-			{
-				id: 'server_ip',
-				label: t('dashboard.server_ip', 'Server IP'),
 				width: '20%',
 				bold: true
 			},
