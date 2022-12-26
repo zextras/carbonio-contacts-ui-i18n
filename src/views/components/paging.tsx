@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { Container, IconButton, Text, Row } from '@zextras/carbonio-design-system';
 import { FIRST_PAGE } from '../../constants';
 
-const Paginig: FC<{
+const Paging: FC<{
 	totalItem: any;
 	firstPage?: any;
 	lastPage?: any;
@@ -109,7 +109,7 @@ const Paginig: FC<{
 			<Text size="medium" weight="bold" color="#828282" orientation="horizontal">
 				<span
 					style={{
-						color: '#414141',
+						color: 'gray0',
 						width: '41px',
 						height: '23px',
 						textAlign: 'center',
@@ -140,4 +140,4 @@ const Paginig: FC<{
 	);
 };
 
-export default Paginig;
+export default Paging;

@@ -17,12 +17,13 @@ import {
 	Padding,
 	Button,
 	IconButton,
-	useSnackbar
+	useSnackbar,
+	Tooltip
 } from '@zextras/carbonio-design-system';
 import moment from 'moment';
 import logo from '../../../../assets/gardian.svg';
 import { useDomainStore } from '../../../../store/domain/store';
-import Paginig from '../../../components/paging';
+import Paging from '../../../components/paging';
 import { accountListDirectory } from '../../../../services/account-list-directory-service';
 import { getAccountRequest } from '../../../../services/get-account';
 import { getAccountMembershipRequest } from '../../../../services/get-account-membership';
@@ -55,6 +56,12 @@ const ManageAccounts: FC = () => {
 				id: 'name',
 				label: t('label.name', 'Name'),
 				width: '15%',
+				bold: true
+			},
+			{
+				id: 'aliases',
+				label: t('label.Aliases', 'Aliases'),
+				width: '10%',
 				bold: true
 			},
 			{
@@ -233,10 +240,10 @@ const ManageAccounts: FC = () => {
 							otpListArr.push({
 								id: item?.id,
 								columns: [
-									<Text size="medium" key={item?.id} color="#414141">
+									<Text size="medium" key={item?.id} color="gray0">
 										{item?.label || ' '}
 									</Text>,
-									<Text size="medium" key={item?.id} color="#414141">
+									<Text size="medium" key={item?.id} color="gray0">
 										{item?.status ? t('label.enabled', 'Enabled') : t('label.disabled', 'Disabled')}
 									</Text>,
 									<Text size="medium" key={item?.id}>
@@ -245,7 +252,7 @@ const ManageAccounts: FC = () => {
 									<Text size="medium" key={item?.id}>
 										{moment(item?.created).format('DD/MMM/YYYY')}
 									</Text>,
-									<Text size="medium" key={item?.id} color="#414141">
+									<Text size="medium" key={item?.id} color="gray0">
 										{item?.description || <>&nbsp;</>}
 									</Text>
 								],
@@ -275,7 +282,7 @@ const ManageAccounts: FC = () => {
 	const getAccountList = useCallback((): void => {
 		const type = 'accounts';
 		const attrs =
-			'displayName,zimbraId,zimbraAliasTargetId,cn,sn,zimbraMailHost,uid,zimbraCOSId,zimbraAccountStatus,zimbraLastLogonTimestamp,description,zimbraIsSystemAccount,zimbraIsDelegatedAdminAccount,zimbraIsAdminAccount,zimbraIsSystemResource,zimbraAuthTokenValidityValue,zimbraIsExternalVirtualAccount,zimbraMailStatus,zimbraIsAdminGroup,zimbraCalResType,zimbraDomainType,zimbraDomainName,zimbraDomainStatus,zimbraIsDelegatedAdminAccount,zimbraIsAdminAccount,zimbraIsSystemResource,zimbraIsSystemAccount,zimbraIsExternalVirtualAccount,zimbraCreateTimestamp,zimbraLastLogonTimestamp,zimbraMailQuota,zimbraNotes';
+			'displayName,zimbraId,zimbraAliasTargetId,cn,sn,zimbraMailHost,uid,zimbraCOSId,zimbraAccountStatus,zimbraLastLogonTimestamp,description,zimbraIsSystemAccount,zimbraIsDelegatedAdminAccount,zimbraIsAdminAccount,zimbraIsSystemResource,zimbraAuthTokenValidityValue,zimbraIsExternalVirtualAccount,zimbraMailStatus,zimbraIsAdminGroup,zimbraCalResType,zimbraDomainType,zimbraDomainName,zimbraDomainStatus,zimbraIsDelegatedAdminAccount,zimbraIsAdminAccount,zimbraIsSystemResource,zimbraIsSystemAccount,zimbraIsExternalVirtualAccount,zimbraCreateTimestamp,zimbraLastLogonTimestamp,zimbraMailQuota,zimbraNotes,mail';
 		accountListDirectory(attrs, type, domainName, searchQuery, offset, limit).then((data) => {
 			const accountListResponse: any = data?.account || [];
 			if (accountListResponse && Array.isArray(accountListResponse)) {
@@ -283,8 +290,18 @@ const ManageAccounts: FC = () => {
 				setTotalAccount(data.searchTotal || 0);
 				accountListResponse.map((item: any): any => {
 					item?.a?.map((ele: any) => {
-						// eslint-disable-next-line no-param-reassign
-						item[ele?.n] = ele._content;
+						if (ele?.n === 'mail') {
+							if (item[ele?.n]) {
+								item[ele?.n].push(ele._content);
+							} else {
+								// eslint-disable-next-line no-param-reassign
+								item[ele?.n] = [ele._content];
+							}
+						} else {
+							// eslint-disable-next-line no-param-reassign
+							item[ele?.n] = ele._content;
+						}
+
 						return '';
 					});
 					accountListArr.push({
@@ -293,7 +310,7 @@ const ManageAccounts: FC = () => {
 							<Text
 								size="medium"
 								key={item?.id}
-								color="#414141"
+								color="gray0"
 								onClick={(): void => {
 									openDetailView(item);
 								}}
@@ -303,17 +320,55 @@ const ManageAccounts: FC = () => {
 							<Text
 								size="medium"
 								key={item?.id}
-								color="#414141"
+								color="gray0"
 								onClick={(): void => {
 									openDetailView(item);
 								}}
 							>
 								{item?.displayName || <>&nbsp;</>}
 							</Text>,
+							<>
+								{
+									// eslint-disable-next-line no-param-reassign, no-unsafe-optional-chaining
+									item?.mail?.length - 1 || 0 ? (
+										<Tooltip
+											key={item?.id}
+											placement="bottom"
+											label={item?.mail.slice(1).join(', ')}
+											maxWidth="auto"
+										>
+											<Text
+												size="medium"
+												key={item?.id}
+												color="#828282"
+												onClick={(): void => {
+													openDetailView(item);
+												}}
+											>
+												{
+													// eslint-disable-next-line no-param-reassign, no-unsafe-optional-chaining
+													item?.mail?.length - 1 || 0
+												}
+											</Text>
+										</Tooltip>
+									) : (
+										<Text
+											size="medium"
+											key={item?.id}
+											color="#828282"
+											onClick={(): void => {
+												openDetailView(item);
+											}}
+										>
+											0
+										</Text>
+									)
+								}
+							</>,
 							<Text
 								size="medium"
 								key={item?.id}
-								color="#828282"
+								color="gray0"
 								onClick={(): void => {
 									openDetailView(item);
 								}}
@@ -333,7 +388,7 @@ const ManageAccounts: FC = () => {
 							<Text
 								size="medium"
 								key={item?.id}
-								color="#414141"
+								color="gray0"
 								onClick={(event: { stopPropagation: () => void }): void => {
 									event.stopPropagation();
 									openDetailView(item);
@@ -511,7 +566,7 @@ const ManageAccounts: FC = () => {
 							</Row>
 							{accountList.length !== 0 && (
 								<Row orientation="horizontal" mainAlignment="flex-start" width="100%">
-									<Paginig totalItem={totalAccount} setOffset={setOffset} pageSize={limit} />
+									<Paging totalItem={totalAccount} setOffset={setOffset} pageSize={limit} />
 								</Row>
 							)}
 						</Row>

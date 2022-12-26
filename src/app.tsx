@@ -45,6 +45,7 @@ import {
 	MANAGE_APP_ID,
 	MONITORING,
 	MTA,
+	NOTIFICATION_ROUTE_ID,
 	OPERATIONS,
 	PRIVACY_ROUTE_ID,
 	SERVICES_ROUTE_ID,
@@ -450,18 +451,34 @@ const App: FC = () => {
 			primarybarSection: { ...managementSection },
 			tooltip: CosTooltipView
 		});
-		addRoute({
-			route: SUBSCRIPTIONS_ROUTE_ID,
-			position: 4,
-			visible: true,
-			label: t('label.subscriptions', 'Subscriptions'),
-			primaryBar: 'AwardOutline',
-			appView: AppView,
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore
-			primarybarSection: { ...managementSection },
-			tooltip: SubscriptionTooltipView
-		});
+		if (isAdvanced) {
+			addRoute({
+				route: SUBSCRIPTIONS_ROUTE_ID,
+				position: 4,
+				visible: true,
+				label: t('label.subscriptions', 'Subscriptions'),
+				primaryBar: 'AwardOutline',
+				appView: AppView,
+				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+				// @ts-ignore
+				primarybarSection: { ...managementSection },
+				tooltip: SubscriptionTooltipView
+			});
+
+			addRoute({
+				route: BACKUP_ROUTE_ID,
+				position: 1,
+				visible: true,
+				label: t('label.backup', 'Backup'),
+				// primaryBar: 'HistoryOutline',
+				primaryBar: backupPrimaryBar,
+				appView: AppView,
+				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+				// @ts-ignore
+				primarybarSection: { ...servicesSection },
+				tooltip: BackupTooltipView
+			});
+		}
 		addRoute({
 			route: PRIVACY_ROUTE_ID,
 			position: 5,
@@ -473,31 +490,18 @@ const App: FC = () => {
 			// @ts-ignore
 			primarybarSection: { ...managementSection }
 		});
-		addRoute({
-			route: BACKUP_ROUTE_ID,
-			position: 1,
-			visible: true,
-			label: t('label.backup', 'Backup'),
-			// primaryBar: 'HistoryOutline',
-			primaryBar: backupPrimaryBar,
-			appView: AppView,
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore
-			primarybarSection: { ...servicesSection },
-			tooltip: BackupTooltipView
-		});
 
-		/* addRoute({
-			route: OPERATIONS,
+		addRoute({
+			route: NOTIFICATION_ROUTE_ID,
 			position: 1,
 			visible: true,
-			label: t('label.operations', 'Operations'),
-			primaryBar: 'ListOutline',
+			label: t('label.notifications', 'Notifications'),
+			primaryBar: 'BellOutline',
 			appView: AppView,
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-ignore
 			primarybarSection: { ...logAndQueuesSection }
-		}); */
+		});
 
 		/* addRoute({
 			route: APPLICATION_LOG,
@@ -534,7 +538,8 @@ const App: FC = () => {
 		StorageTooltipView,
 		SubscriptionTooltipView,
 		logAndQueuesSection,
-		backupPrimaryBar
+		backupPrimaryBar,
+		isAdvanced
 	]);
 
 	useEffect(() => {

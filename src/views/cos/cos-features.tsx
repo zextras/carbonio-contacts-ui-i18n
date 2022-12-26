@@ -20,6 +20,7 @@ import { useTranslation } from 'react-i18next';
 import { useCosStore } from '../../store/cos/store';
 import { modifyCos } from '../../services/modify-cos-service';
 import { RouteLeavingGuard } from '../ui-extras/nav-guard';
+import { useAuthIsAdvanced } from '../../store/auth-advanced/store';
 
 const CosFeatures: FC = () => {
 	const [t] = useTranslation();
@@ -32,22 +33,23 @@ const CosFeatures: FC = () => {
 		zimbraFeatureMailEnabled: true,
 		zimbraFeatureContactsEnabled: true,
 		zimbraFeatureCalendarEnabled: true,
-		zimbraFeatureTaggingEnabled: true,
-		zimbraFeatureHtmlComposeEnabled: true,
-		zimbraFeatureWebClientOfflineAccessEnabled: true,
-		zimbraFeatureMailPriorityEnabled: true,
-		zimbraFeatureOutOfOfficeReplyEnabled: true,
-		zimbraFeaturePop3DataSourceEnabled: true,
-		zimbraFeatureDistributionListFolderEnabled: true,
-		zimbraFeatureGroupCalendarEnabled: true,
-		zimbraFeatureCalendarReminderDeviceEmailEnabled: false,
-		zimbraFeatureSavedSearchesEnabled: true,
-		zimbraFeatureInitialSearchPreferenceEnabled: true,
-		zimbraFeatureAdvancedSearchEnabled: false,
-		zimbraFeaturePeopleSearchEnabled: false,
-		zimbraFeatureSMIMEEnabled: false,
+		// zimbraFeatureTaggingEnabled: true,
+		// zimbraFeatureHtmlComposeEnabled: true,
+		// zimbraFeatureWebClientOfflineAccessEnabled: true,
+		// zimbraFeatureMailPriorityEnabled: true,
+		// zimbraFeatureOutOfOfficeReplyEnabled: true,
+		// zimbraFeaturePop3DataSourceEnabled: true,
+		// zimbraFeatureDistributionListFolderEnabled: true,
+		// zimbraFeatureGroupCalendarEnabled: true,
+		// zimbraFeatureCalendarReminderDeviceEmailEnabled: false,
+		// zimbraFeatureSavedSearchesEnabled: true,
+		// zimbraFeatureInitialSearchPreferenceEnabled: true,
+		// zimbraFeatureAdvancedSearchEnabled: false,
+		// zimbraFeaturePeopleSearchEnabled: false,
+		// zimbraFeatureSMIMEEnabled: false,
 		zimbraFeatureMobileSyncEnabled: false
 	});
+	const isAdvanced = useAuthIsAdvanced((state) => state.isAdvanced);
 
 	const setSwitchOptionValue = useCallback(
 		(key: string, value: boolean): void => {
@@ -68,62 +70,62 @@ const CosFeatures: FC = () => {
 					'zimbraFeatureCalendarEnabled',
 					obj?.zimbraFeatureCalendarEnabled === 'TRUE'
 				);
-				setSwitchOptionValue(
-					'zimbraFeatureTaggingEnabled',
-					obj?.zimbraFeatureTaggingEnabled === 'TRUE'
-				);
-				setSwitchOptionValue(
-					'zimbraFeatureHtmlComposeEnabled',
-					obj?.zimbraFeatureHtmlComposeEnabled === 'TRUE'
-				);
-				setSwitchOptionValue(
-					'zimbraFeatureWebClientOfflineAccessEnabled',
-					obj?.zimbraFeatureWebClientOfflineAccessEnabled === 'TRUE'
-				);
-				setSwitchOptionValue(
-					'zimbraFeatureMailPriorityEnabled',
-					obj?.zimbraFeatureMailPriorityEnabled === 'TRUE'
-				);
-				setSwitchOptionValue(
-					'zimbraFeatureOutOfOfficeReplyEnabled',
-					obj?.zimbraFeatureOutOfOfficeReplyEnabled === 'TRUE'
-				);
-				setSwitchOptionValue(
-					'zimbraFeaturePop3DataSourceEnabled',
-					obj?.zimbraFeaturePop3DataSourceEnabled === 'TRUE'
-				);
-				setSwitchOptionValue(
-					'zimbraFeatureDistributionListFolderEnabled',
-					obj?.zimbraFeatureDistributionListFolderEnabled === 'TRUE'
-				);
-				setSwitchOptionValue(
-					'zimbraFeatureGroupCalendarEnabled',
-					obj?.zimbraFeatureGroupCalendarEnabled === 'TRUE'
-				);
-				setSwitchOptionValue(
-					'zimbraFeatureCalendarReminderDeviceEmailEnabled',
-					obj?.zimbraFeatureCalendarReminderDeviceEmailEnabled === 'TRUE'
-				);
-				setSwitchOptionValue(
-					'zimbraFeatureSavedSearchesEnabled',
-					obj?.zimbraFeatureSavedSearchesEnabled === 'TRUE'
-				);
-				setSwitchOptionValue(
-					'zimbraFeatureInitialSearchPreferenceEnabled',
-					obj?.zimbraFeatureInitialSearchPreferenceEnabled === 'TRUE'
-				);
-				setSwitchOptionValue(
-					'zimbraFeatureAdvancedSearchEnabled',
-					obj?.zimbraFeatureAdvancedSearchEnabled === 'TRUE'
-				);
-				setSwitchOptionValue(
-					'zimbraFeaturePeopleSearchEnabled',
-					obj?.zimbraFeaturePeopleSearchEnabled === 'TRUE'
-				);
-				setSwitchOptionValue(
-					'zimbraFeatureSMIMEEnabled',
-					obj?.zimbraFeatureSMIMEEnabled === 'TRUE'
-				);
+				// setSwitchOptionValue(
+				// 	'zimbraFeatureTaggingEnabled',
+				// 	obj?.zimbraFeatureTaggingEnabled === 'TRUE'
+				// );
+				// setSwitchOptionValue(
+				// 	'zimbraFeatureHtmlComposeEnabled',
+				// 	obj?.zimbraFeatureHtmlComposeEnabled === 'TRUE'
+				// );
+				// setSwitchOptionValue(
+				// 	'zimbraFeatureWebClientOfflineAccessEnabled',
+				// 	obj?.zimbraFeatureWebClientOfflineAccessEnabled === 'TRUE'
+				// );
+				// setSwitchOptionValue(
+				// 	'zimbraFeatureMailPriorityEnabled',
+				// 	obj?.zimbraFeatureMailPriorityEnabled === 'TRUE'
+				// );
+				// setSwitchOptionValue(
+				// 	'zimbraFeatureOutOfOfficeReplyEnabled',
+				// 	obj?.zimbraFeatureOutOfOfficeReplyEnabled === 'TRUE'
+				// );
+				// setSwitchOptionValue(
+				// 	'zimbraFeaturePop3DataSourceEnabled',
+				// 	obj?.zimbraFeaturePop3DataSourceEnabled === 'TRUE'
+				// );
+				// setSwitchOptionValue(
+				// 	'zimbraFeatureDistributionListFolderEnabled',
+				// 	obj?.zimbraFeatureDistributionListFolderEnabled === 'TRUE'
+				// );
+				// setSwitchOptionValue(
+				// 	'zimbraFeatureGroupCalendarEnabled',
+				// 	obj?.zimbraFeatureGroupCalendarEnabled === 'TRUE'
+				// );
+				// setSwitchOptionValue(
+				// 	'zimbraFeatureCalendarReminderDeviceEmailEnabled',
+				// 	obj?.zimbraFeatureCalendarReminderDeviceEmailEnabled === 'TRUE'
+				// );
+				// setSwitchOptionValue(
+				// 	'zimbraFeatureSavedSearchesEnabled',
+				// 	obj?.zimbraFeatureSavedSearchesEnabled === 'TRUE'
+				// );
+				// setSwitchOptionValue(
+				// 	'zimbraFeatureInitialSearchPreferenceEnabled',
+				// 	obj?.zimbraFeatureInitialSearchPreferenceEnabled === 'TRUE'
+				// );
+				// setSwitchOptionValue(
+				// 	'zimbraFeatureAdvancedSearchEnabled',
+				// 	obj?.zimbraFeatureAdvancedSearchEnabled === 'TRUE'
+				// );
+				// setSwitchOptionValue(
+				// 	'zimbraFeaturePeopleSearchEnabled',
+				// 	obj?.zimbraFeaturePeopleSearchEnabled === 'TRUE'
+				// );
+				// setSwitchOptionValue(
+				// 	'zimbraFeatureSMIMEEnabled',
+				// 	obj?.zimbraFeatureSMIMEEnabled === 'TRUE'
+				// );
 				setSwitchOptionValue(
 					'zimbraFeatureMobileSyncEnabled',
 					obj?.zimbraFeatureMobileSyncEnabled === 'TRUE'
@@ -149,48 +151,48 @@ const CosFeatures: FC = () => {
 			if (!obj.zimbraFeatureCalendarEnabled) {
 				obj.zimbraFeatureCalendarEnabled = false;
 			}
-			if (!obj.zimbraFeatureTaggingEnabled) {
-				obj.zimbraFeatureTaggingEnabled = false;
-			}
-			if (!obj.zimbraFeatureHtmlComposeEnabled) {
-				obj.zimbraFeatureHtmlComposeEnabled = false;
-			}
-			if (!obj.zimbraFeatureWebClientOfflineAccessEnabled) {
-				obj.zimbraFeatureWebClientOfflineAccessEnabled = false;
-			}
-			if (!obj.zimbraFeatureMailPriorityEnabled) {
-				obj.zimbraFeatureMailPriorityEnabled = false;
-			}
-			if (!obj.zimbraFeatureOutOfOfficeReplyEnabled) {
-				obj.zimbraFeatureOutOfOfficeReplyEnabled = false;
-			}
-			if (!obj.zimbraFeaturePop3DataSourceEnabled) {
-				obj.zimbraFeaturePop3DataSourceEnabled = false;
-			}
-			if (!obj.zimbraFeatureDistributionListFolderEnabled) {
-				obj.zimbraFeatureDistributionListFolderEnabled = false;
-			}
-			if (!obj.zimbraFeatureGroupCalendarEnabled) {
-				obj.zimbraFeatureGroupCalendarEnabled = false;
-			}
-			if (!obj.zimbraFeatureCalendarReminderDeviceEmailEnabled) {
-				obj.zimbraFeatureCalendarReminderDeviceEmailEnabled = false;
-			}
-			if (!obj.zimbraFeatureSavedSearchesEnabled) {
-				obj.zimbraFeatureSavedSearchesEnabled = false;
-			}
-			if (!obj.zimbraFeatureInitialSearchPreferenceEnabled) {
-				obj.zimbraFeatureInitialSearchPreferenceEnabled = false;
-			}
-			if (!obj.zimbraFeatureAdvancedSearchEnabled) {
-				obj.zimbraFeatureAdvancedSearchEnabled = false;
-			}
-			if (!obj.zimbraFeaturePeopleSearchEnabled) {
-				obj.zimbraFeaturePeopleSearchEnabled = false;
-			}
-			if (!obj.zimbraFeatureSMIMEEnabled) {
-				obj.zimbraFeatureSMIMEEnabled = false;
-			}
+			// if (!obj.zimbraFeatureTaggingEnabled) {
+			// 	obj.zimbraFeatureTaggingEnabled = false;
+			// }
+			// if (!obj.zimbraFeatureHtmlComposeEnabled) {
+			// 	obj.zimbraFeatureHtmlComposeEnabled = false;
+			// }
+			// if (!obj.zimbraFeatureWebClientOfflineAccessEnabled) {
+			// 	obj.zimbraFeatureWebClientOfflineAccessEnabled = false;
+			// }
+			// if (!obj.zimbraFeatureMailPriorityEnabled) {
+			// 	obj.zimbraFeatureMailPriorityEnabled = false;
+			// }
+			// if (!obj.zimbraFeatureOutOfOfficeReplyEnabled) {
+			// 	obj.zimbraFeatureOutOfOfficeReplyEnabled = false;
+			// }
+			// if (!obj.zimbraFeaturePop3DataSourceEnabled) {
+			// 	obj.zimbraFeaturePop3DataSourceEnabled = false;
+			// }
+			// if (!obj.zimbraFeatureDistributionListFolderEnabled) {
+			// 	obj.zimbraFeatureDistributionListFolderEnabled = false;
+			// }
+			// if (!obj.zimbraFeatureGroupCalendarEnabled) {
+			// 	obj.zimbraFeatureGroupCalendarEnabled = false;
+			// }
+			// if (!obj.zimbraFeatureCalendarReminderDeviceEmailEnabled) {
+			// 	obj.zimbraFeatureCalendarReminderDeviceEmailEnabled = false;
+			// }
+			// if (!obj.zimbraFeatureSavedSearchesEnabled) {
+			// 	obj.zimbraFeatureSavedSearchesEnabled = false;
+			// }
+			// if (!obj.zimbraFeatureInitialSearchPreferenceEnabled) {
+			// 	obj.zimbraFeatureInitialSearchPreferenceEnabled = false;
+			// }
+			// if (!obj.zimbraFeatureAdvancedSearchEnabled) {
+			// 	obj.zimbraFeatureAdvancedSearchEnabled = false;
+			// }
+			// if (!obj.zimbraFeaturePeopleSearchEnabled) {
+			// 	obj.zimbraFeaturePeopleSearchEnabled = false;
+			// }
+			// if (!obj.zimbraFeatureSMIMEEnabled) {
+			// 	obj.zimbraFeatureSMIMEEnabled = false;
+			// }
 			if (!obj.zimbraFeatureMobileSyncEnabled) {
 				obj.zimbraFeatureMobileSyncEnabled = false;
 			}
@@ -331,11 +333,17 @@ const CosFeatures: FC = () => {
 								disabled
 							/>
 						</Row>
+						<Row width="20%" mainAlignment="flex-start">
+							<Switch value={false} label={t('cos.chats', 'Chats')} disabled />
+						</Row>
+						<Row width="20%" mainAlignment="flex-start">
+							<Switch value={false} label={t('cos.files', 'Files')} disabled />
+						</Row>
 					</Row>
 
 					<Divider />
 				</Row>
-				<Row mainAlignment="flex-start" padding={{ all: 'large' }} width="100%">
+				{/* <Row mainAlignment="flex-start" padding={{ all: 'large' }} width="100%">
 					<Text size="extralarge" weight="bold">
 						{t('cos.general_features', 'General Features')}
 					</Text>
@@ -513,21 +521,27 @@ const CosFeatures: FC = () => {
 						</Row>
 					</Row>
 					<Divider />
-				</Row>
-				<Row mainAlignment="flex-start" padding={{ all: 'large' }} width="100%">
-					<Text size="extralarge" weight="bold">
-						{t('label.active_sync', 'ActiveSync')}
-					</Text>
-					<Row width="100%" mainAlignment="flex-start" padding={{ top: 'large', bottom: 'large' }}>
-						<Row width="100%" mainAlignment="flex-start">
-							<Switch
-								value={cosFeatures.zimbraFeatureMobileSyncEnabled}
-								onClick={() => changeSwitchOption('zimbraFeatureMobileSyncEnabled')}
-								label={t('cos.activesync_remote_access', 'ActiveSync remote access')}
-							/>
+				</Row> */}
+				{isAdvanced && (
+					<Row mainAlignment="flex-start" padding={{ all: 'large' }} width="100%">
+						<Text size="extralarge" weight="bold">
+							{t('label.active_sync', 'ActiveSync')}
+						</Text>
+						<Row
+							width="100%"
+							mainAlignment="flex-start"
+							padding={{ top: 'large', bottom: 'large' }}
+						>
+							<Row width="100%" mainAlignment="flex-start">
+								<Switch
+									value={cosFeatures.zimbraFeatureMobileSyncEnabled}
+									onClick={() => changeSwitchOption('zimbraFeatureMobileSyncEnabled')}
+									label={t('cos.activesync_remote_access', 'ActiveSync remote access')}
+								/>
+							</Row>
 						</Row>
 					</Row>
-				</Row>
+				)}
 			</Container>
 			<RouteLeavingGuard when={isDirty} onSave={onSave}>
 				<Text>

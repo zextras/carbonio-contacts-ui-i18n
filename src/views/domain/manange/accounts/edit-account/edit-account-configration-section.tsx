@@ -16,6 +16,7 @@ import {
 import { map, some } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { AccountContext } from '../account-context';
+import { useAuthIsAdvanced } from '../../../../../store/auth-advanced/store';
 
 const emailRegex =
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars, max-len, no-control-regex
@@ -29,6 +30,8 @@ const EditAccountConfigrationSection: FC = () => {
 	const [mailForwardingAddress, setMailForwardingAddress] = useState<any[]>([]);
 	const [prefCalendarForwardInvitesTo, setPrefCalendarForwardInvitesTo] = useState<any[]>([]);
 	const [accountQuota, setAccountQuota] = useState('');
+	const isAdvanced = useAuthIsAdvanced((state) => state.isAdvanced);
+
 	useEffect(() => {
 		setPrefMailForwardingAddress(
 			accountDetail?.zimbraPrefMailForwardingAddress
@@ -220,7 +223,7 @@ const EditAccountConfigrationSection: FC = () => {
 					</Text>
 				</Row>
 				<Row width="100%" padding={{ top: 'large', left: 'large' }} mainAlignment="space-between">
-					<Row width="32%" mainAlignment="flex-start">
+					<Row width="20%" mainAlignment="flex-start">
 						<Switch
 							value={accountDetail?.zimbraFeatureMailEnabled === 'TRUE'}
 							onClick={(): void => changeSwitchOption('zimbraFeatureMailEnabled')}
@@ -228,7 +231,7 @@ const EditAccountConfigrationSection: FC = () => {
 							disabled
 						/>
 					</Row>
-					<Row width="32%" mainAlignment="flex-start">
+					<Row width="20%" mainAlignment="flex-start">
 						<Switch
 							value={accountDetail?.zimbraFeatureCalendarEnabled === 'TRUE'}
 							onClick={(): void => changeSwitchOption('zimbraFeatureCalendarEnabled')}
@@ -236,7 +239,7 @@ const EditAccountConfigrationSection: FC = () => {
 							disabled
 						/>
 					</Row>
-					<Row width="32%" mainAlignment="flex-start">
+					<Row width="20%" mainAlignment="flex-start">
 						<Switch
 							value={accountDetail?.zimbraFeatureContactsEnabled === 'TRUE'}
 							onClick={(): void => changeSwitchOption('zimbraFeatureContactsEnabled')}
@@ -244,11 +247,17 @@ const EditAccountConfigrationSection: FC = () => {
 							disabled
 						/>
 					</Row>
+					<Row width="20%" mainAlignment="flex-start">
+						<Switch value={false} label={t('account_details.Chats', 'Chats')} disabled />
+					</Row>
+					<Row width="20%" mainAlignment="flex-start">
+						<Switch value={false} label={t('account_details.files', 'Files')} disabled />
+					</Row>
 				</Row>
 				<Row width="100%" padding={{ top: 'medium' }}>
 					<Divider color="gray2" />
 				</Row>
-				<Row padding={{ top: 'large' }} width="100%" mainAlignment="space-between">
+				{/* <Row padding={{ top: 'large' }} width="100%" mainAlignment="space-between">
 					<Text size="small" color="gray0" weight="bold">
 						{t('account_details.general', 'General')}
 					</Text>
@@ -439,25 +448,29 @@ const EditAccountConfigrationSection: FC = () => {
 				</Row>
 				<Row width="100%" padding={{ top: 'medium' }}>
 					<Divider color="gray2" />
-				</Row>
-				<Row padding={{ top: 'large' }} width="100%" mainAlignment="space-between">
-					<Text size="small" color="gray0" weight="bold">
-						{t('label.active_sync', 'ActiveSync')}
-					</Text>
-				</Row>
-				<Row
-					width="100%"
-					padding={{ top: 'large', left: 'large', bottom: 'large' }}
-					mainAlignment="space-between"
-				>
-					<Row width="32%" mainAlignment="flex-start">
-						<Switch
-							value={accountDetail?.zimbraFeatureMobileSyncEnabled === 'TRUE'}
-							onClick={(): void => changeSwitchOption('zimbraFeatureMobileSyncEnabled')}
-							label={t('account_details.activesync_remote_access', 'ActiveSync remote access')}
-						/>
-					</Row>
-				</Row>
+				</Row> */}
+				{isAdvanced && (
+					<>
+						<Row padding={{ top: 'large' }} width="100%" mainAlignment="space-between">
+							<Text size="small" color="gray0" weight="bold">
+								{t('label.active_sync', 'ActiveSync')}
+							</Text>
+						</Row>
+						<Row
+							width="100%"
+							padding={{ top: 'large', left: 'large', bottom: 'large' }}
+							mainAlignment="space-between"
+						>
+							<Row width="32%" mainAlignment="flex-start">
+								<Switch
+									value={accountDetail?.zimbraFeatureMobileSyncEnabled === 'TRUE'}
+									onClick={(): void => changeSwitchOption('zimbraFeatureMobileSyncEnabled')}
+									label={t('account_details.activesync_remote_access', 'ActiveSync remote access')}
+								/>
+							</Row>
+						</Row>
+					</>
+				)}
 			</Row>
 		</Container>
 	);

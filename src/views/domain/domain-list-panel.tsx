@@ -46,6 +46,7 @@ import { useBackupModuleStore } from '../../store/backup-module/store';
 import MatomoTracker from '../../matomo-tracker';
 import { useGlobalConfigStore } from '../../store/global-config/store';
 import GlobalListPanel from './global-list-panel';
+import { useAuthIsAdvanced } from '../../store/auth-advanced/store';
 
 const SelectItem = styled(Row)``;
 
@@ -71,6 +72,7 @@ const DomainListPanel: FC = () => {
 	const domainInformation = useDomainStore((state) => state.domain);
 	const [isDetailListExpanded, setIsDetailListExpanded] = useState(true);
 	const [isManageListExpanded, setIsManageListExpanded] = useState(true);
+	const isAdvanced = useAuthIsAdvanced((state) => state.isAdvanced);
 
 	useEffect(() => {
 		globalCarbonioSendAnalytics && matomo.trackPageView(`${DOMAINS_ROUTE_ID}`);
@@ -78,7 +80,7 @@ const DomainListPanel: FC = () => {
 
 	const getBackupModuleEnable = useBackupModuleStore((state) => state.backupModuleEnable);
 	const getDomainLists = (domainName: string): any => {
-		getDomainList(domainName).then((data) => {
+		getDomainList(domainName, 0).then((data) => {
 			const searchResponse: any = data;
 			if (!!searchResponse && searchResponse?.searchTotal > 0) {
 				setDomainList(searchResponse?.domain);
@@ -92,17 +94,24 @@ const DomainListPanel: FC = () => {
 		getDomainLists('');
 	}, []);
 
-	useEffect(() => {
+	useMemo(() => {
 		if (domainInformation?.name) {
 			setSearchDomainName(domainInformation?.name);
 			setIsDomainSelect(true);
 			setIsDomainListExpand(false);
-			setSelectedOperationItem(GENERAL_SETTINGS);
+
 			if (domainInformation?.id) {
 				setDomainId(domainInformation?.id);
 			}
 		}
 	}, [domainInformation?.id, domainInformation?.name]);
+
+	useMemo(() => {
+		if (selectedOperationItem === '') {
+			const operationItem = locationService?.pathname.split('/').pop();
+			setSelectedOperationItem(operationItem || '');
+		}
+	}, [locationService?.pathname, selectedOperationItem]);
 
 	useEffect(() => {
 		if (
@@ -265,12 +274,35 @@ const DomainListPanel: FC = () => {
 		[t]
 	);
 
+	const manageItems = useMemo(
+		() =>
+			!isAdvanced
+				? allManageOptions.filter(
+						(item: any) => item?.id !== RESTORE_ACCOUNT && item?.id !== ACTIVE_SYNC
+				  )
+				: allManageOptions,
+		[allManageOptions, isAdvanced]
+	);
+
+	const detailItems = useMemo(
+		() => (!isAdvanced ? detailOptions.filter((item: any) => item?.id !== THEME) : detailOptions),
+		[detailOptions, isAdvanced]
+	);
+
+	const globalOptionsItems = useMemo(
+		() =>
+			!isAdvanced
+				? globalOptionItems.filter((item: any) => item?.id !== GLOBAL_THEME_ROUTE)
+				: globalOptionItems,
+		[globalOptionItems, isAdvanced]
+	);
+
 	const manageOptions = useMemo(
 		() =>
 			!getBackupModuleEnable
-				? allManageOptions.filter((item: any) => item?.id !== RESTORE_DELETED_EMAIL)
-				: allManageOptions,
-		[getBackupModuleEnable, allManageOptions]
+				? manageItems.filter((item: any) => item?.id !== RESTORE_DELETED_EMAIL)
+				: manageItems,
+		[getBackupModuleEnable, manageItems]
 	);
 
 	const toggleDetailView = (): void => {
@@ -346,7 +378,7 @@ const DomainListPanel: FC = () => {
 			style={{ overflow: 'auto', borderTop: '1px solid #FFFFFF' }}
 		>
 			<GlobalListPanel
-				globalOptionItems={globalOptionItems}
+				globalOptionItems={globalOptionsItems}
 				selectedOperationItem={selectedOperationItem}
 				setSelectedOperationItem={setSelectedOperationItem}
 			/>
@@ -368,6 +400,7 @@ const DomainListPanel: FC = () => {
 								: t('domain.type_here_a_domain', 'Type here a domain')
 						}
 						onChange={(ev: any): void => {
+							setIsDomainSelect(false);
 							setSearchDomainName(ev.target.value);
 						}}
 						CustomIcon={(): any => (
@@ -392,7 +425,7 @@ const DomainListPanel: FC = () => {
 			/>
 			{isDetailListExpanded && (
 				<ListItems
-					items={detailOptions}
+					items={detailItems}
 					selectedOperationItem={selectedOperationItem}
 					setSelectedOperationItem={setSelectedOperationItem}
 				/>

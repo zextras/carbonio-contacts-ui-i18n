@@ -22,7 +22,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { debounce } from 'lodash';
 import ListRow from '../list/list-row';
-import Paginig from '../components/paging';
+import Paging from '../components/paging';
 import { useCosStore } from '../../store/cos/store';
 import { getAllServers } from '../../services/get-all-servers-service';
 import { modifyCos } from '../../services/modify-cos-service';
@@ -56,7 +56,7 @@ const CosServerPools: FC = () => {
 			const allRows = serverList.map((item: any) => ({
 				id: item?.id,
 				columns: [
-					<Text size="small" weight="light" key={item?.id} color="#414141">
+					<Text size="small" weight="light" key={item?.id} color="gray0">
 						{item?.name}
 					</Text>,
 					<Text key={item?.id}>
@@ -106,7 +106,7 @@ const CosServerPools: FC = () => {
 				const allRows = serverList.map((item: any) => ({
 					id: item?.id,
 					columns: [
-						<Text size="small" weight="light" key={item?.id} color="#414141">
+						<Text size="small" weight="light" key={item?.id} color="gray0">
 							{item?.name}
 						</Text>,
 						<Text key={item?.id}>
@@ -132,7 +132,7 @@ const CosServerPools: FC = () => {
 					.map((item: any) => ({
 						id: item?.id,
 						columns: [
-							<Text size="small" weight="light" key={item?.id} color="#414141">
+							<Text size="small" weight="light" key={item?.id} color="gray0">
 								{item?.name}
 							</Text>,
 							<Text key={item?.id}>
@@ -157,7 +157,7 @@ const CosServerPools: FC = () => {
 					.map((item: any) => ({
 						id: item?.id,
 						columns: [
-							<Text size="small" weight="light" key={item?.id} color="#414141">
+							<Text size="small" weight="light" key={item?.id} color="gray0">
 								{item?.name}
 							</Text>,
 							<Text key={item?.id}>
@@ -308,7 +308,7 @@ const CosServerPools: FC = () => {
 					.map((item: any) => ({
 						id: item?.id,
 						columns: [
-							<Text size="small" weight="light" key={item?.id} color="#414141">
+							<Text size="small" weight="light" key={item?.id} color="gray0">
 								{item?.name}
 							</Text>,
 							<Text key={item?.id}>
@@ -476,7 +476,7 @@ const CosServerPools: FC = () => {
 								<Divider />
 							</ListRow>
 							<ListRow>
-								<Paginig
+								<Paging
 									totalItem={1}
 									pageSize={10}
 									setOffset={(): void => {

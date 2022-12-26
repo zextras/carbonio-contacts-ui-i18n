@@ -19,7 +19,7 @@ import {
 	Padding,
 	Icon
 } from '@zextras/carbonio-design-system';
-import { isEqual, reduce, remove, map } from 'lodash';
+import { isEqual, reduce, remove, map, differenceBy } from 'lodash';
 import { useDomainStore } from '../../../../../store/domain/store';
 import { RouteLeavingGuard } from '../../../../ui-extras/nav-guard';
 
@@ -28,10 +28,13 @@ import EditAccountConfigrationSection from './edit-account-configration-section'
 import EditAccountUserPrefrencesSection from './edit-account-user-pref-section';
 import EditAccountSecuritySection from './edit-account-security-section';
 
+import { addAccountAliasRequest } from '../../../../../services/add-account-alias';
+import { deleteAccountAliasRequest } from '../../../../../services/delete-account-alias';
 import { modifyAccountRequest } from '../../../../../services/modify-account';
 import { setPasswordRequest } from '../../../../../services/set-password';
 import { renameAccountRequest } from '../../../../../services/rename-account';
 import { AccountContext } from '../account-context';
+import { getDomainList } from '../../../../../services/search-domain-service';
 
 // eslint-disable-next-line no-empty-pattern
 const EditAccount: FC<{
@@ -50,11 +53,38 @@ const EditAccount: FC<{
 	const { t } = useTranslation();
 	const createSnackbar = useSnackbar();
 	const domainName = useDomainStore((state) => state.domain?.name);
+	const domainList = useDomainStore((state) => state.domainList);
 	const [change, setChange] = useState('general');
 	const [click, setClick] = useState('');
 	const [isDirty, setIsDirty] = useState<boolean>(false);
 	const conext = useContext(AccountContext);
 	const { accountDetail, setAccountDetail, initAccountDetail, setInitAccountDetail } = conext;
+	const setDomainListStore = useDomainStore((state) => state.setDomainList);
+
+	const getDomainLists = useCallback(
+		(offset: number): any => {
+			getDomainList('', offset).then((data) => {
+				const searchResponse: any = data;
+				if (!!searchResponse && searchResponse?.searchTotal > 0) {
+					if (searchResponse?.domain?.length) {
+						setDomainListStore([...domainList, ...searchResponse.domain]);
+						if (searchResponse?.more) {
+							getDomainLists(offset + 50);
+						}
+					}
+				} else {
+					setDomainListStore([]);
+				}
+			});
+		},
+		[domainList, setDomainListStore]
+	);
+
+	useEffect(() => {
+		if (!domainList?.length) {
+			getDomainLists(0);
+		}
+	}, [domainList, getDomainLists]);
 
 	useEffect(() => {
 		const modifiedKeys: any = reduce(
@@ -64,7 +94,6 @@ const EditAccount: FC<{
 			},
 			[]
 		);
-		console.log('modifiedKeys', modifiedKeys);
 		map(modifiedKeys, (ele) => {
 			console.log(ele, initAccountDetail[ele], accountDetail[ele]);
 		});
@@ -167,10 +196,31 @@ const EditAccount: FC<{
 			renameAccountRequest(initAccountDetail?.zimbraId, `${accountDetail?.uid}@${domainName}`);
 			remove(modifiedKeys, (ele) => ele === 'uid');
 		}
+		if (modifiedKeys.includes('mail')) {
+			const deleteAliasArr = differenceBy(
+				initAccountDetail.mail.split(','),
+				accountDetail.mail.split(',')
+			);
+			const addAliasArr = differenceBy(
+				accountDetail.mail.split(','),
+				initAccountDetail.mail.split(',')
+			);
+			// eslint-disable-next-line array-callback-return
+			deleteAliasArr.map((aliasName) => {
+				deleteAccountAliasRequest(initAccountDetail?.zimbraId, `${aliasName}`).then();
+			});
 
+			// eslint-disable-next-line array-callback-return
+			addAliasArr.map((aliasName) => {
+				addAccountAliasRequest(initAccountDetail?.zimbraId, `${aliasName}`).then();
+			});
+
+			remove(modifiedKeys, (ele) => ele === 'mail');
+		}
 		modifiedKeys.forEach((ele: any) => {
 			modifiedData[ele] = accountDetail[ele];
 		});
+
 		modifyAccountRequest(initAccountDetail?.zimbraId, modifiedData)
 			.then((data) => {
 				if (data) {
@@ -271,7 +321,7 @@ const EditAccount: FC<{
 							defaultSelected="general"
 							onChange={setChange}
 							onItemClick={setClick}
-							width={715}
+							width={785}
 						/>
 					</Row>
 					<Row width="100%">
