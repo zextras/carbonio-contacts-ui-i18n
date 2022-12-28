@@ -46,6 +46,7 @@ const Dashboard: FC = () => {
 	const accounts = useUserAccounts();
 	const [userName, setUserName] = useState<string>('');
 	const [version, setVersion] = useState<string>('');
+	console.log('>>>>>>', accounts);
 
 	const setDomain = useDomainStore((state) => state.setDomain);
 	const [quickAccessItems, setQuickAccessItems] = useState<Array<any>>([
@@ -62,7 +63,7 @@ const Dashboard: FC = () => {
 			upperText: t('label.domains', 'Domains'),
 			operationText: t('label.mailing_list', 'Mailing List'),
 			bottomText: t('label.open', 'Open'),
-			operationIcon: 'PersonOutline',
+			operationIcon: 'DistributionListOutline',
 			bottomIcon: 'ChevronRightOutline',
 			bgColor: 'avatar_21',
 			operation: 'malinglist'
