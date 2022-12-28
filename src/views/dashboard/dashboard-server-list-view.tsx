@@ -47,7 +47,7 @@ const DashboardServerList: FC<{
 				columns: [
 					<Text
 						size="small"
-						color="gray0"
+						color="gray1"
 						weight="bold"
 						key={item}
 						onClick={(event: { stopPropagation: () => void }): void => {
@@ -58,7 +58,7 @@ const DashboardServerList: FC<{
 					</Text>,
 					<VersionText
 						size="small"
-						weight="bold"
+						weight="regular"
 						color="gray6"
 						key={item?.name}
 						onClick={(event: { stopPropagation: () => void }): void => {
@@ -69,7 +69,7 @@ const DashboardServerList: FC<{
 					</VersionText>,
 					<VersionText
 						size="small"
-						weight="bold"
+						weight="regular"
 						color="gray6"
 						key={item?.name}
 						onClick={(event: { stopPropagation: () => void }): void => {
@@ -81,7 +81,7 @@ const DashboardServerList: FC<{
 					<Text
 						size="small"
 						weight="bold"
-						color="gray0"
+						color="gray1"
 						key={item?.name}
 						onClick={(event: { stopPropagation: () => void }): void => {
 							event.stopPropagation();
@@ -167,7 +167,8 @@ const DashboardServerList: FC<{
 					mainAlignment="space-between"
 					crossAlignment="flex-start"
 					width="fill"
-					height="calc(100vh - 25rem)"
+					maxHeight="calc(100vh - 25rem)"
+					minHeight="auto"
 				>
 					<Table
 						rows={serverListRow}

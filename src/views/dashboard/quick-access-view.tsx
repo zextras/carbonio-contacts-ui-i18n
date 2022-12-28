@@ -29,11 +29,11 @@ const QuickAccess: FC<{
 			background="gray6"
 			mainAlignment="flex-start"
 			crossAlignment="flex-start"
-			padding={{ all: 'extralarge' }}
+			padding={{ top: 'extralarge', right: 'extralarge', bottom: 'extralarge' }}
 			style={{ borderRadius: '0.5rem' }}
 		>
 			<Container
-				padding={{ bottom: 'large', right: 'large', left: 'large' }}
+				padding={{ bottom: 'large', right: 'large', left: 'extralarge', top: 'large' }}
 				mainAlignment="flex-start"
 				crossAlignment="flex-start"
 			>
@@ -52,7 +52,7 @@ const QuickAccess: FC<{
 				orientation="horizontal"
 				mainAlignment="space-between"
 				crossAlignment="flex-start"
-				padding={{ top: 'extralarge' }}
+				padding={{ bottom: 'large', right: 'medium', left: 'medium', top: 'large' }}
 			>
 				{quickAccessItems.map((item) => (
 					<>

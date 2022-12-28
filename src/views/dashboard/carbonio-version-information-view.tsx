@@ -7,11 +7,13 @@
 import React, { FC } from 'react';
 import { Container, Text } from '@zextras/carbonio-design-system';
 import { useTranslation } from 'react-i18next';
+import { useAuthIsAdvanced } from '../../store/auth-advanced/store';
 
 const CarbonioVersionInformation: FC<{
 	userName: string;
 }> = ({ userName }) => {
 	const [t] = useTranslation();
+	const isAdvanced = useAuthIsAdvanced();
 	return (
 		<Container
 			mainAlignment="flex-start"
@@ -25,11 +27,39 @@ const CarbonioVersionInformation: FC<{
 				size="large"
 				style={{ fontSize: '2.25rem', fontFamily: 'roboto' }}
 			>
-				{t('welcome_to_carbonio_information', {
-					adminName: userName,
-					defaultValue: 'Welcome {{adminName}} to Carbonio!'
-				})}
+				{t('welcome', 'Welcome')}
 			</Text>
+			<Text
+				color="secondary"
+				overflow="break-word"
+				weight="light"
+				size="large"
+				style={{ fontSize: '2.25rem', fontFamily: 'roboto' }}
+			>
+				{userName}
+			</Text>
+			{isAdvanced && (
+				<Text
+					color="secondary"
+					overflow="break-word"
+					weight="light"
+					size="large"
+					style={{ fontSize: '2.25rem', fontFamily: 'roboto' }}
+				>
+					{t('to_carbonio', 'to Carbonio!')}
+				</Text>
+			)}
+			{!isAdvanced && (
+				<Text
+					color="secondary"
+					overflow="break-word"
+					weight="light"
+					size="large"
+					style={{ fontSize: '2.25rem', fontFamily: 'roboto' }}
+				>
+					{t('cumminity_edition', 'Community Edition!')}
+				</Text>
+			)}
 		</Container>
 	);
 };
