@@ -52,7 +52,7 @@ const DetailViewContainer = styled(Container)`
 const AppView: FC = () => {
 	const isPrimaryBarExpanded = usePrimaryBarState();
 	return (
-		<Container height="auto" background="gray5">
+		<Container>
 			<BreadCrumb />
 			<Switch>
 				<Route path={`/${DASHBOARD}`}>
