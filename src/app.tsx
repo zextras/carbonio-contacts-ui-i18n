@@ -598,12 +598,11 @@ const App: FC = () => {
 				zextras: {
 					_jsns: 'urn:zimbraAdmin',
 					module: 'ZxConfig',
-					action: 'dump_global_config',
-					targetServers: serverName
+					action: 'dump_global_config'
 				}
 			}).then((data: any) => {
 				const responseData = JSON.parse(data?.Body?.response?.content);
-				const globalConfig = responseData?.response[serverName]?.response;
+				const globalConfig = responseData?.response;
 				if (globalConfig) {
 					setGlobalConfig(globalConfig);
 				}
