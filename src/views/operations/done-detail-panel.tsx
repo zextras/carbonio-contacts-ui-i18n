@@ -24,6 +24,7 @@ const DoneDetailPanel: FC = () => {
 	const operationsDoneHeader = useMemo(() => OperationsDoneHeader(t), [t]);
 	const [wizardDetailToggle, setWizardDetailToggle] = useState(false);
 	const [selectedData, setSelectedData] = useState<any>();
+	const [isSelectedRow, setIsSelectedRow] = useState([]);
 
 	const handleClick = (i: any): any => {
 		const volumeObject: any = doneData.find((s: any, index: any) => index === i);
@@ -37,8 +38,6 @@ const DoneDetailPanel: FC = () => {
 				<AbsoluteContainer orientation="vertical" background="gray5">
 					<OperationsWizardDetailPanel
 						setWizardDetailToggle={setWizardDetailToggle}
-						operation="Operation#2"
-						server="Server#2"
 						setOpen=""
 						selectedData={selectedData}
 					/>
@@ -70,9 +69,11 @@ const DoneDetailPanel: FC = () => {
 							operations={doneData}
 							headers={operationsDoneHeader}
 							donePanel
-							selectedRows=""
+							selectedRows={isSelectedRow}
 							// eslint-disable-next-line @typescript-eslint/no-empty-function
-							onSelectionChange={(selected: any): any => {}}
+							onSelectionChange={(selected: any): any => {
+								setIsSelectedRow(selected);
+							}}
 							onClick={(i: any): any => {
 								handleClick(i);
 							}}

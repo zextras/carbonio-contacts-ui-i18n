@@ -8,6 +8,7 @@ import React, { FC, useMemo } from 'react';
 import { Container, Row, Text, Table, Icon } from '@zextras/carbonio-design-system';
 import { useTranslation } from 'react-i18next';
 import MiliSecondToDate from './functions/miliSecondToDate';
+import { DISMMISED, STARTED, STOPPING } from '../../constants';
 
 export const OperationsTable: FC<{
 	operations: Array<any>;
@@ -44,7 +45,7 @@ export const OperationsTable: FC<{
 									onClick(i);
 								}}
 							>
-								{v?.realTimeScanOperation || 0}
+								{v?.name || ''}
 							</Row>,
 							<Row
 								key={i}
@@ -56,13 +57,13 @@ export const OperationsTable: FC<{
 									onClick(i);
 								}}
 							>
-								{v?.status === 'Pause' && (
+								{v?.state === STOPPING && (
 									<Icon icon="StopCircleOutline" size="medium" color="secondary" />
 								)}
-								{v?.status === 'Stop' && (
+								{v?.state === DISMMISED && (
 									<Icon icon="CloseCircleOutline" size="medium" color="error" />
 								)}
-								{v?.status === 'Running' && (
+								{v?.state === STARTED && (
 									<Icon icon="CheckmarkCircleOutline" size="medium" color="success" />
 								)}
 							</Row>,
@@ -88,7 +89,7 @@ export const OperationsTable: FC<{
 									onClick(i);
 								}}
 							>
-								{MiliSecondToDate(v?.startTime)}
+								{v?.startTime ? MiliSecondToDate(v?.startTime) : ''}
 							</Row>,
 							<Row
 								key={i}
@@ -100,7 +101,7 @@ export const OperationsTable: FC<{
 									onClick(i);
 								}}
 							>
-								{MiliSecondToDate(v?.queuedTime)}
+								{v?.queuedTime ? MiliSecondToDate(v?.queuedTime) : ''}
 							</Row>
 						],
 						clickable: true
@@ -131,7 +132,7 @@ export const OperationsTable: FC<{
 									onClick(i);
 								}}
 							>
-								{v?.realTimeScanOperation || 0}
+								{v?.name || ''}
 							</Row>,
 							<Row
 								key={i}
@@ -155,7 +156,7 @@ export const OperationsTable: FC<{
 									onClick(i);
 								}}
 							>
-								{MiliSecondToDate(v?.startTime)}
+								{v?.startTime ? MiliSecondToDate(v?.startTime) : ''}
 							</Row>,
 							<Row
 								key={i}
@@ -167,7 +168,7 @@ export const OperationsTable: FC<{
 									onClick(i);
 								}}
 							>
-								{MiliSecondToDate(v?.queuedTime)}
+								{v?.queuedTime ? MiliSecondToDate(v?.queuedTime) : ''}
 							</Row>
 						],
 						clickable: true

@@ -1,3 +1,5 @@
+import { AM, PM } from '../../../constants';
+
 /*
  * SPDX-FileCopyrightText: 2022 Zextras <https://www.zextras.com>
  *
@@ -6,7 +8,7 @@
 const MiliSecondToDate: any = (time: any) => {
 	const date = new Date(time).toLocaleDateString();
 	let hours = new Date(time).getHours();
-	const AmOrPm = hours >= 12 ? 'pm' : 'am';
+	const AmOrPm = hours >= 12 ? PM : AM;
 	hours = hours % 12 || 12;
 	const minutes = new Date(time).getMinutes();
 	const finalTime = `${hours}:${minutes} ${AmOrPm}`;

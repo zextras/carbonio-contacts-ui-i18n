@@ -18,7 +18,8 @@ export const stopOperations = async (uuid: string): Promise<any> =>
 			_jsns: 'urn:zimbraAdmin',
 			module: 'ZxCore',
 			action: 'doStopOperation',
-			operationId: uuid
+			operationId: uuid,
+			targetServers: 'all_servers'
 		},
 		'zextras'
 	);

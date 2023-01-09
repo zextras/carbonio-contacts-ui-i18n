@@ -4,7 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import { useSnackbar } from '@zextras/carbonio-design-system';
 import React, { FC, useCallback, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import {
 	DONE_ROUTE_ID,
@@ -22,6 +24,8 @@ import QuededDetailPanel from './queued-detail-panel';
 import RunningDetailPanel from './running-detail-panel';
 
 const OperationsDetailOperation: FC = () => {
+	const [t] = useTranslation();
+	const createSnackbar = useSnackbar();
 	const { operation }: { operation: string } = useParams();
 	const serverList = useServerStore((state) => state.serverList)[0]?.name;
 	const { setAlloperationDetail, setRunningData, setQueuedData, setDoneData } = useOperationStore(
@@ -29,19 +33,38 @@ const OperationsDetailOperation: FC = () => {
 	);
 
 	const getAllOperationAPICallHandler = useCallback(() => {
-		getAllOperations().then((response: any) => {
-			console.log('_dd operation response', response.Body?.response.content);
-			const res = response.Body?.response.content;
-			const result = JSON.parse(res)?.response?.[`${serverList}`]?.response?.operationList;
-			setAlloperationDetail(result);
-			const RunningOperationData = result?.filter((item: any) => item?.state === STARTED);
-			setRunningData(RunningOperationData);
-			const QueuedOperationData = result?.filter((item: any) => item?.state === QUEUED);
-			setQueuedData(QueuedOperationData);
-			const DoneOperationData = result?.filter((item: any) => item?.state === STOPPING);
-			setDoneData(DoneOperationData);
-		});
-	}, [serverList, setAlloperationDetail, setDoneData, setQueuedData, setRunningData]);
+		getAllOperations()
+			.then((response: any) => {
+				const res = JSON.parse(response.Body?.response.content);
+				if (res?.response?.[`${serverList}`]?.ok) {
+					const result = res?.response?.[`${serverList}`]?.response?.operationList;
+					setAlloperationDetail(result);
+					const RunningOperationData = result?.filter((item: any) => item?.state === STARTED);
+					setRunningData(RunningOperationData);
+					const QueuedOperationData = result?.filter((item: any) => item?.state === QUEUED);
+					setQueuedData(QueuedOperationData);
+					const DoneOperationData = result?.filter((item: any) => item?.state === STOPPING);
+					setDoneData(DoneOperationData);
+				}
+			})
+			.catch((err) => {
+				createSnackbar({
+					key: '1',
+					type: 'error',
+					label: t('label.operation.get_all_operation_error', '{{name}}', {
+						name: err
+					})
+				});
+			});
+	}, [
+		createSnackbar,
+		serverList,
+		setAlloperationDetail,
+		setDoneData,
+		setQueuedData,
+		setRunningData,
+		t
+	]);
 
 	useEffect(() => {
 		getAllOperationAPICallHandler();

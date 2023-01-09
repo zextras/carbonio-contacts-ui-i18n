@@ -25,7 +25,7 @@ const DeleteOpearationsModel: FC<{
 				open={open}
 				customFooter={
 					<Container orientation="horizontal" mainAlignment="flex-end">
-						<Row style={{ gap: '8px' }} padding={{ right: 'small' }}>
+						<Row style={{ gap: '1rem' }} padding={{ right: 'small' }}>
 							<Button
 								type="outlined"
 								label={t('operations.label.let_it_run_btn', 'LET IT RUN')}
@@ -49,25 +49,31 @@ const DeleteOpearationsModel: FC<{
 				showCloseIcon
 				onClose={closeHandler}
 			>
-				<Text
-					size={'extralarge'}
-					overflow="break-word"
-					style={{ whiteSpace: 'pre-line', textAlign: 'center', padding: '32px 0' }}
+				<Row
+					mainAlignment="center"
+					crossAlignment="center"
+					padding={{ top: 'small', bottom: 'large' }}
 				>
-					{modelHandler ? (
-						<Trans
-							i18nKey="label.cancel_operations_msg"
-							defaults="Are you sure you want to CANCEL this operation? <br /> By clicking CANCEL OPERATION, it will be removed from the operations queue list."
-							components={{ break: <br /> }}
-						/>
-					) : (
-						<Trans
-							i18nKey="label.stop_operations_msg"
-							defaults="Are you sure you want to STOP this operation? <br /> By clicking STOP OPERATION, it will be stopped and removed from the operations queue list."
-							components={{ break: <br /> }}
-						/>
-					)}
-				</Text>
+					<Text
+						size={'extralarge'}
+						overflow="break-word"
+						style={{ whiteSpace: 'pre-line', textAlign: 'center', paddingBottom: '1rem' }}
+					>
+						{modelHandler ? (
+							<Trans
+								i18nKey="label.cancel_operations_message"
+								defaults="Are you sure you want to CANCEL this operation? <br /> By clicking CANCEL OPERATION, it will be <br /> removed from the operations queue list."
+								components={{ break: <br /> }}
+							/>
+						) : (
+							<Trans
+								i18nKey="label.stop_operations_message"
+								defaults="Are you sure you want to STOP this operation? <br /> By clicking STOP OPERATION, it will be stopped and <br /> removed from the operations queue list."
+								components={{ break: <br /> }}
+							/>
+						)}
+					</Text>
+				</Row>
 			</Modal>
 		</>
 	);

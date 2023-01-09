@@ -158,3 +158,5 @@ export const STOPPING = 'Stopping';
 export const DISMMISED = 'Dismissed';
 export const TRUE_OPERTION = 'True';
 export const FALSE_OPERTION = 'False';
+export const PM = 'pm';
+export const AM = 'am';

@@ -30,11 +30,9 @@ import {
 
 const OperationsWizardDetailPanel: FC<{
 	setWizardDetailToggle: any;
-	operation: string;
-	server: string;
 	setOpen: any;
 	selectedData: any;
-}> = ({ setWizardDetailToggle, server, operation, setOpen, selectedData }) => {
+}> = ({ setWizardDetailToggle, setOpen, selectedData }) => {
 	const [t] = useTranslation();
 	const [status, setStatus] = useState('');
 
@@ -53,7 +51,10 @@ const OperationsWizardDetailPanel: FC<{
 			<Row mainAlignment="flex-start" crossAlignment="center" width="100%" height="auto">
 				<Row mainAlignment="flex-start" padding={{ all: 'large' }} takeAvailableSpace>
 					<Text size="extralarge" weight="bold">
-						{`${operation} on ${selectedData?.host}`}
+						{t('operations.operationname_on_servername', '{{operationName}} on {{serverName}}', {
+							operationName: selectedData?.name,
+							serverName: selectedData?.host
+						})}
 					</Text>
 				</Row>
 				<Row padding={{ horizontal: 'small' }}>
@@ -107,7 +108,7 @@ const OperationsWizardDetailPanel: FC<{
 								<Input
 									background="gray6"
 									label={t('operations.label.operation_type', 'Operation Type')}
-									value="Backup"
+									value={selectedData?.module || ''}
 									readOnly
 								/>
 							</Container>
@@ -115,7 +116,7 @@ const OperationsWizardDetailPanel: FC<{
 								<Input
 									background="gray6"
 									label={t('operations.label.who_started_it', 'Who started it?')}
-									value={selectedData?.parameters?.requesterAddress}
+									value={selectedData?.parameters?.requesterAddress || ''}
 									readOnly
 								/>
 							</Container>
@@ -123,7 +124,7 @@ const OperationsWizardDetailPanel: FC<{
 								<Input
 									background="gray6"
 									label={t('operations.label.status', 'Status')}
-									value={status}
+									value={status || ''}
 									readOnly
 								/>
 							</Container>
@@ -135,7 +136,7 @@ const OperationsWizardDetailPanel: FC<{
 								<Input
 									background="gray6"
 									label={t('operations.label.submitted_at', 'Submitted at')}
-									value={MiliSecondToDate(selectedData?.startTime)}
+									value={selectedData?.startTime ? MiliSecondToDate(selectedData?.startTime) : ''}
 									readOnly
 								/>
 							</Container>
@@ -143,7 +144,7 @@ const OperationsWizardDetailPanel: FC<{
 								<Input
 									background="gray6"
 									label={t('operations.label.started_at', 'Started at')}
-									value={MiliSecondToDate(selectedData?.queuedTime)}
+									value={selectedData?.queuedTime ? MiliSecondToDate(selectedData?.queuedTime) : ''}
 									readOnly
 								/>
 							</Container>
@@ -163,7 +164,7 @@ const OperationsWizardDetailPanel: FC<{
 								<Input
 									background="gray6"
 									label={t('operations.label.action(M)', 'Action (M)')}
-									value="Start"
+									value=""
 									readOnly
 								/>
 							</Container>
@@ -171,7 +172,10 @@ const OperationsWizardDetailPanel: FC<{
 								<Input
 									background="gray6"
 									label={t('operations.label.notifications', 'Notifications')}
-									value={selectedData?.parameters?.additionalNotificationAddresses?.length}
+									value={
+										selectedData?.parameters?.additionalNotificationAddresses &&
+										selectedData?.parameters?.additionalNotificationAddresses?.length
+									}
 									readOnly
 								/>
 							</Container>
@@ -179,7 +183,7 @@ const OperationsWizardDetailPanel: FC<{
 								<Input
 									background="gray6"
 									label={t('operations.label.read_error_threshold', 'Read Error Threshold')}
-									value="0"
+									value=""
 									readOnly
 								/>
 							</Container>
@@ -191,7 +195,7 @@ const OperationsWizardDetailPanel: FC<{
 								<Input
 									background="gray6"
 									label={t('operations.label.remote_metadata_upload', 'Remote Metadata Upload')}
-									value="False"
+									value=""
 									readOnly
 								/>
 							</Container>
