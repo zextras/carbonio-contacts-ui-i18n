@@ -60,9 +60,15 @@ const ReusedDefaultTabBar: FC<{
 			crossAlignment="flex-start"
 			padding={{ all: 'medium' }}
 			takeAvailableSpace
+			style={{ 'justify-content': 'center', display: 'flex' }}
 		>
 			<Container width="2rem" padding={{ right: 'small' }}>
-				<Icon icon={item?.icon} height={'1rem'} width="1rem" />
+				<Icon
+					icon={item?.icon}
+					height={'1rem'}
+					width="1rem"
+					color={selected ? 'primary' : 'gray'}
+				/>
 			</Container>
 			<Container
 				mainAlignment="flex-start"
@@ -483,7 +489,8 @@ const NotificationView: FC<{
 					mainAlignment="space-between"
 					crossAlignment="flex-start"
 					width="fill"
-					height="calc(100vh - 21.25rem)"
+					maxHeight="calc(100vh - 21.25rem)"
+					minHeight="auto"
 					padding={{ all: isAddPadding ? 'large' : '' }}
 				>
 					<Table

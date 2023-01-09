@@ -5,7 +5,7 @@
  */
 
 import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
-import { Container } from '@zextras/carbonio-design-system';
+import { Container, Divider } from '@zextras/carbonio-design-system';
 import { useTranslation } from 'react-i18next';
 import {
 	useUserAccounts,
@@ -62,7 +62,7 @@ const Dashboard: FC = () => {
 			upperText: t('label.domains', 'Domains'),
 			operationText: t('label.mailing_list', 'Mailing List'),
 			bottomText: t('label.open', 'Open'),
-			operationIcon: 'PersonOutline',
+			operationIcon: 'DistributionListOutline',
 			bottomIcon: 'ChevronRightOutline',
 			bgColor: 'avatar_21',
 			operation: 'malinglist'
@@ -115,37 +115,40 @@ const Dashboard: FC = () => {
 	}, [history]);
 
 	return (
-		<Container
-			mainAlignment="flex-start"
-			crossAlignment="flex-start"
-			background="gray5"
-			style={{ overflow: 'auto' }}
-			height="calc(100vh - 7.5rem)"
-		>
-			<ListRow>
-				<Container width={'40'} padding={{ all: 'extralarge' }}>
-					<CarbonioVersionInformation userName={userName} />
-				</Container>
-				<Container width={'60'} padding={{ all: 'extralarge' }}>
-					<QuickAccess
-						quickAccessItems={quickAccessItems}
-						openOperationView={openOperationView}
-						domainName={domainInformation?.name}
-					/>
-				</Container>
-			</ListRow>
+		<Container>
+			<Divider color="gray6" />
+			<Container
+				mainAlignment="flex-start"
+				crossAlignment="flex-start"
+				background="gray5"
+				style={{ overflow: 'auto' }}
+				height="calc(100vh - 6.55rem)"
+			>
+				<ListRow>
+					<Container width={'40'} padding={{ all: 'extralarge' }}>
+						<CarbonioVersionInformation userName={userName} />
+					</Container>
+					<Container width={'60'} padding={{ all: 'extralarge' }}>
+						<QuickAccess
+							quickAccessItems={quickAccessItems}
+							openOperationView={openOperationView}
+							domainName={domainInformation?.name}
+						/>
+					</Container>
+				</ListRow>
 
-			<ListRow>
-				<Container padding={{ all: 'extralarge' }}>
-					<DashboardNotification goToMailNotificationt={goToMailNotificationt} />
-				</Container>
-			</ListRow>
+				<ListRow>
+					<Container padding={{ all: 'extralarge' }}>
+						<DashboardNotification goToMailNotificationt={goToMailNotificationt} />
+					</Container>
+				</ListRow>
 
-			<ListRow>
-				<Container padding={{ all: 'extralarge' }}>
-					<DashboardServerList goToMailStoreServerList={goToMailStoreServerList} />
-				</Container>
-			</ListRow>
+				<ListRow>
+					<Container padding={{ all: 'extralarge' }}>
+						<DashboardServerList goToMailStoreServerList={goToMailStoreServerList} />
+					</Container>
+				</ListRow>
+			</Container>
 		</Container>
 	);
 };

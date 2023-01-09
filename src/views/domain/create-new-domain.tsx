@@ -158,7 +158,7 @@ const CreateDomain: FC = () => {
 			_content: zimbraDomainMaxAccounts
 		});
 		attributes.push({
-			n: 'zimbraDomainAggregateQuota',
+			n: 'zimbraMailDomainQuota',
 			_content: zimbraMailDomainQuota
 		});
 
@@ -280,8 +280,8 @@ const CreateDomain: FC = () => {
 							<Container padding={{ all: 'small' }}>
 								<Input
 									label={t(
-										'label.max_account_you_can_manage_is',
-										'The max accounts you can manage is…'
+										'label.max_number_account_of_this_domain_manage',
+										'The max number of accounts this domain can manage'
 									)}
 									background="gray5"
 									value={zimbraDomainMaxAccounts}
@@ -293,8 +293,8 @@ const CreateDomain: FC = () => {
 							<Container padding={{ all: 'small' }}>
 								<Input
 									label={t(
-										'label.max_email_quota_you_can_manage_is',
-										'The max email quota you can manage is…'
+										'label.default_mail_quota_for_account_domain',
+										'The default email quota for each account in the domain'
 									)}
 									background="gray5"
 									value={zimbraMailDomainQuota}
