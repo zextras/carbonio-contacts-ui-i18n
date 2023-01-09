@@ -35,7 +35,7 @@ const OperationsDetailOperation: FC = () => {
 	const getAllOperationAPICallHandler = useCallback(() => {
 		getAllOperations()
 			.then((response: any) => {
-				const res = JSON.parse(response.Body?.response.content);
+				const res = JSON.parse(response?.Body?.response?.content);
 				if (res?.response?.[`${serverList}`]?.ok) {
 					const result = res?.response?.[`${serverList}`]?.response?.operationList;
 					setAlloperationDetail(result);

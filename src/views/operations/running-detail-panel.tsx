@@ -147,7 +147,7 @@ const RunningDetailPanel: FC<{ getAllOperationAPICallHandler: any }> = ({
 					crossAlignment="flex-start"
 					mainAlignment="flex-start"
 					width="100%"
-					height="calc(100vh - 200px)"
+					height="calc(100vh - 12.5rem)"
 					padding={{ all: 'large' }}
 				>
 					<Row takeAvwidth="fill" mainAlignment="flex-end" crossAlignment="flex-end" width="100%">
@@ -157,8 +157,6 @@ const RunningDetailPanel: FC<{ getAllOperationAPICallHandler: any }> = ({
 							color="error"
 							icon="StopCircleOutline"
 							iconPlacement="right"
-							// onClick={stopOperationAPICall}
-							// disabled={toggleStopBtn}
 						/>
 					</Row>
 					<Row width="100%" padding={{ top: 'large' }}>
@@ -168,7 +166,6 @@ const RunningDetailPanel: FC<{ getAllOperationAPICallHandler: any }> = ({
 								headers={operationsHeader}
 								donePanel={false}
 								selectedRows={isSelectedRow}
-								// eslint-disable-next-line @typescript-eslint/no-empty-function
 								onSelectionChange={(selected: any): any => {
 									setIsSelectedRow(selected);
 								}}

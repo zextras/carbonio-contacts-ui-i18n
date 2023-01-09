@@ -23,7 +23,7 @@ export const OperationsTable: FC<{
 	const tableRows = donePanel
 		? useMemo(
 				() =>
-					operations.map((v, i) => ({
+					operations?.map((v, i) => ({
 						id: i?.toString(),
 						columns: [
 							<Row
@@ -110,7 +110,7 @@ export const OperationsTable: FC<{
 		  )
 		: useMemo(
 				() =>
-					operations.map((v, i) => ({
+					operations?.map((v, i) => ({
 						id: i?.toString(),
 						columns: [
 							<Row

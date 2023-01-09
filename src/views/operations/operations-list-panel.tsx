@@ -64,7 +64,7 @@ const OperationsListPanel: FC = () => {
 			crossAlignment="flex-start"
 			mainAlignment="flex-start"
 			background="gray5"
-			style={{ overflow: 'auto', borderTop: '1px solid #FFFFFF' }}
+			style={{ overflow: 'auto', borderTop: '0.0625rem solid #FFFFFF' }}
 		>
 			<ListItems
 				items={manageOptions}

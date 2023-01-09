@@ -61,7 +61,7 @@ const DoneDetailPanel: FC = () => {
 					crossAlignment="flex-start"
 					mainAlignment="flex-start"
 					width="100%"
-					height="calc(100vh - 200px)"
+					height="calc(100vh - 12.5rem)"
 					padding={{ all: 'large' }}
 				>
 					<Row width="100%" padding={{ top: 'large' }}>
@@ -70,7 +70,6 @@ const DoneDetailPanel: FC = () => {
 							headers={operationsDoneHeader}
 							donePanel
 							selectedRows={isSelectedRow}
-							// eslint-disable-next-line @typescript-eslint/no-empty-function
 							onSelectionChange={(selected: any): any => {
 								setIsSelectedRow(selected);
 							}}

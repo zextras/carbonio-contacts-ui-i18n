@@ -122,7 +122,7 @@ const QuededDetailPanel: FC<{ getAllOperationAPICallHandler: any }> = ({
 					crossAlignment="flex-start"
 					mainAlignment="flex-start"
 					width="100%"
-					height="calc(100vh - 200px)"
+					height="calc(100vh - 12.5rem)"
 					padding={{ all: 'large' }}
 				>
 					<DeleteOpearationsModel
@@ -155,7 +155,6 @@ const QuededDetailPanel: FC<{ getAllOperationAPICallHandler: any }> = ({
 								headers={operationsHeader}
 								donePanel={false}
 								selectedRows={isSelectedRow}
-								// eslint-disable-next-line @typescript-eslint/no-empty-function
 								onSelectionChange={(selected: any): any => {
 									setIsSelectedRow(selected);
 								}}
