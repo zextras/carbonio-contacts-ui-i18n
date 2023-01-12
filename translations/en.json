@@ -48,6 +48,8 @@
             "week": "Week View",
             "work_week": "Work Week View"
         },
+        "delegate_created_successfully": "Delegate created successfully",
+        "delegate_deleted_successfully": "Delegate deleted successfully",
         "delegate_rights": "Delegate Rights",
         "deligate_abstract_text": "The user oscar.dabagno will be able to send mails on behalf of maja.delana. oscar.dabagno will be displayed as the sender of the mails. The messages will not be stored anywhere.",
         "display_external_image_as_html": "Display external image as HTML",

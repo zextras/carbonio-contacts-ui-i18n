@@ -17,12 +17,13 @@ import {
 	RadioGroup
 } from '@zextras/carbonio-design-system';
 import styled from 'styled-components';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { debounce } from 'lodash';
 import { useDomainStore } from '../../../../../../store/domain/store';
 import { accountListDirectory } from '../../../../../../services/account-list-directory-service';
 
 import { delegateRightsType, delegateWhereToStore } from '../../../../../utility/utils';
+import { AccountContext } from '../../account-context';
 
 const SelectItem = styled(Row)``;
 const CustomIcon = styled(Icon)`
@@ -49,6 +50,8 @@ const DelegateAddSection: FC = () => {
 	const [searchQuery, setSearchQuery] = useState<string>('');
 	const [offset, setOffset] = useState<number>(0);
 	const [limit, setLimit] = useState<number>(20);
+	const conext = useContext(AccountContext);
+	const { accountDetail, deligateDetail, setDeligateDetail } = conext;
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const searchAccountList = useCallback(
@@ -140,10 +143,16 @@ const DelegateAddSection: FC = () => {
 				<Row mainAlignment="flex-start" width="100%">
 					<Row padding={{ top: 'large' }} width="100%" mainAlignment="space-between">
 						<Text size="small" color="gray0" weight="bold">
-							{t(
-								'account_details.deligate_abstract_text',
-								`The user oscar.dabagno will be able to send mails on behalf of maja.delana. oscar.dabagno will be displayed as the sender of the mails. The messages will not be stored anywhere.`
-							)}
+							{
+								<Trans
+									i18nKey="account_details.deligate_abstract_text"
+									defaults="The user {{granteeEmail}} will be able to send mails on behalf of {{targetEmail}}"
+									components={{
+										granteeEmail: deligateDetail?.granteeEmail,
+										targetEmail: accountDetail?.zimbraMailDeliveryAddress
+									}}
+								/>
+							}
 						</Text>
 					</Row>
 				</Row>

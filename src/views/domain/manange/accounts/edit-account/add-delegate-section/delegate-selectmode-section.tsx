@@ -37,7 +37,7 @@ const DelegateSelectModeSection: FC = () => {
 		{ id: 'a1', label: 'aa' },
 		{ id: 'a2', label: 'bb' }
 	]);
-	const [searchDelegateAccountName, setSearchDelegateAccountName] = useState('');
+	const [searchDelegateAccountName, setSearchDelegateAccountName] = useState(undefined);
 	const [isDelegateAccountListExpand, setIsDelegateAccountListExpand] = useState(false);
 	const [isDelegateSelect, setIsDelegateSelect] = useState(false);
 	const DELEGETES_TYPE = useMemo(() => delegateType(t), [t]);
@@ -152,7 +152,9 @@ const DelegateSelectModeSection: FC = () => {
 							label={t('account_details.who_will_be_delegates', 'Who will be the delegates?')}
 							showCheckbox={false}
 							padding={{ right: 'medium' }}
-							defaultSelection={DELEGETES_TYPE.find((item: any) => item.value === 'user')}
+							defaultSelection={DELEGETES_TYPE.find(
+								(item: any) => item.value === deligateDetail?.granteeType
+							)}
 							onChange={onGroupByChange}
 							items={DELEGETES_TYPE}
 						/>
@@ -190,7 +192,11 @@ const DelegateSelectModeSection: FC = () => {
 										}}
 									/>
 								)}
-								value={searchDelegateAccountName}
+								value={
+									searchDelegateAccountName === undefined
+										? deligateDetail?.granteeEmail || ''
+										: searchDelegateAccountName
+								}
 								backgroundColor="gray5"
 							/>
 						</Dropdown>

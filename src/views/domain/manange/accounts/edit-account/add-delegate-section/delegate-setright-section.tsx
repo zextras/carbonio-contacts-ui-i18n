@@ -23,6 +23,7 @@ import { useDomainStore } from '../../../../../../store/domain/store';
 import { accountListDirectory } from '../../../../../../services/account-list-directory-service';
 
 import { delegateRightsType, delegateWhereToStore } from '../../../../../utility/utils';
+import { AccountContext } from '../../account-context';
 
 const SelectItem = styled(Row)``;
 const CustomIcon = styled(Icon)`
@@ -49,6 +50,8 @@ const DelegateSetRightsSection: FC = () => {
 	const [searchQuery, setSearchQuery] = useState<string>('');
 	const [offset, setOffset] = useState<number>(0);
 	const [limit, setLimit] = useState<number>(20);
+	const conext = useContext(AccountContext);
+	const { deligateDetail, setDeligateDetail } = conext;
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const searchAccountList = useCallback(
@@ -124,6 +127,13 @@ const DelegateSetRightsSection: FC = () => {
 		getAccountList();
 	}, [getAccountList, searchQuery]);
 
+	const onWhoDelegateChange = (v: any): any => {
+		setDeligateDetail((prev: any) => ({ ...prev, delegeteRights: v }));
+	};
+
+	const onWhereToStoreChange = (v: any): any => {
+		setDeligateDetail((prev: any) => ({ ...prev, whereToStore: v }));
+	};
 	return (
 		<>
 			<Container
@@ -144,8 +154,10 @@ const DelegateSetRightsSection: FC = () => {
 							label={t('account_details.who_will_be_delegates', 'Who will be the delegates?')}
 							showCheckbox={false}
 							padding={{ right: 'medium' }}
-							defaultSelection={DELEGETES_RIGHTS_TYPE.find((item: any) => item.value === 'user')}
-							// onChange={onGroupByChange}
+							defaultSelection={DELEGETES_RIGHTS_TYPE.find(
+								(item: any) => item.value === deligateDetail?.delegeteRights
+							)}
+							onChange={onWhoDelegateChange}
 							items={DELEGETES_RIGHTS_TYPE}
 						/>
 					</Row>
@@ -163,22 +175,25 @@ const DelegateSetRightsSection: FC = () => {
 				<Row padding={{ top: 'large', left: 'large' }} width="100%" mainAlignment="space-between">
 					<Row width="100%" mainAlignment="flex-start">
 						<RadioGroup
-							value={sendingOption}
-							onChange={(newValue: string): void => setSendingOption(newValue)}
+							value={sendingOption || deligateDetail?.right}
+							onChange={(newValue: string): void => {
+								setSendingOption(newValue);
+								setDeligateDetail((prev: any) => ({ ...prev, right: newValue }));
+							}}
 						>
 							<Radio
 								label={t(
 									'account_details.send_as_recepients',
 									`Send as (recepients will see the sender)`
 								)}
-								value="send_as_recepients"
+								value="sendAs"
 							/>
 							<Radio
 								label={t(
 									'account_details.send_as_behalf',
 									`Send on Behalf of (recepients will see the sender)`
 								)}
-								value="send_as_behalf"
+								value="sendOnBehalfOf"
 							/>
 						</RadioGroup>
 					</Row>
@@ -189,7 +204,7 @@ const DelegateSetRightsSection: FC = () => {
 				<Row mainAlignment="flex-start" width="100%">
 					<Row padding={{ top: 'large' }} width="100%" mainAlignment="space-between">
 						<Text size="small" color="gray0" weight="bold">
-							{t('account_details.delegate_rights', `Delegate Rights`)}
+							{t('account_details.where_to_store_sent_emails', `Where to store sent emails?`)}
 						</Text>
 					</Row>
 				</Row>
@@ -200,8 +215,10 @@ const DelegateSetRightsSection: FC = () => {
 							label={t('account_details.where_to_store_sent_emails', 'Where to store sent emails?')}
 							showCheckbox={false}
 							padding={{ right: 'medium' }}
-							defaultSelection={DELEGETES_WHERE_TO_STORE.find((item: any) => item.value === 'user')}
-							// onChange={onGroupByChange}
+							defaultSelection={DELEGETES_WHERE_TO_STORE.find(
+								(item: any) => item.value === deligateDetail?.whereToStore
+							)}
+							onChange={onWhereToStoreChange}
 							items={DELEGETES_WHERE_TO_STORE}
 						/>
 					</Row>

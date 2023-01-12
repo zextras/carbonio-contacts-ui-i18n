@@ -27,7 +27,7 @@ import {
 	Icon
 } from '@zextras/carbonio-design-system';
 import styled from 'styled-components';
-import { map } from 'lodash';
+import { find } from 'lodash';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDomainStore } from '../../../../../store/domain/store';
 import { AccountContext } from '../account-context';
@@ -112,7 +112,8 @@ const EditAccountDelegatesSection: FC = () => {
 						{item?.granteeType === 'usr' ? 'Single User' : 'Group'}
 					</Text>,
 					<Text size="medium" key={item?.granteeID} color="#414141">
-						{'Read'}
+						{item?.sendAs === 'true' ? 'Send As' : ''}
+						{item?.sendOnBehalfOf === 'true' ? 'Send on Behalf Of' : ''}
 					</Text>,
 					<Text size="medium" key={item?.granteeID} color="#414141">
 						{'Read, Send, Write'}
@@ -166,6 +167,7 @@ const EditAccountDelegatesSection: FC = () => {
 	);
 
 	const handleCreateDelegate = (): void => {
+		setDeligateDetail({});
 		setShowCreateIdentity(true);
 	};
 
@@ -178,22 +180,80 @@ const EditAccountDelegatesSection: FC = () => {
 			module: 'ZxCore',
 			action: 'doAddAllowAddressForDelegatedSender',
 			targetServers: 'localhost',
-			targetID: 'd1d0a9ae-702f-4e34-8577-02193eb2e08e',
-			targetEmail: 'a_user1@demo.zextras.io',
+			targetID: accountDetail?.zimbraId,
+			targetEmail: accountDetail?.zimbraMailDeliveryAddress,
 			type: 'account',
 			by: 'name',
 			granteeEmail: deligateDetail?.granteeEmail,
 			granteeType: deligateDetail?.granteeType,
-			right: 'sendAs'
+			right: deligateDetail?.right
 		}).then((res: any) => {
 			console.log('addAllowAddressForDelegatedSender ==>', res?.Body);
 			setShowCreateIdentity(false);
 			getIdentitiesList(accountDetail?.zimbraId);
+			createSnackbar({
+				key: 'success',
+				type: 'success',
+				label: t('account_details.delegate_created_successfully', 'Delegate created successfully'),
+				autoHideTimeout: 3000,
+				hideButton: true,
+				replace: true
+			});
 		});
-	}, [deligateDetail, getIdentitiesList, accountDetail]);
+	}, [deligateDetail, accountDetail, getIdentitiesList, createSnackbar, t]);
 
 	const handleDeleteeDelegate = (): void => {
 		console.log('handleDeleteeDelegate');
+		console.log('selectedRows', selectedRows);
+		const selectedDelegate = find(identitiesList, (o) => o.granteeID === selectedRows[0]);
+		console.log('selectedDelegate', selectedDelegate);
+		if (selectedDelegate) {
+			fetchSoap('zextras', {
+				_jsns: 'urn:zimbraAdmin',
+				module: 'ZxCore',
+				action: 'doRemoveDelegatedSenderAddress',
+				targetServers: 'localhost',
+				targetID: accountDetail?.zimbraId,
+				targetEmail: accountDetail?.zimbraMailDeliveryAddress,
+				type: 'account',
+				by: 'name',
+				granteeEmail: selectedDelegate?.granteeName,
+				granteeType: selectedDelegate?.granteeType,
+				right: 'sendAs'
+			}).then((res: any) => {
+				console.log('doRemoveDelegatedSenderAddress ==>', res?.Body);
+				setShowCreateIdentity(false);
+				getIdentitiesList(accountDetail?.zimbraId);
+			});
+			fetchSoap('zextras', {
+				_jsns: 'urn:zimbraAdmin',
+				module: 'ZxCore',
+				action: 'doRemoveDelegatedSenderAddress',
+				targetServers: 'localhost',
+				targetID: accountDetail?.zimbraId,
+				targetEmail: accountDetail?.zimbraMailDeliveryAddress,
+				type: 'account',
+				by: 'name',
+				granteeEmail: selectedDelegate?.granteeName,
+				granteeType: selectedDelegate?.granteeType,
+				right: 'sendOnBehalfOf'
+			}).then((res: any) => {
+				console.log('doRemoveDelegatedSenderAddress ==>', res?.Body);
+				setShowCreateIdentity(false);
+				getIdentitiesList(accountDetail?.zimbraId);
+				createSnackbar({
+					key: 'success',
+					type: 'success',
+					label: t(
+						'account_details.delegate_deleted_successfully',
+						'Delegate deleted successfully'
+					),
+					autoHideTimeout: 3000,
+					hideButton: true,
+					replace: true
+				});
+			});
+		}
 	};
 	const wizardSteps = useMemo(
 		() => [
@@ -203,7 +263,18 @@ const EditAccountDelegatesSection: FC = () => {
 				icon: 'PlusOutline',
 				view: DelegateSelectModeSection,
 				clickDisabled: true,
-				CancelButton: () => <></>,
+				CancelButton: (props: any) => (
+					<Button
+						{...props}
+						type="outlined"
+						key="wizard-cancel"
+						label={t('label.volume_cancel_button', 'CANCEL')}
+						icon={'CloseOutline'}
+						iconPlacement="right"
+						color="secondary"
+						onClick={(): void => setShowCreateIdentity(false)}
+					/>
+				),
 				PrevButton: (): ReactElement => <></>,
 				NextButton: (props: any) => (
 					<Button
@@ -211,6 +282,7 @@ const EditAccountDelegatesSection: FC = () => {
 						label={t('account_details.NEXT', 'NEXT')}
 						icon="ChevronRightOutline"
 						iconPlacement="right"
+						// disabled={!deligateDetail?.granteeType || !deligateDetail?.granteeEmail}
 						// onClick={(): void => setShowCreateIdentity(false)}
 					/>
 				)
@@ -221,8 +293,28 @@ const EditAccountDelegatesSection: FC = () => {
 				icon: 'OptionsOutline',
 				view: DelegateSetRightsSection,
 				clickDisabled: true,
-				CancelButton: () => <></>,
-				PrevButton: (): ReactElement => <></>,
+				CancelButton: (props: any) => (
+					<Button
+						{...props}
+						type="outlined"
+						key="wizard-cancel"
+						label={t('label.volume_cancel_button', 'CANCEL')}
+						icon={'CloseOutline'}
+						iconPlacement="right"
+						color="secondary"
+						onClick={(): void => setShowCreateIdentity(false)}
+					/>
+				),
+				PrevButton: (props: any): any => (
+					<Button
+						{...props}
+						label={t('label.volume_back_button', 'BACK')}
+						icon={'ChevronLeftOutline'}
+						iconPlacement="left"
+						disable={props.completeLoading}
+						color="secondary"
+					/>
+				),
 				NextButton: (props: any) => (
 					<Button
 						{...props}
@@ -239,8 +331,28 @@ const EditAccountDelegatesSection: FC = () => {
 				icon: 'KeyOutline',
 				view: DelegateAddSection,
 				clickDisabled: true,
-				CancelButton: () => <></>,
-				PrevButton: (): ReactElement => <></>,
+				CancelButton: (props: any) => (
+					<Button
+						{...props}
+						type="outlined"
+						key="wizard-cancel"
+						label={t('label.volume_cancel_button', 'CANCEL')}
+						icon={'CloseOutline'}
+						iconPlacement="right"
+						color="secondary"
+						onClick={(): void => setShowCreateIdentity(false)}
+					/>
+				),
+				PrevButton: (props: any): any => (
+					<Button
+						{...props}
+						label={t('label.volume_back_button', 'BACK')}
+						icon={'ChevronLeftOutline'}
+						iconPlacement="left"
+						disable={props.completeLoading}
+						color="secondary"
+					/>
+				),
 				NextButton: (props: any) => (
 					<Button
 						{...props}
