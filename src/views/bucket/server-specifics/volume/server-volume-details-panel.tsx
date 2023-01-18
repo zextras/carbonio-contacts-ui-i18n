@@ -22,6 +22,7 @@ import { INDEXERES, PRIMARIES, SECONDARIES } from '../../../../constants';
 import { useAuthIsAdvanced } from '../../../../store/auth-advanced/store';
 import { useBucketServersListStore } from '../../../../store/bucket-server-list/store';
 import { useServerStore } from '../../../../store/server/store';
+import { fetchSoap } from '../../../../services/bucket-service';
 
 const ServerVolumeDetailsPanel: FC<{
 	setToggleDetailPage: any;
@@ -56,6 +57,8 @@ const ServerVolumeDetailsPanel: FC<{
 		t('label.set_as_secondary_button', 'SET AS SECONDARY')
 	);
 	const [toggleSetAsIcon, setToggleSetAsIcon] = useState('ArrowheadDown');
+	const [type, setType] = useState<any>();
+	const [externalVolDetail, setExternalVolDetail] = useState<any>('');
 
 	const getVolumeDetailData = useCallback((): void => {
 		soapFetch(
@@ -107,56 +110,122 @@ const ServerVolumeDetailsPanel: FC<{
 		getVolumeDetailData();
 	}, [getVolumeDetailData, volumeDetail, modifyVolumeToggle]);
 
-	const handleTypeToggleClick = useCallback((): void => {
-		soapFetch(
-			'ModifyVolume',
-			{
-				_jsns: 'urn:zimbraAdmin',
-				module: 'ZxCore',
-				action: 'ModifyVolumeRequest',
-				id: detailData?.id,
-				volume: {
+	const handleTypeToggleClick = useCallback(async (): Promise<void> => {
+		if (isAdvanced) {
+			const obj: any = {};
+			obj._jsns = 'urn:zimbraAdmin';
+			obj.module = 'ZxPowerstore';
+			obj.action = 'doUpdateVolume';
+			obj.targetServers = serverName;
+			obj.volumeType =
+				volumeDetail?.volumeType === PRIMARIES.toLocaleLowerCase()
+					? SECONDARIES.toLocaleLowerCase()
+					: PRIMARIES.toLocaleLowerCase();
+			obj.storeType = volumeDetail?.storeType;
+			obj.isCurrent = volumeDetail?.isCurrent;
+			obj.currentVolumeName = volumeDetail?.name;
+
+			await fetchSoap('zextras', obj)
+				.then((res: any) => {
+					const result = JSON.parse(res?.Body?.response?.content);
+					const updateResponse = result?.response?.[`${serverList[0]?.name}`];
+					if (updateResponse?.ok) {
+						createSnackbar({
+							key: '1',
+							type: 'success',
+							label: t('label.external_volume_edited', '{{message}}', {
+								message: updateResponse?.response?.message
+							})
+						});
+						getAllVolumesRequest();
+						setmodifyVolumeToggle(false);
+						setTypeLabel(
+							obj.volumeType === PRIMARIES.toLocaleLowerCase() ? SECONDARIES : PRIMARIES
+						);
+						setToggleDetailPage(false);
+					} else {
+						createSnackbar({
+							key: 'error',
+							type: 'error',
+							label: t('label.volume_detail_error', '{{message}}', {
+								message: updateResponse?.error?.message
+							}),
+							autoHideTimeout: 5000
+						});
+						setmodifyVolumeToggle(false);
+					}
+				})
+				.catch((error: any) => {
+					createSnackbar({
+						key: 'error',
+						type: 'error',
+						label: t('label.volume_detail_error', '{{message}}', {
+							message: error
+						}),
+						autoHideTimeout: 5000
+					});
+					setmodifyVolumeToggle(false);
+				});
+		} else {
+			soapFetch(
+				'ModifyVolume',
+				{
+					_jsns: 'urn:zimbraAdmin',
+					module: 'ZxCore',
+					action: 'ModifyVolumeRequest',
 					id: detailData?.id,
-					type: typeLabel === PRIMARIES ? '2' : '1'
-				}
-			},
-			undefined,
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore
-			selectedServerId
-		)
-			.then(() => {
-				createSnackbar({
-					key: '1',
-					type: 'success',
-					label: t('label.volume_type_edited', '{{message}}', {
-						message:
-							typeLabel === PRIMARIES
-								? 'volume type successfully changed to Secondary'
-								: 'volume type successfully changed to Primary'
-					})
+					volume: {
+						id: detailData?.id,
+						type: typeLabel === PRIMARIES ? '2' : '1'
+					}
+				},
+				undefined,
+				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+				// @ts-ignore
+				selectedServerId
+			)
+				.then(() => {
+					createSnackbar({
+						key: '1',
+						type: 'success',
+						label: t('label.volume_type_edited', '{{message}}', {
+							message:
+								typeLabel === PRIMARIES
+									? 'volume type successfully changed to Secondary'
+									: 'volume type successfully changed to Primary'
+						})
+					});
+					getAllVolumesRequest();
+					getVolumeDetailData();
+				})
+				.catch((error) => {
+					createSnackbar({
+						key: 'error',
+						type: 'error',
+						label: t('label.volume_detail_error', '{{message}}', {
+							message: error
+						}),
+						autoHideTimeout: 5000
+					});
 				});
-				getAllVolumesRequest();
-				getVolumeDetailData();
-			})
-			.catch((error) => {
-				createSnackbar({
-					key: 'error',
-					type: 'error',
-					label: t('label.volume_detail_error', '{{message}}', {
-						message: error
-					}),
-					autoHideTimeout: 5000
-				});
-			});
+		}
 	}, [
-		getAllVolumesRequest,
+		isAdvanced,
+		serverName,
+		volumeDetail?.volumeType,
+		volumeDetail?.storeType,
+		volumeDetail?.isCurrent,
+		volumeDetail?.name,
+		serverList,
 		createSnackbar,
-		detailData?.id,
-		getVolumeDetailData,
 		t,
+		getAllVolumesRequest,
+		setmodifyVolumeToggle,
+		setToggleDetailPage,
+		detailData?.id,
 		typeLabel,
-		selectedServerId
+		selectedServerId,
+		getVolumeDetailData
 	]);
 
 	useEffect(() => {
