@@ -528,7 +528,7 @@ const VolumesDetailPanel: FC = () => {
 		)
 			.then(async (res: any) => {
 				if (attr?.isCurrent === 1) {
-					await fetchSoap('SetCurrentVolumeRequest', {
+					await fetchSoap('SetCurrentVolume', {
 						_jsns: 'urn:zimbraAdmin',
 						module: 'ZxCore',
 						action: 'SetCurrentVolumeRequest',

@@ -215,7 +215,7 @@ const ModifyVolume: FC<{
 				.then(() => {
 					if (isCurrent) {
 						soapFetch(
-							'SetCurrentVolumeRequest',
+							'SetCurrentVolume',
 							{
 								_jsns: 'urn:zimbraAdmin',
 								module: 'ZxCore',
