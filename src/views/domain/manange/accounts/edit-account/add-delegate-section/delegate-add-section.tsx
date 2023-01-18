@@ -146,10 +146,14 @@ const DelegateAddSection: FC = () => {
 							{
 								<Trans
 									i18nKey="account_details.deligate_abstract_text"
-									defaults="The user {{granteeEmail}} will be able to send mails on behalf of {{targetEmail}}"
+									defaults="The user {{granteeEmail}} will be able to send mails {{right}} {{targetEmail}}"
 									components={{
 										granteeEmail: deligateDetail?.granteeEmail,
-										targetEmail: accountDetail?.zimbraMailDeliveryAddress
+										targetEmail: accountDetail?.zimbraMailDeliveryAddress,
+										right:
+											deligateDetail?.right === 'sendAs'
+												? t('account_details.as', 'as')
+												: t('account_details.on_behalf_of', 'on behalf of')
 									}}
 								/>
 							}
@@ -164,8 +168,16 @@ const DelegateAddSection: FC = () => {
 						<Input
 							label={t('account_details.delegate_rights', 'Delegate Rights')}
 							backgroundColor="gray5"
-							defaultValue={'Send Mails only (no rights to read folders)'}
-							value={'Send Mails only (no rights to read folders)'}
+							defaultValue={
+								DELEGETES_RIGHTS_TYPE.find(
+									(item: any) => item.value === deligateDetail?.delegeteRights
+								)?.label
+							}
+							value={
+								DELEGETES_RIGHTS_TYPE.find(
+									(item: any) => item.value === deligateDetail?.delegeteRights
+								)?.label
+							}
 							// onChange={changeAccDetail}
 							inputName="displayName"
 							name="descriptiveName"
@@ -177,16 +189,48 @@ const DelegateAddSection: FC = () => {
 						<Input
 							label={t('account_details.sendin_options', 'Sending Options')}
 							backgroundColor="gray5"
-							defaultValue={
-								'Send on Behalf of (recepients will see the mail from  oscar.dabagno@domain.com)'
-							}
-							value={
-								'Send on Behalf of (recepients will see the mail from  oscar.dabagno@domain.com)'
-							}
+							defaultValue={t(
+								'account_details.send_recepients_see_the_mail',
+								'Send {{right}} (recepients will see the mail from {{targetEmail}})',
+								{
+									granteeEmail: deligateDetail?.granteeEmail,
+									targetEmail: accountDetail?.zimbraMailDeliveryAddress,
+									right:
+										deligateDetail?.right === 'sendAs'
+											? t('account_details.as', 'as')
+											: t('account_details.on_behalf_of', 'on behalf of')
+								}
+							)}
+							value={t(
+								'account_details.send_recepients_see_the_mail',
+								'Send {{right}} (recepients will see the mail from {{targetEmail}})',
+								{
+									granteeEmail: deligateDetail?.granteeEmail,
+									targetEmail: accountDetail?.zimbraMailDeliveryAddress,
+									right:
+										deligateDetail?.right === 'sendAs'
+											? t('account_details.as', 'as')
+											: t('account_details.on_behalf_of', 'on behalf of')
+								}
+							)}
 							// onChange={changeAccDetail}
 							inputName="displayName"
 							name="descriptiveName"
 						/>
+						{/* <Text size="small" color="gray0">
+							<Trans
+								i18nKey="account_details.send_recepients_see_the_mail"
+								defaults="Send {{right}} (recepients will see the mail from {{targetEmail}})"
+								components={{
+									granteeEmail: deligateDetail?.granteeEmail,
+									targetEmail: accountDetail?.zimbraMailDeliveryAddress,
+									right:
+										deligateDetail?.right === 'sendAs'
+											? t('account_details.as', 'as')
+											: t('account_details.on_behalf_of', 'on behalf of')
+								}}
+							/>
+						</Text> */}
 					</Row>
 				</Row>
 				<Row mainAlignment="flex-start" width="100%">
@@ -194,8 +238,16 @@ const DelegateAddSection: FC = () => {
 						<Input
 							label={t('account_details.where_do_we_store_it', 'Where do we store it?')}
 							backgroundColor="gray5"
-							defaultValue={'Don’t save it'}
-							value={'Don’t save it'}
+							defaultValue={
+								DELEGETES_WHERE_TO_STORE.find(
+									(item: any) => item.value === deligateDetail?.whereToStore
+								)?.label
+							}
+							value={
+								DELEGETES_WHERE_TO_STORE.find(
+									(item: any) => item.value === deligateDetail?.whereToStore
+								)?.label
+							}
 							// onChange={changeAccDetail}
 							inputName="displayName"
 							name="descriptiveName"

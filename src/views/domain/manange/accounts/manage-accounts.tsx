@@ -21,6 +21,11 @@ import {
 	Tooltip
 } from '@zextras/carbonio-design-system';
 import moment from 'moment';
+import {
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
+	postSoapFetchRequest
+} from '@zextras/carbonio-shell-ui';
 import logo from '../../../../assets/gardian.svg';
 import { useDomainStore } from '../../../../store/domain/store';
 import Paging from '../../../components/paging';
@@ -271,14 +276,41 @@ const ManageAccounts: FC = () => {
 		},
 		[t]
 	);
-	const getIdentitiesList = useCallback((id): void => {
+	const getIdentitiesList = useCallback((acc): void => {
+		console.log('==>> GetIdentities acc ==>', acc);
 		const targetServers = 'localhost';
+		// soapFetch(`GetIdentities`, {
+		// 	_jsns: 'urn:zimbraAccount',
+		// 	identity: {
+		// 		by: 'name',
+		// 		_content: acc.name
+		// 	}
+		// }).then((res: any) => {
+		// 	console.log('==>> GetIdentities ==>', res?.identity);
+		// 	// setIdentitiesList(res?.Body?.GetIdentitiesResponse?.identity);
+		// });
+
+		const request: any = {
+			_jsns: 'urn:zimbraAccount'
+		};
+		postSoapFetchRequest(
+			`/service/admin/soap/GetIdentitiesRequest`,
+			{
+				...request
+			},
+			'GetIdentitiesRequest',
+			acc.id
+		).then((res: any) => {
+			console.log('==>> GetIdentities ==>', res?.Body?.GetIdentitiesResponse?.identity);
+			// setIdentitiesList(res?.Body?.GetIdentitiesResponse?.identity);
+		});
+
 		fetchSoap('zextras', {
 			_jsns: 'urn:zimbraAdmin',
 			module: 'ZxCore',
 			action: 'getAllowDelegatedAddress',
 			targetServers,
-			targetID: id,
+			targetID: acc.id,
 			type: 'account',
 			by: 'id'
 		}).then((res: any) => {
@@ -297,7 +329,7 @@ const ManageAccounts: FC = () => {
 			getSignatureDetail(acc?.id);
 			getAccountMembership(acc?.id);
 			getListOtp(acc?.name);
-			getIdentitiesList(acc?.id);
+			getIdentitiesList(acc);
 		},
 		[getAccountDetail, getAccountMembership, getSignatureDetail, getListOtp, getIdentitiesList]
 	);

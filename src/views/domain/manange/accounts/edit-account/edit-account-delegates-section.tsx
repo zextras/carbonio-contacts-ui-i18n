@@ -89,6 +89,7 @@ const EditAccountDelegatesSection: FC = () => {
 	console.log('accountDetail===>', accountDetail);
 	const domainName = useDomainStore((state) => state.domain?.name);
 	const [showCreateIdentity, setShowCreateIdentity] = useState<boolean>(false);
+	const [editMode, setEditMode] = useState<boolean>(false);
 	const [qrData, setQrData] = useState('');
 	const [sendEmailTo, setSendEmailTo] = useState('');
 	const [pinCodes, setPinCodes] = useState<any>([]);
@@ -100,7 +101,7 @@ const EditAccountDelegatesSection: FC = () => {
 
 	useEffect(() => {
 		const identitiesArr: any = [];
-		console.log('identitiesList ==>', identitiesList);
+		console.log('==>> DelegatedAddress ==>', identitiesList);
 		identitiesList.map((item: any): any => {
 			identitiesArr.push({
 				id: item?.granteeID,
@@ -167,42 +168,21 @@ const EditAccountDelegatesSection: FC = () => {
 	);
 
 	const handleCreateDelegate = (): void => {
+		setEditMode(false);
 		setDeligateDetail({});
 		setShowCreateIdentity(true);
 	};
+	const handleEditDelegate = (): void => {
+		setEditMode(true);
+		const selectedDelegate = find(identitiesList, (o) => o.granteeID === selectedRows[0]);
+		console.log('selectedDelegate', selectedDelegate);
+		selectedDelegate.granteeEmail = selectedDelegate?.granteeName;
+		selectedDelegate.right = selectedDelegate?.sendAs === 'true' ? 'sendAs' : 'sendOnBehalfOf';
+		setDeligateDetail(selectedDelegate);
+		setShowCreateIdentity(true);
+	};
 
-	const handleCreateDelegateAPI = useCallback((): void => {
-		console.log('handleCreateDelegateAPI');
-		console.log('deligateDetail', deligateDetail);
-		// doAddAllowAddressForDelegatedSender
-		fetchSoap('zextras', {
-			_jsns: 'urn:zimbraAdmin',
-			module: 'ZxCore',
-			action: 'doAddAllowAddressForDelegatedSender',
-			targetServers: 'localhost',
-			targetID: accountDetail?.zimbraId,
-			targetEmail: accountDetail?.zimbraMailDeliveryAddress,
-			type: 'account',
-			by: 'name',
-			granteeEmail: deligateDetail?.granteeEmail,
-			granteeType: deligateDetail?.granteeType,
-			right: deligateDetail?.right
-		}).then((res: any) => {
-			console.log('addAllowAddressForDelegatedSender ==>', res?.Body);
-			setShowCreateIdentity(false);
-			getIdentitiesList(accountDetail?.zimbraId);
-			createSnackbar({
-				key: 'success',
-				type: 'success',
-				label: t('account_details.delegate_created_successfully', 'Delegate created successfully'),
-				autoHideTimeout: 3000,
-				hideButton: true,
-				replace: true
-			});
-		});
-	}, [deligateDetail, accountDetail, getIdentitiesList, createSnackbar, t]);
-
-	const handleDeleteeDelegate = (): void => {
+	const handleDeleteeDelegate = useCallback((): void => {
 		console.log('handleDeleteeDelegate');
 		console.log('selectedRows', selectedRows);
 		const selectedDelegate = find(identitiesList, (o) => o.granteeID === selectedRows[0]);
@@ -241,20 +221,74 @@ const EditAccountDelegatesSection: FC = () => {
 				console.log('doRemoveDelegatedSenderAddress ==>', res?.Body);
 				setShowCreateIdentity(false);
 				getIdentitiesList(accountDetail?.zimbraId);
-				createSnackbar({
-					key: 'success',
-					type: 'success',
-					label: t(
-						'account_details.delegate_deleted_successfully',
-						'Delegate deleted successfully'
-					),
-					autoHideTimeout: 3000,
-					hideButton: true,
-					replace: true
-				});
+				if (!editMode) {
+					createSnackbar({
+						key: 'success',
+						type: 'success',
+						label: t(
+							'account_details.delegate_deleted_successfully',
+							'Delegate deleted successfully'
+						),
+						autoHideTimeout: 3000,
+						hideButton: true,
+						replace: true
+					});
+				}
 			});
 		}
-	};
+	}, [
+		accountDetail?.zimbraId,
+		accountDetail?.zimbraMailDeliveryAddress,
+		createSnackbar,
+		editMode,
+		getIdentitiesList,
+		identitiesList,
+		selectedRows,
+		t
+	]);
+	const handleCreateDelegateAPI = useCallback((): void => {
+		console.log('handleCreateDelegateAPI');
+		console.log('deligateDetail', deligateDetail);
+		// doAddAllowAddressForDelegatedSender
+		if (editMode) {
+			handleDeleteeDelegate();
+		}
+		fetchSoap('zextras', {
+			_jsns: 'urn:zimbraAdmin',
+			module: 'ZxCore',
+			action: 'doAddAllowAddressForDelegatedSender',
+			targetServers: 'localhost',
+			targetID: accountDetail?.zimbraId,
+			targetEmail: accountDetail?.zimbraMailDeliveryAddress,
+			type: 'account',
+			by: 'name',
+			granteeEmail: deligateDetail?.granteeEmail,
+			granteeType: deligateDetail?.granteeType,
+			right: deligateDetail?.right
+		}).then((res: any) => {
+			console.log('addAllowAddressForDelegatedSender ==>', res?.Body);
+			setShowCreateIdentity(false);
+			getIdentitiesList(accountDetail?.zimbraId);
+			createSnackbar({
+				key: 'success',
+				type: 'success',
+				label: t('account_details.delegate_created_successfully', 'Delegate created successfully'),
+				autoHideTimeout: 3000,
+				hideButton: true,
+				replace: true
+			});
+		});
+	}, [
+		deligateDetail,
+		editMode,
+		accountDetail?.zimbraId,
+		accountDetail?.zimbraMailDeliveryAddress,
+		handleDeleteeDelegate,
+		getIdentitiesList,
+		createSnackbar,
+		t
+	]);
+
 	const wizardSteps = useMemo(
 		() => [
 			{
@@ -356,7 +390,7 @@ const EditAccountDelegatesSection: FC = () => {
 				NextButton: (props: any) => (
 					<Button
 						{...props}
-						label={t('account_details.NEXT', 'NEXT')}
+						label={t('account_details.ADD', 'ADD')}
 						icon="PersonOutline"
 						iconPlacement="right"
 						onClick={(): void => handleCreateDelegateAPI()}
@@ -401,7 +435,7 @@ const EditAccountDelegatesSection: FC = () => {
 											iconPlacement="right"
 											color="secondary"
 											height={44}
-											onClick={(): void => handleCreateDelegateAPI()}
+											onClick={(): void => handleEditDelegate()}
 										/>
 									</Padding>
 									<Button

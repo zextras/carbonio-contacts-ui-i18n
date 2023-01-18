@@ -80,7 +80,7 @@ const DelegateSelectModeSection: FC = () => {
 	}, [delegateAccountList]);
 
 	const getAccountList = useCallback((): void => {
-		const type = 'accounts';
+		const type = deligateDetail?.granteeType === 'grp' ? 'distributionlists' : 'accounts';
 		const attrs =
 			'displayName,zimbraId,zimbraAliasTargetId,cn,sn,zimbraMailHost,uid,zimbraCOSId,zimbraAccountStatus,zimbraLastLogonTimestamp,description,zimbraIsSystemAccount,zimbraIsDelegatedAdminAccount,zimbraIsAdminAccount,zimbraIsSystemResource,zimbraAuthTokenValidityValue,zimbraIsExternalVirtualAccount,zimbraMailStatus,zimbraIsAdminGroup,zimbraCalResType,zimbraDomainType,zimbraDomainName,zimbraDomainStatus,zimbraIsDelegatedAdminAccount,zimbraIsAdminAccount,zimbraIsSystemResource,zimbraIsSystemAccount,zimbraIsExternalVirtualAccount,zimbraCreateTimestamp,zimbraLastLogonTimestamp,zimbraMailQuota,zimbraNotes,mail';
 		accountListDirectory(attrs, type, domainName, searchQuery, offset, limit).then((data) => {
@@ -89,6 +89,10 @@ const DelegateSelectModeSection: FC = () => {
 			if (accountListResponse && Array.isArray(accountListResponse)) {
 				console.log('accountListResponse', accountListResponse);
 				const accountListArr: any[] = [];
+				if (data?.dl?.length) {
+					// eslint-disable-next-line no-param-reassign
+					data.account = data?.dl;
+				}
 				data?.account.map((delegateAccount: any) =>
 					accountListArr.push({
 						id: delegateAccount.id,
@@ -119,7 +123,14 @@ const DelegateSelectModeSection: FC = () => {
 				setDelegateAccountList(accountListArr);
 			}
 		});
-	}, [domainName, searchQuery, offset, limit, selectedDelegateAccount]);
+	}, [
+		deligateDetail?.granteeType,
+		domainName,
+		searchQuery,
+		offset,
+		limit,
+		selectedDelegateAccount
+	]);
 
 	useEffect(() => {
 		getAccountList();
@@ -128,6 +139,8 @@ const DelegateSelectModeSection: FC = () => {
 	const onGroupByChange = (v: any): any => {
 		console.log('deligateDetail', deligateDetail);
 		setDeligateDetail((prev: any) => ({ ...prev, granteeType: v }));
+		setSearchDelegateAccountName(undefined);
+		getAccountList();
 	};
 	return (
 		<>
