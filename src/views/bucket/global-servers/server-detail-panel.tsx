@@ -6,7 +6,16 @@
  */
 import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
-import { Container, Row, Text, Divider, Input, Icon, Table } from '@zextras/carbonio-design-system';
+import {
+	Container,
+	Row,
+	Text,
+	Divider,
+	Input,
+	Icon,
+	Table,
+	Button
+} from '@zextras/carbonio-design-system';
 import { useTranslation } from 'react-i18next';
 import {
 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -38,7 +47,8 @@ const ServersListTable: FC<{
 	headers: any;
 	isAdvanced: any;
 	t: TFunction;
-}> = ({ volumes, headers, isAdvanced, t }) => {
+	isRequestInProgress: boolean;
+}> = ({ volumes, headers, isAdvanced, t, isRequestInProgress }) => {
 	const tableRowsAdvance = useMemo(
 		() =>
 			volumes.map((v, i) => ({
@@ -147,7 +157,17 @@ const ServersListTable: FC<{
 				showCheckbox={false}
 				multiSelect={false}
 			/>
-			{(tableRowsAdvance.length === 0 || tableRowCe.length === 0) && (
+			{isRequestInProgress && (
+				<Container
+					crossAlignment="center"
+					mainAlignment="center"
+					height="fit"
+					padding={{ top: 'medium' }}
+				>
+					<Button type="ghost" iconColor="primary" height={36} label="" width={36} loading />
+				</Container>
+			)}
+			{(tableRowsAdvance.length === 0 || tableRowCe.length === 0) && !isRequestInProgress && (
 				<Row padding={{ top: 'extralarge', horizontal: 'extralarge' }} width="fill">
 					<Text>{t('label.this_list_is_empty', 'This list is empty.')}</Text>
 				</Row>
@@ -164,68 +184,85 @@ const serverDetailPanel: FC = () => {
 	const [serverListAll, setServerListAll] = useState<any>([]);
 	const serverHeaderAdvanced = useMemo(() => headerAdvanced(t), [t]);
 	const [searchServer, setSearchServer] = useState<string>('');
+	const [isRequestInProgress, setIsRequestInProgress] = useState<boolean>(false);
 
 	const getServersListType = useCallback((): void => {
 		if (isAdvanced) {
+			setIsRequestInProgress(true);
 			fetchSoap('zextras', {
 				_jsns: 'urn:zimbraAdmin',
 				module: 'ZxPowerstore',
 				action: 'getAllVolumes',
 				targetServers: 'all_servers'
-			}).then((res: any) => {
-				getSoapFetchRequest(
-					`/service/extension/zextras_admin/core/getAllServers?module=zxpowerstore`
-				).then((powerStoreData: any) => {
-					const powerStoreServer = powerStoreData?.servers.map((s: any) => Object.values(s)[0]);
-					const responseData = JSON.parse(res?.Body?.response?.content);
-					if (responseData && responseData.ok) {
-						if (allServersList.length > 0) {
-							const serverList = allServersList.map((item) => {
-								let primaries = '';
-								let secondaries = '';
-								let indexes = '';
-								let description = '';
-								let indexer = '';
-								let hsmScheduled = '';
-								const findPowerStoreServer = powerStoreServer?.find(
-									(s: any) => s.name === item?.name
-								);
-								if (findPowerStoreServer) {
-									indexer = findPowerStoreServer?.ZxPowerstore?.services?.[INDEXER_MANAGER_KEY];
-									hsmScheduled =
-										findPowerStoreServer?.ZxPowerstore?.attributes?.powerstoreMoveScheduler
-											?.value?.[HSM_SCHEDULED_KEY];
-								}
-								if (responseData && responseData?.response && responseData?.response[item.name]) {
-									const data = responseData?.response[item.name]?.response;
-									if (data) {
-										primaries = data?.primaries.length;
-										secondaries = data?.secondaries.length;
-										indexes = data?.indexes.length;
-										const descriptionData = item?.a.filter(
-											(items: any) => items?.n === DESCRIPTION
+			})
+				.then((res: any) => {
+					setIsRequestInProgress(true);
+					getSoapFetchRequest(
+						`/service/extension/zextras_admin/core/getAllServers?module=zxpowerstore`
+					)
+						.then((powerStoreData: any) => {
+							setIsRequestInProgress(false);
+							const powerStoreServer = powerStoreData?.servers.map((s: any) => Object.values(s)[0]);
+							const responseData = JSON.parse(res?.Body?.response?.content);
+							if (responseData && responseData.ok) {
+								if (allServersList.length > 0) {
+									const serverList = allServersList.map((item) => {
+										let primaries = '';
+										let secondaries = '';
+										let indexes = '';
+										let description = '';
+										let indexer = '';
+										let hsmScheduled = '';
+										const findPowerStoreServer = powerStoreServer?.find(
+											(s: any) => s.name === item?.name
 										);
-										if (descriptionData) {
-											description = descriptionData;
+										if (findPowerStoreServer) {
+											// eslint-disable-next-line max-len
+											indexer = findPowerStoreServer?.ZxPowerstore?.services?.[INDEXER_MANAGER_KEY];
+											hsmScheduled =
+												findPowerStoreServer?.ZxPowerstore?.attributes?.powerstoreMoveScheduler
+													?.value?.[HSM_SCHEDULED_KEY];
 										}
-									}
+										if (
+											responseData &&
+											responseData?.response &&
+											responseData?.response[item.name]
+										) {
+											const data = responseData?.response[item.name]?.response;
+											if (data) {
+												primaries = data?.primaries.length;
+												secondaries = data?.secondaries.length;
+												indexes = data?.indexes.length;
+												const descriptionData = item?.a.filter(
+													(items: any) => items?.n === DESCRIPTION
+												);
+												if (descriptionData) {
+													description = descriptionData;
+												}
+											}
+										}
+										return {
+											name: item.name,
+											primaries,
+											secondaries,
+											indexes,
+											hsmScheduled,
+											indexer,
+											description
+										};
+									});
+									setServersList(serverList);
+									setServerListAll(serverList);
 								}
-								return {
-									name: item.name,
-									primaries,
-									secondaries,
-									indexes,
-									hsmScheduled,
-									indexer,
-									description
-								};
-							});
-							setServersList(serverList);
-							setServerListAll(serverList);
-						}
-					}
+							}
+						})
+						.catch((error: any) => {
+							setIsRequestInProgress(false);
+						});
+				})
+				.catch((error: any) => {
+					setIsRequestInProgress(false);
 				});
-			});
 		} else if (!isAdvanced) {
 			if (allServersList.length > 0) {
 				const serverList = allServersList.map((item) => {
@@ -326,6 +363,7 @@ const serverDetailPanel: FC = () => {
 							headers={isAdvanced ? serverHeaderAdvanced : headerCE}
 							isAdvanced={isAdvanced}
 							t={t}
+							isRequestInProgress={isRequestInProgress}
 						/>
 					</Row>
 				</Container>
