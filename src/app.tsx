@@ -524,6 +524,19 @@ const App: FC = () => {
 				// @ts-ignore
 				primarybarSection: { ...logAndQueuesSection }
 			});
+
+			addRoute({
+				route: OPERATIONS_ROUTE_ID,
+				position: 2,
+				visible: true,
+				label: t('label.operations', 'Operations'),
+				primaryBar: 'ListOutline',
+				appView: AppView,
+				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+				// @ts-ignore
+				primarybarSection: { ...logAndQueuesSection },
+				tooltip: OperationTooltipView
+			});
 		}
 		addRoute({
 			route: PRIVACY_ROUTE_ID,
@@ -536,55 +549,6 @@ const App: FC = () => {
 			// @ts-ignore
 			primarybarSection: { ...managementSection }
 		});
-
-		addRoute({
-			route: NOTIFICATION_ROUTE_ID,
-			position: 1,
-			visible: true,
-			label: t('label.notifications', 'Notifications'),
-			primaryBar: 'BellOutline',
-			appView: AppView,
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore
-			primarybarSection: { ...logAndQueuesSection }
-		});
-
-		addRoute({
-			route: OPERATIONS_ROUTE_ID,
-			position: 2,
-			visible: true,
-			label: t('label.operations', 'Operations'),
-			primaryBar: 'ListOutline',
-			appView: AppView,
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore
-			primarybarSection: { ...logAndQueuesSection },
-			tooltip: OperationTooltipView
-		});
-
-		/* addRoute({
-			route: APPLICATION_LOG,
-			position: 2,
-			visible: true,
-			label: t('label.application_log', 'Application Log'),
-			primaryBar: 'FileTextOutline',
-			appView: AppView,
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore
-			primarybarSection: { ...logAndQueuesSection }
-		}); */
-
-		/* addRoute({
-			route: MTA,
-			position: 3,
-			visible: false,
-			label: t('label.mta', 'MTA'),
-			primaryBar: 'MailFolderOutline',
-			appView: AppView,
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore
-			primarybarSection: { ...logAndQueuesSection }
-		}); */
 
 		setAppContext({ cabonio_admin_console_ui: 'cabonio_admin_console_ui' });
 	}, [
