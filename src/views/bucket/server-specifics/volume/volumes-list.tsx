@@ -51,6 +51,8 @@ import CreateMailstoresVolume from './create-volume/advanced-create-volume/creat
 import { VolumeContext } from './create-volume/volume-context';
 import { useAuthIsAdvanced } from '../../../../store/auth-advanced/store';
 import { useBucketServersListStore } from '../../../../store/bucket-server-list/store';
+import { createVoume } from '../../../../services/create-volume-service';
+import { setCurrentVolumeRequest } from '../../../../services/set-current-volume-service';
 
 const RelativeContainer = styled(Container)`
 	position: relative;
@@ -513,72 +515,140 @@ const VolumesDetailPanel: FC = () => {
 	};
 
 	const CreateVolumeRequest = async (attr: any): Promise<any> => {
-		await soapFetch(
-			'CreateVolume',
-			{
-				_jsns: 'urn:zimbraAdmin',
-				module: 'ZxCore',
-				action: 'CreateVolumeRequest',
-				volume: attr
-			},
-			undefined,
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore
-			selectedServerId
-		)
-			.then(async (res: any) => {
-				if (attr?.isCurrent === 1) {
-					await fetchSoap('SetCurrentVolume', {
-						_jsns: 'urn:zimbraAdmin',
-						module: 'ZxCore',
-						action: 'SetCurrentVolumeRequest',
-						id: res?.volume[0]?.id,
-						type: res?.volume[0]?.type
-					})
-						.then(() => {
-							createSnackbar({
-								key: '1',
-								type: 'success',
-								label: t('label.volume_active', '{{volumeName}} is Currently active', {
-									volumeName: attr?.name
-								})
+		if (isAdvanced) {
+			let volType = 'primary';
+			if (attr?.type === 2) {
+				volType = 'secondary';
+			} else if (attr?.type === 10) {
+				volType = 'index';
+			}
+			postSoapFetchRequest(
+				`/service/admin/soap/zextras`,
+				{
+					_jsns: 'urn:zimbraAdmin',
+					module: 'ZxPowerstore',
+					action: 'doCreateVolume',
+					targetServers: selectedServerName,
+					volumeName: attr?.name,
+					volumeType: volType,
+					storeType: 'FILE_BLOB',
+					volumePath: attr?.rootpath,
+					volumeCompressed: attr?.compressBlobs,
+					compressionThresholdBytes: attr?.compressionThreshold,
+					isCurrent: attr?.isCurrent === 1
+				},
+				'zextras'
+			).then(async (res: any) => {
+				const result = JSON.parse(res?.Body?.response?.content);
+				const responseData: any = Object.values(result?.response)[0];
+				if (responseData && responseData?.ok === true) {
+					if (attr?.isCurrent) {
+						await postSoapFetchRequest(
+							`/service/admin/soap/zextras`,
+							{
+								_jsns: 'urn:zimbraAdmin',
+								module: 'ZxPowerstore',
+								action: 'doUpdateVolume',
+								currentVolumeName: attr?.name,
+								currentVolume: true
+							},
+							'zextras'
+						)
+							.then((re: any) => {
+								createSnackbar({
+									key: '1',
+									type: 'success',
+									label: t('label.volume_active', '{{volumeName}} is Currently active', {
+										volumeName: attr?.name
+									})
+								});
+							})
+							.catch((error: any) => {
+								createSnackbar({
+									key: 'error',
+									type: 'error',
+									label: t('label.volume_detail_error', '{{message}}', {
+										message: error
+									}),
+									autoHideTimeout: 5000
+								});
 							});
-						})
-						.catch((error) => {
-							createSnackbar({
-								key: 'error',
-								type: 'error',
-								label: t('label.volume_detail_error', '{{message}}', {
-									message: error
-								}),
-								autoHideTimeout: 5000
-							});
-						});
+					}
+					getAllVolumesRequest();
+					createSnackbar({
+						key: '1',
+						type: 'success',
+						label: t('label.volume_created_msg', 'The volume has been created successfully')
+					});
+					setToggleWizardLocal(false);
+					setToggleWizardExternal(false);
+					setDetailsVolume(false);
+				} else if (responseData && responseData?.ok === false && responseData?.error) {
+					createSnackbar({
+						key: 'error',
+						type: 'error',
+						label: t('label.volume_detail_error', '{{message}}', {
+							message: responseData?.error?.message
+						}),
+						autoHideTimeout: 5000
+					});
 				}
-				getAllVolumesRequest();
-				createSnackbar({
-					key: '1',
-					type: 'success',
-					label: t('label.volume_created_msg', 'The volume has been created successfully')
-				});
-				setToggleWizardLocal(false);
-				setToggleWizardExternal(false);
-				setDetailsVolume(false);
-				return res;
-			})
-			.catch((error) => {
-				createSnackbar({
-					key: 'error',
-					type: 'error',
-					label: error?.message
-						? error?.message
-						: t('label.volume_detail_error', '{{message}}', {
-								message: error
-						  }),
-					autoHideTimeout: 5000
-				});
-				return error;
 			});
+		} else {
+			await createVoume(attr)
+				.then(async (res: any) => {
+					if (res?.volume && Array.isArray(res?.volume)) {
+						const vol = res?.volume[0];
+						if (vol && vol?.id) {
+							if (attr?.isCurrent === 1) {
+								await setCurrentVolumeRequest(vol?.id, vol?.type)
+									.then(() => {
+										createSnackbar({
+											key: '1',
+											type: 'success',
+											label: t('label.volume_active', '{{volumeName}} is Currently active', {
+												volumeName: attr?.name
+											})
+										});
+									})
+									.catch((error) => {
+										createSnackbar({
+											key: 'error',
+											type: 'error',
+											label: t('label.volume_detail_error', '{{message}}', {
+												message: error
+											}),
+											autoHideTimeout: 5000
+										});
+									});
+							}
+						}
+					}
+					getAllVolumesRequest();
+					createSnackbar({
+						key: '1',
+						type: 'success',
+						label: t('label.volume_created_msg', 'The volume has been created successfully')
+					});
+					setToggleWizardLocal(false);
+					setToggleWizardExternal(false);
+					setDetailsVolume(false);
+					return res;
+				})
+				.catch((error) => {
+					createSnackbar({
+						key: 'error',
+						type: 'error',
+						label: error?.message
+							? error?.message
+							: t('label.volume_detail_error', '{{message}}', {
+									message: error
+							  }),
+						autoHideTimeout: 5000
+					});
+					return error;
+				});
+		}
 	};
 
 	const handleClick = (i: number, data: any): void => {
