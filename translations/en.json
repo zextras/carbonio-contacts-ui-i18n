@@ -1047,6 +1047,8 @@
         "logo_for_login_page": "Logo for Login Page",
         "logo_for_webapp": "Logo for WebApp",
         "logo_path": "Logo Path",
+        "logo_redirection": "Logo Redirection",
+        "logo_redirection_title": "Clicking on the Logo will redirect the users to...",
         "logoff_from_every_device": "Log out from every device",
         "logout_redirect_url": "On Logout, the user will be redirected to this URL",
         "long_and_queues": "Log & Queues",
