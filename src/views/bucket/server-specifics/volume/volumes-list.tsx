@@ -550,7 +550,7 @@ const VolumesDetailPanel: FC = () => {
 								module: 'ZxPowerstore',
 								action: 'doUpdateVolume',
 								currentVolumeName: attr?.name,
-								currentVolume: true
+								volumeCurrent: true
 							},
 							'zextras'
 						)
