@@ -768,12 +768,7 @@ const DomainGeneralSettings: FC = () => {
 								</Container>
 							</ListRow>
 							<ListRow>
-								<Container
-									padding={{ all: 'small' }}
-									width="100%"
-									style={{ display: 'block' }}
-									className="xxxx"
-								>
+								<Container padding={{ all: 'small' }} width="100%" style={{ display: 'block' }}>
 									<Button
 										type="outlined"
 										label={t('label.delete_domain', 'Delete Domain')}

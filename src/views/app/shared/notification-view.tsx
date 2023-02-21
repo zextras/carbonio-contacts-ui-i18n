@@ -479,6 +479,7 @@ const NotificationView: FC<{
 							onClick={(): void => {
 								markAsReadUnread(selectedNotification);
 							}}
+							size="medium"
 						/>
 					</Padding>
 				</Container>

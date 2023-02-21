@@ -164,6 +164,7 @@ const DashboardServerList: FC<{
 						label={t('dashboard.go_to_mailstores_server_list', 'Go to mailstores servers list')}
 						color="primary"
 						onClick={goToMailStoreServerList}
+						size="large"
 					/>
 				</Container>
 			</ListRow>
