@@ -227,8 +227,10 @@ export const ThemeConfigs: FC<{
 					>
 						<TabBar
 							items={items}
-							defaultSelected="end_user"
-							onChange={setChange}
+							selected={change}
+							onChange={(ev: unknown, selectedId: string): void => {
+								setChange(selectedId);
+							}}
 							onItemClick={setClick}
 							width={300}
 						/>

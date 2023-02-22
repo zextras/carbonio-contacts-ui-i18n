@@ -60,7 +60,6 @@ const ReusedDefaultTabBar: FC<{
 			crossAlignment="flex-start"
 			padding={{ all: 'medium' }}
 			takeAvailableSpace
-			style={{ 'justify-content': 'center', display: 'flex' }}
 		>
 			<Container width="2rem" padding={{ right: 'small' }}>
 				<Icon
@@ -438,9 +437,12 @@ const NotificationView: FC<{
 				<Container mainAlignment="flex-end" crossAlignment="flex-end">
 					<TabBar
 						items={items}
-						defaultSelected={NOTIFICATION_ALL}
-						onChange={setChange}
+						selected={change}
+						onChange={(ev: unknown, selectedId: string): void => {
+							setChange(selectedId);
+						}}
 						onItemClick={setClick}
+						underlineColor="primary"
 					/>
 				</Container>
 			</ListRow>
