@@ -24,6 +24,8 @@ import gardian from '../../../../assets/gardian.svg';
 import { getAllDevices } from '../../../../services/get-all-devices';
 import ActiveDeviceDetail from './active-device-detail';
 import { ZX_MOBILE } from '../../../../constants';
+import CustomRowFactory from '../../../app/shared/customTableRowFactory';
+import CustomHeaderFactory from '../../../app/shared/customTableHeaderFactory';
 
 type MobileDevice = {
 	accountEmail: string;
@@ -359,7 +361,14 @@ const ActiveSync: FC = () => {
 						wrap="nowrap"
 						padding={{ top: 'large' }}
 					>
-						<Table rows={allDeviceRow} headers={headers} showCheckbox={false} multiSelect={false} />
+						<Table
+							rows={allDeviceRow}
+							headers={headers}
+							showCheckbox={false}
+							multiSelect={false}
+							RowFactory={CustomRowFactory}
+							HeaderFactory={CustomHeaderFactory}
+						/>
 					</Row>
 					{allDeviceRow.length === 0 && (
 						<Container orientation="column" crossAlignment="center" mainAlignment="center">

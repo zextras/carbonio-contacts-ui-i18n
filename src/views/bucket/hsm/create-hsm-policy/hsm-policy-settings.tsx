@@ -18,6 +18,8 @@ import {
 import React, { FC, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
+import CustomHeaderFactory from '../../../app/shared/customTableHeaderFactory';
+import CustomRowFactory from '../../../app/shared/customTableRowFactory';
 import ListRow from '../../../list/list-row';
 import { HSMContext } from '../hsm-context/hsm-context';
 
@@ -438,6 +440,8 @@ const HSMpolicySettings: FC<any> = () => {
 						multiSelect={false}
 						selectedRows={selectedPolicies}
 						onSelectionChange={(selected: any): void => setSelectedPolicies(selected)}
+						RowFactory={CustomRowFactory}
+						HeaderFactory={CustomHeaderFactory}
 					/>
 				</Container>
 			</ListRow>

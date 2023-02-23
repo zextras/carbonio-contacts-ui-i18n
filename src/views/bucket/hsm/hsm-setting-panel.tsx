@@ -41,6 +41,8 @@ import {
 	VOLUME_INDEX_TYPE
 } from '../../../constants';
 import { setCoreAttributes } from '../../../services/set-core-attributes';
+import CustomRowFactory from '../../app/shared/customTableRowFactory';
+import CustomHeaderFactory from '../../app/shared/customTableHeaderFactory';
 
 const HSMsettingPanel: FC = () => {
 	const { operation, server }: { operation: string; server: string } = useParams();
@@ -726,6 +728,8 @@ const HSMsettingPanel: FC = () => {
 						multiSelect={false}
 						selectedRows={selectedPolicies}
 						onSelectionChange={(selected: any): void => setSelectedPolicies(selected)}
+						RowFactory={CustomRowFactory}
+						HeaderFactory={CustomHeaderFactory}
 					/>
 				</ListRow>
 

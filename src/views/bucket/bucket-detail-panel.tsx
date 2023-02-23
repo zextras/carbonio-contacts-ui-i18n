@@ -28,6 +28,8 @@ import DetailsPanel from './details-panel';
 import { fetchSoap } from '../../services/bucket-service';
 import EditBucketDetailPanel from './edit-bucket-details-panel';
 import { AbsoluteContainer } from '../components/styled';
+import CustomRowFactory from '../app/shared/customTableRowFactory';
+import CustomHeaderFactory from '../app/shared/customTableHeaderFactory';
 
 const RelativeContainer = styled(Container)`
 	position: relative;
@@ -120,6 +122,8 @@ const BucketListTable: FC<{
 				multiSelect={false}
 				selectedRows={selectedRows}
 				onSelectionChange={onSelectionChange}
+				RowFactory={CustomRowFactory}
+				HeaderFactory={CustomHeaderFactory}
 			/>
 			{tableRows.length === 0 && (
 				<Container crossAlignment="center" mainAlignment="flex-start" style={{ marginTop: '4rem' }}>

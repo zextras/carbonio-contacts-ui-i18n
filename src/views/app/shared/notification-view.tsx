@@ -40,6 +40,8 @@ import ListRow from '../../list/list-row';
 import NotificationDetail from './notification-detail-view';
 import { copyTextToClipboard } from '../../utility/utils';
 import { readUnreadNotification } from '../../../services/read-unread-notification';
+import CustomRowFactory from './customTableRowFactory';
+import CustomHeaderFactory from './customTableHeaderFactory';
 
 const ReusedDefaultTabBar: FC<{
 	item: any;
@@ -502,6 +504,8 @@ const NotificationView: FC<{
 						showCheckbox={false}
 						multiSelect={false}
 						style={{ overflow: 'auto', height: '100%' }}
+						RowFactory={CustomRowFactory}
+						HeaderFactory={CustomHeaderFactory}
 					/>
 				</Container>
 			</ListRow>

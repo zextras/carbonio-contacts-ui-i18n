@@ -32,6 +32,8 @@ import { getDelegateAuthRequest } from '../../../../services/get-delegate-auth-r
 import { endSession } from '../../../../services/end-session';
 import { getSessions } from '../../../../services/get-sessions';
 import Paging from '../../../components/paging';
+import CustomHeaderFactory from '../../../app/shared/customTableHeaderFactory';
+import CustomRowFactory from '../../../app/shared/customTableRowFactory';
 
 const AccountDetailContainer = styled(Container)`
 	z-index: 10;
@@ -695,7 +697,7 @@ const AccountDetailView: FC<any> = ({
 								type="outlined"
 								icon="StopCircleOutline"
 								iconPlacement="right"
-								height={44}
+								size="extralarge"
 								disabled={selectedSession.length === 0 || isRequestInProgress}
 								onClick={onEndSession}
 								loading={isRequestInProgress}
@@ -717,6 +719,8 @@ const AccountDetailView: FC<any> = ({
 							onSelectionChange={(selected: any): any => {
 								setSelectedSession(selected);
 							}}
+							HeaderFactory={CustomHeaderFactory}
+							RowFactory={CustomRowFactory}
 						></Table>
 					</Row>
 

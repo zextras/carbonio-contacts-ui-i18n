@@ -28,6 +28,8 @@ import { getAllServers } from '../../services/get-all-servers-service';
 import { modifyCos } from '../../services/modify-cos-service';
 import { DISABLED, ENABLED } from '../../constants';
 import { useMailstoreListStore } from '../../store/mailstore-list/store';
+import CustomRowFactory from '../app/shared/customTableRowFactory';
+import CustomHeaderFactory from '../app/shared/customTableHeaderFactory';
 
 const CosServerPools: FC = () => {
 	const [t] = useTranslation();
@@ -468,6 +470,7 @@ const CosServerPools: FC = () => {
 									showCheckbox={false}
 									selectedRows={selectedTableRows}
 									onSelectionChange={(selected: any): void => setSelectedTableRows(selected)}
+									RowFactory={CustomRowFactory}
 								/>
 							</Row>
 							{/* <ListRow>

@@ -27,6 +27,8 @@ import { MailingListContext } from './mailinglist-context';
 import { RECORD_DISPLAY_LIMIT } from '../../../../constants';
 import { searchDirectory } from '../../../../services/search-directory-service';
 import helmetLogo from '../../../../assets/helmet_logo.svg';
+import CustomRowFactory from '../../../app/shared/customTableRowFactory';
+import CustomHeaderFactory from '../../../app/shared/customTableHeaderFactory';
 
 const MailingListMembersSection: FC<any> = () => {
 	const { t } = useTranslation();
@@ -283,6 +285,8 @@ const MailingListMembersSection: FC<any> = () => {
 							onSelectionChange={(selected: any): void =>
 								setSelectedDistributionListMember(selected)
 							}
+							RowFactory={CustomRowFactory}
+							HeaderFactory={CustomHeaderFactory}
 						/>
 					</Container>
 				</ListRow>

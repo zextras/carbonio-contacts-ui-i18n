@@ -23,6 +23,8 @@ import { modifySignature } from '../../../../services/modify-signature-service';
 import { createSignature } from '../../../../services/create-signature-service';
 import Textarea from '../../../components/textarea';
 import logo from '../../../../assets/carbonio_defender.svg';
+import CustomRowFactory from '../../../app/shared/customTableRowFactory';
+import CustomHeaderFactory from '../../../app/shared/customTableHeaderFactory';
 
 export const SignatureDetail: FC<any> = ({
 	isEditable,
@@ -394,6 +396,8 @@ export const SignatureDetail: FC<any> = ({
 						style={{ overflow: 'auto', height: '100%' }}
 						selectedRows={selectedSignature}
 						onSelectionChange={(selected: any): void => setSelectedSignature(selected)}
+						RowFactory={CustomRowFactory}
+						HeaderFactory={CustomHeaderFactory}
 					/>
 				</Container>
 			</ListRow>

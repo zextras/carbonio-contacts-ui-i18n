@@ -22,6 +22,8 @@ import logo from '../../../../assets/gardian.svg';
 import { isValidEmail } from '../../../utility/utils';
 import { searchDirectory } from '../../../../services/search-directory-service';
 import { RECORD_DISPLAY_LIMIT } from '../../../../constants';
+import CustomRowFactory from '../../../app/shared/customTableRowFactory';
+import CustomHeaderFactory from '../../../app/shared/customTableHeaderFactory';
 
 export const SendInviteAccounts: FC<any> = ({
 	isEditable,
@@ -300,6 +302,8 @@ export const SendInviteAccounts: FC<any> = ({
 								setSendInviteDeleteBtnDisabled(true);
 							}
 						}}
+						RowFactory={CustomRowFactory}
+						HeaderFactory={CustomHeaderFactory}
 					/>
 				</Container>
 			</ListRow>

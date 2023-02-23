@@ -26,6 +26,8 @@ import { getAllEmailFromString, isValidEmail } from '../../../utility/utils';
 import { ALL, EMAIL, GRP, PUB } from '../../../../constants';
 import { searchGal } from '../../../../services/search-gal-service';
 import helmetLogo from '../../../../assets/helmet_logo.svg';
+import CustomRowFactory from '../../../app/shared/customTableRowFactory';
+import CustomHeaderFactory from '../../../app/shared/customTableHeaderFactory';
 
 // eslint-disable-next-line no-shadow
 export enum SUBSCRIBE_UNSUBSCRIBE {
@@ -634,6 +636,8 @@ const MailingListSettingsSection: FC<any> = () => {
 							onSelectionChange={(selected: any): void =>
 								setSelectedDistributionListOwner(selected)
 							}
+							RowFactory={CustomRowFactory}
+							HeaderFactory={CustomHeaderFactory}
 						/>
 					</Container>
 				</ListRow>
@@ -766,6 +770,8 @@ const MailingListSettingsSection: FC<any> = () => {
 							showCheckbox={false}
 							selectedRows={selectedGrantEmail}
 							onSelectionChange={(selected: any): void => setSelectedGrantEmail(selected)}
+							RowFactory={CustomRowFactory}
+							HeaderFactory={CustomHeaderFactory}
 						/>
 					</Container>
 				</ListRow>

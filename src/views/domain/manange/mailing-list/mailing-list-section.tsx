@@ -28,6 +28,8 @@ import { getAllEmailFromString, isValidEmail, isValidLdapQuery } from '../../../
 import { searchGal } from '../../../../services/search-gal-service';
 import carbonioHelmet from '../../../../assets/carbonio-helmet.svg';
 import { ALL, EMAIL, GRP, LDAP_QUERY, MEMBERS_ONLY, PUB } from '../../../../constants';
+import CustomHeaderFactory from '../../../app/shared/customTableHeaderFactory';
+import CustomRowFactory from '../../../app/shared/customTableRowFactory';
 
 const MailingListSection: FC<any> = () => {
 	const { t } = useTranslation();
@@ -545,7 +547,13 @@ const MailingListSection: FC<any> = () => {
 						</Row>
 						<ListRow>
 							<Container padding={{ top: 'large', bottom: 'large' }}>
-								<Table rows={dynamicListMemberRows} headers={memberHeaders} showCheckbox={false} />
+								<Table
+									rows={dynamicListMemberRows}
+									headers={memberHeaders}
+									showCheckbox={false}
+									RowFactory={CustomRowFactory}
+									HeaderFactory={CustomHeaderFactory}
+								/>
 							</Container>
 						</ListRow>
 						<Row padding={{ top: 'large' }}>
@@ -684,6 +692,8 @@ const MailingListSection: FC<any> = () => {
 									onSelectionChange={(selected: any): void =>
 										setSelectedDistributionListOwner(selected)
 									}
+									RowFactory={CustomRowFactory}
+									HeaderFactory={CustomHeaderFactory}
 								/>
 							</Container>
 						</ListRow>

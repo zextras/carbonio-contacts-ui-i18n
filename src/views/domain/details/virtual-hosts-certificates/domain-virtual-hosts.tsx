@@ -37,6 +37,8 @@ import { AbsoluteContainer } from '../../../components/styled';
 import LoadVerifyCertificateWizard from './load-verify-certificate-wizard';
 import Textarea from '../../../components/textarea';
 import DeleteCertificateModel from './delete-certificate-model';
+import CustomRowFactory from '../../../app/shared/customTableRowFactory';
+import CustomHeaderFactory from '../../../app/shared/customTableHeaderFactory';
 
 const DomainVirtualHosts: FC = () => {
 	const [t] = useTranslation();
@@ -467,6 +469,8 @@ const DomainVirtualHosts: FC = () => {
 									setRemoveVirtualBtnDisabled(true);
 								}
 							}}
+							HeaderFactory={CustomHeaderFactory}
+							RowFactory={CustomRowFactory}
 						/>
 						{items.length === 0 && (
 							<Container

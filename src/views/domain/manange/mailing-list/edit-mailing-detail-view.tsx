@@ -41,6 +41,8 @@ import { ALL, EMAIL, GRP, PUB, RECORD_DISPLAY_LIMIT } from '../../../../constant
 import { searchGal } from '../../../../services/search-gal-service';
 import { getGrant } from '../../../../services/get-grant';
 import helmetLogo from '../../../../assets/helmet_logo.svg';
+import CustomRowFactory from '../../../app/shared/customTableRowFactory';
+import CustomHeaderFactory from '../../../app/shared/customTableHeaderFactory';
 
 // eslint-disable-next-line no-shadow
 export enum SUBSCRIBE_UNSUBSCRIBE {
@@ -2073,6 +2075,8 @@ const EditMailingListView: FC<any> = ({
 								onSelectionChange={(selected: any): void =>
 									setSelectedDistributionListMember(selected)
 								}
+								RowFactory={CustomRowFactory}
+								HeaderFactory={CustomHeaderFactory}
 							/>
 						</Container>
 					)}
@@ -2251,6 +2255,8 @@ const EditMailingListView: FC<any> = ({
 							showCheckbox={false}
 							selectedRows={selectedOwnerListMember}
 							onSelectionChange={(selected: any): void => setSelectedOwnerListMember(selected)}
+							RowFactory={CustomRowFactory}
+							HeaderFactory={CustomHeaderFactory}
 						/>
 					</Container>
 				</ListRow>
@@ -2396,6 +2402,8 @@ const EditMailingListView: FC<any> = ({
 							showCheckbox={false}
 							selectedRows={selectedGrantEmail}
 							onSelectionChange={(selected: any): void => setSelectedGrantEmail(selected)}
+							RowFactory={CustomRowFactory}
+							HeaderFactory={CustomHeaderFactory}
 						/>
 					</Container>
 				</ListRow>

@@ -24,6 +24,8 @@ import { find, get, unset } from 'lodash';
 import { BucketRegions, BucketRegionsInAlibaba, BucketTypeItems } from '../utility/utils';
 import { fetchSoap } from '../../services/bucket-service';
 import { ALIBABA, AMAZON_WEB_SERVICE_S3, CUSTOM_S3, EMC } from '../../constants';
+import CustomRowFactory from '../app/shared/customTableRowFactory';
+import CustomHeaderFactory from '../app/shared/customTableHeaderFactory';
 
 const prefixRegex = /^[A-Za-z0-9_./-]*$/;
 
@@ -138,6 +140,8 @@ const ServerListTabel: FC<{ volumes: Array<any>; selectedRows: any; onSelectionC
 				multiSelect={false}
 				selectedRows={selectedRows}
 				onSelectionChange={onSelectionChange}
+				RowFactory={CustomRowFactory}
+				HeaderFactory={CustomHeaderFactory}
 			/>
 			{tableRows.length === 0 && (
 				<Row padding={{ top: 'extralarge', horizontal: 'extralarge' }} width="fill">
