@@ -673,24 +673,7 @@ const VolumesDetailPanel: FC = () => {
 	return (
 		<>
 			{toggleWizardExternal && (
-				<AbsoluteContainer
-					orientation="vertical"
-					background="gray5"
-					style={{
-						'z-index': '10',
-						position: 'absolute',
-						top: '2.688rem',
-						right: '0',
-						bottom: '0',
-						left: `${'max(calc(100% - 42.5rem), 0.75rem)'}`,
-						transition: 'left 0.2s ease-in-out',
-						height: 'auto',
-						width: 'auto',
-						'max-height': '100%',
-						overflow: 'hidden',
-						'box-shadow': '-0.375rem 0.25rem 0.313rem 0 rgba(0, 0, 0, 0.1)'
-					}}
-				>
+				<AbsoluteContainer orientation="vertical" background="gray5">
 					<CreateMailstoresVolume
 						setToggleWizardExternal={setToggleWizardExternal}
 						setToggleWizardLocal={setToggleWizardLocal}
@@ -702,24 +685,7 @@ const VolumesDetailPanel: FC = () => {
 				</AbsoluteContainer>
 			)}
 			{toggleWizardLocal && (
-				<AbsoluteContainer
-					orientation="vertical"
-					background="gray5"
-					style={{
-						'z-index': '10',
-						position: 'absolute',
-						top: '2.688rem',
-						right: '0',
-						bottom: '0',
-						left: `${'max(calc(100% - 42.5rem), 0.75rem)'}`,
-						transition: 'left 0.2s ease-in-out',
-						height: 'auto',
-						width: 'auto',
-						'max-height': '100%',
-						overflow: 'hidden',
-						'box-shadow': '-0.375rem 0.25rem 0.313rem 0 rgba(0, 0, 0, 0.1)'
-					}}
-				>
+				<AbsoluteContainer orientation="vertical" background="gray5">
 					<NewVolume
 						setToggleWizardLocal={setToggleWizardLocal}
 						setToggleWizardExternal={setToggleWizardExternal}
@@ -732,24 +698,7 @@ const VolumesDetailPanel: FC = () => {
 				</AbsoluteContainer>
 			)}
 			{toggleDetailPage && volume && (
-				<AbsoluteContainer
-					orientation="vertical"
-					background="gray5"
-					style={{
-						'z-index': '10',
-						position: 'absolute',
-						top: '2.688rem',
-						right: '0',
-						bottom: '0',
-						left: `${'max(calc(100% - 42.5rem), 0.75rem)'}`,
-						transition: 'left 0.2s ease-in-out',
-						height: 'auto',
-						width: 'auto',
-						'max-height': '100%',
-						overflow: 'hidden',
-						'box-shadow': '-0.375rem 0.25rem 0.313rem 0 rgba(0, 0, 0, 0.1)'
-					}}
-				>
+				<AbsoluteContainer orientation="vertical" background="gray5">
 					<ServerVolumeDetailsPanel
 						volumeDetail={volume}
 						setToggleDetailPage={setToggleDetailPage}
@@ -765,24 +714,7 @@ const VolumesDetailPanel: FC = () => {
 				</AbsoluteContainer>
 			)}
 			{modifyVolumeToggle && volume && (
-				<AbsoluteContainer
-					orientation="vertical"
-					background="gray5"
-					style={{
-						'z-index': '10',
-						position: 'absolute',
-						top: '2.688rem',
-						right: '0',
-						bottom: '0',
-						left: `${'max(calc(100% - 42.5rem), 0.75rem)'}`,
-						transition: 'left 0.2s ease-in-out',
-						height: 'auto',
-						width: 'auto',
-						'max-height': '100%',
-						overflow: 'hidden',
-						'box-shadow': '-0.375rem 0.25rem 0.313rem 0 rgba(0, 0, 0, 0.1)'
-					}}
-				>
+				<AbsoluteContainer orientation="vertical" background="gray5">
 					<ModifyVolume
 						volumeDetail={detailData}
 						setmodifyVolumeToggle={setmodifyVolumeToggle}

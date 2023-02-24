@@ -552,7 +552,6 @@ const DomainVirtualHosts: FC = () => {
 						height="fit"
 						crossAlignment="flex-start"
 						background="gray6"
-						className="ff"
 					>
 						<Row
 							padding={{ top: 'large' }}
@@ -651,7 +650,6 @@ const DomainVirtualHosts: FC = () => {
 						height="fit"
 						crossAlignment="flex-start"
 						background="gray6"
-						className="ff"
 					>
 						<Row
 							padding={{ top: 'large' }}
