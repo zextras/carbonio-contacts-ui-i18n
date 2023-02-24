@@ -860,11 +860,7 @@ const EditMailingListView: FC<any> = ({
 				? setOwnerOfList(previousDetail?.ownerOfList)
 				: setOwnerOfList([]);
 		}
-
 		setGrantType(previousDetail?.grantType);
-		previousDetail?.grantEmails !== undefined
-			? setGrantEmailsList(previousDetail?.grantEmails)
-			: setGrantEmailsList([]);
 		setIsDirty(false);
 	};
 
