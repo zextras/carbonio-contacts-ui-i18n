@@ -235,7 +235,7 @@ const App: FC = () => {
 				header: (
 					<Trans
 						i18nKey="label.domain_primarybar_tooltip"
-						defaults="View your <bold>domains details</bold> and <bold>manage</bold> its resources such as <bold>accounts, mailing lists, resources</bold> and <bold>more</bold>."
+						defaults="View your <bold>domains details</bold> and <bold>manage</bold> their resources such as <bold>accounts, mailing lists, resources</bold> and <bold>more</bold>."
 						components={{ bold: <strong /> }}
 					/>
 				),
