@@ -1153,7 +1153,7 @@
             "stop_operation_error": "{{name}}"
         },
         "operation_now_in_queue": "The operation is now in the queue",
-        "operation_primarybar_tooltip": "View and manage the <bold>operations</bold>, be them <bold>running, queued</bold> or <bold>done</bold>.",
+        "operation_primarybar_tooltip": "View and manage the <bold>operations, run, manage</bold> and <bold>end them</bold>.",
         "operations": "Operations",
         "otp": "OTP",
         "otp_deleted_successfully": "OTP has been deleted successfully",
