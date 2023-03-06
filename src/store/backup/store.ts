@@ -10,7 +10,7 @@ type BackupState = {
 	globalConfig: any;
 	setGlobalConfig: (backup: any) => void;
 	selectedServer: string;
-	setSelectedBackupServer: (server: any) => void;
+	setSelectedBackupServer: (server: string) => void;
 };
 
 export const useBackupStore = create<BackupState>(
