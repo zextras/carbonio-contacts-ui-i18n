@@ -223,7 +223,9 @@ const CreateMailstoresVolume: FC<{
 				bucketConfigurationId: advancedVolumeDetail?.bucketId,
 				volumePrefix: advancedVolumeDetail?.prefix,
 				centralized: advancedVolumeDetail?.centralized,
-				isCurrent: advancedVolumeDetail?.isCurrent ? 1 : 0
+				isCurrent: advancedVolumeDetail?.isCurrent ? 1 : 0,
+				useInfrequentAccess: advancedVolumeDetail?.useInfrequentAccess,
+				useIntelligentTiering: advancedVolumeDetail?.useIntelligentTiering
 			});
 			setCreateMailstoresVolumeData(advancedVolumeDetail);
 		},

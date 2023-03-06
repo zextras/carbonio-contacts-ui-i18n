@@ -1425,6 +1425,7 @@
         "volume_deleted": "Volume deleted successfully",
         "volume_detail_error": "{{message}}",
         "volume_detail_page_title": "{{message}} Details",
+        "volume_detail_success": "All changes have been saved successfully",
         "volume_edited": "Volume edited successfully",
         "volume_id": "Volume ID",
         "volume_main": "Volume Main",
@@ -1516,6 +1517,14 @@
             "share": {
                 "accepted": "You have accepted the share request"
             }
+        }
+    },
+    "modal": {
+        "iscurrent_confirm": {
+            "body_message": "The current {{type}} {{currentVolumeName}}.<br />Are you sure you want to <strong>set {{name}} as current</strong>?",
+            "confirm_label": "YES, PROCEED",
+            "secondary_label": "NO, GO BACK",
+            "title": "You are setting {{name}} as current"
         }
     },
     "newOtp": {
@@ -1814,6 +1823,9 @@
             "primary": "Primary",
             "secondary": "Secondary"
         }
+    },
+    "warning": {
+        "is_current": "You have to set another volume as current before."
     },
     "welcome": "Welcome",
     "welcome_to_carbonio": "Welcome {{adminName}} to Carbonio {{carbonioVersion}}!",

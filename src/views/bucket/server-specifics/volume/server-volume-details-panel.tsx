@@ -104,7 +104,7 @@ const ServerVolumeDetailsPanel: FC<{
 					key: 'error',
 					type: 'error',
 					label: t('label.volume_detail_error', '{{message}}', {
-						message: error
+						message: 'Something went wrong, please try again'
 					}),
 					autoHideTimeout: 5000
 				});
@@ -151,12 +151,12 @@ const ServerVolumeDetailsPanel: FC<{
 	}, [getVolumeDetailData, volumeDetail, modifyVolumeToggle, getAllBuckets]);
 
 	useEffect(() => {
-		if (volumeDetail?.unusedBucketType === S3) {
+		if (volumeDetail?.storeType === S3) {
 			setBucketS3(true);
 		} else {
 			setBucketS3(false);
 		}
-	}, [volumeDetail?.unusedBucketType]);
+	}, [volumeDetail?.storeType]);
 
 	useEffect(() => {
 		if (volumeDetail?.volumeType === 'primary') {
@@ -184,14 +184,12 @@ const ServerVolumeDetailsPanel: FC<{
 			await fetchSoap('zextras', obj)
 				.then((res: any) => {
 					const result = JSON.parse(res?.Body?.response?.content);
-					const updateResponse = result?.response?.[`${serverList[0]?.name}`];
+					const updateResponse = result?.response?.[serverName];
 					if (updateResponse?.ok) {
 						createSnackbar({
 							key: '1',
 							type: 'success',
-							label: t('label.external_volume_edited', '{{message}}', {
-								message: updateResponse?.response?.message
-							})
+							label: t('label.volume_detail_success', 'All changes have been saved successfully')
 						});
 						getAllVolumesRequest();
 						setmodifyVolumeToggle(false);
@@ -204,7 +202,7 @@ const ServerVolumeDetailsPanel: FC<{
 							key: 'error',
 							type: 'error',
 							label: t('label.volume_detail_error', '{{message}}', {
-								message: updateResponse?.error?.message
+								message: 'Something went wrong, please try again'
 							}),
 							autoHideTimeout: 5000
 						});
@@ -216,7 +214,7 @@ const ServerVolumeDetailsPanel: FC<{
 						key: 'error',
 						type: 'error',
 						label: t('label.volume_detail_error', '{{message}}', {
-							message: error
+							message: 'Something went wrong, please try again'
 						}),
 						autoHideTimeout: 5000
 					});
@@ -244,12 +242,7 @@ const ServerVolumeDetailsPanel: FC<{
 					createSnackbar({
 						key: '1',
 						type: 'success',
-						label: t('label.volume_type_edited', '{{message}}', {
-							message:
-								typeLabel === PRIMARIES
-									? 'volume type successfully changed to Secondary'
-									: 'volume type successfully changed to Primary'
-						})
+						label: t('label.volume_detail_success', 'All changes have been saved successfully')
 					});
 					getAllVolumesRequest();
 					getVolumeDetailData();
@@ -259,7 +252,7 @@ const ServerVolumeDetailsPanel: FC<{
 						key: 'error',
 						type: 'error',
 						label: t('label.volume_detail_error', '{{message}}', {
-							message: error
+							message: 'Something went wrong, please try again'
 						}),
 						autoHideTimeout: 5000
 					});
@@ -272,7 +265,6 @@ const ServerVolumeDetailsPanel: FC<{
 		volumeDetail?.storeType,
 		volumeDetail?.isCurrent,
 		volumeDetail?.name,
-		serverList,
 		createSnackbar,
 		t,
 		getAllVolumesRequest,
@@ -629,6 +621,7 @@ const ServerVolumeDetailsPanel: FC<{
 											inputName="infrequentAccessThreshold"
 											label={t('label.size_threshold', 'Size Threshold')}
 											backgroundColor="gray5"
+											value={volumeDetail?.infrequentAccessThreshold}
 											disabled
 										/>
 									</Row>

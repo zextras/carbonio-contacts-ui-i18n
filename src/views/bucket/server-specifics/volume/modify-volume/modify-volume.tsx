@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { FC, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import React, { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
 	Container,
 	Row,
@@ -16,7 +16,9 @@ import {
 	Switch,
 	Select,
 	useSnackbar,
-	Radio
+	Radio,
+	Modal,
+	Popover
 } from '@zextras/carbonio-design-system';
 import { Trans, useTranslation } from 'react-i18next';
 import { soapFetch } from '@zextras/carbonio-shell-ui';
@@ -74,6 +76,9 @@ const ModifyVolume: FC<{
 	const [rootpath, setRootpath] = useState(volumeDetail?.rootpath);
 	const [compressBlobs, setCompressBlobs] = useState(volumeDetail?.compressBlobs);
 	const [isCurrent, setIsCurrent] = useState(volumeDetail?.isCurrent);
+	const isCurrentRef = useRef(undefined);
+	const [isCurrentPopper, setIsCurrentPopper] = useState(false);
+
 	const [compressionThreshold, setCompressionThreshold] = useState(
 		volumeDetail?.compressionThreshold
 	);
@@ -88,6 +93,17 @@ const ModifyVolume: FC<{
 	const [bucketConfigurationId, setBucketConfigurationId] = useState();
 	const [bucketS3, setBucketS3] = useState(false);
 	const [volumePrefix, setVolumePrefix] = useState<any>(externalVolDetail?.volumePrefix);
+	const [useInfrequentAccess, setUseInfrequentAccess] = useState<any>(
+		externalVolDetail?.useInfrequentAccess
+	);
+	const [useIntelligentTiering, setUseIntelligentTiering] = useState<any>(
+		externalVolDetail?.useIntelligentTiering
+	);
+	const [infrequentAccessThreshold, setInfrequentAccessThreshold] = useState<any>(
+		externalVolDetail?.infrequentAccessThreshold
+	);
+	const [isCurrentToggle, setIsCurrentToggle] = useState<boolean>(false);
+	const [isCurrentVolume, setIsCurrentVolume] = useState<any>();
 	const createSnackbar = useSnackbar();
 	const { isVolumeAllDetail, setIsVolumeAllDetail } = useBucketVolumeStore((state) => state);
 
@@ -127,8 +143,8 @@ const ModifyVolume: FC<{
 
 			if (externalVolDetail === '') {
 				obj.volumePath = rootpath;
-				obj.compressBlobs = compressBlobs ? 1 : 0;
-				obj.compressionThreshold = Number(compressionThreshold);
+				obj.volumeCompressed = compressBlobs;
+				obj.compressionThreshold = compressionThreshold;
 			} else {
 				if (
 					externalVolDetail?.storeType?.toUpperCase() === ALIBABA?.toUpperCase() ||
@@ -144,9 +160,9 @@ const ModifyVolume: FC<{
 				if (externalVolDetail?.storeType?.toUpperCase() === S3?.toUpperCase()) {
 					obj.volumePrefix = volumePrefix;
 					obj.bucketConfigurationId = bucketConfigurationId;
-					obj.useInfrequentAccess = false;
-					obj.infrequentAccessThreshold = 'asd';
-					obj.useIntelligentTiering = false;
+					obj.useInfrequentAccess = useInfrequentAccess;
+					obj.infrequentAccessThreshold = infrequentAccessThreshold;
+					obj.useIntelligentTiering = useIntelligentTiering;
 				}
 				if (externalVolDetail?.storeType?.toUpperCase() === FILEBLOB?.toUpperCase()) {
 					obj.volumePath = '/tmp/store2';
@@ -183,14 +199,12 @@ const ModifyVolume: FC<{
 			await fetchSoap('zextras', obj)
 				.then((res: any) => {
 					const result = JSON.parse(res?.Body?.response?.content);
-					const updateResponse = result?.response?.[`${serverList[0]?.name}`];
+					const updateResponse = result?.response?.[serverName];
 					if (updateResponse?.ok) {
 						createSnackbar({
 							key: '1',
 							type: 'success',
-							label: t('label.external_volume_edited', '{{message}}', {
-								message: updateResponse?.response?.message
-							})
+							label: t('label.volume_detail_success', 'All changes have been saved successfully')
 						});
 						getAllVolumesRequest();
 						setmodifyVolumeToggle(false);
@@ -199,7 +213,7 @@ const ModifyVolume: FC<{
 							key: 'error',
 							type: 'error',
 							label: t('label.volume_detail_error', '{{message}}', {
-								message: updateResponse?.error?.message
+								message: 'Something went wrong, please try again'
 							}),
 							autoHideTimeout: 5000
 						});
@@ -211,7 +225,7 @@ const ModifyVolume: FC<{
 						key: 'error',
 						type: 'error',
 						label: t('label.volume_detail_error', '{{message}}', {
-							message: error
+							message: 'Something went wrong, please try again'
 						}),
 						autoHideTimeout: 5000
 					});
@@ -260,7 +274,7 @@ const ModifyVolume: FC<{
 								key: 'error',
 								type: 'error',
 								label: t('label.volume_detail_error', '{{message}}', {
-									message: error
+									message: 'Something went wrong, please try again'
 								}),
 								autoHideTimeout: 5000
 							});
@@ -269,7 +283,7 @@ const ModifyVolume: FC<{
 					createSnackbar({
 						key: '1',
 						type: 'success',
-						label: t('label.volume_edited', 'Volume edited successfully')
+						label: t('label.volume_detail_success', 'All changes have been saved successfully')
 					});
 					getAllVolumesRequest();
 					setmodifyVolumeToggle(false);
@@ -279,7 +293,7 @@ const ModifyVolume: FC<{
 						key: 'error',
 						type: 'error',
 						label: t('label.volume_detail_error', '{{message}}', {
-							message: error
+							message: 'Something went wrong, please try again'
 						}),
 						autoHideTimeout: 5000
 					});
@@ -428,6 +442,33 @@ const ModifyVolume: FC<{
 	}, [bucketConfigurationId, externalVolDetail]);
 
 	useEffect(() => {
+		if (
+			externalVolDetail !== undefined &&
+			externalVolDetail?.useInfrequentAccess !== useInfrequentAccess
+		) {
+			setIsDirty(true);
+		}
+	}, [externalVolDetail, useInfrequentAccess]);
+
+	useEffect(() => {
+		if (
+			externalVolDetail !== undefined &&
+			externalVolDetail?.useIntelligentTiering !== useIntelligentTiering
+		) {
+			setIsDirty(true);
+		}
+	}, [externalVolDetail, useIntelligentTiering]);
+
+	useEffect(() => {
+		if (
+			externalVolDetail !== undefined &&
+			externalVolDetail?.infrequentAccessThreshold !== infrequentAccessThreshold
+		) {
+			setIsDirty(true);
+		}
+	}, [externalVolDetail, infrequentAccessThreshold]);
+
+	useEffect(() => {
 		setName(volumeDetail?.name);
 		const volumeTypeObject = volTypeList?.find((item: any) => item?.value === volumeDetail?.type);
 		setType(volumeTypeObject);
@@ -436,13 +477,30 @@ const ModifyVolume: FC<{
 		setCompressBlobs(volumeDetail?.compressBlobs);
 		setIsCurrent(volumeDetail?.isCurrent);
 		setCompressionThreshold(volumeDetail?.compressionThreshold);
-		setBucketS3(volumeDetail?.unusedBucketType === S3);
 		setIsDirty(false);
 	}, [volTypeList, volumeDetail]);
 
 	useEffect(() => {
 		getAllBuckets();
 	}, [getAllBuckets, externalVolDetail]);
+
+	useEffect(() => {
+		setUseIntelligentTiering(externalVolDetail?.useIntelligentTiering);
+		setUseInfrequentAccess(externalVolDetail?.useInfrequentAccess);
+		setInfrequentAccessThreshold(externalVolDetail?.infrequentAccessThreshold);
+	}, [
+		externalVolDetail?.infrequentAccessThreshold,
+		externalVolDetail?.useInfrequentAccess,
+		externalVolDetail?.useIntelligentTiering
+	]);
+
+	useEffect(() => {
+		if (externalVolDetail?.storeType === S3) {
+			setBucketS3(true);
+		} else {
+			setBucketS3(false);
+		}
+	}, [externalVolDetail?.storeType]);
 
 	useEffect(() => {
 		if (isAdvanced) {
@@ -458,6 +516,8 @@ const ModifyVolume: FC<{
 				} else {
 					setExternalVolDetail('');
 				}
+				const currentVolume = volumeList?.primaries?.find((v: any) => v?.isCurrent);
+				setIsCurrentVolume(currentVolume);
 			}
 			if (volumeDetail?.type === 2) {
 				// const volName = volumeList?.secondaries?.filter((items: any) => items?.isCurrent)[0]?.name;
@@ -471,6 +531,9 @@ const ModifyVolume: FC<{
 				} else {
 					setExternalVolDetail('');
 				}
+
+				const currentVolume = volumeList?.secondaries?.find((v: any) => v?.isCurrent);
+				setIsCurrentVolume(currentVolume);
 			}
 			if (volumeDetail?.type === 10) {
 				// const volName = volumeList?.indexes?.filter((items: any) => items?.isCurrent)[0]?.name;
@@ -484,6 +547,8 @@ const ModifyVolume: FC<{
 				} else {
 					setExternalVolDetail('');
 				}
+				const currentVolume = volumeList?.indexes?.find((v: any) => v?.isCurrent);
+				setIsCurrentVolume(currentVolume);
 			}
 		}
 	}, [
@@ -583,6 +648,36 @@ const ModifyVolume: FC<{
 								{t('the_change_will_not_move_the_data', 'The change will not move the data… !!')}
 							</Text>
 						</Padding>
+						<Row
+							padding={{ top: 'large' }}
+							width="100%"
+							mainAlignment="center"
+							crossAlignment="center"
+							backgroundColor="gray6"
+						>
+							<Row width="48%">
+								<Radio
+									inputName="primary"
+									label={t('label.primary_volume', 'This is a Primary Volume')}
+									value={PRIMARY_TYPE_VALUE}
+									checked={type?.value === 1}
+									onClick={(): any => {
+										onVolumeTypeChange(1);
+									}}
+								/>
+							</Row>
+							<Row width="48%">
+								<Radio
+									inputName="secondary"
+									label={t('label.secondary_volume', 'This is a Secondary Volume')}
+									value={SECONDARY_TYPE_VALUE}
+									checked={type?.value === 2}
+									onClick={(): any => {
+										onVolumeTypeChange(2);
+									}}
+								/>
+							</Row>
+						</Row>
 						<Row mainAlignment="flex-start" padding={{ top: 'large' }} width="100%">
 							{volumeDetail?.type !== 10 && (
 								<>
@@ -606,22 +701,52 @@ const ModifyVolume: FC<{
 							)}
 							<Row width="48%" mainAlignment="flex-start">
 								<Switch
+									ref={isCurrentRef}
 									value={isCurrent}
-									label={t('label.current', 'Current')}
-									onClick={(): any => setIsCurrent(!isCurrent)}
+									label={t('label.enable_current', 'Enable as Current')}
+									onClick={(): any => {
+										!isCurrent && setIsCurrentToggle(true);
+										isCurrent && setIsCurrentPopper(true);
+									}}
+									onMouseEnter={(): any => {
+										isCurrent && setIsCurrentPopper(true);
+									}}
+									onMouseLeave={(): any => setIsCurrentPopper(false)}
 								/>
+								<Popover
+									open={isCurrentPopper}
+									anchorEl={isCurrentRef}
+									placement="right"
+									onClose={(): any => setIsCurrentPopper(false)}
+									disableRestoreFocus
+									background="gray3"
+								>
+									<Text>
+										{t('warning.is_current', 'You have to set another volume as current before.')}
+									</Text>
+								</Popover>
 							</Row>
 						</Row>
 						{volumeDetail?.type !== 10 && (
-							<Row padding={{ top: 'small' }} width="50%">
-								<Input
-									label={t('label.compression_threshold', 'Compression Threshold')}
-									value={compressionThreshold}
-									backgroundColor="gray6"
-									onChange={(e: any): any => setCompressionThreshold(e?.target?.value)}
-									color="secondary"
-								/>
-							</Row>
+							<>
+								<Row padding={{ top: 'small' }} width="50%">
+									<Input
+										label={t('label.compression_threshold', 'Compression Threshold')}
+										value={compressionThreshold}
+										backgroundColor="gray6"
+										onChange={(e: any): any => setCompressionThreshold(e?.target?.value)}
+										color="secondary"
+									/>
+								</Row>
+								<Padding top="extrasmall">
+									<Text color="secondary" overflow="break-word" size="extrasmall">
+										{t(
+											'this_will_not_affect_data_already_stored',
+											'This will not affect data already stored'
+										)}
+									</Text>
+								</Padding>
+							</>
 						)}
 					</Container>
 				) : (
@@ -780,10 +905,9 @@ const ModifyVolume: FC<{
 									<Row width="48.5%" mainAlignment="flex-start">
 										<Row mainAlignment="flex-start" width="100%">
 											<Switch
-												value={externalVolDetail?.useInfrequentAccess}
+												value={useInfrequentAccess}
 												label={t('label.use_infraquent_access', 'Use infrequent access')}
-												// onClick={changeSwitchInfraquentAccess}
-												disabled
+												onClick={(): any => setUseInfrequentAccess(!useInfrequentAccess)}
 											/>
 										</Row>
 										<Row mainAlignment="flex-start" width="100%" padding={{ left: 'extralarge' }}>
@@ -802,17 +926,16 @@ const ModifyVolume: FC<{
 											inputName="infrequentAccessThreshold"
 											label={t('label.size_threshold', 'Size Threshold')}
 											backgroundColor="gray5"
-											// onChange={changeVolDetail}
-											disabled
+											value={infrequentAccessThreshold}
+											onChange={(e: any): any => setInfrequentAccessThreshold(e?.target?.value)}
 										/>
 									</Row>
 								</Row>
 								<Row padding={{ top: 'large' }} mainAlignment="flex-start" width="100%">
 									<Switch
-										value={externalVolDetail?.useIntelligentTiering}
+										value={useIntelligentTiering}
 										label={t('label.use_intelligent_tiering', 'Use intelligent tiering')}
-										// onClick={changeSwitchInfraquentTiering}
-										disabled
+										onClick={(): any => setUseIntelligentTiering(!useIntelligentTiering)}
 									/>
 								</Row>
 								<Row mainAlignment="flex-start" width="100%" padding={{ left: 'extralarge' }}>
@@ -828,10 +951,30 @@ const ModifyVolume: FC<{
 						)}
 						<Row padding={{ top: 'large' }} mainAlignment="flex-start" width="100%">
 							<Switch
+								ref={isCurrentRef}
 								value={isCurrent}
 								label={t('label.enable_current', 'Enable as Current')}
-								onClick={(): any => setIsCurrent(!isCurrent)}
+								onClick={(): any => {
+									!isCurrent && setIsCurrentToggle(true);
+									isCurrent && setIsCurrentPopper(true);
+								}}
+								onMouseEnter={(): any => {
+									isCurrent && setIsCurrentPopper(true);
+								}}
+								onMouseLeave={(): any => setIsCurrentPopper(false)}
 							/>
+							<Popover
+								open={isCurrentPopper}
+								anchorEl={isCurrentRef}
+								placement="right"
+								onClose={(): any => setIsCurrentPopper(false)}
+								disableRestoreFocus
+								background="gray3"
+							>
+								<Text>
+									{t('warning.is_current', 'You have to set another volume as current before.')}
+								</Text>
+							</Popover>
 						</Row>
 						<Row mainAlignment="flex-start" width="100%" padding={{ left: 'extralarge' }}>
 							<Text color="secondary">
@@ -841,25 +984,34 @@ const ModifyVolume: FC<{
 								)}
 							</Text>
 						</Row>
-						<Row padding={{ top: 'large' }} mainAlignment="flex-start" width="100%">
-							<Switch
-								value={externalVolDetail?.centralized}
-								label={t('label.storage_centralized', 'I want this Storage to be centralized')}
-								// onClick={changeSwitchCentralized}
-								disabled
-							/>
-						</Row>
-						<Row mainAlignment="flex-start" width="100%" padding={{ left: 'extralarge' }}>
-							<Text color="secondary" style={{ whiteSpace: 'pre-line' }}>
-								<Trans
-									i18nKey="label.storage_centralized_helpertext"
-									defaults="<bold>Use the CLI to manage the centralization.</bold> Centralized data becomes useful when two or more servers need access to the same data. By keeping data in one place, it’s easier to manage both the hardware and the data itself. "
-									components={{ bold: <strong /> }}
-								/>
-							</Text>
-						</Row>
 					</Container>
 				)}
+				<Modal
+					open={isCurrentToggle && !isCurrent}
+					title={t('modal.iscurrent_confirm.title', 'You are setting {{name}} as current', {
+						name
+					})}
+					onClose={(): any => setIsCurrentToggle(false)}
+					onConfirm={(): any => {
+						setIsCurrent(true);
+						setIsCurrentToggle(false);
+					}}
+					confirmLabel={t('modal.iscurrent_confirm.confirm_label', 'YES, PROCEED')}
+					onSecondaryAction={(): any => setIsCurrentToggle(false)}
+					secondaryActionLabel={t('modal.iscurrent_confirm.secondary_label', 'NO, GO BACK')}
+					showCloseIcon
+				>
+					<Padding vertical="small">
+						<Text>
+							<Trans
+								i18nKey="modal.iscurrent_confirm.body_message"
+								defaults="The current {{type}} {{currentVolumeName}}.<br />Are you sure you want to <strong>set {{name}} as current</strong>?"
+								components={{ break: <br />, bold: <strong /> }}
+								values={{ type: type?.label, currentVolumeName: isCurrentVolume?.name, name }}
+							/>
+						</Text>
+					</Padding>
+				</Modal>
 			</Container>
 		</>
 	);

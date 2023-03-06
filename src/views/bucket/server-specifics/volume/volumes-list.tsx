@@ -216,14 +216,14 @@ const VolumesDetailPanel: FC = () => {
 	const serverName = useBucketServersListStore((state) => state?.volumeList)[0].name;
 
 	const changeSelectedVolume = (): any => {
-		if (volume?.type === 1 && volume?.id !== 0) {
-			const volumeObject: any = volumeList?.primaries?.find((s: any) => s?.id === volume?.id);
+		if (detailData?.type === 1 && detailData?.id !== 0) {
+			const volumeObject: any = volumeList?.primaries?.find((s: any) => s?.id === detailData?.id);
 			setVolume(volumeObject);
-		} else if (volume?.type === 2 && volume?.id !== 0) {
-			const volumeObject: any = volumeList?.secondaries?.find((s: any) => s?.id === volume?.id);
+		} else if (detailData?.type === 2 && detailData?.id !== 0) {
+			const volumeObject: any = volumeList?.secondaries?.find((s: any) => s?.id === detailData?.id);
 			setVolume(volumeObject);
-		} else if (volume?.type === 10 && volume?.id !== 0) {
-			const volumeObject: any = volumeList?.indexes?.find((s: any) => s?.id === volume?.id);
+		} else if (detailData?.type === 10 && detailData?.id !== 0) {
+			const volumeObject: any = volumeList?.indexes?.find((s: any) => s?.id === detailData?.id);
 			setVolume(volumeObject);
 		}
 	};
@@ -258,8 +258,8 @@ const VolumesDetailPanel: FC = () => {
 						createSnackbar({
 							key: '1',
 							type: 'error',
-							label: t('label.volume_create_error', '{{volumeErrMessage}}', {
-								volumeErrMessage: getAllVolResponse?.error?.message
+							label: t('label.volume_detail_error', '{{message}}', {
+								message: 'Something went wrong, please try again'
 							})
 						});
 					}
@@ -269,7 +269,7 @@ const VolumesDetailPanel: FC = () => {
 						key: 'error',
 						type: 'error',
 						label: t('label.volume_detail_error', '{{message}}', {
-							message: error
+							message: 'Something went wrong, please try again'
 						}),
 						autoHideTimeout: 5000
 					});
@@ -300,7 +300,7 @@ const VolumesDetailPanel: FC = () => {
 						key: 'error',
 						type: 'error',
 						label: t('label.volume_detail_error', '{{message}}', {
-							message: error
+							message: 'Something went wrong, please try again'
 						}),
 						autoHideTimeout: 5000
 					});
@@ -335,8 +335,8 @@ const VolumesDetailPanel: FC = () => {
 						createSnackbar({
 							key: '1',
 							type: 'error',
-							label: t('label.volume_create_error', '{{volumeErrMessage}}', {
-								volumeErrMessage: deleteResponse?.error?.message
+							label: t('label.volume_detail_error', '{{message}}', {
+								message: 'Something went wrong, please try again'
 							})
 						});
 						setOpen(false);
@@ -348,7 +348,7 @@ const VolumesDetailPanel: FC = () => {
 						key: 'error',
 						type: 'error',
 						label: t('label.volume_detail_error', '{{message}}', {
-							message: error
+							message: 'Something went wrong, please try again'
 						}),
 						autoHideTimeout: 5000
 					});
@@ -388,7 +388,7 @@ const VolumesDetailPanel: FC = () => {
 						key: 'error',
 						type: 'error',
 						label: t('label.volume_detail_error', '{{message}}', {
-							message: error
+							message: 'Something went wrong, please try again'
 						}),
 						autoHideTimeout: 5000
 					});
@@ -446,9 +446,9 @@ const VolumesDetailPanel: FC = () => {
 			obj.bucketConfigurationId = attr?.bucketConfigurationId;
 			obj.volumePrefix = attr?.volumePrefix;
 			obj.centralized = attr?.centralized;
-			obj.useInfrequentAccess = false;
-			obj.infrequentAccessThreshold = 'asd';
-			obj.useIntelligentTiering = false;
+			obj.useInfrequentAccess = attr?.useInfrequentAccess;
+			obj.infrequentAccessThreshold = attr?.infrequentAccessThreshold;
+			obj.useIntelligentTiering = attr?.useIntelligentTiering;
 		}
 		if (attr?.storeType?.toUpperCase() === FILEBLOB?.toUpperCase()) {
 			obj.volumePath = '/tmp/store2';
@@ -505,8 +505,8 @@ const VolumesDetailPanel: FC = () => {
 					createSnackbar({
 						key: '1',
 						type: 'error',
-						label: t('label.volume_create_error', '{{volumeErrMessage}}', {
-							volumeErrMessage: result?.error?.message || result?.exception?.message
+						label: t('label.volume_detail_error', '{{message}}', {
+							message: 'Something went wrong, please try again'
 						})
 					});
 				}
@@ -519,7 +519,7 @@ const VolumesDetailPanel: FC = () => {
 					label: error?.message
 						? error?.message
 						: t('label.volume_detail_error', '{{message}}', {
-								message: error
+								message: 'Something went wrong, please try again'
 						  }),
 					autoHideTimeout: 5000
 				});
@@ -581,7 +581,7 @@ const VolumesDetailPanel: FC = () => {
 									key: 'error',
 									type: 'error',
 									label: t('label.volume_detail_error', '{{message}}', {
-										message: error
+										message: 'Something went wrong, please try again'
 									}),
 									autoHideTimeout: 5000
 								});
@@ -601,7 +601,7 @@ const VolumesDetailPanel: FC = () => {
 						key: 'error',
 						type: 'error',
 						label: t('label.volume_detail_error', '{{message}}', {
-							message: responseData?.error?.message
+							message: 'Something went wrong, please try again'
 						}),
 						autoHideTimeout: 5000
 					});
@@ -629,7 +629,7 @@ const VolumesDetailPanel: FC = () => {
 											key: 'error',
 											type: 'error',
 											label: t('label.volume_detail_error', '{{message}}', {
-												message: error
+												message: 'Something went wrong, please try again'
 											}),
 											autoHideTimeout: 5000
 										});
@@ -655,7 +655,7 @@ const VolumesDetailPanel: FC = () => {
 						label: error?.message
 							? error?.message
 							: t('label.volume_detail_error', '{{message}}', {
-									message: error
+									message: 'Something went wrong, please try again'
 							  }),
 						autoHideTimeout: 5000
 					});
@@ -678,6 +678,11 @@ const VolumesDetailPanel: FC = () => {
 			}
 		}
 	}, [serverList, server]);
+
+	useEffect(() => {
+		changeSelectedVolume();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [modifyVolumeToggle, detailData, volumeList]);
 
 	return (
 		<>
