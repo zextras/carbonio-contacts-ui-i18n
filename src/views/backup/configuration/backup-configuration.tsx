@@ -45,6 +45,7 @@ import {
 } from '../../../constants';
 import { RouteLeavingGuard } from '../../ui-extras/nav-guard';
 import { fetchSoap } from '../../../services/bucket-service';
+import { useBackupStore } from '../../../store/backup/store';
 
 const BackupConfiguration: FC = () => {
 	const { operation, server }: { operation: string; server: string } = useParams();
@@ -88,6 +89,7 @@ const BackupConfiguration: FC = () => {
 	const [manageExternalVolumeNewLocalMountpoint, setManageExternalVolumeNewLocalMountpoint] =
 		useState<string>('');
 	const [rootVolumePath, setRootVolumePath] = useState<string>('');
+	const selectedBackupServer = useBackupStore((state) => state.selectedServer);
 
 	const destinationOptions: any[] = useMemo(
 		() => [
@@ -882,7 +884,7 @@ const BackupConfiguration: FC = () => {
 								crossAlignment="flex-start"
 							>
 								<Text size="medium" weight="bold" color="gray0">
-									{t('backup.server_configuration', 'Server Configuration')}
+									{selectedBackupServer} {t('backup.backup_configuration', 'backup configuration')}
 								</Text>
 							</Row>
 							<Row
