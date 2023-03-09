@@ -54,6 +54,8 @@ import { useAuthIsAdvanced } from '../../../../store/auth-advanced/store';
 import { useBucketServersListStore } from '../../../../store/bucket-server-list/store';
 import { createVoume } from '../../../../services/create-volume-service';
 import { setCurrentVolumeRequest } from '../../../../services/set-current-volume-service';
+import CustomRowFactory from '../../../app/shared/customTableRowFactory';
+import CustomHeaderFactory from '../../../app/shared/customTableHeaderFactory';
 
 const RelativeContainer = styled(Container)`
 	position: relative;
@@ -148,6 +150,8 @@ const VolumeListTable: FC<{
 				multiSelect={false}
 				selectedRows={selectedRows}
 				onSelectionChange={onSelectionChange}
+				RowFactory={CustomRowFactory}
+				HeaderFactory={CustomHeaderFactory}
 			/>
 			{tableRows?.length === 0 && (
 				<Row padding={{ top: 'extralarge', horizontal: 'extralarge' }} width="fill">
@@ -457,8 +461,9 @@ const VolumesDetailPanel: FC = () => {
 			obj.infrequentAccessThreshold = attr?.infrequentAccessThreshold;
 			obj.useIntelligentTiering = attr?.useIntelligentTiering;
 		}
+		// TODO : Fileblob, Centeralized, Open IO, Swift Mocks needs to be provided this is for future reference only
 		if (attr?.storeType?.toUpperCase() === FILEBLOB?.toUpperCase()) {
-			obj.volumePath = '/tmp/store2';
+			obj.volumePath = '';
 			obj.volumeCompressed = false;
 			obj.compressionThresholdBytes = 4096;
 		}
@@ -466,31 +471,30 @@ const VolumesDetailPanel: FC = () => {
 			obj.serverName = attr?.serverName;
 		}
 		if (attr?.storeType?.toUpperCase() === OPENIO?.toUpperCase()) {
-			obj.url = '/tmp/store2';
-			obj.account = 'abc';
-			obj.namespace = 'abc';
+			obj.url = '';
+			obj.account = '';
+			obj.namespace = '';
 			obj.proxyPort = 1;
 			obj.accountPort = 1;
-			obj.ecd = 'abc';
+			obj.ecd = '';
 			obj.centralized = attr?.centralized;
 		}
 		if (attr?.storeType?.toUpperCase() === SWIFT?.toUpperCase()) {
-			obj.url = '/tmp/store2';
-			obj.username = 'abc';
-			obj.password = 'abc';
-			obj.authenticationMethod = 'abc';
-			obj.authenticationMethodScope = 'BASIC';
-			obj.authenticationMethodScope = 'DEFAULT';
-			obj.tenantId = '12';
-			obj.tenantName = '12';
-			obj.domain = '12';
-			obj.proxyHost = '12';
-			obj.proxyPort = 10;
-			obj.proxyUsername = 'abc';
-			obj.proxyPassword = 'abc';
-			obj.publicHost = 'abc';
-			obj.privateHost = 'abc';
-			obj.region = 'abc';
+			obj.url = '';
+			obj.username = '';
+			obj.password = '';
+			obj.authenticationMethod = '';
+			obj.authenticationMethodScope = '';
+			obj.tenantId = '';
+			obj.tenantName = '';
+			obj.domain = '';
+			obj.proxyHost = '';
+			obj.proxyPort = 0;
+			obj.proxyUsername = '';
+			obj.proxyPassword = '';
+			obj.publicHost = '';
+			obj.privateHost = '';
+			obj.region = '';
 			obj.maxDeleteObjectsCount = 10;
 			obj.centralized = attr?.centralized;
 		}

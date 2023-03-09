@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.9.12](https://github.com/zextras/carbonio-admin-console-ui/compare/v0.9.11...v0.9.12) (2023-03-02)
+
+
+### Features
+
+* download mailbox quota in csv ([1ada4f3](https://github.com/zextras/carbonio-admin-console-ui/commit/1ada4f3510626b2fceeb7a4ac33278d02e4bcbfc))
+* sort functionality added inside mail quota ([a52e26e](https://github.com/zextras/carbonio-admin-console-ui/commit/a52e26eae8df47794e9066ac77f4180326e06a9f))
+
+
+### Bug Fixes
+
+* add the hand pointer to clickable items in the secondary bar ([#279](https://github.com/zextras/carbonio-admin-console-ui/issues/279)) ([eb2be76](https://github.com/zextras/carbonio-admin-console-ui/commit/eb2be76f2e47230c3087ecfb809c727c4d304f9e))
+* cos feature error ([#291](https://github.com/zextras/carbonio-admin-console-ui/issues/291)) ([f515607](https://github.com/zextras/carbonio-admin-console-ui/commit/f51560774b896dd9ad959695646e96fa58846a3d))
+* delete account dialog trans ([#286](https://github.com/zextras/carbonio-admin-console-ui/issues/286)) ([b13b8e6](https://github.com/zextras/carbonio-admin-console-ui/commit/b13b8e6c8d22be6884e2408e525e8e5efce6bb53))
+* disable download button when load record of mailbox quota ([a423c3b](https://github.com/zextras/carbonio-admin-console-ui/commit/a423c3b83c8daead691a4ef922652c18155348f6))
+* height of table header in bucket detail is worng ([20ee133](https://github.com/zextras/carbonio-admin-console-ui/commit/20ee13323d80830161bcee8605228eac0cdc81ce))
+* notification and operation should show in carbonio Advance ([d7c57fb](https://github.com/zextras/carbonio-admin-console-ui/commit/d7c57fbcb81080b45fc809b3ba9bb0eb71ffd3dd))
+* tab bar upgrade after design system upgrade ([fd6fda1](https://github.com/zextras/carbonio-admin-console-ui/commit/fd6fda104d78368f6607362e0fc6a04f31d4d260))
+
 ### [0.9.11](https://github.com/zextras/carbonio-admin-console-ui/compare/v0.9.10...v0.9.11) (2023-02-21)
 
 ### [0.9.10](https://github.com/zextras/carbonio-admin-console-ui/compare/v0.9.9...v0.9.10) (2023-02-16)

@@ -191,3 +191,8 @@ export const AMAZON_USERGUIDE_STORAGE_CLASS_LINK =
 	'https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html';
 export const AMAZON_USERGUIDE_INTELLIGENT_TIERING_LINK =
 	'https://docs.aws.amazon.com/AmazonS3/latest/userguide/intelligent-tiering.html';
+export const SEND_MAILS_ONLY = 'send_mails_only';
+export const READ_MAILS_ONLY = 'read_mails_only';
+export const SEND_READ_MAILS = 'send_read_mails';
+export const MANAGE_NO_SEND = 'manage_no_send';
+export const SEND_READ_MANAGE_MAILS = 'send_read_manage_mails';

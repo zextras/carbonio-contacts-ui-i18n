@@ -161,14 +161,17 @@ const EditAccount: FC<{
 			label: t('label.security', 'SECURITY'),
 			CustomComponent: ReusedDefaultTabBar,
 			icon: 'LockOutline'
-		},
-		{
+		}
+	];
+
+	if (isAdvanced) {
+		items.push({
 			id: 'delegates',
 			label: t('label.delegates', 'DELEGATES'),
 			CustomComponent: ReusedDefaultTabBar,
 			icon: 'SharedAccountOutline'
-		}
-	];
+		});
+	}
 
 	const setSwitchInitOptionValue = useCallback(
 		(key: string, value: string): void => {
@@ -417,8 +420,10 @@ const EditAccount: FC<{
 					<Row width="100%" mainAlignment="flex-end" crossAlignment="flex-end">
 						<TabBar
 							items={items}
-							defaultSelected="general"
-							onChange={setChange}
+							selected={change}
+							onChange={(ev: unknown, selectedId: string): void => {
+								setChange(selectedId);
+							}}
 							onItemClick={setClick}
 							width={915}
 						/>

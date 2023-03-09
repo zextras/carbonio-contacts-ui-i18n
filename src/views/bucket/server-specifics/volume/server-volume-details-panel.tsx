@@ -307,11 +307,7 @@ const ServerVolumeDetailsPanel: FC<{
 							</Text>
 						</Row>
 						<Row padding={{ horizontal: 'small' }}>
-							<IconButton
-								icon="CloseOutline"
-								color="gray1"
-								onClick={(): void => setToggleDetailPage(false)}
-							/>
+							<IconButton icon="CloseOutline" onClick={(): void => setToggleDetailPage(false)} />
 						</Row>
 					</Row>
 					<Divider />
@@ -416,6 +412,7 @@ const ServerVolumeDetailsPanel: FC<{
 											disabled={!detailData?.id || volumeDetail?.id !== detailData?.id}
 											loading={!detailData?.id || volumeDetail?.id !== detailData?.id}
 											onClick={handleTypeToggleClick}
+											size="large"
 										/>
 									</Row>
 									<Padding horizontal="small" />
@@ -733,6 +730,7 @@ const ServerVolumeDetailsPanel: FC<{
 									onClick={(): void => setOpen(true)}
 									disabled={!detailData?.id || volumeDetail?.id !== detailData?.id}
 									loading={!detailData?.id || volumeDetail?.id !== detailData?.id}
+									size="large"
 								/>
 							</Row>
 						</Container>

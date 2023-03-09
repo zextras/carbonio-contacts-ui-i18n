@@ -4,7 +4,19 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { TFunction } from 'i18next';
-import { ACTIVE, CLOSED, LOCKED, MAINTENANCE, PENDING, NOT_SET } from '../../constants';
+import {
+	ACTIVE,
+	CLOSED,
+	LOCKED,
+	MAINTENANCE,
+	PENDING,
+	NOT_SET,
+	SEND_MAILS_ONLY,
+	READ_MAILS_ONLY,
+	SEND_READ_MAILS,
+	MANAGE_NO_SEND,
+	SEND_READ_MANAGE_MAILS
+} from '../../constants';
 
 export const timeZoneList = (
 	t: TFunction
@@ -1654,6 +1666,34 @@ export const conversationGroupBy = (t: TFunction): Array<{ value?: string; label
 	}
 ];
 
+export const deligateSendSettings = (t: TFunction): Array<{ value?: string; label: string }> => [
+	{
+		label: t(
+			'label.save_a_copy_of_sent_messages_only_in_delegates_send_folder',
+			`Save a copy of sent messages only in delegate's send folder`
+		),
+		value: 'owner'
+	},
+	{
+		label: t(
+			'label.save_a_copy_of_sent_messages_only_in_delegateds_send_folder',
+			`Save a copy of sent messages only in delegated's send folder`
+		),
+		value: 'sender'
+	},
+	{
+		label: t(
+			'label.save_a_copy_of_sent_messages_to_delegate_and_delegated_send_folder',
+			`Save a copy of sent messages to delegate and delegated send folde`
+		),
+		value: 'both'
+	},
+	{
+		label: t('label.dont_save_a_copy_of_sent_messages', `Don't save a copy of sent messages`),
+		value: 'none'
+	}
+];
+
 export const delegateType = (t: TFunction): Array<{ value?: string; label: string }> => [
 	{
 		label: t('account_details.a_user', 'A User'),
@@ -1668,43 +1708,29 @@ export const delegateType = (t: TFunction): Array<{ value?: string; label: strin
 export const delegateRightsType = (t: TFunction): Array<{ value?: string; label: string }> => [
 	{
 		label: t('account_details.send_mails_only', 'Send Mails only (no rights to read folders)'),
-		value: 'send_mails_only'
+		value: SEND_MAILS_ONLY
 	},
 	{
 		label: t('account_details.read_mails_only', 'Read Mails only (no rights to send mails)'),
-		value: 'read_mails_only'
+		value: READ_MAILS_ONLY
 	},
 	{
 		label: t(
 			'account_details.send_read_mails',
 			'Send and Read Mails (no rights to create folders / manage mails)'
 		),
-		value: 'send_read_mails'
+		value: SEND_READ_MAILS
+	},
+	{
+		label: t('account_details.manage_no_rights_to_send_mails', 'Manage (no rights to send mails)'),
+		value: MANAGE_NO_SEND
 	},
 	{
 		label: t(
 			'account_details.send_read_manage_mails',
 			'Send, Read and Manage Mails (all of the above)'
 		),
-		value: 'send_read_manage_mails'
-	}
-];
-
-export const delegateWhereToStore = (t: TFunction): Array<{ value?: string; label: string }> => [
-	{
-		label: t('account_details.save_it_to_sent_folder', 'Save it to Sent folder'),
-		value: 'save_it_to_sent_folder'
-	},
-	{
-		label: t(
-			'account_details.save_it_to_delegate_sent_folder',
-			'Save it to sender and delegates Sent folder)'
-		),
-		value: 'save_it_to_delegate_sent_folder'
-	},
-	{
-		label: t('account_details.do_not_save_it', 'Don’t save it'),
-		value: 'do_not_save_it'
+		value: SEND_READ_MANAGE_MAILS
 	}
 ];
 
