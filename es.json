@@ -14,7 +14,7 @@
         "shares_folder_edit": "Compartir libreta de direcciones",
         "delete": "Eliminar",
         "edit_access_name": "Editar permisos de {{name}}",
-        "email": "Email",
+        "email": "E-mail",
         "notes": "Notas",
         "of": "de",
         "restore": "Restaurar",
@@ -49,8 +49,8 @@
         "new_contact": "Nuevo contacto",
         "cannot_move": "Ya está en esta carpeta",
         "select_color": "Seleccionar color",
-        "edit_invalid_email": "Email inválido. Haz clic para editarlo",
-        "edit_email": "Editar Email",
+        "edit_invalid_email": "La dirección de e-mail no es válida. Haz clic para editarla",
+        "edit_email": "Editar e-mail",
         "tags": "Etiquetas",
         "tag_name": "Nombre de la etiqueta",
         "tag_max_length": "Máximo 128 caracteres permitidos",
@@ -109,7 +109,7 @@
         "goto_folder": "Ir a la libreta",
         "reset_filters": "Vaciar campos",
         "share_folder": "Compartir carpeta",
-        "send_msg": "Enviar Email"
+        "send_msg": "Enviar E-mail"
     },
     "folder": {
         "modal": {
@@ -210,7 +210,7 @@
         "title": {
             "address": "Dirección",
             "address_plural": "Direcciones",
-            "mail": "Dirección de Email",
+            "mail": "Dirección de e-mail",
             "phone_number": "Teléfono"
         }
     },
@@ -231,7 +231,7 @@
             "contact_moved_to_trash": "Contacto movido a la papelera",
             "contact_restored": "Contacto restaurado",
             "tag_updated": "La etiqueta ha sido actualizada",
-            "tag_not_updated": "Algo salió mal, etiqueta no actualizada. Por favor, prueba de nuevo.",
+            "tag_not_updated": "Algo ha salido mal, la etiqueta no fue actualizada. Intenta nuevamente.",
             "tag_deleted": "Se ha eliminado la etiqueta \"{{name}}\"",
             "tag_created": "Se ha creado la etiqueta \"{{name}}\""
         },
@@ -254,7 +254,7 @@
         "contacts": {
             "checkbox": {
                 "add_contact_to_emailed_contacts": "Añadir nuevos contactos a \"Contactos respondidos\"",
-                "autocomplete_on_comma": "Autocompletar dirección de Email digitando una coma",
+                "autocomplete_on_comma": "Autocompletar dirección de e-mail escribiendo una coma",
                 "incl_addrs_in_glbl_addrs_list": "Incluir direcciones de la Lista Global de Direcciones",
                 "include_add_in_shared_contact": "Incluir direcciones de los contactos compartidos",
                 "srch_glbl_addrs_list": "Buscar primero en la Lista Global de Direcciones al mostrar las sugerencias"
@@ -296,7 +296,7 @@
         "description4": "Crea uno haciendo clic en el botón \"NUEVO\".",
         "description6": "Selecciona la opción \"Editar\" para añadir una nota personalizada.",
         "description7": "Crea un grupo de contactos haciendo clic en el botón \"NUEVO\".",
-        "description8": "Elige un contacto o grupo de contactos para enviarles un email.",
+        "description8": "Elige un contacto o grupo de contactos para enviar un e-mail.",
         "list_title1": "Parece que aún no hay contactos",
         "list_title2": "La papelera está vacía",
         "search_description2": "Intenta iniciar otra búsqueda.",
@@ -313,7 +313,7 @@
         "title6": "Personalizar contacto",
         "title7": "Mantente en contacto con tus compañeros",
         "title9": "Haz clic en el icono de la papelera para eliminar el contacto.",
-        "title8": "Enviar Email"
+        "title8": "Enviar e-mail"
     },
     "contact_restored": "Contacto restaurado",
     "folders": {
