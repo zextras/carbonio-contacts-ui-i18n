@@ -28,7 +28,7 @@
         "undo": "Deshacer",
         "contacts": "Contactos",
         "empty": "Vaciar",
-        "error_try_again": "Algo ha salido mal. Intenta nuevamente",
+        "error_try_again": "Algo salió mal. Intenta nuevamente",
         "move": "Mover",
         "revoke_without_notification": "Revocar acceso sin enviar una notificación",
         "root": "Raíz",
@@ -167,11 +167,11 @@
         "action": {
             "empty": {
                 "trash": "Vaciar papelera",
-                "folder": "Vaciar libreta"
+                "folder": "Vaciar libreta de direcciones"
             },
             "delete": "Eliminar libreta de direcciones",
             "delete_permanently": "Eliminar permanentemente",
-            "edit": "Editar libreta",
+            "edit": "Editar libreta de direcciones",
             "move": "Mover",
             "moved": "La libreta ha sido movida correctamente"
         },
@@ -218,7 +218,7 @@
         "snackbar": {
             "settings_saved": "Se han guardado los cambios"
         },
-        "delete_tag_message2": "Una vez borrada, se quitará de cada elemento marcado con ella.",
+        "delete_tag_message2": "Una vez eliminada, se quitará de cada elemento marcado con ella.",
         "delete_tag_message1": "¿Seguro que quieres borrar la etiqueta \"{{name}}\"?",
         "require_field": "Rellena al menos uno de los campos * requeridos",
         "new_contact": "Este contacto será creado en la carpeta \"Contactos\""
@@ -226,12 +226,12 @@
     "messages": {
         "snackbar": {
             "address_book_moved": "Libreta de direcciones movida a la carpeta de destino",
-            "contact_deleted_permanently": "Contacto borrado permanentemente",
+            "contact_deleted_permanently": "Contacto eliminado permanentemente",
             "contact_moved": "Contacto movido",
             "contact_moved_to_trash": "Contacto movido a la papelera",
             "contact_restored": "Contacto restaurado",
             "tag_updated": "La etiqueta ha sido actualizada",
-            "tag_not_updated": "Algo ha salido mal, la etiqueta no fue actualizada. Intenta nuevamente.",
+            "tag_not_updated": "Algo salió mal, la etiqueta no pudo ser actualizada. Intenta nuevamente.",
             "tag_deleted": "Se ha eliminado la etiqueta \"{{name}}\"",
             "tag_created": "Se ha creado la etiqueta \"{{name}}\""
         },
