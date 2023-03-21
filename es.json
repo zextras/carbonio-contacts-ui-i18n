@@ -142,7 +142,7 @@
                     "message2": "Elige la libreta en donde será creada:"
                 },
                 "input": {
-                    "name": "Introduce el nombre",
+                    "name": "Ingresa el nombre",
                     "name_exist": "El nombre ya existe"
                 },
                 "title2": "Creación de Nueva carpeta",
@@ -195,8 +195,8 @@
         "first_name": "Nombre",
         "last_name": "Apellido",
         "middle_name": "Segundo nombre",
-        "prefix": "Tratamiento de cortesía",
-        "suffix": "Sufijo"
+        "prefix": "Título personal",
+        "suffix": "Complem. del nombre"
     },
     "section": {
         "field": {
