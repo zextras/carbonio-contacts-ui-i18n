@@ -143,7 +143,6 @@
         "revoke_without_notification": "通知を送信せずにアクセス権を取り消す",
         "revoke_with_custom_msg": "カスタム通知を送信してアクセス権を取り消す",
         "root": "ルート",
-        "single_advanced_filter": "高度なフィルタ",
         "type": "種類",
         "website": "ウェブサイト",
         "email": "メール",

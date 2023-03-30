@@ -110,7 +110,6 @@
         "revoke_with_standard_msg": "Zugriff widerrufen mit einer Standardbenachrichtigung",
         "revoke_without_notification": "Zugriff widerrufen ohne eine Benachrichtigung zu senden",
         "root": "Root",
-        "single_advanced_filter": "Erweiterte Filter",
         "website": "Webseite",
         "website_plural": "Webseiten",
         "advanced_filter": "{{count}} Erweiterter Filter",
