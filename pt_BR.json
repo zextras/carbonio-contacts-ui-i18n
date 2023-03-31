@@ -145,7 +145,7 @@
         "new_tag": "Novo marcador",
         "edit_tag_name": "Editar o marcador \"{{name}}\"",
         "edit_tag": "Editar marcador",
-        "delete_tag_name": "Excluir marcador",
+        "delete_tag_name": "Excluir marcador \"{{name}}\"",
         "delete_tag": "Excluir marcador",
         "create_tag": "Criar marcador",
         "no_name": "Sem nome",
