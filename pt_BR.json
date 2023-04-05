@@ -93,7 +93,7 @@
         "share": "Compartilhar",
         "contact_setting": "Configurações de contato",
         "create": "Criar",
-        "edit_access": "Editar acesso",
+        "edit_access": "Editar permissões",
         "edit_folder_properties": "Editar propriedades de {{name}}",
         "resend": "Reenviar",
         "revoke": "Revogar",
@@ -145,7 +145,7 @@
         "new_tag": "Novo marcador",
         "edit_tag_name": "Editar o marcador \"{{name}}\"",
         "edit_tag": "Editar marcador",
-        "delete_tag_name": "Excluir marcador \"{{name}}\"",
+        "delete_tag_name": "Excluir marcador",
         "delete_tag": "Excluir marcador",
         "create_tag": "Criar marcador",
         "no_name": "Sem nome",
@@ -169,13 +169,13 @@
         "options": {
             "share_calendar_with": {
                 "internal_users_groups": "Usuários ou grupos internos",
-                "public": "Público (apenas ver, senha não necessária)",
+                "public": "Público (apenas ver, senha não requerida)",
                 "external_guests": "Convidados externos (apenas visualizar)"
             }
         },
         "recipients_address": "Endereços de e-mail dos destinatários",
         "remove_from_this_list": "Remover desta lista",
-        "role": "Permissão",
+        "role": "Papel",
         "send_notification": "Enviar notificação sobre este compartilhamento",
         "share_added_succesfully": "Compartilhamento adicionado com sucesso",
         "share_info": "Informações da agenda compartilhada",
@@ -254,16 +254,16 @@
             "checkbox": {
                 "add_contact_to_emailed_contacts": "Adicionar novos contatos aos \"Contatos que receberam e-mail\"",
                 "autocomplete_on_comma": "Preencher endereço de e-mail automáticamente ao digitar vírgula",
-                "include_add_in_shared_contact": "Incluir endereços nos contatos compartilhados",
-                "srch_glbl_addrs_list": "Buscar primeiro na GAL ao mostrar sugestões de contatos",
-                "incl_addrs_in_glbl_addrs_list": "Incluir endereços na Lista Global de Endereços"
+                "include_add_in_shared_contact": "Mostrar endereços de contatos compartilhados",
+                "srch_glbl_addrs_list": "Procurar primeiro na GAL ao exibir sugestões de contato",
+                "incl_addrs_in_glbl_addrs_list": "Mostrar endereços da Global Address List"
             }
         }
     },
     "snackbar": {
         "folder_edited": "Agenda de contatos editada com sucesso",
         "folder_shared": "Agenda de contatos compartilhada",
-        "share_resend": "Convite do compartilhamento enviado",
+        "share_resend": "Convite do compartilhamento reenviado",
         "share_revoke": "Acesso compartilhado revogado",
         "share_updated": "Direitos de acesso atualizadas",
         "tag_removed": "Marcador \"{{tag}}\" removido",
@@ -309,7 +309,7 @@
         "title9": "Clique no ícone da lixeira para excluir um contato.",
         "description3": "Clique no botão \"NOVO\" para criar um grupo de contatos.",
         "description5": "Descubra todas as formas que você pode se conectar com outros usuários.",
-        "search_description1": "Ou selecione \"Filtros Avançados\" para refinar sua busca.",
+        "search_description1": "Ou selecione \"Filtros avançados\" para refinar sua busca.",
         "search_list_title1": "Parece que não há resultados. Continue buscando!",
         "search_title4": "Selecione um ou mais resultados para realizar ações ou exibir os detalhes.",
         "title7": "Mantenha contato com seus colegas"
