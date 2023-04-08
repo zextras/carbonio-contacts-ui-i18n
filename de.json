@@ -40,7 +40,8 @@
                 },
                 "message2": "Alle zugehörigen Kontakte werden dauerhaft gelöscht und können nicht wiederhergestellt werden.",
                 "message3": "Möchten Sie den Papierkorb leeren?",
-                "message4": "Der Inhalt wird dauerhaft gelöscht und kann nicht wiederhergestellt werden."
+                "message4": "Der Inhalt wird dauerhaft gelöscht und kann nicht wiederhergestellt werden.",
+                "message1": "Möchten Sie das ausgewählte Adressbuch leeren?"
             },
             "footer": {
                 "go_back": "Zurück"
