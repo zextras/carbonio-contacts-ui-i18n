@@ -178,7 +178,8 @@
         "no_name": "Без имени",
         "no_data": "Нет данных",
         "contact_created_in_folder": "Этот контакт будет создан в папке \"{{name}}\"",
-        "include_shared_folders": "Включить общие адресные книги"
+        "include_shared_folders": "Включить общие адресные книги",
+        "destination_address_book": "Адресная книга назначения"
     },
     "job": {
         "title": "Должность",
