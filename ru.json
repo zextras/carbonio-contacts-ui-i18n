@@ -93,8 +93,7 @@
             "phone_number": "Номер телефона",
             "mail": "Электронная почта",
             "address": "Адрес",
-            "address_plural": "Адреса",
-            "address_2": "Адресов"
+            "address_plural": "Адреса"
         }
     },
     "types": {
