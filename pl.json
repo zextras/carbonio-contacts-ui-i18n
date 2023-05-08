@@ -188,7 +188,7 @@
     },
     "message": {
         "snackbar": {
-            "settings_saved": "Zmiany zostały zapisane pomyślnie"
+            "settings_saved": "Zmiany zostały zapisane"
         },
         "require_field": "Uzupełnij co najmniej jedno z wymaganych pól",
         "delete_tag_message2": "Po usunięciu Tag zostanie zdjęty z każdego elementu oznaczonego nim.",
