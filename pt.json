@@ -51,7 +51,11 @@
                 "body": {
                     "message1": "Deseja esvaziar a agenda de contatos selecionada?",
                     "message2": "Ao esvaziá-la, todo seu conteúdo será movido para a lixeira."
-                }
+                },
+                "message1": "Deseja apagar todos os Contatos da Agenda de Contatos selecionada?",
+                "message2": "Todos os Contatos relacionados serão apagados permanentemente e não será possível recuperá-los.",
+                "message3": "Deseja esvaziar a lixeira?",
+                "message4": "O conteúdo será apagado permanentemente e não será possível recuperá-lo."
             },
             "footer": {
                 "go_back": "Voltar"
@@ -130,7 +134,7 @@
         "folder_name": "Nome da pasta",
         "note": "Nota:",
         "options": "Opções",
-        "share_with": "Compartilhar com",
+        "share_with": "Partilhar com",
         "app_name": "Contatos",
         "new_contact": "Novo contato",
         "cannot_move": "Não é possível mover para a mesma pasta",
