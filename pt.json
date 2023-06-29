@@ -131,7 +131,7 @@
         "discard_changes": "DESCARTAR MODIFICAÇÕES",
         "new_address_book": "Novo Livro de Contactos",
         "new_contact_created": "Novo contato criado",
-        "search_activate_selection_mode": "Modo de seleção ainda não está disponível para resultados da busca",
+        "search_activate_selection_mode": "O modo de seleção ainda não está disponível para os resultados da pesquisa",
         "add_share": "Adicionar compartilhamento",
         "folder_name": "Nome da pasta",
         "note": "Nota:",
@@ -226,7 +226,7 @@
     },
     "message": {
         "snackbar": {
-            "settings_saved": "Edições salvas corretamente"
+            "settings_saved": "Edições guardadas corretamente"
         },
         "delete_tag_message2": "Uma vez excluído, ele será removido de todos os itens marcados com o mesmo.",
         "delete_tag_message1": "Tem certeza que deseja excluir o marcador \"{{name}}\"?",
@@ -305,12 +305,12 @@
         "description8": "Selecione um contato ou grupo de contatos para enviar um e-mail.",
         "list_title1": "Parece que ainda não tem contatos",
         "list_title2": "A lixeira está vazia",
-        "search_description2": "Tente iniciar uma nova busca.",
+        "search_description2": "Tente iniciar uma nova pesquisa.",
         "search_description3": "Verifique a ortografia e as opções dos filtros ou tente com outra palavra-chave.",
-        "search_list_title2": "Nenhum dos itens corresponde à sua busca.",
-        "search_title1": "Inicie uma nova busca",
-        "search_title2": "Não há resultados para sua busca",
-        "search_title3": "Não há resultados para sua busca.",
+        "search_list_title2": "Nenhum dos itens corresponde à sua pesquisa.",
+        "search_title1": "Iniciar uma nova pesquisa",
+        "search_title2": "Não foram encontrados resultados para a sua pesquisa",
+        "search_title3": "Não foram encontrados resultados para a sua pesquisa.",
         "title1": "Crie um contato clicando no botão \"NOVO\".",
         "description4": "Crie um clicando no botão \"NOVO\".",
         "title10": "Selecione e recupere contatos da lixeira",
@@ -322,8 +322,8 @@
         "title9": "Clique no ícone da lixeira para excluir um contato.",
         "description3": "Clique no botão \"NOVO\" para criar um grupo de contatos.",
         "description5": "Descubra todas as formas que você pode se conectar com outros usuários.",
-        "search_description1": "Ou selecione \"Filtros avançados\" para refinar sua busca.",
-        "search_list_title1": "Parece que não há resultados. Continue buscando!",
+        "search_description1": "Ou selecione \"Filtros Avançados\" para refinar a sua pesquisa.",
+        "search_list_title1": "Não foram encontrados resultados. Continue a pesquisa!",
         "search_title4": "Selecione um ou mais resultados para realizar ações ou exibir os detalhes.",
         "title7": "Mantenha o contato com seus colegas"
     },
