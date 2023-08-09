@@ -178,7 +178,7 @@
         "manager": "Gerenciar",
         "options": {
             "share_calendar_with": {
-                "internal_users_groups": "Usuários ou grupos internos",
+                "internal_users_groups": "Utilizadores ou grupos internos",
                 "public": "Público (apenas ver, senha não requerida)",
                 "external_guests": "Convidados externos (apenas visualizar)"
             }
