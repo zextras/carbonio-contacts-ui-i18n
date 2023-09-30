@@ -1,7 +1,7 @@
 {
     "action": {
         "search": "Procurar",
-        "delete_permanently": "Excluir permanentemente",
+        "delete_permanently": "Apagar permanentemente",
         "goto_folder": "Ir para a pasta",
         "reset_filters": "Redefinir filtros",
         "send_msg": "Enviar e-mail",
@@ -11,8 +11,8 @@
         "modal": {
             "delete": {
                 "body": {
-                    "message1": "Deseja excluir o Livro de Contatos selecionado? Ao excluí-lo, seu conteúdo será removido permanentemente e não será mais recuperável.",
-                    "message2": "Deseja excluir permanentemente o Livro de Contatos selecionado? Ao excluí-lo, seu conteúdo será removido permanentemente e não será mais recuperável."
+                    "message1": "Deseja apagar o Livro de Contatos selecionado? O seu conteúdo será removido permanentemente e não será mais recuperável.",
+                    "message2": "Deseja apagar permanentemente o Livro de Contatos selecionado? O seu conteúdo será removido permanentemente e não será mais recuperável."
                 }
             },
             "edit": {
@@ -65,8 +65,8 @@
             }
         },
         "action": {
-            "delete": "Excluir Livro de Contatos",
-            "delete_permanently": "Excluir agenda permanentemente",
+            "delete": "Apagar Livro de Contatos",
+            "delete_permanently": "Apagar agenda permanentemente",
             "edit": "Editar o Livro de Contatos",
             "empty": {
                 "folder": "Esvaziar o Livro de Contatos",
@@ -114,7 +114,7 @@
         "website_1": "Sítios Web",
         "website_2": "Sítios Web",
         "contacts": "Contatos",
-        "delete": "Excluir",
+        "delete": "Apagar",
         "edit_access_name": "Editar acesso de {{name}}",
         "email": "E-mail",
         "empty": "Esvaziar",
@@ -152,7 +152,7 @@
         "edit_tag_name": "Editar a etiqueta \"{{name}}\"",
         "edit_tag": "Editar Etiqueta",
         "delete_tag_name": "Remover a Etiqueta \"{{name}}\"",
-        "delete_tag": "Excluir Etiqueta",
+        "delete_tag": "Apagar etiqueta",
         "create_tag": "Criar Etiqueta",
         "no_name": "Sem nome",
         "no_data": "Sem dados",
@@ -236,7 +236,7 @@
     "messages": {
         "modal": {
             "delete": {
-                "if_delete_lost_forever": "Ao excluir permanentemente este contato, não poderá mais ser recuperado. Deseja continuar?",
+                "if_delete_lost_forever": "Ao apagar permanentemente este contato, o mesmo não poderá ser recuperado. Deseja continuar?",
                 "sure_delete_contact_0": "Tem certeza que deseja remover este contato? (esta ação é irreversível)",
                 "sure_delete_contact_1": "Tem certeza que deseja remover estes contatos? (esta ação é irreversível)",
                 "sure_delete_contact_2": "Tem certeza que deseja remover estes contatos? (esta ação é irreversível)"
@@ -319,7 +319,7 @@
         "title4": "Adicione notas descritivas para personalizar os seus contatos",
         "title6": "Personalizar um contato",
         "title8": "Enviar e-mail",
-        "title9": "Clique no ícone da lixeira para excluir um contato.",
+        "title9": "Clique no ícone da lixeira para apagar um contato.",
         "description3": "Clique no botão \"NOVO\" para criar um grupo de contatos.",
         "description5": "Descubra todas as formas que você pode se conectar com outros usuários.",
         "search_description1": "Ou selecione \"Filtros Avançados\" para refinar a sua pesquisa.",
