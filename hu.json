@@ -37,13 +37,17 @@
         "save": "Mentés",
         "tag": "Címke",
         "undo": "Visszavonás",
-        "error_try_again": "Valami hiba történt, kérjük, próbálja újra"
+        "error_try_again": "Valami hiba történt, kérjük, próbálja újra",
+        "results_for": "Eredmények a következőre:",
+        "root": "Gyökér",
+        "new_tag": "Új címke"
     },
     "messages": {
         "snackbar": {
             "tag_created": "{{name}} címke sikeresen létrehozva",
             "tag_deleted": "{{name}} címke sikeresen törölve",
-            "tag_updated": "Sikeresen frissítve"
+            "tag_updated": "Sikeresen frissítve",
+            "tag_not_updated": "Hiba történt, a címke nem lett frissítve. Próbálja újra."
         }
     },
     "share": {
