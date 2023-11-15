@@ -292,7 +292,7 @@
     "name": {
         "first_name": "Imię",
         "last_name": "Nazwisko",
-        "middle_name": "Drugie Imię",
+        "middle_name": "Drugie imię",
         "nickName": "Pseudonim",
         "suffix": "Sufiks",
         "prefix": "Prefiks"
