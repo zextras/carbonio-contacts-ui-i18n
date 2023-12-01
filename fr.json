@@ -230,7 +230,7 @@
             }
         },
         "owner": "Propriétaire",
-        "read": "Lire",
+        "read": "Lu",
         "recipients_address": "Adresses email des destinataires",
         "remove_from_this_list": "Supprimer de cette liste",
         "role": "Rôle",
