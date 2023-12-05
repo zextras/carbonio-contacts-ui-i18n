@@ -331,5 +331,10 @@
         "mobile": "mobile",
         "other": "other",
         "work": "work"
+    },
+    "secondaryBar": {
+        "contextualMenu": {
+            "dropdownOption": "New Contact Group"
+        }
     }
 }
