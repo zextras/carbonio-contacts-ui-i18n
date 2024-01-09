@@ -1,1 +1,11 @@
-{}
+{
+    "action": {
+        "delete_permanently": "Видалити назавжди",
+        "goto_folder": "Перейти до папки",
+        "reset_filters": "Скинути фільтри",
+        "search": "Пошук",
+        "send_msg": "Надіслати лист",
+        "edit_distribution_list": "Редагувати список розсилки",
+        "share_folder": "Поділитися папкою"
+    }
+}
