@@ -130,17 +130,17 @@
         "folder_name": "Nazwa folderu",
         "note": "Notatka:",
         "options": "Opcje",
-        "tags": "Tagi",
-        "tag_name": "Nazwa Tagu",
+        "tags": "Etykiety",
+        "tag_name": "Nazwa etykiety",
         "tag_max_length": "Dozwolone max. 128 znaków",
         "no_special_char_allowed": "Nazwa nie może zawierać żadnych znaków specjalnych",
-        "new_tag": "Nowy tag",
-        "edit_tag_name": "Edytuj tag \"{{name}}\"",
-        "edit_tag": "Edytuj tag",
-        "delete_tag_name": "Usuń tag \"{{name}}\"",
-        "delete_tag": "Usuń tag",
-        "create_tag": "Stwórz tag",
-        "tag": "Tag",
+        "new_tag": "Nowa etykieta",
+        "edit_tag_name": "Edytuj etykietę \"{{name}}\"",
+        "edit_tag": "Edytuj etykietę",
+        "delete_tag_name": "Usuń etykietę \"{{name}}\"",
+        "delete_tag": "Usuń etykietę",
+        "create_tag": "Stwórz etykietę",
+        "tag": "Etykieta",
         "no_name": "Brak imienia",
         "no_data": "Brak danych",
         "contact_created_in_folder": "Kontakt zostanie utworzony w folderze \"{{name}}\"",
@@ -198,8 +198,8 @@
             "settings_saved": "Zmiany zostały zapisane"
         },
         "require_field": "Uzupełnij co najmniej jedno z wymaganych pól",
-        "delete_tag_message2": "Po usunięciu tag zostanie zdjęty z każdego elementu oznaczonego nim.",
-        "delete_tag_message1": "Czy na pewno chcesz usunąć Tag \"{{name}}\"?",
+        "delete_tag_message2": "Po usunięciu etykieta zostanie zdjęta z każdego elementu oznaczonego nią.",
+        "delete_tag_message1": "Czy na pewno chcesz usunąć etykietę \"{{name}}\"?",
         "new_contact": "Kontakt zostanie stworzony w folderze \"Kontakty\""
     },
     "share": {
@@ -246,8 +246,8 @@
         "folder_edited": "Książka adresowa została zedytowana pomyślnie",
         "folder_shared": "Książka adresowa została udostępniona pomyślnie",
         "share_updated": "Uprawnienia dostępu zostały zaktualizowane",
-        "tag_removed": "Tag \"{{tag}}\" został zdjęty",
-        "tag_applied": "Tag \"{{tag}}\" został zastosowany",
+        "tag_removed": "Etykieta \"{{tag}}\" została zdjęta",
+        "tag_applied": "Etykieta \"{{tag}}\" została zastosowana",
         "edit_distribution_list": {
             "save": {
                 "success": "Zmiany listy dystrybucyjnej \"{{displayName}}\" zostały zapisane"
@@ -274,10 +274,10 @@
             "contact_deleted_permanently": "Kontakt został trwale usunięty",
             "contact_moved_to_trash": "Kontakt został przeniesiony do kosza",
             "address_book_moved": "Książka adresowa została przeniesiona do folderu docelowego",
-            "tag_updated": "Tag został zaktualizowany pomyślnie",
-            "tag_not_updated": "Coś poszło nie tak, tag nie został zaktualizowany. Spróbuj ponownie.",
-            "tag_deleted": "Tag {{name}} został usunięty",
-            "tag_created": "Tag {{name}} został stworzony pomyślnie"
+            "tag_updated": "Etykieta została zaktualizowana",
+            "tag_not_updated": "Coś poszło nie tak, etykieta nie została zaktualizowana. Spróbuj ponownie.",
+            "tag_deleted": "Etykieta {{name}} został usunięta",
+            "tag_created": "Etykieta {{name}} została stworzona"
         },
         "modal": {
             "delete": {
