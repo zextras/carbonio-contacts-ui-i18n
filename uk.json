@@ -26,5 +26,16 @@
                 }
             }
         }
+    },
+    "label": {
+        "discard_changes": "СКАСУВАТИ ЗМІНИ",
+        "save": "Зберегти",
+        "cancel": "Скасувати",
+        "delete": "Видалити"
+    },
+    "message": {
+        "snackbar": {
+            "settings_saved": "Зміни збережено"
+        }
     }
 }
