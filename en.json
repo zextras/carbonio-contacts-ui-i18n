@@ -417,7 +417,8 @@
     },
     "contacts": {
         "importAction": {
-            "modalTitle": "Import contacts"
+            "modalTitle": "Import contacts",
+            "modalButton": "IMPORT"
         }
     }
 }
