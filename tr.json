@@ -5,7 +5,8 @@
         "delete_permanently": "Kalıcı olarak sil",
         "search": "Ara",
         "share_folder": "Klasörü paylaş",
-        "send_msg": "E-posta gönder"
+        "send_msg": "E-posta gönder",
+        "edit_distribution_list": "Dağıtım Listesini Düzenle"
     },
     "folder": {
         "modal": {
@@ -331,5 +332,42 @@
     },
     "search": {
         "shared_folders_note": "Paylaşılan adres defterlerini aramalara dahil edin."
+    },
+    "board": {
+        "label": {
+            "description": "Açıklama"
+        },
+        "newContactGroup": {
+            "addresses": {
+                "label": "Adresler"
+            },
+            "input": {
+                "contact_input": {
+                    "error": {
+                        "address_already_present": "Adres zaten var",
+                        "address_already_present_plural": "Adresler zaten var",
+                        "invalid_address": "Geçersiz Adres",
+                        "invalid_address_plural": "Geçersiz Adresler",
+                        "invalid_already_present_addresses": "Geçersiz ve zaten var olan adresler"
+                    },
+                    "placeholder": "Bir adres yazın, gruba eklemek için \"+\" ya tıklayın",
+                    "title": "Adres Listesi"
+                },
+                "name_input": {
+                    "error": {
+                        "max_length": "İzin verilen maksimum uzunluk 256 karakterdir",
+                        "required": "Grup adı gereklidir, devam etmek için bir ad girin"
+                    },
+                    "name": {
+                        "label": "Grup adı*"
+                    }
+                }
+            },
+            "name": "Yeni Grup",
+            "snackbar": {
+                "contact_group_created": "Kişi grubu başarıyla oluşturuldu"
+            },
+            "title": "Yeni Grup"
+        }
     }
 }
