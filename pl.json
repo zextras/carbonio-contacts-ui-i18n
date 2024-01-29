@@ -424,5 +424,11 @@
             "new_contact_group_creation_action": "Nowa grupa kontaktów"
         }
     },
-    "expand_distribution_list": "Rozwiń listę adresów"
+    "expand_distribution_list": "Rozwiń listę adresów",
+    "contacts": {
+        "importAction": {
+            "modalTitle": "Importuj kontakty",
+            "modalButton": "IMPORTUJ"
+        }
+    }
 }
