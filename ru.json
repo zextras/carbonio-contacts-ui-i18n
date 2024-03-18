@@ -181,7 +181,8 @@
         "select_all_addresses_0": "Выбрать {{count}} адрес",
         "select_all_addresses_1": "Выбрать {{count}} адреса",
         "select_all_addresses_2": "Выбрать {{count}} адресов",
-        "show_more": "показать детали"
+        "show_more": "показать детали",
+        "newContactGroup": "Новая группа контактов"
     },
     "job": {
         "title": "Должность",
