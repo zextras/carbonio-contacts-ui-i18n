@@ -6,7 +6,13 @@
         "search": "Ara",
         "share_folder": "Klasörü paylaş",
         "send_msg": "E-posta gönder",
-        "edit_distribution_list": "Dağıtım Listesini Düzenle"
+        "edit_distribution_list": "Dağıtım Listesini Düzenle",
+        "contactGroup": {
+            "delete": "Sil"
+        },
+        "copy": "Kopyala",
+        "delete": "Sil",
+        "edit": "Düzenle"
     },
     "folder": {
         "modal": {
