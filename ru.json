@@ -386,7 +386,7 @@
                         "address_already_present_0": "Адрес уже присутствует",
                         "address_already_present_1": "Адреса уже присутствуют",
                         "address_already_present_2": "Адреса уже присутствуют",
-                        "invalid_already_present_addresses": "Неверные и уже существующие адреса.",
+                        "invalid_already_present_addresses": "Неверные и уже существующие адреса",
                         "invalid_address_0": "Неверный адрес",
                         "invalid_address_1": "Неверные адреса",
                         "invalid_address_2": "Неверных адресов"
