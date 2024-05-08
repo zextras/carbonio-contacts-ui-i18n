@@ -3,7 +3,21 @@
         "cancel": "Жокко чыгаруу",
         "save": "Сактоо",
         "activate_selection_mode": "Тандоо режимин активдештирүү",
-        "create": "Түзүү"
+        "create": "Түзүү",
+        "create_tag": "Tag түзүү",
+        "delete": "Өчүрүү",
+        "discard_changes": "Өзгөртүүнү жокко чыгаруу",
+        "edit": "Редакциялоо",
+        "edit_access": "Кирүү укугун өзгөртүү",
+        "empty": "Тазалоо",
+        "error_try_again": "Бир жерден ката кетти, кайра аракет кылыңыз",
+        "delete_tag_name": "{{name}} тag өчүрүү",
+        "errors": {
+            "upload_failed_generic": "{{filename}} файлын жүктөөгө мүмкүн болгон жок"
+        },
+        "delete_tag": "Tag өчүрүү",
+        "edit_tag": "Tag редакциялоо",
+        "edit_tag_name": "{{name}} тag редакциялоо"
     },
     "action": {
         "copy": "Көчүрүү",
