@@ -60,5 +60,29 @@
     },
     "folders": {
         "trash": "Себет"
+    },
+    "messages": {
+        "snackbar": {
+            "tag_deleted": "Tag {{name}} ийгиликтүү өчүрүлдү",
+            "tag_created": "Tag {{name}} ийгиликтүү түзүлдү",
+            "tag_updated": "Tag ийгиликтүү жаңыланды"
+        }
+    },
+    "message": {
+        "delete_tag_message1": "{{name}} тag өчүрүүнү каалайсызбы?",
+        "delete_tag_message2": "Өчүрүлгөндөн кийин, ал аны менен белгиленген ар бир элементтен өчүрүлөт.",
+        "snackbar": {
+            "settings_saved": "Оңдоолор сакталды"
+        }
+    },
+    "share": {
+        "options": {
+            "share_calendar_with": {
+                "external_guests": "Тышкы пайдалануучулар (көрүү)",
+                "internal_users_groups": "Ички Пайдалануучулар же Топтор",
+                "public": "Жалпыга жеткиликтүү (көрүү гана, пароль талап кылынбайт)"
+            }
+        },
+        "recipients_address": "Алуучулардын электрондук почталарынын даректери"
     }
 }
