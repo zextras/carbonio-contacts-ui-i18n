@@ -32,10 +32,10 @@
             "input": {
                 "contact_input": {
                     "error": {
-                        "address_already_present": "Address already present",
-                        "address_already_present_plural": "Addresses already present",
-                        "invalid_address": "Invalid address",
-                        "invalid_address_plural": "Invalid addresses",
+                        "address_already_present_one": "Address already present",
+                        "address_already_present_other": "Addresses already present",
+                        "invalid_address_one": "Invalid address",
+                        "invalid_address_other": "Invalid addresses",
                         "invalid_already_present_addresses": "Invalid and already present addresses"
                     },
                     "placeholder": "Type an address, click ‘+’ to add to the group",
@@ -64,8 +64,8 @@
         }
     },
     "contactGroupList": {
-        "addressCount": "{{count}} address",
-        "addressCount_plural": "{{count}} addresses",
+        "addressCount_one": "{{count}} address",
+        "addressCount_other": "{{count}} addresses",
         "emptyList": "No contact groups have been created yet"
     },
     "contact_restored": "Contact restored",
@@ -132,10 +132,10 @@
     },
     "edit_dl_component": {
         "error": {
-            "duplicated_address": "Address already present",
-            "duplicated_address_plural": "Addresses already present",
-            "invalid_address": "Invalid address",
-            "invalid_address_plural": "Invalid addresses",
+            "duplicated_address_one": "Address already present",
+            "duplicated_address_other": "Addresses already present",
+            "invalid_address_one": "Invalid address",
+            "invalid_address_other": "Invalid addresses",
             "invalid_and_duplicated_addresses": "Invalid and already present addresses"
         },
         "input": {
@@ -257,8 +257,8 @@
             "title": "Import contacts"
         },
         "snackbar": {
-            "import_contacts_success": "{{count}} contact imported and added to the selected address book",
-            "import_contacts_success_plural": "{{count}} contacts imported and added to the selected address book"
+            "import_contacts_success_one": "{{count}} contact imported and added to the selected address book",
+            "import_contacts_success_other": "{{count}} contacts imported and added to the selected address book"
         }
     },
     "job": {
@@ -270,8 +270,8 @@
         "activate_selection_mode": "Activate selection mode",
         "add_share": "Add Share",
         "address_book_restored": "Address book restored",
-        "advanced_filter": "{{count}} Advanced Filter",
-        "advanced_filter_plural": "{{count}} Advanced Filters",
+        "advanced_filter_one": "{{count}} Advanced Filter",
+        "advanced_filter_other": "{{count}} Advanced Filters",
         "app_name": "Contacts",
         "autocomplete": "Autocomplete",
         "cancel": "Cancel",
@@ -331,8 +331,8 @@
         "root": "Root",
         "save": "Save",
         "search_activate_selection_mode": "Selection mode isn’t available yet on search results",
-        "select_all_addresses": "Select address",
-        "select_all_addresses_plural": "Select all {{count}} addresses",
+        "select_all_addresses_one": "Select address",
+        "select_all_addresses_other": "Select all {{count}} addresses",
         "select_color": "Select Color",
         "share": "Share",
         "share_with": "Share with",
@@ -345,8 +345,8 @@
         "type": "Type",
         "undo": "Undo",
         "update": "Update",
-        "website": "Website",
-        "website_plural": "Websites"
+        "website_one": "Website",
+        "website_other": "Websites"
     },
     "members_list_item_component": {
         "button": {
@@ -366,8 +366,8 @@
         "modal": {
             "delete": {
                 "if_delete_lost_forever": "By permanently deleting this contact you will not be able to recover it anymore, continue?",
-                "sure_delete_contact": "Are you sure to permanently delete this contact?",
-                "sure_delete_contact_plural": "Are you sure to permanently delete these contacts?"
+                "sure_delete_contact_one": "Are you sure to permanently delete this contact?",
+                "sure_delete_contact_other": "Are you sure to permanently delete these contacts?"
             }
         },
         "snackbar": {
@@ -433,8 +433,8 @@
             "street": "Street"
         },
         "title": {
-            "address": "Address",
-            "address_plural": "Addresses",
+            "address_one": "Address",
+            "address_other": "Addresses",
             "mail": "E-mail address",
             "phone_number": "Phone contact"
         }
@@ -505,8 +505,8 @@
         "email_copied_to_clipboard": "Email copied to clipboard.",
         "folder_edited": "Address book edited successfully",
         "folder_shared": "Address book shared",
-        "import_contacts_success": "{{number}} contacts imported and added to the selected address book",
-        "import_contacts_success_plural": "",
+        "import_contacts_success_one": "{{number}} contacts imported and added to the selected address book",
+        "import_contacts_success_other": "",
         "share_resend": "Share invite resent",
         "share_revoke": "Share access revoked",
         "share_updated": "Access rights updated",
@@ -517,8 +517,8 @@
         "advanced_filters": "Advanced Filters"
     },
     "tooltip": {
-        "address_book_sharing_status": "Shared with {{count}} person",
-        "address_book_sharing_status_plural": "Shared with {{count}} people",
+        "address_book_sharing_status_one": "Shared with {{count}} person",
+        "address_book_sharing_status_other": "Shared with {{count}} people",
         "resend": "Send e-mail notification about this share",
         "revoke": "Revoke access"
     },
