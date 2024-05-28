@@ -34,7 +34,8 @@
         "tags": "Tags",
         "type": "Тип",
         "undo": "Жокко чыгаруу",
-        "no_special_char_allowed": "Аты өзүнчө символдорду камтыбашы керек"
+        "no_special_char_allowed": "Аты өзүнчө символдорду камтыбашы керек",
+        "contacts": "Байланыштар"
     },
     "action": {
         "copy": "Көчүрүү",
