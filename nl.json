@@ -162,8 +162,6 @@
         "revoke_with_custom_msg": "Toegang intrekken door een aangepaste melding te verzenden",
         "root": "Hoofdniveau",
         "type": "Type",
-        "website": "Website",
-        "website_plural": "Websites",
         "undo": "Ongedaan maken",
         "of": "van",
         "restore": "Herstellen",
@@ -173,8 +171,6 @@
         "new_contact_created": "Nieuw contact aangemaakt",
         "discard_changes": "WIJZIGINGEN VERWIJDEREN",
         "address_book_restored": "Adresboek hersteld",
-        "advanced_filter": "{{count}} Geavanceerde filter",
-        "advanced_filter_plural": "{{count}} Geavanceerde filters",
         "search_activate_selection_mode": "Selectiemodus is nog niet beschikbaar bij zoekresultaten",
         "new_contact": "Nieuw contact",
         "add_share": "Delen toevoegen",
@@ -215,8 +211,6 @@
             "street": "Straat"
         },
         "title": {
-            "address": "Adres",
-            "address_plural": "Adressen",
             "mail": "E-mailadres",
             "phone_number": "Telefoon contact"
         }
@@ -239,9 +233,7 @@
     "messages": {
         "modal": {
             "delete": {
-                "if_delete_lost_forever": "Door dit contact definitief te verwijderen, kunt u het niet meer herstellen, verdergaan?",
-                "sure_delete_contact": "Weet u zeker dat u dit contact permanent wilt verwijderen?",
-                "sure_delete_contact_plural": "Weet u zeker dat u deze contacten permanent wilt verwijderen?"
+                "if_delete_lost_forever": "Door dit contact definitief te verwijderen, kunt u het niet meer herstellen, verdergaan?"
             }
         },
         "snackbar": {
@@ -288,9 +280,7 @@
     },
     "tooltip": {
         "resend": "E-mailbericht over dit aandeel verzenden",
-        "revoke": "Toegang intrekken",
-        "address_book_sharing_status": "Gedeeld met {{count}} persoon",
-        "address_book_sharing_status_plural": "Gedeeld met {{count}} personen"
+        "revoke": "Toegang intrekken"
     },
     "displayer": {
         "title5": "Een contact selecteren",

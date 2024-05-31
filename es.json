@@ -22,9 +22,6 @@
         "revoke_with_standard_msg": "Revocar acceso enviando la notificación estándar",
         "revoke_with_custom_msg": "Revocar acceso enviando una notificación personalizada",
         "type": "Tipo",
-        "website_0": "Sitio web",
-        "website_1": "Sitios web",
-        "website_2": "",
         "undo": "Deshacer",
         "contacts": "Contactos",
         "empty": "Vaciar",
@@ -33,9 +30,6 @@
         "revoke_without_notification": "Revocar acceso sin enviar una notificación",
         "root": "Raíz",
         "activate_selection_mode": "Activar modo de selección",
-        "advanced_filter_0": "{{count}} filtro aplicado",
-        "advanced_filter_1": "{{count}} filtros aplicados",
-        "advanced_filter_2": "",
         "discard_changes": "DESCARTAR CAMBIOS",
         "address_book_restored": "Libreta de direcciones restaurada",
         "new_address_book": "Nueva libreta de direcciones",
@@ -217,9 +211,6 @@
             "street": "Calle"
         },
         "title": {
-            "address_0": "Dirección",
-            "address_1": "Direcciones",
-            "address_2": "",
             "mail": "Dirección de e-mail",
             "phone_number": "Teléfono"
         }
@@ -247,9 +238,6 @@
         },
         "modal": {
             "delete": {
-                "sure_delete_contact_0": "¿Seguro que quieres eliminar este contacto de forma permanente?",
-                "sure_delete_contact_1": "¿Seguro que quieres eliminar estos contactos de forma permanente?",
-                "sure_delete_contact_2": "",
                 "if_delete_lost_forever": "Si eliminas este contacto de forma permanente ya no podrás recuperarlo, ¿continuar?"
             }
         }
@@ -286,10 +274,7 @@
     },
     "tooltip": {
         "resend": "Enviar una notificación por correo sobre este uso compartido",
-        "revoke": "Revocar acceso",
-        "address_book_sharing_status_0": "Compartido con {{count}} persona",
-        "address_book_sharing_status_1": "Compartido con {{count}} personas",
-        "address_book_sharing_status_2": ""
+        "revoke": "Revocar acceso"
     },
     "types": {
         "home": "Casa",

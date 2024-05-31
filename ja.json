@@ -148,7 +148,6 @@
         "revoke_with_custom_msg": "カスタム通知を送信してアクセス権を取り消す",
         "root": "ルート",
         "type": "種類",
-        "website": "ウェブサイト",
         "email": "メール",
         "edit_access_name": "{{name}}のアクセスを編集する",
         "empty": "空にする",
@@ -162,7 +161,6 @@
         "discard_changes": "変更履歴を削除する",
         "activate_selection_mode": "選択モードを有効にする",
         "address_book_restored": "アドレス帳が復元されました",
-        "advanced_filter": "{{count}}高度なフィルター",
         "new_address_book": "新しいアドレス帳",
         "new_contact_created": "新しい連絡先が作成されました",
         "search_activate_selection_mode": "選択モードは検索結果ではまだ利用できません",
@@ -213,7 +211,6 @@
             "street": "通り名"
         },
         "title": {
-            "address": "アドレス",
             "mail": "メールアドレス",
             "phone_number": "電話連絡先"
         }
@@ -230,7 +227,6 @@
     "messages": {
         "modal": {
             "delete": {
-                "sure_delete_contact": "本当に選択した連絡先を完全に削除しますか？",
                 "if_delete_lost_forever": "この連絡先を完全に削除すると、復元できなくなります。続行しますか？"
             }
         },
@@ -278,8 +274,7 @@
     },
     "tooltip": {
         "resend": "この共有に関するメール通知を再送信します",
-        "revoke": "アクセス権を取り消す",
-        "address_book_sharing_status": "{{count}}人と共有されました"
+        "revoke": "アクセス権を取り消す"
     },
     "types": {
         "home": "自宅",

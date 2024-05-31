@@ -119,9 +119,6 @@
         "revoke_with_standard_msg": "Revogar acesso enviando a notificação padrão",
         "revoke_with_custom_msg": "Revogar acesso enviando uma notificação personalizada",
         "type": "Tipo",
-        "website_0": "Website",
-        "website_1": "Websites",
-        "website_2": "",
         "contacts": "Contatos",
         "delete": "Excluir",
         "edit_access_name": "Editar acesso de {{name}}",
@@ -134,9 +131,6 @@
         "undo": "Desfazer",
         "activate_selection_mode": "Ativar modo de seleção",
         "address_book_restored": "Agenda de contatos restaurada",
-        "advanced_filter_0": "{{count}} Filtro avançado",
-        "advanced_filter_1": "{{count}} Filtros avançados",
-        "advanced_filter_2": "",
         "discard_changes": "DESCARTAR MODIFICAÇÕES",
         "new_address_book": "Nova agenda de contatos",
         "new_contact_created": "Novo contato criado",
@@ -177,9 +171,6 @@
         "groups_app_name": "Grupos de Contatos e Listas de Distribuição",
         "import_address_book": "Importar arquivo csv",
         "newContactGroup": "Novo grupo de contatos",
-        "select_all_addresses_0": "Selecionar endereço",
-        "select_all_addresses_1": "Selecionar todos os {{count}} endereços",
-        "select_all_addresses_2": "Selecionar todos os {{count}} endereços",
         "update": "Atualizar",
         "discard": "descartar",
         "show_more": "mostrar mais"
@@ -240,8 +231,6 @@
             "street": "Rua"
         },
         "title": {
-            "address": "Endereço",
-            "address_plural": "Endereços",
             "mail": "Endereço de e-mail",
             "phone_number": "Telefone"
         }
@@ -258,10 +247,7 @@
     "messages": {
         "modal": {
             "delete": {
-                "if_delete_lost_forever": "Ao excluir permanentemente este contato, você não poderá mais recuperá-lo. Continuar?",
-                "sure_delete_contact_0": "Tem certeza que deseja excluir permanentemente este contato?",
-                "sure_delete_contact_1": "Tem certeza que deseja excluir permanentemente estes contatos?",
-                "sure_delete_contact_2": ""
+                "if_delete_lost_forever": "Ao excluir permanentemente este contato, você não poderá mais recuperá-lo. Continuar?"
             }
         },
         "snackbar": {
@@ -329,17 +315,11 @@
                 "success": "Edições da lista de distribuição \"{{displayName}}\" salvas com sucesso"
             }
         },
-        "email_copied_to_clipboard": "E-mail copiado para área de transferência.",
-        "import_contacts_success_0": "{{number}} contato importado e adicionado ao catálogo de endereços selecionado",
-        "import_contacts_success_1": "{{number}} contatos importados e adicionados ao catálogo de endereços selecionado",
-        "import_contacts_success_2": "{{number}} contatos importados e adicionados ao catálogo de endereços selecionado"
+        "email_copied_to_clipboard": "E-mail copiado para área de transferência."
     },
     "tooltip": {
         "revoke": "Revogar acesso",
-        "resend": "Enviar notificação por e-mail sobre este compartilhamento",
-        "address_book_sharing_status_0": "Compartilhado com {{count}} pessoa",
-        "address_book_sharing_status_1": "Compartilhado com {{count}} pessoas",
-        "address_book_sharing_status_2": ""
+        "resend": "Enviar notificação por e-mail sobre este compartilhamento"
     },
     "title": {
         "advanced_filters": "Filtros avançados"
@@ -406,9 +386,6 @@
         "shared_folders_note": "Incluir agenda de contatos compartilhada nas buscas."
     },
     "contactGroupList": {
-        "addressCount_0": "{{count}} endereço",
-        "addressCount_1": "{{count}} endereços",
-        "addressCount_2": "{{count}} endereços",
         "emptyList": "Nenhum grupo de contatos foi criado ainda"
     },
     "distribution_list": {
@@ -423,12 +400,6 @@
     },
     "edit_dl_component": {
         "error": {
-            "duplicated_address_0": "Endereço já existente",
-            "duplicated_address_1": "Endereços já existentes",
-            "duplicated_address_2": "Endereços já existentes",
-            "invalid_address_0": "Endereço inválido",
-            "invalid_address_1": "Endereços inválidos",
-            "invalid_address_2": "Endereços inválidos",
             "invalid_and_duplicated_addresses": "Endereços inválidos e já existentes"
         },
         "input": {
@@ -462,11 +433,6 @@
             "confirm": "Importar",
             "title": "Importar contatos",
             "description": "Os contatos dentro do arquivo {{fileName}} escolhido serão importados para a pasta \"{{folderName}}\" do catálogo de endereços selecionado."
-        },
-        "snackbar": {
-            "import_contacts_success_0": "{{count}} contato importado e adicionado ao catálogo de endereços selecionado",
-            "import_contacts_success_1": "{{count}} contatos importados e adicionados ao catálogo de endereços selecionado",
-            "import_contacts_success_2": "{{count}} contatos importados e adicionados ao catálogo de endereços selecionado"
         }
     },
     "members_list_item_component": {
@@ -488,13 +454,7 @@
             "input": {
                 "contact_input": {
                     "error": {
-                        "invalid_address_0": "Endereço inválido",
-                        "invalid_address_1": "Endereços inválidos",
-                        "invalid_address_2": "Endereços inválidos",
-                        "invalid_already_present_addresses": "Endereços inválidos e já existentes",
-                        "address_already_present_0": "Endereço já existente",
-                        "address_already_present_1": "Endereços já existentes",
-                        "address_already_present_2": "Endereços já existentes"
+                        "invalid_already_present_addresses": "Endereços inválidos e já existentes"
                     },
                     "placeholder": "Digite um endereço e clique em \"+\" para adicioná-lo ao grupo",
                     "title": "Lista de endereços"

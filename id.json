@@ -157,12 +157,10 @@
         "revoke_with_custom_msg": "Batalkan akses dengan mengirim pemberitahuan kustom",
         "root": "Root",
         "type": "Jenis",
-        "website": "Situs Web",
         "undo": "Batalkan",
         "activate_selection_mode": "Aktifkan mode pemilihan",
         "discard_changes": "HAPUS PERUBAHAN",
         "address_book_restored": "buku alamat dipulihkan",
-        "advanced_filter": "{{count}} Filter Lanjutan",
         "new_address_book": "Buku alamat baru",
         "search_activate_selection_mode": "Mode pemilihan belum tersedia di hasil pencarian",
         "new_contact_created": "Kontak baru dibuat",
@@ -214,8 +212,7 @@
         },
         "title": {
             "mail": "Alamat email",
-            "phone_number": "Kontak telepon",
-            "address": "Alamat"
+            "phone_number": "Kontak telepon"
         }
     },
     "message": {
@@ -230,8 +227,7 @@
     "messages": {
         "modal": {
             "delete": {
-                "if_delete_lost_forever": "Jika kontak ini dihapus secara permanen, Anda tidak dapat memulihkannya lagi, lanjutkan?",
-                "sure_delete_contact": "Anda yakin ingin menghapus kontak secara permanen?"
+                "if_delete_lost_forever": "Jika kontak ini dihapus secara permanen, Anda tidak dapat memulihkannya lagi, lanjutkan?"
             }
         },
         "snackbar": {
@@ -269,8 +265,7 @@
     },
     "tooltip": {
         "revoke": "Batalkan akses",
-        "resend": "Kirim notifikasi email tentang berbagi ini",
-        "address_book_sharing_status": "Dibagikan kepada {{count}} orang"
+        "resend": "Kirim notifikasi email tentang berbagi ini"
     },
     "types": {
         "home": "beranda",

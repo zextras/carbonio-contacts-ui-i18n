@@ -13,9 +13,7 @@
             "phone_number": "Contatto telefonico",
             "phone_number_plural": "Contatti telefonici {{count}}",
             "mail": "Indirizzo e-mail",
-            "mail_plural": "Inidirizzi e-mail {{count}}",
-            "address": "Indirizzo",
-            "address_plural": "Indirizzi"
+            "mail_plural": "Inidirizzi e-mail {{count}}"
         },
         "field": {
             "street": "Via",
@@ -76,12 +74,8 @@
         "type": "Tipo",
         "new_contact_created": "Nuovo contatto creato",
         "address_book_restored": "Rubrica ripristinata",
-        "advanced_filter": "{{count}} Filtro Avanzato",
-        "advanced_filter_plural": "{{count}} Filtri Avanzati",
         "discard_changes": "ELIMINA MODIFICHE",
         "undo": "Annulla",
-        "website": "Sito Web",
-        "website_plural": "",
         "search_activate_selection_mode": "La Modalità Selezione non è ancora disponibile nei risultati di ricerca",
         "edit_email": "Modifica E-mail",
         "edit_invalid_email": "E-mail non valida, selezionala per modificare",
@@ -111,9 +105,6 @@
         "destination_address_book": "Rubrica di destinazione",
         "include_shared_folders": "Includi rubriche condivise",
         "autocomplete": "Auto completamento",
-        "select_all_addresses_0": "Seleziona l'indirizzo",
-        "select_all_addresses_1": "Seleziona tutti i {{count}} indirizzi",
-        "select_all_addresses_2": "Seleziona tutti i {{count}} indirizzi",
         "show_more": "mostra di più",
         "discard": "eliminare",
         "newContactGroup": "Nuovo gruppo contatti",
@@ -289,8 +280,6 @@
         },
         "modal": {
             "delete": {
-                "sure_delete_contact": "Vuoi eliminare questo contatto definitivamente?",
-                "sure_delete_contact_plural": "Vuoi eliminare questi contatti definitivamente?",
                 "if_delete_lost_forever": "Eliminando definitivamente questo contatto non sarà possibile ripristinarlo, continuare?"
             }
         }
@@ -313,10 +302,7 @@
                 "success": "Gruppo di contatti eliminato con successo"
             }
         },
-        "email_copied_to_clipboard": "Email copiata negli appunti.",
-        "import_contacts_success_0": "{{number}} contatto importato e aggiunti alla rubrica selezionata",
-        "import_contacts_success_1": "{{number}} contatti importati e aggiunti alla rubrica selezionata",
-        "import_contacts_success_2": "{{number}} contatti importati e aggiunti alla rubrica selezionata"
+        "email_copied_to_clipboard": "Email copiata negli appunti."
     },
     "modal": {
         "address_book_name": "Nome rubrica",
@@ -344,9 +330,7 @@
     },
     "tooltip": {
         "resend": "Invia e-mail di notifica per questa condivisione",
-        "revoke": "Revoca accesso",
-        "address_book_sharing_status": "Condiviso con {{count}} persona",
-        "address_book_sharing_status_plural": "Condiviso con {{count}} persone"
+        "revoke": "Revoca accesso"
     },
     "displayer": {
         "description3": "Clicca il pulsante \"NUOVO\" per creare un nuovo gruppo di contatti.",
@@ -424,13 +408,7 @@
             "input": {
                 "contact_input": {
                     "error": {
-                        "invalid_address_0": "Indirizzo non valido",
-                        "invalid_address_1": "Indirizzi non validi",
-                        "invalid_address_2": "Indirizzi non validi",
-                        "invalid_already_present_addresses": "Indirizzi non validi e già presenti",
-                        "address_already_present_0": "Indirizzo già presente",
-                        "address_already_present_1": "Indirizzi già presenti",
-                        "address_already_present_2": "Indirizzi già presenti"
+                        "invalid_already_present_addresses": "Indirizzi non validi e già presenti"
                     },
                     "placeholder": "Scrivi un indirizzo, clicca ‘+’ per aggiungerlo al gruppo",
                     "title": "Elenco indirizzi"
@@ -460,12 +438,6 @@
     },
     "edit_dl_component": {
         "error": {
-            "duplicated_address_0": "Indirizzo già presente",
-            "duplicated_address_1": "Indirizzi già presenti",
-            "duplicated_address_2": "Indirizzi già presenti",
-            "invalid_address_0": "Indirizzo non valido",
-            "invalid_address_1": "Indirizzi non validi",
-            "invalid_address_2": "Indirizzi non validi",
             "invalid_and_duplicated_addresses": "Indirizzi non validi e già presenti"
         },
         "label": {
@@ -520,11 +492,6 @@
             "description": "I contatti all'interno del file {{fileName}} scelto verranno importati all'interno della cartella \"{{folderName}}\" della rubrica selezionata.",
             "confirm": "Importa",
             "title": "Importa i contatti"
-        },
-        "snackbar": {
-            "import_contacts_success_0": "{{count}} contatto importato e aggiunto alla rubrica selezionata",
-            "import_contacts_success_1": "{{count}} contatti importati e aggiunti alla rubrica selezionata",
-            "import_contacts_success_2": "{{count}} contatti importati e aggiunti alla rubrica selezionata"
         }
     },
     "contactGroupDisplayer": {
@@ -533,9 +500,6 @@
         }
     },
     "contactGroupList": {
-        "addressCount_0": "{{count}} indirizzo",
-        "addressCount_1": "{{count}} indirizzi",
-        "addressCount_2": "{{count}} indirizzi",
         "emptyList": "Non è stato ancora creato alcun gruppo di contatti"
     }
 }

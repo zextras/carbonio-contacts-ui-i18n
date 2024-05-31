@@ -13,13 +13,7 @@
             "input": {
                 "contact_input": {
                     "error": {
-                        "invalid_address_0": "Невірна адреса",
-                        "invalid_address_1": "Невірні адреси",
-                        "invalid_address_2": "Невірні адреси",
-                        "invalid_already_present_addresses": "Недійсні та вже наявні адреси",
-                        "address_already_present_0": "Уже наявна адреси",
-                        "address_already_present_1": "Уже наявні адреси",
-                        "address_already_present_2": "Уже наявні адреси"
+                        "invalid_already_present_addresses": "Недійсні та вже наявні адреси"
                     },
                     "placeholder": "Введіть адресу, натисніть \"+\", щоб додати до групи",
                     "title": "Список адрес"

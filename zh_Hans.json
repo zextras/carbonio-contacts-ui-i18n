@@ -145,7 +145,6 @@
         "type": "类型",
         "undo": "撤消",
         "delete": "删除",
-        "website": "网站",
         "activate_selection_mode": "激活选择模式",
         "address_book_restored": "地址簿已恢复",
         "contacts": "联系人",
@@ -164,7 +163,6 @@
         "root": "根目录",
         "empty": "空",
         "discard_changes": "丢弃变更",
-        "advanced_filter": "{{count}}高级过滤条件",
         "search_activate_selection_mode": "搜索结果上无可用选择模式",
         "new_contact": "新联系人",
         "add_share": "添加共享",
@@ -213,7 +211,6 @@
             "street": "街道"
         },
         "title": {
-            "address": "地址",
             "mail": "邮件地址",
             "phone_number": "电话联系"
         }
@@ -234,8 +231,7 @@
     "messages": {
         "modal": {
             "delete": {
-                "if_delete_lost_forever": "永久性删除此联系人将导致您无法再次将其恢复，是否继续？",
-                "sure_delete_contact": "确定要永久性删除这些联系人吗？"
+                "if_delete_lost_forever": "永久性删除此联系人将导致您无法再次将其恢复，是否继续？"
             }
         },
         "snackbar": {
@@ -252,8 +248,7 @@
     },
     "tooltip": {
         "resend": "发送有关此共享的邮件通知",
-        "revoke": "撤销访问权限",
-        "address_book_sharing_status": "已与 {{count}} 人共享"
+        "revoke": "撤销访问权限"
     },
     "types": {
         "work": "工作",

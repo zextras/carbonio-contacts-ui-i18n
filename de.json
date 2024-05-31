@@ -114,10 +114,6 @@
         "revoke_with_standard_msg": "Zugriff widerrufen mit einer Standardbenachrichtigung",
         "revoke_without_notification": "Zugriff widerrufen ohne eine Benachrichtigung zu senden",
         "root": "Stammordner",
-        "website": "Webseite",
-        "website_plural": "Webseiten",
-        "advanced_filter": "{{count}} Erweiterter Filter",
-        "advanced_filter_plural": "{{count}} Erweiterte Filter",
         "email": "E-Mail",
         "move": "Verschieben",
         "new_contact_created": "Neuer Kontakt erstellt",
@@ -171,8 +167,6 @@
     "messages": {
         "modal": {
             "delete": {
-                "sure_delete_contact": "Sind Sie sicher, dass Sie diesen Kontakt endgültig löschen möchten ?",
-                "sure_delete_contact_plural": "Sind Sie sicher, dass Sie diese Kontakte endgültig löschen möchten ?",
                 "if_delete_lost_forever": "Wenn Sie diesen Kontakt endgültig löschen, werden Sie ihn nicht mehr wiederherstellen können, fortfahren?"
             }
         },
@@ -211,9 +205,7 @@
         },
         "title": {
             "mail": "E-Mail-Adresse",
-            "phone_number": "Telefonkontakt",
-            "address": "Adresse",
-            "address_plural": "Adressen"
+            "phone_number": "Telefonkontakt"
         }
     },
     "select": {
@@ -282,9 +274,7 @@
     },
     "tooltip": {
         "revoke": "Zugriff widerrufen",
-        "resend": "E-Mail-Benachrichtigung über dieses geteilte Element senden",
-        "address_book_sharing_status": "Mit {{count}} Person geteilt",
-        "address_book_sharing_status_plural": "Mit {{count}} Personen geteilt"
+        "resend": "E-Mail-Benachrichtigung über dieses geteilte Element senden"
     },
     "types": {
         "home": "Zuhause",

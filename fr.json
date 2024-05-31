@@ -166,9 +166,6 @@
         "type": "Type",
         "undo": "Annuler",
         "address_book_restored": "Carnet d'adresses restauré",
-        "advanced_filter_0": "{{count}} filtre avancé",
-        "advanced_filter_1": "{{count}} filtres avancés",
-        "advanced_filter_2": "{{count}} filtres avancés",
         "contact_setting": "Paramètres de contact",
         "revoke_share": "Révoquer le partage de {{title}}",
         "search_activate_selection_mode": "Le mode sélection n'est pas encore disponible dans les résultats de la recherche",
@@ -178,9 +175,6 @@
         "new_address_book": "Nouveau carnet d'adresses",
         "new_contact_created": "Nouveau contact créé",
         "shares_folder_edit": "Partager ce carnet d'adresses",
-        "website_0": "Site web",
-        "website_1": "Sites web",
-        "website_2": "Sites web",
         "edit_email": "Éditer l'email",
         "edit_invalid_email": "l'email est invalide, cliquez pour l'éditer",
         "new_contact": "Nouveau contact",
@@ -209,9 +203,6 @@
         "destination_address_book": "Carnet d'adresse de destination",
         "include_shared_folders": "Inclure les carnets d'adresses partagés",
         "autocomplete": "Auto-complétion",
-        "select_all_addresses_0": "Sélectionner l'adresse",
-        "select_all_addresses_1": "Sélectionner les {{count}} adresses",
-        "select_all_addresses_2": "Sélectionner les {{count}} adresses",
         "show_more": "plus de détail",
         "discard": "Annuler",
         "newContactGroup": "Nouveau groupe de contact",
@@ -242,9 +233,6 @@
             "postalCode": "Code postal"
         },
         "title": {
-            "address_0": "Adresse",
-            "address_1": "Adresses",
-            "address_2": "Adresses",
             "mail": "Adresse email",
             "phone_number": "Téléphone"
         }
@@ -305,9 +293,6 @@
                 "success": "Le groupe de contact a été supprimé avec succès"
             }
         },
-        "import_contacts_success_0": "{{number}} contact importé et ajouté dans le carnet d'adresse sélectionné",
-        "import_contacts_success_1": "{{number}} contacts importés et ajoutés dans le carnet d'adresse sélectionné",
-        "import_contacts_success_2": "{{number}} contacts importés et ajoutés dans le carnet d'adresse sélectionné",
         "email_copied_to_clipboard": "Email copié dans le presse papier."
     },
     "title": {
@@ -315,10 +300,7 @@
     },
     "tooltip": {
         "revoke": "Révoquer les accès",
-        "resend": "Envoyer un email de notification concernant ce partage",
-        "address_book_sharing_status_0": "Partager avec {{count}} personne",
-        "address_book_sharing_status_1": "Partager avec {{count}} personnes",
-        "address_book_sharing_status_2": "Partager avec {{count}} personnes"
+        "resend": "Envoyer un email de notification concernant ce partage"
     },
     "job": {
         "company": "Entreprise",
@@ -349,10 +331,7 @@
         },
         "modal": {
             "delete": {
-                "if_delete_lost_forever": "En supprimant définitivement ce contact, vous ne serez plus en mesure de le restaurer. Souhaitez-vous continuer ?",
-                "sure_delete_contact_0": "Êtes-vous sûr de vouloir supprimer définitivement ce contact ?",
-                "sure_delete_contact_1": "Êtes-vous sûr de vouloir supprimer définitivement ces contacts ?",
-                "sure_delete_contact_2": "Êtes-vous sûr de vouloir supprimer définitivement ces contacts ?"
+                "if_delete_lost_forever": "En supprimant définitivement ce contact, vous ne serez plus en mesure de le restaurer. Souhaitez-vous continuer ?"
             }
         }
     },
@@ -427,12 +406,6 @@
             "input": {
                 "contact_input": {
                     "error": {
-                        "address_already_present_0": "Adresse déjà existante",
-                        "address_already_present_1": "Adresses déjà existantes",
-                        "address_already_present_2": "Adresses déjà existantes",
-                        "invalid_address_0": "Adresse invalide",
-                        "invalid_address_1": "Adresses invalides",
-                        "invalid_address_2": "Adresses invalides",
                         "invalid_already_present_addresses": "Adresses invalides et déjà présentes"
                     },
                     "placeholder": "Saisissez une adresse puis cliquez sur \"+\" pour l'ajouter au groupe",
@@ -463,12 +436,6 @@
     },
     "edit_dl_component": {
         "error": {
-            "duplicated_address_0": "Adresse déjà présente",
-            "duplicated_address_1": "Adresses déjà présentes",
-            "duplicated_address_2": "Adresses déjà présentes",
-            "invalid_address_0": "Adresse invalide",
-            "invalid_address_1": "Adresses invalides",
-            "invalid_address_2": "Adresses invalides",
             "invalid_and_duplicated_addresses": "Adresse invalides et déjà présentes"
         },
         "label": {
@@ -504,10 +471,7 @@
         }
     },
     "contactGroupList": {
-        "emptyList": "Aucun groupe de contact n'a encore été créé",
-        "addressCount_0": "{{count}} adresse",
-        "addressCount_1": "{{count}} adresses",
-        "addressCount_2": "{{count}} adresses"
+        "emptyList": "Aucun groupe de contact n'a encore été créé"
     },
     "distribution_list": {
         "label": {
@@ -529,11 +493,6 @@
             "confirm": "Importer",
             "description": "Les contacts contenus dans le fichier {{fileName}} sélectionné seront importés dans le dossier \"{{folderName}}\" du carnet d'adresses sélectionné.",
             "title": "Importer des contacts"
-        },
-        "snackbar": {
-            "import_contacts_success_0": "{{count}} contact importé et ajouté au carnet d'adresses sélectionné",
-            "import_contacts_success_1": "{{count}} contacts importés et ajoutés au carnet d'adresses sélectionné",
-            "import_contacts_success_2": "{{count}} contacts importés et ajoutés au carnet d'adresses sélectionné"
         }
     },
     "contactGroupDisplayer": {

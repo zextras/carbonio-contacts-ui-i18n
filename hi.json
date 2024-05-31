@@ -148,8 +148,6 @@
         "move": "ले जाएँ",
         "notes": "नोट्स",
         "type": "टाइप",
-        "website": "वेबसाइट",
-        "website_plural": "वेबसाईटें",
         "delete": "डिलीट करें",
         "edit_access_name": "{{name}} के ऐक्सेस में संशोधन",
         "of": "में से",
@@ -161,8 +159,6 @@
         "root": "मूल",
         "undo": "अनडू करें",
         "new_address_book": "नई एड्रेस बुक",
-        "advanced_filter": "{{count}} एड्वांड्स्ड फिल्टर",
-        "advanced_filter_plural": "{{count}} एड्वांड्स्ड फिल्टर",
         "new_contact_created": "नया कांटैक्ट बनाया गया",
         "search_activate_selection_mode": "सर्च रिज़ल्ट में अभी तक सिलेक्शन मोड उपलब्ध नहीं है",
         "discard_changes": "बदलाव रद्द करें",
@@ -215,8 +211,6 @@
             "street": "गली"
         },
         "title": {
-            "address": "पता",
-            "address_plural": "पते",
             "mail": "ई-मेल पता",
             "phone_number": "फोन कांटैक्ट"
         }
@@ -233,9 +227,7 @@
     "messages": {
         "modal": {
             "delete": {
-                "if_delete_lost_forever": "इस कांटैक्ट को परमानेंट डिलीट करने के बाद आप इसे फिर वापस नहीं ला सकेंगे, जारी रखें?",
-                "sure_delete_contact": "क्या आप वाकई में इस कांटैक्ट को परमानेंट डिलीट करना चाहते हैं?",
-                "sure_delete_contact_plural": "क्या आप वाकई में इन कांटैक्ट्स को परमानेंट डिलीट करना चाहते हैं?"
+                "if_delete_lost_forever": "इस कांटैक्ट को परमानेंट डिलीट करने के बाद आप इसे फिर वापस नहीं ला सकेंगे, जारी रखें?"
             }
         },
         "snackbar": {
@@ -282,9 +274,7 @@
     },
     "tooltip": {
         "resend": "इस शेयर के बारे में ई-मेल नोटिफिकेशन भेजें",
-        "revoke": "एक्सेस बंद करें",
-        "address_book_sharing_status": "{{count}} व्यक्ति के साथ शेयर किया गया",
-        "address_book_sharing_status_plural": "{{count}} व्यक्तियों के साथ शेयर किया गया"
+        "revoke": "एक्सेस बंद करें"
     },
     "types": {
         "home": "होम",

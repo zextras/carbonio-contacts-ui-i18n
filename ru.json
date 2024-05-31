@@ -92,9 +92,7 @@
         },
         "title": {
             "phone_number": "Номер телефона",
-            "mail": "Электронная почта",
-            "address": "Адрес",
-            "address_plural": "Адреса"
+            "mail": "Электронная почта"
         }
     },
     "types": {
@@ -139,16 +137,12 @@
         "revoke_with_custom_msg": "Отменить доступ, отправив персонализированное уведомление",
         "root": "Корень",
         "type": "Тип",
-        "website": "Сайт",
-        "website_plural": "Сайта",
         "new_address_book": "Новая адресная книга",
         "revoke_with_standard_msg": "Отменить доступ, отправив стандартное уведомление",
         "discard_changes": "ОТМЕНИТЬ ИЗМЕНЕНИЯ",
         "new_contact_created": "Создан новый контакт",
         "undo": "Отменить",
         "address_book_restored": "Адресная книга восстановлена",
-        "advanced_filter": "{{count}} Расширенный фильтр",
-        "advanced_filter_plural": "{{count}} Расширенных фильтра",
         "search_activate_selection_mode": "Режим выбора пока недоступен в результатах поиска",
         "of": "из",
         "edit_email": "Изменить адрес электронной почты",
@@ -179,9 +173,6 @@
         "include_shared_folders": "Включить общие адресные книги",
         "destination_address_book": "Адресная книга назначения",
         "autocomplete": "Автозаполнение",
-        "select_all_addresses_0": "Выбрать {{count}} адрес",
-        "select_all_addresses_1": "Выбрать {{count}} адреса",
-        "select_all_addresses_2": "Выбрать {{count}} адресов",
         "show_more": "показать детали",
         "newContactGroup": "Новая группа контактов",
         "edit_contacts": "Редактировать контакты",
@@ -213,9 +204,7 @@
         },
         "modal": {
             "delete": {
-                "if_delete_lost_forever": "Удалив этот контакт без возможности восстановления, вы больше не сможете его восстановить. Продолжить?",
-                "sure_delete_contact": "Вы действительно хотите удалить этот контакт навсегда?",
-                "sure_delete_contact_plural": "Вы действительно хотите удалить выбранных контакта навсегда?"
+                "if_delete_lost_forever": "Удалив этот контакт без возможности восстановления, вы больше не сможете его восстановить. Продолжить?"
             }
         }
     },
@@ -311,10 +300,7 @@
             "confirm": {
                 "success": "Группа контактов успешно удалена"
             }
-        },
-        "import_contacts_success_0": "{{number}} контакт импортирован и добавлен в выбранную адресную книгу",
-        "import_contacts_success_1": "{{number}} контакта импортированы и добавлены в выбранную адресную книгу",
-        "import_contacts_success_2": "{{number}} контактов импортированы и добавлены в выбранную адресную книгу"
+        }
     },
     "title": {
         "advanced_filters": "Расширенные фильтры"
@@ -342,9 +328,7 @@
     },
     "tooltip": {
         "resend": "Отправить уведомление об этой публикации",
-        "revoke": "Отозвать доступ",
-        "address_book_sharing_status": "Поделился с {{count}} пользователем",
-        "address_book_sharing_status_plural": "Поделился с {{count}} пользователями"
+        "revoke": "Отозвать доступ"
     },
     "contact_restored": "Контакт восстановлен",
     "displayer": {
@@ -428,13 +412,7 @@
             "input": {
                 "contact_input": {
                     "error": {
-                        "address_already_present_0": "Адрес уже присутствует",
-                        "address_already_present_1": "Адреса уже присутствуют",
-                        "address_already_present_2": "Адреса уже присутствуют",
-                        "invalid_already_present_addresses": "Неверные и уже существующие адреса",
-                        "invalid_address_0": "Неверный адрес",
-                        "invalid_address_1": "Неверные адреса",
-                        "invalid_address_2": "Неверных адресов"
+                        "invalid_already_present_addresses": "Неверные и уже существующие адреса"
                     },
                     "title": "Список адресов",
                     "placeholder": "Введите адрес, нажмите «+», чтобы добавить в группу"
@@ -458,12 +436,6 @@
     },
     "edit_dl_component": {
         "error": {
-            "invalid_address_0": "Недействительный адрес",
-            "invalid_address_1": "Недействительных адресов",
-            "invalid_address_2": "Недействительных адресов",
-            "duplicated_address_0": "Адрес уже присутствует",
-            "duplicated_address_1": "Адреса уже присутствует",
-            "duplicated_address_2": "Адресов уже присутствует",
             "invalid_and_duplicated_addresses": "Недействительные и уже существующие адреса"
         },
         "label": {
@@ -499,9 +471,6 @@
         }
     },
     "contactGroupList": {
-        "addressCount_0": "{{count}} адрес",
-        "addressCount_1": "{{count}} адреса",
-        "addressCount_2": "{{count}} адресов",
         "emptyList": "Группы контактов пока не созданы"
     },
     "distribution_list": {
@@ -524,11 +493,6 @@
             "confirm": "Импортировать",
             "title": "Импортировать контакты",
             "description": "Контакты внутри выбранного файла {{fileName}} будут импортированы в папку выбранной адресной книги «{{folderName}}»."
-        },
-        "snackbar": {
-            "import_contacts_success_0": "{{count}} контакт импортирован и добавлен в выбранную адресную книгу",
-            "import_contacts_success_1": "{{count}} контакта импортированы и добавлены в выбранную адресную книгу",
-            "import_contacts_success_2": "{{count}} контактов импортированы и добавлены в выбранную адресную книгу"
         }
     },
     "members_list_item_component": {

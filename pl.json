@@ -115,12 +115,6 @@
         "edit_folder_properties": "Edytuj właściwości {{name}}",
         "email": "E-mail",
         "new_contact": "Nowy kontakt",
-        "website_0": "Strona internetowa",
-        "website_1": "Strony internetowe",
-        "website_2": "Stron internetowych",
-        "advanced_filter_0": "{{count}} Zaawansowany filtr",
-        "advanced_filter_1": "{{count}} Zaawansowane filtry",
-        "advanced_filter_2": "{{count}} Zaawansowanych filtrów",
         "edit_invalid_email": "E-mail jest nieprawidłowy, kliknij aby go edytować",
         "revoke_with_standard_msg": "Odbierz dostęp i wyślij domyślną notkę",
         "app_name": "Kontakty",
@@ -150,9 +144,6 @@
         "autocomplete": "Automatyczne uzupełnianie",
         "discard": "odrzuć",
         "newContactGroup": "Nowa grupa kontaktów",
-        "select_all_addresses_0": "Wybierz adres",
-        "select_all_addresses_1": "Wybierz wszystkie {{count}} adresy",
-        "select_all_addresses_2": "Wybierz wszystkie {{count}} adresów",
         "show_more": "pokaż więcej",
         "import_address_book": "Importuj plik csv",
         "update": "Zaktualizuj",
@@ -289,17 +280,11 @@
                 "success": "Grupa kontaktów została usunięta"
             }
         },
-        "import_contacts_success_0": "{{number}} kontakt został zaimportowany i dodany do wybranej książki adresowej",
-        "import_contacts_success_1": "{{number}} kontakty zostały zaimportowane i dodane do wybranej książki adresowej",
-        "import_contacts_success_2": "{{number}} kontaktów zostało zaimportowanych i dodanych do wybranej książki adresowej",
         "email_copied_to_clipboard": "E-mail został skopiowany do schowka."
     },
     "tooltip": {
         "revoke": "Odbierz dostęp",
-        "resend": "Wyślij powiadomienie mailowe dot. tego udostępnienia",
-        "address_book_sharing_status_0": "Udostępniono {{count}} osobie",
-        "address_book_sharing_status_1": "Udostępniono {{count}} osobom",
-        "address_book_sharing_status_2": "Udostępniono {{count}} osobom"
+        "resend": "Wyślij powiadomienie mailowe dot. tego udostępnienia"
     },
     "contact_restored": "Kontakt został przywrócony",
     "job": {
@@ -321,9 +306,6 @@
         },
         "modal": {
             "delete": {
-                "sure_delete_contact_0": "Czy na pewno chcesz usunąć ten kontakt?",
-                "sure_delete_contact_1": "Czy na pewno chcesz usunąć te kontakty?",
-                "sure_delete_contact_2": "Czy na pewno chcesz usunąć te kontakty?",
                 "if_delete_lost_forever": "Trwale usuwając ten kontakt, nie będziesz w stanie go już odzyskać. Kontynuować?"
             }
         }
@@ -376,9 +358,6 @@
             "postalCode": "Kod pocztowy"
         },
         "title": {
-            "address_0": "Adres",
-            "address_1": "Adresy",
-            "address_2": "Adresów",
             "mail": "Adres e-mail",
             "phone_number": "Numer telefonu"
         }
@@ -417,12 +396,6 @@
             "input": {
                 "contact_input": {
                     "error": {
-                        "address_already_present_0": "Adres już obecny",
-                        "address_already_present_1": "Adresy już obecne",
-                        "address_already_present_2": "Adresów już obecnych",
-                        "invalid_address_0": "Nieprawidłowy adres",
-                        "invalid_address_1": "Nieprawidłowe adresy",
-                        "invalid_address_2": "Nieprawidłowych adresów",
                         "invalid_already_present_addresses": "Nieprawidłowe i już obecne adresy"
                     },
                     "placeholder": "Wpisz adres i kliknij na \"+\", aby dodać do grupy",
@@ -453,13 +426,7 @@
     },
     "edit_dl_component": {
         "error": {
-            "invalid_and_duplicated_addresses": "Nieprawidłowe i już obecne adresy",
-            "duplicated_address_0": "Adres już obecny",
-            "duplicated_address_1": "Adresy już obecne",
-            "duplicated_address_2": "Adresów już obecnych",
-            "invalid_address_0": "Nieprawidłowy adres",
-            "invalid_address_1": "Nieprawidłowe adresy",
-            "invalid_address_2": "Nieprawidłowych adresów"
+            "invalid_and_duplicated_addresses": "Nieprawidłowe i już obecne adresy"
         },
         "label": {
             "dl_email": "Lista dystrybucyjna",
@@ -508,11 +475,6 @@
             "confirm": "Importuj",
             "description": "Kontakty w wybranym pliku {{fileName}} zostaną zaimportowane do folderu {{folderName}} wybranej książki adresowej.",
             "title": "Importuj kontakty"
-        },
-        "snackbar": {
-            "import_contacts_success_0": "{{count}} kontakt został zaimportowany i dodany do wybranej książki adresowej",
-            "import_contacts_success_1": "{{count}} kontakty zostały zaimportowane i dodane do wybranej książki adresowej",
-            "import_contacts_success_2": "{{count}} kontaktów zostało zaimportowanych i dodanych do wybranej książki adresowej"
         }
     },
     "contactGroupDisplayer": {
@@ -521,9 +483,6 @@
         }
     },
     "contactGroupList": {
-        "addressCount_0": "{{count}} adres",
-        "addressCount_1": "{{count}} adresy",
-        "addressCount_2": "{{count}} adresów",
         "emptyList": "Nie stworzono jeszcze żadnych grup kontaktów"
     },
     "distribution_list": {

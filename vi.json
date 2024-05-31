@@ -20,7 +20,6 @@
         "activate_selection_mode": "Kích hoạt chế độ lựa chọn",
         "cancel": "Huỷ",
         "contacts": "Liên hệ",
-        "advanced_filter": "Bộ lọc nâng cao {{count}}",
         "contact_setting": "Cài đặt liên hệ",
         "create": "Tạo",
         "discard_changes": "BỎ QUA CÁC THAY ĐỔI",
@@ -46,7 +45,6 @@
         "revoke_with_standard_msg": "Thu hồi quyền truy cập gửi thông báo chuẩn",
         "revoke_without_notification": "Thu hồi quyền truy cập và không gửi thông báo",
         "root": "Root",
-        "website": "Websites",
         "address_book_restored": "Danh bạ đã được khôi phục",
         "tags": "Thẻ",
         "tag_name": "Tên thẻ",
@@ -112,8 +110,7 @@
         },
         "modal": {
             "delete": {
-                "if_delete_lost_forever": "Chọn cách xóa vĩnh viễn liên hệ này, bạn sẽ không thể khôi phục được nữa, bạn có tiếp tục không?",
-                "sure_delete_contact": "Bạn có chắc chắn xóa vĩnh viễn những liên hệ này không?"
+                "if_delete_lost_forever": "Chọn cách xóa vĩnh viễn liên hệ này, bạn sẽ không thể khôi phục được nữa, bạn có tiếp tục không?"
             }
         }
     },
@@ -265,7 +262,6 @@
             "street": "Đường/phố"
         },
         "title": {
-            "address": "Địa chỉ",
             "mail": "Địa chỉ thư điện tử",
             "phone_number": "Số điện thoại liên lạc"
         }
@@ -304,8 +300,7 @@
     },
     "tooltip": {
         "revoke": "Thu hồi truy cập",
-        "resend": "Gửi thư điện tử thông báo về chia sẻ này",
-        "address_book_sharing_status": "Chia sẻ {{count}} với người"
+        "resend": "Gửi thư điện tử thông báo về chia sẻ này"
     },
     "folders": {
         "trash": "Thùng rác",
