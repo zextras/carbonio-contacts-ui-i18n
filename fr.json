@@ -13,7 +13,8 @@
         "copy": "Copier",
         "delete": "Supprimer",
         "edit": "Modifier",
-        "mail": "Envoyer un email"
+        "mail": "Envoyer un email",
+        "add_shared_address_books": "Ajouter des partages"
     },
     "displayer": {
         "list_title2": "La corbeille est vide",
@@ -97,7 +98,8 @@
                 "body": {
                     "message1": "Voulez-vous supprimer le carnet d'adresses sélectionné ? Si vous le supprimez, le contenu associé sera définitivement supprimé et le carnet d'adresses ne sera plus récupérable.",
                     "message2": "Voulez-vous supprimer définitivement le carnet d'adresses sélectionné ? Si vous le supprimez, le contenu associé sera définitivement supprimé et le carnet d'adresses ne sera plus récupérable."
-                }
+                },
+                "title": "Supprimer {{addressBookName}}"
             },
             "edit": {
                 "body": {
@@ -114,7 +116,8 @@
                 "message1": "Souhaitez-vous vider le carnet d'adresse sélectionné ?",
                 "message2": "Tous les contacts concernés seront supprimé de manière permanente et il ne sera plus possible de les restaurer.",
                 "message3": "Souhaitez-vous vider la corbeille ?",
-                "message4": "Son contenu sera supprimé de manière permanente et il ne sera pas possible de les restaurer."
+                "message4": "Son contenu sera supprimé de manière permanente et il ne sera pas possible de les restaurer.",
+                "title": "Nettoyer {{addressBookName}}"
             },
             "item": {
                 "empty": "Aucun élément disponible"
@@ -126,7 +129,8 @@
                 },
                 "input": {
                     "filter": "Filtrer le carnet d'adresses"
-                }
+                },
+                "title": "Déplacer {{addressBookName}}"
             }
         },
         "share_folder": "Partager le carnet d'adresses",
@@ -213,7 +217,19 @@
         "export_address_book": "Exporter en fichier csv",
         "groups_app_name": "Groupes de contact et Listes de distribution",
         "import_address_book": "Importer un fichier csv",
-        "update": "Mettre à jour"
+        "update": "Mettre à jour",
+        "advanced_filter_one": "{{count}} filtre avancé",
+        "advanced_filter_many": "{{count}} filtres avancés",
+        "advanced_filter_other": "{{count}} filtres avancés",
+        "select_all_addresses_one": "Sélectionner l'adresse",
+        "select_all_addresses_many": "Sélectionner les {{count}} adresses",
+        "select_all_addresses_other": "Sélectionner les {{count}} adresses",
+        "website_one": "Site web",
+        "website_many": "Sites web",
+        "website_other": "Sites web",
+        "find_share": "Trouver les partages",
+        "filter_folders": "Filtrer les dossiers",
+        "new_folder": "Nouveau dossier"
     },
     "name": {
         "nickName": "Surnom",
@@ -234,7 +250,10 @@
         },
         "title": {
             "mail": "Adresse email",
-            "phone_number": "Téléphone"
+            "phone_number": "Téléphone",
+            "address_one": "Adresse",
+            "address_many": "Adresses",
+            "address_other": "Adresses"
         }
     },
     "share": {
@@ -273,7 +292,8 @@
         "shared_folders": "Partager les carnets d'adresses",
         "shared_item": "Élément partagé",
         "shared_items": "Les carnets d'adresses de {{value}}",
-        "workflow": "Flux de travail"
+        "workflow": "Flux de travail",
+        "link_name": "{{shareName}} de {{ownerName}}"
     },
     "snackbar": {
         "share_resend": "Invitation à partager renvoyée",
@@ -293,14 +313,21 @@
                 "success": "Le groupe de contact a été supprimé avec succès"
             }
         },
-        "email_copied_to_clipboard": "Email copié dans le presse papier."
+        "email_copied_to_clipboard": "Email copié dans le presse papier.",
+        "import_contacts_success_one": "{{number}} contact importé et ajouté au carnet d'adresses sélectionné",
+        "import_contacts_success_many": "{{number}} contacts importés et ajoutés au carnet d'adresses sélectionné",
+        "import_contacts_success_other": "{{number}} contacts importés et ajoutés au carnet d'adresses sélectionné"
     },
     "title": {
         "advanced_filters": "Filtres avancés"
     },
     "tooltip": {
         "revoke": "Révoquer les accès",
-        "resend": "Envoyer un email de notification concernant ce partage"
+        "resend": "Envoyer un email de notification concernant ce partage",
+        "address_book_sharing_status_one": "Partagé avec {{count}} personne",
+        "address_book_sharing_status_many": "Partagé avec {{count}} personnes",
+        "address_book_sharing_status_other": "Partagé avec {{count}} personnes",
+        "folder_linked_status": "Connecté avec moi"
     },
     "job": {
         "company": "Entreprise",
@@ -327,11 +354,17 @@
             "tag_updated": "Étiquette mise à jour avec succès",
             "tag_not_updated": "Une erreur est survenue, l'étiquette n'a pas été mise à jour. Merci de réessayer.",
             "tag_deleted": "L'étiquette {{name}} a été supprimée avec succès",
-            "tag_created": "L'étiquette {{name}} a été créée avec succès"
+            "tag_created": "L'étiquette {{name}} a été créée avec succès",
+            "conversation_move": "La conversation a été déplacée avec succès",
+            "folder_moved": "Le dossier a été déplacé avec succès",
+            "message_move": "Le message a été déplacé avec succès"
         },
         "modal": {
             "delete": {
-                "if_delete_lost_forever": "En supprimant définitivement ce contact, vous ne serez plus en mesure de le restaurer. Souhaitez-vous continuer ?"
+                "if_delete_lost_forever": "En supprimant définitivement ce contact, vous ne serez plus en mesure de le restaurer. Souhaitez-vous continuer ?",
+                "sure_delete_contact_one": "Êtes-vous sûr de vouloir supprimer ce contact définitivement ?",
+                "sure_delete_contact_many": "Êtes-vous sûr de vouloir supprimer ces contacts définitivement ?",
+                "sure_delete_contact_other": "Êtes-vous sûr de vouloir supprimer ces contacts définitivement ?"
             }
         }
     },
@@ -406,7 +439,13 @@
             "input": {
                 "contact_input": {
                     "error": {
-                        "invalid_already_present_addresses": "Adresses invalides et déjà présentes"
+                        "invalid_already_present_addresses": "Adresses invalides et déjà présentes",
+                        "address_already_present_one": "Adresse déjà présente",
+                        "address_already_present_many": "Adresses déjà présentes",
+                        "address_already_present_other": "Adresses déjà présentes",
+                        "invalid_address_one": "Adresse non valide",
+                        "invalid_address_many": "Adresses non valides",
+                        "invalid_address_other": "Adresses non valides"
                     },
                     "placeholder": "Saisissez une adresse puis cliquez sur \"+\" pour l'ajouter au groupe",
                     "title": "Liste des adresses"
@@ -436,7 +475,13 @@
     },
     "edit_dl_component": {
         "error": {
-            "invalid_and_duplicated_addresses": "Adresse invalides et déjà présentes"
+            "invalid_and_duplicated_addresses": "Adresse invalides et déjà présentes",
+            "invalid_address_one": "Adresse non valide",
+            "invalid_address_many": "Adresses non valides",
+            "invalid_address_other": "Adresses non valides",
+            "duplicated_address_one": "Adresse déjà présente",
+            "duplicated_address_many": "Adresses déjà présentes",
+            "duplicated_address_other": "Adresses déjà présentes"
         },
         "label": {
             "dl_email": "Liste de distribution",
@@ -471,7 +516,10 @@
         }
     },
     "contactGroupList": {
-        "emptyList": "Aucun groupe de contact n'a encore été créé"
+        "emptyList": "Aucun groupe de contact n'a encore été créé",
+        "addressCount_one": "{{count}} adresse",
+        "addressCount_many": "{{count}} adresses",
+        "addressCount_other": "{{count}} adresses"
     },
     "distribution_list": {
         "label": {
@@ -493,6 +541,11 @@
             "confirm": "Importer",
             "description": "Les contacts contenus dans le fichier {{fileName}} sélectionné seront importés dans le dossier \"{{folderName}}\" du carnet d'adresses sélectionné.",
             "title": "Importer des contacts"
+        },
+        "snackbar": {
+            "import_contacts_success_one": "{{count}} contact importé et ajouté au carnet d'adresses sélectionné",
+            "import_contacts_success_many": "{{count}} contacts importés et ajoutés au carnet d'adresses sélectionné",
+            "import_contacts_success_other": "{{count}} contacts importés et ajoutés au carnet d'adresses sélectionné"
         }
     },
     "contactGroupDisplayer": {
