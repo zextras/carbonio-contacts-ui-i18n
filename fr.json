@@ -552,5 +552,21 @@
         "label": {
             "members_total": "Adresses : {{count}}"
         }
+    },
+    "contact": {
+        "modal": {
+            "move_single": {
+                "title": "Déplacer le contact {{contactDesc}}"
+            },
+            "move_multiple": {
+                "title": "Déplacer {{count}} contacts"
+            },
+            "restore_single": {
+                "title": "Restaurer le contact {{contactDesc}}"
+            },
+            "restore_multiple": {
+                "title": "Restaurer {{count}} contacts"
+            }
+        }
     }
 }
