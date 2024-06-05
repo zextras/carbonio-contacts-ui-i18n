@@ -152,7 +152,16 @@
             "upload_failed_generic": "Przesyłanie pliku {{filename}} się nie powiodło"
         },
         "export_address_book": "Eksportuj plik csv",
-        "groups_app_name": "Grupy kontaktów i listy dystrybucyjne"
+        "groups_app_name": "Grupy kontaktów i listy dystrybucyjne",
+        "advanced_filter_one": "{{count}} zaawansowany filtr",
+        "advanced_filter_few": "{{count}} zaawansowane filtry",
+        "advanced_filter_many": "{{count}} zaawansowanych filtrów",
+        "select_all_addresses_one": "Wybierz adres",
+        "select_all_addresses_few": "Wybierz wszystkie {{count}} adresy",
+        "select_all_addresses_many": "Wybierz wszystkie {{count}} adresów",
+        "website_one": "Strona internetowa",
+        "website_few": "Strony internetowe",
+        "website_many": "Stron internetowych"
     },
     "displayer": {
         "search_description1": "Lub wybierz \"Zaawansowane filtry\", aby udoskonalić wyniki wyszukiwania.",
@@ -306,7 +315,10 @@
         },
         "modal": {
             "delete": {
-                "if_delete_lost_forever": "Trwale usuwając ten kontakt, nie będziesz w stanie go już odzyskać. Kontynuować?"
+                "if_delete_lost_forever": "Trwale usuwając ten kontakt, nie będziesz w stanie go już odzyskać. Kontynuować?",
+                "sure_delete_contact_one": "Czy na pewno chcesz trwale usunąć ten kontakt?",
+                "sure_delete_contact_few": "Czy na pewno chcesz trwale usunąć te kontakty?",
+                "sure_delete_contact_many": "Czy na pewno chcesz trwale usunąć te kontakty?"
             }
         }
     },
@@ -359,7 +371,10 @@
         },
         "title": {
             "mail": "Adres e-mail",
-            "phone_number": "Numer telefonu"
+            "phone_number": "Numer telefonu",
+            "address_one": "Adres",
+            "address_few": "Adresy",
+            "address_many": "Adresów"
         }
     },
     "select": {
@@ -396,7 +411,13 @@
             "input": {
                 "contact_input": {
                     "error": {
-                        "invalid_already_present_addresses": "Nieprawidłowe i już obecne adresy"
+                        "invalid_already_present_addresses": "Nieprawidłowe i już obecne adresy",
+                        "address_already_present_one": "Adres jest już obecny",
+                        "address_already_present_few": "Adresy są już obecne",
+                        "address_already_present_many": "Adresów jest już obecnych",
+                        "invalid_address_one": "Nieprawidłowy adres",
+                        "invalid_address_few": "Nieprawidłowe adresy",
+                        "invalid_address_many": "Nieprawidłowych adresów"
                     },
                     "placeholder": "Wpisz adres i kliknij na \"+\", aby dodać do grupy",
                     "title": "Lista adresów"
@@ -426,7 +447,13 @@
     },
     "edit_dl_component": {
         "error": {
-            "invalid_and_duplicated_addresses": "Nieprawidłowe i już obecne adresy"
+            "invalid_and_duplicated_addresses": "Nieprawidłowe i już obecne adresy",
+            "duplicated_address_one": "Adres jest już obecny",
+            "duplicated_address_few": "Adresy są już obecne",
+            "duplicated_address_many": "Adresów jest już obecnych",
+            "invalid_address_one": "Nieprawidłowy adres",
+            "invalid_address_few": "Nieprawidłowe adresy",
+            "invalid_address_many": "Nieprawidłowych adresów"
         },
         "label": {
             "dl_email": "Lista dystrybucyjna",
@@ -475,6 +502,11 @@
             "confirm": "Importuj",
             "description": "Kontakty w wybranym pliku {{fileName}} zostaną zaimportowane do folderu {{folderName}} wybranej książki adresowej.",
             "title": "Importuj kontakty"
+        },
+        "snackbar": {
+            "import_contacts_success_one": "{{count}} kontakt został zaimportowany i dodany do wybranej książki adresowej",
+            "import_contacts_success_few": "{{count}} kontakty zostały zaimportowane i dodane do wybranej książki adresowej",
+            "import_contacts_success_many": "{{count}} kontaktów zostało zaimportowanych i dodanych do wybranej książki adresowej"
         }
     },
     "contactGroupDisplayer": {
@@ -483,7 +515,10 @@
         }
     },
     "contactGroupList": {
-        "emptyList": "Nie stworzono jeszcze żadnych grup kontaktów"
+        "emptyList": "Nie stworzono jeszcze żadnych grup kontaktów",
+        "addressCount_one": "{{count}} adres",
+        "addressCount_few": "{{count}} adresy",
+        "addressCount_many": "{{count}} adresów"
     },
     "distribution_list": {
         "label": {
