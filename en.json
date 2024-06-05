@@ -541,5 +541,21 @@
         "mobile": "mobile",
         "other": "other",
         "work": "work"
+    },
+    "contact": {
+        "modal": {
+            "move_multiple": {
+                "title": "Move {{count}} contacts"
+            },
+            "move_single": {
+                "title": "Move {{contactDesc}}'s contact"
+            },
+            "restore_multiple": {
+                "title": "Restore {{count}} contacts"
+            },
+            "restore_single": {
+                "title": "Restore {{contactDesc}}'s contact"
+            }
+        }
     }
 }
