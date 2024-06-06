@@ -8,7 +8,8 @@
                 "body": {
                     "message1": "Czy na pewno chcesz usunąć tą książkę adresową? Jeśli ją usuniesz, powiązana z nią zawartość zostanie trwale usunięta, a książki adresowej nie będzie dało się już odzyskać.",
                     "message2": "Czy na pewno chcesz trwale usunąć tą książkę adresową? Jeśli ją usuniesz, powiązana z nią zawartość zostanie trwale usunięta, a książki adresowej nie będzie dało się już odzyskać."
-                }
+                },
+                "title": "Usuń {{addressBookName}}"
             },
             "edit": {
                 "body": {
@@ -25,7 +26,8 @@
                 "message1": "Czy na pewno chcesz opróżnić wybraną książkę adresową?",
                 "message2": "Wszystkie powiązane kontakty zostaną trwale usunięte i nie będzie się dało ich odzyskać.",
                 "message3": "Czy chcesz opróźnić kosz?",
-                "message4": "Jego zawartość zostanie trwale usunięta i nie będzie się dało jej odzyskać."
+                "message4": "Jego zawartość zostanie trwale usunięta i nie będzie się dało jej odzyskać.",
+                "title": "Opróżnij {{addressBookName}}"
             },
             "move": {
                 "body": {
@@ -34,7 +36,8 @@
                 },
                 "input": {
                     "filter": "Filtruj książkę adresową"
-                }
+                },
+                "title": "Przenieś {{addressBookName}}"
             },
             "item": {
                 "empty": "Brak dostępnych elementów"
@@ -119,7 +122,7 @@
         "revoke_with_standard_msg": "Odbierz dostęp i wyślij domyślną notkę",
         "app_name": "Kontakty",
         "share_with": "Udostępnij",
-        "add_share": "Dodaj Udostępnienie",
+        "add_share": "Dodaj udostępnienie",
         "cannot_move": "Nie można przenieść do tego samego folderu",
         "select_color": "Wybierz kolor",
         "folder_name": "Nazwa folderu",
@@ -161,7 +164,10 @@
         "select_all_addresses_many": "Wybierz wszystkie {{count}} adresów",
         "website_one": "Strona internetowa",
         "website_few": "Strony internetowe",
-        "website_many": "Stron internetowych"
+        "website_many": "Stron internetowych",
+        "filter_folders": "Filtruj foldery",
+        "find_share": "Dodaj",
+        "new_folder": "Nowy folder"
     },
     "displayer": {
         "search_description1": "Lub wybierz \"Zaawansowane filtry\", aby udoskonalić wyniki wyszukiwania.",
@@ -222,7 +228,8 @@
         "copy": "Skopiuj",
         "delete": "Usuń",
         "edit": "Edytuj",
-        "mail": "Wyślij e-maila"
+        "mail": "Wyślij e-maila",
+        "add_shared_address_books": "Dodaj udostępnienia"
     },
     "message": {
         "snackbar": {
@@ -269,7 +276,8 @@
         "role": "Rola",
         "send_notification": "Wyślij powiadomienie o tym udostępnieniu",
         "share_added_succesfully": "Udostępnienie zostało dodane",
-        "share_info": "Informacje o udostępnionej książce adresowej"
+        "share_info": "Informacje o udostępnionej książce adresowej",
+        "link_name": "{{shareName}} od {{ownerName}}"
     },
     "snackbar": {
         "share_resend": "Zaproszenie do udostępnienia zostało wysłane ponownie",
@@ -289,11 +297,18 @@
                 "success": "Grupa kontaktów została usunięta"
             }
         },
-        "email_copied_to_clipboard": "E-mail został skopiowany do schowka."
+        "email_copied_to_clipboard": "E-mail został skopiowany do schowka.",
+        "import_contacts_success_one": "{{number}} kontakt został zaimportowany i dodany do wybranej książki adresowej",
+        "import_contacts_success_few": "{{number}} kontakty zostały zaimportowane i dodane do wybranej książki adresowej",
+        "import_contacts_success_many": "{{number}} kontaktów zostało zaimportowanych i dodanych do wybranej książki adresowej"
     },
     "tooltip": {
         "revoke": "Odbierz dostęp",
-        "resend": "Wyślij powiadomienie mailowe dot. tego udostępnienia"
+        "resend": "Wyślij powiadomienie mailowe dot. tego udostępnienia",
+        "folder_linked_status": "Powiązane ze mną",
+        "address_book_sharing_status_one": "Udostępniono {{count}} osobie",
+        "address_book_sharing_status_few": "Udostępniono {{count}} osobom",
+        "address_book_sharing_status_many": "Udostępniono {{count}} osobom"
     },
     "contact_restored": "Kontakt został przywrócony",
     "job": {
@@ -311,7 +326,10 @@
             "tag_updated": "Etykieta została zaktualizowana",
             "tag_not_updated": "Coś poszło nie tak, etykieta nie została zaktualizowana. Spróbuj ponownie.",
             "tag_deleted": "Etykieta {{name}} został usunięta",
-            "tag_created": "Etykieta {{name}} została stworzona"
+            "tag_created": "Etykieta {{name}} została stworzona",
+            "folder_moved": "Folder został przeniesiony",
+            "conversation_move": "Konwersacja została przeniesiona",
+            "message_move": "Wiadomość została przeniesiona"
         },
         "modal": {
             "delete": {
@@ -533,6 +551,22 @@
     "emptyDisplayer": {
         "contactGroup": {
             "hint": "Kliknij na przycisk \"NOWY\", aby stworzyć nową grupę kontaktów."
+        }
+    },
+    "contact": {
+        "modal": {
+            "move_single": {
+                "title": "Przenieś kontakt {{contactDesc}}"
+            },
+            "move_multiple": {
+                "title": "Przenieś {{count}} kontakty"
+            },
+            "restore_multiple": {
+                "title": "Przywróć {{count}} kontakty"
+            },
+            "restore_single": {
+                "title": "Przywróć kontakt {{contactDesc}}"
+            }
         }
     }
 }
