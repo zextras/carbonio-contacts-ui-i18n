@@ -37,7 +37,9 @@
         "no_special_char_allowed": "Аты өзүнчө символдорду камтыбашы керек",
         "contacts": "Байланыштар",
         "notes": "Белгилер",
-        "update": "Жаңылоо"
+        "update": "Жаңылоо",
+        "filter_folders": "Папкаларды чыпкалоо",
+        "new_folder": "Жаңы папка"
     },
     "action": {
         "copy": "Көчүрүү",
