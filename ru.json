@@ -412,7 +412,13 @@
             "input": {
                 "contact_input": {
                     "error": {
-                        "invalid_already_present_addresses": "Неверные и уже существующие адреса"
+                        "invalid_already_present_addresses": "Неверные и уже существующие адреса",
+                        "address_already_present_one": "Адрес уже присутствует",
+                        "address_already_present_few": "Адреса уже присутствуют",
+                        "address_already_present_many": "Адресов уже присутствует",
+                        "invalid_address_one": "Неверный адрес",
+                        "invalid_address_few": "Неверных адреса",
+                        "invalid_address_many": "Неверных адресов"
                     },
                     "title": "Список адресов",
                     "placeholder": "Введите адрес, нажмите «+», чтобы добавить в группу"
@@ -471,7 +477,10 @@
         }
     },
     "contactGroupList": {
-        "emptyList": "Группы контактов пока не созданы"
+        "emptyList": "Группы контактов пока не созданы",
+        "addressCount_one": "{{count}} адрес",
+        "addressCount_few": "{{count}} адреса",
+        "addressCount_many": "{{count}} адресов"
     },
     "distribution_list": {
         "label": {
