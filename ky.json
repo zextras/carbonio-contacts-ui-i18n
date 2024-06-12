@@ -204,10 +204,7 @@
             "contact_restored": "Байланыш калыбына келтирилди",
             "contact_deleted_permanently": "Өчүрүү ийгиликтүү аяктады",
             "contact_moved_to_trash": "Байланыш себетке жайгаштырылды",
-            "tag_not_updated": "Бир жерден ката кетти, tag жаңыланган жок. Сураныч, кайра аракет кылыңыз.",
-            "folder_moved": "",
-            "conversation_move": "",
-            "message_move": ""
+            "tag_not_updated": "Бир жерден ката кетти, tag жаңыланган жок. Сураныч, кайра аракет кылыңыз."
         },
         "modal": {
             "delete": {
