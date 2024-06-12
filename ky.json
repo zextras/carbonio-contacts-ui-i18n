@@ -216,7 +216,7 @@
     },
     "message": {
         "delete_tag_message1": "{{name}} тag өчүрүүнү каалайсызбы?",
-        "delete_tag_message2": "Өчүрүлгөндөн кийин, ал белгиленген ар бир элементтен өчүрүлөт.",
+        "delete_tag_message2": "Өчүрүлгөндөн кийин, ал белгилеген ар бир элементтен өчүрүлөт.",
         "snackbar": {
             "settings_saved": "Оңдоолор сакталды"
         },
@@ -287,7 +287,8 @@
         "revoke": "Кирүү мүмкүнчүлүгүн жокко чыгаруу",
         "resend": "Бул жарыя жөнүндө кабарлоо жөнөтүү",
         "address_book_sharing_status_one": "{{count}} адам менен бөлүшүлгөн",
-        "address_book_sharing_status_other": "{{count}} адамдар менен бөлүшүлгөн"
+        "address_book_sharing_status_other": "{{count}} адамдар менен бөлүшүлгөн",
+        "folder_linked_status": "Мени менен байланыштуу"
     },
     "contacts": {
         "importAction": {
