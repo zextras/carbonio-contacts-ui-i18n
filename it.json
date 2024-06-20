@@ -11,9 +11,7 @@
     "section": {
         "title": {
             "phone_number": "Contatto telefonico",
-            "phone_number_plural": "Contatti telefonici {{count}}",
-            "mail": "Indirizzo e-mail",
-            "mail_plural": "Inidirizzi e-mail {{count}}"
+            "mail": "Indirizzo e-mail"
         },
         "field": {
             "street": "Via",
@@ -115,7 +113,10 @@
         "export_address_book": "Esporta il file CSV",
         "groups_app_name": "Gruppi di contatti e liste di distribuzione",
         "import_address_book": "Importa file CSV",
-        "update": "Aggiorna"
+        "update": "Aggiorna",
+        "advanced_filter_one": "{{count}} Filtro Avanzato",
+        "advanced_filter_many": "{{count}} Filtri Avanzati",
+        "advanced_filter_other": "{{count}} Filtri Avanzati"
     },
     "job": {
         "title": "Ruolo",
@@ -408,7 +409,13 @@
             "input": {
                 "contact_input": {
                     "error": {
-                        "invalid_already_present_addresses": "Indirizzi non validi e già presenti"
+                        "invalid_already_present_addresses": "Indirizzi non validi e già presenti",
+                        "invalid_address_one": "Indirizzo non valido",
+                        "invalid_address_many": "Indirizzi non validi",
+                        "invalid_address_other": "Indirizzi non validi",
+                        "address_already_present_one": "Indirizzo già presente",
+                        "address_already_present_many": "Indirizzi già presenti",
+                        "address_already_present_other": "Indirizzi già presenti"
                     },
                     "placeholder": "Scrivi un indirizzo, clicca ‘+’ per aggiungerlo al gruppo",
                     "title": "Elenco indirizzi"
@@ -438,7 +445,13 @@
     },
     "edit_dl_component": {
         "error": {
-            "invalid_and_duplicated_addresses": "Indirizzi non validi e già presenti"
+            "invalid_and_duplicated_addresses": "Indirizzi non validi e già presenti",
+            "duplicated_address_one": "Indirizzo già presente",
+            "duplicated_address_many": "Indirizzi già presenti",
+            "duplicated_address_other": "Indirizzi già presenti",
+            "invalid_address_one": "Indirizzo non valido",
+            "invalid_address_many": "Indirizzi non validi",
+            "invalid_address_other": "Indirizzi non validi"
         },
         "label": {
             "dl_email": "Distribution list",
@@ -492,6 +505,11 @@
             "description": "I contatti all'interno del file {{fileName}} scelto verranno importati all'interno della cartella \"{{folderName}}\" della rubrica selezionata.",
             "confirm": "Importa",
             "title": "Importa i contatti"
+        },
+        "snackbar": {
+            "import_contacts_success_one": "{{count}} contatto importato e aggiunto alla rubrica selezionata",
+            "import_contacts_success_many": "{{count}} contatti importati e aggiunti alla rubrica selezionata",
+            "import_contacts_success_other": "{{count}} contatti importati e aggiunti alla rubrica selezionata"
         }
     },
     "contactGroupDisplayer": {
@@ -500,6 +518,9 @@
         }
     },
     "contactGroupList": {
-        "emptyList": "Non è stato ancora creato alcun gruppo di contatti"
+        "emptyList": "Non è stato ancora creato alcun gruppo di contatti",
+        "addressCount_one": "{{count}} indirizzo",
+        "addressCount_many": "{{count}} indirizzi",
+        "addressCount_other": "{{count}} indirizzi"
     }
 }
