@@ -433,7 +433,8 @@
             "state": "Регион",
             "street": "көчө",
             "city": "Шаар",
-            "country": "Өлкө"
+            "country": "Өлкө",
+            "postalCode": "Индекс"
         },
         "title": {
             "mail": "Электрондук почта",
