@@ -122,7 +122,13 @@
         "advanced_filter_other": "{{count}} Filtri Avanzati",
         "website_one": "Sito web",
         "website_many": "Siti web",
-        "website_other": "Siti web"
+        "website_other": "Siti web",
+        "filter_folders": "Filtra cartelle",
+        "find_share": "Trova condivisioni",
+        "new_folder": "Nuova Cartella",
+        "select_all_addresses_one": "Seleziona indirizzo",
+        "select_all_addresses_many": "Seleziona {{count}} indirizzi",
+        "select_all_addresses_other": ""
     },
     "job": {
         "title": "Ruolo",
@@ -225,7 +231,8 @@
         "copy": "Copia",
         "delete": "Elimina",
         "edit": "Modifica",
-        "mail": "Invia e-mail"
+        "mail": "Invia e-mail",
+        "add_shared_address_books": "Aggiungi condivisioni"
     },
     "settings": {
         "contacts": {
@@ -274,7 +281,8 @@
         "share_note": "Il messaggio predefinito mostra il tuo nome, il nome dell'elemento condiviso, i permessi dati ai destinatari e le informazioni di accesso.",
         "shared_folders": "Rubriche Condivise",
         "shared_items": "Rubrica condivisa di {{value}}",
-        "viewer": "Visualizzazione"
+        "viewer": "Visualizzazione",
+        "link_name": "{{shareName}} di {{ownerName}}"
     },
     "messages": {
         "snackbar": {
@@ -286,7 +294,10 @@
             "tag_updated": "Etichetta aggiornata con successo",
             "tag_not_updated": "Qualcosa è andato storto, etichetta non aggiornata. Riprova.",
             "tag_deleted": "Etichetta {{name}} eliminata con successo",
-            "tag_created": "Etichetta {{name}} creata con successo"
+            "tag_created": "Etichetta {{name}} creata con successo",
+            "folder_moved": "Cartella spostata con successo",
+            "message_move": "Messaggio spostato con successo",
+            "conversation_move": "Conversazione spostata con successo"
         },
         "modal": {
             "delete": {
@@ -540,5 +551,12 @@
         "addressCount_one": "{{count}} indirizzo",
         "addressCount_many": "{{count}} indirizzi",
         "addressCount_other": "{{count}} indirizzi"
+    },
+    "contact": {
+        "modal": {
+            "move_multiple": {
+                "title": "Sposta {{count}} contatti"
+            }
+        }
     }
 }
