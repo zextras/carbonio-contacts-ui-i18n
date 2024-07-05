@@ -92,7 +92,10 @@
         },
         "title": {
             "phone_number": "Номер телефона",
-            "mail": "Электронная почта"
+            "mail": "Электронная почта",
+            "address_one": "Адрес",
+            "address_few": "Адреса",
+            "address_many": "Адреса"
         }
     },
     "types": {
@@ -183,7 +186,17 @@
         "discard": "отменить",
         "export_address_book": "Экспортировать CSV-файл",
         "groups_app_name": "Группы контактов и списки рассылки",
-        "import_address_book": "Импортировать CSV-файл"
+        "import_address_book": "Импортировать CSV-файл",
+        "new_folder": "Новая папка",
+        "select_all_addresses_one": "Выбрать {{count}} адрес",
+        "select_all_addresses_few": "Выбрать {{count}} адреса",
+        "select_all_addresses_many": "Выбрать {{count}} адресов",
+        "advanced_filter_one": "{{count}} Расширенный фильтр",
+        "advanced_filter_few": "{{count}} Расширенных фильтров",
+        "advanced_filter_many": "{{count}} Расширенных фильтров",
+        "website_one": "Сайт",
+        "website_few": "Сайта",
+        "website_many": "Сайтов"
     },
     "job": {
         "title": "Должность",
@@ -200,11 +213,17 @@
             "tag_updated": "Тег успешно обновлен",
             "tag_not_updated": "Что-то пошло не так, тег не обновился. Пожалуйста, попробуйте еще раз.",
             "tag_deleted": "{{name}} Тег успешно удален",
-            "tag_created": "Тег {{name}} успешно создан"
+            "tag_created": "Тег {{name}} успешно создан",
+            "conversation_move": "Разговор успешно перенесен",
+            "folder_moved": "Папка успешно перенесена",
+            "message_move": "Сообщение успешно перенесено"
         },
         "modal": {
             "delete": {
-                "if_delete_lost_forever": "Удалив этот контакт без возможности восстановления, вы больше не сможете его восстановить. Продолжить?"
+                "if_delete_lost_forever": "Удалив этот контакт без возможности восстановления, вы больше не сможете его восстановить. Продолжить?",
+                "sure_delete_contact_one": "Вы уверены, что хотите навсегда удалить этот контакт?",
+                "sure_delete_contact_few": "Вы уверены, что хотите навсегда удалить эти контакты?",
+                "sure_delete_contact_many": "Вы уверены, что хотите навсегда удалить эти контакты?"
             }
         }
     },
@@ -300,7 +319,10 @@
             "confirm": {
                 "success": "Группа контактов успешно удалена"
             }
-        }
+        },
+        "import_contacts_success_one": "{{number}}Контакт импортирован и добавлен в выбранную адресную книгу",
+        "import_contacts_success_few": "{{number}}Контакта импортированы и добавлены в выбранную адресную книгу",
+        "import_contacts_success_many": "{{number}}Контактов импортированы и добавлены в выбранную адресную книгу"
     },
     "title": {
         "advanced_filters": "Расширенные фильтры"
@@ -328,7 +350,8 @@
     },
     "tooltip": {
         "resend": "Отправить уведомление об этой публикации",
-        "revoke": "Отозвать доступ"
+        "revoke": "Отозвать доступ",
+        "folder_linked_status": "Адресовано мне"
     },
     "contact_restored": "Контакт восстановлен",
     "displayer": {
@@ -442,7 +465,13 @@
     },
     "edit_dl_component": {
         "error": {
-            "invalid_and_duplicated_addresses": "Недействительные и уже существующие адреса"
+            "invalid_and_duplicated_addresses": "Недействительные и уже существующие адреса",
+            "duplicated_address_one": "Адрес уже существует",
+            "duplicated_address_few": "Адреса уже существуют",
+            "duplicated_address_many": "Адреса уже существуют",
+            "invalid_address_one": "Неверный адрес",
+            "invalid_address_few": "Неверные адреса",
+            "invalid_address_many": "Неверные адреса"
         },
         "label": {
             "dl_email": "Список рассылок",
@@ -502,11 +531,32 @@
             "confirm": "Импортировать",
             "title": "Импортировать контакты",
             "description": "Контакты внутри выбранного файла {{fileName}} будут импортированы в папку выбранной адресной книги «{{folderName}}»."
+        },
+        "snackbar": {
+            "import_contacts_success_one": "{{count}} контакт импортирован и добавлен в выбранную адресную книгу",
+            "import_contacts_success_few": "{{count}} контакта импортированы и добавлены в выбранную адресную книгу",
+            "import_contacts_success_many": "{{count}} контактов импортированы и добавлены в выбранную адресную книгу"
         }
     },
     "members_list_item_component": {
         "button": {
             "remove": "удалить"
+        }
+    },
+    "contact": {
+        "modal": {
+            "restore_multiple": {
+                "title": "Восстановить {{count}} контактов"
+            },
+            "move_multiple": {
+                "title": "Переместить {{count}} контактов"
+            },
+            "move_single": {
+                "title": "Переместить {{contactDesc}} контакт"
+            },
+            "restore_single": {
+                "title": "Восстановить {{contactDesc}} контакт"
+            }
         }
     }
 }
