@@ -108,7 +108,12 @@
         "goto_folder": "Ir a la carpeta",
         "reset_filters": "Restablecer campos",
         "share_folder": "Compartir carpeta",
-        "send_msg": "Enviar e-mail"
+        "send_msg": "Enviar e-mail",
+        "contactGroup": {
+            "delete": "Eliminar"
+        },
+        "copy": "Copiar",
+        "delete": "Eliminar"
     },
     "folder": {
         "modal": {
