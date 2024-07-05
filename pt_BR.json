@@ -13,7 +13,8 @@
         "copy": "Copiar",
         "delete": "Excluir",
         "edit": "Editar",
-        "mail": "Enviar e-mail"
+        "mail": "Enviar e-mail",
+        "add_shared_address_books": "Adicionar compartilhamentos"
     },
     "folder": {
         "modal": {
@@ -21,7 +22,8 @@
                 "body": {
                     "message1": "Deseja excluir a agenda de contatos selecionada? Ao excluí-la, seu conteúdo será removido permanentemente e não será mais recuperável.",
                     "message2": "Deseja excluir permanentemente a agenda de contatos selecionada? Ao excluí-la, seu conteúdo será removido permanentemente e não será mais recuperável."
-                }
+                },
+                "title": "Excluir {{addressBookName}}"
             },
             "edit": {
                 "body": {
@@ -37,7 +39,8 @@
                 },
                 "input": {
                     "filter": "Filtrar agenda de contatos"
-                }
+                },
+                "title": "Mover {{addressBookName}}"
             },
             "new": {
                 "body": {
@@ -63,7 +66,8 @@
                 "message1": "Deseja esvaziar a agenda de contatos selecionada?",
                 "message3": "Deseja esvaziar a lixeira?",
                 "message2": "Todos os contatos relacionados serão excluídos permanentemente e não será possível recuperá-los.",
-                "message4": "Seu conteúdo será excluído permanentemente e não será possível recuperá-lo."
+                "message4": "Seu conteúdo será excluído permanentemente e não será possível recuperá-lo.",
+                "title": "Esvaziar {{addressBookName}}"
             },
             "footer": {
                 "go_back": "Voltar"
@@ -173,7 +177,19 @@
         "newContactGroup": "Novo grupo de contatos",
         "update": "Atualizar",
         "discard": "descartar",
-        "show_more": "mostrar mais"
+        "show_more": "mostrar mais",
+        "filter_folders": "Filtrar pastas",
+        "find_share": "Localizar compartilhamentos",
+        "new_folder": "Nova Pasta",
+        "advanced_filter_one": "{{count}} Filtro Avançado",
+        "advanced_filter_many": "{{count}} Filtros Avançados",
+        "advanced_filter_other": "{{count}} Filtros Avançados",
+        "select_all_addresses_one": "Selecionar endereço",
+        "select_all_addresses_many": "Selecionar todos os {{count}} endereços",
+        "select_all_addresses_other": "Selecionar todos os {{count}} endereços",
+        "website_one": "Site",
+        "website_many": "Sites",
+        "website_other": "Sites"
     },
     "share": {
         "add": "Adicionar",
@@ -211,7 +227,8 @@
         "standard_message": "Adicionar nota à mensagem padrão",
         "viewer": "Visualizar",
         "workflow": "Fluxo de trabalho",
-        "write": "Escrever"
+        "write": "Escrever",
+        "link_name": "{{shareName}} de {{ownerName}}"
     },
     "name": {
         "nickName": "Apelido",
@@ -232,7 +249,10 @@
         },
         "title": {
             "mail": "Endereço de e-mail",
-            "phone_number": "Telefone"
+            "phone_number": "Telefone",
+            "address_one": "Endereço",
+            "address_many": "Endereços",
+            "address_other": "Endereços"
         }
     },
     "message": {
@@ -247,7 +267,10 @@
     "messages": {
         "modal": {
             "delete": {
-                "if_delete_lost_forever": "Ao excluir permanentemente este contato, você não poderá mais recuperá-lo. Continuar?"
+                "if_delete_lost_forever": "Ao excluir permanentemente este contato, você não poderá mais recuperá-lo. Continuar?",
+                "sure_delete_contact_one": "Tem certeza que deseja excluir permanentemente esse contato?",
+                "sure_delete_contact_many": "Tem certeza que deseja excluir permanentemente esses contatos?",
+                "sure_delete_contact_other": "Tem certeza que deseja excluir permanentemente esses contatos?"
             }
         },
         "snackbar": {
@@ -259,7 +282,10 @@
             "tag_updated": "Marcador atualizado com sucesso",
             "tag_not_updated": "Algo deu errado, o marcador não foi atualizado. Tente novamente.",
             "tag_deleted": "Marcador \"{{name}}\" excluído com sucesso",
-            "tag_created": "Marcador \"{{name}}\" criado com sucesso"
+            "tag_created": "Marcador \"{{name}}\" criado com sucesso",
+            "conversation_move": "Conversa movida com sucesso",
+            "folder_moved": "Pasta movida com sucesso",
+            "message_move": "Mensagem movida com sucesso"
         }
     },
     "modal": {
@@ -315,11 +341,18 @@
                 "success": "Edições da lista de distribuição \"{{displayName}}\" salvas com sucesso"
             }
         },
-        "email_copied_to_clipboard": "E-mail copiado para área de transferência."
+        "email_copied_to_clipboard": "E-mail copiado para área de transferência.",
+        "import_contacts_success_one": "{{number}} contato importado e adicionado à agenda de contatos selecionada",
+        "import_contacts_success_many": "{{number}} contatos importados e adicionados à agenda de contatos selecionada",
+        "import_contacts_success_other": "{{number}} contatos importados e adicionados à agenda de contatos selecionada"
     },
     "tooltip": {
         "revoke": "Revogar acesso",
-        "resend": "Enviar notificação por e-mail sobre este compartilhamento"
+        "resend": "Enviar notificação por e-mail sobre este compartilhamento",
+        "folder_linked_status": "Vinculado a mim",
+        "address_book_sharing_status_one": "Compartilhado com {{count}} pessoa",
+        "address_book_sharing_status_many": "Compartilhado com {{count}} pessoas",
+        "address_book_sharing_status_other": "Compartilhado com {{count}} pessoas"
     },
     "title": {
         "advanced_filters": "Filtros avançados"
@@ -386,7 +419,10 @@
         "shared_folders_note": "Incluir agenda de contatos compartilhada nas buscas."
     },
     "contactGroupList": {
-        "emptyList": "Nenhum grupo de contatos foi criado ainda"
+        "emptyList": "Nenhum grupo de contatos foi criado ainda",
+        "addressCount_one": "{{count}} endereço",
+        "addressCount_many": "{{count}} endereços",
+        "addressCount_other": "{{count}} endereços"
     },
     "distribution_list": {
         "label": {
@@ -400,7 +436,13 @@
     },
     "edit_dl_component": {
         "error": {
-            "invalid_and_duplicated_addresses": "Endereços inválidos e já existentes"
+            "invalid_and_duplicated_addresses": "Endereços inválidos e já existentes",
+            "duplicated_address_one": "O endereço já existe",
+            "duplicated_address_many": "Os endereços já existem",
+            "duplicated_address_other": "Os endereços já existem",
+            "invalid_address_one": "Endereço inválido",
+            "invalid_address_many": "Endereços inválidos",
+            "invalid_address_other": "Endereços inválidos"
         },
         "input": {
             "description": {
@@ -433,6 +475,11 @@
             "confirm": "Importar",
             "title": "Importar contatos",
             "description": "Os contatos dentro do arquivo {{fileName}} escolhido serão importados para a pasta \"{{folderName}}\" do catálogo de endereços selecionado."
+        },
+        "snackbar": {
+            "import_contacts_success_one": "{{count}} contato importado e adicionado à agenda de contatos selecionada",
+            "import_contacts_success_many": "{{count}} contatos importados e adicionados à agenda de contatos selecionada",
+            "import_contacts_success_other": "{{count}} contatos importados e adicionados à agenda de contatos selecionada"
         }
     },
     "members_list_item_component": {
@@ -454,7 +501,13 @@
             "input": {
                 "contact_input": {
                     "error": {
-                        "invalid_already_present_addresses": "Endereços inválidos e já existentes"
+                        "invalid_already_present_addresses": "Endereços inválidos e já existentes",
+                        "invalid_address_one": "Endereço inválido",
+                        "invalid_address_many": "Endereços inválidos",
+                        "invalid_address_other": "Endereços inválidos",
+                        "address_already_present_one": "O endereço já existe",
+                        "address_already_present_many": "Os endereços já existem",
+                        "address_already_present_other": "Os endereços já existem"
                     },
                     "placeholder": "Digite um endereço e clique em \"+\" para adicioná-lo ao grupo",
                     "title": "Lista de endereços"
@@ -498,6 +551,22 @@
     "contactGroupDisplayer": {
         "label": {
             "members_total": "Endereços: {{count}}"
+        }
+    },
+    "contact": {
+        "modal": {
+            "move_single": {
+                "title": "Mover contato de {{contactDesc}}"
+            },
+            "move_multiple": {
+                "title": "Mover {{count}} contatos"
+            },
+            "restore_single": {
+                "title": "Restaurar contato de {{contactDesc}}"
+            },
+            "restore_multiple": {
+                "title": "Restaurar {{count}} contatos"
+            }
         }
     }
 }
