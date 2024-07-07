@@ -335,6 +335,47 @@
             "snackbar": {
                 "contact_group_edited": "Grupo actualizado con éxito"
             }
+        },
+        "newContactGroup": {
+            "input": {
+                "name_input": {
+                    "error": {
+                        "required": "Es necesario un nombre de grupo, introduce un nombre para proceder",
+                        "max_length": "La longitud máxima permitida es de 256 caracteres"
+                    },
+                    "name": {
+                        "label": "Nombre del grupo*"
+                    }
+                },
+                "contact_input": {
+                    "error": {
+                        "invalid_already_present_addresses": "Dirección inválida y ya presente"
+                    },
+                    "title": "Lista de direcciones",
+                    "placeholder": "Introduce una dirección, haz clic en \"+\" para añadir al grupo"
+                }
+            },
+            "name": "Grupo nuevo",
+            "title": "Nuevo grupo",
+            "snackbar": {
+                "contact_group_created": "Grupo de contacto creado con éxito"
+            }
+        }
+    },
+    "contactGroupList": {
+        "addressCount_one": "{{count}} dirección",
+        "addressCount_many": "{{count}} direcciones",
+        "addressCount_other": "{{count}} direcciones",
+        "emptyList": "No se han creado grupos de contacto aún"
+    },
+    "contactGroupDisplayer": {
+        "label": {
+            "members_total": "Dirección: {{count}}"
+        }
+    },
+    "contacts": {
+        "importAction": {
+            "modalButton": "IMPORTAR"
         }
     }
 }
