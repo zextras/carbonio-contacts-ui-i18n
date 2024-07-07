@@ -113,7 +113,10 @@
             "delete": "Eliminar"
         },
         "copy": "Copiar",
-        "delete": "Eliminar"
+        "delete": "Eliminar",
+        "edit_distribution_list": "Editar",
+        "edit": "Editar",
+        "mail": "Enviar e-mail"
     },
     "folder": {
         "modal": {
@@ -326,5 +329,12 @@
     },
     "search": {
         "shared_folders_note": "Incluir libretas compartidas en las búsquedas."
+    },
+    "board": {
+        "editContactGroup": {
+            "snackbar": {
+                "contact_group_edited": "Grupo actualizado con éxito"
+            }
+        }
     }
 }
