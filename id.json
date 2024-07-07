@@ -43,7 +43,8 @@
         "goto_folder": "Buka folder",
         "reset_filters": "Atur Ulang Filter",
         "send_msg": "Kirim email",
-        "share_folder": "Bagikan folder"
+        "share_folder": "Bagikan folder",
+        "delete": "Hapus"
     },
     "folder": {
         "modal": {
