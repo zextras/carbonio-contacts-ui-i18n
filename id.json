@@ -35,7 +35,8 @@
         "shared_items": "buku alamat {{value}} bersama",
         "share_removed_succesfully": "Item bersama berhasil dihapus",
         "shared_folders": "Buku Alamat Bersama",
-        "write": "Tulis"
+        "write": "Tulis",
+        "link_name": "{{shareName}} dari {{ownerName}}"
     },
     "action": {
         "search": "Cari",
@@ -44,7 +45,15 @@
         "reset_filters": "Atur Ulang Filter",
         "send_msg": "Kirim email",
         "share_folder": "Bagikan folder",
-        "delete": "Hapus"
+        "delete": "Hapus",
+        "edit_distribution_list": "Edit",
+        "add_shared_address_books": "Tambahkan berbagi",
+        "contactGroup": {
+            "delete": "Hapus"
+        },
+        "copy": "Salin",
+        "edit": "Edit",
+        "mail": "Kirim e-mail"
     },
     "folder": {
         "modal": {
@@ -52,7 +61,8 @@
                 "body": {
                     "message2": "Apakah Anda ingin menghapus buku alamat yang dipilih secara permanen? Jika dihapus, konten terkait akan dihapus secara permanen dan buku alamat tidak dapat dipulihkan lagi.",
                     "message1": "Apakah Anda ingin menghapus buku alamat yang dipilih? Jika dihapus, konten terkait akan dihapus secara permanen dan buku alamat tidak akan bisa dipulihkan lagi."
-                }
+                },
+                "title": "Hapus {{addressBookName}}"
             },
             "edit": {
                 "body": {
@@ -68,7 +78,8 @@
                 "body": {
                     "message3": "Pilih satu folder sebagai tempat memindahkan file yang diinginkan:",
                     "message1": "Pilih satu buku alamat sebagai tempat memindahkan alamat yang diinginkan:"
-                }
+                },
+                "title": "Pindahkan {{addressBookName}}"
             },
             "new": {
                 "body": {
@@ -94,7 +105,8 @@
                 "message1": "Apakah Anda ingin mengosongkan buku alamat yang dipilih?",
                 "message2": "Semua kontak terkait akan dihapus permanen dan tidak akan bisa dipulihkan.",
                 "message3": "Apakah Anda ingin mengosongkan sampah?",
-                "message4": "Kontennya akan dihapus permanen dan tidak akan bisa dipulihkan."
+                "message4": "Kontennya akan dihapus permanen dan tidak akan bisa dipulihkan.",
+                "title": "Kosongkan {{addressBookName}}"
             },
             "footer": {
                 "go_back": "Kembali"
@@ -112,7 +124,8 @@
                 "trash": "Kosongkan tempat sampah"
             },
             "move": "Pindahkan",
-            "moved": "Buku alamat berhasil dipindahkan"
+            "moved": "Buku alamat berhasil dipindahkan",
+            "deleteContactGroup": "Hapus \"{{contactGroupTitle}}\""
         },
         "share_folder": "Bagikan buku alamat",
         "snackbar": {
@@ -192,7 +205,24 @@
         "contact_created_in_folder": "Kontak ini akan dibuat di folder '{{name}}'",
         "destination_address_book": "Buku alamat tujuan",
         "include_shared_folders": "Sertakan buku alamat bersama",
-        "autocomplete": "Lengkapi otomatis"
+        "autocomplete": "Lengkapi otomatis",
+        "edit_contacts": "Edit kontak",
+        "errors": {
+            "upload_failed_generic": "Gagal mengunggah file \"{{filename}}\""
+        },
+        "new_folder": "Folder Baru",
+        "groups_app_name": "Grup Kontak dan Daftar Distribusi",
+        "export_address_book": "Ekspor file csv",
+        "find_share": "Temukan berbagi",
+        "filter_folders": "Filter folder",
+        "advanced_filter_other": "{{count}} Filter Lanjutan",
+        "discard": "hapus",
+        "import_address_book": "Impor file csv",
+        "newContactGroup": "Grup kontak baru",
+        "select_all_addresses_other": "Pilih {{count}} alamat",
+        "show_more": "tampilkan selengkapnya",
+        "update": "Perbarui",
+        "website_other": "Situs web"
     },
     "name": {
         "nickName": "Nama panggilan",
@@ -213,7 +243,8 @@
         },
         "title": {
             "mail": "Alamat email",
-            "phone_number": "Kontak telepon"
+            "phone_number": "Kontak telepon",
+            "address_other": "Alamat"
         }
     },
     "message": {
@@ -228,7 +259,8 @@
     "messages": {
         "modal": {
             "delete": {
-                "if_delete_lost_forever": "Jika kontak ini dihapus secara permanen, Anda tidak dapat memulihkannya lagi, lanjutkan?"
+                "if_delete_lost_forever": "Jika kontak ini dihapus secara permanen, Anda tidak dapat memulihkannya lagi, lanjutkan?",
+                "sure_delete_contact_other": "Anda yakin ingin menghapus kontak ini secara permanen?"
             }
         },
         "snackbar": {
@@ -240,12 +272,32 @@
             "tag_updated": "Tag berhasil diperbarui",
             "tag_not_updated": "Terjadi kesalahan, tag tidak diperbarui. Coba lagi.",
             "tag_deleted": "Tag {{name}} berhasil dihapus",
-            "tag_created": "Tag {{name}} berhasil dibuat"
+            "tag_created": "Tag {{name}} berhasil dibuat",
+            "conversation_move": "Percakapan berhasil dipindahkan",
+            "folder_moved": "Folder berhasil dipindahkan",
+            "message_move": "Pesan berhasil dipindahkan"
         }
     },
     "modal": {
         "address_book_name": "Nama buku alamat",
-        "destination": "Folder tujuan"
+        "destination": "Folder tujuan",
+        "cancel": "batalkan",
+        "delete": {
+            "contactGroup": {
+                "body1": "Anda yakin ingin menghapus grup kontak yang dipilih?",
+                "body2": "Jika Anda menghapusnya, grup kontak akan hilang selamanya.",
+                "header": "Hapus \"{{contactGroupName}}\""
+            },
+            "button": {
+                "confirm": "hapus"
+            }
+        },
+        "close": {
+            "tooltip": "Tutup"
+        },
+        "edit_distribution_list": {
+            "title": "Edit \"{{displayName}}\""
+        }
     },
     "settings": {
         "contacts": {
@@ -266,7 +318,9 @@
     },
     "tooltip": {
         "revoke": "Batalkan akses",
-        "resend": "Kirim notifikasi email tentang berbagi ini"
+        "resend": "Kirim notifikasi email tentang berbagi ini",
+        "folder_linked_status": "Ditautkan ke saya",
+        "address_book_sharing_status_other": "Berbagi dengan {{count}} orang"
     },
     "types": {
         "home": "beranda",
@@ -281,7 +335,19 @@
         "share_revoke": "Akses berbagi dibatalkan",
         "share_updated": "Hak akses diperbarui",
         "tag_removed": "Tag \"{{tag}}: dihapus",
-        "tag_applied": "Tag \"{{tag}}\" diterapkan"
+        "tag_applied": "Tag \"{{tag}}\" diterapkan",
+        "import_contacts_success_other": "{{number}} kontak diimpor dan ditambahkan ke buku alamat yang dipilih",
+        "delete_contact_group": {
+            "confirm": {
+                "success": "Grup kontak berhasil dihapus"
+            }
+        },
+        "edit_distribution_list": {
+            "save": {
+                "success": "Hasil edit daftar distribusi \"{{displayName}}\" berhasil disimpan"
+            }
+        },
+        "email_copied_to_clipboard": "Email disalin ke clipboard."
     },
     "displayer": {
         "title5": "Pilih kontak",
@@ -311,7 +377,22 @@
         "title7": "Tetaplah berkomunikasi dengan rekan kerja Anda",
         "title9": "Klik ikon sampah untuk menghapus kontak.",
         "search_description1": "Atau pilih \"Filter Lanjutan\" untuk mempersempit pencarian.",
-        "title8": "Kirim email bersama"
+        "title8": "Kirim email bersama",
+        "distribution_list": {
+            "empty_displayer": "Pilih daftar distribusi atau hubungi Admin untuk mendapatkannya.",
+            "placeholder": {
+                "filter_member": "Filter alamat"
+            },
+            "label": {
+                "description": "Deskripsi",
+                "manager_total": "Daftar pengelola {{total}}",
+                "member_total": "Daftar anggota {{total}}",
+                "filter_hint": "Anda dapat memfilter daftar ini dengan mencari nama anggota tertentu."
+            },
+            "member_not_visible": "Anda tidak memiliki izin untuk melihat anggota daftar distribusi ini. Untuk melihat selengkapnya, hubungi administrator.",
+            "no_details_owner": "Tidak ada detail tambahan untuk daftar distribusi ini. Edit daftar distribusi untuk menambahkannya atau hubungi administrator.",
+            "no_details": "Tidak ada detail tambahan untuk daftar distribusi ini. Untuk informasi selengkapnya, hubungi administrator."
+        }
     },
     "contact_restored": "Kontak dipulihkan",
     "folders": {
@@ -322,5 +403,144 @@
     },
     "search": {
         "shared_folders_note": "Sertakan buku alamat bersama di pencarian."
+    },
+    "distribution_list": {
+        "label": {
+            "empty_message": "Belum ada daftar distribusi."
+        },
+        "tabs": {
+            "details": "Detail",
+            "managers": "Daftar pengelola",
+            "members": "Daftar anggota"
+        }
+    },
+    "edit_dl_component": {
+        "error": {
+            "invalid_and_duplicated_addresses": "Alamat tidak valid dan sudah ada",
+            "duplicated_address_other": "Alamat sudah ada",
+            "invalid_address_other": "Alamat tidak valid"
+        },
+        "input": {
+            "description": {
+                "label": "Deskripsi"
+            },
+            "name": {
+                "error": {
+                    "max_length": "Panjang maksimum yang diperbolehkan adalah 256 karakter"
+                },
+                "label": "Nama Daftar Distribusi"
+            }
+        },
+        "label": {
+            "dl_email": "Daftar distribusi",
+            "hint": "Anda dapat memfilter daftar ini dengan mencari nama anggota tertentu atau menambahkan anggota baru dengan mengedit Daftar Distribusi.",
+            "members_total": "Daftar anggota {{total}}"
+        },
+        "placeholder": {
+            "filter_member": "Filter alamat",
+            "add_members": "Ketik alamat, klik '+' untuk menambahkan ke daftar distribusi"
+        }
+    },
+    "import_contacts": {
+        "modal": {
+            "confirm": "Impor",
+            "title": "Impor kontak",
+            "description": "Kontak di dalam file {{fileName}} yang dipilih akan diimpor ke dalam folder buku alamat “{{folderName}}” yang dipilih."
+        },
+        "snackbar": {
+            "import_contacts_success_other": "{{count}} kontak diimpor dan ditambahkan ke buku alamat yang dipilih"
+        }
+    },
+    "members_list_item_component": {
+        "button": {
+            "remove": "hapus"
+        }
+    },
+    "contact": {
+        "modal": {
+            "move_multiple": {
+                "title": "Pindahkan {{count}} kontak"
+            },
+            "restore_single": {
+                "title": "Pulihkan kontak {{contactDesc}}"
+            },
+            "restore_multiple": {
+                "title": "Pulihkan {{count}} kontak"
+            },
+            "move_single": {
+                "title": "Pindahkan kontak {{contactDesc}}"
+            }
+        }
+    },
+    "board": {
+        "label": {
+            "description": "Deskripsi"
+        },
+        "newContactGroup": {
+            "addresses": {
+                "label": "Alamat"
+            },
+            "input": {
+                "contact_input": {
+                    "error": {
+                        "invalid_already_present_addresses": "Alamat tidak valid dan sudah ada",
+                        "address_already_present_other": "Alamat sudah ada",
+                        "invalid_address_other": "Alamat tidak valid"
+                    },
+                    "placeholder": "Ketik alamat, klik '+' untuk menambahkan ke grup",
+                    "title": "Daftar alamat"
+                },
+                "name_input": {
+                    "error": {
+                        "max_length": "Panjang maksimum yang diperbolehkan adalah 256 karakter",
+                        "required": "Nama grup wajib diisi, masukkan nama untuk melanjutkan"
+                    },
+                    "name": {
+                        "label": "Nama grup*"
+                    }
+                }
+            },
+            "snackbar": {
+                "contact_group_created": "Grup kontak berhasil dibuat"
+            },
+            "title": "Grup Baru",
+            "name": "Grup Baru"
+        },
+        "editContactGroup": {
+            "snackbar": {
+                "contact_group_edited": "Grup berhasil diperbarui",
+                "error": "Terjadi kesalahan saat menyimpan hasil edit, coba lagi"
+            }
+        }
+    },
+    "contactGroupList": {
+        "emptyList": "Belum ada grup kontak yang dibuat",
+        "addressCount_other": "{{count}} alamat"
+    },
+    "emptyDisplayer": {
+        "contactGroup": {
+            "hint": "Klik tombol “BARU” untuk membuat grup kontak baru."
+        }
+    },
+    "expand_distribution_list": "Perluas daftar alamat",
+    "secondaryBar": {
+        "myContactGroups": "Grup Kontak Saya",
+        "contextualMenu": {
+            "new_contact_group_creation_action": "Grup Kontak Baru"
+        },
+        "distributionLists": "Daftar Distribusi",
+        "distributionListsManager": "Pengelola",
+        "distributionListsMember": "Anggota"
+    },
+    "contactGroupDisplayer": {
+        "label": {
+            "members_total": "Alamat: {{count}}"
+        }
+    },
+    "contacts": {
+        "importAction": {
+            "modalTitle": "Impor kontak",
+            "modalButton": "IMPOR"
+        }
     }
 }
