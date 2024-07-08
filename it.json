@@ -556,6 +556,15 @@
         "modal": {
             "move_multiple": {
                 "title": "Sposta {{count}} contatti"
+            },
+            "move_single": {
+                "title": "Sposta contatto di {{contactDesc}}"
+            },
+            "restore_single": {
+                "title": "Ripristina contatto di {{contactDesc}}"
+            },
+            "restore_multiple": {
+                "title": "Ripristina {{count}} contatti"
             }
         }
     }
