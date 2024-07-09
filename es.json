@@ -62,7 +62,30 @@
         "contact_created_in_folder": "El contacto será creado en la carpeta \"{{name}}\"",
         "destination_address_book": "Libreta de direcciones de destino",
         "autocomplete": "Autocompletar",
-        "include_shared_folders": "Incluir libretas compartidas"
+        "include_shared_folders": "Incluir libretas compartidas",
+        "import_address_book": "Importar archivo cvs",
+        "find_share": "Encontrar compartidos",
+        "new_folder": "Carpeta nueva",
+        "edit_contacts": "Editar contactos",
+        "errors": {
+            "upload_failed_generic": "Subida fallida para el archivo \"{{filename}}\""
+        },
+        "export_address_book": "Exportar archivo cvs",
+        "update": "Actualizar",
+        "select_all_addresses_one": "Elegir dirección",
+        "select_all_addresses_many": "Elegir todas las {{count}} direcciones",
+        "select_all_addresses_other": "Elegir todas las {{count}} direcciones",
+        "filter_folders": "Filtrar carpetas",
+        "advanced_filter_one": "{{count}} filtro avanzado",
+        "advanced_filter_many": "{{count}} filtros avanzados",
+        "advanced_filter_other": "{{count}} filtros avanzados",
+        "discard": "desechar",
+        "groups_app_name": "Contactar grupos y listas de distribución",
+        "newContactGroup": "Nuevo grupo de contactos",
+        "website_one": "Página web",
+        "website_many": "Páginas web",
+        "website_other": "Páginas web",
+        "show_more": "mostrar más"
     },
     "share": {
         "none": "Ninguno",
@@ -100,7 +123,8 @@
         "shared_items": "Libretas compartidas de {{value}}",
         "viewer": "Visualizador",
         "workflow": "Flujo de trabajo",
-        "write": "Escribir"
+        "write": "Escribir",
+        "link_name": "{{shareName}} de {{ownerName}}"
     },
     "action": {
         "search": "Buscar",
@@ -116,7 +140,8 @@
         "delete": "Eliminar",
         "edit_distribution_list": "Editar",
         "edit": "Editar",
-        "mail": "Enviar e-mail"
+        "mail": "Enviar e-mail",
+        "add_shared_address_books": "Añadir compartidos"
     },
     "folder": {
         "modal": {
@@ -124,7 +149,8 @@
                 "body": {
                     "message1": "¿Quieres eliminar la libreta seleccionada? Al hacerlo, su contenido será borrado y los contactos ya no se podrán recuperar.",
                     "message2": "¿Quieres eliminar la libreta seleccionada de forma permanente? Al hacerlo, su contenido será borrado y los contactos ya no se podrán recuperar."
-                }
+                },
+                "title": "Borrar {{addressBookName}}"
             },
             "edit": {
                 "body": {
@@ -140,7 +166,8 @@
                 },
                 "input": {
                     "filter": "Filtrar libreta de direcciones"
-                }
+                },
+                "title": "Mover {{addressBookName}}"
             },
             "new": {
                 "create_footer": "Crear y mover",
@@ -169,7 +196,8 @@
                 "message1": "¿Quieres vaciar la libreta seleccionada?",
                 "message2": "Todos los contactos serán eliminados permanentemente y no se podrán recuperar.",
                 "message3": "¿Quieres vaciar la Papelera?",
-                "message4": "Todo su contenido será eliminado permanentemente y no se podrá recuperar."
+                "message4": "Todo su contenido será eliminado permanentemente y no se podrá recuperar.",
+                "title": "Vaciar {{addressBookName}}"
             },
             "item": {
                 "empty": "No hay elementos disponibles"
@@ -184,7 +212,8 @@
             "delete_permanently": "Eliminar permanentemente",
             "edit": "Editar libreta de direcciones",
             "move": "Mover",
-            "moved": "La libreta ha sido movida"
+            "moved": "La libreta ha sido movida",
+            "deleteContactGroup": "Borrar \"{{contactGroupTitle}}\""
         },
         "share_folder": "Compartir libreta de direcciones",
         "snackbar": {
@@ -220,7 +249,10 @@
         },
         "title": {
             "mail": "Dirección de e-mail",
-            "phone_number": "Teléfono"
+            "phone_number": "Teléfono",
+            "address_one": "Dirección",
+            "address_many": "Direcciones",
+            "address_other": "Direcciones"
         }
     },
     "message": {
@@ -242,17 +274,40 @@
             "tag_updated": "La etiqueta ha sido actualizada",
             "tag_not_updated": "Algo salió mal, la etiqueta no pudo ser actualizada. Intenta nuevamente.",
             "tag_deleted": "Se ha eliminado la etiqueta \"{{name}}\"",
-            "tag_created": "Se ha creado la etiqueta \"{{name}}\""
+            "tag_created": "Se ha creado la etiqueta \"{{name}}\"",
+            "conversation_move": "Conversación movida con éxito",
+            "folder_moved": "Carpeta movida con éxito",
+            "message_move": "Mensaje movido con éxito"
         },
         "modal": {
             "delete": {
-                "if_delete_lost_forever": "Si eliminas este contacto de forma permanente ya no podrás recuperarlo, ¿continuar?"
+                "if_delete_lost_forever": "Si eliminas este contacto de forma permanente ya no podrás recuperarlo, ¿continuar?",
+                "sure_delete_contact_one": "¿Seguro que quieres borrar este contacto?",
+                "sure_delete_contact_many": "¿Seguro que quieres borrar estos contactos?",
+                "sure_delete_contact_other": "¿Seguro que quieres borrar estos contactos?"
             }
         }
     },
     "modal": {
         "address_book_name": "Nombre de la libreta de direcciones",
-        "destination": "Carpeta de destino"
+        "destination": "Carpeta de destino",
+        "cancel": "cancelar",
+        "close": {
+            "tooltip": "Cerrar"
+        },
+        "delete": {
+            "contactGroup": {
+                "body1": "¿Seguro que quieres borrar el grupo de contacto seleccionado?",
+                "body2": "Si lo borras se perderá para siempre.",
+                "header": "Borrar \"{{contactGroupName}}\""
+            },
+            "button": {
+                "confirm": "borrar"
+            }
+        },
+        "edit_distribution_list": {
+            "title": "Editar \"{{displayName}}\""
+        }
     },
     "select": {
         "default": "Tipo"
@@ -275,14 +330,32 @@
         "share_revoke": "Permiso de uso compartido revocado",
         "share_updated": "Permisos de acceso actualizados",
         "tag_removed": "Etiqueta \"{{tag}}\" removida",
-        "tag_applied": "Etiqueta \"{{tag}}\" aplicada"
+        "tag_applied": "Etiqueta \"{{tag}}\" aplicada",
+        "delete_contact_group": {
+            "confirm": {
+                "success": "Grupo de contacto borrado con éxito"
+            }
+        },
+        "edit_distribution_list": {
+            "save": {
+                "success": "Ediciones en la lista de distribución {{displayName}} guardados correctamente"
+            }
+        },
+        "email_copied_to_clipboard": "Email copiado al portapapeles.",
+        "import_contacts_success_one": "{{number}} contacto importado y añadido al listín de direcciones seleccionado",
+        "import_contacts_success_many": "{{number}} contactos importados y añadidos al listín de direcciones seleccionado",
+        "import_contacts_success_other": "{{number}} contactos importados y añadidos al listín de direcciones seleccionado"
     },
     "title": {
         "advanced_filters": "Filtros avanzados"
     },
     "tooltip": {
         "resend": "Enviar una notificación por correo sobre este uso compartido",
-        "revoke": "Revocar acceso"
+        "revoke": "Revocar acceso",
+        "address_book_sharing_status_one": "Compartido con {{count}} persona",
+        "address_book_sharing_status_many": "Compartido con {{count}} personas",
+        "address_book_sharing_status_other": "Compartido con {{count}} personas",
+        "folder_linked_status": "Compartido conmigo"
     },
     "types": {
         "home": "Casa",
@@ -325,7 +398,14 @@
             "no_details_owner": "No hay detalles adicionales para esta lista de distribución. Edita la lista de distribución para añadirlos o pregunta al administrador.",
             "placeholder": {
                 "filter_member": "Filtrar una dirección"
-            }
+            },
+            "label": {
+                "filter_hint": "Puedes filtrar esta lista buscando por el nombre de un miembro específico.",
+                "manager_total": "Lista de administrador {{total}}",
+                "description": "Descripción",
+                "member_total": "Lista de miembros {{total}}"
+            },
+            "empty_displayer": "Elige una lista de distribución o contacta con el Administrador para obtener una."
         }
     },
     "contact_restored": "Contacto restaurado",
@@ -341,7 +421,8 @@
     "board": {
         "editContactGroup": {
             "snackbar": {
-                "contact_group_edited": "Grupo actualizado con éxito"
+                "contact_group_edited": "Grupo actualizado con éxito",
+                "error": "Algo fue mal mientras se guardaban las ediciones, prueba de nuevo"
             }
         },
         "newContactGroup": {
@@ -357,7 +438,13 @@
                 },
                 "contact_input": {
                     "error": {
-                        "invalid_already_present_addresses": "Dirección inválida y ya presente"
+                        "invalid_already_present_addresses": "Dirección inválida y ya presente",
+                        "address_already_present_one": "Dirección ya presente",
+                        "address_already_present_many": "Direcciones ya presentes",
+                        "address_already_present_other": "Direcciones ya presentes",
+                        "invalid_address_one": "Dirección no válida",
+                        "invalid_address_many": "Direcciones no válidas",
+                        "invalid_address_other": "Direcciones no válidas"
                     },
                     "title": "Lista de direcciones",
                     "placeholder": "Introduce una dirección, haz clic en \"+\" para añadir al grupo"
@@ -367,7 +454,13 @@
             "title": "Nuevo grupo",
             "snackbar": {
                 "contact_group_created": "Grupo de contacto creado con éxito"
+            },
+            "addresses": {
+                "label": "Direcciones"
             }
+        },
+        "label": {
+            "description": "Descripción"
         }
     },
     "contactGroupList": {
@@ -383,7 +476,97 @@
     },
     "contacts": {
         "importAction": {
-            "modalButton": "IMPORTAR"
+            "modalButton": "IMPORTAR",
+            "modalTitle": "Importar contactos"
         }
-    }
+    },
+    "edit_dl_component": {
+        "placeholder": {
+            "filter_member": "Filtrar una dirección",
+            "add_members": "Introduce una dirección, haz clic en + para añadir a la lista de distribución"
+        },
+        "error": {
+            "duplicated_address_one": "Dirección ya presente",
+            "duplicated_address_many": "Direcciones ya presentes",
+            "duplicated_address_other": "Direcciones ya presentes",
+            "invalid_address_one": "Dirección inválida",
+            "invalid_address_many": "Direcciones inválidas",
+            "invalid_address_other": "Direcciones inválidas",
+            "invalid_and_duplicated_addresses": "Direcciones inválidas y ya presentes"
+        },
+        "input": {
+            "description": {
+                "label": "Descripción"
+            },
+            "name": {
+                "error": {
+                    "max_length": "La longitud máxima permitida es de 256 caracteres"
+                },
+                "label": "Nombre de lista de distribución"
+            }
+        },
+        "label": {
+            "dl_email": "Lista de distribución",
+            "hint": "Puedes filtrar esta lista buscando por el nombre de un miembro en concreto y añadir nuevos editando la Lista de distribución.",
+            "members_total": "Lista de miembros {{total}}"
+        }
+    },
+    "import_contacts": {
+        "modal": {
+            "confirm": "Importar",
+            "description": "Los contactos dentro del archivo {{fileName}} serán importados dentro del listín de direcciones seleccionado en la carpeta {{folderName}}.",
+            "title": "Importar contactos"
+        },
+        "snackbar": {
+            "import_contacts_success_one": "{{count}} contacto importado y añadido al listín de direcciones seleccionado",
+            "import_contacts_success_many": "{{count}} contactos importados y añadidos al listín de direcciones seleccionado",
+            "import_contacts_success_other": "{{count}} contactos importados y añadidos al listín de direcciones seleccionado"
+        }
+    },
+    "secondaryBar": {
+        "distributionLists": "Listas de distribución",
+        "distributionListsManager": "Administrador",
+        "distributionListsMember": "Miembro",
+        "myContactGroups": "Mis Grupos de Contactos",
+        "contextualMenu": {
+            "new_contact_group_creation_action": "Nuevo grupo de contacto"
+        }
+    },
+    "contact": {
+        "modal": {
+            "move_single": {
+                "title": "Mover contacto de {{contactDesc}}"
+            },
+            "restore_single": {
+                "title": "Restaurar contacto de {{contactDesc}}"
+            },
+            "restore_multiple": {
+                "title": "Restaurar {{count}} contactos"
+            },
+            "move_multiple": {
+                "title": "Mover {{count}} contactos"
+            }
+        }
+    },
+    "distribution_list": {
+        "label": {
+            "empty_message": "Aún no hay listas de distribución."
+        },
+        "tabs": {
+            "details": "Detalles",
+            "managers": "Lista de administradores",
+            "members": "Lista de miembros"
+        }
+    },
+    "emptyDisplayer": {
+        "contactGroup": {
+            "hint": "Haz clic en el botón \"NUEVO\" para crear un nuevo grupo de contactos."
+        }
+    },
+    "members_list_item_component": {
+        "button": {
+            "remove": "eliminar"
+        }
+    },
+    "expand_distribution_list": "Ampliar lista de direcciones"
 }
