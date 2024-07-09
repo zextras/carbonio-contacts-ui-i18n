@@ -349,7 +349,7 @@
     "tooltip": {
         "revoke": "Revogar acesso",
         "resend": "Enviar notificação por e-mail sobre este compartilhamento",
-        "folder_linked_status": "Vinculado a mim",
+        "folder_linked_status": "Compartilhado comigo",
         "address_book_sharing_status_one": "Compartilhado com {{count}} pessoa",
         "address_book_sharing_status_many": "Compartilhado com {{count}} pessoas",
         "address_book_sharing_status_other": "Compartilhado com {{count}} pessoas"
