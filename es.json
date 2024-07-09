@@ -318,7 +318,15 @@
         "title6": "Personalizar contacto",
         "title7": "Mantente en contacto con tus compañeros",
         "title9": "Haz clic en el icono de la Papelera para eliminar el contacto.",
-        "title8": "Enviar e-mail"
+        "title8": "Enviar e-mail",
+        "distribution_list": {
+            "member_not_visible": "No tienes permiso para ver los miembros de esta lista de distribución. Para más información, preguntar al administrador.",
+            "no_details": "No existen detalles adicionales para esta lista de distribución. Para más información, preguntar al administrador.",
+            "no_details_owner": "No hay detalles adicionales para esta lista de distribución. Edita la lista de distribución para añadirlos o pregunta al administrador.",
+            "placeholder": {
+                "filter_member": "Filtrar una dirección"
+            }
+        }
     },
     "contact_restored": "Contacto restaurado",
     "folders": {
