@@ -532,7 +532,7 @@
         "address_book_sharing_status_other": "Shared with {{count}} people",
         "resend": "Send e-mail notification about this share",
         "revoke": "Revoke access",
-        "folder_linked_status": "Linked to me",
+        "folder_linked_status": "Shared with me",
         "folder_sharing_status_one": "Shared with 1 person",
         "folder_sharing_status_other": "Shared with {{count}} people"
     },
