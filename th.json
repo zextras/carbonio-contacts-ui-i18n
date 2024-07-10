@@ -5,7 +5,15 @@
         "goto_folder": "ไปที่โฟลเดอร์",
         "reset_filters": "รีเซ็ตตัวกรอง",
         "send_msg": "ส่งอีเมล",
-        "share_folder": "แชร์โฟลเดอร์"
+        "share_folder": "แชร์โฟลเดอร์",
+        "edit_distribution_list": "แก้ไข",
+        "contactGroup": {
+            "delete": "ลบ"
+        },
+        "copy": "คัดลอก",
+        "delete": "ลบ",
+        "edit": "แก้ไข",
+        "mail": "ส่งอีเมล"
     },
     "folder": {
         "modal": {
@@ -73,7 +81,8 @@
             },
             "move": "ย้าย",
             "delete_permanently": "ลบสมุดที่อยู่อย่างถาวร",
-            "moved": "ย้ายสมุดที่อยู่เรียบร้อยแล้ว"
+            "moved": "ย้ายสมุดที่อยู่เรียบร้อยแล้ว",
+            "deleteContactGroup": "ลบ \"{{contactGroupTitle}}\""
         },
         "share_folder": "แชร์สมุดที่อยู่",
         "snackbar": {
@@ -310,7 +319,22 @@
         "title6": "ปรับแต่งการติดต่อ",
         "title7": "ติดต่อกับเพื่อนร่วมงานของคุณ",
         "title8": "ส่งอีเมลที่แชร์",
-        "title9": "คลิกไอคอนถังขยะเพื่อลบผู้ติดต่อ"
+        "title9": "คลิกไอคอนถังขยะเพื่อลบผู้ติดต่อ",
+        "distribution_list": {
+            "label": {
+                "member_total": "รายชื่อสมาชิก {{total}}",
+                "description": "คำอธิบาย",
+                "filter_hint": "คุณสามารถกรองรายการนี้ได้โดยการค้นหาชื่อสมาชิกที่ต้องการ",
+                "manager_total": "รายชื่อผู้จัดการ {{total}}"
+            },
+            "member_not_visible": "คุณไม่ได้รับอนุญาตให้ดูสมาชิกของรายการแจกจ่ายนี้ หากต้องการข้อมูลเพิ่มเติม โปรดสอบถามจากผู้ดูแลระบบ",
+            "no_details_owner": "ไม่มีรายละเอียดเพิ่มเติมสำหรับรายการแจกจ่ายนี้ แก้ไขรายการแจกจ่ายเพื่อเพิ่ม หรือสอบถามผู้ดูแลระบบ",
+            "no_details": "ไม่มีรายละเอียดเพิ่มเติมสำหรับรายการแจกจ่ายนี้ หากต้องการข้อมูลเพิ่มเติม โปรดสอบถามจากผู้ดูแลระบบ",
+            "placeholder": {
+                "filter_member": "กรองที่อยู่"
+            },
+            "empty_displayer": "เลือกรายการแจกจ่ายหรือติดต่อผู้ดูแลระบบเพื่อขอรายการ"
+        }
     },
     "contact_restored": "กู้คืนผู้ติดต่อแล้ว",
     "folders": {
@@ -321,5 +345,99 @@
     },
     "search": {
         "shared_folders_note": "รวมสมุดที่อยู่ที่ใช้ร่วมกันในการค้นหา"
+    },
+    "distribution_list": {
+        "tabs": {
+            "details": "รายละเอียด",
+            "managers": "รายชื่อผู้จัดการ",
+            "members": "รายชื่อสมาชิก"
+        },
+        "label": {
+            "empty_message": "ยังไม่มีรายการแจกจ่าย"
+        }
+    },
+    "edit_dl_component": {
+        "placeholder": {
+            "filter_member": "กรองที่อยู่",
+            "add_members": "พิมพ์ที่อยู่ คลิก '+' เพื่อเพิ่มไปยังรายการแจกจ่าย"
+        },
+        "label": {
+            "dl_email": "รายการแจกจ่าย"
+        },
+        "input": {
+            "name": {
+                "label": "ชื่อรายการแจกจ่าย"
+            },
+            "description": {
+                "label": "คำอธิบาย"
+            }
+        },
+        "error": {
+            "duplicated_address_other": "ที่อยู่ที่มีอยู่แล้ว",
+            "invalid_address_other": "ที่อยู่ไม่ถูกต้อง",
+            "invalid_and_duplicated_addresses": "ที่อยู่ไม่ถูกต้องและมีอยู่แล้ว"
+        }
+    },
+    "board": {
+        "label": {
+            "description": "คำอธิบาย"
+        },
+        "newContactGroup": {
+            "addresses": {
+                "label": "ที่อยู่"
+            },
+            "input": {
+                "contact_input": {
+                    "error": {
+                        "address_already_present_other": "ที่อยู่ที่มีอยู่แล้ว",
+                        "invalid_address_other": "ที่อยู่ไม่ถูกต้อง",
+                        "invalid_already_present_addresses": "ที่อยู่ไม่ถูกต้องและมีอยู่แล้ว"
+                    },
+                    "title": "รายการที่อยู่",
+                    "placeholder": "พิมพ์ที่อยู่ แล้วคลิก '+' เพื่อเพิ่มลงในกลุ่ม"
+                },
+                "name_input": {
+                    "error": {
+                        "max_length": "ความยาวสูงสุดที่อนุญาตคือ 256 อักขระ",
+                        "required": "ต้องระบุชื่อกลุ่ม ป้อนชื่อเพื่อดําเนินการต่อ"
+                    },
+                    "name": {
+                        "label": "ชื่อกลุ่ม*"
+                    }
+                }
+            },
+            "name": "กลุ่มใหม่",
+            "snackbar": {
+                "contact_group_created": "สร้างกลุ่มผู้ติดต่อสำเร็จแล้ว"
+            },
+            "title": "กลุ่มใหม่"
+        },
+        "editContactGroup": {
+            "snackbar": {
+                "contact_group_edited": "อัปเดตกลุ่มเรียบร้อยแล้ว",
+                "error": "มีบางอย่างผิดพลาดในการบันทึกการแก้ไข ลองอีกครั้ง"
+            }
+        }
+    },
+    "contactGroupList": {
+        "addressCount_other": "{{count}} ที่อยู่",
+        "emptyList": "ยังไม่มีการสร้างกลุ่มผู้ติดต่อ"
+    },
+    "emptyDisplayer": {
+        "contactGroup": {
+            "hint": "คลิกปุ่ม \"ใหม่\" เพื่อสร้างกลุ่มผู้ติดต่อใหม่"
+        }
+    },
+    "contacts": {
+        "importAction": {
+            "modalButton": "นำเข้า",
+            "modalTitle": "นําเข้าผู้ติดต่อ"
+        }
+    },
+    "expand_distribution_list": "ขยายรายการที่อยู่",
+    "contactGroupDisplayer": {
+        "label": {
+            "members_total": "ที่อยู่: {{count}}"
+        }
     }
 }
