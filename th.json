@@ -13,7 +13,8 @@
         "copy": "คัดลอก",
         "delete": "ลบ",
         "edit": "แก้ไข",
-        "mail": "ส่งอีเมล"
+        "mail": "ส่งอีเมล",
+        "add_shared_address_books": "เพิ่มการแชร์"
     },
     "folder": {
         "modal": {
@@ -21,7 +22,8 @@
                 "body": {
                     "message2": "คุณต้องการลบสมุดที่อยู่ที่เลือกอย่างถาวรหรือไม่? หากคุณลบออก เนื้อหาที่เกี่ยวข้องจะถูกลบออกอย่างถาวรและสมุดที่อยู่จะไม่สามารถกู้คืนได้อีก",
                     "message1": "คุณต้องการลบสมุดที่อยู่ที่เลือกหรือไม่? หากคุณลบออก เนื้อหาที่เกี่ยวข้องจะถูกลบออกอย่างถาวรและสมุดที่อยู่จะไม่สามารถกู้คืนได้อีก"
-                }
+                },
+                "title": "ลบ {{addressBookName}}"
             },
             "edit": {
                 "body": {
@@ -37,7 +39,8 @@
                 },
                 "input": {
                     "filter": "กรองสมุดที่อยู่"
-                }
+                },
+                "title": "ย้าย {{addressBookName}}"
             },
             "new": {
                 "body": {
@@ -63,7 +66,8 @@
                 "message1": "คุณต้องการล้างสมุดที่อยู่ที่เลือกหรือไม่?",
                 "message3": "คุณต้องการล้างข้อมูลในถังขยะหรือไม่?",
                 "message2": "รายชื่อทั้งหมดที่เกี่ยวข้องจะถูกลบอย่างถาวรและมันจะไม่สามารถที่จะกู้คืนได้",
-                "message4": "เนื้อหาจะถูกลบอย่างถาวรและไม่สามารถกู้คืนได้"
+                "message4": "เนื้อหาจะถูกลบอย่างถาวรและไม่สามารถกู้คืนได้",
+                "title": "{{addressBookName}} ว่างเปล่า"
             },
             "footer": {
                 "go_back": "ย้อนกลับ"
@@ -157,7 +161,24 @@
         "destination_address_book": "สมุดที่อยู่ปลายทาง",
         "include_shared_folders": "รวมสมุดที่อยู่ที่ใช้ร่วมกัน",
         "autocomplete": "เติมข้อความอัตโนมัติ",
-        "contact_created_in_folder": "ผู้ติดต่อนี้จะถูกสร้างขึ้นในโฟลเดอร์ \"{{name}}\""
+        "contact_created_in_folder": "ผู้ติดต่อนี้จะถูกสร้างขึ้นในโฟลเดอร์ \"{{name}}\"",
+        "update": "อัปเดต",
+        "find_share": "ค้นหาการแชร์",
+        "new_folder": "โฟลเดอร์ใหม่",
+        "advanced_filter_other": "{{count}} ตัวกรองขั้นสูง",
+        "discard": "ยกเลิก",
+        "errors": {
+            "upload_failed_generic": "การอัปโหลดไฟล์ \"{{filename}}\" ล้มเหลว"
+        },
+        "show_more": "แสดงเพิ่มเติม",
+        "filter_folders": "กรองโฟลเดอร์",
+        "edit_contacts": "แก้ไขรายชื่อผู้ติดต่อ",
+        "export_address_book": "ส่งออกไฟล์ CSV",
+        "groups_app_name": "กลุ่มผู้ติดต่อและรายการแจกจ่าย",
+        "import_address_book": "นำเข้าไฟล์ CSV",
+        "newContactGroup": "กลุ่มผู้ติดต่อใหม่",
+        "select_all_addresses_other": "เลือกที่อยู่ทั้งหมด {{count}} แห่ง",
+        "website_other": "เว็บไซต์"
     },
     "share": {
         "read": "อ่าน",
@@ -195,7 +216,8 @@
         "workflow": "เวิร์กโฟลว์",
         "write": "เขียน",
         "find_shares_label": "เลือกสมุดที่อยู่ที่คุณต้องการดูในแผนผังของผู้ติดต่อ",
-        "share_note": "ข้อความมาตรฐานจะแสดงชื่อของคุณ, ชื่อรายการที่แชร์, สิทธิ์ที่มอบให้กับผู้รับ, และข้อมูลการลงชื่อเข้าใช้"
+        "share_note": "ข้อความมาตรฐานจะแสดงชื่อของคุณ, ชื่อรายการที่แชร์, สิทธิ์ที่มอบให้กับผู้รับ, และข้อมูลการลงชื่อเข้าใช้",
+        "link_name": "{{shareName}} ของ {{ownerName}}"
     },
     "job": {
         "company": "บริษัท",
@@ -221,7 +243,8 @@
         },
         "title": {
             "mail": "ที่อยู่อีเมล",
-            "phone_number": "โทรศัพท์ติดต่อ"
+            "phone_number": "โทรศัพท์ติดต่อ",
+            "address_other": "ที่อยู่"
         }
     },
     "types": {
@@ -242,7 +265,8 @@
     "messages": {
         "modal": {
             "delete": {
-                "if_delete_lost_forever": "การลบผู้ติดต่อนี้อย่างถาวร คุณจะไม่สามารถกู้คืนได้อีก ดำเนินการต่อหรือไม่?"
+                "if_delete_lost_forever": "การลบผู้ติดต่อนี้อย่างถาวร คุณจะไม่สามารถกู้คืนได้อีก ดำเนินการต่อหรือไม่?",
+                "sure_delete_contact_other": "คุณแน่ใจหรือไม่ว่าต้องการลบผู้ติดต่อเหล่านี้อย่างถาวร?"
             }
         },
         "snackbar": {
@@ -254,12 +278,32 @@
             "tag_updated": "อัปเดตแท็กเรียบร้อยแล้ว",
             "tag_not_updated": "มีบางอย่างผิดพลาด ไม่สามารถอัปเดตแท็ก โปรดลองใหม่อีกครั้ง",
             "tag_deleted": "แท็ก {{name}} ถูกลบเรียบร้อยแล้ว",
-            "tag_created": "สร้างแท็ก {{name}} สำเร็จแล้ว"
+            "tag_created": "สร้างแท็ก {{name}} สำเร็จแล้ว",
+            "conversation_move": "ย้ายการสนทนาเรียบร้อยแล้ว",
+            "folder_moved": "ย้ายโฟลเดอร์เรียบร้อยแล้ว",
+            "message_move": "ย้ายข้อความเรียบร้อยแล้ว"
         }
     },
     "modal": {
         "address_book_name": "ชื่อสมุดที่อยู่",
-        "destination": "โฟลเดอร์ปลายทาง"
+        "destination": "โฟลเดอร์ปลายทาง",
+        "cancel": "ยกเลิก",
+        "close": {
+            "tooltip": "ปิด"
+        },
+        "delete": {
+            "contactGroup": {
+                "body2": "หากคุณลบ มันจะหายไปอย่างถาวร",
+                "body1": "คุณแน่ใจหรือว่าจะลบกลุ่มผู้ติดต่อที่เลือก?",
+                "header": "ลบ \"{{contactGroupName}}\""
+            },
+            "button": {
+                "confirm": "ลบ"
+            }
+        },
+        "edit_distribution_list": {
+            "title": "แก้ไข \"{{displayName}}\""
+        }
     },
     "select": {
         "default": "เลือกประเภท"
@@ -282,14 +326,28 @@
         "share_revoke": "ถอนการเข้าถึงการแชร์",
         "share_updated": "อัปเดตสิทธิ์การเข้าถึงแล้ว",
         "tag_removed": "นำแท็ก \"{{tag}}\" ออกแล้ว",
-        "tag_applied": "ใช้แท็ก \"{{tag}}\" แล้ว"
+        "tag_applied": "ใช้แท็ก \"{{tag}}\" แล้ว",
+        "delete_contact_group": {
+            "confirm": {
+                "success": "ลบกลุ่มผู้ติดต่อเรียบร้อยแล้ว"
+            }
+        },
+        "email_copied_to_clipboard": "คัดลอกอีเมลไปยังคลิปบอร์ดแล้ว",
+        "edit_distribution_list": {
+            "save": {
+                "success": "บันทึกการแก้ไขรายการแจกจ่าย \"{{displayName}}\" เรียบร้อยแล้ว"
+            }
+        },
+        "import_contacts_success_other": "นำเข้าผู้ติดต่อ {{number}} รายการและเพิ่มไปยังสมุดที่อยู่ที่เลือก"
     },
     "title": {
         "advanced_filters": "ตัวกรองขั้นสูง"
     },
     "tooltip": {
         "revoke": "เพิกถอนการเข้าถึง",
-        "resend": "ส่งอีเมลแจ้งเตือนเกี่ยวกับการแชร์นี้"
+        "resend": "ส่งอีเมลแจ้งเตือนเกี่ยวกับการแชร์นี้",
+        "folder_linked_status": "แชร์กับฉัน",
+        "address_book_sharing_status_other": "แบ่งปันกับ {{count}} คน"
     },
     "displayer": {
         "title5": "เลือกรายชื่อผู้ติดต่อ",
@@ -362,11 +420,16 @@
             "add_members": "พิมพ์ที่อยู่ คลิก '+' เพื่อเพิ่มไปยังรายการแจกจ่าย"
         },
         "label": {
-            "dl_email": "รายการแจกจ่าย"
+            "dl_email": "รายการแจกจ่าย",
+            "hint": "คุณสามารถกรองรายชื่อนี้ได้โดยการค้นหาชื่อสมาชิกที่ต้องการ หรือเพิ่มชื่อใหม่โดยการแก้ไขรายการแจกจ่าย",
+            "members_total": "รายชื่อสมาชิก {{total}}"
         },
         "input": {
             "name": {
-                "label": "ชื่อรายการแจกจ่าย"
+                "label": "ชื่อรายการแจกจ่าย",
+                "error": {
+                    "max_length": "ความยาวสูงสุดที่อนุญาตคือ 256 อักขระ"
+                }
             },
             "description": {
                 "label": "คำอธิบาย"
@@ -438,6 +501,46 @@
     "contactGroupDisplayer": {
         "label": {
             "members_total": "ที่อยู่: {{count}}"
+        }
+    },
+    "members_list_item_component": {
+        "button": {
+            "remove": "ลบออก"
+        }
+    },
+    "secondaryBar": {
+        "distributionListsMember": "สมาชิก",
+        "contextualMenu": {
+            "new_contact_group_creation_action": "กลุ่มผู้ติดต่อใหม่"
+        },
+        "distributionLists": "รายการแจกจ่าย",
+        "distributionListsManager": "ผู้จัดการ",
+        "myContactGroups": "กลุ่มผู้ติดต่อของฉัน"
+    },
+    "contact": {
+        "modal": {
+            "move_single": {
+                "title": "ย้ายผู้ติดต่อของ {{contactDesc}}"
+            },
+            "move_multiple": {
+                "title": "ย้ายผู้ติดต่อ {{count}} ราย"
+            },
+            "restore_single": {
+                "title": "คืนค่าผู้ติดต่อของ {{contactDesc}}"
+            },
+            "restore_multiple": {
+                "title": "กู้คืนผู้ติดต่อ {{count}} ราย"
+            }
+        }
+    },
+    "import_contacts": {
+        "modal": {
+            "title": "นําเข้าผู้ติดต่อ",
+            "description": "ผู้ติดต่อภายในไฟล์ {{fileName}} ที่เลือกจะถูกนำเข้าภายในโฟลเดอร์สมุดที่อยู่ที่เลือก “{{folderName}}”",
+            "confirm": "นำเข้า"
+        },
+        "snackbar": {
+            "import_contacts_success_other": "นำเข้าผู้ติดต่อ {{count}} รายการและเพิ่มลงในสมุดที่อยู่ที่เลือก"
         }
     }
 }
