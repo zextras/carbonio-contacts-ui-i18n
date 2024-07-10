@@ -319,7 +319,7 @@
     "tooltip": {
         "revoke": "Batalkan akses",
         "resend": "Kirim notifikasi email tentang berbagi ini",
-        "folder_linked_status": "Ditautkan ke saya",
+        "folder_linked_status": "Dibagikan dengan saya",
         "address_book_sharing_status_other": "Berbagi dengan {{count}} orang"
     },
     "types": {
@@ -360,7 +360,7 @@
         "description7": "Buat grup kontak dengan mengklik tombol \"BARU\".",
         "description8": "Pilih kontak atau grup kontak untuk mengirim email bersama.",
         "list_title1": "Tampaknya belum ada kontak",
-        "list_title2": "Sampah kosong",
+        "list_title2": "Tempat sampah kosong",
         "search_description2": "Coba mulai pencarian lain.",
         "search_description3": "Perika ejaan dan opsi filter atau coba dengan kata kunci lain.",
         "search_list_title1": "Tampaknya tidak ada hasil. Cari terus!",
