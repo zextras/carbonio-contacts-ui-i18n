@@ -327,7 +327,7 @@
         "address_book_sharing_status_one": "Partagé avec {{count}} personne",
         "address_book_sharing_status_many": "Partagé avec {{count}} personnes",
         "address_book_sharing_status_other": "Partagé avec {{count}} personnes",
-        "folder_linked_status": "Connecté avec moi"
+        "folder_linked_status": "Partagé avec moi"
     },
     "job": {
         "company": "Entreprise",
