@@ -537,5 +537,21 @@
     },
     "title": {
         "advanced_filters": "Өркүндөтүлгөн чыпкалар"
+    },
+    "contact": {
+        "modal": {
+            "move_single": {
+                "title": "{{contactDesc}} байланыштарын жайгаштыруу"
+            },
+            "move_multiple": {
+                "title": "{{count}} байланыштарды жайгаштыруу"
+            },
+            "restore_single": {
+                "title": "{{contactDesc}} байланыштарды калыбына келтирүү"
+            },
+            "restore_multiple": {
+                "title": "{{count}} байланыштарды калыбына келтирүү"
+            }
+        }
     }
 }
