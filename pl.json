@@ -305,7 +305,7 @@
     "tooltip": {
         "revoke": "Odbierz dostęp",
         "resend": "Wyślij powiadomienie mailowe dot. tego udostępnienia",
-        "folder_linked_status": "Powiązane ze mną",
+        "folder_linked_status": "Udostępnione dla mnie",
         "address_book_sharing_status_one": "Udostępniono {{count}} osobie",
         "address_book_sharing_status_few": "Udostępniono {{count}} osobom",
         "address_book_sharing_status_many": "Udostępniono {{count}} osobom"
