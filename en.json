@@ -353,7 +353,9 @@
         "website_other": "Websites",
         "find_share": "Find shares",
         "filter_folders": "Filter folders",
-        "new_folder": "New Folder"
+        "new_folder": "New Folder",
+        "export_contact": "Export vCard file",
+        "keyword": "Keyword"
     },
     "members_list_item_component": {
         "button": {
@@ -440,7 +442,8 @@
             "number": "Number",
             "postalCode": "PostalCode",
             "state": "State",
-            "street": "Street"
+            "street": "Street",
+            "website": "Website"
         },
         "title": {
             "address_one": "Address",
