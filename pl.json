@@ -167,7 +167,9 @@
         "website_many": "Stron internetowych",
         "filter_folders": "Filtruj foldery",
         "find_share": "Dodaj",
-        "new_folder": "Nowy folder"
+        "new_folder": "Nowy folder",
+        "export_contact": "Eksportuj plik vCard",
+        "keyword": "Słowo kluczowe"
     },
     "displayer": {
         "search_description1": "Lub wybierz \"Zaawansowane filtry\", aby udoskonalić wyniki wyszukiwania.",
@@ -385,7 +387,8 @@
             "number": "Numer",
             "street": "Ulica",
             "state": "Województwo",
-            "postalCode": "Kod pocztowy"
+            "postalCode": "Kod pocztowy",
+            "website": "Strona internetowa"
         },
         "title": {
             "mail": "Adres e-mail",
