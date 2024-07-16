@@ -22,7 +22,8 @@
             "postalCode": "Codice postale",
             "number": "Numero",
             "country": "Paese",
-            "city": "Città"
+            "city": "Città",
+            "website": "Sito Web"
         }
     },
     "name": {
@@ -128,7 +129,8 @@
         "new_folder": "Nuova Cartella",
         "select_all_addresses_one": "Seleziona indirizzo",
         "select_all_addresses_many": "Seleziona {{count}} indirizzi",
-        "select_all_addresses_other": ""
+        "select_all_addresses_other": "",
+        "keyword": "Parola chiave"
     },
     "job": {
         "title": "Ruolo",
