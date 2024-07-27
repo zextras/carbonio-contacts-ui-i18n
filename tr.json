@@ -371,7 +371,11 @@
             "input": {
                 "contact_input": {
                     "error": {
-                        "invalid_already_present_addresses": "Geçersiz ve zaten var olan adresler"
+                        "invalid_already_present_addresses": "Geçersiz ve zaten var olan adresler",
+                        "address_already_present_one": "Adres zaten mevcut",
+                        "address_already_present_other": "Adresler zaten mevcut",
+                        "invalid_address_one": "Geçersiz Adres",
+                        "invalid_address_other": "Geçersiz Adresler"
                     },
                     "placeholder": "Bir adres yazın, gruba eklemek için \"+\" ya tıklayın",
                     "title": "Adres Listesi"
@@ -442,7 +446,9 @@
     },
     "expand_distribution_list": "Adres listesini genişlet",
     "contactGroupList": {
-        "emptyList": "Henüz hiçbir kişi grubu oluşturulmadı"
+        "emptyList": "Henüz hiçbir kişi grubu oluşturulmadı",
+        "addressCount_one": "{{count}} adres",
+        "addressCount_other": "{{count}} adres"
     },
     "contactGroupDisplayer": {
         "label": {
