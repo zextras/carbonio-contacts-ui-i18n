@@ -229,7 +229,9 @@
         "website_other": "Sites web",
         "find_share": "Trouver les partages",
         "filter_folders": "Filtrer les dossiers",
-        "new_folder": "Nouveau dossier"
+        "new_folder": "Nouveau dossier",
+        "export_contact": "Exporter le fichier vCard",
+        "keyword": "Mot clé"
     },
     "name": {
         "nickName": "Surnom",
@@ -246,7 +248,8 @@
             "number": "Numéro",
             "state": "État",
             "street": "Voie",
-            "postalCode": "Code postal"
+            "postalCode": "Code postal",
+            "website": "Site web"
         },
         "title": {
             "mail": "Adresse email",
