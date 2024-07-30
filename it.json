@@ -130,7 +130,8 @@
         "select_all_addresses_one": "Seleziona indirizzo",
         "select_all_addresses_many": "Seleziona {{count}} indirizzi",
         "select_all_addresses_other": "",
-        "keyword": "Parola chiave"
+        "keyword": "Parola chiave",
+        "export_contact": "Esporta file vCard"
     },
     "job": {
         "title": "Ruolo",
