@@ -12,5 +12,12 @@
         "search_list_title2": "لا يتطابق أي من العناصر الخاصة بك مع بحثك.",
         "search_title1": "بدء بحث آخر",
         "search_title2": "عذرا، ولكن لا توجد نتائج لبحثك"
+    },
+    "label": {
+        "activate_selection_mode": "تفعيل وضع الاختيار",
+        "cancel": "إلغاء"
+    },
+    "folders": {
+        "trash": "سلة المهملات"
     }
 }
