@@ -15,7 +15,15 @@
     },
     "label": {
         "activate_selection_mode": "تفعيل وضع الاختيار",
-        "cancel": "إلغاء"
+        "cancel": "إلغاء",
+        "delete_tag_name": "حذف علامةبإسم {{name}}",
+        "discard_changes": "تجاهل التغييرات",
+        "folder_name": "اسم المجلد",
+        "delete": "حذف",
+        "create": "انشئ",
+        "create_tag": "انشئ علامة",
+        "delete_tag": "حذف العلامة",
+        "filter_folders": "تصفية المجلدات"
     },
     "folders": {
         "trash": "سلة المهملات"
