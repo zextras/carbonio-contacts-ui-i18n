@@ -405,7 +405,11 @@
     },
     "edit_dl_component": {
         "error": {
-            "invalid_and_duplicated_addresses": "Geçersiz ve zaten var olan adresler"
+            "invalid_and_duplicated_addresses": "Geçersiz ve zaten var olan adresler",
+            "duplicated_address_one": "Adres zaten mevcut",
+            "duplicated_address_other": "Adresler zaten mevcut",
+            "invalid_address_one": "Geçersiz adres",
+            "invalid_address_other": "Geçersiz adresler"
         },
         "label": {
             "dl_email": "Dağıtım listesi",
