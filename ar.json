@@ -23,7 +23,20 @@
         "create": "انشئ",
         "create_tag": "انشئ علامة",
         "delete_tag": "حذف العلامة",
-        "filter_folders": "تصفية المجلدات"
+        "filter_folders": "تصفية المجلدات",
+        "empty": "فارغ",
+        "error_try_again": "حدث خطأ ما، يرجى المحاولة مرة أخرى",
+        "no_special_char_allowed": "يجب ألا يحتوي الاسم على أي حرف خاص",
+        "new_folder": "مجلد جديد",
+        "edit": "‬عدل",
+        "edit_tag": "عدل العلامة",
+        "errors": {
+            "upload_failed_generic": "فشل تحميل الملف \"{{filename}}\""
+        },
+        "move": "نقل",
+        "edit_access": "عدل صلاحيات الوصول",
+        "edit_tag_name": "عدل العلامة \"{{name}}\"",
+        "of": "من"
     },
     "folders": {
         "trash": "سلة المهملات"
