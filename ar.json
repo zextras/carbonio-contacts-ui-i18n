@@ -36,7 +36,13 @@
         "move": "نقل",
         "edit_access": "عدل صلاحيات الوصول",
         "edit_tag_name": "عدل العلامة \"{{name}}\"",
-        "of": "من"
+        "of": "من",
+        "select_color": "حدد اللون",
+        "resend": "إعادة إرسال",
+        "restore": "إستعادة",
+        "revoke": "الغاء",
+        "save": "حفظ",
+        "search_activate_selection_mode": "وضع الاختيار غير متاح حالياً في نتائج البحث"
     },
     "folders": {
         "trash": "سلة المهملات"
