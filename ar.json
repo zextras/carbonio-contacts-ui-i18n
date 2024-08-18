@@ -42,9 +42,23 @@
         "restore": "إستعادة",
         "revoke": "الغاء",
         "save": "حفظ",
-        "search_activate_selection_mode": "وضع الاختيار غير متاح حالياً في نتائج البحث"
+        "search_activate_selection_mode": "وضع الاختيار غير متاح حالياً في نتائج البحث",
+        "share_with": "شارك مع",
+        "type": "النوع",
+        "tag_name": "اسم العلامة",
+        "tags": "علامات",
+        "share": "مشاركة",
+        "tag": "علامه",
+        "tag_max_length": "يسمح بحد أقصى 128 حرفا",
+        "undo": "تراجع"
     },
     "folders": {
         "trash": "سلة المهملات"
+    },
+    "messages": {
+        "snackbar": {
+            "conversation_move": "تم نقل المحادثة بنجاح",
+            "folder_moved": "تم نقل المجلد بنجاح"
+        }
     }
 }
