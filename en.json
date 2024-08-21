@@ -537,7 +537,10 @@
         "revoke": "Revoke access",
         "folder_linked_status": "Shared with me",
         "folder_sharing_status_one": "Shared with 1 person",
-        "folder_sharing_status_other": "Shared with {{count}} people"
+        "folder_sharing_status_other": "Shared with {{count}} people",
+        "list_trash": {
+            "deletePermanently": "Delete contact permanently"
+        }
     },
     "types": {
         "home": "home",
