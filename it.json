@@ -364,7 +364,10 @@
         "address_book_sharing_status_one": "Condiviso con {{count}} persona",
         "address_book_sharing_status_many": "Condiviso con {{count}} persone",
         "address_book_sharing_status_other": "Condiviso con {{count}} persone",
-        "folder_linked_status": "Condivisa con me"
+        "folder_linked_status": "Condivisa con me",
+        "list_trash": {
+            "deletePermanently": "Elimina contatto definitivamente"
+        }
     },
     "displayer": {
         "description3": "Clicca il pulsante \"NUOVO\" per creare un nuovo gruppo di contatti.",
