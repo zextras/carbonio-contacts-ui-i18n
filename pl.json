@@ -310,7 +310,10 @@
         "folder_linked_status": "Udostępnione dla mnie",
         "address_book_sharing_status_one": "Udostępniono {{count}} osobie",
         "address_book_sharing_status_few": "Udostępniono {{count}} osobom",
-        "address_book_sharing_status_many": "Udostępniono {{count}} osobom"
+        "address_book_sharing_status_many": "Udostępniono {{count}} osobom",
+        "list_trash": {
+            "deletePermanently": "Trwale usuń kontakt"
+        }
     },
     "contact_restored": "Kontakt został przywrócony",
     "job": {
