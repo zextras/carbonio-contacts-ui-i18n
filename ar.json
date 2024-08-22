@@ -60,5 +60,9 @@
             "conversation_move": "تم نقل المحادثة بنجاح",
             "folder_moved": "تم نقل المجلد بنجاح"
         }
+    },
+    "message": {
+        "delete_tag_message2": "بمجرد حذفه ، ستتم إزالته من كل عنصر مميز به.",
+        "delete_tag_message1": "هل أنت متأكد من حذف العلامة \"{{name}}\"؟"
     }
 }
