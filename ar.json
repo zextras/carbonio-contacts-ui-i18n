@@ -4,7 +4,7 @@
         "share_folder": "مشاركة المجلد"
     },
     "displayer": {
-        "search_description1": "أو حدد \"تصفية متقدمة\" لتحسين بحثك.",
+        "search_description1": "أو حدد \"ترَشّيح متقدم\" لتحسين بحثك.",
         "search_description2": "حاول بدء بحث آخر.",
         "search_title3": "لا توجد نتائج لبحثك.",
         "search_title4": "حدد نتيجة واحدة أو أكثر لتنفيذ الإجراءات أو عرض التفاصيل.",
@@ -23,7 +23,7 @@
         "create": "انشئ",
         "create_tag": "انشئ علامة",
         "delete_tag": "حذف العلامة",
-        "filter_folders": "تصفية المجلدات",
+        "filter_folders": "فرز المجلدات",
         "empty": "فارغ",
         "error_try_again": "حدث خطأ ما، يرجى المحاولة مرة أخرى",
         "no_special_char_allowed": "يجب ألا يحتوي الاسم على أي حرف خاص",
@@ -58,11 +58,18 @@
     "messages": {
         "snackbar": {
             "conversation_move": "تم نقل المحادثة بنجاح",
-            "folder_moved": "تم نقل المجلد بنجاح"
+            "folder_moved": "تم نقل المجلد بنجاح",
+            "message_move": "تم نقل الرسالة بنجاح",
+            "tag_created": "تم إنشاء العلامة {{name}} بنجاح",
+            "tag_deleted": "تم حذف العلامة {{name}} بنجاح",
+            "tag_updated": "تم تحديث العلامة بنجاح"
         }
     },
     "message": {
         "delete_tag_message2": "بمجرد حذفه ، ستتم إزالته من كل عنصر مميز به.",
-        "delete_tag_message1": "هل أنت متأكد من حذف العلامة \"{{name}}\"؟"
+        "delete_tag_message1": "هل أنت متأكد من حذف العلامة \"{{name}}\"؟",
+        "snackbar": {
+            "settings_saved": "تم حفظ التعديلات بشكل صحيح"
+        }
     }
 }
