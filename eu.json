@@ -1,1 +1,16 @@
-{}
+{
+    "displayer": {
+        "search_description2": "Saiatu beste bilaketa bat egiten.",
+        "search_list_title1": "Emaitzarik ez dagoela ematen du. Segi bila!",
+        "search_title1": "Hasi beste bilaketa bat",
+        "search_title3": "Ez dago zure bilaketarako emaitzarik.",
+        "search_description1": "Edo hautatu \"Iragazki aurreratuak\" bilaketa hobetzeko.",
+        "search_list_title2": "Zure elementuetako bat ere ez dator bat zure bilaketarekin.",
+        "search_title4": "Hautatu emaitza bat edo gehiago ekintzak egiteko edo xehetasunak bistaratzeko.",
+        "search_title2": "Sentitzen dugu baina ez dago zure bilaketarako emaitzarik"
+    },
+    "action": {
+        "search": "Bilatu",
+        "share_folder": "Partekatu karpeta"
+    }
+}
