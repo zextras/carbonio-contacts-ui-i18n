@@ -402,9 +402,9 @@
         "contacts": {
             "checkbox": {
                 "add_contact_to_emailed_contacts": "Ajouter de nouveaux contact dans \"Personnes contactées par email\"",
-                "autocomplete_on_comma": "Sélectionner l'autocomplétion de la correspondance dès que la virgule est tapée",
+                "autocomplete_on_comma": "Sélectionner l'autocomplétion correspondante dès que la virgule est tapée",
                 "incl_addrs_in_glbl_addrs_list": "Inclure les adresses dans la Liste d'Adresse Globale",
-                "include_add_in_shared_contact": "Inclure les adresses dans les contacts partagés",
+                "include_add_in_shared_contact": "Inclure les adresses des contacts partagés",
                 "srch_glbl_addrs_list": "Recherche préliminaire dans la Liste des Adresses Globale lors de l'appel au sélectionneur de contact"
             }
         }
