@@ -12,5 +12,81 @@
     "action": {
         "search": "Bilatu",
         "share_folder": "Partekatu karpeta"
+    },
+    "label": {
+        "create_tag": "Sortu etiketa berria",
+        "delete_tag": "Ezabatu Etiketa",
+        "delete_tag_name": "Ezabatu \"{{name}}\" etiketa",
+        "edit": "Editatu",
+        "edit_tag": "Editatu Etiketa",
+        "empty": "Hutsik",
+        "move": "Mugitu",
+        "resend": "Berbidali",
+        "revoke": "Ezeztatu",
+        "search_activate_selection_mode": "Hautaketa modua ez dago oraindik erabilgarri bilaketa-emaitzetan",
+        "select_color": "Hautatu kolorea",
+        "share": "Partekatu",
+        "share_with": "Partekatu honekin:",
+        "tag": "Etiketa",
+        "tag_max_length": "Gehienez 128 karaktere onartzen dira",
+        "tag_name": "Etiketa-izena",
+        "type": "Mota",
+        "undo": "Desegin",
+        "filter_folders": "Iragazi karpetak",
+        "new_folder": "Karpeta berria",
+        "activate_selection_mode": "Aktibatu hautaketa modua",
+        "folder_name": "Karpetaren izena",
+        "create": "Sortu",
+        "cancel": "Utzi",
+        "delete": "Ezabatu",
+        "edit_access": "Editatu sarbidea",
+        "error_try_again": "Arazoren bat izan da, saiatu berriro",
+        "errors": {
+            "upload_failed_generic": "Ezin izan da kargatu \"{{filename}}\" fitxategia"
+        },
+        "discard_changes": "BAZTERTU ALDAKETAK",
+        "edit_tag_name": "Editatu \"{{name}}\" etiketa",
+        "no_special_char_allowed": "Izenak ez du karaktere berezirik eduki behar",
+        "restore": "Berrezarri",
+        "save": "Gorde",
+        "tags": "Etiketak"
+    },
+    "messages": {
+        "snackbar": {
+            "tag_deleted": "{{name}} Etiketa behar bezala ezabatu da",
+            "tag_updated": "Etiketa behar bezala eguneratu da",
+            "message_move": "Mezua arazorik gabe mugitu da",
+            "folder_moved": "Karpeta behar bezala mugitu da",
+            "conversation_move": "Elkarrizketa behar bezala mugitu da",
+            "tag_created": "{{name}} etiketa behar bezala sortu da"
+        }
+    },
+    "share": {
+        "options": {
+            "share_calendar_with": {
+                "internal_users_groups": "Barne Erabiltzaileak edo Taldeak",
+                "public": "Publikoa (ikusteko soilik, ez da pasahitzik behar)",
+                "external_guests": "Kanpoko gonbidatuak (ikusteko soilik)"
+            }
+        },
+        "recipients_address": "Hartzaileen helbide elektronikoak",
+        "share_note": "Mezu estandarrak zure izena, partekatutako elementuaren izena, hartzaileei emandako baimenak eta saioa hasteko informazioa bistaratzen ditu."
+    },
+    "snackbar": {
+        "share_resend": "Partekatze gonbidapena birbidali da",
+        "share_revoke": "Partekatze baimena ezeztatu da",
+        "tag_applied": "\"{{tag}}\" etiketa aplikatu da",
+        "email_copied_to_clipboard": "E-posta arbelean kopiatu da.",
+        "tag_removed": "\"{{tag}}\" etiketa ezabatu da"
+    },
+    "folders": {
+        "trash": "Zakarrontzia"
+    },
+    "message": {
+        "delete_tag_message2": "Ezabatu ondoren, horrekin markatutako elementu guztietatik kenduko da.",
+        "delete_tag_message1": "Ziur zaude {{name}} etiketa ezabatu nahi duzula ?",
+        "snackbar": {
+            "settings_saved": "Aldaketak behar bezala gorde dira"
+        }
     }
 }
