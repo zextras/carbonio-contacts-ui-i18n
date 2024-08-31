@@ -11,7 +11,9 @@
     },
     "action": {
         "search": "Bilatu",
-        "share_folder": "Partekatu karpeta"
+        "share_folder": "Partekatu karpeta",
+        "delete": "Ezabatu",
+        "edit": "Editatu"
     },
     "label": {
         "create_tag": "Sortu etiketa berria",
@@ -49,7 +51,8 @@
         "no_special_char_allowed": "Izenak ez du karaktere berezirik eduki behar",
         "restore": "Berrezarri",
         "save": "Gorde",
-        "tags": "Etiketak"
+        "tags": "Etiketak",
+        "new_tag": "Etiketa berria"
     },
     "messages": {
         "snackbar": {
@@ -87,6 +90,18 @@
         "delete_tag_message1": "Ziur zaude {{name}} etiketa ezabatu nahi duzula ?",
         "snackbar": {
             "settings_saved": "Aldaketak behar bezala gorde dira"
+        }
+    },
+    "folder": {
+        "modal": {
+            "footer": {
+                "go_back": "Itzuli"
+            }
+        }
+    },
+    "board": {
+        "label": {
+            "description": "Deskribapena"
         }
     }
 }
