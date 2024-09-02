@@ -413,6 +413,11 @@
         "destination": "Destination folder",
         "edit_distribution_list": {
             "title": "Edit \"{{displayName}}\""
+        },
+        "initializeError": {
+            "content": "Please reload the page or try again later",
+            "title": "Oops!…Something went wrong",
+            "buttonConfirm": "RELOAD"
         }
     },
     "name": {
