@@ -353,7 +353,12 @@
                 "confirm": "elimina"
             }
         },
-        "cancel": "annulla"
+        "cancel": "annulla",
+        "initializeError": {
+            "content": "Per favore, ricarica la pagina o riprova più tardi",
+            "title": "Oops!...Qualcosa è andato storto",
+            "buttonConfirm": "RICARICA"
+        }
     },
     "title": {
         "advanced_filters": "Filtri Avanzati"
