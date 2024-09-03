@@ -373,7 +373,12 @@
                 "confirm": "usuń"
             }
         },
-        "cancel": "anuluj"
+        "cancel": "anuluj",
+        "initializeError": {
+            "buttonConfirm": "ODŚWIEŻ",
+            "content": "Odśwież stronę lub spróbuj ponownie później",
+            "title": "Ups! Coś poszło nie tak"
+        }
     },
     "name": {
         "first_name": "Imię",
