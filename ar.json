@@ -1,7 +1,13 @@
 {
     "action": {
         "search": "بحث",
-        "share_folder": "مشاركة المجلد"
+        "share_folder": "مشاركة المجلد",
+        "delete_permanently": "احذفها نهائيا",
+        "contactGroup": {
+            "delete": "حذف"
+        },
+        "copy": "نسخ",
+        "delete": "حذف"
     },
     "displayer": {
         "search_description1": "أو حدد \"ترَشّيح متقدم\" لتحسين بحثك.",
@@ -89,5 +95,16 @@
         "tag_applied": "تم تطبيق العلامه \"{{tag}}\"",
         "share_resend": "إعادة إرسال الدعوة",
         "share_revoke": "تم إلغاء حق الوصول إلى المشاركة"
+    },
+    "modal": {
+        "initializeError": {
+            "content": "يرجى إعادة تحميل الصفحة أو المحاولة مرة أخرى لاحقا",
+            "buttonConfirm": "إعادة التحميل",
+            "title": "عفوا!... حدث خطأ ما"
+        }
+    },
+    "tooltip": {
+        "folder_linked_status": "تمت مشاركتها معي",
+        "revoke": "تعطيل الوصول"
     }
 }
