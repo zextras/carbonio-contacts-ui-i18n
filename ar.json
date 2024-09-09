@@ -106,5 +106,12 @@
     "tooltip": {
         "folder_linked_status": "تمت مشاركتها معي",
         "revoke": "تعطيل الوصول"
+    },
+    "folder": {
+        "modal": {
+            "footer": {
+                "go_back": "عُد"
+            }
+        }
     }
 }
