@@ -13,7 +13,13 @@
         "search": "Bilatu",
         "share_folder": "Partekatu karpeta",
         "delete": "Ezabatu",
-        "edit": "Editatu"
+        "edit": "Editatu",
+        "contactGroup": {
+            "delete": "Ezabatu"
+        },
+        "copy": "kopiatu",
+        "delete_permanently": "Betirako ezabatu",
+        "send_msg": "Mezua bidali"
     },
     "label": {
         "create_tag": "Sortu etiketa berria",
