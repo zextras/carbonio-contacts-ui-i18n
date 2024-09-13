@@ -438,7 +438,8 @@
         "distributionLists": "Distribution Lists",
         "distributionListsManager": "Manager",
         "distributionListsMember": "Member",
-        "myContactGroups": "My Contact Groups"
+        "myContactGroups": "My Contact Groups",
+        "contactGroups": "Contact Groups"
     },
     "section": {
         "field": {
