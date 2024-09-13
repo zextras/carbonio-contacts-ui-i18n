@@ -437,7 +437,8 @@
         "distributionLists": "Liste di distribuzione",
         "distributionListsManager": "Gestore",
         "distributionListsMember": "Partecipante",
-        "myContactGroups": "I miei gruppi di contatti"
+        "myContactGroups": "I miei gruppi di contatti",
+        "contactGroups": "Gruppi di Contatti"
     },
     "board": {
         "label": {
