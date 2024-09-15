@@ -109,5 +109,16 @@
         "label": {
             "description": "Deskribapena"
         }
+    },
+    "tooltip": {
+        "revoke": "Ezeztatu sarbidea",
+        "folder_linked_status": "Nirekin partekatua"
+    },
+    "modal": {
+        "initializeError": {
+            "title": "Ups!... Zerbait gaizki atera da.",
+            "content": "Mesedez, berriro kargatu orria edo saiatu berriro geroago",
+            "buttonConfirm": "BIRKARGATU"
+        }
     }
 }
