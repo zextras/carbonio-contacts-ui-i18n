@@ -79,5 +79,12 @@
     },
     "displayer": {
         "search_title2": "Sajnáljuk, de nincs találat a keresésre"
+    },
+    "modal": {
+        "initializeError": {
+            "title": "Hoppá, valami hiba történt",
+            "content": "Kérjük töltse be újra az oldalt, vagy próbálkozzon újra később!",
+            "buttonConfirm": "ÚJRATÖLTÉS"
+        }
     }
 }
