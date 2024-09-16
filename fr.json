@@ -436,7 +436,8 @@
         "distributionLists": "Listes de distribution",
         "distributionListsManager": "Gestionnaire",
         "distributionListsMember": "Membre",
-        "myContactGroups": "Mes groupes de contacts"
+        "myContactGroups": "Mes groupes de contacts",
+        "contactGroups": "Groupes de contacts"
     },
     "expand_distribution_list": "Élargir la liste d'adresses",
     "board": {
