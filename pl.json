@@ -517,7 +517,8 @@
         "distributionLists": "Listy dystrybucyjne",
         "distributionListsManager": "Manager",
         "distributionListsMember": "Członek",
-        "myContactGroups": "Moje grupy kontaktów"
+        "myContactGroups": "Moje grupy kontaktów",
+        "contactGroups": "Grupy kontaktów"
     },
     "expand_distribution_list": "Rozwiń listę adresów",
     "contacts": {
