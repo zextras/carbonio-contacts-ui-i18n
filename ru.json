@@ -356,6 +356,11 @@
         },
         "edit_distribution_list": {
             "title": "Редактировать \"{{displayName}}\""
+        },
+        "initializeError": {
+            "title": "Упс!…Что-то пошло не так",
+            "content": "Пожалуйста, перезагрузите страницу или повторите попытку позже",
+            "buttonConfirm": "Перезагрузить"
         }
     },
     "tooltip": {
