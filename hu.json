@@ -86,5 +86,60 @@
             "content": "Kérjük töltse be újra az oldalt, vagy próbálkozzon újra később!",
             "buttonConfirm": "ÚJRATÖLTÉS"
         }
+    },
+    "action": {
+        "goto_folder": "Ugrás a mappára",
+        "delete_permanently": "Végleges törlés",
+        "edit_distribution_list": "Szerkesztés",
+        "search": "Keresés",
+        "send_msg": "Levél küldése",
+        "share_folder": "Mappa megosztása",
+        "contactGroup": {
+            "delete": "Törlés"
+        },
+        "copy": "Másolás",
+        "delete": "Törlés",
+        "edit": "Szerkesztés",
+        "mail": "Levél küldése",
+        "reset_filters": "Szűrők törlése"
+    },
+    "board": {
+        "newContactGroup": {
+            "input": {
+                "contact_input": {
+                    "error": {
+                        "invalid_address_one": "Érvénytelen cím",
+                        "invalid_address_other": "Érvénytelen címek",
+                        "address_already_present_one": "Meglévő cím",
+                        "address_already_present_other": "Meglévő címek",
+                        "invalid_already_present_addresses": "Érvénytelen és már meglévő címek"
+                    },
+                    "placeholder": "Írjon be egy címet, kattintson a „+” gombra a csoporthoz való hozzáadáshoz",
+                    "title": "Címlista"
+                },
+                "name_input": {
+                    "name": {
+                        "label": "Csoport név*"
+                    },
+                    "error": {
+                        "max_length": "A maximálisan megengedett hosszúság 256 karakter",
+                        "required": "A csoportnév megadása kötelező, a folytatáshoz adjon meg egy nevet"
+                    }
+                }
+            },
+            "addresses": {
+                "label": "Címek"
+            },
+            "name": "Új Csoport"
+        },
+        "label": {
+            "description": "Leírás"
+        },
+        "editContactGroup": {
+            "snackbar": {
+                "contact_group_edited": "A csoport sikeresen frissítve",
+                "error": "Hiba történt a szerkesztés mentésekor, kérjük próbálja újra"
+            }
+        }
     }
 }
