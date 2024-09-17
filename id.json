@@ -222,7 +222,9 @@
         "select_all_addresses_other": "Pilih {{count}} alamat",
         "show_more": "tampilkan selengkapnya",
         "update": "Perbarui",
-        "website_other": "Situs web"
+        "website_other": "Situs web",
+        "export_contact": "Ekspor file vCard",
+        "keyword": "Kata kunci"
     },
     "name": {
         "nickName": "Nama panggilan",
@@ -239,7 +241,8 @@
             "city": "Kota",
             "number": "Angka",
             "postalCode": "Kode Pos",
-            "street": "Jalan"
+            "street": "Jalan",
+            "website": "Situs web"
         },
         "title": {
             "mail": "Alamat email",
@@ -297,6 +300,11 @@
         },
         "edit_distribution_list": {
             "title": "Edit \"{{displayName}}\""
+        },
+        "initializeError": {
+            "title": "Ups!…Ada yang salah",
+            "content": "Muat ulang halaman atau coba lagi nanti",
+            "buttonConfirm": "MUAT ULANG"
         }
     },
     "settings": {
@@ -320,7 +328,10 @@
         "revoke": "Batalkan akses",
         "resend": "Kirim notifikasi email tentang berbagi ini",
         "folder_linked_status": "Dibagikan dengan saya",
-        "address_book_sharing_status_other": "Berbagi dengan {{count}} orang"
+        "address_book_sharing_status_other": "Berbagi dengan {{count}} orang",
+        "list_trash": {
+            "deletePermanently": "Hapus kontak secara permanen"
+        }
     },
     "types": {
         "home": "beranda",
@@ -530,7 +541,8 @@
         },
         "distributionLists": "Daftar Distribusi",
         "distributionListsManager": "Pengelola",
-        "distributionListsMember": "Anggota"
+        "distributionListsMember": "Anggota",
+        "contactGroups": "Kontak Grup"
     },
     "contactGroupDisplayer": {
         "label": {
