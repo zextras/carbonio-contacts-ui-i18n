@@ -189,7 +189,9 @@
         "select_all_addresses_other": "Selecionar todos os {{count}} endereços",
         "website_one": "Site",
         "website_many": "Sites",
-        "website_other": "Sites"
+        "website_other": "Sites",
+        "export_contact": "Exportar arquivo vCard",
+        "keyword": "Palavra-chave"
     },
     "share": {
         "add": "Adicionar",
@@ -245,7 +247,8 @@
             "city": "Cidade",
             "number": "Número",
             "postalCode": "CEP",
-            "street": "Rua"
+            "street": "Rua",
+            "website": "Site"
         },
         "title": {
             "mail": "Endereço de e-mail",
@@ -307,6 +310,11 @@
         },
         "edit_distribution_list": {
             "title": "Editar \"{{displayName}}\""
+        },
+        "initializeError": {
+            "title": "Oops!… Algo deu errado",
+            "content": "Atualize a página ou tente novamente",
+            "buttonConfirm": "ATUALIZAR"
         }
     },
     "select": {
@@ -352,7 +360,10 @@
         "folder_linked_status": "Compartilhado comigo",
         "address_book_sharing_status_one": "Compartilhado com {{count}} pessoa",
         "address_book_sharing_status_many": "Compartilhado com {{count}} pessoas",
-        "address_book_sharing_status_other": "Compartilhado com {{count}} pessoas"
+        "address_book_sharing_status_other": "Compartilhado com {{count}} pessoas",
+        "list_trash": {
+            "deletePermanently": "Excluir contato permanentemente"
+        }
     },
     "title": {
         "advanced_filters": "Filtros avançados"
@@ -494,7 +505,8 @@
         "myContactGroups": "Meus Grupos de Contatos",
         "contextualMenu": {
             "new_contact_group_creation_action": "Novo Grupo de Contatos"
-        }
+        },
+        "contactGroups": "Grupos de Contato"
     },
     "board": {
         "newContactGroup": {
