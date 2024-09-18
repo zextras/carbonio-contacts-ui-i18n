@@ -85,7 +85,9 @@
         "website_one": "Página web",
         "website_many": "Páginas web",
         "website_other": "Páginas web",
-        "show_more": "mostrar más"
+        "show_more": "mostrar más",
+        "export_contact": "Exportar archivo vCard",
+        "keyword": "Teclado"
     },
     "share": {
         "none": "Ninguno",
@@ -245,7 +247,8 @@
             "city": "Ciudad",
             "number": "Número",
             "postalCode": "Código postal",
-            "street": "Calle"
+            "street": "Calle",
+            "website": "Página web"
         },
         "title": {
             "mail": "Dirección de e-mail",
@@ -307,6 +310,11 @@
         },
         "edit_distribution_list": {
             "title": "Editar \"{{displayName}}\""
+        },
+        "initializeError": {
+            "title": "¡Vaya! Algo salió mal",
+            "content": "Por favor, recarga la página o prueba de nuevo más tarde",
+            "buttonConfirm": "RECARGAR"
         }
     },
     "select": {
@@ -355,7 +363,10 @@
         "address_book_sharing_status_one": "Compartido con {{count}} persona",
         "address_book_sharing_status_many": "Compartido con {{count}} personas",
         "address_book_sharing_status_other": "Compartido con {{count}} personas",
-        "folder_linked_status": "Compartido conmigo"
+        "folder_linked_status": "Compartido conmigo",
+        "list_trash": {
+            "deletePermanently": "Borrar contacto permanentemente"
+        }
     },
     "types": {
         "home": "Casa",
@@ -530,7 +541,8 @@
         "myContactGroups": "Mis Grupos de Contactos",
         "contextualMenu": {
             "new_contact_group_creation_action": "Nuevo grupo de contacto"
-        }
+        },
+        "contactGroups": "Grupos de contacto"
     },
     "contact": {
         "modal": {
