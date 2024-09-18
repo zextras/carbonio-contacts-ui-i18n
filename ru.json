@@ -366,10 +366,13 @@
     "tooltip": {
         "resend": "Отправить уведомление об этой публикации",
         "revoke": "Отозвать доступ",
-        "folder_linked_status": "Адресовано мне",
+        "folder_linked_status": "Поделились со мной",
         "address_book_sharing_status_one": "Доступ предоставлен {{count}} человеку",
         "address_book_sharing_status_few": "Доступ предоставлен {{count}} человекам",
-        "address_book_sharing_status_many": "Доступ предоставлен {{count}} человекам"
+        "address_book_sharing_status_many": "Доступ предоставлен {{count}} человекам",
+        "list_trash": {
+            "deletePermanently": "Удалить контакт навсегда"
+        }
     },
     "contact_restored": "Контакт восстановлен",
     "displayer": {
@@ -433,7 +436,8 @@
         "distributionLists": "Списки рассылок",
         "distributionListsManager": "Менеджер",
         "distributionListsMember": "Участник",
-        "myContactGroups": "Мои группы контактов"
+        "myContactGroups": "Мои группы контактов",
+        "contactGroups": "Группы контактов"
     },
     "expand_distribution_list": "Развернуть список адресов",
     "board": {
