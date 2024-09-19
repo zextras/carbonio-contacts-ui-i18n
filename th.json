@@ -178,7 +178,9 @@
         "import_address_book": "นำเข้าไฟล์ CSV",
         "newContactGroup": "กลุ่มผู้ติดต่อใหม่",
         "select_all_addresses_other": "เลือกที่อยู่ทั้งหมด {{count}} แห่ง",
-        "website_other": "เว็บไซต์"
+        "website_other": "เว็บไซต์",
+        "export_contact": "ส่งออกไฟล์ vCard",
+        "keyword": "คำหลัก"
     },
     "share": {
         "read": "อ่าน",
@@ -239,7 +241,8 @@
             "city": "เมือง",
             "number": "หมายเลข",
             "postalCode": "รหัสไปรษณีย์",
-            "street": "ถนน"
+            "street": "ถนน",
+            "website": "เว็บไซต์"
         },
         "title": {
             "mail": "ที่อยู่อีเมล",
@@ -303,6 +306,11 @@
         },
         "edit_distribution_list": {
             "title": "แก้ไข \"{{displayName}}\""
+        },
+        "initializeError": {
+            "title": "อุ๊ย!…มีบางอย่างผิดพลาด",
+            "content": "โปรดโหลดหน้าเพจนี้ใหม่หรือลองอีกครั้งในภายหลัง",
+            "buttonConfirm": "โหลดซ้ำ"
         }
     },
     "select": {
@@ -347,7 +355,10 @@
         "revoke": "เพิกถอนการเข้าถึง",
         "resend": "ส่งอีเมลแจ้งเตือนเกี่ยวกับการแชร์นี้",
         "folder_linked_status": "แชร์กับฉัน",
-        "address_book_sharing_status_other": "แบ่งปันกับ {{count}} คน"
+        "address_book_sharing_status_other": "แบ่งปันกับ {{count}} คน",
+        "list_trash": {
+            "deletePermanently": "ลบผู้ติดต่อถาวร"
+        }
     },
     "displayer": {
         "title5": "เลือกรายชื่อผู้ติดต่อ",
@@ -515,7 +526,8 @@
         },
         "distributionLists": "รายการแจกจ่าย",
         "distributionListsManager": "ผู้จัดการ",
-        "myContactGroups": "กลุ่มผู้ติดต่อของฉัน"
+        "myContactGroups": "กลุ่มผู้ติดต่อของฉัน",
+        "contactGroups": "กลุ่มผู้ติดต่อ"
     },
     "contact": {
         "modal": {
