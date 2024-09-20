@@ -4,6 +4,12 @@
             "footer": {
                 "go_back": "Vissza"
             }
+        },
+        "action": {
+            "deleteContactGroup": "„{{contactGroupTitle}}” törlése",
+            "delete_permanently": "Címjegyzék végleges törlése",
+            "edit": "Címjegyzék szerkesztése",
+            "delete": "Címjegyzék törlése"
         }
     },
     "label": {
@@ -78,7 +84,49 @@
         "delete_tag_message2": "A törlés után minden vele megjelölt elemből eltávolításra kerül."
     },
     "displayer": {
-        "search_title2": "Sajnáljuk, de nincs találat a keresésre"
+        "search_title2": "Sajnáljuk, de nincs találat a keresésre",
+        "distribution_list": {
+            "label": {
+                "description": "Leírás",
+                "filter_hint": "Szűrheti ezt a listát az adott tag nevének megkeresésével.",
+                "member_total": "Tagok listája {{total}}",
+                "manager_total": "Menedzserek listája {{total}}"
+            },
+            "empty_displayer": "Válasszon ki egy terjesztési listát, vagy vegye fel a kapcsolatot az adminisztrátorral lista létrehozásához.",
+            "no_details": "Ehhez a terjesztési listához nincsenek további részletek. További információkért keresse a rendszergazdát.",
+            "member_not_visible": "Nincs jogosultsága a terjesztési lista tagjainak megtekintéséhez. További információkért forduljon a rendszergazdához.",
+            "placeholder": {
+                "filter_member": "Cím szűrése"
+            },
+            "no_details_owner": "Ehhez a terjesztési listához nincsenek további részletek. Szerkessze a listát a hozzáadáshoz vagy keresse a rendszergazdát."
+        },
+        "title1": "Hozzon létre egy új névjegyet az „ÚJ” gombra kattintva.",
+        "title2": "Oszd meg az összes munkádat a kapcsolataiddal.",
+        "description8": "Válasszon ki egy névjegyet vagy névjegyek egy csoportját a megosztott e-mailek küldéséhez.",
+        "description3": "Új névjegycsoport létrehozásához kattintson az „ÚJ” gombra.",
+        "description7": "Hozzon létre egy névjegycsoportot az „ÚJ” gombra kattintva.",
+        "description6": "Használja a „Szerkesztés” üzemmódot, ha személyes megjegyzést szeretne hozzáadni egy névjegyhez.",
+        "search_title1": "Másik keresés indítása",
+        "search_description3": "Ellenőrizze a helyesírást és a szűrők beállításait, vagy próbálkozzon egy másik kulcsszóval.",
+        "title4": "Személyre szabhatod a névjegyeidet személyes megjegyzések hozzáadásával",
+        "description2": "ÚJ létrehozásához kattintson az „ÚJ” gombra.",
+        "description4": "Hozzon létre egy újat az „ÚJ” gombra kattintva.",
+        "description5": "Fedezze fel az összes módot, amellyel kapcsolatba léphet más felhasználókkal.",
+        "list_title1": "Úgy tűnik, még nincsenek névjegyek",
+        "list_title2": "A kuka üres",
+        "search_description1": "Vagy válassza ki a \"Haladó szűrőbeállítások\"-at a keresés testreszabásához.",
+        "search_description2": "Próbáljon meg egy másik keresést indítani.",
+        "search_list_title1": "Eddig nincs találat. Folytassa a keresést!",
+        "search_list_title2": "Nincs találat a keresésre.",
+        "search_title3": "Nincs találat a keresésére.",
+        "search_title4": "Válasszon ki egy vagy több találatot a műveletek végrehajtásához vagy a részletek megjelenítéséhez.",
+        "title10": "Névjegyek kiválasztása és visszaállítása a kukából",
+        "title3": "Tartsa a kapcsolatot a kollégáival.",
+        "title5": "Névjegy kiválasztása",
+        "title6": "Névjegy testreszabása",
+        "title7": "Tartsa a kapcsolatot kollégáival.",
+        "title8": "Megosztott e-mail küldése",
+        "title9": "Névjegy törléséhez kattintson a kuka ikonra."
     },
     "modal": {
         "initializeError": {
@@ -130,7 +178,11 @@
             "addresses": {
                 "label": "Címek"
             },
-            "name": "Új Csoport"
+            "name": "Új Csoport",
+            "title": "Új csoport",
+            "snackbar": {
+                "contact_group_created": "Névjegycsoport sikeresen létrehozva"
+            }
         },
         "label": {
             "description": "Leírás"
@@ -138,8 +190,70 @@
         "editContactGroup": {
             "snackbar": {
                 "contact_group_edited": "A csoport sikeresen frissítve",
-                "error": "Hiba történt a szerkesztés mentésekor, kérjük próbálja újra"
+                "error": "Hiba történt a szerkesztett adatok mentésekor, kérjük próbálja újra"
             }
+        }
+    },
+    "distribution_list": {
+        "tabs": {
+            "details": "Részletek",
+            "managers": "Menedzserek listája",
+            "members": "Tagok listája"
+        },
+        "label": {
+            "empty_message": "Még nincsenek terjesztési listák."
+        }
+    },
+    "edit_dl_component": {
+        "input": {
+            "description": {
+                "label": "Leírás"
+            },
+            "name": {
+                "label": "Terjesztési lista neve",
+                "error": {
+                    "max_length": "A maximálisan megengedett hosszúság 256 karakter"
+                }
+            }
+        },
+        "placeholder": {
+            "add_members": "Írjon be egy címet, kattintson a „+” gombra a terjesztési listához való hozzáadáshoz",
+            "filter_member": "Cím szűrése"
+        },
+        "label": {
+            "members_total": "Tagok listája {{total}}",
+            "dl_email": "Terjesztési lista",
+            "hint": "Szűrheti ezt a terjesztési listát az adott tag nevének megkeresésével, vagy hozzáadhat új tagokat szerkesztéssel."
+        },
+        "error": {
+            "duplicated_address_one": "A cím már létezik",
+            "duplicated_address_other": "A címek már létezek",
+            "invalid_address_one": "Érvénytelen cím",
+            "invalid_address_other": "Érvénytelen címek",
+            "invalid_and_duplicated_addresses": "Érvénytelen és már meglévő címek"
+        }
+    },
+    "emptyDisplayer": {
+        "contactGroup": {
+            "hint": "Új névjegycsoport létrehozásához kattintson az „új” gombra."
+        }
+    },
+    "contactGroupList": {
+        "addressCount_one": "{{count}} cím",
+        "addressCount_other": "{{count}} cím",
+        "emptyList": "Még nincs létrehozva névjegycsoport"
+    },
+    "contact_restored": "Névjegy visszaállítva",
+    "contacts": {
+        "importAction": {
+            "modalTitle": "Névjegyek importálása",
+            "modalButton": "IMPORTÁLÁS"
+        }
+    },
+    "expand_distribution_list": "Címlista kibontása",
+    "contactGroupDisplayer": {
+        "label": {
+            "members_total": "Címek: {{count}}"
         }
     }
 }
