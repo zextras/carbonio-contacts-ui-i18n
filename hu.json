@@ -3,14 +3,83 @@
         "modal": {
             "footer": {
                 "go_back": "Vissza"
+            },
+            "delete": {
+                "body": {
+                    "message2": "Véglegesen törli a kiválasztott címjegyzéket? Ha törli, a kapcsolódó tartalom véglegesen eltávolításra kerül, és a címjegyzék a továbbiakban nem lesz helyreállítható.",
+                    "message1": "Szeretné törölni a kiválasztott címjegyzéket? Ha törli, a kapcsolódó tartalom véglegesen eltávolításra kerül, és a címjegyzék a továbbiakban nem lesz helyreállítható."
+                },
+                "title": "\"{{addressBookName}}\" törlése"
+            },
+            "empty": {
+                "body": {
+                    "message1": "Szeretné kiüríteni a kiválasztott címjegyzéket?",
+                    "message2": "Ha kiüríti, az összes kapcsolódó tartalom a szemetesbe kerül."
+                },
+                "message3": "Szeretné kiüríteni a szemetest?",
+                "title": "\"{{addressBookName}}\" űrítése",
+                "message1": "Szeretné kiüríteni a kiválasztott címjegyzéket?",
+                "message2": "Az összes kapcsolódó névjegy véglegesen törlődik, később már nem lehet őket helyreállítani.",
+                "message4": "Tartalma véglegesen törlődik, és nem lesz lehetséges helyreállítani."
+            },
+            "new": {
+                "body": {
+                    "message1": "Új címjegyzéknév",
+                    "message2": "Válasszon ki egy címjegyzéket, amelybe az újonnan létrehozott kerül:"
+                },
+                "input": {
+                    "name_exist": "A név már létezik ebben az útvonalban",
+                    "name": "Címjegyzék név megadás"
+                },
+                "create_footer": "Létrehozás és áthelyezés",
+                "title": "Új címjegyzék létrehozása",
+                "title2": "Új mappa létrehozása"
+            },
+            "restore": {
+                "create_footer": "Létrehozás és visszaállítás"
+            },
+            "item": {
+                "empty": "Nincs elérhető elem"
+            },
+            "move": {
+                "body": {
+                    "message3": "Válasszon ki egy mappát, amelybe át szeretné helyezni a kívántat:",
+                    "message1": "Válasszon ki egy címjegyzéket amelybe a kívántat szeretné áthelyezni:"
+                },
+                "title": "{{addressBookName}} áthelyezése",
+                "input": {
+                    "filter": "Címjegyzék szűrése"
+                }
+            },
+            "edit": {
+                "body": {
+                    "item": {
+                        "empty": "Nincs elérhető útvonal"
+                    }
+                }
             }
         },
         "action": {
             "deleteContactGroup": "„{{contactGroupTitle}}” törlése",
             "delete_permanently": "Címjegyzék végleges törlése",
             "edit": "Címjegyzék szerkesztése",
-            "delete": "Címjegyzék törlése"
-        }
+            "delete": "Címjegyzék törlése",
+            "move": "Áthelyezés",
+            "moved": "Címjegyzék áthelyezése sikeres",
+            "empty": {
+                "folder": "Üres címjegyzék",
+                "trash": "Szemetes ürítése"
+            }
+        },
+        "snackbar": {
+            "address_book_moved_to_trash": "A címjegyzék a szemetesbe került",
+            "trash_empty": "Szemetes mappa sikeresen kiürítve",
+            "folder_new": "Új címjegyzék létrehozva",
+            "address_book_permanently_deleted": "Címjegyzék véglegesen törölve",
+            "folder_empty": "Címjegyzék sikeresen kiürítve"
+        },
+        "share_folder": "Címjegyzék megosztása",
+        "type": "Névjegy mappa"
     },
     "label": {
         "delete": "Töröl",
@@ -46,14 +115,80 @@
         "error_try_again": "Valami hiba történt, kérjük, próbálja újra",
         "results_for": "Eredmények a következőre:",
         "root": "Gyökér",
-        "new_tag": "Új címke"
+        "new_tag": "Új címke",
+        "edit_contacts": "Névjegyek szerkesztése",
+        "errors": {
+            "upload_failed_generic": "A(z) „{{filename}}” fájl feltöltése nem sikerült"
+        },
+        "import_address_book": "Importálás CSV-fájlból",
+        "options": "Beállítások",
+        "update": "Frissítés",
+        "app_name": "Névjegyek",
+        "shares_folder_edit": "A címjegyzék megosztása",
+        "filter_folders": "Mappák szűrése",
+        "find_share": "Megosztások keresése",
+        "new_folder": "Új mappa",
+        "edit_email": "E-mail szerkesztése",
+        "edit_folder_properties": "{{name}} tulajdonságainak szerkesztése",
+        "edit_invalid_email": "Az e-mail-cím érvénytelen, kattintson a szerkesztéshez",
+        "email": "E-mail",
+        "edit_access_name": "{{name}} hozzáférésének szerkesztése",
+        "revoke_without_notification": "Hozzáférés visszavonása értesítés küldése nélkül",
+        "add_share": "Megosztás hozzáadása",
+        "address_book_restored": "Címjegyzék visszaállítva",
+        "export_address_book": "Exportálás CSV fájlként",
+        "discard": "elvet",
+        "note": "Megjegyzés:",
+        "notes": "Megjegyzések",
+        "show_more": "Több megjelenítése",
+        "activate_selection_mode": "Kiválasztási mód aktiválása",
+        "revoke_with_custom_msg": "Egyedi értesítés küldési lehetőség visszavonása",
+        "advanced_filter_one": "{{count}} speciális szűrő",
+        "advanced_filter_other": "{{count}} speciális szűrő",
+        "groups_app_name": "Névjegycsoportok és terjesztési listák",
+        "revoke_with_standard_msg": "Értesítés küldési lehetőség visszavonása",
+        "contact_created_in_folder": "Ez a névjegy a (z) „{{name}}” mappában jön létre",
+        "select_all_addresses_one": "Cím kiválasztása",
+        "select_all_addresses_other": "Összes {{count}} cím kiválasztása",
+        "export_contact": "Exportálás vCard fájlba",
+        "keyword": "Kulcsszó",
+        "autocomplete": "Automatikus kiegészítés",
+        "cannot_move": "Nem helyezhető át ugyanabba a mappába",
+        "contact_setting": "Névjegy Beállítások",
+        "contacts": "Névjegyek",
+        "destination_address_book": "Cél névjegyzék",
+        "include_shared_folders": "Használja a megosztott címjegyzékeket",
+        "newContactGroup": "Új névjegycsoport",
+        "new_address_book": "Új címjegyzék",
+        "new_contact_created": "Új névjegy létrehozva",
+        "no_data": "Nincs adat",
+        "no_name": "Nincs név",
+        "revoke_share": "\"{{title}}\" megosztásának visszavonása",
+        "website_one": "Weboldal",
+        "website_other": "Weboldalak",
+        "new_contact": "Új névjegy"
     },
     "messages": {
         "snackbar": {
             "tag_created": "{{name}} címke sikeresen létrehozva",
             "tag_deleted": "{{name}} címke sikeresen törölve",
             "tag_updated": "Sikeresen frissítve",
-            "tag_not_updated": "Hiba történt, a címke nem lett frissítve. Próbálja újra."
+            "tag_not_updated": "Hiba történt, a címke nem lett frissítve. Próbálja újra.",
+            "contact_moved": "Névjegy áthelyezve",
+            "conversation_move": "Beszélgetés áthelyezése sikeres",
+            "folder_moved": "Mappa áthelyezése sikeres",
+            "message_move": "Üzenet áthelyezése sikeres",
+            "contact_deleted_permanently": "Névjegy véglegesen törölve",
+            "contact_moved_to_trash": "Névjegy áthelyezve a szemetesbe",
+            "address_book_moved": "Címjegyzék áthelyezve a célmappába",
+            "contact_restored": "Névjegy visszaállítva"
+        },
+        "modal": {
+            "delete": {
+                "if_delete_lost_forever": "A névjegy a végleges törlés után már nem visszaállítható. Biztosan folytatja?",
+                "sure_delete_contact_one": "Biztosan véglegesen törli ezt a névjegyet?",
+                "sure_delete_contact_other": "Biztosan véglegesen törli ezeket a névjegyeket?"
+            }
         }
     },
     "share": {
@@ -65,23 +200,76 @@
             }
         },
         "recipients_address": "Címzettek e-mail címei",
-        "share_note": "A szabványos üzenet megjeleníti a nevedet, a megosztott elem nevét, a címzetteknek adott engedélyeket és a bejelentkezési információkat."
+        "share_note": "A szabványos üzenet megjeleníti a nevedet, a megosztott elem nevét, a címzetteknek adott engedélyeket és a bejelentkezési információkat.",
+        "add": "Hozzáadás",
+        "find_contact_shares": "Névjegymegosztások keresése",
+        "filter_user": "Felhasználók keresése",
+        "insert": "Beszúrás",
+        "send_notification": "Értesítés küldése erről a megosztásról",
+        "share_removed_succesfully": "Megosztás sikeresen eltávolítva",
+        "viewer": "Megtekintő",
+        "write": "Írás",
+        "link_name": "{{shareName}}/{{ownerName}}",
+        "manager": "Kezelő",
+        "find_shares_label": "Válassza ki, hogy melyik címjegyzéket szeretné látni a névjegyfában",
+        "none": "Nincs",
+        "owner": "Tulajdonos",
+        "share_added_succesfully": "Megosztás sikeresen hozzáadva",
+        "admin": "Admin",
+        "administer": "Adminisztráló",
+        "allowed_actions": "Engedélyezett műveletek",
+        "contact_folder": "Címjegyzék",
+        "find_shares": "Megosztások keresése",
+        "read": "olvasás",
+        "remove_from_this_list": "Eltávolítás a listáról",
+        "role": "Szerepkör",
+        "share_info": "Megosztott címjegyzék adatai",
+        "shared_folders": "Megosztott címjegyzékek",
+        "workflow": "Munkafolyamat",
+        "shared_item": "Megosztott elem",
+        "shared_items": "{{value}} megosztott címjegyzékei",
+        "standard_message": "Megjegyzés fűzése standard üzenethez"
     },
     "snackbar": {
         "share_resend": "Meghívó megosztása újraküldve",
         "share_revoke": "Megosztási hozzáférés visszavonva",
         "tag_applied": "„{{tag}}” címke alkalmazva",
-        "tag_removed": "„{{tag}}” címke eltávolítva"
+        "tag_removed": "„{{tag}}” címke eltávolítva",
+        "folder_edited": "Címjegyzék szerkesztése sikeres",
+        "delete_contact_group": {
+            "confirm": {
+                "success": "Névjegy csoport sikeresen törölve"
+            }
+        },
+        "edit_distribution_list": {
+            "save": {
+                "success": "\"{{displayName}}\" terjesztési lista módosításai sikeresen mentve"
+            }
+        },
+        "email_copied_to_clipboard": "E-mail a vágólapra másolva.",
+        "folder_shared": "Címjegyzék megosztva",
+        "import_contacts_success_one": "{{number}} névjegy importálva és hozzáadva a kiválasztott címjegyzékhez",
+        "import_contacts_success_other": "{{number}} névjegy importálva és hozzáadva a kiválasztott címjegyzékhez",
+        "share_updated": "Hozzáférési jogok frissítve"
     },
     "tooltip": {
-        "revoke": "Hozzáférés visszavonása"
+        "revoke": "Hozzáférés visszavonása",
+        "list_trash": {
+            "deletePermanently": "Névjegy végleges törlése"
+        },
+        "resend": "E-mailes értesítés küldése erről a megosztásról",
+        "folder_linked_status": "Velem megosztva",
+        "address_book_sharing_status_one": "{{count}} emberrel megosztva",
+        "address_book_sharing_status_other": "{{count}} emberrel megosztva"
     },
     "message": {
         "delete_tag_message1": "Biztosan törli a (z) „{{name}}” címkét?",
         "snackbar": {
             "settings_saved": "A szerkesztések mentése sikeres"
         },
-        "delete_tag_message2": "A törlés után minden vele megjelölt elemből eltávolításra kerül."
+        "delete_tag_message2": "A törlés után minden vele megjelölt elemből eltávolításra kerül.",
+        "new_contact": "Ez a névjegy a „Névjegyek” mappában lesz létrehozva",
+        "require_field": "Töltsön ki legalább egy kötelező * mezőt"
     },
     "displayer": {
         "search_title2": "Sajnáljuk, de nincs találat a keresésre",
@@ -133,7 +321,26 @@
             "title": "Hoppá, valami hiba történt",
             "content": "Kérjük töltse be újra az oldalt, vagy próbálkozzon újra később!",
             "buttonConfirm": "ÚJRATÖLTÉS"
-        }
+        },
+        "delete": {
+            "contactGroup": {
+                "body1": "Biztosan törli a kiválasztott névjegycsoportot?",
+                "body2": "Ha törli, örökre elveszik.",
+                "header": "„{{contactGroupName}}” törlése"
+            },
+            "button": {
+                "confirm": "törlés"
+            }
+        },
+        "destination": "Célmappa",
+        "close": {
+            "tooltip": "Bezárás"
+        },
+        "cancel": "mégsem",
+        "edit_distribution_list": {
+            "title": "„{{displayName}}” szerkesztése"
+        },
+        "address_book_name": "Címjegyzék neve"
     },
     "action": {
         "goto_folder": "Ugrás a mappára",
@@ -149,7 +356,8 @@
         "delete": "Törlés",
         "edit": "Szerkesztés",
         "mail": "Levél küldése",
-        "reset_filters": "Szűrők törlése"
+        "reset_filters": "Szűrők törlése",
+        "add_shared_address_books": "Megosztások hozzáadása"
     },
     "board": {
         "newContactGroup": {
@@ -255,5 +463,109 @@
         "label": {
             "members_total": "Címek: {{count}}"
         }
+    },
+    "folders": {
+        "auto_contacts": "Névjegyek, akiknek e-mailt küldött",
+        "root": "Gyökér",
+        "trash": "Szemetes",
+        "contacts": "Névjegyek"
+    },
+    "import_contacts": {
+        "modal": {
+            "description": "A kiválasztott {{fileName}} fájlban lévő névjegyek a kiválasztott „{{folderName}}” mappába lesznek importálva.",
+            "confirm": "Importálás",
+            "title": "Névjegyek importálása"
+        },
+        "snackbar": {
+            "import_contacts_success_one": "{{count}} névjegy importálva és hozzáadva a kiválasztott címjegyzékhez",
+            "import_contacts_success_other": "{{count}} névjegy importálva és hozzáadva a kiválasztott címjegyzékhez"
+        }
+    },
+    "job": {
+        "company": "Vállalat",
+        "title": "Munkakör",
+        "department": "Részleg"
+    },
+    "name": {
+        "prefix": "Előtag",
+        "nickName": "Becenév",
+        "first_name": "Keresztnév",
+        "last_name": "Vezetéknév",
+        "suffix": "Utótag",
+        "middle_name": "Középső név"
+    },
+    "secondaryBar": {
+        "distributionListsMember": "Tag",
+        "distributionLists": "Terjesztési listák",
+        "contactGroups": "Névjegycsoportok",
+        "contextualMenu": {
+            "new_contact_group_creation_action": "Új névjegycsoport"
+        },
+        "distributionListsManager": "Kezelő",
+        "myContactGroups": "Névjegycsoportjaim"
+    },
+    "section": {
+        "field": {
+            "street": "Utca",
+            "state": "Állam",
+            "website": "Weboldal",
+            "city": "Város",
+            "country": "Ország",
+            "number": "Szám",
+            "postalCode": "Irányítószám"
+        },
+        "title": {
+            "mail": "E-mail-cím",
+            "phone_number": "Telefonos kapcsolat",
+            "address_one": "Cím",
+            "address_other": "Címek"
+        }
+    },
+    "select": {
+        "default": "Típus választás"
+    },
+    "types": {
+        "mobile": "Mobil",
+        "home": "Kezdőlap",
+        "other": "egyéb",
+        "work": "munka"
+    },
+    "contact": {
+        "modal": {
+            "restore_single": {
+                "title": "\"{{contactDesc}}\" névjegyének visszaállítása"
+            },
+            "move_single": {
+                "title": "\"{{contactDesc}}\" névjegyének áthelyezése"
+            },
+            "move_multiple": {
+                "title": "{{count}} névjegy áthelyezése"
+            },
+            "restore_multiple": {
+                "title": "{{count}} névjegy visszaállítása"
+            }
+        }
+    },
+    "search": {
+        "shared_folders_note": "Tartalmazza a megosztott címjegyzékeket a keresésekben."
+    },
+    "settings": {
+        "contacts": {
+            "checkbox": {
+                "incl_addrs_in_glbl_addrs_list": "Címek felvétele a globális címlistába",
+                "include_add_in_shared_contact": "Címek szerepeltetése a megosztott névjegyekben",
+                "add_contact_to_emailed_contacts": "Új névjegyek hozzáadása az „E-mailes névjegyek” -hez",
+                "autocomplete_on_comma": "Automatikus kiegészítés kiválasztása vessző beírásakor",
+                "srch_glbl_addrs_list": "Először keresés a globális címlistában a partnerválasztó használatakor"
+            }
+        }
+    },
+    "members_list_item_component": {
+        "button": {
+            "remove": "eltávolítás"
+        }
+    },
+    "title": {
+        "advanced_filters": "Speciális szűrők"
     }
 }
