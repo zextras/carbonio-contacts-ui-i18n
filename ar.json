@@ -7,7 +7,13 @@
             "delete": "حذف"
         },
         "copy": "نسخ",
-        "delete": "حذف"
+        "delete": "حذف",
+        "edit_distribution_list": "تعديل",
+        "goto_folder": "انتقل إلى المجلد",
+        "mail": "ارسل بريد الكتروني",
+        "reset_filters": "إعادة تعيين عوامل التصفيه",
+        "send_msg": "ارسل بريد الكتروني",
+        "edit": "تعديل"
     },
     "displayer": {
         "search_description1": "أو حدد \"ترَشّيح متقدم\" لتحسين بحثك.",
@@ -17,7 +23,12 @@
         "search_list_title1": "يبدو أنه لا توجد نتائج. استمر في البحث!",
         "search_list_title2": "لا يتطابق أي من العناصر الخاصة بك مع بحثك.",
         "search_title1": "بدء بحث آخر",
-        "search_title2": "عذرا، ولكن لا توجد نتائج لبحثك"
+        "search_title2": "عذرا، ولكن لا توجد نتائج لبحثك",
+        "description5": "اكتشف جميع الطرق التي يمكنك من خلالها التواصل مع المستخدمين الآخرين.",
+        "description6": "استخدم وضع \"تحرير\" لإضافة أي ملاحظة شخصية إلى جهة اتصال.",
+        "description4": "قم بإنشاء واحدة جديدة بالنقر فوق الزر \"جديد\".",
+        "description2": "انقر فوق الزر \"جديد\" لبدء إنشاء واحدة جديدة.",
+        "description3": "انقر فوق الزر \"جديد\" لإنشاء مجموعة جديدة من جهات الاتصال."
     },
     "label": {
         "activate_selection_mode": "تفعيل وضع الاختيار",
@@ -59,7 +70,11 @@
         "undo": "تراجع",
         "new_tag": "علامة جديدة",
         "results_for": "نتائج عن:",
-        "root": "الرئيسي"
+        "root": "الرئيسي",
+        "newContactGroup": "مجموعة جهات اتصال جديدة",
+        "new_address_book": "دفتر عناوين جديد",
+        "new_contact": "جهة اتصال جديدة",
+        "new_contact_created": "تم إنشاء جهة اتصال جديدة"
     },
     "folders": {
         "trash": "سلة المهملات"
@@ -115,7 +130,93 @@
         "modal": {
             "footer": {
                 "go_back": "عُد"
+            },
+            "new": {
+                "body": {
+                    "message1": "اسم دفتر عناوين جديد"
+                },
+                "title2": "إنشاء مجلد جديد"
             }
+        },
+        "snackbar": {
+            "folder_new": "تم إنشاء دفتر عناوين جديد"
+        }
+    },
+    "board": {
+        "label": {
+            "description": "الوصف"
+        },
+        "newContactGroup": {
+            "addresses": {
+                "label": "العناوين"
+            },
+            "name": "مجموعة جديدة",
+            "input": {
+                "contact_input": {
+                    "error": {
+                        "address_already_present_zero": "عنوان موجود بالفعل",
+                        "address_already_present_one": "عنوان موجود بالفعل",
+                        "address_already_present_two": "عنوانين موجودين بالفعل",
+                        "address_already_present_few": "عناوين موجوده بالفعل",
+                        "address_already_present_many": "عنوان موجود بالفعل",
+                        "address_already_present_other": "عنوان موجود بالفعل",
+                        "invalid_address_zero": "عنوان غير صالح",
+                        "invalid_address_one": "عنوان غير صالح",
+                        "invalid_address_two": "عنوانين غير صالحين",
+                        "invalid_address_few": "عناوين غير صالحه",
+                        "invalid_address_many": "عنوان غير صالح",
+                        "invalid_address_other": "عنوان غير صالح",
+                        "invalid_already_present_addresses": "العناوين غير الصالحة والموجودة بالفعل"
+                    },
+                    "placeholder": "اكتب عنوانا ، انقر فوق علامة \"+\" لإضافته إلى المجموعة",
+                    "title": "قائمة العناوين"
+                },
+                "name_input": {
+                    "error": {
+                        "max_length": "الحد الأقصى المسموح به هو 256 حرفا",
+                        "required": "اسم المجموعة مطلوب، أدخل اسماً للمتابعة"
+                    },
+                    "name": {
+                        "label": "اسم المجموعة*"
+                    }
+                }
+            },
+            "snackbar": {
+                "contact_group_created": "تم إنشاء مجموعة جهات الاتصال بنجاح"
+            },
+            "title": "مجموعة جديدة"
+        },
+        "editContactGroup": {
+            "snackbar": {
+                "contact_group_edited": "تم تحديث المجموعة بنجاح",
+                "error": "حدث خطأ ما في حفظ التعديلات ، حاول مرة أخرى"
+            }
+        }
+    },
+    "contactGroupDisplayer": {
+        "label": {
+            "members_total": "العناوين: {{count}}"
+        }
+    },
+    "contactGroupList": {
+        "addressCount_zero": "{{count}} عنوان",
+        "addressCount_one": "عنوان {{count}}",
+        "addressCount_two": "{{count}} عنوان",
+        "addressCount_few": "{{count}} عناوين",
+        "addressCount_many": "{{count}} عنوان",
+        "addressCount_other": "{{count}} عنوان",
+        "emptyList": "لم يتم إنشاء مجموعات اتصال حتى الآن"
+    },
+    "contact_restored": "تم استعادة الاتصال",
+    "secondaryBar": {
+        "contextualMenu": {
+            "new_contact_group_creation_action": "مجموعة جهات اتصال جديدة"
+        }
+    },
+    "contacts": {
+        "importAction": {
+            "modalTitle": "استيراد جهات الاتصال",
+            "modalButton": "استورد"
         }
     }
 }
