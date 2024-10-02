@@ -355,8 +355,8 @@
         },
         "cancel": "annulla",
         "initializeError": {
-            "content": "Per favore, ricarica la pagina o riprova più tardi",
-            "title": "Oops!...Qualcosa è andato storto",
+            "content": "Per favore, aggiorna la pagina o riprova più tardi. Altri moduli potrebbero essere ancora disponibili con funzionalità limitate.",
+            "title": "Qualcosa è andato storto",
             "buttonConfirm": "RICARICA"
         }
     },
