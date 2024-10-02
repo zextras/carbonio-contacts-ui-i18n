@@ -415,8 +415,8 @@
             "title": "Edit \"{{displayName}}\""
         },
         "initializeError": {
-            "content": "Please reload the page or try again later",
-            "title": "Oops!…Something went wrong",
+            "content": "Please refresh the page or try again later. Other modules might still be available on limited functionality.",
+            "title": "Something went wrong",
             "buttonConfirm": "RELOAD"
         }
     },
