@@ -7,7 +7,42 @@
         "search_description1": "Edo hautatu \"Iragazki aurreratuak\" bilaketa hobetzeko.",
         "search_list_title2": "Zure elementuetako bat ere ez dator bat zure bilaketarekin.",
         "search_title4": "Hautatu emaitza bat edo gehiago ekintzak egiteko edo xehetasunak bistaratzeko.",
-        "search_title2": "Sentitzen dugu baina ez dago zure bilaketarako emaitzarik"
+        "search_title2": "Sentitzen dugu baina ez dago zure bilaketarako emaitzarik",
+        "description2": "Klikatu \"BERRIA\" botoian berri bat sortzeko.",
+        "description3": "Klikatu \"BERRIA\" botoian kontaktu talde berria sortzeko.",
+        "description4": "Berria sortu \"BERRIA\" botoian klikatuta.",
+        "description5": "Ezagutu beste erabiltzaile batzuekin konektatzeko modu guztiak.",
+        "description6": "Erabili \"Editatu\" modua kontaktu bati edozein ohar pertsonal gehitzeko.",
+        "description8": "Hautatu kontaktu bat edo kontaktu talde bat partekatutako mezu elektronikoak bidaltzeko.",
+        "distribution_list": {
+            "empty_displayer": "Hautatu banaketa-zerrenda bat edo jarri harremanetan administratzailearekin bat izateko.",
+            "label": {
+                "description": "Deskribapena",
+                "filter_hint": "Zerrenda hau iragazi dezakezu kide jakin baten izena bilatuz.",
+                "manager_total": "Kudeatzaileen zerrenda {{total}}",
+                "member_total": "Kideen zerrenda {{total}}"
+            },
+            "member_not_visible": "Ez duzu banaketa-zerrenda honetako kideak ikusteko baimenik. Informazio gehiago lortzeko, galdetu administratzaileari.",
+            "no_details": "Ez dago banaketa zerrenda honetarako xehetasun gehigarririk. Informazio gehiago lortzeko, galdetu administratzaileari.",
+            "no_details_owner": "Ez dago banaketa zerrenda honetarako xehetasun gehigarririk. Editatu banaketa zerrenda horiek gehitzeko edo galdetu administratzaileari.",
+            "placeholder": {
+                "filter_member": "Iragazi helbide bat"
+            }
+        },
+        "list_title1": "Badirudi oraindik ez dagoela kontakturik",
+        "list_title2": "Zaborrontzia hutsik dago",
+        "search_description3": "Egiaztatu ortografia eta iragazkien aukerak edo saiatu beste gako-hitz batekin.",
+        "title1": "Sortu kontaktu berri bat \"BERRIA\" botoian klik eginez.",
+        "title10": "Hautatu eta berreskuratu kontaktuak zakarrontzitik",
+        "title2": "Partekatu zure lan guztiak zure kontaktuekin.",
+        "title3": "Egon harremanetan zure lankideekin.",
+        "title4": "Pertsonalizatu zure kontaktuak ohar pertsonalak gehituz",
+        "title5": "Hautatu kontaktu bat",
+        "title6": "Pertsonalizatu kontaktu bat",
+        "title7": "Egon harremanetan zure lankideekin",
+        "title8": "Bidali partekatutako mezu elektronikoa",
+        "title9": "Egin klik zakarrontziaren ikonoan kontaktu bat ezabatzeko.",
+        "description7": "Sortu kontaktu talde bat \"BERRIA\" botoian klik eginez."
     },
     "action": {
         "search": "Bilatu",
@@ -19,7 +54,12 @@
         },
         "copy": "kopiatu",
         "delete_permanently": "Betirako ezabatu",
-        "send_msg": "Mezua bidali"
+        "send_msg": "Mezua bidali",
+        "edit_distribution_list": "Editatu",
+        "goto_folder": "Joan karpetara",
+        "mail": "Mezua bidali",
+        "reset_filters": "Iragazkiak berrezarri",
+        "add_shared_address_books": "Gehitu partekatuak"
     },
     "label": {
         "create_tag": "Sortu etiketa berria",
@@ -102,12 +142,67 @@
         "modal": {
             "footer": {
                 "go_back": "Itzuli"
+            },
+            "delete": {
+                "body": {
+                    "message1": "Hautatutako helbide-liburua ezabatu nahi duzu? Ezabatzen baduzu, erlazionatutako edukia betiko kenduko da eta helbide-liburua ezingo da berreskuratu."
+                }
             }
+        },
+        "action": {
+            "delete": "Ezabatu helbide-liburua",
+            "deleteContactGroup": "Ezabatu \"{{contactGroupTitle}}\"",
+            "delete_permanently": "Ezabatu helbide-liburua behin betiko",
+            "edit": "Editatu helbide-liburua",
+            "empty": {
+                "folder": "Hustu helbide-liburua",
+                "trash": "Hustu zaborrontzia"
+            },
+            "move": "Mugitu",
+            "moved": "Helbide-liburua behar bezala mugitu da"
         }
     },
     "board": {
         "label": {
             "description": "Deskribapena"
+        },
+        "editContactGroup": {
+            "snackbar": {
+                "contact_group_edited": "Talde ondo eguneratuta",
+                "error": "Zerbaitek huts egin du aldaketak gordetzerakoan, saiatu berriro"
+            }
+        },
+        "newContactGroup": {
+            "addresses": {
+                "label": "Helbideak"
+            },
+            "input": {
+                "contact_input": {
+                    "error": {
+                        "invalid_address_one": "Helbide okerra",
+                        "invalid_address_other": "Helbide okerrak",
+                        "invalid_already_present_addresses": "Helbide okerra eta aurrez badago",
+                        "address_already_present_one": "Helbidea aurrez badago",
+                        "address_already_present_other": "Helbideak aurrez badaude"
+                    },
+                    "placeholder": "Helbidea idatzi eta ‘+’ klikatu gehitzeko taldera",
+                    "title": "Helbideen lista"
+                },
+                "name_input": {
+                    "error": {
+                        "max_length": "Onartutako gehienezko luzera 256 karaktere dira",
+                        "required": "Talde izena beharrezkoa da; sartu izena jarraitzeko"
+                    },
+                    "name": {
+                        "label": "Talde izena*"
+                    }
+                }
+            },
+            "name": "Talde berria",
+            "snackbar": {
+                "contact_group_created": "Kontaktu taldea ondo sortu da"
+            },
+            "title": "Talde berria"
         }
     },
     "tooltip": {
@@ -120,5 +215,67 @@
             "content": "Mesedez, berriro kargatu orria edo saiatu berriro geroago",
             "buttonConfirm": "BIRKARGATU"
         }
-    }
+    },
+    "contactGroupDisplayer": {
+        "label": {
+            "members_total": "Helbideak: {{count}}"
+        }
+    },
+    "contactGroupList": {
+        "addressCount_one": "Helbide 1",
+        "addressCount_other": "{{count}} helbide",
+        "emptyList": "Ez da oraindik kontaktu talderik sortu"
+    },
+    "contact_restored": "Kontaktua berrezarri da",
+    "contacts": {
+        "importAction": {
+            "modalButton": "INPORTATU",
+            "modalTitle": "Inportatu kontaktuak"
+        }
+    },
+    "distribution_list": {
+        "label": {
+            "empty_message": "Oraindik ez dago banaketa zerrendarik."
+        },
+        "tabs": {
+            "details": "Xehetasunak",
+            "managers": "Kudeatzaileen zerrenda",
+            "members": "Kideen zerrenda"
+        }
+    },
+    "edit_dl_component": {
+        "error": {
+            "duplicated_address_one": "Helbidea aurrez badago",
+            "duplicated_address_other": "Helbideak aurrez badaude",
+            "invalid_address_one": "Helbide baliogabea",
+            "invalid_address_other": "Helbide baliogabeak",
+            "invalid_and_duplicated_addresses": "Helbide baliogabeak eta dagoeneko daudenak"
+        },
+        "input": {
+            "description": {
+                "label": "Deskribapena"
+            },
+            "name": {
+                "error": {
+                    "max_length": "Onartutako gehienezko luzera 256 karaktere da"
+                },
+                "label": "Banaketa Zerrendaren izena"
+            }
+        },
+        "label": {
+            "dl_email": "Banaketa-zerrenda",
+            "hint": "Zerrenda hau iragazi dezakezu kide jakin baten izena bilatuz edo berriak gehitu Banaketa Zerrenda editatuz.",
+            "members_total": "Kideen zerrenda {{total}}"
+        },
+        "placeholder": {
+            "add_members": "Idatzi helbide bat eta sakatu '+' banaketa zerrendara gehitzeko",
+            "filter_member": "Iragazi helbide bat"
+        }
+    },
+    "emptyDisplayer": {
+        "contactGroup": {
+            "hint": "Egin klik \"BERRIA\" botoian kontaktu talde berri bat sortzeko."
+        }
+    },
+    "expand_distribution_list": "Zabaldu helbide-zerrenda"
 }
