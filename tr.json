@@ -13,7 +13,8 @@
         "copy": "Kopyala",
         "delete": "Sil",
         "edit": "Düzenle",
-        "mail": "E-posta gönder"
+        "mail": "E-posta gönder",
+        "add_shared_address_books": "Paylaşımlar Ekle"
     },
     "folder": {
         "modal": {
@@ -21,7 +22,8 @@
                 "body": {
                     "message1": "Seçili adres defterini kalıcı olarak silmek istiyor musunuz? Silerseniz, ilgili içerik kalıcı olarak silinecek ve adres defteri artık geri alınamayacak.",
                     "message2": "Seçili adres defterini kalıcı olarak silmek istiyor musunuz? Silerseniz, ilgili içerik kalıcı olarak silinecek ve adres defteri artık geri alınamayacak."
-                }
+                },
+                "title": "{{addressBookName}} sil"
             },
             "footer": {
                 "go_back": "Geriye git"
@@ -49,7 +51,8 @@
                 },
                 "input": {
                     "filter": "Adres defterini filtrele"
-                }
+                },
+                "title": "{{addressBookName}} taşı"
             },
             "edit": {
                 "body": {
@@ -66,7 +69,8 @@
                 "message1": "Seçili adres defterini boşaltmak istiyor musunuz?",
                 "message2": "İlgili tüm kişiler kalıcı olarak silinecek ve bunları kurtarmak mümkün olmayacaktır.",
                 "message3": "Çöp Kutusunu boşaltmak istiyor musunuz?",
-                "message4": "İçeriği kalıcı olarak silinecek ve kurtarılması mümkün olmayacaktır."
+                "message4": "İçeriği kalıcı olarak silinecek ve kurtarılması mümkün olmayacaktır.",
+                "title": "{{addressBookName}} boşalt"
             },
             "item": {
                 "empty": "Hiç öğe bulunamadı"
@@ -207,7 +211,21 @@
         "autocomplete": "Otomatik tamamla",
         "discard": "vazgeç",
         "newContactGroup": "Yeni kişi grubu",
-        "show_more": "daha fazla göster"
+        "show_more": "daha fazla göster",
+        "groups_app_name": "Kişi Grupları ve Dağıtım Listeleri",
+        "advanced_filter_one": "{{count}} Gelişmiş Filtre",
+        "advanced_filter_other": "{{count}} Gelişmiş Filtreler",
+        "import_address_book": "CSV dosyasını içeri aktar",
+        "update": "Güncele",
+        "edit_contacts": "Kişileri düzenle",
+        "errors": {
+            "upload_failed_generic": "\"{{ filename }}\" dosyası için yükleme başarısız oldu"
+        },
+        "export_address_book": "CSV olarak dışa aktar",
+        "select_all_addresses_one": "Adres seçin",
+        "select_all_addresses_other": "Tüm {{count}} adresi seçin",
+        "website_one": "Web sitesi",
+        "website_other": "Web sitesileri"
     },
     "job": {
         "company": "Firma",
@@ -217,7 +235,9 @@
     "messages": {
         "modal": {
             "delete": {
-                "if_delete_lost_forever": "Bu kişiyi kalıcı olarak silerseniz geri alamazsınız, devam edilsin mi?"
+                "if_delete_lost_forever": "Bu kişiyi kalıcı olarak silerseniz geri alamazsınız, devam edilsin mi?",
+                "sure_delete_contact_one": "Bu kişiyi kalıcı olarak silmek istediğinizden emin misiniz?",
+                "sure_delete_contact_other": "Bu kişileri kalıcı olarak silmek istediğinizden emin misiniz?"
             }
         },
         "snackbar": {
@@ -240,7 +260,23 @@
         },
         "edit_distribution_list": {
             "title": "\"{{displayName}}\" düzenle"
-        }
+        },
+        "initializeError": {
+            "title": "Bir hata oluştu",
+            "buttonConfirm": "YENİDEN YÜKLE",
+            "content": "Lütfen sayfayı yenileyin veya daha sonra tekrar deneyin. Diğer modüller halen sınırlı olarak kullanılabilir durumda olabilir."
+        },
+        "delete": {
+            "contactGroup": {
+                "header": "\"{{contactGroupName}}\" öğesini sil",
+                "body1": "Seçilen kişi grubunu sildiğinizden emin misiniz?",
+                "body2": "Eğer silerseniz, sonsuza dek kaybolacaktır."
+            },
+            "button": {
+                "confirm": "sil"
+            }
+        },
+        "cancel": "iptal"
     },
     "name": {
         "first_name": "Ad",
@@ -261,7 +297,9 @@
         },
         "title": {
             "mail": "E-posta adresi",
-            "phone_number": "Telefon"
+            "phone_number": "Telefon",
+            "address_one": "Adres",
+            "address_other": "Adresler"
         }
     },
     "select": {
@@ -290,14 +328,25 @@
             "save": {
                 "success": "\"{{displayName}}\" dağıtım listesi düzenlemeleri başarıyla kaydedildi"
             }
-        }
+        },
+        "delete_contact_group": {
+            "confirm": {
+                "success": "Kişi grubu başarıyla silindi"
+            }
+        },
+        "import_contacts_success_one": "{{number}} kişi içe aktarıldı ve seçilen adres defterine eklendi",
+        "import_contacts_success_other": "{{number}} kişi içe aktarıldı ve seçilen adres defterine eklendi",
+        "email_copied_to_clipboard": "E-posta panoya kopyalandı."
     },
     "title": {
         "advanced_filters": "Gelişmiş Filtreler"
     },
     "tooltip": {
         "resend": "Bu paylaşım hakkında e-posta bildirimi gönder",
-        "revoke": "Erişimi iptal et"
+        "revoke": "Erişimi iptal et",
+        "folder_linked_status": "Benimle paylaşılan",
+        "address_book_sharing_status_one": "{{count}} kişi ile paylaşıldı",
+        "address_book_sharing_status_other": "{{count}} kişi ile paylaşıldı"
     },
     "types": {
         "home": "Ev",
@@ -440,7 +489,11 @@
     "secondaryBar": {
         "contextualMenu": {
             "new_contact_group_creation_action": "Yeni Kişiler Grubu"
-        }
+        },
+        "distributionListsManager": "Yönetici",
+        "distributionListsMember": "Üye",
+        "myContactGroups": "İletişim Gruplarım",
+        "distributionLists": "Dağıtım Listeleri"
     },
     "contacts": {
         "importAction": {
@@ -472,6 +525,17 @@
     "emptyDisplayer": {
         "contactGroup": {
             "hint": "Yeni bir kişi grubu oluşturmak için \"YENİ\" düğmesine tıklayın."
+        }
+    },
+    "import_contacts": {
+        "modal": {
+            "confirm": "İçeri Aktar",
+            "description": "Seçilen {{fileName}} dosyasındaki kişiler, seçilen adres defteri \"{{folderName}}\" klasörüne aktarılacaktır.",
+            "title": "Kişileri içe aktar"
+        },
+        "snackbar": {
+            "import_contacts_success_one": "{{count}} kişi içe aktarıldı ve seçilen adres defterine eklendi",
+            "import_contacts_success_other": "{{count}} kişi içe aktarıldı ve seçilen adres defterine eklendi"
         }
     }
 }
