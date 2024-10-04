@@ -395,8 +395,8 @@
         },
         "cancel": "annuler",
         "initializeError": {
-            "content": "Merci de recharger la page ou d'essayer plus tard",
-            "title": "Oups !... Quelque chose s'est mal passé",
+            "content": "Merci de rafraîchir la page ou d'essayer plus tard. D'autres modules peuvent encore être disponibles avec des fonctionnalités limitées.",
+            "title": "Quelque chose s'est mal passé",
             "buttonConfirm": "RECHARGER"
         }
     },
