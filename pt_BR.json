@@ -312,8 +312,8 @@
             "title": "Editar \"{{displayName}}\""
         },
         "initializeError": {
-            "title": "Oops!… Algo deu errado",
-            "content": "Atualize a página ou tente novamente",
+            "title": "Algo deu errado",
+            "content": "Atualize a página ou tente novamente mais tarde. Outros módulos ainda podem estar disponíveis com funcionalidade limitada.",
             "buttonConfirm": "ATUALIZAR"
         }
     },
