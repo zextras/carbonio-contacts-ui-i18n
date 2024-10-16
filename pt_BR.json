@@ -114,7 +114,7 @@
         "edit_folder_properties": "Editar propriedades de {{name}}",
         "resend": "Reenviar",
         "revoke": "Revogar",
-        "revoke_share": "Revogar compartilhamento de {{title}}",
+        "revoke_share": "Interromper compartilhamento de {{title}}",
         "shares_folder_edit": "Compartilhamento da agenda de contatos",
         "notes": "Notas",
         "of": "de",
