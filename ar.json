@@ -154,6 +154,15 @@
             "content": "يرجى إعادة تحميل الصفحة أو المحاولة مرة أخرى لاحقا",
             "buttonConfirm": "إعادة التحميل",
             "title": "عفوا!... حدث خطأ ما"
+        },
+        "delete": {
+            "contactGroup": {
+                "header": "حذف {{contactGroupName}}"
+            }
+        },
+        "destination": "مجلد الوجهة",
+        "edit_distribution_list": {
+            "title": "تعديل \"{{displayName}}\""
         }
     },
     "tooltip": {
@@ -308,7 +317,11 @@
     "secondaryBar": {
         "contextualMenu": {
             "new_contact_group_creation_action": "مجموعة جهات اتصال جديدة"
-        }
+        },
+        "distributionLists": "قوائم التوزيع",
+        "distributionListsManager": "المدير",
+        "distributionListsMember": "العضو",
+        "myContactGroups": "مجموعات الاتصال الخاصة بي"
     },
     "contacts": {
         "importAction": {
@@ -388,5 +401,16 @@
             "hint": "انقر فوق الزر \"جديد\" لإنشاء مجموعة جهات اتصال جديدة."
         }
     },
-    "expand_distribution_list": "توسيع قائمة العناوين"
+    "expand_distribution_list": "توسيع قائمة العناوين",
+    "name": {
+        "first_name": "الاسم الأول",
+        "last_name": "اسم العائلة",
+        "middle_name": "إسم الأب (الاسم الاوسط)",
+        "nickName": "الكنية",
+        "suffix": "لقب ما بعد الاسم",
+        "prefix": "لقب ما قبل الاسم"
+    },
+    "search": {
+        "shared_folders_note": "تضمين دفاتر العناوين المشتركة في عمليات البحث."
+    }
 }
