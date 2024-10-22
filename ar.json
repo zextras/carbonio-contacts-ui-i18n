@@ -105,7 +105,56 @@
         "new_address_book": "دفتر عناوين جديد",
         "new_contact": "جهة اتصال جديدة",
         "new_contact_created": "تم إنشاء جهة اتصال جديدة",
-        "add_share": "إضافة مشاركة"
+        "add_share": "إضافة مشاركة",
+        "destination_address_book": "دفتر عناوين الوجهة",
+        "address_book_restored": "تم استعادة دفتر العناوين",
+        "edit_access_name": "تعديل خصائص الوصول لـ {{name}}",
+        "edit_contacts": "تعديل جهات الاتصال",
+        "edit_email": "تحرير البريد الإلكتروني",
+        "email": "بريد إلكتروني",
+        "groups_app_name": "مجموعات الاتصال وقوائم التوزيع",
+        "import_address_book": "استيراد ملف CSV",
+        "include_shared_folders": "تضمين دفاتر العناوين المشتركة",
+        "shares_folder_edit": "مشاركة دفتر العناوين هذا",
+        "contacts": "جهات الاتصال",
+        "notes": "ملحوظات",
+        "discard": "إلغاء",
+        "edit_folder_properties": "تعديل إعدادات {{name}}",
+        "edit_invalid_email": "البريد الإلكتروني غير صالح ، انقر لتعديله",
+        "export_address_book": "تصديره كملف CSV",
+        "autocomplete": "الإكمال التلقائي",
+        "cannot_move": "لا يمكن الانتقال إلى نفس المجلد",
+        "advanced_filter_zero": "{{count}} مرشح متقدم",
+        "advanced_filter_one": "مرشح {{count}} متقدم",
+        "advanced_filter_two": "مرشحات {{count}} متقدمان",
+        "advanced_filter_few": "{{count}} مرشحات متقدمه",
+        "advanced_filter_many": "{{count}} مرشح متقدم",
+        "advanced_filter_other": "{{count}} مرشح متقدم",
+        "contact_created_in_folder": "سيتم إنشاء جهة الاتصال هذه في المجلد \"{{name}}\"",
+        "contact_setting": "إعدادات جهات الاتصال",
+        "no_data": "لا توجد بيانات",
+        "no_name": "لا اسم",
+        "note": "ملحوظة:",
+        "options": "خيارات",
+        "revoke_without_notification": "إلغاء الوصول دون إرسال إشعار",
+        "select_all_addresses_zero": "حدد {{count}} عنوان",
+        "select_all_addresses_one": "حدد {{count}} عنوان",
+        "select_all_addresses_two": "حدد عنوانان {{count}}",
+        "select_all_addresses_few": "حدد {{count}} عناوين",
+        "select_all_addresses_many": "حدد {{count}} عنوان",
+        "select_all_addresses_other": "حدد {{count}} عنوان",
+        "show_more": "تظهر المزيد",
+        "update": "تحديث",
+        "website_zero": "موقع",
+        "website_one": "موقع",
+        "website_two": "موقعان",
+        "website_few": "مواقع",
+        "website_many": "موقع",
+        "website_other": "موقع",
+        "app_name": "جهات الاتصال",
+        "revoke_share": "إلغاء مشاركة {{title}}",
+        "revoke_with_custom_msg": "إلغاء الوصول لإرسال إشعار مخصص",
+        "revoke_with_standard_msg": "إلغاء الوصول لإرسال إشعار قياسي"
     },
     "folders": {
         "trash": "سلة المهملات",
@@ -121,7 +170,22 @@
             "tag_created": "تم إنشاء العلامة {{name}} بنجاح",
             "tag_deleted": "تم حذف العلامة {{name}} بنجاح",
             "tag_updated": "تم تحديث العلامة بنجاح",
-            "tag_not_updated": "حدث خطأ ما ، لم يتم تحديث العلامة. يرجى المحاولة مرة أخرى."
+            "tag_not_updated": "حدث خطأ ما ، لم يتم تحديث العلامة. يرجى المحاولة مرة أخرى.",
+            "address_book_moved": "تم نقل دفتر العناوين إلى المجلد المراد نقله إليه",
+            "contact_deleted_permanently": "حذفت جهة الاتصال نهائياً",
+            "contact_moved": "تم نقل الاتصال",
+            "contact_moved_to_trash": "تم نقل الاتصال إلى المهملات"
+        },
+        "modal": {
+            "delete": {
+                "sure_delete_contact_zero": "هل أنت متأكد من حذف جهة الاتصال هذه بشكل دائم؟",
+                "sure_delete_contact_one": "هل أنت متأكد من حذف جهة الاتصال هذه بشكل دائم؟",
+                "sure_delete_contact_two": "هل أنت متأكد من حذف جهتا الاتصال هاتين بشكل دائم؟",
+                "sure_delete_contact_few": "هل أنت متأكد من حذف جهات الاتصال بشكل دائم؟",
+                "sure_delete_contact_many": "هل أنت متأكد من حذف جهات الاتصال بشكل دائم؟",
+                "sure_delete_contact_other": "هل أنت متأكد من حذف جهات الاتصال بشكل دائم؟",
+                "if_delete_lost_forever": "من خلال حذف هذا الاتصال بشكل دائم لن تتمكن من استعادته بعد الآن ، تابع؟"
+            }
         }
     },
     "message": {
@@ -129,7 +193,9 @@
         "delete_tag_message1": "هل أنت متأكد من حذف العلامة \"{{name}}\"؟",
         "snackbar": {
             "settings_saved": "تم حفظ التعديلات بشكل صحيح"
-        }
+        },
+        "new_contact": "سيتم إنشاء جهة الاتصال هذه في مجلد \"جهات الاتصال\"",
+        "require_field": "املأ واحدًا على الأقل من الحقول المطلوبه *"
     },
     "share": {
         "recipients_address": "عناوين البريد الإلكتروني للمستلمين",
@@ -140,7 +206,22 @@
                 "external_guests": "الضيوف الخارجيون (للعرض فقط)",
                 "internal_users_groups": "المستخدمون الداخليون أو المجموعات الداخلية"
             }
-        }
+        },
+        "administer": "يدير",
+        "allowed_actions": "الإجراءات المسموح بها",
+        "manager": "مدير",
+        "read": "قرائة فقط",
+        "remove_from_this_list": "إزالة من هذه القائمة",
+        "add": "أضف",
+        "insert": "أدخل",
+        "admin": "مسؤول",
+        "contact_folder": "دفتر العناوين",
+        "filter_user": "‬ابحث عن المستخدمين",
+        "find_contact_shares": "ابحث عن المشاركات مع جهات الاتصال",
+        "find_shares": "البحث عن المشاركات",
+        "find_shares_label": "حدد دفتر العناوين الذي تريد رؤيته في شجرة جهات الاتصال",
+        "none": "لا أحد",
+        "owner": "مالك"
     },
     "snackbar": {
         "tag_removed": "تم إزالة العلامة \"{{tag}}\"",
@@ -412,5 +493,17 @@
     },
     "search": {
         "shared_folders_note": "تضمين دفاتر العناوين المشتركة في عمليات البحث."
+    },
+    "settings": {
+        "contacts": {
+            "checkbox": {
+                "srch_glbl_addrs_list": "ابحث في البداية في قائمة العناوين العالمية عند استخدام منتقي الاتصال"
+            }
+        }
+    },
+    "members_list_item_component": {
+        "button": {
+            "remove": "أزل"
+        }
     }
 }
