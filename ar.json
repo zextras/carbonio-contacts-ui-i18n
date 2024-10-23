@@ -13,7 +13,8 @@
         "mail": "ارسل بريد الكتروني",
         "reset_filters": "إعادة تعيين عوامل التصفيه",
         "send_msg": "ارسل بريد الكتروني",
-        "edit": "تعديل"
+        "edit": "تعديل",
+        "add_shared_address_books": "إضافة مشاركات"
     },
     "displayer": {
         "search_description1": "أو حدد \"ترَشّيح متقدم\" لتحسين بحثك.",
@@ -174,7 +175,8 @@
             "address_book_moved": "تم نقل دفتر العناوين إلى المجلد المراد نقله إليه",
             "contact_deleted_permanently": "حذفت جهة الاتصال نهائياً",
             "contact_moved": "تم نقل الاتصال",
-            "contact_moved_to_trash": "تم نقل الاتصال إلى المهملات"
+            "contact_moved_to_trash": "تم نقل الاتصال إلى المهملات",
+            "contact_restored": "تم استعادة جهة الاتصال"
         },
         "modal": {
             "delete": {
@@ -221,30 +223,64 @@
         "find_shares": "البحث عن المشاركات",
         "find_shares_label": "حدد دفتر العناوين الذي تريد رؤيته في شجرة جهات الاتصال",
         "none": "لا أحد",
-        "owner": "مالك"
+        "owner": "مالك",
+        "role": "دور",
+        "share_info": "معلومات دفتر العناوين المشترك",
+        "share_removed_succesfully": "تمت إزالة المشاركة بنجاح",
+        "shared_folders": "دفاتر العناوين المشتركة",
+        "shared_item": "العنصر المشترك",
+        "shared_items": "دفاتر العناوين المشتركة لـ {{value}}",
+        "send_notification": "إرسال إشعار حول هذه المشاركة",
+        "share_added_succesfully": "تمت إضافة المشاركة بنجاح",
+        "standard_message": "إضافة ملاحظة إلى الرسالة العامة",
+        "viewer": "مشاهد",
+        "workflow": "سير العمل",
+        "write": "كتابة"
     },
     "snackbar": {
         "tag_removed": "تم إزالة العلامة \"{{tag}}\"",
         "email_copied_to_clipboard": "تم نسخ البريد الإلكتروني إلى الحافظة.",
         "tag_applied": "تم تطبيق العلامه \"{{tag}}\"",
         "share_resend": "إعادة إرسال الدعوة",
-        "share_revoke": "تم إلغاء حق الوصول إلى المشاركة"
+        "share_revoke": "تم إلغاء حق الوصول إلى المشاركة",
+        "delete_contact_group": {
+            "confirm": {
+                "success": "تم حذف مجموعة الاتصال بنجاح"
+            }
+        },
+        "edit_distribution_list": {
+            "save": {
+                "success": "تم حفظ تعديلات قائمة التوزيع \"{{displayName}}\" بنجاح"
+            }
+        },
+        "folder_edited": "تم تحرير دفتر العناوين بنجاح",
+        "folder_shared": "تمت مشاركة دفتر العناوين"
     },
     "modal": {
         "initializeError": {
-            "content": "يرجى إعادة تحميل الصفحة أو المحاولة مرة أخرى لاحقا",
+            "content": "يرجى تحديث الصفحة أو المحاولة مرة أخرى لاحقًا. قد تظل وحدات أخرى متاحة بوظائف محدودة.",
             "buttonConfirm": "إعادة التحميل",
-            "title": "عفوا!... حدث خطأ ما"
+            "title": "حدث خطأ ما"
         },
         "delete": {
             "contactGroup": {
-                "header": "حذف {{contactGroupName}}"
+                "header": "حذف {{contactGroupName}}",
+                "body1": "هل أنت متأكد من حذف مجموعة الاتصال المحددة؟",
+                "body2": "إذا قمت بحذفها سفقدها إلى الأبد."
+            },
+            "button": {
+                "confirm": "إحذف"
             }
         },
         "destination": "مجلد الوجهة",
         "edit_distribution_list": {
             "title": "تعديل \"{{displayName}}\""
-        }
+        },
+        "cancel": "ألغِ",
+        "close": {
+            "tooltip": "أغلق"
+        },
+        "address_book_name": "اسم دفتر العناوين"
     },
     "tooltip": {
         "folder_linked_status": "تمت مشاركتها معي",
@@ -276,7 +312,8 @@
                 },
                 "message1": "هل تريد إفراغ دفتر العناوين المحدد؟",
                 "message3": "هل تريد إفراغ سلة المهملات؟",
-                "message4": "سيتم حذف محتواه نهائيًا ولن يكون من الممكن استعادته."
+                "message4": "سيتم حذف محتواه نهائيًا ولن يكون من الممكن استعادته.",
+                "title": "أفراغ {{addressBookName}}"
             },
             "edit": {
                 "body": {
@@ -292,13 +329,15 @@
                 },
                 "input": {
                     "filter": "تصفية دفتر العناوين"
-                }
+                },
+                "title": "أنقل {{addressBookName}}"
             },
             "delete": {
                 "body": {
                     "message2": "هل تريد حذف دفتر العناوين المحدد بشكل دائم؟ إذا قمت بحذفه، فسيتم إزالة المحتوى المرتبط به بشكل دائم ولن يكون من الممكن استرداد دفتر العناوين بعد الآن.",
                     "message1": "هل تريد حذف دفتر العناوين المحدد؟ إذا قمت بحذفه، فسيتم إزالة المحتوى المرتبط به بشكل دائم ولن يكون من الممكن استرداد دفتر العناوين بعد الآن."
-                }
+                },
+                "title": "حذف {{addressBookName}}"
             },
             "item": {
                 "empty": "لا يوجد عناصر متاحة"
@@ -497,7 +536,11 @@
     "settings": {
         "contacts": {
             "checkbox": {
-                "srch_glbl_addrs_list": "ابحث في البداية في قائمة العناوين العالمية عند استخدام منتقي الاتصال"
+                "srch_glbl_addrs_list": "ابحث في البداية في قائمة العناوين العالمية عند استخدام منتقي الاتصال",
+                "add_contact_to_emailed_contacts": "إضافة جهات الاتصال الجديدة إلى \"جهات اتصال المراسلة بالبريد الإلكتروني\"",
+                "autocomplete_on_comma": "حدد تطابق الإكمال التلقائي عند كتابة فاصلة",
+                "incl_addrs_in_glbl_addrs_list": "إضافة العناوين إلى قائمة العناوين العامة",
+                "include_add_in_shared_contact": "إضافة العناوين في جهات الاتصال المشتركة"
             }
         }
     },
@@ -505,5 +548,33 @@
         "button": {
             "remove": "أزل"
         }
+    },
+    "section": {
+        "field": {
+            "country": "الدوله",
+            "city": "المدينه",
+            "number": "الرقم",
+            "postalCode": "الرمز البريدي",
+            "state": "الولاية",
+            "street": "الشارع"
+        },
+        "title": {
+            "mail": "عنوان البريد الإلكتروني",
+            "address_zero": "عنوان",
+            "address_one": "عنوان",
+            "address_two": "عنوانين",
+            "address_few": "عناوين",
+            "address_many": "عنوان",
+            "address_other": "عنوان",
+            "phone_number": "رقم الإتصال"
+        }
+    },
+    "types": {
+        "mobile": "الهاتف المحمول",
+        "other": "آخر",
+        "work": "العمل"
+    },
+    "select": {
+        "default": "حدد النوع"
     }
 }
