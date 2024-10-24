@@ -355,7 +355,8 @@
         "filter_folders": "Filter folders",
         "new_folder": "New Folder",
         "export_contact": "Export vCard file",
-        "keyword": "Keyword"
+        "keyword": "Keyword",
+        "find_shares": "FIND SHARES"
     },
     "members_list_item_component": {
         "button": {
