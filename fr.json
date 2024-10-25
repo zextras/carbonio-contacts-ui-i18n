@@ -231,7 +231,8 @@
         "filter_folders": "Filtrer les dossiers",
         "new_folder": "Nouveau dossier",
         "export_contact": "Exporter le fichier vCard",
-        "keyword": "Mot clé"
+        "keyword": "Mot clé",
+        "find_shares": "TROUVER LES PARTAGES"
     },
     "name": {
         "nickName": "Surnom",
@@ -288,7 +289,7 @@
         "filter_user": "Trouver des utilisateurs",
         "find_contact_shares": "Trouver des partages de contact",
         "find_shares": "Trouver des partages",
-        "find_shares_label": "Sélectionner le carnet d'adresses que vous souhaitez voir dans l'arbre des contacts",
+        "find_shares_label": "Sélectionner le carnet d'adresses que vous souhaitez voir",
         "share_added_succesfully": "Le partage a été ajouté avec succès",
         "share_info": "Partager les informations du carnet d'adresses",
         "share_removed_succesfully": "Le partage a été supprimé avec succès",
