@@ -169,7 +169,8 @@
         "find_share": "Dodaj",
         "new_folder": "Nowy folder",
         "export_contact": "Eksportuj plik vCard",
-        "keyword": "Słowo kluczowe"
+        "keyword": "Słowo kluczowe",
+        "find_shares": "ZNAJDŹ UDOSTĘPNIENIA"
     },
     "displayer": {
         "search_description1": "Lub wybierz \"Zaawansowane filtry\", aby udoskonalić wyniki wyszukiwania.",
