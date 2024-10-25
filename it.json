@@ -131,7 +131,8 @@
         "select_all_addresses_many": "Seleziona {{count}} indirizzi",
         "select_all_addresses_other": "",
         "keyword": "Parola chiave",
-        "export_contact": "Esporta file vCard"
+        "export_contact": "Esporta file vCard",
+        "find_shares": "TROVA CONDIVISIONI"
     },
     "job": {
         "title": "Ruolo",
