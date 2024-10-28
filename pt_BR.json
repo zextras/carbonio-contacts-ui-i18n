@@ -191,7 +191,8 @@
         "website_many": "Sites",
         "website_other": "Sites",
         "export_contact": "Exportar arquivo vCard",
-        "keyword": "Palavra-chave"
+        "keyword": "Palavra-chave",
+        "find_shares": "PESQUISAR COMPARTILHAMENTOS"
     },
     "share": {
         "add": "Adicionar",
