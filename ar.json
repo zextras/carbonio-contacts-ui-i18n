@@ -155,7 +155,11 @@
         "app_name": "جهات الاتصال",
         "revoke_share": "إلغاء مشاركة {{title}}",
         "revoke_with_custom_msg": "إلغاء الوصول لإرسال إشعار مخصص",
-        "revoke_with_standard_msg": "إلغاء الوصول لإرسال إشعار قياسي"
+        "revoke_with_standard_msg": "إلغاء الوصول لإرسال إشعار قياسي",
+        "find_shares": "البحث عن المشاركات",
+        "find_share": "البحث عن مشاركة",
+        "export_contact": "تصدير معلومات الإتصال كملف vCard",
+        "keyword": "الكلمات الرئيسية"
     },
     "folders": {
         "trash": "سلة المهملات",
@@ -235,7 +239,8 @@
         "standard_message": "إضافة ملاحظة إلى الرسالة العامة",
         "viewer": "مشاهد",
         "workflow": "سير العمل",
-        "write": "كتابة"
+        "write": "كتابة",
+        "link_name": "{{shareName}} من {{ownerName}}"
     },
     "snackbar": {
         "tag_removed": "تم إزالة العلامة \"{{tag}}\"",
@@ -254,7 +259,14 @@
             }
         },
         "folder_edited": "تم تحرير دفتر العناوين بنجاح",
-        "folder_shared": "تمت مشاركة دفتر العناوين"
+        "folder_shared": "تمت مشاركة دفتر العناوين",
+        "import_contacts_success_zero": "تم استيراد {{number}} جهة إتصال وإضافتها إلى دفتر العناوين المحدد",
+        "import_contacts_success_one": "تم استيراد {{number}} جهة إتصال وإضافتها إلى دفتر العناوين المحدد",
+        "import_contacts_success_two": "تم استيراد {{number}} جهتا إتصال وإضافتها إلى دفتر العناوين المحدد",
+        "import_contacts_success_few": "تم استيراد {{number}} جهات إتصال وإضافتها إلى دفتر العناوين المحدد",
+        "import_contacts_success_many": "تم استيراد {{number}} جهة إتصال وإضافتها إلى دفتر العناوين المحدد",
+        "import_contacts_success_other": "تم استيراد {{number}} جهة إتصال وإضافتها إلى دفتر العناوين المحدد",
+        "share_updated": "تم تحديث إعدادات الوصول"
     },
     "modal": {
         "initializeError": {
@@ -284,7 +296,17 @@
     },
     "tooltip": {
         "folder_linked_status": "تمت مشاركتها معي",
-        "revoke": "تعطيل الوصول"
+        "revoke": "تعطيل الوصول",
+        "list_trash": {
+            "deletePermanently": "حذف جهة الاتصال بشكل دائم"
+        },
+        "address_book_sharing_status_zero": "لم يتم مشاركتها مع أحد",
+        "address_book_sharing_status_one": "تمت المشاركة مع شخص {{count}}",
+        "address_book_sharing_status_two": "تمت المشاركة مع شخصان",
+        "address_book_sharing_status_few": "تمت المشاركة مع {{count}} أشخاص",
+        "address_book_sharing_status_many": "تمت المشاركة مع {{count}} شخصاً",
+        "address_book_sharing_status_other": "تمت المشاركة مع {{count}} شخصٍ",
+        "resend": "إرسال إشعار بالبريد الإلكتروني حول هذه المشاركة"
     },
     "folder": {
         "modal": {
@@ -441,7 +463,8 @@
         "distributionLists": "قوائم التوزيع",
         "distributionListsManager": "المدير",
         "distributionListsMember": "العضو",
-        "myContactGroups": "مجموعات الاتصال الخاصة بي"
+        "myContactGroups": "مجموعات الاتصال الخاصة بي",
+        "contactGroups": "مجموعات الاتصال"
     },
     "contacts": {
         "importAction": {
@@ -556,7 +579,8 @@
             "number": "الرقم",
             "postalCode": "الرمز البريدي",
             "state": "الولاية",
-            "street": "الشارع"
+            "street": "الشارع",
+            "website": "الموقع الإلكتروني"
         },
         "title": {
             "mail": "عنوان البريد الإلكتروني",
@@ -572,9 +596,29 @@
     "types": {
         "mobile": "الهاتف المحمول",
         "other": "آخر",
-        "work": "العمل"
+        "work": "العمل",
+        "home": "المنزل"
     },
     "select": {
         "default": "حدد النوع"
+    },
+    "contact": {
+        "modal": {
+            "move_single": {
+                "title": "انقل جهة اتصال {{contactDesc}}"
+            },
+            "move_multiple": {
+                "title": "نقل {{count}} جهات الاتصال"
+            },
+            "restore_single": {
+                "title": "استعادة جهة اتصال {{contactDesc}}"
+            },
+            "restore_multiple": {
+                "title": "استعادة {{count}} جهة/جهات إتصال"
+            }
+        }
+    },
+    "title": {
+        "advanced_filters": "مرشحات متقدمة"
     }
 }
