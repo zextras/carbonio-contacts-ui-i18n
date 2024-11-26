@@ -312,7 +312,7 @@
             "title": "Editar \"{{displayName}}\""
         },
         "initializeError": {
-            "title": "¡Vaya! Algo salió mal",
+            "title": "Algo salió mal",
             "content": "Por favor, recarga la página o prueba de nuevo más tarde",
             "buttonConfirm": "RECARGAR"
         }
