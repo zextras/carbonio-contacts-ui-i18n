@@ -302,7 +302,7 @@
             "title": "Edit \"{{displayName}}\""
         },
         "initializeError": {
-            "title": "Ups!…Ada yang salah",
+            "title": "Ada yang salah",
             "content": "Muat ulang halaman atau coba lagi nanti",
             "buttonConfirm": "MUAT ULANG"
         }
