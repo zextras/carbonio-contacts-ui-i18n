@@ -87,7 +87,8 @@
         "website_other": "Páginas web",
         "show_more": "mostrar más",
         "export_contact": "Exportar archivo vCard",
-        "keyword": "Teclado"
+        "keyword": "Teclado",
+        "find_shares": "ENCONTRAR COMPARTIDOS"
     },
     "share": {
         "none": "Ninguno",
@@ -313,7 +314,7 @@
         },
         "initializeError": {
             "title": "Algo salió mal",
-            "content": "Por favor, recarga la página o prueba de nuevo más tarde",
+            "content": "Por favor, recarga la página o prueba de nuevo más tarde. Puede que otros módulos sigan disponibles aunque con una funcionalidad limitada.",
             "buttonConfirm": "RECARGAR"
         }
     },
