@@ -224,7 +224,8 @@
         "update": "Perbarui",
         "website_other": "Situs web",
         "export_contact": "Ekspor file vCard",
-        "keyword": "Kata kunci"
+        "keyword": "Kata kunci",
+        "find_shares": "TEMUKAN BERBAGI"
     },
     "name": {
         "nickName": "Nama panggilan",
@@ -303,7 +304,7 @@
         },
         "initializeError": {
             "title": "Ada yang salah",
-            "content": "Muat ulang halaman atau coba lagi nanti",
+            "content": "Segarkan halaman atau coba lagi nanti. Modul lain mungkin masih tersedia dengan fungsionalitas terbatas.",
             "buttonConfirm": "MUAT ULANG"
         }
     },
