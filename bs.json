@@ -1,1 +1,418 @@
-{}
+{
+    "action": {
+        "contactGroup": {
+            "delete": "Izbriši"
+        },
+        "copy": "Kopiraj",
+        "delete": "Izbriši",
+        "delete_permanently": "Trajno obriši",
+        "edit": "Uredi",
+        "edit_distribution_list": "Uredi",
+        "goto_folder": "Idi u folder",
+        "mail": "Pošalji e-mail",
+        "reset_filters": "Resetuj filtere",
+        "send_msg": "Pošalji e-mail",
+        "add_shared_address_books": "Dodaj dijeljeno"
+    },
+    "board": {
+        "editContactGroup": {
+            "snackbar": {
+                "contact_group_edited": "Grupa uspješno ažurirana",
+                "error": "Došlo je do greške prilikom spašavanja izmjena, pokušajte ponovo"
+            }
+        },
+        "label": {
+            "description": "Opis"
+        },
+        "newContactGroup": {
+            "addresses": {
+                "label": "Adrese"
+            },
+            "input": {
+                "contact_input": {
+                    "error": {
+                        "address_already_present_one": "Adresa već postoji",
+                        "address_already_present_few": "Adrese već postoje",
+                        "address_already_present_other": "Adrese već postoje",
+                        "invalid_address_one": "Adresa nije validna",
+                        "invalid_address_few": "Adrese nisu validne",
+                        "invalid_address_other": "Adrese nisu validne",
+                        "invalid_already_present_addresses": "Adresa već postoji i nije validna"
+                    },
+                    "placeholder": "Unesite adresu, kliknite na „+“ da biste istu dodali u grupu",
+                    "title": "Lista adresa"
+                },
+                "name_input": {
+                    "error": {
+                        "required": "Naziv grupe je obavezan, unesite naziv da biste nastavili",
+                        "max_length": "Maksimalna dozvoljena dužina je 256 znakova"
+                    },
+                    "name": {
+                        "label": "Naziv grupe*"
+                    }
+                }
+            },
+            "name": "Nova Grupa",
+            "snackbar": {
+                "contact_group_created": "Kontakt grupa uspješno kreirana"
+            },
+            "title": "Nova Grupa"
+        }
+    },
+    "contactGroupDisplayer": {
+        "label": {
+            "members_total": "Adrese: {{count}}"
+        }
+    },
+    "contactGroupList": {
+        "addressCount_one": "{{count}} adresa",
+        "addressCount_few": "{{count}} adrese",
+        "addressCount_other": "{{count}} adrese",
+        "emptyList": "Još nisu kreirane grupe kontakata"
+    },
+    "contact_restored": "Kontakti vraćeni",
+    "contacts": {
+        "importAction": {
+            "modalButton": "IMPORT",
+            "modalTitle": "Importuj kontakte"
+        }
+    },
+    "displayer": {
+        "description2": "Kliknite tipku \"NOVO\" kako bi kreirali novi.",
+        "description5": "Otkrijte sve načine da se povežete s drugim korisnicima.",
+        "description6": "Koristite „Uredi“ mode za dodavanje lične napomene za kontakt.",
+        "description7": "Kreirajte grupu kontakata klikom na dugme „NOVO“.",
+        "description8": "Odaberite kontakt ili grupu kontakata za slanje dijeljenih e-mail poruka.",
+        "distribution_list": {
+            "empty_displayer": "Odaberite distribucijsku listu ili kontaktirajte administratora za kreiranje iste.",
+            "label": {
+                "description": "Opis",
+                "manager_total": "Menadžer lista {{total}}",
+                "member_total": "Lista članova {{total}}",
+                "filter_hint": "Možete filtrovati ovu listu tako što ćete pretraživati određeno ime člana."
+            },
+            "member_not_visible": "Nemate privilegije za pregled članova ove distribucijske liste. Za više informacija, molimo kontaktirajte administratora.",
+            "placeholder": {
+                "filter_member": "Filtriraj adresu"
+            },
+            "no_details": "Nema dodatnih detalja za ovu distribucijsku listu. Za više informacija, kontaktirajte administratora.",
+            "no_details_owner": "Nema dodatnih detalja za ovu distribucijsku listu. Uredite distribucijsku listu kako biste ih dodali ili kontaktirajte administratora."
+        },
+        "list_title1": "Izgleda da još nema kontakata",
+        "list_title2": "Smeće je prazno",
+        "search_description3": "Provjerite pravopis i opcije filtera ili pokušajte s drugom ključnom riječju.",
+        "title1": "Kreirajte novi kontakt klikom na dugme „NOVI“.",
+        "title10": "Odaberite i vratite kontakte iz smeća",
+        "title2": "Podijelite sav svoj rad sa svojim kontaktima.",
+        "title3": "Ostanite u kontaktu sa kolegama.",
+        "title4": "Prilagodite vaše kontakte dodavanjem ličnih bilješki",
+        "title5": "Odaberite kontakt",
+        "title6": "Prilagodi kontakt",
+        "title7": "Ostanite u kontaktu sa kolegama",
+        "title8": "Pošalji zajedničku e-mail poruku",
+        "title9": "Kliknite na ikonicu Smeće da biste izbrisali kontakt.",
+        "description4": "Kreirajte novi tako što ćete kliknuti na dugme \"KREIRAJ NOVI\".",
+        "description3": "Kliknite dugme \"NOVI\" za kreiranje nove grupe kontakata."
+    },
+    "distribution_list": {
+        "label": {
+            "empty_message": "Još nema distribucijske liste."
+        },
+        "tabs": {
+            "details": "Detalji",
+            "managers": "Lista menadžera",
+            "members": "Lista članova"
+        }
+    },
+    "edit_dl_component": {
+        "error": {
+            "invalid_address_one": "Nevalidna adresa",
+            "invalid_address_few": "Nevalidne adrese",
+            "invalid_address_other": "Nevalidne adrese",
+            "invalid_and_duplicated_addresses": "Adresa već postoji i nije validna",
+            "duplicated_address_one": "Adresa je već prisutna",
+            "duplicated_address_few": "Adrese su već prisutne",
+            "duplicated_address_other": "Adrese su već prisutne"
+        },
+        "input": {
+            "description": {
+                "label": "Opis"
+            },
+            "name": {
+                "error": {
+                    "max_length": "Maksimalna dozvoljena dužina je 256 znakova"
+                },
+                "label": "Naziv distribucijske liste"
+            }
+        },
+        "label": {
+            "dl_email": "Distribucijska lista",
+            "members_total": "Lista članova {{total}}",
+            "hint": "Možete filtrirati ovu listu tako što ćete tražiti ime određenog člana ili dodavati nove uređivanjem distribucijske liste."
+        },
+        "placeholder": {
+            "add_members": "Unesite adresu, kliknite '+' za dodavanje u distribucijsku listu",
+            "filter_member": "Filtriraj adresu"
+        }
+    },
+    "emptyDisplayer": {
+        "contactGroup": {
+            "hint": "Kliknite na dugme \"NOVO\" kako biste kreirali novu grupu kontakata."
+        }
+    },
+    "expand_distribution_list": "Proširi listu adresa",
+    "folder": {
+        "action": {
+            "delete": "Izbriši adresar",
+            "deleteContactGroup": "Obriši \"{{contactGroupTitle}}\"",
+            "edit": "Uredi adresar",
+            "empty": {
+                "folder": "Isprazni adresar",
+                "trash": "Isprazni smeće"
+            },
+            "move": "Premjesti",
+            "delete_permanently": "Izbrišite adresar trajno",
+            "moved": "Imenik uspješno premješten"
+        },
+        "modal": {
+            "delete": {
+                "body": {
+                    "message2": "Želite li izbrisati odabrani adresar? Ako ga izbrišete, povezani sadržaj će biti trajno uklonjen i adresar više neće biti dostupan za vraćanje.",
+                    "message1": "Želite li izbrisati odabrani adresar? Ako ga izbrišete, povezani sadržaj će biti trajno uklonjen i adresar više neće biti dostupan za vraćanje."
+                },
+                "title": "Obriši {{addressBookName}}"
+            },
+            "edit": {
+                "body": {
+                    "item": {
+                        "empty": "Nema dostupne putanje"
+                    }
+                }
+            },
+            "empty": {
+                "body": {
+                    "message1": "Želite li isprazniti odabrani adresar?",
+                    "message2": "Ako ga ispraznite, sadržaj će biti premješten u smeće."
+                },
+                "message2": "Svi povezani kontakti bit će trajno izbrisani i neće biti moguće ih vratiti.",
+                "message3": "Želite li isprazniti smeće?",
+                "message4": "Sadržaj će biti trajno obrisan i neće biti moguće ga vratiti.",
+                "title": "Isprazni {{addressBookName}}",
+                "message1": "Želite li isprazniti odabrani adresar?"
+            },
+            "item": {
+                "empty": "Nema dostupnih stavki"
+            },
+            "move": {
+                "body": {
+                    "message3": "Odaberite folder u koji želite premjestiti odabrani:",
+                    "message1": "Odaberite adresar u koji želite premjestiti odabrani:"
+                },
+                "title": "Premjesti {{addressBookName}}",
+                "input": {
+                    "filter": "Filtriraj adresar"
+                }
+            },
+            "new": {
+                "create_footer": "Kreiraj i premjesti",
+                "body": {
+                    "message1": "Novi naziv adresara",
+                    "message2": "Odaberite adresar koji će sadržavati novo-napravljeni unos:"
+                },
+                "input": {
+                    "name": "Unesite naziv adresara",
+                    "name_exist": "Ime već postoji u ovoj putanji"
+                },
+                "title": "Kreiraj novi adresar",
+                "title2": "Kreiranje novog foldera"
+            },
+            "restore": {
+                "create_footer": "Kreiraj i Vrati"
+            }
+        },
+        "share_folder": "Dijeli adresar",
+        "snackbar": {
+            "address_book_moved_to_trash": "Adresar prebačen u smeće",
+            "folder_empty": "Adresar je uspješno ispražnjen",
+            "folder_new": "Novi adresar je kreiran",
+            "trash_empty": "Folder Smeće je uspješno ispražnjen",
+            "address_book_permanently_deleted": "Adresar je trajno obrisan"
+        },
+        "type": "Kontakt folder"
+    },
+    "folders": {
+        "auto_contacts": "E-mail kontakti",
+        "contacts": "Kontakti",
+        "root": "Korijen"
+    },
+    "import_contacts": {
+        "modal": {
+            "confirm": "Import",
+            "description": "Kontakti unutar odabranog {{fileName}} fajla biće importovani u odabrani adresar “{{folderName}}” folder.",
+            "title": "Importuj kontakte"
+        },
+        "snackbar": {
+            "import_contacts_success_one": "{{count}} kontakt je importovan i dodan u odabrani adresar",
+            "import_contacts_success_few": "{{count}} kontakti su importovani i dodani u odabrani adresar",
+            "import_contacts_success_other": "{{count}} kontakti su importovani i dodani u odabrani adresar"
+        }
+    },
+    "job": {
+        "company": "Kompanija",
+        "department": "Odjel",
+        "title": "Uloga posla"
+    },
+    "label": {
+        "add_share": "Dodaj dijeljenje",
+        "advanced_filter_one": "{{count}} Napredan filter",
+        "advanced_filter_few": "{{count}} Napredni filteri",
+        "advanced_filter_other": "{{count}} Napredni filteri",
+        "app_name": "Kontakti",
+        "autocomplete": "Autokompletiranje",
+        "cannot_move": "Nije moguće premjestiti u isti folder",
+        "contact_setting": "Postavke za kontakt",
+        "contacts": "Kontakti",
+        "destination_address_book": "Destinacijski adresar",
+        "discard": "odbaci",
+        "edit_access_name": "Uredi pristup za {{name}}",
+        "edit_contacts": "Uredi kontakte",
+        "edit_email": "Uredi E-mail",
+        "edit_folder_properties": "Uredi postavke za {{name}}",
+        "email": "E-mail",
+        "import_address_book": "Import CSV fajla",
+        "export_address_book": "Eksport CSV fajla",
+        "include_shared_folders": "Uključi dijeljene adresare",
+        "newContactGroup": "Nova grupa kontakata",
+        "new_address_book": "Novi adresar",
+        "new_contact": "Novi kontakt",
+        "new_contact_created": "Kreiran novi kontakt",
+        "new_tag": "Nova oznaka",
+        "no_data": "Nema podataka",
+        "no_name": "Ime nije navedeno",
+        "note": "Napomena:",
+        "notes": "Bilješke",
+        "options": "Opcije",
+        "results_for": "Rezultati za:",
+        "revoke_share": "Opozovi {{title}} dijeljenje",
+        "revoke_with_custom_msg": "Opozovi pristup slanjem prilagođene obavijesti",
+        "revoke_without_notification": "Opozovi pristup bez slanja obavještenja",
+        "root": "Korijen",
+        "select_all_addresses_one": "Selektuj adresu",
+        "select_all_addresses_few": "Selektujte sve {{count}} adrese",
+        "select_all_addresses_other": "Selektuj sve {{count}} adrese",
+        "shares_folder_edit": "Dijeljenje ovog adresara",
+        "show_more": "Prikaži više",
+        "tag": "Oznaka",
+        "tag_max_length": "Maksimalno 128 znakova je dopušteno",
+        "tag_name": "Naziv oznake",
+        "tags": "Oznake",
+        "type": "Tip",
+        "undo": "Poništi",
+        "website_one": "Web stranica",
+        "website_few": "Web stranice",
+        "website_other": "Web stranice",
+        "find_share": "Pronađi dijeljenja",
+        "keyword": "Ključna riječ",
+        "find_shares": "PRONAĐI DIJELJENJA",
+        "contact_created_in_folder": "Ovaj kontakt biće kreiran u \"{{name}}\" folderu",
+        "update": "Ažuriranje",
+        "address_book_restored": "Adresar vraćen",
+        "edit_invalid_email": "E-mail adresa nije validna, kliknite za uređivanje",
+        "groups_app_name": "Kontaktne grupe i Distribucijske liste",
+        "revoke_with_standard_msg": "Opozovi pristup slanjem standardnog obavještenja",
+        "export_contact": "Eksport vCard fajla"
+    },
+    "members_list_item_component": {
+        "button": {
+            "remove": "ukloni"
+        }
+    },
+    "message": {
+        "delete_tag_message1": "Jeste li sigurni da želite izbrisati oznaku \"{{name}}\"?",
+        "new_contact": "Ovaj kontakt bit će kreiran u folderu 'Kontakti'",
+        "require_field": "Popunite barem jedno od obaveznih polja *",
+        "delete_tag_message2": "Nakon brisanja, bit će uklonjen sa svih stavki označenih njime."
+    },
+    "messages": {
+        "modal": {
+            "delete": {
+                "if_delete_lost_forever": "Trajnim brisanjem ovog kontakta, više nećete moći ga vratiti, želite li nastaviti?",
+                "sure_delete_contact_one": "Jeste li sigurni da želite trajno izbrisati ovaj kontakt?",
+                "sure_delete_contact_few": "Jeste li sigurni da želite trajno izbrisati ove kontakte?",
+                "sure_delete_contact_other": "Jeste li sigurni da želite trajno izbrisati ove kontakte?"
+            }
+        },
+        "snackbar": {
+            "address_book_moved": "Adresar prebačen u destinacijski folder",
+            "contact_deleted_permanently": "Kontakt je trajno obrisan",
+            "contact_moved": "Kontakt premješten",
+            "contact_moved_to_trash": "Kontakt premješten u Smeće",
+            "contact_restored": "Kontakt vraćen",
+            "tag_created": "Oznaka {{name}} uspješno kreirana",
+            "tag_deleted": "{{name}} Oznaka uspješno obrisana",
+            "tag_not_updated": "Desila se greška, oznaka nije ažurirana. Pokušajte ponovo.",
+            "tag_updated": "Oznaka uspješno ažurirana",
+            "conversation_move": "Konverzacija uspješno prebačena",
+            "message_move": "Poruka uspješno premještena",
+            "folder_moved": "Folder uspješno premješten"
+        }
+    },
+    "modal": {
+        "address_book_name": "Naziv adresara",
+        "cancel": "odustani",
+        "close": {
+            "tooltip": "Zatvori"
+        },
+        "delete": {
+            "button": {
+                "confirm": "obriši"
+            },
+            "contactGroup": {
+                "body1": "Jeste li sigurni da želite izbrisati odabranu kontakt grupu?",
+                "header": "Obriši \"{{contactGroupName}}\"",
+                "body2": "Ako ga obrišete, bit će izgubljen zauvijek."
+            }
+        },
+        "destination": "Destinacijski folder",
+        "edit_distribution_list": {
+            "title": "Uredi \"{{displayName}}\""
+        },
+        "initializeError": {
+            "title": "Došlo je do greške.",
+            "buttonConfirm": "PONOVO UČITAJ",
+            "content": "Molimo osvježite stranicu ili pokušajte ponovo kasnije. Ostali moduli mogli bi i dalje biti dostupni uz ograničene funkcije."
+        }
+    },
+    "name": {
+        "first_name": "Ime",
+        "last_name": "Prezime",
+        "middle_name": "Srednje ime",
+        "nickName": "Nadimak",
+        "prefix": "Prefiks",
+        "suffix": "Sufiks"
+    },
+    "search": {
+        "shared_folders_note": "Uključi dijeljene adresare u pretragu."
+    },
+    "secondaryBar": {
+        "distributionLists": "Distribucijske liste",
+        "distributionListsManager": "Menadžer",
+        "distributionListsMember": "Član",
+        "myContactGroups": "Moje Kontakt Grupe",
+        "contactGroups": "Kontakt Grupe",
+        "contextualMenu": {
+            "new_contact_group_creation_action": "Nova kontakt grupa"
+        }
+    },
+    "section": {
+        "field": {
+            "city": "Grad",
+            "country": "Država",
+            "number": "Broj",
+            "state": "Država",
+            "website": "Web stranica",
+            "postalCode": "Poštanski broj",
+            "street": "Ulica"
+        }
+    }
+}
