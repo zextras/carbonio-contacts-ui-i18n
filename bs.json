@@ -297,7 +297,7 @@
         "revoke_with_custom_msg": "Opozovi pristup slanjem prilagođene obavijesti",
         "revoke_without_notification": "Opozovi pristup bez slanja obavještenja",
         "root": "Korijen",
-        "select_all_addresses_one": "Selektuj adresu",
+        "select_all_addresses_one": "Selektuj {{count}} adresu",
         "select_all_addresses_few": "Selektujte sve {{count}} adrese",
         "select_all_addresses_other": "Selektuj sve {{count}} adrese",
         "shares_folder_edit": "Dijeljenje ovog adresara",
@@ -413,6 +413,113 @@
             "website": "Web stranica",
             "postalCode": "Poštanski broj",
             "street": "Ulica"
+        },
+        "title": {
+            "address_one": "Adresa",
+            "address_few": "Adrese",
+            "address_other": "Adrese",
+            "mail": "E-mail adresa",
+            "phone_number": "Kontakt telefon"
+        }
+    },
+    "select": {
+        "default": "Selektuj tip"
+    },
+    "settings": {
+        "contacts": {
+            "checkbox": {
+                "add_contact_to_emailed_contacts": "Dodaj novi kontakt u \"E-mail kontakti\"",
+                "autocomplete_on_comma": "Odaberi automatsko podudaranje kada se unese zarez",
+                "incl_addrs_in_glbl_addrs_list": "Uključi adrese u Globalnu listu adresa",
+                "srch_glbl_addrs_list": "Prvo pretraži Globalnu listu adresa kada se koristi birač kontakata",
+                "include_add_in_shared_contact": "Uključi adrese u dijeljene kontakte"
+            }
+        }
+    },
+    "share": {
+        "add": "Dodaj",
+        "admin": "Admin",
+        "administer": "Administriraj",
+        "allowed_actions": "Dozvoljene akcije",
+        "contact_folder": "Adresar",
+        "filter_user": "Pretraga korisnika",
+        "find_contact_shares": "Pretraga Dijeljenih Kontakata",
+        "find_shares": "Pretraga Dijeljenja",
+        "insert": "Ubaci",
+        "manager": "Menadžer",
+        "none": "Nijedno",
+        "owner": "Vlasnik",
+        "read": "Pročitano",
+        "remove_from_this_list": "Ukloni iz liste",
+        "role": "Uloga",
+        "send_notification": "Pošaljite obavještenje o ovom dijeljenju",
+        "share_added_succesfully": "Dijeljeno je uspješno dodano",
+        "share_info": "Dijeljeni podaci o adresaru",
+        "share_removed_succesfully": "Dijeljeno je uspješno obrisano",
+        "shared_folders": "Dijeljeni adresari",
+        "shared_item": "Dijeljena Stavka",
+        "shared_items": "{{value}} dijeljeni adresar",
+        "standard_message": "Dodajte bilješku standardnoj poruci",
+        "viewer": "Preglednik",
+        "workflow": "Tok rada",
+        "write": "Piši",
+        "link_name": "{{shareName}} od {{ownerName}}",
+        "find_shares_label": "Selektujte koji adresar želite vidjeti u kontakt stablu"
+    },
+    "snackbar": {
+        "edit_distribution_list": {
+            "save": {
+                "success": "Izmjene u \"{{displayName}}\" distribucijskoj listi su uspješno spašene"
+            }
+        },
+        "folder_edited": "Adresar je uspješno uređen",
+        "folder_shared": "Adresar je podijeljen",
+        "share_updated": "Prava pristupa su ažurirana",
+        "tag_applied": "Primijenjena je oznaka \"{{tag}}\"",
+        "import_contacts_success_one": "{{number}} kontakt je importovan i dodan u odabrani adresar",
+        "import_contacts_success_few": "{{number}} kontakata je importovano i dodano u odabrani adresar",
+        "import_contacts_success_other": "{{number}} kontakata je importovano i dodano u odabrani adresar",
+        "delete_contact_group": {
+            "confirm": {
+                "success": "Grupa kontakata je uspješno izbrisana"
+            }
+        }
+    },
+    "title": {
+        "advanced_filters": "Napredni filteri"
+    },
+    "tooltip": {
+        "resend": "Pošaljite e-mail obavještenje o ovom dijeljenju",
+        "address_book_sharing_status_one": "Podijeljeno sa {{count}} osobom",
+        "address_book_sharing_status_few": "Podijeljeno sa {{count}} osoba",
+        "address_book_sharing_status_other": "Podijeljeno sa {{count}} osoba",
+        "list_trash": {
+            "deletePermanently": "Obriši kontakt trajno"
+        },
+        "folder_sharing_status_one": "Podijeljeno sa {{count}} osobom",
+        "folder_sharing_status_few": "Podijeljeno sa {{count}} osoba",
+        "folder_sharing_status_other": "Podijeljeno sa {{count}} osoba"
+    },
+    "types": {
+        "home": "start",
+        "mobile": "mobilni",
+        "other": "ostali",
+        "work": "posao"
+    },
+    "contact": {
+        "modal": {
+            "move_multiple": {
+                "title": "Premjesti {{count}} kontakta"
+            },
+            "move_single": {
+                "title": "Premjesti kontakte od {{contactDesc}}"
+            },
+            "restore_multiple": {
+                "title": "Vrati {{count}} kontakta"
+            },
+            "restore_single": {
+                "title": "Vrati kontakte od {{contactDesc}}"
+            }
         }
     }
 }
