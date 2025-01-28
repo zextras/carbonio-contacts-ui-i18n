@@ -237,7 +237,7 @@
         "send_notification": "إرسال إشعار حول هذه المشاركة",
         "share_added_succesfully": "تمت إضافة المشاركة بنجاح",
         "standard_message": "إضافة ملاحظة إلى الرسالة العامة",
-        "viewer": "مشاهد",
+        "viewer": "مُشاهد",
         "workflow": "سير العمل",
         "write": "كتابة",
         "link_name": "{{shareName}} من {{ownerName}}"
