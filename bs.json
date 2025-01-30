@@ -267,8 +267,8 @@
         "advanced_filter_one": "{{count}} Napredan filter",
         "advanced_filter_few": "{{count}} Napredni filteri",
         "advanced_filter_other": "{{count}} Napredni filteri",
-        "app_name": "Kontakti",
-        "autocomplete": "Autokompletiranje",
+        "app_name": "Kontaktima",
+        "autocomplete": "Automatsko popunjavanje",
         "cannot_move": "Nije moguće premjestiti u isti folder",
         "contact_setting": "Postavke za kontakt",
         "contacts": "Kontakti",
@@ -373,7 +373,7 @@
                 "body2": "Ako ga obrišete, bit će izgubljen zauvijek."
             }
         },
-        "destination": "Destinacijski folder",
+        "destination": "Odredišna mapa",
         "edit_distribution_list": {
             "title": "Uredi \"{{displayName}}\""
         },
@@ -444,7 +444,7 @@
         "contact_folder": "Adresar",
         "filter_user": "Pretraga korisnika",
         "find_contact_shares": "Pretraga Dijeljenih Kontakata",
-        "find_shares": "Pretraga Dijeljenja",
+        "find_shares": "Pronađi Dijeljenja",
         "insert": "Ubaci",
         "manager": "Menadžer",
         "none": "Nijedno",
