@@ -132,7 +132,8 @@
         "select_all_addresses_other": "Seleziona {{count}} indirizzi",
         "keyword": "Parola chiave",
         "export_contact": "Esporta file vCard",
-        "find_shares": "TROVA CONDIVISIONI"
+        "find_shares": "TROVA CONDIVISIONI",
+        "filter_mode": "Modalità filtro"
     },
     "job": {
         "title": "Ruolo",
@@ -580,6 +581,13 @@
             "restore_multiple": {
                 "title": "Ripristina {{count}} contatti"
             }
+        }
+    },
+    "folder_panel": {
+        "option": {
+            "contact_group": "Gruppi di Contatti",
+            "contacts": "Contatti",
+            "all_contacts": "Tutti"
         }
     }
 }
