@@ -356,7 +356,8 @@
         "new_folder": "New Folder",
         "export_contact": "Export vCard file",
         "keyword": "Keyword",
-        "find_shares": "FIND SHARES"
+        "find_shares": "FIND SHARES",
+        "filter_mode": "Filter mode"
     },
     "members_list_item_component": {
         "button": {
@@ -569,6 +570,13 @@
             "restore_single": {
                 "title": "Restore {{contactDesc}}'s contact"
             }
+        }
+    },
+    "folder_panel": {
+        "option": {
+            "all_contacts": "All",
+            "contacts": "Contacts",
+            "contact_group": "Contact Groups"
         }
     }
 }
