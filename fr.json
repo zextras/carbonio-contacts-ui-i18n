@@ -232,7 +232,8 @@
         "new_folder": "Nouveau dossier",
         "export_contact": "Exporter le fichier vCard",
         "keyword": "Mot clé",
-        "find_shares": "TROUVER LES PARTAGES"
+        "find_shares": "TROUVER LES PARTAGES",
+        "filter_mode": "Mode du filtre"
     },
     "name": {
         "nickName": "Surnom",
@@ -580,6 +581,13 @@
             "restore_multiple": {
                 "title": "Restaurer {{count}} contacts"
             }
+        }
+    },
+    "folder_panel": {
+        "option": {
+            "contact_group": "Groupes de contacts",
+            "all_contacts": "Tous",
+            "contacts": "Contacts"
         }
     }
 }
