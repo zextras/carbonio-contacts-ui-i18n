@@ -170,7 +170,8 @@
         "new_folder": "Nowy folder",
         "export_contact": "Eksportuj plik vCard",
         "keyword": "Słowo kluczowe",
-        "find_shares": "ZNAJDŹ UDOSTĘPNIENIA"
+        "find_shares": "ZNAJDŹ UDOSTĘPNIENIA",
+        "filter_mode": "Tryb filtrowania"
     },
     "displayer": {
         "search_description1": "Lub wybierz \"Zaawansowane filtry\", aby udoskonalić wyniki wyszukiwania.",
@@ -580,6 +581,13 @@
             "restore_single": {
                 "title": "Przywróć kontakt {{contactDesc}}"
             }
+        }
+    },
+    "folder_panel": {
+        "option": {
+            "contacts": "Kontakty",
+            "contact_group": "Grupy kontaktów",
+            "all_contacts": "Wszystkie"
         }
     }
 }
