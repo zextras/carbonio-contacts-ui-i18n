@@ -205,7 +205,8 @@
         "export_contact": "Экспортировать файл vCard",
         "find_share": "Поиск общих ресурсов",
         "keyword": "Ключевое слово",
-        "find_shares": "НАЙТИ ОБЩИЕ РЕСУРСЫ"
+        "find_shares": "НАЙТИ ОБЩИЕ РЕСУРСЫ",
+        "filter_mode": "Режим фильтра"
     },
     "job": {
         "title": "Должность",
@@ -580,6 +581,13 @@
             "restore_single": {
                 "title": "Восстановить {{contactDesc}} контакт"
             }
+        }
+    },
+    "folder_panel": {
+        "option": {
+            "contacts": "Контакты",
+            "contact_group": "Группы контактов",
+            "all_contacts": "Все"
         }
     }
 }
