@@ -320,7 +320,8 @@
         "edit_invalid_email": "E-mail adresa nije validna, kliknite za uređivanje",
         "groups_app_name": "Kontaktne grupe i Distribucijske liste",
         "revoke_with_standard_msg": "Opozovi pristup slanjem standardnog obavještenja",
-        "export_contact": "Eksport vCard fajla"
+        "export_contact": "Eksport vCard fajla",
+        "filter_mode": "Način filtriranja"
     },
     "members_list_item_component": {
         "button": {
@@ -520,6 +521,13 @@
             "restore_single": {
                 "title": "Vrati kontakte od {{contactDesc}}"
             }
+        }
+    },
+    "folder_panel": {
+        "option": {
+            "contacts": "Kontakti",
+            "contact_group": "Kontakt Grupe",
+            "all_contacts": "Sve"
         }
     }
 }
