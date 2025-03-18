@@ -357,7 +357,8 @@
         "export_contact": "Export vCard file",
         "keyword": "Keyword",
         "find_shares": "FIND SHARES",
-        "filter_mode": "Filter mode"
+        "filter_mode": "Filter mode",
+        "distribution_list_app_name": "Distribution Lists"
     },
     "members_list_item_component": {
         "button": {
