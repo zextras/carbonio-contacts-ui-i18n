@@ -171,7 +171,8 @@
         "export_contact": "Eksportuj plik vCard",
         "keyword": "Słowo kluczowe",
         "find_shares": "ZNAJDŹ UDOSTĘPNIENIA",
-        "filter_mode": "Tryb filtrowania"
+        "filter_mode": "Tryb filtrowania",
+        "distribution_list_app_name": "Listy dystrybucyjne"
     },
     "displayer": {
         "search_description1": "Lub wybierz \"Zaawansowane filtry\", aby udoskonalić wyniki wyszukiwania.",
