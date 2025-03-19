@@ -473,8 +473,7 @@
                 "include_add_in_shared_contact": "Include addresses in shared contacts",
                 "srch_glbl_addrs_list": "Initially search the Global Address List when using the contact picker"
             }
-        },
-        "address_in": "Address"
+        }
     },
     "share": {
         "add": "Add",
