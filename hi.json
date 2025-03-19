@@ -191,7 +191,10 @@
         "autocomplete": "अपने आप भरें",
         "contact_created_in_folder": "यह कांटैक्ट \"{{ name }}\" फ़ोल्डर में बनाया जाएगा",
         "destination_address_book": "गंतव्य एड्रेस बुक",
-        "include_shared_folders": "शेयर की गई एड्रेस बुक्स शामिल करें"
+        "include_shared_folders": "शेयर की गई एड्रेस बुक्स शामिल करें",
+        "errors": {
+            "upload_failed_generic": "फ़ाइल \"{{filename}}\" के लिए अपलोड विफल रहा"
+        }
     },
     "name": {
         "nickName": "उर्फनाम",
