@@ -233,7 +233,8 @@
         "export_contact": "Exporter le fichier vCard",
         "keyword": "Mot clé",
         "find_shares": "TROUVER LES PARTAGES",
-        "filter_mode": "Mode du filtre"
+        "filter_mode": "Mode du filtre",
+        "distribution_list_app_name": "Listes de distribution"
     },
     "name": {
         "nickName": "Surnom",
