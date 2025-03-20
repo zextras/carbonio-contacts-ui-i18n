@@ -316,7 +316,10 @@
         "address_book_sharing_status_many": "Udostępniono {{count}} osobom",
         "list_trash": {
             "deletePermanently": "Trwale usuń kontakt"
-        }
+        },
+        "folder_sharing_status_one": "Udostępniono 1 osobie",
+        "folder_sharing_status_few": "Udostępniono {{count}} osobom",
+        "folder_sharing_status_many": "Udostępniono {{count}} osobom"
     },
     "contact_restored": "Kontakt został przywrócony",
     "job": {
