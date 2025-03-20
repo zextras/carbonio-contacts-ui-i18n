@@ -336,7 +336,10 @@
         "folder_linked_status": "Partagé avec moi",
         "list_trash": {
             "deletePermanently": "Supprimer le contact définitivement"
-        }
+        },
+        "folder_sharing_status_one": "Partagé avec 1 personne",
+        "folder_sharing_status_many": "Partagé avec {{count}} personnes",
+        "folder_sharing_status_other": "Partagé avec {{count}} personnes"
     },
     "job": {
         "company": "Entreprise",
