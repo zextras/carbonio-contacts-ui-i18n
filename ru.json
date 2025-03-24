@@ -206,7 +206,8 @@
         "find_share": "Поиск общих ресурсов",
         "keyword": "Ключевое слово",
         "find_shares": "НАЙТИ ОБЩИЕ РЕСУРСЫ",
-        "filter_mode": "Режим фильтра"
+        "filter_mode": "Режим фильтра",
+        "distribution_list_app_name": "Списки рассылок"
     },
     "job": {
         "title": "Должность",
@@ -374,7 +375,10 @@
         "address_book_sharing_status_many": "Доступ предоставлен {{count}} человекам",
         "list_trash": {
             "deletePermanently": "Удалить контакт навсегда"
-        }
+        },
+        "folder_sharing_status_one": "Поделиться с {{count}}",
+        "folder_sharing_status_few": "Поделиться с {{count}}",
+        "folder_sharing_status_many": "Поделиться с {{count}}"
     },
     "contact_restored": "Контакт восстановлен",
     "displayer": {
