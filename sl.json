@@ -1,1 +1,41 @@
-{}
+{
+    "action": {
+        "delete": "Izbriši",
+        "search": "Iskanje"
+    },
+    "label": {
+        "create_tag": "Ustvari oznako",
+        "delete": "Izbriši",
+        "delete_tag": "Izbriši oznako",
+        "discard_changes": "Zavrzi spremembe",
+        "edit": "Uredi",
+        "edit_access": "Uredi dostop",
+        "empty": "Prazno",
+        "move": "Premakni",
+        "new_tag": "Nova oznaka",
+        "no_special_char_allowed": "Ime ne sme vsebovati nobenih posebnih znakov",
+        "of": "od",
+        "resend": "Ponovno pošlji",
+        "restore": "Obnovi",
+        "results_for": "Rezultati za:",
+        "revoke": "Prekliči",
+        "save": "Shrani",
+        "share": "Delite",
+        "share_with": "Delite z",
+        "tag": "Oznaka",
+        "tag_max_length": "Dovoljeno največ 128 znakov",
+        "tag_name": "Ime oznake",
+        "root": "Koren",
+        "create": "Ustvari",
+        "edit_tag": "Uredi oznako",
+        "error_try_again": "Nekaj je šlo narobe, poskusite znova",
+        "select_color": "Izberite barvo"
+    },
+    "folder": {
+        "modal": {
+            "footer": {
+                "go_back": "Pojdi nazaj"
+            }
+        }
+    }
+}
