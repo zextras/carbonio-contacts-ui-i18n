@@ -29,7 +29,9 @@
         "create": "Ustvari",
         "edit_tag": "Uredi oznako",
         "error_try_again": "Nekaj je šlo narobe, poskusite znova",
-        "select_color": "Izberite barvo"
+        "select_color": "Izberite barvo",
+        "tags": "Oznake",
+        "undo": "Razveljavi"
     },
     "folder": {
         "modal": {
@@ -37,5 +39,28 @@
                 "go_back": "Pojdi nazaj"
             }
         }
+    },
+    "messages": {
+        "snackbar": {
+            "tag_deleted": "Oznaka {{name}} uspešno izbrisana",
+            "tag_not_updated": "Nekaj je šlo narobe, oznaka ni bila posodobljena. Poskusite znova.",
+            "tag_updated": "Oznaka uspešno posodobljena",
+            "tag_created": "Oznaka {{name}} uspešno ustvarjena"
+        }
+    },
+    "share": {
+        "options": {
+            "share_calendar_with": {
+                "external_guests": "Zunanji gostje (samo ogled)",
+                "internal_users_groups": "Notranji uporabniki ali skupine",
+                "public": "Javno (samo ogled, geslo ni potrebno)"
+            }
+        }
+    },
+    "message": {
+        "delete_tag_message2": "Ko bo izbrisan, bo odstranjen iz vseh elementov, na katere je bila dodeljen."
+    },
+    "snackbar": {
+        "email_copied_to_clipboard": "E-pošta kopirana v odložišče."
     }
 }
