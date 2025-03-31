@@ -307,7 +307,13 @@
         "address_book_sharing_status_few": "تمت المشاركة مع {{count}} أشخاص",
         "address_book_sharing_status_many": "تمت المشاركة مع {{count}} شخصاً",
         "address_book_sharing_status_other": "تمت المشاركة مع {{count}} شخصٍ",
-        "resend": "إرسال إشعار بالبريد الإلكتروني حول هذه المشاركة"
+        "resend": "إرسال إشعار بالبريد الإلكتروني حول هذه المشاركة",
+        "folder_sharing_status_zero": "تمت مشاركته مع 0 أشخاص",
+        "folder_sharing_status_one": "تمت مشاركته مع شخص واحد",
+        "folder_sharing_status_two": "تمت مشاركته مع شخصين",
+        "folder_sharing_status_few": "تمت مشاركته {{count}} أشخاص",
+        "folder_sharing_status_many": "تمت مشاركته {{count}} شخص",
+        "folder_sharing_status_other": "تمت مشاركته {{count}} شخص"
     },
     "folder": {
         "modal": {
