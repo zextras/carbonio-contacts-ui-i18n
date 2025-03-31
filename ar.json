@@ -159,7 +159,8 @@
         "find_shares": "البحث عن المشاركات",
         "find_share": "البحث عن مشاركة",
         "export_contact": "تصدير معلومات الإتصال كملف vCard",
-        "keyword": "الكلمات الرئيسية"
+        "keyword": "الكلمات الرئيسية",
+        "distribution_list_app_name": "قوائم التوزيع"
     },
     "folders": {
         "trash": "سلة المهملات",
@@ -620,5 +621,12 @@
     },
     "title": {
         "advanced_filters": "مرشحات متقدمة"
+    },
+    "folder_panel": {
+        "option": {
+            "all_contacts": "الجميع",
+            "contacts": "جهات الاتصال",
+            "contact_group": "مجموعات الاتصال"
+        }
     }
 }
