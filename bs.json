@@ -12,7 +12,9 @@
         "mail": "Pošalji e-mail",
         "reset_filters": "Resetuj filtere",
         "send_msg": "Pošalji e-mail",
-        "add_shared_address_books": "Dodaj dijeljeno"
+        "add_shared_address_books": "Dodaj dijeljeno",
+        "search": "Pretraga",
+        "share_folder": "Podijelite mapu"
     },
     "board": {
         "editContactGroup": {
@@ -112,7 +114,15 @@
         "title8": "Pošalji zajedničku e-mail poruku",
         "title9": "Kliknite na ikonicu Smeće da biste izbrisali kontakt.",
         "description4": "Kreirajte novi tako što ćete kliknuti na dugme \"KREIRAJ NOVI\".",
-        "description3": "Kliknite dugme \"NOVI\" za kreiranje nove grupe kontakata."
+        "description3": "Kliknite dugme \"NOVI\" za kreiranje nove grupe kontakata.",
+        "search_description2": "Pokušaj pokrenuti novu pretragu.",
+        "search_list_title1": "Izgleda da nema rezultata. Nastavite pretragu!",
+        "search_list_title2": "Nijedna od vaših stavki ne odgovara vašoj potrazi.",
+        "search_title1": "Pokreni novu pretragu",
+        "search_title2": "Izvinjavamo se, ali nema rezultata za vašu pretragu",
+        "search_title3": "Nema rezultata za vašu pretragu.",
+        "search_title4": "Odaberite jedan ili više rezultata za izvršavanje radnji ili prikaz detalja.",
+        "search_description1": "Ili odaberite “Napredni filteri” da precizirate pretragu."
     },
     "distribution_list": {
         "label": {
@@ -228,6 +238,9 @@
             },
             "restore": {
                 "create_footer": "Kreiraj i Vrati"
+            },
+            "footer": {
+                "go_back": "Nazad"
             }
         },
         "share_folder": "Dijeli adresar",
@@ -243,7 +256,8 @@
     "folders": {
         "auto_contacts": "E-mail kontakti",
         "contacts": "Kontakti",
-        "root": "Korijen"
+        "root": "Korijen",
+        "trash": "Smeće"
     },
     "import_contacts": {
         "modal": {
@@ -321,7 +335,39 @@
         "groups_app_name": "Kontaktne grupe i Distribucijske liste",
         "revoke_with_standard_msg": "Opozovi pristup slanjem standardnog obavještenja",
         "export_contact": "Eksport vCard fajla",
-        "filter_mode": "Način filtriranja"
+        "filter_mode": "Način filtriranja",
+        "distribution_list_app_name": "Distribucijske liste",
+        "save": "Sačuvaj",
+        "select_color": "Odaberi boju",
+        "share": "Dijeli",
+        "share_with": "Podijeli sa",
+        "revoke": "Opozovi",
+        "create": "Kreiraj",
+        "create_tag": "Kreiraj oznaku",
+        "delete": "Izbriši",
+        "delete_tag": "Obriši oznaku",
+        "delete_tag_name": "Izbriši \"{{name}}\" oznaku",
+        "edit": "Uredi",
+        "edit_access": "Uredi pristup",
+        "edit_tag": "Uredi oznaku",
+        "edit_tag_name": "Uredi \"{{name}}\" oznaku",
+        "empty": "Prazan",
+        "error_try_again": "Došlo je do greške, pokušaj ponovo",
+        "errors": {
+            "upload_failed_generic": "Otpremanje fajla \"{{filename}}\" nije uspjelo"
+        },
+        "folder_name": "Naziv mape",
+        "move": "Pomijeri",
+        "no_special_char_allowed": "Ime ne smije sadržavati specijalne znakove",
+        "of": "od",
+        "resend": "Ponovite slanje",
+        "restore": "Povrati",
+        "new_folder": "Nova mapa",
+        "activate_selection_mode": "Aktiviraj režim selekcije",
+        "cancel": "Odustani",
+        "filter_folders": "Filtriraj mape",
+        "discard_changes": "ODBACI IZMJENE",
+        "search_activate_selection_mode": "Režim selekcije još nije dostupan za rezultate pretrage"
     },
     "members_list_item_component": {
         "button": {
@@ -332,7 +378,10 @@
         "delete_tag_message1": "Jeste li sigurni da želite izbrisati oznaku \"{{name}}\"?",
         "new_contact": "Ovaj kontakt bit će kreiran u folderu 'Kontakti'",
         "require_field": "Popunite barem jedno od obaveznih polja *",
-        "delete_tag_message2": "Nakon brisanja, bit će uklonjen sa svih stavki označenih njime."
+        "delete_tag_message2": "Nakon brisanja, bit će uklonjen sa svih stavki označenih njime.",
+        "snackbar": {
+            "settings_saved": "Izmjene su ispravno sačuvane"
+        }
     },
     "messages": {
         "modal": {
@@ -379,7 +428,7 @@
             "title": "Uredi \"{{displayName}}\""
         },
         "initializeError": {
-            "title": "Došlo je do greške.",
+            "title": "Došlo je do greške",
             "buttonConfirm": "PONOVO UČITAJ",
             "content": "Molimo osvježite stranicu ili pokušajte ponovo kasnije. Ostali moduli mogli bi i dalje biti dostupni uz ograničene funkcije."
         }
@@ -465,7 +514,16 @@
         "workflow": "Tok rada",
         "write": "Piši",
         "link_name": "{{shareName}} od {{ownerName}}",
-        "find_shares_label": "Selektujte koji adresar želite vidjeti u kontakt stablu"
+        "find_shares_label": "Selektujte koji adresar želite vidjeti u kontakt stablu",
+        "options": {
+            "share_calendar_with": {
+                "internal_users_groups": "Interni Korisnici ili Grupe",
+                "external_guests": "Vanjski gosti (samo za pregled)",
+                "public": "Javno (samo pregled, bez lozinke)"
+            }
+        },
+        "recipients_address": "E-mail adrese primatelja",
+        "share_note": "Standardna poruka prikazuje vaše ime, ime dijeljene stavke, dozvole date primaocima i informacije za prijavu."
     },
     "snackbar": {
         "edit_distribution_list": {
@@ -484,7 +542,11 @@
             "confirm": {
                 "success": "Grupa kontakata je uspješno izbrisana"
             }
-        }
+        },
+        "email_copied_to_clipboard": "E-mail poruka kopirana u međuspremnik.",
+        "share_resend": "Ponovna poslata pozivnica za dijeljenje",
+        "share_revoke": "Otkazano dijeljenje pristupa",
+        "tag_removed": "Oznaka \"{{tag}}\" je uklonjena"
     },
     "title": {
         "advanced_filters": "Napredni filteri"
@@ -499,7 +561,9 @@
         },
         "folder_sharing_status_one": "Podijeljeno sa {{count}} osobom",
         "folder_sharing_status_few": "Podijeljeno sa {{count}} osoba",
-        "folder_sharing_status_other": "Podijeljeno sa {{count}} osoba"
+        "folder_sharing_status_other": "Podijeljeno sa {{count}} osoba",
+        "folder_linked_status": "Dijeljeno sa mnom",
+        "revoke": "Otkaži pristup"
     },
     "types": {
         "home": "start",
