@@ -62,5 +62,16 @@
     },
     "snackbar": {
         "email_copied_to_clipboard": "E-pošta kopirana v odložišče."
+    },
+    "modal": {
+        "initializeError": {
+            "buttonConfirm": "OSVEŽI",
+            "title": "Nekaj je šlo narobe",
+            "content": "Osvežite stran ali poskusite znova kasneje. Drugi moduli so lahko še vedno na voljo z omejeno funkcionalnostjo."
+        }
+    },
+    "tooltip": {
+        "folder_linked_status": "V skupni rabi z mano",
+        "revoke": "Prekliči dostop"
     }
 }
