@@ -1,7 +1,8 @@
 {
     "action": {
         "delete": "Izbriši",
-        "search": "Iskanje"
+        "search": "Iskanje",
+        "edit": "Uredi"
     },
     "label": {
         "create_tag": "Ustvari oznako",
