@@ -1,1 +1,9 @@
-{}
+{
+    "label": {
+        "activate_selection_mode": "Aktivovat režim výběru",
+        "cancel": "Zrušit",
+        "delete": "Smazat",
+        "create": "Vytvořit",
+        "create_tag": "Vytvořit štítek"
+    }
+}
