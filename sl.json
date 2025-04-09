@@ -10,7 +10,11 @@
         "reset_filters": "Ponastavi filtre",
         "send_msg": "Pošlji e-pošto",
         "share_folder": "Deli mapo",
-        "add_shared_address_books": "Dodaj deljene"
+        "add_shared_address_books": "Dodaj deljene",
+        "contactGroup": {
+            "delete": "Izbriši"
+        },
+        "edit_distribution_list": "Uredi"
     },
     "label": {
         "create_tag": "Ustvari oznako",
