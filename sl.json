@@ -2,7 +2,15 @@
     "action": {
         "delete": "Izbriši",
         "search": "Iskanje",
-        "edit": "Uredi"
+        "edit": "Uredi",
+        "copy": "Kopiraj",
+        "delete_permanently": "Trajno izbriši",
+        "goto_folder": "Pojdi v mapo",
+        "mail": "Pošlji e-pošto",
+        "reset_filters": "Ponastavi filtre",
+        "send_msg": "Pošlji e-pošto",
+        "share_folder": "Deli mapo",
+        "add_shared_address_books": "Dodaj deljene"
     },
     "label": {
         "create_tag": "Ustvari oznako",
@@ -21,8 +29,8 @@
         "results_for": "Rezultati za:",
         "revoke": "Prekliči",
         "save": "Shrani",
-        "share": "Delite",
-        "share_with": "Delite z",
+        "share": "Deli",
+        "share_with": "Deli z",
         "tag": "Oznaka",
         "tag_max_length": "Dovoljeno največ 128 znakov",
         "tag_name": "Ime oznake",
@@ -32,21 +40,179 @@
         "error_try_again": "Nekaj je šlo narobe, poskusite znova",
         "select_color": "Izberite barvo",
         "tags": "Oznake",
-        "undo": "Razveljavi"
+        "undo": "Razveljavi",
+        "groups_app_name": "Skupine stikov in distribucijski seznami",
+        "activate_selection_mode": "Aktiviraj način izbire",
+        "add_share": "Dodaj delitev",
+        "address_book_restored": "Imenik obnovljen",
+        "advanced_filter_one": "{{count}} napredni filter",
+        "advanced_filter_two": "{{count}} napredna filtra",
+        "advanced_filter_few": "{{count}} naprednih filtrov",
+        "advanced_filter_other": "{{count}} naprednih filtrov",
+        "app_name": "Stiki",
+        "autocomplete": "Samodokončanje",
+        "cancel": "Prekliči",
+        "cannot_move": "Ni mogoče premakniti v isto mapo",
+        "contact_created_in_folder": "Ta stik bo ustvarjen v imeniku \"{{name}}\"",
+        "contact_setting": "Nastavitve stikov",
+        "contacts": "Stiki",
+        "delete_tag_name": "Izbriši oznako \"{{name}}\"",
+        "destination_address_book": "Ciljni imenik",
+        "discard": "Zavrzi",
+        "edit_access_name": "Uredi dostop za {{name}}",
+        "edit_contacts": "Uredi stike",
+        "edit_email": "Uredi e-pošto",
+        "edit_folder_properties": "Uredi lastnosti za {{name}}",
+        "edit_invalid_email": "E-pošta ni veljavna, kliknite za urejanje",
+        "edit_tag_name": "Uredi oznako \"{{name}}\"",
+        "email": "E-pošta",
+        "errors": {
+            "upload_failed_generic": "Nalaganje datoteke \"{{filename}}\" ni uspelo"
+        },
+        "export_address_book": "Izvozi CSV datoteko",
+        "folder_name": "Ime mape",
+        "import_address_book": "Uvozi CSV datoteko",
+        "include_shared_folders": "Vključi deljene imenike",
+        "newContactGroup": "Nova skupina stikov",
+        "new_address_book": "Nov imenik",
+        "new_contact": "Nov stik",
+        "new_contact_created": "Nov stik ustvarjen",
+        "no_data": "Ni podatkov",
+        "no_name": "Brez imena",
+        "note": "Opomba:",
+        "notes": "Opombe",
+        "options": "Možnosti",
+        "revoke_share": "Prekliči delitev za {{title}}",
+        "revoke_with_standard_msg": "Prekliči dostop s standardnim obvestilom",
+        "revoke_with_custom_msg": "Prekliči dostop z obvestilom po meri",
+        "revoke_without_notification": "Prekliči dostop brez obvestila",
+        "search_activate_selection_mode": "Način izbire trenutno ni na voljo v rezultatih iskanja",
+        "shares_folder_edit": "Deljenje tega imenika",
+        "show_more": "pokaži več",
+        "type": "Tip",
+        "update": "Posodobi",
+        "website_one": "Spletna stran",
+        "website_two": "Spletni strani",
+        "website_few": "Spletne strani",
+        "website_other": "Spletnih strani",
+        "filter_folders": "Filtriraj mape",
+        "new_folder": "Nova mapa",
+        "export_contact": "Izvozi vCard datoteko",
+        "keyword": "Ključne besede",
+        "filter_mode": "Način filtriranja",
+        "distribution_list_app_name": "Distribucijski seznami",
+        "select_all_addresses_one": "Izberi naslov",
+        "select_all_addresses_two": "Izberi {{count}} naslova",
+        "select_all_addresses_few": "Izberi vse {{count}} naslove",
+        "select_all_addresses_other": "Izberi vseh {{count}} naslovov",
+        "find_share": "Najdi skupne rabe",
+        "find_shares": "NAJDI SKUPNE RABE"
     },
     "folder": {
         "modal": {
             "footer": {
                 "go_back": "Pojdi nazaj"
+            },
+            "delete": {
+                "title": "Izbriši {{addressBookName}}",
+                "body": {
+                    "message2": "Ali želite trajno izbrisati izbrani imenik? Vsa vsebina bo trajno odstranjena in imenika ne bo mogoče obnoviti.",
+                    "message1": "Ali želite izbrisati izbrani imenik? Če ga izbrišete, bo vsebina trajno odstranjena in imenika ne bo mogoče obnoviti."
+                }
+            },
+            "empty": {
+                "message2": "Vsi povezani stiki bodo trajno izbrisani in jih ne bo mogoče obnoviti.",
+                "body": {
+                    "message1": "Ali želite izprazniti izbrani imenik?",
+                    "message2": "Če ga izpraznite, bo celotna vsebina premaknjena v koš."
+                },
+                "message1": "Ali želite izprazniti izbrani imenik?",
+                "message3": "Ali želite izprazniti koš?",
+                "message4": "Vsebina bo trajno izbrisana in je ne bo mogoče obnoviti.",
+                "title": "Izprazni {{addressBookName}}"
+            },
+            "move": {
+                "title": "Premakni {{addressBookName}}",
+                "body": {
+                    "message1": "Izberite imenik, kamor želite premakniti izbranega:",
+                    "message3": "Izberite mapo, kamor želite premakniti izbrano:"
+                },
+                "input": {
+                    "filter": "Filtriraj imenik"
+                }
+            },
+            "edit": {
+                "body": {
+                    "item": {
+                        "empty": "Pot ni na voljo"
+                    }
+                }
+            },
+            "item": {
+                "empty": "Ni elementov"
+            },
+            "new": {
+                "body": {
+                    "message1": "Ime novega imenika",
+                    "message2": "Izberite imenik, ki bo vseboval novo ustvarjenega:"
+                },
+                "create_footer": "Ustvari in premakni",
+                "input": {
+                    "name": "Vnesite ime imenika",
+                    "name_exist": "Ime že obstaja na tej poti"
+                },
+                "title": "Ustvari nov imenik",
+                "title2": "Ustvarjanje nove mape"
+            },
+            "restore": {
+                "create_footer": "Ustvari in obnovi"
             }
-        }
+        },
+        "action": {
+            "delete": "Izbriši imenik",
+            "deleteContactGroup": "Izbriši \"{{contactGroupTitle}}\"",
+            "delete_permanently": "Trajno izbriši imenik",
+            "edit": "Uredi imenik",
+            "empty": {
+                "folder": "Izprazni imenik",
+                "trash": "Izprazni koš"
+            },
+            "move": "Premakni",
+            "moved": "Imenik uspešno premaknjen"
+        },
+        "share_folder": "Deli imenik",
+        "snackbar": {
+            "address_book_moved_to_trash": "Imenik premaknjen v koš",
+            "address_book_permanently_deleted": "Imenik trajno izbrisan",
+            "folder_empty": "Imenik uspešno izpraznjen",
+            "folder_new": "Nov imenik ustvarjen",
+            "trash_empty": "Koš uspešno izpraznjen"
+        },
+        "type": "Mapa s stiki"
     },
     "messages": {
         "snackbar": {
             "tag_deleted": "Oznaka {{name}} uspešno izbrisana",
             "tag_not_updated": "Nekaj je šlo narobe, oznaka ni bila posodobljena. Poskusite znova.",
             "tag_updated": "Oznaka uspešno posodobljena",
-            "tag_created": "Oznaka {{name}} uspešno ustvarjena"
+            "tag_created": "Oznaka {{name}} uspešno ustvarjena",
+            "address_book_moved": "Imenik premaknjen v ciljno mapo",
+            "contact_deleted_permanently": "Stik trajno izbrisan",
+            "contact_moved": "Stik premaknjen",
+            "contact_moved_to_trash": "Stik premaknjen v koš",
+            "contact_restored": "Stik obnovljen",
+            "conversation_move": "Pogovor uspešno premaknjen",
+            "folder_moved": "Mapa uspešno premaknjena",
+            "message_move": "Sporočilo uspešno premaknjeno"
+        },
+        "modal": {
+            "delete": {
+                "if_delete_lost_forever": "Z izbrisom tega stika ga ne boste mogli več obnoviti. Nadaljujem?",
+                "sure_delete_contact_one": "Ali ste prepričani, da želite trajno izbrisati ta stik?",
+                "sure_delete_contact_two": "Ali ste prepričani, da želite trajno izbrisati ta stika?",
+                "sure_delete_contact_few": "Ali ste prepričani, da želite trajno izbrisati te stike?",
+                "sure_delete_contact_other": "Ali ste prepričani, da želite trajno izbrisati te stike?"
+            }
         }
     },
     "share": {
@@ -56,23 +222,386 @@
                 "internal_users_groups": "Notranji uporabniki ali skupine",
                 "public": "Javno (samo ogled, geslo ni potrebno)"
             }
-        }
+        },
+        "find_shares_label": "Izberite, kateri imenik želite prikazati v drevesu stikov",
+        "add": "Dodaj",
+        "administer": "Upravljaj",
+        "allowed_actions": "Dovoljena dejanja",
+        "contact_folder": "Imenik",
+        "filter_user": "Najdi uporabnike",
+        "find_contact_shares": "Najdi delitve stikov",
+        "admin": "Administrator",
+        "find_shares": "Najdi skupne rabe",
+        "insert": "Vstavi",
+        "manager": "Upravitelj",
+        "none": "Brez",
+        "owner": "Lastnik",
+        "read": "Branje",
+        "recipients_address": "E-poštni naslovi prejemnikov",
+        "remove_from_this_list": "Odstrani s tega seznama",
+        "role": "Vloga",
+        "send_notification": "Pošlji obvestilo o tej delitvi",
+        "share_added_succesfully": "Delitev uspešno dodana",
+        "share_info": "Informacije o deljenem imeniku",
+        "share_removed_succesfully": "Delitev uspešno odstranjena",
+        "shared_folders": "Deljeni imeniki",
+        "shared_item": "Deljeni element",
+        "shared_items": "Deljeni imeniki uporabnika {{value}}",
+        "standard_message": "Dodaj opombo k standardnemu sporočilu",
+        "viewer": "Ogledovalec",
+        "workflow": "Potek dela",
+        "write": "Pisanje",
+        "link_name": "{{shareName}} od {{ownerName}}",
+        "share_note": "Standardno sporočilo prikazuje vaše ime, ime deljenega elementa, dovoljenja in podatke za prijavo."
     },
     "message": {
-        "delete_tag_message2": "Ko bo izbrisan, bo odstranjen iz vseh elementov, na katere je bila dodeljen."
+        "delete_tag_message2": "Ko bo izbrisan, bo odstranjen iz vseh elementov, na katere je bila dodeljen.",
+        "delete_tag_message1": "Ali ste prepričani, da želite izbrisati oznako \"{{name}}\"?",
+        "new_contact": "Ta stik bo ustvarjen v mapi \"Stiki\"",
+        "require_field": "Izpolnite vsaj eno obvezno * polje",
+        "snackbar": {
+            "settings_saved": "Spremembe uspešno shranjene"
+        }
     },
     "snackbar": {
-        "email_copied_to_clipboard": "E-pošta kopirana v odložišče."
+        "email_copied_to_clipboard": "E-pošta kopirana v odložišče.",
+        "edit_distribution_list": {
+            "save": {
+                "success": "Urejanje distribucijskega seznama \"{{displayName}}\" uspešno shranjeno"
+            }
+        },
+        "folder_edited": "Imenik uspešno urejen",
+        "folder_shared": "Imenik uspešno deljen",
+        "share_resend": "Povabilo k delitvi ponovno poslano",
+        "share_revoke": "Dostop do delitve preklican",
+        "share_updated": "Pravice dostopa posodobljene",
+        "tag_applied": "Oznaka \"{{tag}}\" uporabljena",
+        "tag_removed": "Oznaka \"{{tag}}\" odstranjena",
+        "delete_contact_group": {
+            "confirm": {
+                "success": "Skupina stikov uspešno izbrisana"
+            }
+        },
+        "import_contacts_success_one": "{{number}} stik uvožen in dodan v izbrani imenik",
+        "import_contacts_success_two": "{{number}} stika uvožena in dodana v izbrani imenik",
+        "import_contacts_success_few": "{{number}} stikov uvoženih in dodanih v izbrani imenik",
+        "import_contacts_success_other": "{{number}} stikov uvoženih in dodanih v izbrani imenik"
     },
     "modal": {
         "initializeError": {
-            "buttonConfirm": "OSVEŽI",
+            "buttonConfirm": "PONOVNO NALOŽI",
             "title": "Nekaj je šlo narobe",
             "content": "Osvežite stran ali poskusite znova kasneje. Drugi moduli so lahko še vedno na voljo z omejeno funkcionalnostjo."
+        },
+        "address_book_name": "Ime imenika",
+        "cancel": "prekliči",
+        "close": {
+            "tooltip": "Zapri"
+        },
+        "delete": {
+            "button": {
+                "confirm": "izbriši"
+            },
+            "contactGroup": {
+                "body1": "Ali ste prepričani, da želite izbrisati izbrano skupino stikov?",
+                "body2": "Če jo izbrišete, bo trajno izgubljena.",
+                "header": "Izbriši \"{{contactGroupName}}\""
+            }
+        },
+        "destination": "Ciljna mapa",
+        "edit_distribution_list": {
+            "title": "Uredi \"{{displayName}}\""
         }
     },
     "tooltip": {
         "folder_linked_status": "V skupni rabi z mano",
-        "revoke": "Prekliči dostop"
+        "revoke": "Prekliči dostop",
+        "resend": "Pošlji e-poštno obvestilo o tej delitvi",
+        "list_trash": {
+            "deletePermanently": "Trajno izbriši stik"
+        },
+        "address_book_sharing_status_one": "Deljeno z {{count}} osebo",
+        "address_book_sharing_status_two": "Deljeno z {{count}} osebama",
+        "address_book_sharing_status_few": "Deljeno z {{count}} osebami",
+        "address_book_sharing_status_other": "Deljeno z {{count}} osebami",
+        "folder_sharing_status_one": "Deljeno z {{count}} osebo",
+        "folder_sharing_status_two": "Deljeno z {{count}} osebama",
+        "folder_sharing_status_few": "Deljeno s {{count}} osebami",
+        "folder_sharing_status_other": "Deljeno s {{count}} osebami"
+    },
+    "board": {
+        "editContactGroup": {
+            "snackbar": {
+                "contact_group_edited": "Skupina uspešno posodobljena",
+                "error": "Prišlo je do napake pri shranjevanju sprememb, poskusite znova"
+            }
+        },
+        "label": {
+            "description": "Opis"
+        },
+        "newContactGroup": {
+            "addresses": {
+                "label": "Naslovi"
+            },
+            "input": {
+                "contact_input": {
+                    "error": {
+                        "address_already_present_one": "Naslov že obstaja",
+                        "address_already_present_two": "Naslova že obstajata",
+                        "address_already_present_few": "Naslovi že obstajajo",
+                        "address_already_present_other": "Naslovi že obstajajo",
+                        "invalid_address_one": "Neveljaven naslov",
+                        "invalid_address_two": "Neveljavna naslova",
+                        "invalid_address_few": "Neveljavni naslovi",
+                        "invalid_address_other": "Neveljavni naslovi",
+                        "invalid_already_present_addresses": "Neveljavni in že prisotni naslovi"
+                    },
+                    "placeholder": "Vnesite naslov, kliknite ‘+’ za dodajanje v skupino",
+                    "title": "Seznam naslovov"
+                },
+                "name_input": {
+                    "error": {
+                        "max_length": "Največja dovoljena dolžina je 256 znakov",
+                        "required": "Ime skupine je obvezno, vnesite ime za nadaljevanje"
+                    },
+                    "name": {
+                        "label": "Ime skupine*"
+                    }
+                }
+            },
+            "name": "Nova skupina",
+            "snackbar": {
+                "contact_group_created": "Skupina stikov uspešno ustvarjena"
+            },
+            "title": "Nova skupina"
+        }
+    },
+    "contactGroupList": {
+        "addressCount_one": "{{count}} naslov",
+        "addressCount_two": "{{count}} naslova",
+        "addressCount_few": "{{count}} naslovov",
+        "addressCount_other": "{{count}} naslovov",
+        "emptyList": "Skupine stikov še niso bile ustvarjene"
+    },
+    "displayer": {
+        "description2": "Kliknite gumb \"NOVA\" za začetek ustvarjanja novega.",
+        "distribution_list": {
+            "no_details": "Za ta distribucijski seznam ni dodatnih podrobnosti. Za več informacij se obrnite na skrbnika.",
+            "empty_displayer": "Izberite distribucijski seznam ali kontaktirajte skrbnika za dostop.",
+            "label": {
+                "description": "Opis",
+                "manager_total": "Seznam skrbnikov {{total}}",
+                "member_total": "Seznam članov {{total}}",
+                "filter_hint": "Ta seznam lahko filtrirate z iskanjem po imenu člana."
+            },
+            "member_not_visible": "Nimate dovoljenja za ogled članov tega distribucijskega seznama. Za več informacij se obrnite na skrbnika.",
+            "no_details_owner": "Za ta distribucijski seznam ni dodatnih podrobnosti. Uredite seznam ali se posvetujte s skrbnikom.",
+            "placeholder": {
+                "filter_member": "Filtriraj naslov"
+            }
+        },
+        "search_title4": "Izberite enega ali več rezultatov za izvedbo dejanj ali ogled podrobnosti.",
+        "description4": "Ustvarite novega s klikom na gumb \"NOVA\".",
+        "description3": "Kliknite gumb \"NOVA\" za ustvarjanje nove skupine stikov.",
+        "description5": "Odkrijte vse načine povezovanja z drugimi uporabniki.",
+        "description7": "Ustvarite skupino stikov s klikom na gumb \"NOVA\".",
+        "description8": "Izberite stik ali skupino stikov za pošiljanje skupnih e-poštnih sporočil.",
+        "list_title1": "Videti je, kot da še ni stikov",
+        "list_title2": "Koš je prazen",
+        "search_description1": "Ali izberite \"Napredni filtri\" za natančnejše iskanje.",
+        "search_description2": "Poskusite znova z drugim iskanjem.",
+        "search_description3": "Preverite črkovanje in možnosti filtrov ali poskusite z drugo ključno besedo.",
+        "search_list_title1": "Videti je, kot da ni rezultatov. Nadaljujte z iskanjem!",
+        "search_list_title2": "Noben element ne ustreza vašemu iskanju.",
+        "search_title1": "Začnite novo iskanje",
+        "search_title2": "Oprostite, ni rezultatov za vaše iskanje",
+        "search_title3": "Ni rezultatov za vaše iskanje.",
+        "title1": "Ustvarite nov stik s klikom na gumb \"NOV\"",
+        "title10": "Izberite in obnovite stike iz koša",
+        "title2": "Delite vse svoje projekte s svojimi stiki.",
+        "title3": "Ostanite v stiku s sodelavci.",
+        "title4": "Prilagodite svoje stike z dodajanjem osebnih opomb",
+        "title5": "Izberite stik",
+        "title6": "Prilagodite stik",
+        "title8": "Pošlji skupinsko e-pošto",
+        "title9": "Kliknite ikono koša za izbris stika.",
+        "description6": "Uporabite način \"Uredi\" za dodajanje osebnih opomb stiku.",
+        "title7": "Ostanite v stiku s sodelavci"
+    },
+    "import_contacts": {
+        "modal": {
+            "confirm": "Uvozi",
+            "description": "Stiki iz izbrane datoteke {{fileName}} bodo uvoženi v izbrani imenik \"{{folderName}}\".",
+            "title": "Uvoz stikov"
+        },
+        "snackbar": {
+            "import_contacts_success_one": "{{count}} stik uvožen in dodan v izbrani imenik",
+            "import_contacts_success_two": "{{count}} stika uvožena in dodana v izbrani imenik",
+            "import_contacts_success_few": "{{count}} stikov uvoženih in dodanih v izbrani imenik",
+            "import_contacts_success_other": "{{count}} stikov uvoženih in dodanih v izbrani imenik"
+        }
+    },
+    "settings": {
+        "contacts": {
+            "checkbox": {
+                "incl_addrs_in_glbl_addrs_list": "Vključi naslove v globalni imenik",
+                "add_contact_to_emailed_contacts": "Dodaj nove stike v \"Samodejno dodani stiki\"",
+                "autocomplete_on_comma": "Izberi samodokončanje, ko je vnesena vejica",
+                "include_add_in_shared_contact": "Vključi naslove v deljene stike",
+                "srch_glbl_addrs_list": "Pri izbiri stikov najprej išči v globalnem imeniku"
+            }
+        }
+    },
+    "contactGroupDisplayer": {
+        "label": {
+            "members_total": "Naslovi: {{count}}"
+        }
+    },
+    "contact_restored": "Stik je bil obnovljen",
+    "contacts": {
+        "importAction": {
+            "modalButton": "UVOZI",
+            "modalTitle": "Uvoz stikov"
+        }
+    },
+    "distribution_list": {
+        "label": {
+            "empty_message": "Distribucijski seznami še niso ustvarjeni."
+        },
+        "tabs": {
+            "details": "Podrobnosti",
+            "managers": "Seznam skrbnikov",
+            "members": "Seznam članov"
+        }
+    },
+    "edit_dl_component": {
+        "error": {
+            "invalid_address_one": "Neveljaven naslov",
+            "invalid_address_two": "Neveljavna naslova",
+            "invalid_address_few": "Neveljavni naslovi",
+            "invalid_address_other": "Neveljavni naslovi",
+            "invalid_and_duplicated_addresses": "Neveljavni in že prisotni naslovi",
+            "duplicated_address_one": "Naslov že obstaja",
+            "duplicated_address_two": "Naslova že obstajata",
+            "duplicated_address_few": "Naslovi že obstajajo",
+            "duplicated_address_other": "Naslovi že obstajajo"
+        },
+        "input": {
+            "description": {
+                "label": "Opis"
+            },
+            "name": {
+                "error": {
+                    "max_length": "Največja dovoljena dolžina je 256 znakov"
+                },
+                "label": "Ime distribucijskega seznama"
+            }
+        },
+        "label": {
+            "dl_email": "Distribucijski seznam",
+            "members_total": "Seznam članov {{total}}",
+            "hint": "Seznam lahko filtrirate po imenu člana ali dodate nove z urejanjem distribucijskega seznama."
+        },
+        "placeholder": {
+            "add_members": "Vnesite naslov, kliknite '+' za dodajanje v distribucijski seznam",
+            "filter_member": "Filtriraj naslov"
+        }
+    },
+    "emptyDisplayer": {
+        "contactGroup": {
+            "hint": "Kliknite gumb \"NOVA\" za ustvarjanje nove skupine stikov."
+        }
+    },
+    "expand_distribution_list": "Razširi seznam naslovov",
+    "folders": {
+        "auto_contacts": "Samodejno dodani stiki",
+        "contacts": "Stiki",
+        "root": "Koren",
+        "trash": "Koš"
+    },
+    "job": {
+        "company": "Podjetje",
+        "department": "Oddelek",
+        "title": "Delovno mesto"
+    },
+    "members_list_item_component": {
+        "button": {
+            "remove": "odstrani"
+        }
+    },
+    "name": {
+        "first_name": "Ime",
+        "last_name": "Priimek",
+        "middle_name": "Srednje ime",
+        "nickName": "Vzdevek",
+        "prefix": "Predpona",
+        "suffix": "Pripona"
+    },
+    "search": {
+        "shared_folders_note": "Vključi deljene imenike v iskanje."
+    },
+    "secondaryBar": {
+        "contextualMenu": {
+            "new_contact_group_creation_action": "Nova skupina stikov"
+        },
+        "distributionLists": "Distribucijski seznami",
+        "distributionListsManager": "Skrbnik",
+        "distributionListsMember": "Član",
+        "myContactGroups": "Moje skupine stikov",
+        "contactGroups": "Skupine stikov"
+    },
+    "section": {
+        "field": {
+            "city": "Mesto",
+            "country": "Država",
+            "number": "Številka",
+            "postalCode": "Poštna številka",
+            "state": "Regija",
+            "street": "Ulica",
+            "website": "Spletna stran"
+        },
+        "title": {
+            "address_one": "Naslov",
+            "address_two": "Naslova",
+            "address_few": "Naslovi",
+            "address_other": "Naslovov",
+            "mail": "E-poštni naslov",
+            "phone_number": "Telefonski stik"
+        }
+    },
+    "select": {
+        "default": "Izberi tip"
+    },
+    "title": {
+        "advanced_filters": "Napredni filtri"
+    },
+    "types": {
+        "home": "doma",
+        "mobile": "mobilni",
+        "other": "drugo",
+        "work": "služba"
+    },
+    "contact": {
+        "modal": {
+            "move_multiple": {
+                "title": "Premakni {{count}} stikov"
+            },
+            "move_single": {
+                "title": "Premakni stik uporabnika {{contactDesc}}"
+            },
+            "restore_single": {
+                "title": "Obnovi stik uporabnika {{contactDesc}}"
+            },
+            "restore_multiple": {
+                "title": "Obnovi {{count}} stikov"
+            }
+        }
+    },
+    "folder_panel": {
+        "option": {
+            "all_contacts": "Vsi",
+            "contacts": "Stiki",
+            "contact_group": "Skupine stikov"
+        }
     }
 }
