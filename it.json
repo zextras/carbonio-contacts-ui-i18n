@@ -130,7 +130,7 @@
         "select_all_addresses_one": "Seleziona indirizzo",
         "select_all_addresses_many": "Seleziona {{count}} indirizzi",
         "select_all_addresses_other": "Seleziona {{count}} indirizzi",
-        "keyword": "Parola chiave",
+        "keyword": "Parole chiave",
         "export_contact": "Esporta file vCard",
         "find_shares": "TROVA CONDIVISIONI",
         "filter_mode": "Modalità filtro",
