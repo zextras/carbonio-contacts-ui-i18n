@@ -144,7 +144,8 @@
         "colorBlack": "Nero",
         "colorBlue": "Blu",
         "colorGreen": "Verde",
-        "colorOrange": "Arancione"
+        "colorOrange": "Arancione",
+        "clear_search_query": "PULISCI RICERCA"
     },
     "job": {
         "title": "Ruolo",
