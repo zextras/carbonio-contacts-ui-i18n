@@ -368,7 +368,8 @@
         "colorRed": "Red",
         "colorPink": "Pink",
         "colorGrey": "Grey",
-        "colorOrange": "Orange"
+        "colorOrange": "Orange",
+        "clear_search_query": "CLEAR SEARCH"
     },
     "members_list_item_component": {
         "button": {
