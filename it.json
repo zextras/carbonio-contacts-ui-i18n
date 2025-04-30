@@ -134,7 +134,17 @@
         "export_contact": "Esporta file vCard",
         "find_shares": "TROVA CONDIVISIONI",
         "filter_mode": "Modalità filtro",
-        "distribution_list_app_name": "Liste di distribuzione"
+        "distribution_list_app_name": "Liste di distribuzione",
+        "colorCyan": "Ciano",
+        "colorYellow": "Giallo",
+        "colorRed": "Rosso",
+        "colorGrey": "Grigio",
+        "colorPink": "Rosa",
+        "colorPurple": "Viola",
+        "colorBlack": "Nero",
+        "colorBlue": "Blu",
+        "colorGreen": "Verde",
+        "colorOrange": "Arancione"
     },
     "job": {
         "title": "Ruolo",
