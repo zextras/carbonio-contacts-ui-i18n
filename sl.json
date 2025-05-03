@@ -20,7 +20,7 @@
         "create_tag": "Ustvari oznako",
         "delete": "Izbriši",
         "delete_tag": "Izbriši oznako",
-        "discard_changes": "Zavrzi spremembe",
+        "discard_changes": "ZAVRZI SPREMEMBE",
         "edit": "Uredi",
         "edit_access": "Uredi dostop",
         "empty": "Prazno",
@@ -110,7 +110,17 @@
         "select_all_addresses_few": "Izberi vse {{count}} naslove",
         "select_all_addresses_other": "Izberi vseh {{count}} naslovov",
         "find_share": "Najdi skupne rabe",
-        "find_shares": "NAJDI SKUPNE RABE"
+        "find_shares": "NAJDI SKUPNE RABE",
+        "colorBlack": "Črna",
+        "colorBlue": "Modra",
+        "colorCyan": "Turkizna",
+        "colorGreen": "Zelena",
+        "colorPurple": "Vijolična",
+        "colorRed": "Rdeča",
+        "colorYellow": "Rumena",
+        "colorPink": "Roza",
+        "colorGrey": "Siva",
+        "colorOrange": "Oranžna"
     },
     "folder": {
         "modal": {
