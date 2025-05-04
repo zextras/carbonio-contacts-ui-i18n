@@ -287,7 +287,7 @@
         "folder_edited": "Imenik uspešno urejen",
         "folder_shared": "Imenik uspešno deljen",
         "share_resend": "Povabilo k delitvi ponovno poslano",
-        "share_revoke": "Dostop do delitve preklican",
+        "share_revoke": "Dostop za deljenje je bil preklican",
         "share_updated": "Pravice dostopa posodobljene",
         "tag_applied": "Oznaka \"{{tag}}\" uporabljena",
         "tag_removed": "Oznaka \"{{tag}}\" odstranjena",
@@ -531,7 +531,7 @@
         "auto_contacts": "Samodejno dodani stiki",
         "contacts": "Stiki",
         "root": "Koren",
-        "trash": "Koš"
+        "trash": "Smeti"
     },
     "job": {
         "company": "Podjetje",
