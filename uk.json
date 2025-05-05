@@ -25,7 +25,13 @@
         "discard_changes": "СКАСУВАТИ ЗМІНИ",
         "save": "Зберегти",
         "cancel": "Скасувати",
-        "delete": "Видалити"
+        "delete": "Видалити",
+        "colorGreen": "Зелений",
+        "colorRed": "Червоний",
+        "colorYellow": "Жовтий",
+        "colorPink": "Рожевий",
+        "colorGrey": "Сірий",
+        "colorOrange": "Помаранчевий"
     },
     "message": {
         "snackbar": {
