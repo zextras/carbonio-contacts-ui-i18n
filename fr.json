@@ -234,7 +234,17 @@
         "keyword": "Mots clé",
         "find_shares": "TROUVER LES PARTAGES",
         "filter_mode": "Mode du filtre",
-        "distribution_list_app_name": "Listes de distribution"
+        "distribution_list_app_name": "Listes de distribution",
+        "colorBlack": "Noir",
+        "colorBlue": "Bleu",
+        "colorCyan": "Cyan",
+        "colorGreen": "Vert",
+        "colorYellow": "Jaune",
+        "colorPurple": "Violet",
+        "colorRed": "Rouge",
+        "colorPink": "Rose",
+        "colorGrey": "Gris",
+        "colorOrange": "Orange"
     },
     "name": {
         "nickName": "Surnom",
