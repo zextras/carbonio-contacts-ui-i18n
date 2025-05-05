@@ -31,5 +31,10 @@
         "snackbar": {
             "settings_saved": "Зміни збережено"
         }
+    },
+    "members_list_item_component": {
+        "button": {
+            "remove": "видалити"
+        }
     }
 }
