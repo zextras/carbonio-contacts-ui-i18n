@@ -1,1 +1,7 @@
-{}
+{
+    "action": {
+        "copy": "Kopiraj",
+        "delete": "Izbriši",
+        "edit": "Uredi"
+    }
+}
