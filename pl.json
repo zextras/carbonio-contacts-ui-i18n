@@ -172,7 +172,17 @@
         "keyword": "Słowa kluczowe",
         "find_shares": "ZNAJDŹ UDOSTĘPNIENIA",
         "filter_mode": "Tryb filtrowania",
-        "distribution_list_app_name": "Listy dystrybucyjne"
+        "distribution_list_app_name": "Listy dystrybucyjne",
+        "colorBlack": "Czarny",
+        "colorBlue": "Niebieski",
+        "colorCyan": "Cyjanowy",
+        "colorGreen": "Zielony",
+        "colorPurple": "Fioletowy",
+        "colorRed": "Czerwony",
+        "colorYellow": "Żółty",
+        "colorPink": "Różowy",
+        "colorGrey": "Szary",
+        "colorOrange": "Pomarańczowy"
     },
     "displayer": {
         "search_description1": "Lub wybierz \"Zaawansowane filtry\", aby udoskonalić wyniki wyszukiwania.",
