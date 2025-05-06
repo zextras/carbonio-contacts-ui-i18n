@@ -6,7 +6,13 @@
         "search": "Пошук",
         "send_msg": "Надіслати лист",
         "edit_distribution_list": "Редагувати список розсилки",
-        "share_folder": "Поділитися папкою"
+        "share_folder": "Поділитися папкою",
+        "contactGroup": {
+            "delete": "Видалити"
+        },
+        "copy": "Копіювати",
+        "delete": "Видалити",
+        "edit": "Редагувати"
     },
     "board": {
         "newContactGroup": {
