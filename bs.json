@@ -13,7 +13,7 @@
         "reset_filters": "Resetuj filtere",
         "send_msg": "Pošalji e-mail",
         "add_shared_address_books": "Dodaj dijeljeno",
-        "search": "Pretraga",
+        "search": "Pretraži",
         "share_folder": "Podijelite mapu"
     },
     "board": {
@@ -367,7 +367,17 @@
         "cancel": "Odustani",
         "filter_folders": "Filtriraj mape",
         "discard_changes": "ODBACI IZMJENE",
-        "search_activate_selection_mode": "Režim selekcije još nije dostupan za rezultate pretrage"
+        "search_activate_selection_mode": "Režim selekcije još nije dostupan za rezultate pretrage",
+        "colorBlue": "Plava",
+        "colorBlack": "Crna",
+        "colorCyan": "Cijan",
+        "colorGreen": "Zeleno",
+        "colorYellow": "Žuta",
+        "colorPurple": "Ljubičasta",
+        "colorRed": "Crvena",
+        "colorPink": "Roza",
+        "colorGrey": "Siva",
+        "colorOrange": "Narandžasta"
     },
     "members_list_item_component": {
         "button": {
