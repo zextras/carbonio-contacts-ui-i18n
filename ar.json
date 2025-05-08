@@ -161,7 +161,17 @@
         "export_contact": "تصدير معلومات الإتصال كملف vCard",
         "keyword": "الكلمات الرئيسية",
         "distribution_list_app_name": "قوائم التوزيع",
-        "filter_mode": "وضعية المرشح"
+        "filter_mode": "وضعية المرشح",
+        "colorBlue": "أزرق",
+        "colorBlack": "أسود",
+        "colorCyan": "سماوي",
+        "colorGreen": "أخضر",
+        "colorYellow": "أصفر",
+        "colorPurple": "أرجواني",
+        "colorRed": "أحمر",
+        "colorPink": "وردي",
+        "colorGrey": "رمادي",
+        "colorOrange": "برتقالي"
     },
     "folders": {
         "trash": "سلة المهملات",
