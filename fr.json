@@ -33,7 +33,7 @@
         "description5": "Découvrez toutes les façons dont vous pouvez vous connecter avec d'autres utilisateurs.",
         "description6": "Utilisez le mode \"Modifier\" pour ajouter une note personnelle à un contact.",
         "description7": "Créez un groupe de contacts en cliquant sur le bouton \"NOUVEAU\".",
-        "description8": "Sélectionnez un contact ou un groupe de contacts pour envoyer des e-mails partagés.",
+        "description8": "Sélectionnez un contact ou un groupe de contacts pour envoyer des emails partagés.",
         "list_title1": "Il semble qu'il n'y ait pas encore de contacts",
         "search_description3": "Vérifiez l'orthographe et les options des filtres ou essayez avec un autre mot-clé.",
         "title1": "Créez un nouveau contact en cliquant sur le bouton \"NOUVEAU\".",
@@ -422,7 +422,7 @@
     "settings": {
         "contacts": {
             "checkbox": {
-                "add_contact_to_emailed_contacts": "Ajouter de nouveaux contact dans \"Personnes contactées par email\"",
+                "add_contact_to_emailed_contacts": "Ajouter de nouveaux contacts dans \"Personnes contactées par email\"",
                 "autocomplete_on_comma": "Sélectionner l'autocomplétion correspondante dès que la virgule est tapée",
                 "incl_addrs_in_glbl_addrs_list": "Inclure les adresses dans la Liste d'Adresse Globale",
                 "include_add_in_shared_contact": "Inclure les adresses des contacts partagés",
