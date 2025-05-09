@@ -358,8 +358,7 @@
         "keyword": "Keywords",
         "find_shares": "FIND SHARES",
         "filter_mode": "Filter mode",
-        "distribution_list_app_name": "Distribution Lists",
-        "colorOrange": "Orange"
+        "distribution_list_app_name": "Distribution Lists"
     },
     "members_list_item_component": {
         "button": {
