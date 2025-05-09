@@ -110,8 +110,7 @@
         "select_all_addresses_few": "Izberi vse {{count}} naslove",
         "select_all_addresses_other": "Izberi vseh {{count}} naslovov",
         "find_share": "Najdi skupne rabe",
-        "find_shares": "NAJDI SKUPNE RABE",
-        "colorOrange": "Oranžna"
+        "find_shares": "NAJDI SKUPNE RABE"
     },
     "folder": {
         "modal": {
