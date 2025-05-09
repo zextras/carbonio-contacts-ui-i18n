@@ -234,8 +234,7 @@
         "keyword": "Mots clé",
         "find_shares": "TROUVER LES PARTAGES",
         "filter_mode": "Mode du filtre",
-        "distribution_list_app_name": "Listes de distribution",
-        "colorOrange": "Orange"
+        "distribution_list_app_name": "Listes de distribution"
     },
     "name": {
         "nickName": "Surnom",
