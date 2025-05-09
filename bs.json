@@ -367,8 +367,7 @@
         "cancel": "Odustani",
         "filter_folders": "Filtriraj mape",
         "discard_changes": "ODBACI IZMJENE",
-        "search_activate_selection_mode": "Režim selekcije još nije dostupan za rezultate pretrage",
-        "colorOrange": "Narandžasta"
+        "search_activate_selection_mode": "Režim selekcije još nije dostupan za rezultate pretrage"
     },
     "members_list_item_component": {
         "button": {
