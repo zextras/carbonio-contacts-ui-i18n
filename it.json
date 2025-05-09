@@ -590,5 +590,17 @@
             "contacts": "Contatti",
             "all_contacts": "Tutti"
         }
+    },
+    "colors": {
+        "black": "Nero",
+        "purple": "Viola",
+        "blue": "Blu",
+        "cyan": "Ciano",
+        "green": "Verde",
+        "orange": "Arancione",
+        "grey": "Grigio",
+        "pink": "Rosa",
+        "yellow": "Giallo",
+        "red": "Rosso"
     }
 }
