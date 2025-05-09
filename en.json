@@ -579,5 +579,17 @@
             "contacts": "Contacts",
             "contact_group": "Contact Groups"
         }
+    },
+    "colors": {
+        "black": "Black",
+        "purple": "Purple",
+        "blue": "Blue",
+        "cyan": "Cyan",
+        "red": "Red",
+        "green": "Green",
+        "orange": "Orange",
+        "grey": "Grey",
+        "pink": "Pink",
+        "yellow": "Yellow"
     }
 }
