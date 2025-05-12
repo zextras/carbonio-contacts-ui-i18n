@@ -593,5 +593,17 @@
             "contact_group": "Grupy kontaktów",
             "all_contacts": "Wszystkie"
         }
+    },
+    "colors": {
+        "purple": "Fioletowy",
+        "black": "Czarny",
+        "blue": "Niebieski",
+        "cyan": "Cyjan",
+        "green": "Zielony",
+        "orange": "Pomarańczowy",
+        "grey": "Szary",
+        "pink": "Różowy",
+        "yellow": "Żółty",
+        "red": "Czerwony"
     }
 }
