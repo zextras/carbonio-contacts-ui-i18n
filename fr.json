@@ -593,5 +593,17 @@
             "all_contacts": "Tous",
             "contacts": "Contacts"
         }
+    },
+    "colors": {
+        "black": "Noir",
+        "purple": "Violet",
+        "blue": "Bleu",
+        "cyan": "Cyan",
+        "green": "Vert",
+        "orange": "Orange",
+        "grey": "Gris",
+        "pink": "Rose",
+        "yellow": "Jaune",
+        "red": "Rouge"
     }
 }
