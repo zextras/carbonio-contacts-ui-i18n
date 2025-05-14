@@ -593,5 +593,17 @@
             "contact_group": "Kontakt Grupe",
             "all_contacts": "Sve"
         }
+    },
+    "colors": {
+        "black": "Crna",
+        "blue": "Plava",
+        "cyan": "Cijan",
+        "green": "Zeleno",
+        "grey": "Siva",
+        "purple": "Ljubičasta",
+        "yellow": "Žuta",
+        "red": "Crvena",
+        "pink": "Roza",
+        "orange": "Narandžasta"
     }
 }
