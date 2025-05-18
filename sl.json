@@ -115,7 +115,7 @@
     "folder": {
         "modal": {
             "footer": {
-                "go_back": "Pojdi nazaj"
+                "go_back": "Nazaj"
             },
             "delete": {
                 "title": "Izbriši {{addressBookName}}",
