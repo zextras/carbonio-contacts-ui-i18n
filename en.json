@@ -549,7 +549,8 @@
         "folder_sharing_status_other": "Shared with {{count}} people",
         "list_trash": {
             "deletePermanently": "Delete contact permanently"
-        }
+        },
+        "subfolder_unread_status": "{{count}} unread mails in subfolders"
     },
     "types": {
         "home": "home",
