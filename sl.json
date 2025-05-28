@@ -607,5 +607,17 @@
             "contacts": "Stiki",
             "contact_group": "Skupine stikov"
         }
+    },
+    "colors": {
+        "black": "Črna",
+        "cyan": "Turkizna",
+        "green": "Zelena",
+        "blue": "Modra",
+        "grey": "Siva",
+        "purple": "Vijolična",
+        "yellow": "Rumena",
+        "red": "Rdeča",
+        "pink": "Roza",
+        "orange": "Oranžna"
     }
 }
