@@ -600,6 +600,7 @@
         "orange": "Arancione",
         "pink": "Rosa",
         "yellow": "Giallo",
-        "red": "Rosso"
+        "red": "Rosso",
+        "gray": "Grigio"
     }
 }
