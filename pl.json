@@ -172,7 +172,8 @@
         "keyword": "Słowa kluczowe",
         "find_shares": "ZNAJDŹ UDOSTĘPNIENIA",
         "filter_mode": "Tryb filtrowania",
-        "distribution_list_app_name": "Listy dystrybucyjne"
+        "distribution_list_app_name": "Listy dystrybucyjne",
+        "invalid_query": "Znaki specjalne, takie jak !, :, -, \" itp., są ignorowane w wyszukiwaniu. To może prowadzić do nieoczekiwanych wyników."
     },
     "displayer": {
         "search_description1": "Lub wybierz \"Zaawansowane filtry\", aby udoskonalić wyniki wyszukiwania.",
