@@ -234,7 +234,8 @@
         "keyword": "Mots clé",
         "find_shares": "TROUVER LES PARTAGES",
         "filter_mode": "Mode du filtre",
-        "distribution_list_app_name": "Listes de distribution"
+        "distribution_list_app_name": "Listes de distribution",
+        "invalid_query": "Les caractères spéciaux comme :, \", -, !, etc., seront ignorés par la recherche. Cela peut même générer des résultats erronés."
     },
     "name": {
         "nickName": "Surnom",
