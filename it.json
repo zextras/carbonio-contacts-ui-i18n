@@ -135,7 +135,7 @@
         "find_shares": "TROVA CONDIVISIONI",
         "filter_mode": "Modalità filtro",
         "distribution_list_app_name": "Liste di distribuzione",
-        "invalid_query": "I caratteri speciali come :, \", -, !, ecc. vengono ignorati nella ricerca. Questo potrebbe portare a risultati inattesi."
+        "invalid_query": "I caratteri speciali come :, \", -, !, ecc., vengono ignorati nella ricerca. Questo potrebbe portare a risultati inaspettati per:"
     },
     "job": {
         "title": "Ruolo",
