@@ -359,7 +359,7 @@
         "find_shares": "FIND SHARES",
         "filter_mode": "Filter mode",
         "distribution_list_app_name": "Distribution Lists",
-        "invalid_query": "Special characters like :, \", -, !, etc., are ignored in the search. This may lead to unexpected results."
+        "invalid_query": "Special characters like :, \", -, !, etc., are ignored in the search. This may lead to unexpected results for:"
     },
     "members_list_item_component": {
         "button": {
