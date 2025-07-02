@@ -121,7 +121,7 @@
         "search_title1": "Pokreni novu pretragu",
         "search_title2": "Izvinjavamo se, ali nema rezultata za vašu pretragu",
         "search_title3": "Nema rezultata za vašu pretragu.",
-        "search_title4": "Odaberite jedan ili više rezultata za izvršavanje radnji ili prikaz detalja.",
+        "search_title4": "Odaberi jedan ili više rezultata za izvršenje akcija ili prikaz detalja.",
         "search_description1": "Ili odaberite “Napredni filteri” da precizirate pretragu."
     },
     "distribution_list": {
@@ -367,7 +367,8 @@
         "cancel": "Odustani",
         "filter_folders": "Filtriraj mape",
         "discard_changes": "ODBACI IZMJENE",
-        "search_activate_selection_mode": "Režim selekcije još nije dostupan za rezultate pretrage"
+        "search_activate_selection_mode": "Režim selekcije još nije dostupan za rezultate pretrage",
+        "invalid_query": "Specijalni karakteri kao što su :, \", -, !, itd., ignorišu se u pretrazi. Ovo može dovesti do neočekivanih rezultata za:"
     },
     "members_list_item_component": {
         "button": {
