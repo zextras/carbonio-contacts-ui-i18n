@@ -25,7 +25,7 @@
         "search_list_title2": "Aucun de vos éléments ne correspond à votre recherche.",
         "search_title2": "Nous sommes désolés mais il n'y a pas de résultats pour votre recherche",
         "search_title3": "Il n'y a pas de résultats pour votre recherche.",
-        "search_title4": "Sélectionner un ou plusieurs résultats pour effectuer des actions ou afficher des détails.",
+        "search_title4": "Sélectionnez un ou plusieurs résultats pour effectuer des actions ou afficher des détails.",
         "title5": "sélectionner un contact",
         "description2": "Cliquez sur le bouton \"NOUVEAU\" pour commencer à en créer un nouveau.",
         "description3": "Cliquez sur le bouton \"NOUVEAU\" pour commencer à créer un nouveau groupe de contacts.",
@@ -235,7 +235,7 @@
         "find_shares": "TROUVER LES PARTAGES",
         "filter_mode": "Mode du filtre",
         "distribution_list_app_name": "Listes de distribution",
-        "invalid_query": "Les caractères spéciaux comme :, \", -, !, etc., seront ignorés par la recherche. Cela peut même générer des résultats erronés."
+        "invalid_query": "Les caractères spéciaux comme :, \", -, !, etc., seront ignorés par la recherche. Cela peut même générer des résultats erronés pour :"
     },
     "name": {
         "nickName": "Surnom",
