@@ -580,6 +580,9 @@
             },
             "restore_multiple": {
                 "title": "{{count}} kişileri geri yükle"
+            },
+            "restore_single": {
+                "title": "{{contactDesc}}'in temasını geri yükle"
             }
         }
     }
