@@ -227,7 +227,8 @@
         "select_all_addresses_other": "Tüm {{count}} adresi seçin",
         "website_one": "Web sitesi",
         "website_other": "Web sitesileri",
-        "invalid_query": "Bu aramada :, \", -, !, vb. gibi özel karakterler yok sayılır. Bu beklenmedik sonuçlara neden olabilir:"
+        "invalid_query": "Bu aramada :, \", -, !, vb. gibi özel karakterler yok sayılır. Bu beklenmedik sonuçlara neden olabilir:",
+        "find_share": "Paylaşımları bul"
     },
     "job": {
         "company": "Firma",
