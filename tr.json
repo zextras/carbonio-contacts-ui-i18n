@@ -577,6 +577,9 @@
             },
             "move_single": {
                 "title": "{{contactDesc}}'in temasını taşı"
+            },
+            "restore_multiple": {
+                "title": "{{count}} kişileri geri yükle"
             }
         }
     }
