@@ -576,7 +576,7 @@
                 "title": "{{count}} kişiyi taşı"
             },
             "move_single": {
-                "title": "{{contactDesc}}'in temasını taşı"
+                "title": "{{contactDesc}}'in kişiyi taşı"
             },
             "restore_multiple": {
                 "title": "{{count}} kişileri geri yükle"
