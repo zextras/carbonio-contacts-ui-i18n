@@ -161,7 +161,8 @@
         "activate_selection_mode": "Seçim modunu aktive et",
         "contacts": "Kişiler",
         "empty": "Boşalt",
-        "delete": "Sil",
+        "delete_one": "Sil",
+        "delete_other": "Sil",
         "edit_access_name": "{{name}}'in erişimini düzenle",
         "email": "E-posta",
         "error_try_again": "Bir sorun oluştu, lütfen tekrar deneyin",
@@ -225,7 +226,8 @@
         "select_all_addresses_one": "Adres seçin",
         "select_all_addresses_other": "Tüm {{count}} adresi seçin",
         "website_one": "Web sitesi",
-        "website_other": "Web sitesileri"
+        "website_other": "Web sitesileri",
+        "invalid_query": "Bu aramada :, \", -, !, vb. gibi özel karakterler yok sayılır. Bu beklenmedik sonuçlara neden olabilir:"
     },
     "job": {
         "company": "Firma",
@@ -537,5 +539,16 @@
             "import_contacts_success_one": "{{count}} kişi içe aktarıldı ve seçilen adres defterine eklendi",
             "import_contacts_success_other": "{{count}} kişi içe aktarıldı ve seçilen adres defterine eklendi"
         }
+    },
+    "colors": {
+        "black": "Siyah",
+        "cyan": "Camgöbeği",
+        "green": "Yeşil",
+        "blue": "Mavi",
+        "yellow": "Sarı",
+        "purple": "Mor",
+        "red": "Kırmızı",
+        "pink": "Pembe",
+        "orange": "Portakal"
     }
 }
