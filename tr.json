@@ -134,7 +134,8 @@
         "share_added_succesfully": "Paylaşım başarıyla eklendi",
         "share_info": "Paylaşılan adres defteri bilgisi",
         "share_removed_succesfully": "Paylaşım başarıyla kaldırıldı",
-        "shared_items": "{{value}}'in paylaşılan adres defterleri"
+        "shared_items": "{{value}}'in paylaşılan adres defterleri",
+        "link_name": "{{shareName}} {{ownerName}}'den"
     },
     "message": {
         "snackbar": {
@@ -233,7 +234,8 @@
         "new_folder": "Yeni Klasör",
         "export_contact": "vCard dosyasını dışa aktar",
         "keyword": "Anahtar kelimeler",
-        "find_shares": "PAYLAŞIMLARI BUL"
+        "find_shares": "PAYLAŞIMLARI BUL",
+        "filter_mode": "Filtre modu"
     },
     "job": {
         "company": "Firma",
@@ -301,7 +303,8 @@
             "number": "Sayı",
             "postalCode": "Posta kodu",
             "state": "Bölge",
-            "street": "Sokak"
+            "street": "Sokak",
+            "website": "Web Sitesi"
         },
         "title": {
             "mail": "E-posta adresi",
@@ -354,7 +357,12 @@
         "revoke": "Erişimi iptal et",
         "folder_linked_status": "Benimle paylaşılan",
         "address_book_sharing_status_one": "{{count}} kişi ile paylaşıldı",
-        "address_book_sharing_status_other": "{{count}} kişi ile paylaşıldı"
+        "address_book_sharing_status_other": "{{count}} kişi ile paylaşıldı",
+        "list_trash": {
+            "deletePermanently": "Kişiyi kalıcı olarak sil"
+        },
+        "folder_sharing_status_one": "Paylaşıldı: 1 kişi",
+        "folder_sharing_status_other": "Paylaşıldı: {{count}} kişi"
     },
     "types": {
         "home": "Ev",
@@ -501,7 +509,8 @@
         "distributionListsManager": "Yönetici",
         "distributionListsMember": "Üye",
         "myContactGroups": "İletişim Gruplarım",
-        "distributionLists": "Dağıtım Listeleri"
+        "distributionLists": "Dağıtım Listeleri",
+        "contactGroups": "İletişim Grupları"
     },
     "contacts": {
         "importAction": {
@@ -556,5 +565,12 @@
         "red": "Kırmızı",
         "pink": "Pembe",
         "orange": "Portakal"
+    },
+    "contact": {
+        "modal": {
+            "move_multiple": {
+                "title": "{{count}} kişileri taşı"
+            }
+        }
     }
 }
