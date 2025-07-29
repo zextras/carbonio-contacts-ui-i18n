@@ -228,7 +228,9 @@
         "website_one": "Web sitesi",
         "website_other": "Web sitesileri",
         "invalid_query": "Bu aramada :, \", -, !, vb. gibi özel karakterler yok sayılır. Bu beklenmedik sonuçlara neden olabilir:",
-        "find_share": "Paylaşımları bul"
+        "find_share": "Paylaşımları bul",
+        "filter_folders": "Klasörleri filtrele",
+        "new_folder": "Yeni Klasör"
     },
     "job": {
         "company": "Firma",
