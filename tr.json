@@ -573,7 +573,7 @@
     "contact": {
         "modal": {
             "move_multiple": {
-                "title": "{{count}} kişileri taşı"
+                "title": "{{count}} kişiyi taşı"
             },
             "move_single": {
                 "title": "{{contactDesc}}'in temasını taşı"
