@@ -589,7 +589,8 @@
     "folder_panel": {
         "option": {
             "contacts": "Kişiler",
-            "all_contacts": "Hepsi"
+            "all_contacts": "Hepsi",
+            "contact_group": "İletişim Grupları"
         }
     }
 }
