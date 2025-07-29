@@ -235,7 +235,8 @@
         "export_contact": "vCard dosyasını dışa aktar",
         "keyword": "Anahtar kelimeler",
         "find_shares": "PAYLAŞIMLARI BUL",
-        "filter_mode": "Filtre modu"
+        "filter_mode": "Filtre modu",
+        "distribution_list_app_name": "Dağıtım Listeleri"
     },
     "job": {
         "company": "Firma",
@@ -259,7 +260,10 @@
             "tag_updated": "Etiket başarıyla güncellendi",
             "tag_not_updated": "Bir hata oluştu, etiket güncellenemedi. Lütfen tekrar deneyin.",
             "tag_deleted": "{{name}} Etiketi başarıyla silindi",
-            "tag_created": "{{name}} etiketi başarıyla oluşturuldu"
+            "tag_created": "{{name}} etiketi başarıyla oluşturuldu",
+            "conversation_move": "Görüşme başarıyla taşındı",
+            "folder_moved": "Klasör başarıyla taşındı",
+            "message_move": "Mesaj başarıyla taşındı"
         }
     },
     "modal": {
