@@ -582,7 +582,7 @@
                 "title": "{{count}} kişileri geri yükle"
             },
             "restore_single": {
-                "title": "{{contactDesc}}'in temasını geri yükle"
+                "title": "{{contactDesc}}'in kişiyi geri yükle"
             }
         }
     },
