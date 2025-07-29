@@ -585,5 +585,11 @@
                 "title": "{{contactDesc}}'in temasını geri yükle"
             }
         }
+    },
+    "folder_panel": {
+        "option": {
+            "contacts": "Kişiler",
+            "all_contacts": "Hepsi"
+        }
     }
 }
