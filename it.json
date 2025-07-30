@@ -289,7 +289,8 @@
         "shared_folders": "Rubriche Condivise",
         "shared_items": "Rubrica condivisa di {{value}}",
         "viewer": "Visualizzazione",
-        "link_name": "{{shareName}} di {{ownerName}}"
+        "link_name": "{{shareName}} di {{ownerName}}",
+        "is_contained_in": "È contenuto in"
     },
     "messages": {
         "snackbar": {
@@ -603,5 +604,13 @@
         "yellow": "Giallo",
         "red": "Rosso",
         "gray": "Grigio"
+    },
+    "advancedFilters": {
+        "title": "Filtri Avanzati",
+        "isContainedIn": {
+            "chooseFolder": "Scegli cartella"
+        },
+        "phoneNumber": "Numero di telefono",
+        "keywords": "Parole chiave"
     }
 }
