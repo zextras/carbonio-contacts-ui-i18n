@@ -623,6 +623,11 @@
         "gray": "Siva"
     },
     "advancedFilters": {
-        "phoneNumber": "Telefonska številka"
+        "phoneNumber": "Telefonska številka",
+        "title": "Napredni filtri",
+        "keywords": "Ključne besede",
+        "isContainedIn": {
+            "chooseFolder": "Izberi mapo"
+        }
     }
 }
