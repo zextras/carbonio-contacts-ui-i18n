@@ -513,7 +513,8 @@
         "viewer": "Viewer",
         "workflow": "Workflow",
         "write": "Write",
-        "link_name": "{{shareName}} of {{ownerName}}"
+        "link_name": "{{shareName}} of {{ownerName}}",
+        "is_contained_in": "Is contained in"
     },
     "snackbar": {
         "delete_contact_group": {
@@ -592,5 +593,13 @@
         "pink": "Pink",
         "yellow": "Yellow",
         "gray": "Gray"
+    },
+    "advancedFilters": {
+        "isContainedIn": {
+            "chooseFolder": "Choose folder"
+        },
+        "phoneNumber": "Phone Number",
+        "title": "Advanced Filters",
+        "keywords": "Keywords"
     }
 }
