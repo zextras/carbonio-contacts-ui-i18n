@@ -621,5 +621,8 @@
         "pink": "Roza",
         "orange": "Oranžna",
         "gray": "Siva"
+    },
+    "advancedFilters": {
+        "phoneNumber": "Telefonska številka"
     }
 }
