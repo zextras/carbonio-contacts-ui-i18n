@@ -257,7 +257,8 @@
         "workflow": "Potek dela",
         "write": "Pisanje",
         "link_name": "{{shareName}} od {{ownerName}}",
-        "share_note": "Standardno sporočilo prikazuje vaše ime, ime deljenega elementa, dovoljenja in podatke za prijavo."
+        "share_note": "Standardno sporočilo prikazuje vaše ime, ime deljenega elementa, dovoljenja in podatke za prijavo.",
+        "is_contained_in": "Je vsebovan v"
     },
     "message": {
         "delete_tag_message2": "Ko bo izbrisan, bo odstranjen iz vseh elementov, na katere je bila dodeljen.",
