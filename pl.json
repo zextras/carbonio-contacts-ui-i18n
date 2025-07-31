@@ -283,7 +283,8 @@
         "send_notification": "Wyślij powiadomienie o tym udostępnieniu",
         "share_added_succesfully": "Udostępnienie zostało dodane",
         "share_info": "Informacje o udostępnionej książce adresowej",
-        "link_name": "{{shareName}} od {{ownerName}}"
+        "link_name": "{{shareName}} od {{ownerName}}",
+        "is_contained_in": "Znajduje się w"
     },
     "snackbar": {
         "share_resend": "Zaproszenie do udostępnienia zostało wysłane ponownie",
@@ -606,5 +607,13 @@
         "yellow": "Żółty",
         "red": "Czerwony",
         "gray": "Szary"
+    },
+    "advancedFilters": {
+        "phoneNumber": "Numer telefonu",
+        "isContainedIn": {
+            "chooseFolder": "Wybierz folder"
+        },
+        "title": "Zaawansowane filtry",
+        "keywords": "Słowa kluczowe"
     }
 }
