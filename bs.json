@@ -524,7 +524,8 @@
             }
         },
         "recipients_address": "E-mail adrese primatelja",
-        "share_note": "Standardna poruka prikazuje vaše ime, ime dijeljene stavke, dozvole date primaocima i informacije za prijavu."
+        "share_note": "Standardna poruka prikazuje vaše ime, ime dijeljene stavke, dozvole date primaocima i informacije za prijavu.",
+        "is_contained_in": "Nalazi se u"
     },
     "snackbar": {
         "edit_distribution_list": {
@@ -606,5 +607,13 @@
         "pink": "Roza",
         "orange": "Narandžasta",
         "gray": "Sivi"
+    },
+    "advancedFilters": {
+        "title": "Napredni filteri",
+        "keywords": "Ključne riječi",
+        "phoneNumber": "Broj telefona",
+        "isContainedIn": {
+            "chooseFolder": "Odaberi folder"
+        }
     }
 }
