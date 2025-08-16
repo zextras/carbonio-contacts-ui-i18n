@@ -243,7 +243,8 @@
         "viewer": "مُشاهد",
         "workflow": "سير العمل",
         "write": "كتابة",
-        "link_name": "{{shareName}} من {{ownerName}}"
+        "link_name": "{{shareName}} من {{ownerName}}",
+        "is_contained_in": "موجود في"
     },
     "snackbar": {
         "tag_removed": "تم إزالة العلامة \"{{tag}}\"",
@@ -648,5 +649,13 @@
         "red": "أحمر",
         "orange": "برتقالي",
         "gray": "رمادي"
+    },
+    "advancedFilters": {
+        "title": "المرشحات المتقدمة",
+        "phoneNumber": "رقم الهاتف",
+        "keywords": "الكلمات التعريفية",
+        "isContainedIn": {
+            "chooseFolder": "اختر المجلد"
+        }
     }
 }
