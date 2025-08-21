@@ -300,7 +300,8 @@
         "shared_item": "Élément partagé",
         "shared_items": "Les carnets d'adresses de {{value}}",
         "workflow": "Flux de travail",
-        "link_name": "{{shareName}} de {{ownerName}}"
+        "link_name": "{{shareName}} de {{ownerName}}",
+        "is_contained_in": "Est contenu dans"
     },
     "snackbar": {
         "share_resend": "Invitation à partager renvoyée",
@@ -606,5 +607,13 @@
         "yellow": "Jaune",
         "red": "Rouge",
         "gray": "Gris"
+    },
+    "advancedFilters": {
+        "phoneNumber": "Numéro de téléphone",
+        "title": "Filtres avancés",
+        "keywords": "Mots clés",
+        "isContainedIn": {
+            "chooseFolder": "Choisissez un dossier"
+        }
     }
 }
