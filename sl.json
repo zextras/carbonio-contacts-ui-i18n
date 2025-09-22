@@ -111,7 +111,7 @@
         "select_all_addresses_other": "Izberi vseh {{count}} naslovov",
         "find_share": "Najdi skupne rabe",
         "find_shares": "NAJDI SKUPNE RABE",
-        "invalid_query": "Posebni znaki, kot so :, \", -, ! itd., so pri iskanju prezrti. To lahko povzroči nepričakovane rezultate."
+        "invalid_query": "Posebni znaki, kot so :, \", -, ! itd., so pri iskanju prezrti. To lahko povzroči nepričakovane rezultate za:"
     },
     "folder": {
         "modal": {
