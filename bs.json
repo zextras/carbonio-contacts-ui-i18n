@@ -430,7 +430,7 @@
         },
         "initializeError": {
             "title": "Došlo je do greške",
-            "buttonConfirm": "PONOVO UČITAJ",
+            "buttonConfirm": "UČITAJ PONOVO",
             "content": "Molimo osvježite stranicu ili pokušajte ponovo kasnije. Ostali moduli mogli bi i dalje biti dostupni uz ograničene funkcije."
         }
     },
