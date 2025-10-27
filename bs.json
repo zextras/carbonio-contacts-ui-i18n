@@ -317,7 +317,7 @@
         "shares_folder_edit": "Dijeljenje ovog adresara",
         "show_more": "Prikaži više",
         "tag": "Oznaka",
-        "tag_max_length": "Maksimalno 128 znakova je dopušteno",
+        "tag_max_length": "Maksimalno je dopušteno 128 znakova",
         "tag_name": "Naziv oznake",
         "tags": "Oznake",
         "type": "Tip",
@@ -403,9 +403,9 @@
             "tag_deleted": "{{name}} Oznaka uspješno obrisana",
             "tag_not_updated": "Desila se greška, oznaka nije ažurirana. Pokušajte ponovo.",
             "tag_updated": "Oznaka uspješno ažurirana",
-            "conversation_move": "Konverzacija uspješno prebačena",
+            "conversation_move": "Razgovor je uspješno premješten",
             "message_move": "Poruka uspješno premještena",
-            "folder_moved": "Folder uspješno premješten"
+            "folder_moved": "Direktorij je uspješno premješten"
         }
     },
     "modal": {
@@ -546,7 +546,7 @@
             }
         },
         "email_copied_to_clipboard": "E-mail poruka kopirana u međuspremnik.",
-        "share_resend": "Ponovna poslata pozivnica za dijeljenje",
+        "share_resend": "Ponovno je poslana pozivnica za dijeljenje",
         "share_revoke": "Otkazano dijeljenje pristupa",
         "tag_removed": "Oznaka \"{{tag}}\" je uklonjena"
     },
