@@ -14,7 +14,7 @@
         "send_msg": "Pošalji e-mail",
         "add_shared_address_books": "Dodaj dijeljeno",
         "search": "Pretraži",
-        "share_folder": "Podijelite mapu"
+        "share_folder": "Podijelite direktorij"
     },
     "board": {
         "editContactGroup": {
@@ -101,10 +101,10 @@
             "no_details_owner": "Nema dodatnih detalja za ovu distribucijsku listu. Uredite distribucijsku listu kako biste ih dodali ili kontaktirajte administratora."
         },
         "list_title1": "Izgleda da još nema kontakata",
-        "list_title2": "Smeće je prazno",
+        "list_title2": "Kanta za Otpad je prazna",
         "search_description3": "Provjerite pravopis i opcije filtera ili pokušajte s drugom ključnom riječju.",
         "title1": "Kreirajte novi kontakt klikom na dugme „NOVI“.",
-        "title10": "Odaberite i vratite kontakte iz smeća",
+        "title10": "Odaberite i vratite kontakte iz otpada",
         "title2": "Podijelite sav svoj rad sa svojim kontaktima.",
         "title3": "Ostanite u kontaktu sa kolegama.",
         "title4": "Prilagodite vaše kontakte dodavanjem ličnih bilješki",
@@ -112,7 +112,7 @@
         "title6": "Prilagodi kontakt",
         "title7": "Ostanite u kontaktu sa kolegama",
         "title8": "Pošalji zajedničku e-mail poruku",
-        "title9": "Kliknite na ikonicu Smeće da biste izbrisali kontakt.",
+        "title9": "Kliknite na ikonicu kante da biste izbrisali kontakt.",
         "description4": "Kreirajte novi tako što ćete kliknuti na dugme \"KREIRAJ NOVI\".",
         "description3": "Kliknite dugme \"NOVI\" za kreiranje nove grupe kontakata.",
         "search_description2": "Pokušaj pokrenuti novu pretragu.",
@@ -178,7 +178,7 @@
             "edit": "Uredi adresar",
             "empty": {
                 "folder": "Isprazni adresar",
-                "trash": "Isprazni smeće"
+                "trash": "Isprazni kantu za otpad"
             },
             "move": "Premjesti",
             "delete_permanently": "Izbrišite adresar trajno",
@@ -202,10 +202,10 @@
             "empty": {
                 "body": {
                     "message1": "Želite li isprazniti odabrani adresar?",
-                    "message2": "Ako ga ispraznite, sadržaj će biti premješten u smeće."
+                    "message2": "Ako ga ispraznite, sav povezani sadržaj će biti premješten u Otpad."
                 },
                 "message2": "Svi povezani kontakti bit će trajno izbrisani i neće biti moguće ih vratiti.",
-                "message3": "Želite li isprazniti smeće?",
+                "message3": "Želite li isprazniti kantu za otpad?",
                 "message4": "Sadržaj će biti trajno obrisan i neće biti moguće ga vratiti.",
                 "title": "Isprazni {{addressBookName}}",
                 "message1": "Želite li isprazniti odabrani adresar?"
@@ -245,10 +245,10 @@
         },
         "share_folder": "Dijeli adresar",
         "snackbar": {
-            "address_book_moved_to_trash": "Adresar prebačen u smeće",
+            "address_book_moved_to_trash": "Adresar prebačen u otpad",
             "folder_empty": "Adresar je uspješno ispražnjen",
             "folder_new": "Novi adresar je kreiran",
-            "trash_empty": "Folder Smeće je uspješno ispražnjen",
+            "trash_empty": "Direktorij Otpad je uspješno ispražnjen",
             "address_book_permanently_deleted": "Adresar je trajno obrisan"
         },
         "type": "Kontakt folder"
@@ -257,7 +257,7 @@
         "auto_contacts": "E-mail kontakti",
         "contacts": "Kontakti",
         "root": "Korijen",
-        "trash": "Smeće"
+        "trash": "Otpad"
     },
     "import_contacts": {
         "modal": {
@@ -397,7 +397,7 @@
             "address_book_moved": "Adresar prebačen u destinacijski folder",
             "contact_deleted_permanently": "Kontakt je trajno obrisan",
             "contact_moved": "Kontakt premješten",
-            "contact_moved_to_trash": "Kontakt premješten u Smeće",
+            "contact_moved_to_trash": "Kontakt premješten u Otpad",
             "contact_restored": "Kontakt vraćen",
             "tag_created": "Oznaka {{name}} uspješno kreirana",
             "tag_deleted": "{{name}} Oznaka uspješno obrisana",
