@@ -39,8 +39,9 @@
                         "invalid_address_other": "Invalid addresses",
                         "invalid_already_present_addresses": "Invalid and already present addresses"
                     },
-                    "placeholder": "Type an address, click ‘+’ to add to the group",
-                    "title": "Addresses list"
+                    "placeholder": "Type an address",
+                    "title": "Addresses list",
+                    "placeholder2": "Type an address"
                 },
                 "name_input": {
                     "error": {
