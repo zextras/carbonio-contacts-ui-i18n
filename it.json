@@ -464,8 +464,9 @@
                         "address_already_present_many": "Indirizzi già presenti",
                         "address_already_present_other": "Indirizzi già presenti"
                     },
-                    "placeholder": "Scrivi un indirizzo, clicca ‘+’ per aggiungerlo al gruppo",
-                    "title": "Elenco indirizzi"
+                    "placeholder": "Scrivi un indirizzo",
+                    "title": "Elenco indirizzi",
+                    "placeholder2": "Scrivi un indirizzo"
                 },
                 "name_input": {
                     "error": {
