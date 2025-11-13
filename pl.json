@@ -456,8 +456,9 @@
                         "invalid_address_few": "Nieprawidłowe adresy",
                         "invalid_address_many": "Nieprawidłowych adresów"
                     },
-                    "placeholder": "Wpisz adres i kliknij na \"+\", aby dodać do grupy",
-                    "title": "Lista adresów"
+                    "placeholder": "Wpisz adres",
+                    "title": "Lista adresów",
+                    "placeholder2": "Wpisz adres"
                 },
                 "name_input": {
                     "error": {
