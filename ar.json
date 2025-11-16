@@ -426,8 +426,9 @@
                         "invalid_address_other": "عنوان غير صالح",
                         "invalid_already_present_addresses": "العناوين غير الصالحة والموجودة بالفعل"
                     },
-                    "placeholder": "اكتب عنوانا ، انقر فوق علامة \"+\" لإضافته إلى المجموعة",
-                    "title": "قائمة العناوين"
+                    "placeholder": "اكتب عنواناً",
+                    "title": "قائمة العناوين",
+                    "placeholder2": "اكتب عنواناً"
                 },
                 "name_input": {
                     "error": {
