@@ -467,8 +467,9 @@
                         "invalid_address_many": "Adresses non valides",
                         "invalid_address_other": "Adresses non valides"
                     },
-                    "placeholder": "Saisissez une adresse puis cliquez sur \"+\" pour l'ajouter au groupe",
-                    "title": "Liste des adresses"
+                    "placeholder": "Saisissez une adresse",
+                    "title": "Liste des adresses",
+                    "placeholder2": "Saisir une adresse"
                 },
                 "name_input": {
                     "error": {
