@@ -357,7 +357,7 @@
             "upload_failed_generic": "Otpremanje fajla \"{{filename}}\" nije uspjelo"
         },
         "folder_name": "Naziv mape",
-        "move": "Pomijeri",
+        "move": "Pomjeri",
         "no_special_char_allowed": "Ime ne smije sadržavati specijalne znakove",
         "of": "od",
         "resend": "Ponovite slanje",
