@@ -351,7 +351,7 @@
         "edit_access": "Uredi pristup",
         "edit_tag": "Uredi oznaku",
         "edit_tag_name": "Uredi \"{{name}}\" oznaku",
-        "empty": "Prazan",
+        "empty": "Isprazni",
         "error_try_again": "Došlo je do greške, pokušaj ponovo",
         "errors": {
             "upload_failed_generic": "Otpremanje fajla \"{{filename}}\" nije uspjelo"
