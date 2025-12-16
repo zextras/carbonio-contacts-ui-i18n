@@ -494,7 +494,7 @@
             "share_calendar_with": {
                 "external_guests": "External guests (view only)",
                 "internal_users_groups": "Internal Users or Groups",
-                "public": "Public (view only, no password required)"
+                "public": "Share with public (view only, no password required)"
             }
         },
         "owner": "Owner",
