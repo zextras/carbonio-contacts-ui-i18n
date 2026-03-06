@@ -469,7 +469,7 @@
                         "invalid_already_present_addresses": "ที่อยู่ไม่ถูกต้องและมีอยู่แล้ว"
                     },
                     "title": "รายการที่อยู่",
-                    "placeholder": "พิมพ์ที่อยู่ แล้วคลิก '+' เพื่อเพิ่มลงในกลุ่ม"
+                    "placeholder": "พิมพ์ที่อยู่"
                 },
                 "name_input": {
                     "error": {
