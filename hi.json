@@ -5,7 +5,16 @@
         "delete_permanently": "सदा के लिए मिटाएँ",
         "goto_folder": "फोल्डर में जाएँ",
         "reset_filters": "फिल्टर रीसेट करें",
-        "share_folder": "फोल्डर साझा करें"
+        "share_folder": "फोल्डर साझा करें",
+        "contactGroup": {
+            "delete": "मिटाना"
+        },
+        "copy": "कॉपी करें",
+        "delete": "मिटाना",
+        "edit": "परिवर्तन",
+        "edit_distribution_list": "परिवर्तन",
+        "mail": "ई-मेल भेजें",
+        "add_shared_address_books": "शेयर जोड़ें"
     },
     "folder": {
         "modal": {
@@ -313,7 +322,11 @@
         "title2": "अपने कांटैक्ट्स से अपना सारा काम शेयर करें।",
         "title4": "पर्सनल नोट्स जोड़कर अपने कांटैक्ट कस्टमाइज़ करें",
         "title6": "कोई कांटैक्ट कस्टमाइज़ करें",
-        "title8": "शेयर की गई ई-मेल भेजें"
+        "title8": "शेयर की गई ई-मेल भेजें",
+        "distribution_list": {
+            "empty_displayer": "एक डिस्ट्रीब्यूशन लिस्ट चुनें या एडमिन से संपर्क करें।",
+            "no_details": "इस वितरण सूची के लिए कोई अतिरिक्त विवरण नहीं है। अधिक जानकारी के लिए, प्रशासक से पूछें।"
+        }
     },
     "contact_restored": "Contact वापस लाया गया",
     "folders": {
@@ -324,5 +337,50 @@
     },
     "search": {
         "shared_folders_note": "खोजों में शेयर की गई एड्रेस बुक्स शामिल करें।"
+    },
+    "board": {
+        "editContactGroup": {
+            "snackbar": {
+                "contact_group_edited": "समूह को सफलतापूर्वक अद्यतन किया गया",
+                "error": "कुछ गलत हो गया संपादन को सहेजते समय, पुनः प्रयास करें"
+            }
+        },
+        "label": {
+            "description": "विवरण"
+        },
+        "newContactGroup": {
+            "addresses": {
+                "label": "पते"
+            },
+            "input": {
+                "contact_input": {
+                    "error": {
+                        "address_already_present_one": "पता पहले से मौजूद है",
+                        "address_already_present_other": "पते पहले से मौजूद है",
+                        "invalid_address_one": "अमान्य पता",
+                        "invalid_address_other": "अमान्य पते",
+                        "invalid_already_present_addresses": "अमान्य और पहले से मौजूद पते"
+                    },
+                    "placeholder": "पता टाइप करें"
+                }
+            },
+            "title": "नया समूह"
+        }
+    },
+    "contactGroupDisplayer": {
+        "label": {
+            "members_total": "पते: {{count}}"
+        }
+    },
+    "contactGroupList": {
+        "addressCount_one": "{{count}} पता",
+        "addressCount_other": "{{count}} पते",
+        "emptyList": "अब तक कोई संपर्क समूह बनाया नहीं गया है"
+    },
+    "contacts": {
+        "importAction": {
+            "modalButton": "इम्पोर्ट करें",
+            "modalTitle": "संपर्क आयात करें"
+        }
     }
 }
