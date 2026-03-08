@@ -111,7 +111,7 @@
         "revoke": "เพิกถอน",
         "revoke_share": "ถอนการแชร์ของ {{title}}",
         "shares_folder_edit": "การแชร์สมุดที่อยู่นี้",
-        "contacts": "การติดต่อ",
+        "contacts": "ผู้ติดต่อ",
         "edit_access_name": "แก้ไขการเข้าถึงของ {{name}}",
         "email": "อีเมล",
         "restore": "กู้คืน",
@@ -140,7 +140,7 @@
         "options": "ตัวเลือก",
         "share_with": "แชร์กับ",
         "select_color": "เลือกสี",
-        "app_name": "การติดต่อ",
+        "app_name": "ผู้ติดต่อ",
         "new_contact": "รายชื่อผู้ติดต่อใหม่",
         "cannot_move": "ไม่สามารถย้ายไปยังโฟลเดอร์เดียวกันได้",
         "edit_invalid_email": "อีเมลไม่ถูกต้อง คลิกเพื่อแก้ไข",
@@ -181,7 +181,8 @@
         "website_other": "เว็บไซต์",
         "export_contact": "ส่งออกไฟล์ vCard",
         "keyword": "คำหลัก",
-        "find_shares": "ค้นหาการแชร์"
+        "find_shares": "ค้นหาการแชร์",
+        "invalid_query": "อักขระพิเศษ เช่น :, \", -, ! เป็นต้น จะถูกละเว้นในการค้นหา ซึ่งอาจทำให้ผลลัพธ์สำหรับรายการต่อไปนี้ไม่เป็นไปตามที่คาดไว้:"
     },
     "share": {
         "read": "อ่าน",
@@ -220,7 +221,8 @@
         "write": "เขียน",
         "find_shares_label": "เลือกสมุดที่อยู่ที่คุณต้องการดูในแผนผังของผู้ติดต่อ",
         "share_note": "ข้อความมาตรฐานจะแสดงชื่อของคุณ, ชื่อรายการที่แชร์, สิทธิ์ที่มอบให้กับผู้รับ, และข้อมูลการลงชื่อเข้าใช้",
-        "link_name": "{{shareName}} ของ {{ownerName}}"
+        "link_name": "{{shareName}} ของ {{ownerName}}",
+        "is_contained_in": "ประกอบอยู่ใน"
     },
     "job": {
         "company": "บริษัท",
@@ -359,7 +361,8 @@
         "address_book_sharing_status_other": "แบ่งปันกับ {{count}} คน",
         "list_trash": {
             "deletePermanently": "ลบผู้ติดต่อถาวร"
-        }
+        },
+        "folder_sharing_status_other": "แชร์กับ {{count}} คน"
     },
     "displayer": {
         "title5": "เลือกรายชื่อผู้ติดต่อ",
@@ -469,7 +472,8 @@
                         "invalid_already_present_addresses": "ที่อยู่ไม่ถูกต้องและมีอยู่แล้ว"
                     },
                     "title": "รายการที่อยู่",
-                    "placeholder": "พิมพ์ที่อยู่"
+                    "placeholder": "พิมพ์ที่อยู่",
+                    "placeholder2": "พิมพ์ที่อยู่"
                 },
                 "name_input": {
                     "error": {
@@ -554,6 +558,33 @@
         },
         "snackbar": {
             "import_contacts_success_other": "นำเข้าผู้ติดต่อ {{count}} รายการและเพิ่มลงในสมุดที่อยู่ที่เลือก"
+        }
+    },
+    "folder_panel": {
+        "option": {
+            "all_contacts": "ทั้งหมด",
+            "contacts": "ผู้ติดต่อ",
+            "contact_group": "กลุ่มผู้ติดต่อ"
+        }
+    },
+    "colors": {
+        "black": "สีดำ",
+        "purple": "สีม่วง",
+        "blue": "สีน้ำเงิน",
+        "cyan": "สีฟ้า",
+        "red": "สีแดง",
+        "green": "สีเขียว",
+        "orange": "สีส้ม",
+        "pink": "สีชมพู",
+        "yellow": "สีเหลือง",
+        "gray": "สีเทา"
+    },
+    "advancedFilters": {
+        "title": "ตัวกรองขั้นสูง",
+        "phoneNumber": "หมายเลขโทรศัพท์",
+        "keywords": "คำหลัก",
+        "isContainedIn": {
+            "chooseFolder": "เลือกโฟลเดอร์"
         }
     }
 }
