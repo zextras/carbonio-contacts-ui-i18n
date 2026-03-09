@@ -1,1 +1,219 @@
-{}
+{
+    "action": {
+        "contactGroup": {
+            "delete": "Suprimeix"
+        },
+        "copy": "Copia",
+        "delete": "Suprimeix",
+        "edit": "Edita",
+        "edit_distribution_list": "Edita",
+        "search": "Cerca",
+        "share_folder": "Comparteix carpeta"
+    },
+    "board": {
+        "label": {
+            "description": "Descripció"
+        },
+        "newContactGroup": {
+            "addresses": {
+                "label": "Adreces"
+            }
+        }
+    },
+    "displayer": {
+        "distribution_list": {
+            "label": {
+                "description": "Descripció"
+            }
+        },
+        "title5": "Selecciona contacte"
+    },
+    "distribution_list": {
+        "tabs": {
+            "details": "Detalls"
+        }
+    },
+    "edit_dl_component": {
+        "error": {
+            "invalid_address_one": "L’adreça IP no és vàlida",
+            "invalid_address_many": "",
+            "invalid_address_other": "L’adreça IP no és vàlida"
+        },
+        "input": {
+            "description": {
+                "label": "Descripció"
+            }
+        }
+    },
+    "folder": {
+        "action": {
+            "move": "Mou"
+        },
+        "modal": {
+            "edit": {
+                "body": {
+                    "item": {
+                        "empty": "no hi ha dades disponibles"
+                    }
+                }
+            }
+        },
+        "type": "Carpeta de contactes"
+    },
+    "folders": {
+        "auto_contacts": "Contactes a qui s’ha enviat correu",
+        "contacts": "Contactes",
+        "root": "Arrel",
+        "trash": "Paperera"
+    },
+    "import_contacts": {
+        "modal": {
+            "confirm": "Importa"
+        }
+    },
+    "job": {
+        "company": "Empresa",
+        "department": "Departament"
+    },
+    "label": {
+        "app_name": "Contactes",
+        "autocomplete": "Emplenament automàtic",
+        "cancel": "Cancel·la",
+        "contacts": "Contactes",
+        "create": "Creat",
+        "delete": "Suprimeix",
+        "edit": "Edita",
+        "empty": "Buida",
+        "folder_name": "Nom de carpeta",
+        "move": "Mou",
+        "new_contact": "Contacte nou",
+        "new_tag": "Etiqueta nova",
+        "note": "Nota:",
+        "notes": "Notes",
+        "options": "Opcions",
+        "resend": "Reenvia",
+        "revoke": "Revoca",
+        "root": "Arrel",
+        "save": "Desa",
+        "share": "Comparteix",
+        "share_with": "Comparteix amb:",
+        "tag": "Etiqueta",
+        "tag_name": "Nom d’etiqueta",
+        "tags": "Etiquetes",
+        "type": "Tipus",
+        "undo": "Desfés",
+        "find_share": "Cerca comparticions",
+        "new_folder": "Carpeta nova",
+        "distribution_list_app_name": "Llistes de distribució"
+    },
+    "members_list_item_component": {
+        "button": {
+            "remove": "Elimina"
+        }
+    },
+    "messages": {
+        "snackbar": {
+            "contact_moved": "El contacte s’ha desat"
+        }
+    },
+    "modal": {
+        "close": {
+            "tooltip": "Tancar"
+        }
+    },
+    "name": {
+        "first_name": "Nom",
+        "last_name": "Cognom",
+        "middle_name": "Segon nom",
+        "nickName": "Sobrenom",
+        "prefix": "Prefix",
+        "suffix": "Sufix"
+    },
+    "secondaryBar": {
+        "contextualMenu": {
+            "new_contact_group_creation_action": "Grup de contactes nou"
+        },
+        "distributionLists": "Llistes de distribució",
+        "distributionListsManager": "Administrador",
+        "contactGroups": "Grup de contactes"
+    },
+    "section": {
+        "field": {
+            "city": "Ciutat",
+            "country": "País:",
+            "number": "Número",
+            "state": "Estat:",
+            "street": "Carrer"
+        },
+        "title": {
+            "address_one": "Adreça",
+            "address_many": "",
+            "address_other": "Adreces",
+            "mail": "Adreça de correu:"
+        }
+    },
+    "settings": {
+        "contacts": {
+            "checkbox": {
+                "add_contact_to_emailed_contacts": "Afegeix contactes nous a \"Contactes a qui s’ha enviat correu\"",
+                "autocomplete_on_comma": "Selecciona una coincidència d’emplenament automàtic en escriure una coma",
+                "incl_addrs_in_glbl_addrs_list": "Inclou adreces de la llista global d’adreces",
+                "include_add_in_shared_contact": "Inclou les adreces als contactes compartits",
+                "srch_glbl_addrs_list": "Cerca primer a la llista global d’adreces en fer servir el selector de contactes"
+            }
+        }
+    },
+    "share": {
+        "add": "Afegeix",
+        "admin": "Administració",
+        "administer": "Administra",
+        "find_shares": "Cerca comparticions",
+        "manager": "Administrador",
+        "none": "Cap",
+        "options": {
+            "share_calendar_with": {
+                "external_guests": "Convidats externs (només visualitza)",
+                "internal_users_groups": "Usuaris o grups interns",
+                "public": "Públic (només visualitza, sense contrasenya)"
+            }
+        },
+        "owner": "Propietari",
+        "read": "Llegit",
+        "remove_from_this_list": "Elimina de la llista",
+        "role": "Rol",
+        "share_note": "<b>Nota:</b> El missatge estàndard inclou el vostre nom, el nom de l’element compartit, els permisos concedits als destinataris i les dades d’inici de sessió, si s’escau.",
+        "standard_message": "Afegeix nota al missatge estàndard",
+        "viewer": "Visualitzador",
+        "workflow": "Flux de treball"
+    },
+    "title": {
+        "advanced_filters": "Filtres avançats"
+    },
+    "tooltip": {
+        "folder_linked_status": "Comparteix amb:"
+    },
+    "types": {
+        "other": "altres",
+        "work": "feina"
+    },
+    "folder_panel": {
+        "option": {
+            "contacts": "Contactes",
+            "contact_group": "Grup de contactes"
+        }
+    },
+    "colors": {
+        "purple": "Porpra",
+        "blue": "Blau",
+        "cyan": "Cian",
+        "green": "Verd",
+        "orange": "Taronja",
+        "pink": "Rosa",
+        "yellow": "Groc",
+        "gray": "Gris"
+    },
+    "advancedFilters": {
+        "phoneNumber": "Número de telèfon",
+        "title": "Filtres avançats"
+    }
+}
