@@ -8,7 +8,8 @@
         "edit": "Edita",
         "edit_distribution_list": "Edita",
         "search": "Cerca",
-        "share_folder": "Comparteix carpeta"
+        "share_folder": "Comparteix carpeta",
+        "delete_permanently": "Eliminar permanentment"
     },
     "board": {
         "label": {
@@ -17,6 +18,16 @@
         "newContactGroup": {
             "addresses": {
                 "label": "Adreces"
+            },
+            "input": {
+                "name_input": {
+                    "error": {
+                        "max_length": "La longitud màxima de la contrasenya és de {0} caràcters"
+                    },
+                    "name": {
+                        "label": "Nom del grup"
+                    }
+                }
             }
         }
     },
@@ -42,12 +53,24 @@
         "input": {
             "description": {
                 "label": "Descripció"
+            },
+            "name": {
+                "error": {
+                    "max_length": "La longitud màxima de la contrasenya és de {0} caràcters"
+                },
+                "label": "Llista de distribució"
             }
+        },
+        "label": {
+            "dl_email": "Llistes de distribució"
         }
     },
     "folder": {
         "action": {
-            "move": "Mou"
+            "move": "Mou",
+            "empty": {
+                "trash": "Buida la paperera"
+            }
         },
         "modal": {
             "edit": {
@@ -56,9 +79,20 @@
                         "empty": "no hi ha dades disponibles"
                     }
                 }
+            },
+            "footer": {
+                "go_back": "Tornar"
+            },
+            "move": {
+                "body": {
+                    "message3": "Seleccioneu un calendari per moure la cita considerada:"
+                }
             }
         },
-        "type": "Carpeta de contactes"
+        "type": "Carpeta de contactes",
+        "snackbar": {
+            "trash_empty": "Escombraries buidades correctament"
+        }
     },
     "folders": {
         "auto_contacts": "Contactes a qui s’ha enviat correu",
@@ -104,7 +138,9 @@
         "undo": "Desfés",
         "find_share": "Cerca comparticions",
         "new_folder": "Carpeta nova",
-        "distribution_list_app_name": "Llistes de distribució"
+        "distribution_list_app_name": "Llistes de distribució",
+        "delete_tag_name": "Eliminar etiqueta {{name}}",
+        "edit_tag_name": "Editar etiqueta {{name}}"
     },
     "members_list_item_component": {
         "button": {
@@ -114,11 +150,24 @@
     "messages": {
         "snackbar": {
             "contact_moved": "El contacte s’ha desat"
+        },
+        "modal": {
+            "delete": {
+                "sure_delete_contact_one": "Esteu segur que voleu suprimir aquesta versió del fitxer de forma permanent?",
+                "sure_delete_contact_many": "",
+                "sure_delete_contact_other": "Esteu segur que voleu suprimir aquesta versió del fitxer de forma permanent?"
+            }
         }
     },
     "modal": {
         "close": {
             "tooltip": "Tancar"
+        },
+        "cancel": "Cancel·la",
+        "delete": {
+            "button": {
+                "confirm": "Suprimeix"
+            }
         }
     },
     "name": {
@@ -135,7 +184,8 @@
         },
         "distributionLists": "Llistes de distribució",
         "distributionListsManager": "Administrador",
-        "contactGroups": "Grup de contactes"
+        "contactGroups": "Grup de contactes",
+        "distributionListsMember": "Membres"
     },
     "section": {
         "field": {
@@ -143,7 +193,8 @@
             "country": "País:",
             "number": "Número",
             "state": "Estat:",
-            "street": "Carrer"
+            "street": "Carrer",
+            "postalCode": "Codi postal"
         },
         "title": {
             "address_one": "Adreça",
@@ -184,17 +235,22 @@
         "share_note": "<b>Nota:</b> El missatge estàndard inclou el vostre nom, el nom de l’element compartit, els permisos concedits als destinataris i les dades d’inici de sessió, si s’escau.",
         "standard_message": "Afegeix nota al missatge estàndard",
         "viewer": "Visualitzador",
-        "workflow": "Flux de treball"
+        "workflow": "Flux de treball",
+        "find_shares_label": "Seleccioneu quins calendaris voleu veure a l'arbre de calendaris"
     },
     "title": {
         "advanced_filters": "Filtres avançats"
     },
     "tooltip": {
-        "folder_linked_status": "Comparteix amb:"
+        "folder_linked_status": "Comparteix amb:",
+        "list_trash": {
+            "deletePermanently": "Eliminar permanentment"
+        }
     },
     "types": {
         "other": "altres",
-        "work": "feina"
+        "work": "feina",
+        "mobile": "Mòbil"
     },
     "folder_panel": {
         "option": {
@@ -214,6 +270,9 @@
     },
     "advancedFilters": {
         "phoneNumber": "Número de telèfon",
-        "title": "Filtres avançats"
+        "title": "Filtres avançats",
+        "isContainedIn": {
+            "chooseFolder": "Seleccioneu una carpeta"
+        }
     }
 }
