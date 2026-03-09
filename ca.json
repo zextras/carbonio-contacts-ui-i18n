@@ -9,7 +9,12 @@
         "edit_distribution_list": "Edita",
         "search": "Cerca",
         "share_folder": "Comparteix carpeta",
-        "delete_permanently": "Eliminar permanentment"
+        "delete_permanently": "Eliminar permanentment",
+        "goto_folder": "Anar a la carpeta",
+        "mail": "Enviar correu electrònic",
+        "reset_filters": "Restablir filtres",
+        "send_msg": "Enviar correu electrònic",
+        "add_shared_address_books": "Afegir comparticions"
     },
     "board": {
         "label": {
@@ -27,7 +32,24 @@
                     "name": {
                         "label": "Nom del grup"
                     }
+                },
+                "contact_input": {
+                    "error": {
+                        "address_already_present_one": "Adreça ja present",
+                        "address_already_present_many": "",
+                        "address_already_present_other": "Adreces ja presents",
+                        "invalid_address_one": "Adreça no vàlida",
+                        "invalid_address_many": "",
+                        "invalid_address_other": "Adreces no vàlides",
+                        "invalid_already_present_addresses": "Adreces no vàlides i ja presents"
+                    }
                 }
+            }
+        },
+        "editContactGroup": {
+            "snackbar": {
+                "contact_group_edited": "Grup actualitzat correctament",
+                "error": "Ha ocorregut un error en desar les edicions, torneu-ho a provar"
             }
         }
     },
@@ -140,7 +162,65 @@
         "new_folder": "Carpeta nova",
         "distribution_list_app_name": "Llistes de distribució",
         "delete_tag_name": "Eliminar etiqueta {{name}}",
-        "edit_tag_name": "Editar etiqueta {{name}}"
+        "edit_tag_name": "Editar etiqueta {{name}}",
+        "activate_selection_mode": "Activa el mode de selecció",
+        "add_share": "Afegeix Compartir",
+        "address_book_restored": "Llibreta d'adreces restaurada",
+        "advanced_filter_one": "{{count}} Filtre avançat",
+        "advanced_filter_many": "",
+        "advanced_filter_other": "{{count}} Filtres avançats",
+        "cannot_move": "No es pot moure a la mateixa carpeta",
+        "contact_created_in_folder": "Aquest contacte es crearà a la carpeta \"{{name}}\"",
+        "contact_setting": "Configuració de contactes",
+        "create_tag": "Crea etiqueta",
+        "delete_tag": "Eliminar etiqueta",
+        "destination_address_book": "Llibreta d'adreces de destinació",
+        "discard": "descarta",
+        "discard_changes": "DESCARTAR CANVIS",
+        "edit_access": "Editar accés",
+        "edit_access_name": "Edita l'accés de {{name}}",
+        "edit_contacts": "Edita contactes",
+        "edit_email": "Edita Correu electrònic",
+        "edit_folder_properties": "Edita les propietats de {{name}}",
+        "edit_invalid_email": "El correu electrònic no és vàlid, feu clic per editar-lo",
+        "edit_tag": "Editar etiqueta",
+        "email": "Correu electrònic",
+        "error_try_again": "Alguna cosa ha anat malament, torneu-ho a provar",
+        "errors": {
+            "upload_failed_generic": "Ha fallat la càrrega del fitxer \"{{filename}}\""
+        },
+        "export_address_book": "Exporta el fitxer csv",
+        "groups_app_name": "Grups de contactes i llistes de distribució",
+        "import_address_book": "Importa el fitxer csv",
+        "include_shared_folders": "Inclou llibres d'adreces compartits",
+        "newContactGroup": "Nou grup de contactes",
+        "new_address_book": "Nou llibre d'adreces",
+        "new_contact_created": "Nou contacte creat",
+        "no_data": "Sense dades",
+        "no_name": "Sense nom",
+        "no_special_char_allowed": "El nom no hauria de contenir cap caràcter especial",
+        "of": "de",
+        "restore": "Restaurar",
+        "results_for": "Resultats per:",
+        "revoke_share": "Revoqua el compartició de {{title}}",
+        "revoke_with_custom_msg": "Revoqua l'accés enviant una notificació personalitzada",
+        "revoke_with_standard_msg": "Revoqua l'accés enviant una notificació estàndard",
+        "revoke_without_notification": "Revoqua l'accés sense enviar cap notificació",
+        "search_activate_selection_mode": "Mode de selecció no està disponible encara en els resultats de la cerca",
+        "select_all_addresses_one": "Selecciona adreça",
+        "select_all_addresses_many": "",
+        "select_all_addresses_other": "Selecciona totes les adreces {{count}}",
+        "select_color": "Selecciona color",
+        "shares_folder_edit": "Compartir aquest llibre d'adreces",
+        "show_more": "mostra més",
+        "tag_max_length": "S'allowen com a màxim 128 caràcters",
+        "update": "Actualitza",
+        "website_one": "Lloc web",
+        "website_many": "",
+        "website_other": "Llocs web",
+        "filter_folders": "Filtre carpetes",
+        "export_contact": "Exporta fitxer vCard",
+        "keyword": "Paraules clau"
     },
     "members_list_item_component": {
         "button": {
@@ -185,7 +265,8 @@
         "distributionLists": "Llistes de distribució",
         "distributionListsManager": "Administrador",
         "contactGroups": "Grup de contactes",
-        "distributionListsMember": "Membres"
+        "distributionListsMember": "Membres",
+        "myContactGroups": "Els meus grups de contactes"
     },
     "section": {
         "field": {
@@ -194,13 +275,15 @@
             "number": "Número",
             "state": "Estat:",
             "street": "Carrer",
-            "postalCode": "Codi postal"
+            "postalCode": "Codi postal",
+            "website": "Lloc web"
         },
         "title": {
             "address_one": "Adreça",
             "address_many": "",
             "address_other": "Adreces",
-            "mail": "Adreça de correu:"
+            "mail": "Adreça de correu:",
+            "phone_number": "Contacte telefònic"
         }
     },
     "settings": {
@@ -255,7 +338,8 @@
     "folder_panel": {
         "option": {
             "contacts": "Contactes",
-            "contact_group": "Grup de contactes"
+            "contact_group": "Grup de contactes",
+            "all_contacts": "Tots"
         }
     },
     "colors": {
@@ -266,13 +350,38 @@
         "orange": "Taronja",
         "pink": "Rosa",
         "yellow": "Groc",
-        "gray": "Gris"
+        "gray": "Gris",
+        "black": "Negre",
+        "red": "Vermell"
     },
     "advancedFilters": {
         "phoneNumber": "Número de telèfon",
         "title": "Filtres avançats",
         "isContainedIn": {
             "chooseFolder": "Seleccioneu una carpeta"
+        },
+        "keywords": "Paraules clau"
+    },
+    "search": {
+        "shared_folders_note": "Inclou llibres d'adreces compartits a les cerques."
+    },
+    "select": {
+        "default": "Seleccioneu el tipus"
+    },
+    "contact": {
+        "modal": {
+            "move_multiple": {
+                "title": "Mou {{count}} contactes"
+            },
+            "move_single": {
+                "title": "Mou el contacte {{contactDesc}}"
+            },
+            "restore_multiple": {
+                "title": "Restaura {{count}} contactes"
+            },
+            "restore_single": {
+                "title": "Restaura el contacte {{contactDesc}}"
+            }
         }
     }
 }
