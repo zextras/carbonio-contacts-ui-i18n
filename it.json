@@ -377,7 +377,10 @@
         "folder_linked_status": "Condivisa con me",
         "list_trash": {
             "deletePermanently": "Elimina contatto definitivamente"
-        }
+        },
+        "folder_sharing_status_one": "Condiviso con {{count}} persone",
+        "folder_sharing_status_many": "",
+        "folder_sharing_status_other": ""
     },
     "displayer": {
         "description3": "Clicca il pulsante \"NUOVO\" per creare un nuovo gruppo di contatti.",
