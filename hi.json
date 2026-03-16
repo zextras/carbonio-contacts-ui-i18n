@@ -215,7 +215,22 @@
         "export_address_book": "सीएसवी फ़ाइल निर्यात करें",
         "groups_app_name": "संपर्क समूह और वितरण सूची",
         "import_address_book": "सीएसवी फ़ाइल आयात करें",
-        "newContactGroup": "नया संपर्क समूह"
+        "newContactGroup": "नया संपर्क समूह",
+        "select_all_addresses_one": "पते चुनें",
+        "select_all_addresses_other": "सभी {{count}} पते चुनें",
+        "show_more": "अधिक दिखाएं",
+        "update": "अद्यतन करें",
+        "website_one": "वेबसाइट्स",
+        "website_other": "वेबसाइटें",
+        "find_share": "साझा ढूँढें",
+        "filter_folders": "फोल्डर फिल्टर करें",
+        "new_folder": "नया फ़ोल्डर",
+        "export_contact": "वीकार्ड फ़ाइल एक्सपोर्ट करें",
+        "keyword": "मुख्य शब्द",
+        "find_shares": "साझा किए गए आइटम खोजें",
+        "filter_mode": "फ़िल्टर मोड",
+        "distribution_list_app_name": "वितरण सूचियाँ",
+        "invalid_query": "विशेष वर्ण जैसे:, \", -, !, आदि को खोज में अनदेखा किया जाता है। इससे अप्रत्याशित परिणाम हो सकते हैं:"
     },
     "name": {
         "nickName": "उर्फनाम",
@@ -251,7 +266,9 @@
     "messages": {
         "modal": {
             "delete": {
-                "if_delete_lost_forever": "इस कांटैक्ट को परमानेंट डिलीट करने के बाद आप इसे फिर वापस नहीं ला सकेंगे, जारी रखें?"
+                "if_delete_lost_forever": "इस कांटैक्ट को परमानेंट डिलीट करने के बाद आप इसे फिर वापस नहीं ला सकेंगे, जारी रखें?",
+                "sure_delete_contact_one": "क्या आप वाकई इस संपर्क को स्थायी रूप से हटाना चाहते हैं?",
+                "sure_delete_contact_other": "क्या आप इन संपर्कों को स्थायी रूप से हटाने के लिए आश्वस्त हैं?"
             }
         },
         "snackbar": {
@@ -474,6 +491,11 @@
         "snackbar": {
             "import_contacts_success_one": "{{count}} संपर्क आयात किए गए और चयनित पते पुस्तिका में जोड़े गए",
             "import_contacts_success_other": "{{count}} संपर्क आयात किए गए और चयनित पते पुस्तिका में जोड़े गए"
+        }
+    },
+    "members_list_item_component": {
+        "button": {
+            "remove": "हटाएँ"
         }
     }
 }
