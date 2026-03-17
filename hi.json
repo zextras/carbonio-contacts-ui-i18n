@@ -247,11 +247,14 @@
             "city": "नगर",
             "number": "संख्या",
             "postalCode": "पोस्ट पिन कोड",
-            "street": "गली"
+            "street": "गली",
+            "website": "वेबसाइट"
         },
         "title": {
             "mail": "ई-मेल पता",
-            "phone_number": "फोन कांटैक्ट"
+            "phone_number": "फोन कांटैक्ट",
+            "address_one": "पता",
+            "address_other": "पते"
         }
     },
     "message": {
@@ -280,12 +283,37 @@
             "tag_updated": "टैग अपडेट हो गया",
             "tag_not_updated": "कुछ गड़बड़ हुई, टैग अपडेट नहीं है। दोबारा कोशिश करें।",
             "tag_deleted": "{{name}} टैग डिलीट हो गया",
-            "tag_created": "टैग {{name}} बन गया"
+            "tag_created": "टैग {{name}} बन गया",
+            "conversation_move": "बातचीत सफलतापूर्वक स्थानांतरित की गई",
+            "folder_moved": "फ़ोल्डर सफलतापूर्वक स्थानांतरित किया गया",
+            "message_move": "संदेश सफलतापूर्वक स्थानांतरित किया गया"
         }
     },
     "modal": {
         "address_book_name": "एड्रेस बुक नाम",
-        "destination": "गंतव्य फोल्डर"
+        "destination": "गंतव्य फोल्डर",
+        "cancel": "रद्द करें",
+        "close": {
+            "tooltip": "बंद"
+        },
+        "delete": {
+            "button": {
+                "confirm": "मिटाना"
+            },
+            "contactGroup": {
+                "body1": "क्या आप चयनित संपर्क समूह को हटाने के लिए निश्चित हैं?",
+                "body2": "यदि आप इसे हटा देते हैं तो यह हमेशा के लिए खो जाएगा।",
+                "header": "हटाएं \"{{contactGroupName}}\""
+            }
+        },
+        "edit_distribution_list": {
+            "title": "संपादित करें \"{{displayName}}\""
+        },
+        "initializeError": {
+            "content": "कृपया पृष्ठ को ताज़ा करें या बाद में पुनः प्रयास करें। अन्य मॉड्यूल सीमित कार्यक्षमता के साथ अभी भी उपलब्ध हो सकते हैं।",
+            "title": "कुछ गड़बड़ हुई",
+            "buttonConfirm": "पुनः लोड करें"
+        }
     },
     "select": {
         "default": "टाइप सिलेक्ट करें"
@@ -497,5 +525,15 @@
         "button": {
             "remove": "हटाएँ"
         }
+    },
+    "secondaryBar": {
+        "contextualMenu": {
+            "new_contact_group_creation_action": "नया संपर्क समूह"
+        },
+        "distributionLists": "वितरण सूचियाँ",
+        "distributionListsManager": "प्रबंधक",
+        "distributionListsMember": "सदस्य",
+        "myContactGroups": "मेरे संपर्क समूह",
+        "contactGroups": "संपर्क समूह"
     }
 }
