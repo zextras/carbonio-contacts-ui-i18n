@@ -360,7 +360,12 @@
         "revoke": "एक्सेस बंद करें",
         "address_book_sharing_status_one": "{{count}} व्यक्ति के साथ साझा किया गया",
         "address_book_sharing_status_other": "{{count}} लोगों के साथ साझा किया गया",
-        "folder_linked_status": "मुझसे साझा किया गया"
+        "folder_linked_status": "मुझसे साझा किया गया",
+        "folder_sharing_status_one": "{{count}} व्यक्ति के साथ शेयर किया गया",
+        "folder_sharing_status_other": "{{count}} व्यक्तियों के साथ शेयर किया गया",
+        "list_trash": {
+            "deletePermanently": "संपर्क को स्थायी रूप से हटाएं"
+        }
     },
     "types": {
         "home": "होम",
@@ -552,5 +557,12 @@
         "distributionListsMember": "सदस्य",
         "myContactGroups": "मेरे संपर्क समूह",
         "contactGroups": "संपर्क समूह"
+    },
+    "contact": {
+        "modal": {
+            "move_multiple": {
+                "title": "{{count}} संपर्क स्थानांतरित करें"
+            }
+        }
     }
 }
