@@ -134,7 +134,8 @@
         "standard_message": "स्टैंडर्ड मैसेज में कोई नोट जोड़ें",
         "workflow": "वर्कफ़्लो",
         "write": "लिखें",
-        "remove_from_this_list": "इस लिस्ट से हटाएँ"
+        "remove_from_this_list": "इस लिस्ट से हटाएँ",
+        "link_name": "{{shareName}} का {{ownerName}}"
     },
     "job": {
         "company": "कंपनी",
@@ -336,7 +337,20 @@
         "share_revoke": "शेयर एक्सेस वापस ली गई",
         "share_updated": "एक्सेस अधिकार अपडेट हुए",
         "tag_removed": "\"{{tag}}\" टैग हटाया गया",
-        "tag_applied": "\"{{tag}}\" टैग अप्लाई हो गया"
+        "tag_applied": "\"{{tag}}\" टैग अप्लाई हो गया",
+        "delete_contact_group": {
+            "confirm": {
+                "success": "संपर्क समूह सफलतापूर्वक हटा दिया गया"
+            }
+        },
+        "edit_distribution_list": {
+            "save": {
+                "success": "\"{{displayName}}\" वितरण सूची संपादन सफलतापूर्वक सहेजे गए"
+            }
+        },
+        "email_copied_to_clipboard": "ईमेल क्लिपबोर्ड पर कॉपी किया गया है।",
+        "import_contacts_success_one": "{{number}} संपर्क आयात किए गए और चुनी गई पता पुस्तिका में जोड़े गए",
+        "import_contacts_success_other": "{{number}} संपर्क आयात किए गए और चुनी गई पता पुस्तिका में जोड़े गए"
     },
     "title": {
         "advanced_filters": "एड्वान्स्ड फ़िल्टर"
