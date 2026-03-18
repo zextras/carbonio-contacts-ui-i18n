@@ -359,7 +359,8 @@
         "resend": "इस शेयर के बारे में ई-मेल नोटिफिकेशन भेजें",
         "revoke": "एक्सेस बंद करें",
         "address_book_sharing_status_one": "{{count}} व्यक्ति के साथ साझा किया गया",
-        "address_book_sharing_status_other": "{{count}} लोगों के साथ साझा किया गया"
+        "address_book_sharing_status_other": "{{count}} लोगों के साथ साझा किया गया",
+        "folder_linked_status": "मुझसे साझा किया गया"
     },
     "types": {
         "home": "होम",
