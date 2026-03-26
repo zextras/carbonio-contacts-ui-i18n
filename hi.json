@@ -135,7 +135,8 @@
         "workflow": "वर्कफ़्लो",
         "write": "लिखें",
         "remove_from_this_list": "इस लिस्ट से हटाएँ",
-        "link_name": "{{shareName}} का {{ownerName}}"
+        "link_name": "{{shareName}} का {{ownerName}}",
+        "is_contained_in": "में मौजूद है"
     },
     "job": {
         "company": "कंपनी",
@@ -452,7 +453,8 @@
                         "invalid_already_present_addresses": "अमान्य और पहले से मौजूद पते"
                     },
                     "placeholder": "पता टाइप करें",
-                    "title": "पते की सूची"
+                    "title": "पते की सूची",
+                    "placeholder2": "पता टाइप करें"
                 },
                 "name_input": {
                     "error": {
@@ -562,7 +564,43 @@
         "modal": {
             "move_multiple": {
                 "title": "{{count}} संपर्क स्थानांतरित करें"
+            },
+            "move_single": {
+                "title": "{{contactDesc}} के संपर्क स्थानांतरित करें"
+            },
+            "restore_multiple": {
+                "title": "{{count}} संपर्क पुनर्स्थापित करें"
+            },
+            "restore_single": {
+                "title": "{{contactDesc}} के संपर्क पुनर्स्थापित करें"
             }
+        }
+    },
+    "folder_panel": {
+        "option": {
+            "all_contacts": "सभी",
+            "contacts": "संपर्क",
+            "contact_group": "संपर्क समूह"
+        }
+    },
+    "colors": {
+        "black": "काला",
+        "purple": "बैंगनी",
+        "blue": "नीला",
+        "cyan": "आसमानी नीला",
+        "red": "लाल",
+        "green": "हरा",
+        "orange": "केसरी",
+        "pink": "गुलाबी",
+        "yellow": "पीला",
+        "gray": "भूरा"
+    },
+    "advancedFilters": {
+        "title": "उन्नत फ़िल्टर",
+        "phoneNumber": "फ़ोन नंबर",
+        "keywords": "मुख्य शब्द",
+        "isContainedIn": {
+            "chooseFolder": "फोल्डर चुनें"
         }
     }
 }
