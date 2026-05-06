@@ -522,7 +522,7 @@
                         "address_already_present_many": "Os endereços já existem",
                         "address_already_present_other": "Os endereços já existem"
                     },
-                    "placeholder": "Digite um endereço e clique em \"+\" para adicioná-lo ao grupo",
+                    "placeholder": "Digite um endereço",
                     "title": "Lista de endereços"
                 },
                 "name_input": {
