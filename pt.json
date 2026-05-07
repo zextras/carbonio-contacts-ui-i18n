@@ -191,8 +191,9 @@
         "website_many": "Sites",
         "website_other": "Sites",
         "export_contact": "Exportar arquivo vCard",
-        "keyword": "Palavra-chave",
-        "find_shares": "PESQUISAR COMPARTILHAMENTOS"
+        "keyword": "Palavras-chave",
+        "find_shares": "PESQUISAR COMPARTILHAMENTOS",
+        "invalid_query": "Caracteres especiais como :, \", -, ! etc. são ignorados na pesquisa. Isso pode levar a resultados inesperados para:"
     },
     "share": {
         "add": "Adicionar",
