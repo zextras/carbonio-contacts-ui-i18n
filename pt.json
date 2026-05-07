@@ -193,7 +193,8 @@
         "export_contact": "Exportar arquivo vCard",
         "keyword": "Palavras-chave",
         "find_shares": "PESQUISAR COMPARTILHAMENTOS",
-        "invalid_query": "Caracteres especiais como :, \", -, ! etc. são ignorados na pesquisa. Isso pode levar a resultados inesperados para:"
+        "invalid_query": "Caracteres especiais como :, \", -, ! etc. são ignorados na pesquisa. Isso pode levar a resultados inesperados para:",
+        "filter_mode": "Modo de filtro"
     },
     "share": {
         "add": "Adicionar",
