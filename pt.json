@@ -194,7 +194,8 @@
         "keyword": "Palavras-chave",
         "find_shares": "PESQUISAR COMPARTILHAMENTOS",
         "invalid_query": "Caracteres especiais como :, \", -, ! etc. são ignorados na pesquisa. Isso pode levar a resultados inesperados para:",
-        "filter_mode": "Modo de filtro"
+        "filter_mode": "Modo de filtro",
+        "distribution_list_app_name": "Listas de Distribuição"
     },
     "share": {
         "add": "Adicionar",
