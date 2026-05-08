@@ -234,7 +234,8 @@
         "viewer": "Visualizar",
         "workflow": "Fluxo de trabalho",
         "write": "Escrever",
-        "link_name": "{{shareName}} de {{ownerName}}"
+        "link_name": "{{shareName}} de {{ownerName}}",
+        "is_contained_in": "Está contido em"
     },
     "name": {
         "nickName": "Apelido",
@@ -367,7 +368,10 @@
         "address_book_sharing_status_other": "Compartilhado com {{count}} pessoas",
         "list_trash": {
             "deletePermanently": "Excluir contato permanentemente"
-        }
+        },
+        "folder_sharing_status_one": "Compartilhado com 1 pessoa",
+        "folder_sharing_status_many": "Compartilhado com {{count}} pessoas",
+        "folder_sharing_status_other": "Compartilhado com {{count}} pessoas"
     },
     "title": {
         "advanced_filters": "Filtros avançados"
@@ -526,7 +530,8 @@
                         "address_already_present_other": "Os endereços já existem"
                     },
                     "placeholder": "Digite um endereço",
-                    "title": "Lista de endereços"
+                    "title": "Lista de endereços",
+                    "placeholder2": "Digite um endereço"
                 },
                 "name_input": {
                     "name": {
@@ -583,6 +588,33 @@
             "restore_multiple": {
                 "title": "Restaurar {{count}} contatos"
             }
+        }
+    },
+    "folder_panel": {
+        "option": {
+            "all_contacts": "Todos",
+            "contacts": "Contatos",
+            "contact_group": "Grupos de contatos"
+        }
+    },
+    "colors": {
+        "black": "Preto",
+        "purple": "Roxo",
+        "blue": "Azul",
+        "cyan": "Ciano",
+        "red": "Vermelho",
+        "green": "Verde",
+        "orange": "Laranja",
+        "pink": "Rosa",
+        "yellow": "Amarelo",
+        "gray": "Cinza"
+    },
+    "advancedFilters": {
+        "title": "Filtros Avançados",
+        "phoneNumber": "Número de telefone",
+        "keywords": "Palavras-chave",
+        "isContainedIn": {
+            "chooseFolder": "Escolher pasta"
         }
     }
 }
