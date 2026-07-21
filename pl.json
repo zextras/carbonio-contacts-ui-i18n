@@ -112,7 +112,7 @@
         "notes": "Notatki",
         "revoke_with_custom_msg": "Odbierz dostęp i wyślij niestandardową notke",
         "revoke_without_notification": "Odbierz dostęp i nie wysyłaj powiadomienia",
-        "root": "Źródło",
+        "root": "Root",
         "shares_folder_edit": "Udostępnianie tej książki adresowej",
         "edit_email": "Edytuj e-mail",
         "edit_folder_properties": "Edytuj właściwości {{name}}",
@@ -430,7 +430,7 @@
     },
     "folders": {
         "trash": "Kosz",
-        "root": "Źródło",
+        "root": "Root",
         "contacts": "Kontakty",
         "auto_contacts": "Kontakty do których wysłano e-maila"
     },
