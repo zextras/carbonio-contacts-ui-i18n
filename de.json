@@ -11,7 +11,10 @@
         },
         "copy": "Kopieren",
         "delete": "Löschen",
-        "add_shared_address_books": "Freigaben hinzufügen"
+        "add_shared_address_books": "Freigaben hinzufügen",
+        "edit": "Bearbeiten",
+        "edit_distribution_list": "Bearbeiten",
+        "mail": "E-Mail senden"
     },
     "folder": {
         "action": {
@@ -364,6 +367,9 @@
                 "contact_group_created": "Kontaktgruppe erfolgreich erstellt"
             },
             "title": "Neue Gruppe"
+        },
+        "label": {
+            "description": "Beschreibung"
         }
     },
     "contactGroupDisplayer": {
@@ -375,5 +381,10 @@
         "addressCount_one": "{{count}} Adresse",
         "addressCount_other": "{{count}} Adressen",
         "emptyList": "Es wurden noch keine Kontaktgruppen erstellt"
+    },
+    "contacts": {
+        "importAction": {
+            "modalButton": "IMPORTIEREN"
+        }
     }
 }
