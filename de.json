@@ -5,7 +5,13 @@
         "search": "Suche",
         "send_msg": "E-Mail senden",
         "share_folder": "Ordner teilen",
-        "delete_permanently": "Permanent löschen"
+        "delete_permanently": "Permanent löschen",
+        "contactGroup": {
+            "delete": "Löschen"
+        },
+        "copy": "Kopieren",
+        "delete": "Löschen",
+        "add_shared_address_books": "Freigaben hinzufügen"
     },
     "folder": {
         "action": {
@@ -153,7 +159,10 @@
         "contact_created_in_folder": "Dieser Kontakt wird im Ordner \"{{name}}\" erstellt",
         "destination_address_book": "Zieladressbuch",
         "include_shared_folders": "Geteilte Adressbücher einschließen",
-        "autocomplete": "Automatisch vervollständigen"
+        "autocomplete": "Automatisch vervollständigen",
+        "find_share": "Geteilte Kontakte durchsuchen",
+        "find_shares": "Geteilte Kontakte durchsuchen",
+        "invalid_query": "Sonderzeichen wie :, \", -, ! usw. werden bei der Suche ignoriert. Dies kann bei Folgendem zu unerwarteten Ergebnissen führen:"
     },
     "message": {
         "snackbar": {
@@ -205,7 +214,9 @@
         },
         "title": {
             "mail": "E-Mail-Adresse",
-            "phone_number": "Telefonkontakt"
+            "phone_number": "Telefonkontakt",
+            "address_one": "Adresse",
+            "address_other": "Adressen"
         }
     },
     "select": {
@@ -270,7 +281,7 @@
         "tag_applied": "\"{{tag}}\" Tag angewendet"
     },
     "title": {
-        "advanced_filters": "Fortgeschrittene Filter"
+        "advanced_filters": "erweiterte Filter"
     },
     "tooltip": {
         "revoke": "Zugriff widerrufen",
@@ -321,5 +332,48 @@
     },
     "search": {
         "shared_folders_note": "Fügen Sie freigegebene Adressbücher in Suchanfragen ein."
+    },
+    "board": {
+        "newContactGroup": {
+            "addresses": {
+                "label": "Adressen"
+            },
+            "input": {
+                "contact_input": {
+                    "error": {
+                        "address_already_present_one": "Adresse existiert bereits",
+                        "address_already_present_other": "Adressen existieren bereits",
+                        "invalid_address_one": "ungültige Adresse",
+                        "invalid_address_other": "ungültige Adressen",
+                        "invalid_already_present_addresses": "Ungültige und bereits vorhandene Adressen"
+                    },
+                    "placeholder": "Adresse eingeben"
+                },
+                "name_input": {
+                    "error": {
+                        "max_length": "Die maximal zulässige Länge beträgt 256 Zeichen",
+                        "required": "Gruppenname ist erforderlich. Geben Sie einen Namen ein, um fortzufahren"
+                    },
+                    "name": {
+                        "label": "Gruppenname*"
+                    }
+                }
+            },
+            "name": "Neue Gruppe",
+            "snackbar": {
+                "contact_group_created": "Kontaktgruppe erfolgreich erstellt"
+            },
+            "title": "Neue Gruppe"
+        }
+    },
+    "contactGroupDisplayer": {
+        "label": {
+            "members_total": "Adressen: {{count}}"
+        }
+    },
+    "contactGroupList": {
+        "addressCount_one": "{{count}} Adresse",
+        "addressCount_other": "{{count}} Adressen",
+        "emptyList": "Es wurden noch keine Kontaktgruppen erstellt"
     }
 }
