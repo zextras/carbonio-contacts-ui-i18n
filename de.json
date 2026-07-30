@@ -350,7 +350,8 @@
                         "invalid_address_other": "ungültige Adressen",
                         "invalid_already_present_addresses": "Ungültige und bereits vorhandene Adressen"
                     },
-                    "placeholder": "Adresse eingeben"
+                    "placeholder": "Adresse eingeben",
+                    "title": "Adressenliste"
                 },
                 "name_input": {
                     "error": {
@@ -370,6 +371,12 @@
         },
         "label": {
             "description": "Beschreibung"
+        },
+        "editContactGroup": {
+            "snackbar": {
+                "contact_group_edited": "Gruppe erfolgreich aktualisiert",
+                "error": "Beim Speichern der Änderungen ist ein Fehler aufgetreten, versuchen Sie es erneut"
+            }
         }
     },
     "contactGroupDisplayer": {
@@ -384,7 +391,8 @@
     },
     "contacts": {
         "importAction": {
-            "modalButton": "IMPORTIEREN"
+            "modalButton": "IMPORTIEREN",
+            "modalTitle": "Kontakte importieren"
         }
     }
 }
