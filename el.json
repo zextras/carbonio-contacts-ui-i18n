@@ -1,1 +1,10 @@
-{}
+{
+    "action": {
+        "contactGroup": {
+            "delete": "Διαγραφή"
+        },
+        "copy": "Αντιγραφή",
+        "edit": "Επεξεργασία",
+        "delete_permanently": "Διαγραφή Μόνιμα"
+    }
+}
