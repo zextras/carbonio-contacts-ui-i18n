@@ -1,1 +1,174 @@
-{}
+{
+    "label": {
+        "cancel": "გაუქმება",
+        "save": "შენახვა",
+        "contacts": "კონტაქტები",
+        "create": "შექმნა",
+        "delete": "წაშლა",
+        "edit": "ჩასწორება",
+        "notes": "შენიშვნები",
+        "of": "/",
+        "type": "ტიპი",
+        "update": "განახლება",
+        "empty": "დაცარიელება",
+        "move": "გადატანა",
+        "resend": "თავიდან გაგზავნა",
+        "restore": "აღდგენა",
+        "revoke": "გაბათილება",
+        "root": "Root",
+        "share": "გაზიარება",
+        "tag": "ჭდე",
+        "tags": "ჭდეები",
+        "undo": "ბრძანების გაუქმება",
+        "app_name": "კონტაქტები",
+        "autocomplete": "ავტოდასრულება",
+        "discard": "მოცილება",
+        "email": "ელფოსტა",
+        "note": "შენიშვნა:",
+        "options": "მორგება",
+        "keyword": "საკვანძო სიტყვები"
+    },
+    "action": {
+        "search": "ძებნა",
+        "delete": "წაშლა",
+        "copy": "კოპირება",
+        "edit": "ჩასწორება",
+        "contactGroup": {
+            "delete": "წაშლა"
+        },
+        "edit_distribution_list": "ჩასწორება"
+    },
+    "modal": {
+        "initializeError": {
+            "buttonConfirm": "თავიდან ჩატვირთვა"
+        },
+        "cancel": "გაუქმება",
+        "close": {
+            "tooltip": "დახურვა"
+        },
+        "delete": {
+            "button": {
+                "confirm": "წაშლა"
+            }
+        }
+    },
+    "colors": {
+        "blue": "ლურჯი",
+        "green": "მწვანე",
+        "cyan": "მომწვანო-მოცისფრო",
+        "purple": "იისფერი",
+        "yellow": "ყვითელი",
+        "red": "წითელი",
+        "pink": "ვარდისფერი",
+        "orange": "ნარინჯისფერი",
+        "black": "შავი",
+        "gray": "ნაცრისფერი"
+    },
+    "board": {
+        "label": {
+            "description": "აღწერა"
+        },
+        "newContactGroup": {
+            "addresses": {
+                "label": "მისამართები"
+            }
+        }
+    },
+    "contacts": {
+        "importAction": {
+            "modalButton": "შემოტანა"
+        }
+    },
+    "displayer": {
+        "distribution_list": {
+            "label": {
+                "description": "აღწერა"
+            }
+        }
+    },
+    "distribution_list": {
+        "tabs": {
+            "details": "დეტალები"
+        }
+    },
+    "edit_dl_component": {
+        "input": {
+            "description": {
+                "label": "აღწერა"
+            }
+        }
+    },
+    "folder": {
+        "action": {
+            "move": "გადატანა"
+        }
+    },
+    "folders": {
+        "contacts": "კონტაქტები",
+        "root": "Root",
+        "trash": "ნაგვის ყუთი"
+    },
+    "import_contacts": {
+        "modal": {
+            "confirm": "შემოტანა"
+        }
+    },
+    "job": {
+        "company": "კომპანია",
+        "department": "განყოფილება"
+    },
+    "members_list_item_component": {
+        "button": {
+            "remove": "წაშლა"
+        }
+    },
+    "name": {
+        "nickName": "მეტსახელი",
+        "prefix": "პრეფიქსი",
+        "suffix": "სუფიქსი"
+    },
+    "secondaryBar": {
+        "distributionListsManager": "მმართველი",
+        "distributionListsMember": "წევრი"
+    },
+    "section": {
+        "field": {
+            "city": "ქალაქი",
+            "country": "ქვეყანა",
+            "number": "ნომერი",
+            "postalCode": "საფოსტო კოდი",
+            "state": "შტატი",
+            "street": "ქუჩა",
+            "website": "ვებსაიტი"
+        }
+    },
+    "share": {
+        "add": "დამატება",
+        "admin": "ადმინი",
+        "administer": "ადმინისტრირება",
+        "insert": "ჩასმა",
+        "manager": "მმართველი",
+        "none": "არცერთი",
+        "owner": "მფლობელი",
+        "read": "კითხვა",
+        "role": "როლი",
+        "viewer": "დამთვალიერებელი",
+        "workflow": "სამუშაო პროცესი",
+        "write": "ჩაწერა"
+    },
+    "types": {
+        "home": "საწყისი",
+        "mobile": "მობილური",
+        "other": "სხვა",
+        "work": "სამუშაო"
+    },
+    "folder_panel": {
+        "option": {
+            "all_contacts": "ყველა",
+            "contacts": "კონტაქტები"
+        }
+    },
+    "advancedFilters": {
+        "keywords": "საკვანძო სიტყვები"
+    }
+}
