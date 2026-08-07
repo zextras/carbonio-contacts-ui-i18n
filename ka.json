@@ -26,7 +26,19 @@
         "email": "ელფოსტა",
         "note": "შენიშვნა:",
         "options": "მორგება",
-        "keyword": "საკვანძო სიტყვები"
+        "keyword": "საკვანძო სიტყვები",
+        "discard_changes": "ცვლილებების გაუქმება",
+        "filter_folders": "საქაღალდეების გაფილტვრა",
+        "new_folder": "ახალი საქაღალდე",
+        "create_tag": "ჭდის შექმნა",
+        "delete_tag": "ჭდის წაშლა",
+        "edit_access": "წვდომის ჩასწორება",
+        "edit_tag": "ჭდის ჩასწორება",
+        "new_tag": "ახალი ჭდე",
+        "results_for": "შედეგები მოთხოვნისთვის:",
+        "select_color": "ფერის არჩევა",
+        "share_with": "გაზიარება ვისთან",
+        "tag_name": "ჭდის სახელი"
     },
     "action": {
         "search": "ძებნა",
@@ -36,7 +48,13 @@
         "contactGroup": {
             "delete": "წაშლა"
         },
-        "edit_distribution_list": "ჩასწორება"
+        "edit_distribution_list": "ჩასწორება",
+        "delete_permanently": "სამუდამოდ წაშლა",
+        "mail": "ელფოსტის გაგზავნა",
+        "reset_filters": "ფილტრების ჩამოყრა",
+        "send_msg": "ელფოსტის გაგზავნა",
+        "share_folder": "საქაღალდის გაზიარება",
+        "add_shared_address_books": "გაზიარებების დამატება"
     },
     "modal": {
         "initializeError": {
@@ -71,7 +89,19 @@
         "newContactGroup": {
             "addresses": {
                 "label": "მისამართები"
-            }
+            },
+            "input": {
+                "contact_input": {
+                    "title": "მისამართების სია"
+                },
+                "name_input": {
+                    "name": {
+                        "label": "ჯგუფის სახელი*"
+                    }
+                }
+            },
+            "name": "ახალი ჯგუფი",
+            "title": "ახალი ჯგუფი"
         }
     },
     "contacts": {
@@ -101,6 +131,11 @@
     "folder": {
         "action": {
             "move": "გადატანა"
+        },
+        "modal": {
+            "footer": {
+                "go_back": "უკან გადასვლა"
+            }
         }
     },
     "folders": {
@@ -170,5 +205,8 @@
     },
     "advancedFilters": {
         "keywords": "საკვანძო სიტყვები"
+    },
+    "tooltip": {
+        "revoke": "წვდომის გაბათილება"
     }
 }
