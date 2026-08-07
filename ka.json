@@ -38,7 +38,22 @@
         "results_for": "შედეგები მოთხოვნისთვის:",
         "select_color": "ფერის არჩევა",
         "share_with": "გაზიარება ვისთან",
-        "tag_name": "ჭდის სახელი"
+        "tag_name": "ჭდის სახელი",
+        "add_share": "გაზიარების დამატება",
+        "contact_setting": "კონტაქტის მორგება",
+        "edit_contacts": "კონტაქტების ჩასწორება",
+        "edit_email": "ელფოსტის ჩასწორება",
+        "folder_name": "საქაღალდის სახელი",
+        "new_contact": "ახალი კონტაქტი",
+        "no_data": "მონაცემების გარეშე",
+        "no_name": "სახელის გარეშე",
+        "show_more": "მეტის ჩვენება",
+        "website_one": "ვებსაიტი",
+        "website_other": "ვებსაიტები",
+        "find_share": "გაზიარებების პოვნა",
+        "find_shares": "გაზიარებების პოვნა",
+        "filter_mode": "ფილტრის რეჟიმი",
+        "distribution_list_app_name": "განაწილების სიები"
     },
     "action": {
         "search": "ძებნა",
@@ -67,7 +82,14 @@
         "delete": {
             "button": {
                 "confirm": "წაშლა"
+            },
+            "contactGroup": {
+                "header": "\"{{contactGroupName}}\"-ის წაშლა"
             }
+        },
+        "destination": "სამიზნე საქაღალდე",
+        "edit_distribution_list": {
+            "title": "\"{{displayName}}\"-ის ჩასწორება"
         }
     },
     "colors": {
@@ -106,7 +128,8 @@
     },
     "contacts": {
         "importAction": {
-            "modalButton": "შემოტანა"
+            "modalButton": "შემოტანა",
+            "modalTitle": "კონტაქტების შემოტანა"
         }
     },
     "displayer": {
@@ -118,7 +141,9 @@
     },
     "distribution_list": {
         "tabs": {
-            "details": "დეტალები"
+            "details": "დეტალები",
+            "managers": "მმართველების სია",
+            "members": "წევრების სია"
         }
     },
     "edit_dl_component": {
@@ -126,31 +151,51 @@
             "description": {
                 "label": "აღწერა"
             }
+        },
+        "label": {
+            "dl_email": "განაწილების სია"
         }
     },
     "folder": {
         "action": {
-            "move": "გადატანა"
+            "move": "გადატანა",
+            "deleteContactGroup": "\"{{contactGroupTitle}}\"-ის წაშლა",
+            "empty": {
+                "trash": "ნაგვის დაცარიელება"
+            }
         },
         "modal": {
             "footer": {
                 "go_back": "უკან გადასვლა"
+            },
+            "delete": {
+                "title": "{{addressBookName}}-ის წაშლა"
+            },
+            "empty": {
+                "title": "{{addressBookName}}-ის დაცარიელება"
+            },
+            "move": {
+                "title": "{{addressBookName}}-ის გადატანა"
             }
-        }
+        },
+        "type": "კონტაქტის საქაღალდე"
     },
     "folders": {
         "contacts": "კონტაქტები",
         "root": "Root",
-        "trash": "ნაგვის ყუთი"
+        "trash": "ნაგვის ყუთი",
+        "auto_contacts": "კონტაქტები, ვისაც ელფოსტა გაეგზავნა"
     },
     "import_contacts": {
         "modal": {
-            "confirm": "შემოტანა"
+            "confirm": "შემოტანა",
+            "title": "კონტაქტების შემოტანა"
         }
     },
     "job": {
         "company": "კომპანია",
-        "department": "განყოფილება"
+        "department": "განყოფილება",
+        "title": "თანამდებობა"
     },
     "members_list_item_component": {
         "button": {
@@ -160,11 +205,16 @@
     "name": {
         "nickName": "მეტსახელი",
         "prefix": "პრეფიქსი",
-        "suffix": "სუფიქსი"
+        "suffix": "სუფიქსი",
+        "first_name": "სახელი",
+        "last_name": "გვარი",
+        "middle_name": "მამის სახელი"
     },
     "secondaryBar": {
         "distributionListsManager": "მმართველი",
-        "distributionListsMember": "წევრი"
+        "distributionListsMember": "წევრი",
+        "distributionLists": "განაწილების სიები",
+        "contactGroups": "კონტაქტის ჯგუფები"
     },
     "section": {
         "field": {
@@ -175,6 +225,12 @@
             "state": "შტატი",
             "street": "ქუჩა",
             "website": "ვებსაიტი"
+        },
+        "title": {
+            "address_one": "მისამართი",
+            "address_other": "მისამართები",
+            "mail": "ელფოსტის მისამართი",
+            "phone_number": "ტელეფონის კონტაქტი"
         }
     },
     "share": {
@@ -189,7 +245,12 @@
         "role": "როლი",
         "viewer": "დამთვალიერებელი",
         "workflow": "სამუშაო პროცესი",
-        "write": "ჩაწერა"
+        "write": "ჩაწერა",
+        "allowed_actions": "დაშვებული ქმედებები",
+        "contact_folder": "მისამართების წიგნი",
+        "filter_user": "მომხმარებლების ძებნა",
+        "find_shares": "გაზიარებების ძებნა",
+        "shared_item": "გაზიარებული ელემენტი"
     },
     "types": {
         "home": "საწყისი",
@@ -200,13 +261,37 @@
     "folder_panel": {
         "option": {
             "all_contacts": "ყველა",
-            "contacts": "კონტაქტები"
+            "contacts": "კონტაქტები",
+            "contact_group": "კონტაქტის ჯგუფები"
         }
     },
     "advancedFilters": {
-        "keywords": "საკვანძო სიტყვები"
+        "keywords": "საკვანძო სიტყვები",
+        "isContainedIn": {
+            "chooseFolder": "აირჩიეთ საქაღალდე"
+        },
+        "phoneNumber": "ტელეფონის ნომერი",
+        "title": "გაფართოებული ფილტრები"
     },
     "tooltip": {
         "revoke": "წვდომის გაბათილება"
+    },
+    "contactGroupDisplayer": {
+        "label": {
+            "members_total": "მისამართები: {{count}}"
+        }
+    },
+    "contact_restored": "კონტაქტი აღდგა",
+    "messages": {
+        "snackbar": {
+            "contact_moved": "კონტაქტი გადატანილია",
+            "contact_restored": "კონტაქტი აღდგა"
+        }
+    },
+    "select": {
+        "default": "ტიპის არჩევა"
+    },
+    "title": {
+        "advanced_filters": "გაფართოებული ფილტრები"
     }
 }
