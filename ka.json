@@ -73,7 +73,8 @@
     },
     "modal": {
         "initializeError": {
-            "buttonConfirm": "თავიდან ჩატვირთვა"
+            "buttonConfirm": "თავიდან ჩატვირთვა",
+            "title": "რაღაც არასწორად წავიდა"
         },
         "cancel": "გაუქმება",
         "close": {
@@ -137,7 +138,8 @@
             "label": {
                 "description": "აღწერა"
             }
-        }
+        },
+        "search_title1": "კიდევ ერთი ძებნის დაწყება"
     },
     "distribution_list": {
         "tabs": {
@@ -250,7 +252,8 @@
         "contact_folder": "მისამართების წიგნი",
         "filter_user": "მომხმარებლების ძებნა",
         "find_shares": "გაზიარებების ძებნა",
-        "shared_item": "გაზიარებული ელემენტი"
+        "shared_item": "გაზიარებული ელემენტი",
+        "is_contained_in": "რა შეიცავს"
     },
     "types": {
         "home": "საწყისი",
@@ -274,7 +277,8 @@
         "title": "გაფართოებული ფილტრები"
     },
     "tooltip": {
-        "revoke": "წვდომის გაბათილება"
+        "revoke": "წვდომის გაბათილება",
+        "folder_linked_status": "გამიზიარეს"
     },
     "contactGroupDisplayer": {
         "label": {
@@ -285,7 +289,8 @@
     "messages": {
         "snackbar": {
             "contact_moved": "კონტაქტი გადატანილია",
-            "contact_restored": "კონტაქტი აღდგა"
+            "contact_restored": "კონტაქტი აღდგა",
+            "tag_updated": "ჭდე წარმატებით განახლდა"
         }
     },
     "select": {
@@ -293,5 +298,10 @@
     },
     "title": {
         "advanced_filters": "გაფართოებული ფილტრები"
+    },
+    "message": {
+        "snackbar": {
+            "settings_saved": "ჩასწორებები შენახულია"
+        }
     }
 }
