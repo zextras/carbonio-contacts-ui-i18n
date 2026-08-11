@@ -53,7 +53,21 @@
         "find_share": "გაზიარებების პოვნა",
         "find_shares": "გაზიარებების პოვნა",
         "filter_mode": "ფილტრის რეჟიმი",
-        "distribution_list_app_name": "განაწილების სიები"
+        "distribution_list_app_name": "განაწილების სიები",
+        "activate_selection_mode": "მონიშვნის რეჟიმის გააქტიურება",
+        "address_book_restored": "მისამართების წიგნი აღდგენილია",
+        "delete_tag_name": "\"{{name}}\" ჭდის წაშლა",
+        "destination_address_book": "სამიზნე მისამართების წიგნი",
+        "edit_access_name": "{{name}}-ის წვდომის ჩასწორება",
+        "edit_folder_properties": "{{name}}-ის თვისებების ჩასწორება",
+        "edit_tag_name": "\"{{name}}\" ჭდის ჩასწორება",
+        "export_address_book": "CSV ფაილის გატანა",
+        "import_address_book": "CSV ფაილის შემოტანა",
+        "newContactGroup": "ახალი კონტაქტების ჯგუფი",
+        "new_address_book": "ახალი მისამართების წიგნი",
+        "new_contact_created": "ახალი კონტაქტი შეიქმნა",
+        "revoke_share": "{{title}}-ის გაზიარების გაბათილება",
+        "export_contact": "vCard ფაილის გატანა"
     },
     "action": {
         "search": "ძებნა",
@@ -69,7 +83,8 @@
         "reset_filters": "ფილტრების ჩამოყრა",
         "send_msg": "ელფოსტის გაგზავნა",
         "share_folder": "საქაღალდის გაზიარება",
-        "add_shared_address_books": "გაზიარებების დამატება"
+        "add_shared_address_books": "გაზიარებების დამატება",
+        "goto_folder": "საქაღალდეზე გადასვლა"
     },
     "modal": {
         "initializeError": {
@@ -91,7 +106,8 @@
         "destination": "სამიზნე საქაღალდე",
         "edit_distribution_list": {
             "title": "\"{{displayName}}\"-ის ჩასწორება"
-        }
+        },
+        "address_book_name": "მისამართების წიგნის სახელი"
     },
     "colors": {
         "blue": "ლურჯი",
@@ -115,7 +131,9 @@
             },
             "input": {
                 "contact_input": {
-                    "title": "მისამართების სია"
+                    "title": "მისამართების სია",
+                    "placeholder": "აკრიფეთ მისამართი",
+                    "placeholder2": "აკრიფეთ მისამართი"
                 },
                 "name_input": {
                     "name": {
@@ -125,6 +143,11 @@
             },
             "name": "ახალი ჯგუფი",
             "title": "ახალი ჯგუფი"
+        },
+        "editContactGroup": {
+            "snackbar": {
+                "contact_group_edited": "ჯგუფი წარმატებით განახლდა"
+            }
         }
     },
     "contacts": {
@@ -136,10 +159,18 @@
     "displayer": {
         "distribution_list": {
             "label": {
-                "description": "აღწერა"
+                "description": "აღწერა",
+                "manager_total": "მმართველების სია {{total}}",
+                "member_total": "წევრების სია {{total}}"
+            },
+            "placeholder": {
+                "filter_member": "მისამართის გაფილტვრა"
             }
         },
-        "search_title1": "კიდევ ერთი ძებნის დაწყება"
+        "search_title1": "კიდევ ერთი ძებნის დაწყება",
+        "title5": "კონტაქტის არჩევა",
+        "title6": "კონტაქტის მორგება",
+        "title8": "გაზიარებული ელფოსტის გაგზავნა"
     },
     "distribution_list": {
         "tabs": {
@@ -152,10 +183,17 @@
         "input": {
             "description": {
                 "label": "აღწერა"
+            },
+            "name": {
+                "label": "განაწილების სიის სახელი"
             }
         },
         "label": {
-            "dl_email": "განაწილების სია"
+            "dl_email": "განაწილების სია",
+            "members_total": "წევრების სია {{total}}"
+        },
+        "placeholder": {
+            "filter_member": "მისამართის გაფილტვრა"
         }
     },
     "folder": {
@@ -163,8 +201,11 @@
             "move": "გადატანა",
             "deleteContactGroup": "\"{{contactGroupTitle}}\"-ის წაშლა",
             "empty": {
-                "trash": "ნაგვის დაცარიელება"
-            }
+                "trash": "ნაგვის დაცარიელება",
+                "folder": "მისამართების წიგნის დაცარიელება"
+            },
+            "delete": "მისამართების წიგნის წაშლა",
+            "edit": "მისამართების წიგნის ჩასწორება"
         },
         "modal": {
             "footer": {
@@ -177,10 +218,31 @@
                 "title": "{{addressBookName}}-ის დაცარიელება"
             },
             "move": {
-                "title": "{{addressBookName}}-ის გადატანა"
+                "title": "{{addressBookName}}-ის გადატანა",
+                "input": {
+                    "filter": "მისამართების წიგნის გაფილტვრა"
+                }
+            },
+            "edit": {
+                "body": {
+                    "item": {
+                        "empty": "ბილიკი ხელმისაწვდომი არაა"
+                    }
+                }
+            },
+            "item": {
+                "empty": "ხელმისაწვდომი ელემენტების გარეშე"
+            },
+            "new": {
+                "create_footer": "შექმნა და გადატანა",
+                "title2": "ახალი საქაღალდის შექმნა"
+            },
+            "restore": {
+                "create_footer": "შექმნა და აღდგენა"
             }
         },
-        "type": "კონტაქტის საქაღალდე"
+        "type": "კონტაქტის საქაღალდე",
+        "share_folder": "მისამართების წიგნის გაზიარება"
     },
     "folders": {
         "contacts": "კონტაქტები",
@@ -216,7 +278,11 @@
         "distributionListsManager": "მმართველი",
         "distributionListsMember": "წევრი",
         "distributionLists": "განაწილების სიები",
-        "contactGroups": "კონტაქტის ჯგუფები"
+        "contactGroups": "კონტაქტის ჯგუფები",
+        "contextualMenu": {
+            "new_contact_group_creation_action": "ახალი კონტაქტების ჯგუფი"
+        },
+        "myContactGroups": "ჩემი კონტაქტის ჯგუფები"
     },
     "section": {
         "field": {
@@ -253,7 +319,19 @@
         "filter_user": "მომხმარებლების ძებნა",
         "find_shares": "გაზიარებების ძებნა",
         "shared_item": "გაზიარებული ელემენტი",
-        "is_contained_in": "რა შეიცავს"
+        "is_contained_in": "რა შეიცავს",
+        "find_contact_shares": "კონტაქტის გაზიარებების პოვნა",
+        "recipients_address": "მიმღების ელფოსტის მისამართები",
+        "share_added_succesfully": "გაზიარებული წარმატებით დაემატა",
+        "share_removed_succesfully": "გაზიარებული წარმატებით წაიშალა",
+        "shared_folders": "გაზიარებული მისამართის წიგნები",
+        "link_name": "{{shareName}} / {{ownerName}}",
+        "options": {
+            "share_calendar_with": {
+                "external_guests": "გარე სტუმრები (მხოლოდ ნახვა)",
+                "internal_users_groups": "შიდა მომხმარებლები, ან ჯგუფები"
+            }
+        }
     },
     "types": {
         "home": "საწყისი",
@@ -278,7 +356,10 @@
     },
     "tooltip": {
         "revoke": "წვდომის გაბათილება",
-        "folder_linked_status": "გამიზიარეს"
+        "folder_linked_status": "გამიზიარეს",
+        "list_trash": {
+            "deletePermanently": "კონტაქტის სამუდამოდ წაშლა"
+        }
     },
     "contactGroupDisplayer": {
         "label": {
@@ -290,7 +371,13 @@
         "snackbar": {
             "contact_moved": "კონტაქტი გადატანილია",
             "contact_restored": "კონტაქტი აღდგა",
-            "tag_updated": "ჭდე წარმატებით განახლდა"
+            "tag_updated": "ჭდე წარმატებით განახლდა",
+            "contact_deleted_permanently": "კონტაქტი სამუდამოდ წაიშალა",
+            "conversation_move": "საუბრის გადატანა წარმატებულია",
+            "folder_moved": "საქაღალდის გადატანა წარმატებულია",
+            "message_move": "შეტყობინების გადატანა წარმატებულია",
+            "tag_created": "ჭდე {{name}} წარმატებით შეიქმნა",
+            "tag_deleted": "ჭდე {{name}} წარმატებით წაიშალა"
         }
     },
     "select": {
@@ -302,6 +389,32 @@
     "message": {
         "snackbar": {
             "settings_saved": "ჩასწორებები შენახულია"
+        }
+    },
+    "expand_distribution_list": "მისამართების სიის ჩამოშლა",
+    "snackbar": {
+        "folder_shared": "მისამართების წიგნი გაზიარებულია",
+        "share_resend": "გაზიარების მოსაწვევი გადაიგზავნა",
+        "share_revoke": "გაზიარებულთან წვდომა გაბათილებულია",
+        "share_updated": "წვდომის უფლებები განახლდა",
+        "tag_applied": "ჭდე \"{{tag}}\" გადატარებულია",
+        "tag_removed": "ჭდე \"{{tag}}\" წაიშალა",
+        "email_copied_to_clipboard": "ელფოსტა დაკოპირდა ბუფერში."
+    },
+    "contact": {
+        "modal": {
+            "move_multiple": {
+                "title": "{{count}} კონტაქტის გადატანა"
+            },
+            "move_single": {
+                "title": "{{contactDesc}}-ის კონტაქტის გადატანა"
+            },
+            "restore_multiple": {
+                "title": "{{count}} კონტაქტის აღდგენა"
+            },
+            "restore_single": {
+                "title": "{{contactDesc}}-ის კონტაქტის აღდგენა"
+            }
         }
     }
 }
