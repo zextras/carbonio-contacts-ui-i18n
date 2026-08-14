@@ -73,7 +73,20 @@
         "cannot_move": "იგივე საქაღალდეში გადატანა შეუძლებელია",
         "groups_app_name": "კონტაქტის ჯგუფები და განაწილების სიები",
         "shares_folder_edit": "ამ მისამართის წიგნის გაზიარება",
-        "error_try_again": "რაღაც არასწორად წავიდა. კიდევ სცადეთ"
+        "error_try_again": "რაღაც არასწორად წავიდა. კიდევ სცადეთ",
+        "advanced_filter_one": "{{count}} გაფართოებული ფილტრი",
+        "advanced_filter_other": "{{count}} გაფართოებული ფილტრი",
+        "errors": {
+            "upload_failed_generic": "ატვირთვა ჩავარდა ფაილისთვის \"{{filename}}\""
+        },
+        "revoke_with_custom_msg": "წვდომის გაბათილება მორგებული გაფრთხილების გაგზავნით",
+        "revoke_with_standard_msg": "წვდომის გაბათილება სტანდარტული გაფრთხილების გაგზავნით",
+        "revoke_without_notification": "წვდომის გაბათილება გაფრთხილების გაგზავნის გარეშე",
+        "select_all_addresses_one": "მისამართის მონიშვნა",
+        "select_all_addresses_other": "ყველა {{count}} მისამართის მონიშვნა",
+        "no_special_char_allowed": "სახელი სპეციალურ სიმბოლოს არ უნდა შეიცავდეს",
+        "edit_invalid_email": "ელფოსტა არასწორია. ჩასასწორებლად დააწკაპუნეთ",
+        "search_activate_selection_mode": "მონიშვნის რეჟიმი ძებნის შედეგებზე ჯერჯერობით ხელმისაწვდომი არაა"
     },
     "action": {
         "search": "ძებნა",
@@ -106,7 +119,8 @@
                 "confirm": "წაშლა"
             },
             "contactGroup": {
-                "header": "\"{{contactGroupName}}\"-ის წაშლა"
+                "header": "\"{{contactGroupName}}\"-ის წაშლა",
+                "body2": "თუ მას წაშლით, სამუდამოდ დაკარგავთ."
             }
         },
         "destination": "სამიზნე საქაღალდე",
@@ -143,12 +157,17 @@
                     "error": {
                         "invalid_address_one": "არასწორი მისამართი",
                         "invalid_address_other": "არასწორი მისამართები",
-                        "invalid_already_present_addresses": "არასწორი და უკვე არსებული მისამართები"
+                        "invalid_already_present_addresses": "არასწორი და უკვე არსებული მისამართები",
+                        "address_already_present_one": "მისამართი უკვე არსებობს",
+                        "address_already_present_other": "მისამართები უკვე არსებობს"
                     }
                 },
                 "name_input": {
                     "name": {
                         "label": "ჯგუფის სახელი*"
+                    },
+                    "error": {
+                        "max_length": "მაქს. დაშვებული სიგრძე 256 სიმბოლოა"
                     }
                 }
             },
@@ -160,7 +179,8 @@
         },
         "editContactGroup": {
             "snackbar": {
-                "contact_group_edited": "ჯგუფი წარმატებით განახლდა"
+                "contact_group_edited": "ჯგუფი წარმატებით განახლდა",
+                "error": "ჩასწორებების შენახვისას რაღაც არასწორად წავიდა. კიდევ სცადეთ"
             }
         }
     },
@@ -186,13 +206,26 @@
         "title6": "კონტაქტის მორგება",
         "title8": "გაზიარებული ელფოსტის გაგზავნა",
         "list_title2": "ნაგვის ყუთი ცარიელია",
-        "search_description2": "კიდევ ერთი ძებნის დაწყების ცდა."
+        "search_description2": "კიდევ ერთი ძებნის დაწყების ცდა.",
+        "title3": "დარჩით კავშირზე კოლეგებთან.",
+        "title7": "დარჩით კავშირზე კოლეგებთან",
+        "search_list_title2": "ელემენტებიდან თქვენს საძიებო სტრიქონს არცერთი ემთხვევა.",
+        "search_title3": "თქვენს ძებნას შედეგები არ აქვს.",
+        "title10": "კონტაქტების არჩევა და აღდგენა ნაგვის ყუთიდან",
+        "title2": "გაუზიარეთ თქვენი ნამუშევრები თქვენს კონტაქტებს.",
+        "title4": "მოირგეთ თქვენი კონტაქტები პირადი შენიშვნების დამატებით",
+        "list_title1": "როგორც ჩანს, ჯერ კონტაქტები არ გაქვთ",
+        "search_description1": "ან აირჩიეთ\" გაფართოებული ფილტრები\" ძებნის დასაზუსტებლად.",
+        "title9": "კონტაქტის წასაშლელად დააწკაპუნეთ ნაგვის ყუთის ხატულაზე."
     },
     "distribution_list": {
         "tabs": {
             "details": "დეტალები",
             "managers": "მმართველების სია",
             "members": "წევრების სია"
+        },
+        "label": {
+            "empty_message": "განაწილების სიები ჯერ არ არსებობს."
         }
     },
     "edit_dl_component": {
@@ -201,7 +234,10 @@
                 "label": "აღწერა"
             },
             "name": {
-                "label": "განაწილების სიის სახელი"
+                "label": "განაწილების სიის სახელი",
+                "error": {
+                    "max_length": "მაქს. დაშვებული სიგრძე 256 სიმბოლოა"
+                }
             }
         },
         "label": {
@@ -214,7 +250,9 @@
         "error": {
             "invalid_address_one": "არასწორი მისამართი",
             "invalid_address_other": "არასწორი მისამართები",
-            "invalid_and_duplicated_addresses": "არასწორი და უკვე არსებული მისამართები"
+            "invalid_and_duplicated_addresses": "არასწორი და უკვე არსებული მისამართები",
+            "duplicated_address_one": "მისამართი უკვე არსებობს",
+            "duplicated_address_other": "მისამართები უკვე არსებობს"
         }
     },
     "folder": {
@@ -238,7 +276,8 @@
                 "title": "{{addressBookName}}-ის წაშლა"
             },
             "empty": {
-                "title": "{{addressBookName}}-ის დაცარიელება"
+                "title": "{{addressBookName}}-ის დაცარიელება",
+                "message3": "მართლა გნებავთ ნაგვის ყუთის დაცარიელება?"
             },
             "move": {
                 "title": "{{addressBookName}}-ის გადატანა",
@@ -263,7 +302,8 @@
                     "message1": "ახალი მისამართების წიგნის სახელი"
                 },
                 "input": {
-                    "name": "შეიყვანეთ მისამართების წიგნის სახელი"
+                    "name": "შეიყვანეთ მისამართების წიგნის სახელი",
+                    "name_exist": "სახელი უკვე არსებობს მითითებულ ბილიკში"
                 },
                 "title": "ახალი მისამართების წიგნის შექმნა"
             },
@@ -366,13 +406,15 @@
         "options": {
             "share_calendar_with": {
                 "external_guests": "გარე სტუმრები (მხოლოდ ნახვა)",
-                "internal_users_groups": "შიდა მომხმარებლები, ან ჯგუფები"
+                "internal_users_groups": "შიდა მომხმარებლები, ან ჯგუფები",
+                "public": "საჯაროდ გაზიარება (მხოლოდ ნახვა, პაროლი საჭირო არაა)"
             }
         },
         "remove_from_this_list": "ამ სიიდან წაშლა",
         "share_info": "გაზიარებული მისამართების წიგნის ინფორმაცია",
         "shared_items": "{{value}}-ის გაზიარებული მისამართის წიგნები",
-        "send_notification": "გაფრთხილების გაგზავნა ამ გაზიარების შესახებ"
+        "send_notification": "გაფრთხილების გაგზავნა ამ გაზიარების შესახებ",
+        "standard_message": "შენიშვნის მიწერა სტანდარტული შეტყობინებისთვის"
     },
     "types": {
         "home": "საწყისი",
@@ -400,7 +442,12 @@
         "folder_linked_status": "გამიზიარეს",
         "list_trash": {
             "deletePermanently": "კონტაქტის სამუდამოდ წაშლა"
-        }
+        },
+        "resend": "ელფოსტის გაფრთხილებების გაგზავნა ამ გაზიარებულის შესახებ",
+        "address_book_sharing_status_one": "გაზიარებულია {{count}} პირთან",
+        "address_book_sharing_status_other": "გაზიარებულია {{count}} პირთან",
+        "folder_sharing_status_one": "გაზიარებულია 1 პირთან",
+        "folder_sharing_status_other": "გაზიარებულია {{count}} პირთან"
     },
     "contactGroupDisplayer": {
         "label": {
@@ -419,7 +466,8 @@
             "message_move": "შეტყობინების გადატანა წარმატებულია",
             "tag_created": "ჭდე {{name}} წარმატებით შეიქმნა",
             "tag_deleted": "ჭდე {{name}} წარმატებით წაიშალა",
-            "contact_moved_to_trash": "კონტაქტი გადატანილია ნაგვის ყუთში"
+            "contact_moved_to_trash": "კონტაქტი გადატანილია ნაგვის ყუთში",
+            "address_book_moved": "მისამართების წიგნი გადატანილია სამიზნე საქაღალდეში"
         }
     },
     "select": {
@@ -431,7 +479,8 @@
     "message": {
         "snackbar": {
             "settings_saved": "ჩასწორებები შენახულია"
-        }
+        },
+        "delete_tag_message1": "მართლა გნებავთ, წაშალოთ ჭდე \"{{name}}\"?"
     },
     "expand_distribution_list": "მისამართების სიის ჩამოშლა",
     "snackbar": {
@@ -447,7 +496,12 @@
                 "success": "კონტაქტების ჯგუფი წარმატებით წაიშალა"
             }
         },
-        "folder_edited": "მისამართების წიგნი წარმატებით ჩასწორდა"
+        "folder_edited": "მისამართების წიგნი წარმატებით ჩასწორდა",
+        "edit_distribution_list": {
+            "save": {
+                "success": "განაწილების სიის \"{{displayName}}\" ჩასწორებები წარმატებით იქნა შენახული"
+            }
+        }
     },
     "contact": {
         "modal": {
@@ -467,13 +521,20 @@
     },
     "contactGroupList": {
         "addressCount_one": "{{count}} მისამართი",
-        "addressCount_other": "{{count}} მისამართი"
+        "addressCount_other": "{{count}} მისამართი",
+        "emptyList": "ჯერ ჯგუფები არ შექმნილა"
     },
     "settings": {
         "contacts": {
             "checkbox": {
-                "include_add_in_shared_contact": "გაზიარებული კონტაქტის მისამართების ჩასმა"
+                "include_add_in_shared_contact": "გაზიარებული კონტაქტის მისამართების ჩასმა",
+                "add_contact_to_emailed_contacts": "ახალი კონტაქტების დამატება \"ელფოსტა ვისაც მივწერე\" კონტაქტებში",
+                "incl_addrs_in_glbl_addrs_list": "მისამართების წაშლა გლობალური მისამართების სიაში",
+                "autocomplete_on_comma": "ავტოდასრულების დამთხვევის არჩევა მძიმის აკრეფისას"
             }
         }
+    },
+    "search": {
+        "shared_folders_note": "გაზიარებული მისამართის წიგნების ჩასმა ძებნაში."
     }
 }
