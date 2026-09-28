@@ -360,7 +360,14 @@
         "find_shares": "FIND SHARES",
         "filter_mode": "Filter mode",
         "distribution_list_app_name": "Distribution Lists",
-        "invalid_query": "Special characters like :, \", -, !, etc., are ignored in the search. This may lead to unexpected results for:"
+        "invalid_query": "Special characters like :, \", -, !, etc., are ignored in the search. This may lead to unexpected results for:",
+        "choose_representative_name": "Choose a representative name",
+        "choose_address_book_color_caption": "Choose a color to make this address book easier to recognize",
+        "custom_color": "Custom color ({{hex}})",
+        "customize_color": "Customize color",
+        "hex_color": "Hex color",
+        "close": "Close",
+        "choose": "Choose"
     },
     "members_list_item_component": {
         "button": {
@@ -537,7 +544,8 @@
         "share_revoke": "Share access revoked",
         "share_updated": "Access rights updated",
         "tag_applied": "\"{{tag}}\" tag applied",
-        "tag_removed": "\"{{tag}}\" tag removed"
+        "tag_removed": "\"{{tag}}\" tag removed",
+        "hex_color_copied": "Hex color copied"
     },
     "title": {
         "advanced_filters": "Advanced Filters"
@@ -552,7 +560,8 @@
         "folder_sharing_status_other": "Shared with {{count}} people",
         "list_trash": {
             "deletePermanently": "Delete contact permanently"
-        }
+        },
+        "copy_hex_color": "Copy hex color"
     },
     "types": {
         "home": "home",
