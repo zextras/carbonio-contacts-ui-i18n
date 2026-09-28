@@ -135,7 +135,14 @@
         "find_shares": "TROVA CONDIVISIONI",
         "filter_mode": "Modalità filtro",
         "distribution_list_app_name": "Liste di distribuzione",
-        "invalid_query": "I caratteri speciali come :, \", -, !, ecc., vengono ignorati nella ricerca. Questo potrebbe portare a risultati inaspettati per:"
+        "invalid_query": "I caratteri speciali come :, \", -, !, ecc., vengono ignorati nella ricerca. Questo potrebbe portare a risultati inaspettati per:",
+        "choose_representative_name": "Scegli un nome rappresentativo",
+        "choose_address_book_color_caption": "Scegli un colore per riconoscere più facilmente questa rubrica",
+        "custom_color": "Colore personalizzato ({{hex}})",
+        "customize_color": "Personalizza colore",
+        "hex_color": "Colore hex",
+        "close": "Chiudi",
+        "choose": "Scegli"
     },
     "job": {
         "title": "Ruolo",
@@ -337,7 +344,8 @@
         "email_copied_to_clipboard": "Email copiata negli appunti.",
         "import_contacts_success_one": "{{number}} contatto importato e aggiunto alla rubrica selezionata",
         "import_contacts_success_many": "{{number}} contatti importati e aggiunti alla rubrica selezionata",
-        "import_contacts_success_other": "{{number}} contatti importati e aggiunti alla rubrica selezionata"
+        "import_contacts_success_other": "{{number}} contatti importati e aggiunti alla rubrica selezionata",
+        "hex_color_copied": "Colore esadecimale copiato"
     },
     "modal": {
         "address_book_name": "Nome rubrica",
@@ -380,7 +388,8 @@
         },
         "folder_sharing_status_one": "Condiviso con {{count}} persone",
         "folder_sharing_status_many": "",
-        "folder_sharing_status_other": ""
+        "folder_sharing_status_other": "",
+        "copy_hex_color": "Copia colore esadecimale"
     },
     "displayer": {
         "description3": "Clicca il pulsante \"NUOVO\" per creare un nuovo gruppo di contatti.",
