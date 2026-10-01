@@ -88,7 +88,14 @@
         "edit_invalid_email": "ელფოსტა არასწორია. ჩასასწორებლად დააწკაპუნეთ",
         "search_activate_selection_mode": "მონიშვნის რეჟიმი ძებნის შედეგებზე ჯერჯერობით ხელმისაწვდომი არაა",
         "contact_created_in_folder": "ეს კონტაქტი შეიქმნება საქაღალდეში \"{{name}}\"",
-        "invalid_query": "სპეციალური სიმბოლოები, როგორიცაა :,\",-,! და ა.შ. ძებნისას გამოტოვებულია. ამან შეიძლება, მოულოდნელი შედეგები მოგცეთ სტრიქონისტვის:"
+        "invalid_query": "სპეციალური სიმბოლოები, როგორიცაა :,\",-,! და ა.შ. ძებნისას გამოტოვებულია. ამან შეიძლება, მოულოდნელი შედეგები მოგცეთ სტრიქონისტვის:",
+        "choose_representative_name": "აირჩიეთ წარმომადგენლობითი სახელი",
+        "choose_address_book_color_caption": "აირჩიეთ ფერი, რომ ეს მისამართების წიგნი უფრო ადვილი გამოსაცნობი იყოს",
+        "custom_color": "მომხმარებლის ფერი ({{hex}})",
+        "customize_color": "ფერის მორგება",
+        "hex_color": "თექვსმ. ფერი",
+        "close": "დახურვა",
+        "choose": "არჩევა"
     },
     "action": {
         "search": "ძებნა",
@@ -494,7 +501,8 @@
         "address_book_sharing_status_one": "გაზიარებულია {{count}} პირთან",
         "address_book_sharing_status_other": "გაზიარებულია {{count}} პირთან",
         "folder_sharing_status_one": "გაზიარებულია 1 პირთან",
-        "folder_sharing_status_other": "გაზიარებულია {{count}} პირთან"
+        "folder_sharing_status_other": "გაზიარებულია {{count}} პირთან",
+        "copy_hex_color": "თექვსმ. ფერის კოპირება"
     },
     "contactGroupDisplayer": {
         "label": {
@@ -561,7 +569,8 @@
             }
         },
         "import_contacts_success_one": "{{number}} კონტაქტი შემოტანილი და დამატებულია არჩეულ მისამართების წიგნში",
-        "import_contacts_success_other": "{{number}} კონტაქტი შემოტანილი და დამატებულია არჩეულ მისამართების წიგნში"
+        "import_contacts_success_other": "{{number}} კონტაქტი შემოტანილი და დამატებულია არჩეულ მისამართების წიგნში",
+        "hex_color_copied": "თექვსმ. ფერი დაკოპირდა"
     },
     "contact": {
         "modal": {
