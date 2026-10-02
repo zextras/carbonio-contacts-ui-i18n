@@ -378,7 +378,7 @@
         "delete_tag_message1": "Are you sure to delete \"{{name}}\" Tag?",
         "delete_tag_message2": "Once deleted, it will be removed from every item marked with it.",
         "new_contact": "This contact will be created in the 'Contacts' folder",
-        "require_field": "Fill at least one of the required * field",
+        "require_field": "Fill in the required fields to save",
         "snackbar": {
             "settings_saved": "Edits saved correctly"
         }
@@ -486,7 +486,7 @@
     },
     "share": {
         "add": "Add",
-        "admin": "Admin",
+        "admin": "Admin (can view, edit, add, delete and share)",
         "administer": "Administer",
         "allowed_actions": "Allowed actions",
         "contact_folder": "Address Book",
@@ -495,7 +495,7 @@
         "find_shares": "Find Shares",
         "find_shares_label": "Select which address book you want to see in contact’s tree",
         "insert": "Insert",
-        "manager": "Manager",
+        "manager": "Manager (can view, edit, add and delete)",
         "none": "None",
         "options": {
             "share_calendar_with": {
@@ -518,7 +518,7 @@
         "shared_item": "Shared Item",
         "shared_items": "{{value}}'s shared address books",
         "standard_message": "Add a note to standard message",
-        "viewer": "Viewer",
+        "viewer": "Viewer (can view)",
         "workflow": "Workflow",
         "write": "Write",
         "link_name": "{{shareName}} of {{ownerName}}",
