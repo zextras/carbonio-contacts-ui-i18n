@@ -173,7 +173,14 @@
         "find_shares": "ZNAJDŹ UDOSTĘPNIENIA",
         "filter_mode": "Tryb filtrowania",
         "distribution_list_app_name": "Listy dystrybucyjne",
-        "invalid_query": "Znaki specjalne, takie jak !, :, -, \" itp., są ignorowane w wyszukiwaniu. To może prowadzić do nieoczekiwanych wyników dla:"
+        "invalid_query": "Znaki specjalne, takie jak !, :, -, \" itp., są ignorowane w wyszukiwaniu. To może prowadzić do nieoczekiwanych wyników dla:",
+        "choose_address_book_color_caption": "Wybierz kolor, żeby łatwiej rozpoznawać tę książkę adresową",
+        "choose_representative_name": "Wybierz charakterystyczną nazwę",
+        "custom_color": "Niestandardowy kolor ({{hex}})",
+        "customize_color": "Dostosuj kolor",
+        "hex_color": "Kolor Hex",
+        "choose": "Wybierz",
+        "close": "Zamknij"
     },
     "displayer": {
         "search_description1": "Lub wybierz \"Zaawansowane filtry\", aby udoskonalić wyniki wyszukiwania.",
@@ -307,7 +314,8 @@
         "email_copied_to_clipboard": "E-mail został skopiowany do schowka.",
         "import_contacts_success_one": "{{number}} kontakt został zaimportowany i dodany do wybranej książki adresowej",
         "import_contacts_success_few": "{{number}} kontakty zostały zaimportowane i dodane do wybranej książki adresowej",
-        "import_contacts_success_many": "{{number}} kontaktów zostało zaimportowanych i dodanych do wybranej książki adresowej"
+        "import_contacts_success_many": "{{number}} kontaktów zostało zaimportowanych i dodanych do wybranej książki adresowej",
+        "hex_color_copied": "Kolor Hex został skopiowany"
     },
     "tooltip": {
         "revoke": "Odbierz dostęp",
@@ -321,7 +329,8 @@
         },
         "folder_sharing_status_one": "Udostępniono 1 osobie",
         "folder_sharing_status_few": "Udostępniono {{count}} osobom",
-        "folder_sharing_status_many": "Udostępniono {{count}} osobom"
+        "folder_sharing_status_many": "Udostępniono {{count}} osobom",
+        "copy_hex_color": "Skopiuj kolor Hex"
     },
     "contact_restored": "Kontakt został przywrócony",
     "job": {
