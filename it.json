@@ -39,7 +39,7 @@
         "snackbar": {
             "settings_saved": "Modifiche salvate correttamente"
         },
-        "require_field": "Completa almeno uno dei campi richiesti *",
+        "require_field": "Compila i campi obbligatori per salvare",
         "delete_tag_message2": "Una volta eliminata, verrà eliminata anche da tutti gli elementi su cui è utilizzata.",
         "delete_tag_message1": "Vuoi eliminare l'etichetta \"{{name}}\"?"
     },
@@ -263,14 +263,14 @@
         "find_shares_label": "Seleziona le rubriche da visualizzare nella lista dei contatti",
         "none": "Nessuno",
         "add": "Aggiungi",
-        "admin": "Amministratore",
+        "admin": "Amministratore (può visualizzare, modificare, aggiungere, eliminare e condividere)",
         "administer": "Gestisci",
         "allowed_actions": "Azioni consentite",
         "contact_folder": "Rubrica",
         "filter_user": "Trova utenti",
         "find_shares": "Trova Condivisioni",
         "insert": "Inserisci",
-        "manager": "Manager",
+        "manager": "Gestore (può visualizzare, modificare, aggiungere ed eliminare)",
         "owner": "Proprietario",
         "read": "Letto",
         "remove_from_this_list": "Rimuovi da questa lista",
@@ -295,7 +295,7 @@
         "share_note": "Il messaggio predefinito mostra il tuo nome, il nome dell'elemento condiviso, i permessi dati ai destinatari e le informazioni di accesso.",
         "shared_folders": "Rubriche Condivise",
         "shared_items": "Rubrica condivisa di {{value}}",
-        "viewer": "Visualizzazione",
+        "viewer": "Visualizzatore (può visualizzare)",
         "link_name": "{{shareName}} di {{ownerName}}",
         "is_contained_in": "È contenuto in"
     },
