@@ -140,7 +140,7 @@
         "choose_address_book_color_caption": "Scegli un colore per riconoscere più facilmente questa rubrica",
         "custom_color": "Colore personalizzato ({{hex}})",
         "customize_color": "Personalizza colore",
-        "hex_color": "Colore hex",
+        "hex_color": "Colore esadecimale",
         "close": "Chiudi",
         "choose": "Scegli"
     },
