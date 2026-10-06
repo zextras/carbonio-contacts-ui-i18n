@@ -248,7 +248,7 @@
         "snackbar": {
             "settings_saved": "Zmiany zostały zapisane"
         },
-        "require_field": "Uzupełnij co najmniej jedno z wymaganych pól",
+        "require_field": "Uzupełnij wymagane pola, aby zapisać",
         "delete_tag_message2": "Po usunięciu etykieta zostanie zdjęta z każdego elementu oznaczonego nią.",
         "delete_tag_message1": "Czy na pewno chcesz usunąć etykietę \"{{name}}\"?",
         "new_contact": "Kontakt zostanie stworzony w folderze \"Kontakty\""
@@ -267,12 +267,12 @@
         "shared_item": "Udostępniony element",
         "shared_items": "Udostępnione książki adresowe {{value}}",
         "standard_message": "Dodaj notatkę do domyślnej wiadomości",
-        "viewer": "Wyświetlający",
+        "viewer": "Wyświetlający (może wyświetlać)",
         "workflow": "Organizacja Pracy",
         "write": "Pisanie",
         "share_removed_succesfully": "Udostępnienie zostało usunięte",
         "add": "Dodaj",
-        "admin": "Administrator",
+        "admin": "Administrator (może wyświetlać, edytować, dodawać, usuwać i udostępniać)",
         "administer": "Zarządzaj",
         "allowed_actions": "Dozwolone czynności",
         "contact_folder": "Książka adresowa",
@@ -281,7 +281,7 @@
         "find_shares": "Dodaj",
         "find_shares_label": "Wybierz którą książkę adresową chcesz widzieć w drzewku kontaktów",
         "insert": "Wstaw",
-        "manager": "Manager",
+        "manager": "Manager (może wyświetlać, edytować, dodawać i usuwać)",
         "none": "Wyłączone",
         "owner": "Właściciel",
         "read": "Czytanie",
