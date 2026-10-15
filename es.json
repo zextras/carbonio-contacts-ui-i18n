@@ -88,7 +88,8 @@
         "show_more": "mostrar más",
         "export_contact": "Exportar archivo vCard",
         "keyword": "Teclado",
-        "find_shares": "ENCONTRAR COMPARTIDOS"
+        "find_shares": "ENCONTRAR COMPARTIDOS",
+        "invalid_query": "Los caracteres especiales como :, \", -, !, etc., se ignoran en la búsqueda. Esto puede dar lugar a resultados inesperados en casos como:"
     },
     "share": {
         "none": "Ninguno",
