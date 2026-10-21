@@ -1,156 +1,606 @@
 {
-    "action": {
-        "delete_permanently": "Видалити назавжди",
-        "goto_folder": "Перейти до папки",
-        "reset_filters": "Скинути фільтри",
-        "search": "Пошук",
-        "send_msg": "Надіслати лист",
-        "edit_distribution_list": "Редагувати",
-        "share_folder": "Поділитися папкою",
-        "contactGroup": {
-            "delete": "Видалити"
-        },
-        "copy": "Копіювати",
-        "delete": "Видалити",
-        "edit": "Редагувати",
-        "add_shared_address_books": "Додати спільний доступ",
-        "mail": "Надіслати лист"
+  "action": {
+    "contactGroup": {
+      "delete": "Видалити"
     },
-    "board": {
-        "newContactGroup": {
-            "input": {
-                "contact_input": {
-                    "error": {
-                        "invalid_already_present_addresses": "Недійсні та вже наявні адреси",
-                        "address_already_present_one": "Адреса вже вказана",
-                        "address_already_present_few": "Адреси вже вказано",
-                        "address_already_present_many": "Адрес вже вказано",
-                        "invalid_address_one": "Недійсна адреса",
-                        "invalid_address_few": "Недійсні адреси",
-                        "invalid_address_many": "Недійсних адрес"
-                    },
-                    "placeholder": "Введіть адресу, натисніть \"+\", щоб додати до групи",
-                    "title": "Список адрес"
-                },
-                "name_input": {
-                    "name": {
-                        "label": "Назва групи*"
-                    },
-                    "error": {
-                        "max_length": "Дозволяється щонайбільше 256 символів",
-                        "required": "Необхідно вказати ім'я групи, введіть ім'я для продовження"
-                    }
-                }
-            },
-            "name": "Нова група",
-            "snackbar": {
-                "contact_group_created": "Групу контактів створено успішно"
-            },
-            "title": "Нова група",
-            "addresses": {
-                "label": "Адреси"
-            }
-        },
-        "editContactGroup": {
-            "snackbar": {
-                "error": "Сталася помилка під час збереження змін, спробуйте ще раз",
-                "contact_group_edited": "Групу успішно оновлено"
-            }
-        },
-        "label": {
-            "description": "Опис"
-        }
+    "copy": "Копіювати",
+    "delete": "Видалити",
+    "delete_permanently": "Видалити назавжди",
+    "edit": "Редагувати",
+    "edit_distribution_list": "Редагувати",
+    "goto_folder": "Перейти до папки",
+    "mail": "Надіслати лист",
+    "reset_filters": "Скинути фільтри",
+    "search": "Пошук",
+    "send_msg": "Надіслати лист",
+    "share_folder": "Поділитися папкою",
+    "add_shared_address_books": "Додати спільний доступ"
+  },
+  "board": {
+    "editContactGroup": {
+      "snackbar": {
+        "contact_group_edited": "Групу успішно оновлено",
+        "error": "Сталася помилка під час збереження змін, спробуйте ще раз"
+      }
     },
     "label": {
-        "discard_changes": "СКАСУВАТИ ЗМІНИ",
-        "save": "Зберегти",
-        "cancel": "Скасувати",
-        "delete": "Видалити",
-        "invalid_query": "Спеціальні символи, як-от :, \", -, ! тощо, ігноруються під час пошуку. Це може призвести до неочікуваних результатів.",
-        "move": "Перемістити",
-        "new_folder": "Нова папка",
-        "activate_selection_mode": "Увімкнути режим вибору"
+      "description": "Опис"
     },
-    "message": {
-        "snackbar": {
-            "settings_saved": "Зміни збережено"
+    "newContactGroup": {
+      "addresses": {
+        "label": "Адреси"
+      },
+      "input": {
+        "contact_input": {
+          "error": {
+            "address_already_present_one": "Адреса вже вказана",
+            "address_already_present_other": "Адреси вже присутні",
+            "invalid_address_one": "Недійсна адреса",
+            "invalid_address_other": "Недійсні адреси",
+            "invalid_already_present_addresses": "Недійсні та вже наявні адреси"
+          },
+          "placeholder": "Введіть адресу, натисніть \"+\", щоб додати до групи",
+          "title": "Список адрес",
+          "placeholder2": "Введіть адресу"
         },
-        "delete_tag_message1": "Ви впевнені, що хочете видалити \"{{name}}\" Tag?",
-        "delete_tag_message2": "Після видалення він буде вилучений з усіх елементів, до яких був застосований."
-    },
-    "members_list_item_component": {
-        "button": {
-            "remove": "видалити"
+        "name_input": {
+          "error": {
+            "max_length": "Дозволяється щонайбільше 256 символів",
+            "required": "Необхідно вказати ім'я групи, введіть ім'я для продовження"
+          },
+          "name": {
+            "label": "Назва групи*"
+          }
         }
-    },
-    "contactGroupList": {
-        "emptyList": "Ще не створено жодної групи контактів",
-        "addressCount_one": "{{count}} адреса",
-        "addressCount_few": "{{count}} адреси",
-        "addressCount_many": "{{count}} адрес"
-    },
-    "contact_restored": "Контакт відновлено",
-    "displayer": {
-        "description3": "Натисніть кнопку \"НОВИЙ\", щоб створити нову групу контактів.",
-        "description4": "Створіть новий, натиснувши кнопку «НОВИЙ».",
-        "description5": "Відкрийте для себе всі способи зв'язку з іншими користувачами.",
-        "description8": "Оберіть контакт або групу контактів для надсилання спільних електронних листів.",
-        "distribution_list": {
-            "empty_displayer": "Оберіть список розсилки або зв'яжіться з адміністратором, щоб отримати такий.",
-            "label": {
-                "description": "Опис",
-                "member_total": "Список учасників {{total}}",
-                "filter_hint": "Ви можете відфільтрувати цей список, шукаючи ім'я конкретного учасника.",
-                "manager_total": "Список менеджерів {{total}}"
-            },
-            "member_not_visible": "Ви не маєте дозволу переглядати членів цього списку розсилки. Для отримання додаткової інформації зверніться до адміністратора.",
-            "no_details_owner": "Додаткова інформація щодо цього списку розсилки відсутня. Відредагуйте цей список, щоб додати інформацію, або зверніться до адміністратора.",
-            "placeholder": {
-                "filter_member": "Фільтрувати адресу"
-            },
-            "no_details": "Додаткова інформація щодо цього списку розсилки відсутня. За подробицями зверніться до адміністратора."
-        },
-        "search_description3": "Перевірте правильність написання та параметри фільтрів або спробуйте інше ключове слово.",
-        "search_title2": "Вибачте, за вашим запитом нічого не знайдено",
-        "search_title4": "Виберіть один або декілька результатів для виконання дій або відображення деталей.",
-        "search_title1": "Розпочати новий пошук",
-        "search_list_title2": "Жоден з елементів не відповідає пошуковому запиту.",
-        "search_title3": "За вашим запитом нічого не знайдено.",
-        "description7": "Створіть групу контактів, натиснувши кнопку «НОВИЙ».",
-        "list_title1": "Здається жодних контактів наразі немає",
-        "list_title2": "Кошик порожній",
-        "search_description2": "Спробуйте розпочати новий пошук.",
-        "title1": "Створіть новий контакт, натиснувши кнопку «НОВИЙ».",
-        "title10": "Виберіть та відновіть контакти з кошика",
-        "search_description1": "Або виберіть «Розширені фільтри», щоб уточнити пошук.",
-        "description2": "Натисніть кнопку \"НОВИЙ\", щоб створити новий контакт.",
-        "description6": "Використайте режим \"Редагування\", щоб додати будь-які особисті нотатки до контакту.",
-        "search_list_title1": "Схоже, немає жодних результатів. Лупайте сю скалу!",
-        "title2": "Розділіть усі свої роботи зі своїми контактами.",
-        "title8": "Надіслати спільне повідомленнчя",
-        "title7": "Залишайтесь на зв'язку з колегами",
-        "title4": "Налаштуйте свої контакти, додаючи особисті нотатки",
-        "title6": "Настроїти контакт",
-        "title3": "Залишайтесь на зв'язку з колегами.",
-        "title5": "Виберіть контакт"
-    },
-    "contactGroupDisplayer": {
-        "label": {
-            "members_total": "Адрес: {{count}}"
-        }
-    },
-    "contacts": {
-        "importAction": {
-            "modalTitle": "Імпортувати контакти",
-            "modalButton": "ІМПОРТУВАТИ"
-        }
-    },
-    "colors": {
-        "yellow": "Жовтий",
-        "red": "Червоний",
-        "pink": "Рожевий",
-        "orange": "Помаранчевий",
-        "black": "Чорний",
-        "gray": "Сірий"
+      },
+      "name": "Нова група",
+      "snackbar": {
+        "contact_group_created": "Групу контактів створено успішно"
+      },
+      "title": "Нова група"
     }
+  },
+  "contactGroupDisplayer": {
+    "label": {
+      "members_total": "Адрес: {{count}}"
+    }
+  },
+  "contactGroupList": {
+    "addressCount_one": "{{count}} адреса",
+    "addressCount_other": "{{count}} адреси",
+    "emptyList": "Ще не створено жодної групи контактів"
+  },
+  "contact_restored": "Контакт відновлено",
+  "contacts": {
+    "importAction": {
+      "modalButton": "ІМПОРТУВАТИ",
+      "modalTitle": "Імпортувати контакти"
+    }
+  },
+  "displayer": {
+    "description2": "Натисніть кнопку \"НОВИЙ\", щоб створити новий контакт.",
+    "description3": "Натисніть кнопку \"НОВИЙ\", щоб створити нову групу контактів.",
+    "description4": "Створіть новий, натиснувши кнопку «НОВИЙ».",
+    "description5": "Відкрийте для себе всі способи зв'язку з іншими користувачами.",
+    "description6": "Використайте режим \"Редагування\", щоб додати будь-які особисті нотатки до контакту.",
+    "description7": "Створіть групу контактів, натиснувши кнопку «НОВИЙ».",
+    "description8": "Оберіть контакт або групу контактів для надсилання спільних електронних листів.",
+    "distribution_list": {
+      "empty_displayer": "Оберіть список розсилки або зв'яжіться з адміністратором, щоб отримати такий.",
+      "label": {
+        "description": "Опис",
+        "filter_hint": "Ви можете відфільтрувати цей список, шукаючи ім'я конкретного учасника.",
+        "manager_total": "Список менеджерів {{total}}",
+        "member_total": "Список учасників {{total}}"
+      },
+      "member_not_visible": "Ви не маєте дозволу переглядати членів цього списку розсилки. Для отримання додаткової інформації зверніться до адміністратора.",
+      "no_details": "Додаткова інформація щодо цього списку розсилки відсутня. За подробицями зверніться до адміністратора.",
+      "no_details_owner": "Додаткова інформація щодо цього списку розсилки відсутня. Відредагуйте цей список, щоб додати інформацію, або зверніться до адміністратора.",
+      "placeholder": {
+        "filter_member": "Фільтрувати адресу"
+      }
+    },
+    "list_title1": "Здається жодних контактів наразі немає",
+    "list_title2": "Кошик порожній",
+    "search_description1": "Або виберіть «Розширені фільтри», щоб уточнити пошук.",
+    "search_description2": "Спробуйте розпочати новий пошук.",
+    "search_description3": "Перевірте правильність написання та параметри фільтрів або спробуйте інше ключове слово.",
+    "search_list_title1": "Схоже, немає жодних результатів. Лупайте сю скалу!",
+    "search_list_title2": "Жоден з елементів не відповідає пошуковому запиту.",
+    "search_title1": "Розпочати новий пошук",
+    "search_title2": "Вибачте, за вашим запитом нічого не знайдено",
+    "search_title3": "За вашим запитом нічого не знайдено.",
+    "search_title4": "Виберіть один або декілька результатів для виконання дій або відображення деталей.",
+    "title1": "Створіть новий контакт, натиснувши кнопку «НОВИЙ».",
+    "title10": "Виберіть та відновіть контакти з кошика",
+    "title2": "Розділіть усі свої роботи зі своїми контактами.",
+    "title3": "Залишайтесь на зв'язку з колегами.",
+    "title4": "Налаштуйте свої контакти, додаючи особисті нотатки",
+    "title5": "Виберіть контакт",
+    "title6": "Настроїти контакт",
+    "title7": "Залишайтесь на зв'язку з колегами",
+    "title8": "Надіслати спільне повідомленнчя",
+    "title9": "Натисніть значок кошика, щоб видалити контакт."
+  },
+  "distribution_list": {
+    "label": {
+      "empty_message": "Списків розсилки ще немає."
+    },
+    "tabs": {
+      "details": "Деталі",
+      "managers": "Список менеджерів",
+      "members": "Список учасників"
+    }
+  },
+  "edit_dl_component": {
+    "error": {
+      "duplicated_address_one": "Адреса вже присутня",
+      "duplicated_address_other": "Адреси вже присутні",
+      "invalid_address_one": "Недійсна адреса",
+      "invalid_address_other": "Недійсні адреси",
+      "invalid_and_duplicated_addresses": "Недійсні та вже присутні адреси"
+    },
+    "input": {
+      "description": {
+        "label": "Опис"
+      },
+      "name": {
+        "error": {
+          "max_length": "Максимальна дозволена довжина становить 256 символів"
+        },
+        "label": "Назва списку розсилки"
+      }
+    },
+    "label": {
+      "dl_email": "Список розсилки",
+      "hint": "Ви можете відфільтрувати цей список, знайшовши ім’я конкретного учасника, або додати нових, відредагувавши список розсилки.",
+      "members_total": "Список учасників {{total}}"
+    },
+    "placeholder": {
+      "add_members": "Введіть адресу, натисніть «+», щоб додати до списку розсилки",
+      "filter_member": "Фільтрувати адресу"
+    }
+  },
+  "emptyDisplayer": {
+    "contactGroup": {
+      "hint": "Натисніть кнопку «НОВА», щоб створити нову групу контактів."
+    }
+  },
+  "expand_distribution_list": "Розгорнути список адрес",
+  "folder": {
+    "action": {
+      "delete": "Видалити адресну книгу",
+      "deleteContactGroup": "Видалити \"{{contactGroupTitle}}\"",
+      "delete_permanently": "Видалити адресну книгу назавжди",
+      "edit": "Редагувати адресну книгу",
+      "empty": {
+        "folder": "Порожня адресна книга",
+        "trash": "Очистити кошик"
+      },
+      "move": "Перемістити",
+      "moved": "Адресну книгу успішно переміщено"
+    },
+    "modal": {
+      "delete": {
+        "body": {
+          "message1": "Ви бажаєте видалити вибрану адресну книгу? Якщо ви видалите його, пов’язаний вміст буде видалено назавжди, і адресну книгу більше не можна буде відновити.",
+          "message2": "Бажаєте остаточно видалити вибрану адресну книгу? Якщо ви видалите його, пов’язаний вміст буде видалено назавжди, і адресну книгу більше не можна буде відновити."
+        },
+        "title": "Видалити {{addressBookName}}"
+      },
+      "edit": {
+        "body": {
+          "item": {
+            "empty": "Немає доступного шляху"
+          }
+        }
+      },
+      "empty": {
+        "body": {
+          "message1": "Бажаєте очистити вибрану адресну книгу?",
+          "message2": "Якщо ви очистите його, увесь пов’язаний вміст буде переміщено до кошика."
+        },
+        "message1": "Бажаєте очистити вибрану адресну книгу?",
+        "message2": "Усі пов’язані контакти буде остаточно видалено, і відновити їх буде неможливо.",
+        "message3": "Ви хочете очистити смітник?",
+        "message4": "Його вміст буде остаточно видалено, і його буде неможливо відновити.",
+        "title": "Порожній {{addressBookName}}"
+      },
+      "footer": {
+        "go_back": "Повернутися назад"
+      },
+      "item": {
+        "empty": "Немає доступних елементів"
+      },
+      "move": {
+        "body": {
+          "message1": "Виберіть адресну книгу, до якої потрібно перемістити розглянуту:",
+          "message3": "Виберіть папку для переміщення розглянутого:"
+        },
+        "input": {
+          "filter": "Фільтр адресної книги"
+        },
+        "title": "Перемістити {{addressBookName}}"
+      },
+      "new": {
+        "body": {
+          "message1": "Нова назва адресної книги",
+          "message2": "Select an address book which will contain the newly created one:"
+        },
+        "create_footer": "Створити та перемістити",
+        "input": {
+          "name": "Вставте назву адресної книги",
+          "name_exist": "Назва вже існує в цьому шляху"
+        },
+        "title": "Створити нову адресну книгу",
+        "title2": "Створення нової папки"
+      },
+      "restore": {
+        "create_footer": "Створити та відновити"
+      }
+    },
+    "share_folder": "Поділитися адресною книгою",
+    "snackbar": {
+      "address_book_moved_to_trash": "Адресну книгу переміщено до кошика",
+      "address_book_permanently_deleted": "Адресна книга остаточно видалена",
+      "folder_empty": "Адресна книга успішно очищена",
+      "folder_new": "Створено нову адресну книгу",
+      "trash_empty": "Папку кошика успішно очищено"
+    },
+    "type": "Папка контактів"
+  },
+  "folders": {
+    "auto_contacts": "Контакти електронною поштою",
+    "contacts": "Контакти",
+    "root": "Корінь",
+    "trash": "Кошик"
+  },
+  "import_contacts": {
+    "modal": {
+      "confirm": "Імпорт",
+      "description": "The contacts inside the chosen {{fileName}} file will be imported inside the selected address book “{{folderName}}” folder.",
+      "title": "Імпортувати контакти"
+    },
+    "snackbar": {
+      "import_contacts_success_one": "{{count}} contact imported and added to the selected address book",
+      "import_contacts_success_other": "{{count}} contacts imported and added to the selected address book"
+    }
+  },
+  "job": {
+    "company": "Компанія",
+    "department": "відділ",
+    "title": "Посадова роль"
+  },
+  "label": {
+    "activate_selection_mode": "Увімкнути режим вибору",
+    "add_share": "Додати спільний доступ",
+    "address_book_restored": "Адресна книга відновлена ​​",
+    "advanced_filter_one": "{{count}} Розширений фільтр",
+    "advanced_filter_other": "{{count}} Розширені фільтри",
+    "app_name": "Контакти",
+    "autocomplete": "Автозаповнення",
+    "cancel": "Скасувати",
+    "cannot_move": "Неможливо перемістити в ту саму папку",
+    "contact_created_in_folder": "Цей контакт буде створено в папці «{{name}}»",
+    "contact_setting": "Налаштування контактів",
+    "contacts": "Контакти",
+    "create": "Створити",
+    "create_tag": "Створити тег",
+    "delete": "Видалити",
+    "delete_tag": "Видалити тег",
+    "delete_tag_name": "Видалити тег \"{{name}}\"",
+    "destination_address_book": "Адресна книга призначення",
+    "discard": "відкинути",
+    "discard_changes": "СКАСУВАТИ ЗМІНИ",
+    "edit": "Редагувати",
+    "edit_access": "Редагувати доступ",
+    "edit_access_name": "Редагувати доступ {{name}}",
+    "edit_contacts": "Редагувати контакти",
+    "edit_email": "Редагувати адресу електронної пошти",
+    "edit_folder_properties": "Редагувати властивості {{name}}",
+    "edit_invalid_email": "Електронна адреса недійсна, натисніть, щоб змінити її",
+    "edit_tag": "Редагувати тег",
+    "edit_tag_name": "Редагувати тег \"{{name}}\"",
+    "email": "Електронна пошта",
+    "empty": "Порожній",
+    "error_try_again": "Щось пішло не так, повторіть спробу",
+    "errors": {
+      "upload_failed_generic": "Помилка завантаження файлу \"{{filename}}\""
+    },
+    "export_address_book": "Експорт файлу csv",
+    "folder_name": "Назва папки",
+    "groups_app_name": "Контактні групи та списки розсилки",
+    "import_address_book": "Імпорт файлу csv",
+    "include_shared_folders": "Включати спільні адресні книги",
+    "move": "Перемістити",
+    "newContactGroup": "Нова контактна група",
+    "new_address_book": "Нова адресна книга",
+    "new_contact": "Новий контакт",
+    "new_contact_created": "Створено новий контакт",
+    "new_tag": "Новий тег",
+    "no_data": "Немає даних",
+    "no_name": "Без імені",
+    "no_special_char_allowed": "Ім'я не повинно містити спеціальних символів",
+    "note": "Примітка:",
+    "notes": "Примітки",
+    "of": "з",
+    "options": "Опції",
+    "resend": "Повторно",
+    "restore": "Відновити",
+    "results_for": "Результати для:",
+    "revoke": "Відкликати",
+    "revoke_share": "Відкликати частку {{title}}",
+    "revoke_with_custom_msg": "Скасувати доступ, надіславши спеціальне сповіщення",
+    "revoke_with_standard_msg": "Скасувати доступ, відправивши стандартне сповіщення",
+    "revoke_without_notification": "Скасувати доступ без надсилання сповіщення",
+    "root": "Корінь",
+    "save": "Зберегти",
+    "search_activate_selection_mode": "Режим вибору ще не доступний для результатів пошуку",
+    "select_all_addresses_one": "Виберіть адресу",
+    "select_all_addresses_other": "Виберіть усі адреси {{count}}",
+    "select_color": "Виберіть колір",
+    "share": "Поділитися",
+    "share_with": "Поділіться з",
+    "shares_folder_edit": "Спільне використання цієї адресної книги",
+    "show_more": "показати більше",
+    "tag": "Тег",
+    "tag_max_length": "Допускається не більше 128 символів",
+    "tag_name": "Назва тега",
+    "tags": "Теги",
+    "type": "Тип",
+    "undo": "Скасувати",
+    "update": "Оновлення",
+    "website_one": "Веб-сайт",
+    "website_other": "Веб-сайти",
+    "find_share": "Знайти акції",
+    "filter_folders": "Фільтр папок",
+    "new_folder": "Нова папка",
+    "export_contact": "Експорт файлу vCard",
+    "keyword": "Ключові слова",
+    "find_shares": "ЗНАЙТИ АКЦІЇ",
+    "filter_mode": "Режим фільтра",
+    "distribution_list_app_name": "Списки розсилки",
+    "invalid_query": "Спеціальні символи, як-от :, \", -, ! тощо, ігноруються під час пошуку. Це може призвести до неочікуваних результатів."
+  },
+  "members_list_item_component": {
+    "button": {
+      "remove": "видалити"
+    }
+  },
+  "message": {
+    "delete_tag_message1": "Ви впевнені, що хочете видалити \"{{name}}\" Tag?",
+    "delete_tag_message2": "Після видалення він буде вилучений з усіх елементів, до яких був застосований.",
+    "new_contact": "Цей контакт буде створено в папці «Контакти»",
+    "require_field": "Заповніть хоча б одне з обов'язкових * полів",
+    "snackbar": {
+      "settings_saved": "Зміни збережено"
+    }
+  },
+  "messages": {
+    "modal": {
+      "delete": {
+        "if_delete_lost_forever": "Якщо остаточно видалити цей контакт, ви більше не зможете його відновити. Продовжити?",
+        "sure_delete_contact_one": "Ви впевнені, що хочете остаточно видалити цей контакт?",
+        "sure_delete_contact_other": "Ви впевнені, що остаточно видалите ці контакти?"
+      }
+    },
+    "snackbar": {
+      "address_book_moved": "Адресну книгу переміщено до папки призначення",
+      "contact_deleted_permanently": "Контакт видалено назавжди",
+      "contact_moved": "Контакт переміщено",
+      "contact_moved_to_trash": "Контакт переміщено до кошика",
+      "contact_restored": "Контакт відновлено",
+      "tag_created": "Тег {{name}} успішно створено",
+      "tag_deleted": "{{name}} Тег успішно видалено",
+      "tag_not_updated": "Щось пішло не так, тег не оновлено. Спробуйте ще раз.",
+      "tag_updated": "Тег успішно оновлено",
+      "conversation_move": "Бесіду успішно перенесено",
+      "folder_moved": "Папку успішно переміщено",
+      "message_move": "Повідомлення успішно переміщено"
+    }
+  },
+  "modal": {
+    "address_book_name": "Назва адресної книги",
+    "cancel": "скасувати",
+    "close": {
+      "tooltip": "Закрити"
+    },
+    "delete": {
+      "button": {
+        "confirm": "видалити"
+      },
+      "contactGroup": {
+        "body1": "Ви впевнені, що хочете видалити вибрану групу контактів?",
+        "body2": "Якщо видалити, воно буде втрачено назавжди.",
+        "header": "Видалити \"{{contactGroupName}}\""
+      }
+    },
+    "destination": "Папка призначення",
+    "edit_distribution_list": {
+      "title": "Редагувати \"{{displayName}}\""
+    },
+    "initializeError": {
+      "content": "Будь ласка, оновіть сторінку або повторіть спробу пізніше. Інші модулі все ще можуть бути доступні з обмеженою функціональністю.",
+      "title": "Щось пішло не так",
+      "buttonConfirm": "ПЕРЕЗАВАНТАЖИТИ"
+    }
+  },
+  "name": {
+    "first_name": "Ім'я",
+    "last_name": "Прізвище",
+    "middle_name": "По батькові",
+    "nickName": "Псевдонім",
+    "prefix": "Префікс",
+    "suffix": "Суфікс"
+  },
+  "search": {
+    "shared_folders_note": "Включайте в пошук спільні адресні книги."
+  },
+  "secondaryBar": {
+    "contextualMenu": {
+      "new_contact_group_creation_action": "Нова контактна група"
+    },
+    "distributionLists": "Списки розсилки",
+    "distributionListsManager": "Менеджер",
+    "distributionListsMember": "Член",
+    "myContactGroups": "Мої контактні групи",
+    "contactGroups": "Контактні групи"
+  },
+  "section": {
+    "field": {
+      "city": "Місто",
+      "country": "Країна",
+      "number": "Номер",
+      "postalCode": "Поштовий індекс",
+      "state": "Держава",
+      "street": "Вулиця",
+      "website": "Веб-сайт"
+    },
+    "title": {
+      "address_one": "Адреса",
+      "address_other": "Адреси",
+      "mail": "Адреса електронної пошти",
+      "phone_number": "Контактний телефон"
+    }
+  },
+  "select": {
+    "default": "Виберіть тип"
+  },
+  "settings": {
+    "contacts": {
+      "checkbox": {
+        "add_contact_to_emailed_contacts": "Додайте нові контакти до «Контактів електронною поштою»",
+        "autocomplete_on_comma": "Виберіть збіг автозавершення, коли вводиться кома",
+        "incl_addrs_in_glbl_addrs_list": "Включити адреси в глобальний список адрес",
+        "include_add_in_shared_contact": "Включати адреси в спільні контакти",
+        "srch_glbl_addrs_list": "Спочатку шукайте в глобальному списку адрес, використовуючи засіб вибору контактів"
+      }
+    }
+  },
+  "share": {
+    "add": "Додати",
+    "admin": "Адміністратор",
+    "administer": "Адмініструвати",
+    "allowed_actions": "Дозволені дії",
+    "contact_folder": "Адресна книга",
+    "filter_user": "Знайти користувачів",
+    "find_contact_shares": "Знайти спільні контакти",
+    "find_shares": "Знайти спільні ресурси",
+    "find_shares_label": "Виберіть, яку адресну книгу ви бажаєте бачити в дереві контактів",
+    "insert": "Вставити",
+    "manager": "Менеджер",
+    "none": "Жодного",
+    "options": {
+      "share_calendar_with": {
+        "external_guests": "Зовнішні гості (лише перегляд)",
+        "internal_users_groups": "Внутрішні користувачі або групи",
+        "public": "Поділитися з усіма (лише перегляд, пароль не потрібен)"
+      }
+    },
+    "owner": "Власник",
+    "read": "Прочитати",
+    "recipients_address": "Адреси електронної пошти одержувачів",
+    "remove_from_this_list": "Видалити з цього списку",
+    "role": "Роль",
+    "send_notification": "Надіслати сповіщення про цей спільний доступ",
+    "share_added_succesfully": "Спільний доступ успішно додано",
+    "share_info": "Інформація про спільну адресну книгу",
+    "share_note": "Стандартне повідомлення відображає ваше ім’я, назву спільного елемента, дозволи, надані одержувачам, і інформацію для входу.",
+    "share_removed_succesfully": "Спільний доступ видалено успішно",
+    "shared_folders": "Спільні адресні книги",
+    "shared_item": "Спільний елемент",
+    "shared_items": "Спільні адресні книги {{value}}",
+    "standard_message": "Додати примітку до стандартного повідомлення",
+    "viewer": "Переглядач",
+    "workflow": "Робочий процес",
+    "write": "Напишіть",
+    "link_name": "{{shareName}} з {{ownerName}}",
+    "is_contained_in": "Міститься в"
+  },
+  "snackbar": {
+    "delete_contact_group": {
+      "confirm": {
+        "success": "Групу контактів успішно видалено"
+      }
+    },
+    "edit_distribution_list": {
+      "save": {
+        "success": "Редагування списку розсилки \"{{displayName}}\" успішно збережено"
+      }
+    },
+    "email_copied_to_clipboard": "Електронну пошту скопійовано в буфер обміну.",
+    "folder_edited": "Адресну книгу успішно відредаговано",
+    "folder_shared": "Адресна книга спільна",
+    "import_contacts_success_one": "Контакти {{number}} імпортовано та додано до вибраної адресної книги",
+    "import_contacts_success_other": "",
+    "share_resend": "Поділитися запрошенням повторно",
+    "share_revoke": "Спільний доступ скасовано",
+    "share_updated": "Права доступу оновлено",
+    "tag_applied": "Застосовано тег \"{{tag}}\"",
+    "tag_removed": "Тег \"{{tag}}\" видалено"
+  },
+  "title": {
+    "advanced_filters": "Розширені фільтри"
+  },
+  "tooltip": {
+    "address_book_sharing_status_one": "Спільно з особою {{count}}",
+    "address_book_sharing_status_other": "Спільно з людьми {{count}}",
+    "resend": "Надіслати сповіщення електронною поштою про цей спільний доступ",
+    "revoke": "Скасувати доступ",
+    "folder_linked_status": "Поділився зі мною",
+    "folder_sharing_status_one": "Спільно з 1 особою",
+    "folder_sharing_status_other": "Спільно з людьми {{count}}",
+    "list_trash": {
+      "deletePermanently": "Видалити контакт назавжди"
+    }
+  },
+  "types": {
+    "home": "додому",
+    "mobile": "мобільний",
+    "other": "інше",
+    "work": "робота"
+  },
+  "contact": {
+    "modal": {
+      "move_multiple": {
+        "title": "Перемістити контакти {{count}}"
+      },
+      "move_single": {
+        "title": "Перемістити контакт {{contactDesc}}"
+      },
+      "restore_multiple": {
+        "title": "Відновити контакти {{count}}"
+      },
+      "restore_single": {
+        "title": "Відновити контакт {{contactDesc}}"
+      }
+    }
+  },
+  "folder_panel": {
+    "option": {
+      "all_contacts": "Усі",
+      "contacts": "Контакти",
+      "contact_group": "Контактні групи"
+    }
+  },
+  "colors": {
+    "black": "Чорний",
+    "purple": "Фіолетовий",
+    "blue": "Синій",
+    "cyan": "Блакитний",
+    "red": "Червоний",
+    "green": "Зелений",
+    "orange": "Помаранчевий",
+    "pink": "Рожевий",
+    "yellow": "Жовтий",
+    "gray": "Сірий"
+  },
+  "advancedFilters": {
+    "isContainedIn": {
+      "chooseFolder": "Виберіть папку"
+    },
+    "phoneNumber": "Номер телефону",
+    "title": "Розширені фільтри",
+    "keywords": "Ключові слова"
+  }
 }
